@@ -316,8 +316,8 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
 
 	if (!self.menuControllerActions || self.menuControllerActions.count == 0) return;
         
-        if ([[UIResponder atlCurrentFirstResponder] isKindOfClass:[ATLMessageComposeTextView class]]) {
-            self.weakTextView = (ATLMessageComposeTextView *)[UIResponder atlCurrentFirstResponder];
+        if ([[UIResponder atl_currentFirstResponder] isKindOfClass:[ATLMessageComposeTextView class]]) {
+            self.weakTextView = (ATLMessageComposeTextView *)[UIResponder atl_currentFirstResponder];
             self.weakTextView.overrideNextResponder = self;
         } else {
             [self becomeFirstResponder];

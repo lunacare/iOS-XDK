@@ -22,6 +22,6 @@
 
 @interface UIResponder (ATLFirstResponder)
 
-+ (id)atlCurrentFirstResponder;
++ (id)atl_currentFirstResponder;
 
 @end

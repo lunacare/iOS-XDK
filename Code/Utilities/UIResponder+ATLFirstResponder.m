@@ -24,13 +24,13 @@ static __weak id currentFirstResponder;
 
 @implementation UIResponder (ATLFirstResponder)
 
-+ (id)atlCurrentFirstResponder {
++ (id)atl_currentFirstResponder {
     currentFirstResponder = nil;
-    [[UIApplication sharedApplication] sendAction:@selector(atlFindFirstResponder:) to:nil from:nil forEvent:nil];
+    [[UIApplication sharedApplication] sendAction:@selector(atl_findFirstResponder:) to:nil from:nil forEvent:nil];
     return currentFirstResponder;
 }
 
-- (void)atlFindFirstResponder:(id)sender {
+- (void)atl_findFirstResponder:(id)sender {
     currentFirstResponder = self;
 }
 
