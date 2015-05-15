@@ -34,7 +34,7 @@
 
 /**
  @abstract Overrides the default next responder when we want to keep the
- keyboard visible while presenting a `UIMenuController.
+ keyboard visible while presenting a `UIMenuController`.
  */
 @property (nonatomic, weak) UIResponder *overrideNextResponder;
 

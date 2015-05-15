@@ -102,11 +102,6 @@ static CGFloat const ATLButtonHeight = 28.0f;
     return self;
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)layoutSubviews
 {
     [super layoutSubviews];

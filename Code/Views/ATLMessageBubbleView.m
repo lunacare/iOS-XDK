@@ -319,14 +319,15 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
         if ([[UIResponder currentFirstResponder] isKindOfClass:[ATLMessageComposeTextView class]]) {
             self.weakTextView = (ATLMessageComposeTextView *)[UIResponder currentFirstResponder];
             self.weakTextView.overrideNextResponder = self;
-            [[NSNotificationCenter defaultCenter] addObserver:self
-                                                     selector:@selector(menuControllerDisappeared)
-                                                         name:UIMenuControllerDidHideMenuNotification
-                                                       object:nil];
-
         } else {
             [self becomeFirstResponder];
         }
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(menuControllerDisappeared)
+                                                     name:UIMenuControllerDidHideMenuNotification
+                                                   object:nil];
+
         
         self.longPressMask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         self.longPressMask.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
