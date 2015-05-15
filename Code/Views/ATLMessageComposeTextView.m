@@ -25,6 +25,7 @@
 @interface ATLMessageComposeTextView ()
 
 @property (nonatomic) UILabel *placeholderLabel;
+@property (nonatomic, weak) UIResponder *overrideNextResponder;
 
 @end
 
@@ -52,8 +53,26 @@ static NSString *const ATLPlaceholderText = @"Enter Message";
         [self addSubview:self.placeholderLabel];
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewTextDidChange:) name:UITextViewTextDidChangeNotification object:self];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nate:) name:@"testnate" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuWillHide:) name:UIMenuControllerWillHideMenuNotification object:nil];
+
     }
     return self;
+}
+
+- (void)nate:(NSNotification *)note
+{
+    id object = [note object];
+    if ([self isFirstResponder]) {
+        self.overrideNextResponder = object;
+    } else {
+        [object becomeFirstResponder];
+    }
+}
+
+- (void)menuWillHide:(NSNotification *)note
+{
+    self.overrideNextResponder = nil;
 }
 
 - (void)dealloc
@@ -81,6 +100,23 @@ static NSString *const ATLPlaceholderText = @"Enter Message";
 
         // We want the placeholder to be overlapped by / underneath the cursor.
         [self sendSubviewToBack:self.placeholderLabel];
+    }
+}
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender
+{
+    if (self.overrideNextResponder != nil)
+        return NO;
+    else
+        return [super canPerformAction:action withSender:sender];
+}
+
+- (UIResponder *)nextResponder
+{
+    if (self.overrideNextResponder != nil) {
+        return self.overrideNextResponder;
+    } else {
+        return [super nextResponder];
     }
 }
 
