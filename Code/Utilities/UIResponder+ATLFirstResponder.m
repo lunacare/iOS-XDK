@@ -1,16 +1,16 @@
 //
-//  UIResponder+FirstResponder.m
+//  UIResponder+ATLFirstResponder.m
 //  Pods
 //
 //  Created by Kabir Mahal on 5/15/15.
 //
 //
 
-#import "UIResponder+FirstResponder.h"
+#import "UIResponder+ATLFirstResponder.h"
 
 static __weak id currentFirstResponder;
 
-@implementation UIResponder (FirstResponder)
+@implementation UIResponder (ATLFirstResponder)
 
 +(id)currentFirstResponder {
     currentFirstResponder = nil;

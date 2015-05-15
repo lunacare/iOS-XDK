@@ -53,6 +53,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
 @property (nonatomic) MKMapSnapshotter *snapshotter;
 @property (nonatomic) ATLProgressView *progressView;
 @property (nonatomic) ATLPlayView *playView;
+@property (nonatomic, weak) ATLMessageComposeTextView *weakTextView;
 
 @end
 
@@ -312,15 +313,20 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
 - (void)handleLongPress:(UILongPressGestureRecognizer *)recognizer
 {
     if ([recognizer state] == UIGestureRecognizerStateBegan && !self.longPressMask) {
+
+	if (!self.menuControllerActions || self.menuControllerActions.count == 0) return;
         
-        if (!self.menuControllerActions || self.menuControllerActions.count == 0) return;
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(menuControllerDisappeared)
-                                                     name:UIMenuControllerDidHideMenuNotification
-                                                   object:nil];
-        
-        [self becomeFirstResponder];
+        if ([[UIResponder currentFirstResponder] isKindOfClass:[ATLMessageComposeTextView class]]) {
+            self.weakTextView = (ATLMessageComposeTextView *)[UIResponder currentFirstResponder];
+            self.weakTextView.overrideNextResponder = self;
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(menuControllerDisappeared)
+                                                         name:UIMenuControllerDidHideMenuNotification
+                                                       object:nil];
+
+        } else {
+            [self becomeFirstResponder];
+        }
         
         self.longPressMask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         self.longPressMask.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

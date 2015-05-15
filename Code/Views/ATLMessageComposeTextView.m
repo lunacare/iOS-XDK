@@ -25,7 +25,6 @@
 @interface ATLMessageComposeTextView ()
 
 @property (nonatomic) UILabel *placeholderLabel;
-@property (nonatomic, weak) UIResponder *overrideNextResponder;
 
 @end
 
@@ -53,26 +52,8 @@ static NSString *const ATLPlaceholderText = @"Enter Message";
         [self addSubview:self.placeholderLabel];
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewTextDidChange:) name:UITextViewTextDidChangeNotification object:self];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nate:) name:@"testnate" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuWillHide:) name:UIMenuControllerWillHideMenuNotification object:nil];
-
     }
     return self;
-}
-
-- (void)nate:(NSNotification *)note
-{
-    id object = [note object];
-    if ([self isFirstResponder]) {
-        self.overrideNextResponder = object;
-    } else {
-        [object becomeFirstResponder];
-    }
-}
-
-- (void)menuWillHide:(NSNotification *)note
-{
-    self.overrideNextResponder = nil;
 }
 
 - (void)dealloc
