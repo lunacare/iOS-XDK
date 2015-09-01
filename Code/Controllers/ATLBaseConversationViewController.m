@@ -73,7 +73,7 @@ static CGFloat const ATLMaxScrollDistanceFromBottom = 150;
     [super viewDidLoad];
     
     // Add message input tool bar
-    self.messageInputToolbar = [ATLMessageInputToolbar new];
+    self.messageInputToolbar = [self initializeMessageInputToolbar];
     // An apparent system bug causes a view controller to not be deallocated
     // if the view controller's own inputAccessoryView property is used.
     self.view.inputAccessoryView = self.messageInputToolbar;
@@ -94,6 +94,11 @@ static CGFloat const ATLMaxScrollDistanceFromBottom = 150;
         [self configureAddressbarLayoutConstraints];
     }
     [self atl_baseRegisterForNotifications];
+}
+
+- (ATLMessageInputToolbar *)initializeMessageInputToolbar
+{
+    return [ATLMessageInputToolbar new];
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -68,6 +68,11 @@
  */
 @property (nonatomic) BOOL displaysAddressBar;
 
+/**
+ @abstract Initializes toolbar, allow override to use a custom ATLMessageInputToolbar.
+ */
+- (ATLMessageInputToolbar *)initializeMessageInputToolbar;
+
 ///-------------------------------------
 /// @name Managing Scrolling
 ///-------------------------------------
