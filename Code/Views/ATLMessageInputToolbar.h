@@ -160,4 +160,7 @@ extern NSString *const ATLMessageInputToolbarAccessibilityLabel;
  */
 @property (nonatomic, readonly) NSArray *mediaAttachments;
 
+
+- (void)configureRightAccessoryButtonState;
+
 @end
