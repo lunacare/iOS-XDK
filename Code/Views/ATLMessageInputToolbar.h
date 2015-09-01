@@ -149,6 +149,12 @@ extern NSString *const ATLMessageInputToolbarAccessibilityLabel;
 @property (nonatomic) NSUInteger maxNumberOfLines;
 
 /**
+ @abstract The margin on top and bottom of textInputView
+ @default 7.0f
+ */
+@property (nonatomic) NSUInteger verticalMargin;
+
+/**
  @abstract An array of all media attachments displayed in the text view.
  @discussion Any existing media attachments will be removed when the right accessory button is tapped.
  */

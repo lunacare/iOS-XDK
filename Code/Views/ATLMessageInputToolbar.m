@@ -46,7 +46,6 @@ NSString *const ATLMessageInputToolbarSendButton  = @"Message Input Toolbar Send
 // Compose View Margin Constants
 static CGFloat const ATLLeftButtonHorizontalMargin = 6.0f;
 static CGFloat const ATLRightButtonHorizontalMargin = 4.0f;
-static CGFloat const ATLVerticalMargin = 7.0f;
 
 // Compose View Button Constants
 static CGFloat const ATLLeftAccessoryButtonWidth = 40.0f;
@@ -96,6 +95,7 @@ static CGFloat const ATLButtonHeight = 28.0f;
         // Calling sizeThatFits: or contentSize on the displayed UITextView causes the cursor's position to momentarily appear out of place and prevent scrolling to the selected range. So we use another text view for height calculations.
         self.dummyTextView = [[ATLMessageComposeTextView alloc] init];
         self.maxNumberOfLines = 8;
+        self.verticalMargin = 7.0f;
     }
     return self;
 }
@@ -132,14 +132,14 @@ static CGFloat const ATLButtonHeight = 28.0f;
     rightButtonFrame.origin.x = CGRectGetWidth(frame) - CGRectGetWidth(rightButtonFrame) - ATLRightButtonHorizontalMargin;
 
     textViewFrame.origin.x = CGRectGetMaxX(leftButtonFrame) + ATLLeftButtonHorizontalMargin;
-    textViewFrame.origin.y = ATLVerticalMargin;
+    textViewFrame.origin.y = self.verticalMargin;
     textViewFrame.size.width = CGRectGetMinX(rightButtonFrame) - CGRectGetMinX(textViewFrame) - ATLRightButtonHorizontalMargin;
 
     self.dummyTextView.attributedText = self.textInputView.attributedText;
     CGSize fittedTextViewSize = [self.dummyTextView sizeThatFits:CGSizeMake(CGRectGetWidth(textViewFrame), MAXFLOAT)];
     textViewFrame.size.height = ceil(MIN(fittedTextViewSize.height, self.textViewMaxHeight));
 
-    frame.size.height = CGRectGetHeight(textViewFrame) + ATLVerticalMargin * 2;
+    frame.size.height = CGRectGetHeight(textViewFrame) + self.verticalMargin * 2;
     frame.origin.y -= frame.size.height - CGRectGetHeight(self.frame);
  
     // Only calculate button centerY once to anchor it to bottom of bar.
