@@ -33,7 +33,7 @@
 @property (nonatomic) NSString *placeholder;
 
 /**
- @abstract Overrides the default next responder when we want to keep the
+ @abstract Overrides the default next responder when keeping the
  keyboard visible while presenting a `UIMenuController`.
  */
 @property (nonatomic, weak) UIResponder *overrideNextResponder;

@@ -314,7 +314,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
 {
     if ([recognizer state] == UIGestureRecognizerStateBegan && !self.longPressMask) {
 
-	if (!self.menuControllerActions || self.menuControllerActions.count == 0) return;
+        if (!self.menuControllerActions || self.menuControllerActions.count == 0) return;
         
         if ([[UIResponder atl_currentFirstResponder] isKindOfClass:[ATLMessageComposeTextView class]]) {
             self.weakTextView = (ATLMessageComposeTextView *)[UIResponder atl_currentFirstResponder];
