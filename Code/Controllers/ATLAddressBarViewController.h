@@ -105,6 +105,15 @@
  */
 @property (nonatomic) ATLAddressBarView *addressBarView;
 
+///----------------------
+// @name UI Configuration
+///----------------------
+
+/**
+ @abstract Whether the view controller should show avatars in the participant list. Default is NO.
+ */
+@property (nonatomic) BOOL shouldShowParticipantAvatars;
+
 ///------------------------------------
 // @name Managing Participant Selection
 ///------------------------------------

@@ -59,7 +59,8 @@
     // UIAppearance Defaults
     _boldTitleFont = [UIFont boldSystemFontOfSize:17];
     _titleFont = [UIFont systemFontOfSize:17];
-    _titleColor =[UIColor blackColor];
+    _titleColor = [UIColor blackColor];
+    _shouldBoldTitle = YES;
     
     self.nameLabel = [UILabel new];
     self.nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -152,7 +153,7 @@
             }
             break;
     }
-    if (rangeToBold.location != NSNotFound) {
+    if (rangeToBold.location != NSNotFound && self.shouldBoldTitle) {
         [attributedString addAttributes:@{NSFontAttributeName: self.boldTitleFont} range:rangeToBold];
     }
 

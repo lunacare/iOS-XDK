@@ -43,4 +43,9 @@
  */
 @property (nonatomic) UIColor *titleColor UI_APPEARANCE_SELECTOR;
 
+/**
+ @abstract Whether to bold part of the title label displayed in the cell, according to the sort type. Default is YES.
+ */
+@property (nonatomic) BOOL shouldBoldTitle;
+
 @end
