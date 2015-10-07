@@ -1,16 +1,19 @@
-platform :ios, '7.0'
+platform :ios, '8.0'
 
 # Import CocoaPods sources
 source 'https://github.com/CocoaPods/Specs.git'
+source 'git@github.com:layerhq/cocoapods-specs.git'
+
+use_frameworks!
 
 target 'Programmatic' do
   pod 'Atlas', path: '.'
-  pod 'LayerKit'
+  pod 'LayerKit', :git => 'git@github.com:layerhq/LayerKit.git'
 end
 
 target 'Storyboard' do
   pod 'Atlas', path: '.'
-  pod 'LayerKit'
+  pod 'LayerKit', :git => 'git@github.com:layerhq/LayerKit.git'
 end
 
 target 'ProgrammaticTests' do
