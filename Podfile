@@ -4,17 +4,12 @@ platform :ios, '8.0'
 source 'https://github.com/CocoaPods/Specs.git'
 source 'git@github.com:layerhq/cocoapods-specs.git'
 
+dropbox_path = ENV['LAYER_DROPBOX_PATH'] || '~/Dropbox (Layer)'
+
 use_frameworks!
 
-target 'Programmatic' do
-  pod 'Atlas', path: '.'
-  pod 'LayerKit', :git => 'git@github.com:layerhq/LayerKit.git'
-end
-
-target 'Storyboard' do
-  pod 'Atlas', path: '.'
-  pod 'LayerKit', :git => 'git@github.com:layerhq/LayerKit.git'
-end
+pod 'Atlas', path: '.'
+pod 'LayerKit', path: "#{dropbox_path}/Layer/Builds/iOS/LayerKit-0.17.0-pre5"
 
 target 'ProgrammaticTests' do
   pod 'KIFViewControllerActions', git: 'https://github.com/blakewatters/KIFViewControllerActions.git'
