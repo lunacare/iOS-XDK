@@ -244,7 +244,10 @@
 /**
  @abstract The controller used to display search results.
  */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 @property (nonatomic, readonly) UISearchDisplayController *searchController;
+#pragma GCC diagnostic pop
 
 /**
  @abstract A boolean value that determines if the controller should show a search bar and search display controller.
