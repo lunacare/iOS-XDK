@@ -115,6 +115,9 @@ static CGFloat const ATLMaxScrollDistanceFromBottom = 150;
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    if (self.displaysAddressBar) {
+        [self updateTopCollectionViewInset];
+    }
     [super viewDidAppear:animated];
     self.messageInputToolbar.translucent = YES;
 }
