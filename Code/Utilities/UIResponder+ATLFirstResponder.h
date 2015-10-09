@@ -20,6 +20,10 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ @abstract This category on `UIRResponder` finds the current first responder of the application.
+ @discussion This category is used in Atlas internally to override next responder status.
+ */
 @interface UIResponder (ATLFirstResponder)
 
 + (id)atl_currentFirstResponder;
