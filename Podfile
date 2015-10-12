@@ -2,14 +2,13 @@ platform :ios, '8.0'
 
 # Import CocoaPods sources
 source 'https://github.com/CocoaPods/Specs.git'
-source 'git@github.com:layerhq/cocoapods-specs.git'
-
-dropbox_path = ENV['LAYER_DROPBOX_PATH'] || '~/Dropbox (Layer)'
 
 use_frameworks!
 
+link_with 'Programmatic', 'Storyboard'
+
 pod 'Atlas', path: '.'
-pod 'LayerKit', '~> 0.17.0'
+pod 'LayerKit'
 
 target 'ProgrammaticTests' do
   pod 'KIFViewControllerActions', git: 'https://github.com/blakewatters/KIFViewControllerActions.git'
