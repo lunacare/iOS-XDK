@@ -100,3 +100,9 @@ void ATLLastPhotoTaken(void(^completionHandler)(UIImage *image, NSError *error))
 UIImage *ATLPinPhotoForSnapshot(MKMapSnapshot *snapshot, CLLocationCoordinate2D location);
 
 NSArray *ATLTextCheckingResultsForText(NSString *text, NSTextCheckingType linkTypes);
+
+//---------------------------------
+// @name Resources Bundle Utilities
+//---------------------------------
+
+NSBundle *ATLResourcesBundle(void);
