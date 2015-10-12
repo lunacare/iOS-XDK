@@ -9,7 +9,7 @@ dropbox_path = ENV['LAYER_DROPBOX_PATH'] || '~/Dropbox (Layer)'
 use_frameworks!
 
 pod 'Atlas', path: '.'
-pod 'LayerKit', path: "#{dropbox_path}/Layer/Builds/iOS/LayerKit-0.17.0-pre5"
+pod 'LayerKit', '~> 0.17.0'
 
 target 'ProgrammaticTests' do
   pod 'KIFViewControllerActions', git: 'https://github.com/blakewatters/KIFViewControllerActions.git'

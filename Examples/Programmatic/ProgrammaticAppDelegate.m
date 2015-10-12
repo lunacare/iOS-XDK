@@ -24,10 +24,7 @@ static BOOL ATLIsRunningTests()
 @implementation ProgrammaticAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-
-//LYRClient *client = [LYRClient clientWithAppID:[NSURL URLWithString:@"te"]];
-    
+{    
     ATLUserMock *mockUser = [ATLUserMock userWithMockUserName:ATLMockUserNameBlake];
     LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.participantIdentifier];
     [[LYRMockContentStore sharedStore] hydrateConversationsForAuthenticatedUserID:layerClient.authenticatedUserID count:1];
