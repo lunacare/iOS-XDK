@@ -10,6 +10,7 @@
 #import "ATLSampleConversationListViewController.h"
 #import "LayerKitMock.h"
 #import <Atlas/Atlas.h>
+#import <LayerKit/LayerKit.h> 
 
 static BOOL ATLIsRunningTests()
 {
@@ -23,7 +24,7 @@ static BOOL ATLIsRunningTests()
 @implementation ProgrammaticAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+{    
     ATLUserMock *mockUser = [ATLUserMock userWithMockUserName:ATLMockUserNameBlake];
     LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.participantIdentifier];
     [[LYRMockContentStore sharedStore] hydrateConversationsForAuthenticatedUserID:layerClient.authenticatedUserID count:1];

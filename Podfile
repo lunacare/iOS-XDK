@@ -1,17 +1,14 @@
-platform :ios, '7.0'
+platform :ios, '8.0'
 
 # Import CocoaPods sources
 source 'https://github.com/CocoaPods/Specs.git'
 
-target 'Programmatic' do
-  pod 'Atlas', path: '.'
-  pod 'LayerKit'
-end
+use_frameworks!
 
-target 'Storyboard' do
-  pod 'Atlas', path: '.'
-  pod 'LayerKit'
-end
+link_with 'Programmatic', 'Storyboard'
+
+pod 'Atlas', path: '.'
+pod 'LayerKit'
 
 target 'ProgrammaticTests' do
   pod 'KIFViewControllerActions', git: 'https://github.com/blakewatters/KIFViewControllerActions.git'
