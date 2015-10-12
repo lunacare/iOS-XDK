@@ -186,7 +186,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
     [self.snapshotter startWithCompletionHandler:^(MKMapSnapshot *snapshot, NSError *error) {
         self.bubbleImageView.hidden = NO;
         if (error) {
-            self.bubbleImageView.image = [UIImage imageNamed:@"LayerUIKitResource.bundle/warning-black"];
+            self.bubbleImageView.image = [UIImage imageNamed:@"layer-logo"];
             self.bubbleImageView.contentMode = UIViewContentModeCenter;
             return;
         }

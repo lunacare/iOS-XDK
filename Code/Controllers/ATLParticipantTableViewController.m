@@ -245,7 +245,8 @@ NSString *const ATLParticipantTableViewControllerTitle = @"Participants";
     id<ATLParticipant> participant = [self participantForTableView:tableView atIndexPath:indexPath];
     [cell presentParticipant:participant withSortType:self.sortType shouldShowAvatarItem:YES];
     if ([self.blockedParticipantIdentifiers containsObject:[participant participantIdentifier]]) {
-        cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AtlasResource.bundle/block"]];
+        NSBundle *resourcesBundle = ATLResourcesBundle();
+        cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"block"  inBundle:resourcesBundle compatibleWithTraitCollection:nil]];
     }
 }
 
