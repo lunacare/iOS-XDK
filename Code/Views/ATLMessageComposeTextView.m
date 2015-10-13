@@ -84,6 +84,23 @@ static NSString *const ATLPlaceholderText = @"Enter Message";
     }
 }
 
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender
+{
+    if (self.overrideNextResponder != nil)
+        return NO;
+    else
+        return [super canPerformAction:action withSender:sender];
+}
+
+- (UIResponder *)nextResponder
+{
+    if (self.overrideNextResponder != nil) {
+        return self.overrideNextResponder;
+    } else {
+        return [super nextResponder];
+    }
+}
+
 - (void)setFont:(UIFont *)font
 {
     [super setFont:font];

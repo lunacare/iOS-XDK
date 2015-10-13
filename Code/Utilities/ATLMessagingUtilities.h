@@ -23,6 +23,8 @@
 #import <MapKit/MapKit.h>
 #import <ImageIO/ImageIO.h>
 #import "ATLMediaAttachment.h"
+#import "UIResponder+ATLFirstResponder.h"
+#import "ATLMessageComposeTextView.h"
 
 extern NSString *const ATLMIMETypeTextPlain;          // text/plain
 extern NSString *const ATLMIMETypeImagePNG;           // image/png

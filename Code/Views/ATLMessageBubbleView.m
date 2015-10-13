@@ -53,6 +53,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
 @property (nonatomic) MKMapSnapshotter *snapshotter;
 @property (nonatomic) ATLProgressView *progressView;
 @property (nonatomic) ATLPlayView *playView;
+@property (nonatomic, weak) ATLMessageComposeTextView *weakTextView;
 
 @end
 
@@ -74,7 +75,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
     if (self) {
         _locationShown = kCLLocationCoordinate2DInvalid;
         self.clipsToBounds = YES;
-        
+
         _bubbleViewLabel = [[UILabel alloc] init];
         _bubbleViewLabel.numberOfLines = 0;
         _bubbleViewLabel.userInteractionEnabled = YES;
@@ -119,7 +120,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
         
         UIMenuItem *resetMenuItem = [[UIMenuItem alloc] initWithTitle:@"Copy" action:@selector(copyItem)];
         _menuControllerActions = @[resetMenuItem];
-        
+
         [self prepareForReuse];
     }
     return self;
@@ -171,7 +172,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
     [self applyImageWidthConstraint:YES];
     [self setBubbleViewContentType:ATLBubbleViewContentTypeLocation];
     [self setNeedsUpdateConstraints];
-    
+
     NSString *cachedImageIdentifier = [NSString stringWithFormat:@"%f,%f", location.latitude, location.longitude];
     UIImage *cachedImage = [[[self class] sharedCache] objectForKey:cachedImageIdentifier];
     if (cachedImage) {
@@ -181,7 +182,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
         self.bubbleImageView.hidden = NO;
         return;
     }
-    
+
     self.snapshotter = [self snapshotterForLocation:location];
     [self.snapshotter startWithCompletionHandler:^(MKMapSnapshot *snapshot, NSError *error) {
         self.bubbleImageView.hidden = NO;
@@ -194,7 +195,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
         self.bubbleImageView.image = ATLPinPhotoForSnapshot(snapshot, location);
         self.locationShown = location;
         [[[self class] sharedCache] setObject:self.bubbleImageView.image forKey:cachedImageIdentifier];
-        
+
         // Animate into view.
         self.bubbleImageView.alpha = 0.0;
         [UIView animateWithDuration:0.2 animations:^{
@@ -294,6 +295,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
     [UIView animateWithDuration:0.1 animations:^{
         self.longPressMask.alpha = 0;
     } completion:^(BOOL finished) {
+		self.weakTextView.overrideNextResponder = nil;
         [self.longPressMask removeFromSuperview];
         self.longPressMask = nil;
     }];
@@ -311,15 +313,20 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
 - (void)handleLongPress:(UILongPressGestureRecognizer *)recognizer
 {
     if ([recognizer state] == UIGestureRecognizerStateBegan && !self.longPressMask) {
-        
+
         if (!self.menuControllerActions || self.menuControllerActions.count == 0) return;
+        
+        if ([[UIResponder atl_currentFirstResponder] isKindOfClass:[ATLMessageComposeTextView class]]) {
+            self.weakTextView = (ATLMessageComposeTextView *)[UIResponder atl_currentFirstResponder];
+            self.weakTextView.overrideNextResponder = self;
+        } else {
+            [self becomeFirstResponder];
+        }
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(menuControllerDisappeared)
                                                      name:UIMenuControllerDidHideMenuNotification
                                                    object:nil];
-        
-        [self becomeFirstResponder];
         
         self.longPressMask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         self.longPressMask.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
