@@ -1,5 +1,19 @@
 # Atlas Changelog
 
+## 1.0.12
+
+### Enhancements
+
+* Improved `UIMenuController` behavior while scrolling.
+* Cached message cell height to improve scrolling performance.
+* Added native video support.
+* Atlas uses `LayerKit v0.17.0` which provides support for dynamic frameworks.
+
+### Bug Fixes
+
+* Fixed iOS9 issue with the `ATLMessageInputToolbar` having a black background when presented on screen.
+* Fixed iOS9 breaking layout constraints.
+
 ## 1.0.11
 
 ### Public API Changes
