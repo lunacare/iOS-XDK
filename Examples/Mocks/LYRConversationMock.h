@@ -19,7 +19,6 @@
 //
 #import <Foundation/Foundation.h>
 #import "LYRMessageMock.h"
-#import <LayerKit/LayerKit.h>
 
 @class LYRMessageMock;
 
