@@ -18,7 +18,7 @@
 //  limitations under the License.
 //
 #import <Foundation/Foundation.h>
-#import <LayerKit/LayerKit.h> 
+#import <Atlas/Atlas.h>
 
 @class LYRConversationMock;
 

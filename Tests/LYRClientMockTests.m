@@ -25,7 +25,6 @@
 #import <Expecta/Expecta.h>
 #import <OCMock/OCMock.h>
 
-#import <LayerKit/LayerKit.h>
 #import "LYRClientMock.h"
 #import "ATLTestInterface.h"
 
