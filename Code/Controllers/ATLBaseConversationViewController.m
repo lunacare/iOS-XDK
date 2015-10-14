@@ -18,6 +18,8 @@
 //  limitations under the License.
 //
 
+#define SYSTEM_VERSION_LESS_THAN(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+
 #import "ATLBaseConversationViewController.h"
 #import "ATLConversationView.h"
 
@@ -145,10 +147,12 @@ static CGFloat const ATLMaxScrollDistanceFromBottom = 150;
     [super viewWillDisappear:animated];
     
     self.messageInputToolbar.translucent = NO;
-    // Workaround for view's content flashing onscreen after pop animation concludes on iOS 8.
-    BOOL isPopping = ![self.navigationController.viewControllers containsObject:self];
-    if (isPopping) {
-        [self.messageInputToolbar.textInputView resignFirstResponder];
+    if (SYSTEM_VERSION_LESS_THAN(@"9.0")) {
+        // Workaround for view's content flashing onscreen after pop animation concludes on iOS 8.
+        BOOL isPopping = ![self.navigationController.viewControllers containsObject:self];
+        if (isPopping) {
+            [self.messageInputToolbar.textInputView resignFirstResponder];
+        }
     }
 }
 
