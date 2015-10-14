@@ -151,6 +151,22 @@ CGSize  ATLSizeFromOriginalSizeWithConstraint(CGSize originalSize, CGFloat const
     return originalSize;
 }
 
+#pragma mark - Message Utilities
+
+LYRMessage *ATLMessageForParts(LYRClient *layerClient, NSArray *messageParts, NSString *pushText, NSString *pushSound)
+{
+    LYRPushNotificationConfiguration *defaultConfiguration = [LYRPushNotificationConfiguration new];
+    defaultConfiguration.alert = pushText;
+    defaultConfiguration.sound = pushSound;
+    NSDictionary *options = @{ LYRMessageOptionsPushNotificationConfigurationKey: defaultConfiguration };
+    NSError *error;
+    LYRMessage *message = [layerClient newMessageWithParts:messageParts options:options error:&error];
+    if (error) {
+        return nil;
+    }
+    return message;
+}
+
 #pragma mark - Message Parts Utilities
 
 NSArray *ATLMessagePartsWithMediaAttachment(ATLMediaAttachment *mediaAttachment)

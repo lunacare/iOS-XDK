@@ -83,6 +83,12 @@ CGRect ATLImageRectConstrainedToSize(CGSize imageSize, CGSize maxSize);
 
 CGFloat ATLDegreeToRadians(CGFloat degrees);
 
+//------------------------
+// @name Message Utilities
+//------------------------
+
+LYRMessage *ATLMessageForParts(LYRClient *layerClient, NSArray *messageParts, NSString *pushText, NSString *pushSound);
+
 //-----------------------------
 // @name Message Part Utilities
 //-----------------------------
