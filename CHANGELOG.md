@@ -1,5 +1,20 @@
 # Atlas Changelog
 
+## 1.0.13
+
+### Public API Changes
+
+* Exposed `ATLConversationViewController` method `sendMessage:` to allow custom `LYRMessage` objects to use Atlas delegate handling.
+* Introduced `verticalMargin` property on `ATLMessageInputToolbar` to specify top and bottom margins for the text input view.
+
+### Enhancements
+
+* Improved `UIMenuController` behavior.
+
+### Bug Fixes
+
+* Updated the Atlas podspec that caused build errors for some users.
+
 ## 1.0.12
 
 ### Enhancements
