@@ -14,6 +14,7 @@
 ### Bug Fixes
 
 * Updated the Atlas podspec that caused build errors for some users.
+* Fixed an iOS9 bug with duplicate keyboards being dismissed.
 
 ## 1.0.12
 
