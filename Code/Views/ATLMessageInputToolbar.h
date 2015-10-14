@@ -144,7 +144,7 @@ extern NSString *const ATLMessageInputToolbarAccessibilityLabel;
   @abstract The margin on top and bottom of the textInputView.
   @default 7.0f.
   */
-@property (nonatomic) NSUInteger verticalMargin;
+@property (nonatomic) CGFloat verticalMargin;
 
 /**
  @abstract The delegate object for the view.
