@@ -48,6 +48,8 @@ extern NSString *const ATLMessageInputToolbarAccessibilityLabel;
 extern NSString *const ATLMessageInputToolbarCameraButton;
 extern NSString *const ATLMessageInputToolbarLocationButton;
 extern NSString *const ATLMessageInputToolbarSendButton;
+CGFloat const ATLRightAccessoryButtonDefaultWidth = 46.0f;
+CGFloat const ATLRightAccessoryButtonPadding = 5.3f;
 
 - (void)setUp
 {
@@ -91,6 +93,18 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     [tester clearTextFromViewWithAccessibilityLabel:ATLMessageInputToolbarTextInputView];
     [tester waitForViewWithAccessibilityLabel:ATLMessageInputToolbarLocationButton];
     [tester waitForAbsenceOfViewWithAccessibilityLabel:ATLMessageInputToolbarSendButton];
+}
+
+- (void)testToVerifyRightAccessoryButtonWidthChangesWithTitle
+{
+    [self setRootViewController];
+    ATLMessageInputToolbar *toolBar = (ATLMessageInputToolbar *)[tester waitForViewWithAccessibilityLabel:ATLMessageInputToolbarAccessibilityLabel];
+    toolBar.rightAccessoryButtonTitle = @"longer title";
+    expect(toolBar.rightAccessoryButton.frame.size.width).to.equal(ATLRightAccessoryButtonDefaultWidth);
+    toolBar.textInputView.text = @"heyhey";
+    [toolBar layoutSubviews];
+    CGFloat width = [toolBar.rightAccessoryButtonTitle boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:0 attributes:@{NSFontAttributeName: toolBar.rightAccessoryButtonFont} context:nil].size.width + ATLRightAccessoryButtonPadding;
+    expect(toolBar.rightAccessoryButton.frame.size.width).to.equal(width);
 }
 
 - (void)testToVerifyRightAccessoryButtonDelegateFunctionality
