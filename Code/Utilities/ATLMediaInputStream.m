@@ -141,6 +141,7 @@ static size_t ATLMediaInputStreamPutBytesIntoStreamCallback(void *assetStreamRef
     
     // iOS7 specific
     BOOL success;
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_8_0
     if (&kCGImageDestinationImageMaxPixelSize == NULL) {
         success = [self setupiOS7SpecificConsumerPrerequisite:&error];
         if (!success) {
@@ -149,6 +150,7 @@ static size_t ATLMediaInputStreamPutBytesIntoStreamCallback(void *assetStreamRef
             return;
         }
     }
+#endif
     
     // Setup data consumer.
     success = [self setupConsumerWithError:&error numberOfSourceImages:numberOfSourceImages];
@@ -307,6 +309,7 @@ static size_t ATLMediaInputStreamPutBytesIntoStreamCallback(void *assetStreamRef
  */
 - (BOOL)setupiOS7SpecificConsumerPrerequisite:(NSError **)error
 {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_8_0
     if (self.maximumSize > 0 && &kCGImageDestinationImageMaxPixelSize == NULL) {
         CFDataRef cfDataPNGRepresentation;
         if (!self.sourceAssetURL && self.sourceImage) {
@@ -332,6 +335,7 @@ static size_t ATLMediaInputStreamPutBytesIntoStreamCallback(void *assetStreamRef
         self.sourceImage = [UIImage imageWithCGImage:thumbnailCGImage];
         CGImageRelease(thumbnailCGImage);
     }
+#endif
     return YES;
 }
 
@@ -371,11 +375,18 @@ static size_t ATLMediaInputStreamPutBytesIntoStreamCallback(void *assetStreamRef
     NSMutableDictionary *destinationOptions = self.metadata ? [self.metadata mutableCopy] : [NSMutableDictionary dictionary];
     if (self.maximumSize > 0) {
         // Resample image if requested.
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+        // Compiled with iOS8 SDK support.
+        [destinationOptions setObject:@(self.maximumSize) forKey:(NSString *)kCGImageDestinationImageMaxPixelSize];
+#else
+        // Compiled with < iOS8 SDK support, which should still work on the
+        // >=iOS 8.0 if the constant is not NULL.
         if (&kCGImageDestinationImageMaxPixelSize != NULL) {
             // Unfortunately, this feature is only available on iOS8+. If we're
             // on <= iOS7.1, image had to be resampled beforehand (see setupiOS7SpecificConsumerPrerequisite:).
             [destinationOptions setObject:@(self.maximumSize) forKey:(NSString *)kCGImageDestinationImageMaxPixelSize];
         }
+#endif
     }
     if (self.compressionQuality > 0) {
         // If image should only be compressed.
