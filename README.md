@@ -136,9 +136,12 @@ Layer Messages include an arbitrary number of message parts. Each message part i
 ```objc
 NSString *ATLMIMETypeTextPlain; // text/plain
 NSString *ATLMIMETypeImagePNG;  // image/png
-NSString *ATLMIMETypeImageJPEG;  // image/jpeg
+NSString *ATLMIMETypeImageJPEG; // image/jpeg
+NSString *ATLMIMETypeImageGIF;  // image/gif
 NSString *ATLMIMETypeLocation;  // location
 ```
+
+**Note:** Set `LYRClient` property `autoDownloadMIMETypes` to include `ATLMIMETypeImageJPEGPreview` and `ATLMIMETypeImageGIFPreview` for the Atlas UI to render previews correctly.
 
 ## Component Details
 
