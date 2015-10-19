@@ -152,7 +152,7 @@ extern NSString *const ATLMessageInputToolbarAccessibilityLabel;
  @abstract The margin on top and bottom of textInputView
  @default 7.0f
  */
-@property (nonatomic) NSUInteger verticalMargin;
+@property (nonatomic) NSUInteger verticalMargin UI_APPEARANCE_SELECTOR;
 
 /**
  @abstract An array of all media attachments displayed in the text view.
@@ -160,7 +160,10 @@ extern NSString *const ATLMessageInputToolbarAccessibilityLabel;
  */
 @property (nonatomic, readonly) NSArray *mediaAttachments;
 
-
+/**
+ @abstract Configures rightAccessoryButton on setup, when textInputView value changes and when media is attached. Override this method to customize right button behavior and appearance.
+ @default Configures button with atl.messagetoolbar.send.key label if textInputView has text value or image attached, shows button with rightAccessoryImage otherwise.
+ */
 - (void)configureRightAccessoryButtonState;
 
 @end

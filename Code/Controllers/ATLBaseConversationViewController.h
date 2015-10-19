@@ -69,7 +69,7 @@
 @property (nonatomic) BOOL displaysAddressBar;
 
 /**
- @abstract Initializes toolbar, allow override to use a custom ATLMessageInputToolbar.
+ @abstract Initializes the input accessory view of the ATLBaseConversationViewController, which by default is an instance of ATLMessageInputToolbar. Override this method to return a subclass of ATLMessageInputToolbar.
  */
 - (ATLMessageInputToolbar *)initializeMessageInputToolbar;
 

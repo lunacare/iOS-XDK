@@ -57,6 +57,7 @@ static CGFloat const ATLButtonHeight = 28.0f;
     ATLMessageInputToolbar *proxy = [self appearance];
     proxy.rightAccessoryButtonActiveColor = ATLBlueColor();
     proxy.rightAccessoryButtonDisabledColor = [UIColor grayColor];
+    proxy.verticalMargin = 7.0f;
 }
 
 - (id)init
@@ -95,7 +96,6 @@ static CGFloat const ATLButtonHeight = 28.0f;
         // Calling sizeThatFits: or contentSize on the displayed UITextView causes the cursor's position to momentarily appear out of place and prevent scrolling to the selected range. So we use another text view for height calculations.
         self.dummyTextView = [[ATLMessageComposeTextView alloc] init];
         self.maxNumberOfLines = 8;
-        self.verticalMargin = 7.0f;
     }
     return self;
 }
