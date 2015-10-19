@@ -149,7 +149,7 @@ extern NSString *const ATLMessageInputToolbarAccessibilityLabel;
   @abstract The margin on top and bottom of the textInputView.
   @default 7.0f.
   */
-@property (nonatomic) CGFloat verticalMargin;
+@property (nonatomic) CGFloat verticalMargin UI_APPEARANCE_SELECTOR;
 
 /**
  @abstract The delegate object for the view.
@@ -180,5 +180,11 @@ extern NSString *const ATLMessageInputToolbarAccessibilityLabel;
  to support UISplitViewController usage.  This property should only be set when subclassing `ATLMessageInputToolbar`.
  */
 @property (nonatomic, weak) UIViewController *containerViewController;
+
+/**
+ @abstract Configures rightAccessoryButton on setup, when textInputView value changes and when media is attached. Override this method to customize right button behavior and appearance.
+ @default Configures button with atl.messagetoolbar.send.key label if textInputView has text value or image attached, shows button with rightAccessoryImage otherwise.
+ */
+- (void)configureRightAccessoryButtonState;
 
 @end
