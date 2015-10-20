@@ -42,7 +42,7 @@ SPEC CHECKSUMS:
   KIF: 0a82046d06f3648799cac522d2d0f7934214caac
   KIFViewControllerActions: 73085acd975ebbfc954f7895ca1aaa9faa36b3c6
   LayerKit: 81d635966427859230deb8ede88dbc710dcac8fd
-  LYRCountDownLatch: 9b440b42a19ddbf4e75bdd4b43726baa1527606a
+  LYRCountDownLatch: 72a444f729ca5a8c6157c0b58f335a44e6702b48
   OCMock: 28def049ef47f996b515a8eeea958be7ccab2dbb
 
 COCOAPODS: 0.39.0
