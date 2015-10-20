@@ -17,7 +17,6 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
-
 #import <UIKit/UIKit.h>
 
 /**
@@ -30,16 +29,16 @@
 /**
  @abstract Returns the image URL for an avatar image for the receiver.
  */
-@property (nonatomic, readonly) NSURL *avatarImageURL;
+@property (nonatomic, readonly, nullable) NSURL *avatarImageURL;
 
 /**
  @abstract Returns the avatar image of the receiver.
  */
-@property (nonatomic, readonly) UIImage *avatarImage;
+@property (nonatomic, readonly, nullable) UIImage *avatarImage;
 
 /** 
  @abstract Returns the avatar initials of the receiver.
  */
-@property (nonatomic, readonly) NSString *avatarInitials;
+@property (nonatomic, readonly, nullable) NSString *avatarInitials;
 
 @end

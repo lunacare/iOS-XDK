@@ -22,7 +22,9 @@
 #import <LayerKit/LayerKit.h>
 #import "ATLConversationTableViewCell.h"
 #import "ATLAvatarItem.h"
+#import "ATLParticipant.h"
 
+NS_ASSUME_NONNULL_BEGIN
 @class ATLConversationListViewController;
 
 ///---------------------------------------
@@ -63,7 +65,7 @@
  @param searchText The search text that was used for search.
  @param completion The block has has no return value and accepts a single argument: an NSSet of objects conforming to the ATLParticipant protocol that were found to match the search text.
  */
-- (void)conversationListViewController:(ATLConversationListViewController *)conversationListViewController didSearchForText:(NSString *)searchText completion:(void (^)(NSSet *filteredParticipants))completion;
+- (void)conversationListViewController:(ATLConversationListViewController *)conversationListViewController didSearchForText:(NSString *)searchText completion:(void (^)(NSSet <id<ATLParticipant>>*filteredParticipants))completion;
 
 @end
 
@@ -210,7 +212,7 @@
  @default `LYRDeletionModeLocal` and `LYRDeletionModeAllParticipants.
  @raises NSInternalInconsistencyException Raised if the value is mutated after the receiver has been presented.
  */
-@property (nonatomic) NSArray *deletionModes;
+@property (nonatomic) NSArray <NSNumber*> *deletionModes;
 
 /**
  @abstract Informs the receiver if it should display an avatar item representing a conversation.
@@ -268,3 +270,4 @@
 - (void)reloadCellForConversation:(LYRConversation *)conversation;
 
 @end
+NS_ASSUME_NONNULL_END

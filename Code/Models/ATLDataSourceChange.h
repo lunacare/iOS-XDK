@@ -20,7 +20,7 @@
 
 #import <Foundation/Foundation.h>
 #import <LayerKit/LayerKit.h>
-
+NS_ASSUME_NONNULL_BEGIN
 @interface ATLDataSourceChange : NSObject
 
 + (instancetype)changeObjectWithType:(LYRQueryControllerChangeType)type newIndex:(NSUInteger)newIndex currentIndex:(NSUInteger)currentIndex;
@@ -32,3 +32,4 @@
 @property (nonatomic) NSInteger currentIndex;
 
 @end
+NS_ASSUME_NONNULL_END
