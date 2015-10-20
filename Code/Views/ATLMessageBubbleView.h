@@ -22,6 +22,7 @@
 #import <MapKit/MapKit.h>
 #import "ATLProgressView.h"
 
+NS_ASSUME_NONNULL_BEGIN
 extern CGFloat const ATLMessageBubbleLabelVerticalPadding;
 extern CGFloat const ATLMessageBubbleLabelHorizontalPadding;
 extern CGFloat const ATLMessageBubbleMapWidth;
@@ -103,6 +104,7 @@ extern NSString *const ATLUserDidTapPhoneNumberNotification;
  overriding this property's default value.
  @default `UIMenuItem` copy action.
  */
-@property (nonatomic) NSArray *menuControllerActions;
+@property (nonatomic) NSArray <UIMenuItem*>*menuControllerActions;
 
 @end
+NS_ASSUME_NONNULL_END
