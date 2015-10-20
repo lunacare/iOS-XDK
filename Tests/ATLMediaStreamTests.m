@@ -135,7 +135,6 @@
     
     NSString *path = [NSString stringWithFormat:@"%@test.jpeg", NSTemporaryDirectory()];
     [data writeToFile:path atomically:NO];
-    NSLog(@"check file: %@ length=%lu", path, data.length);
 }
 
 - (void)testMediaStreamReadsStreamForPhotoAssetFromDifferentThread
@@ -172,7 +171,6 @@
     
     NSString *path = [NSString stringWithFormat:@"%@test.jpeg", NSTemporaryDirectory()];
     [data writeToFile:path atomically:NO];
-    NSLog(@"check file: %@ length=%lu", path, data.length);
 }
 
 #pragma mark - Photo File Input Stream
@@ -356,7 +354,6 @@
     NSError *error = nil;
     NSUInteger buffered = [rep getBytes:buffer1 fromOffset:0.0 length:rep.size error:&error];
     NSData *data1 = [NSData dataWithBytesNoCopy:buffer1 length:buffered freeWhenDone:YES];
-    NSLog(@"Size of video %lu",(unsigned long)data1.length);
     
     ATLMediaInputStream *stream = [ATLMediaInputStream mediaInputStreamWithAssetURL:LastVideoURL];
     
@@ -383,12 +380,8 @@
     
     NSString *path = [NSString stringWithFormat:@"%@test.mp4", NSTemporaryDirectory()];
     [data writeToFile:path atomically:NO];
-    NSLog(@"check file: %@ length=%lu", path, data.length);
     
     NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:NULL];
-    for (count = 0; count < (int)[directoryContent count]; count++) {
-        NSLog(@"File %d: %@", (count + 1), [directoryContent objectAtIndex:count]);
-    }
     expect([directoryContent count]).to.equal(0);
 }
 
@@ -481,7 +474,6 @@
     
     NSString *path = [NSString stringWithFormat:@"%@test.mp4", NSTemporaryDirectory()];
     [data writeToFile:path atomically:NO];
-    NSLog(@"check file: %@ length=%lu", path, data.length);
 }
 
 -(void)testTempVideoFilesCleaned
@@ -516,9 +508,6 @@
     int count;
     
     NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:NULL];
-    for (count = 0; count < (int)[directoryContent count]; count++) {
-        NSLog(@"File %d: %@", (count + 1), [directoryContent objectAtIndex:count]);
-    }
     expect([directoryContent count]).to.equal(0);
 }
 
