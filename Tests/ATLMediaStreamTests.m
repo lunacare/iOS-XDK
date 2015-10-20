@@ -342,18 +342,11 @@
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, 1, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    int count; 
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     ALAsset *VideoSourceAsset = ATLVideoAssetTestObtainLastVideoFromAssetLibrary(library);
     expect(VideoSourceAsset).toNot.beNil();
     
     NSURL *LastVideoURL = VideoSourceAsset.defaultRepresentation.url;
-    //Video Length
-    ALAssetRepresentation *rep = [VideoSourceAsset defaultRepresentation];
-    Byte *buffer1 = (Byte*)malloc(rep.size);
-    NSError *error = nil;
-    NSUInteger buffered = [rep getBytes:buffer1 fromOffset:0.0 length:rep.size error:&error];
-    NSData *data1 = [NSData dataWithBytesNoCopy:buffer1 length:buffered freeWhenDone:YES];
     
     ATLMediaInputStream *stream = [ATLMediaInputStream mediaInputStreamWithAssetURL:LastVideoURL];
     
@@ -504,8 +497,6 @@
     free(buffer);
     expect(stream.streamStatus).to.equal(NSStreamStatusAtEnd);
     [stream close];
-    
-    int count;
     
     NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:NULL];
     expect([directoryContent count]).to.equal(0);
