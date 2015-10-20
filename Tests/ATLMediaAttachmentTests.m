@@ -167,7 +167,6 @@
     NSURL *outputStreamedImageURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"streamed-image.jpeg"]];
     [[NSFileManager defaultManager] removeItemAtURL:outputStreamedImageURL error:nil];
     [mediaPayload writeToURL:outputStreamedImageURL atomically:NO];
-    NSLog(@"Output file at path:'%@' length=%lu", outputStreamedImageURL.path, mediaPayload.length);
 
     // Verifying thumbnail content
     NSData *thumbnailPayload = ATLTestAttachmentDataFromStream(mediaAttachment.thumbnailInputStream);
@@ -216,7 +215,6 @@
     NSURL *outputStreamedImageURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"streamed-image.jpeg"]];
     [[NSFileManager defaultManager] removeItemAtURL:outputStreamedImageURL error:nil];
     [mediaPayload writeToURL:outputStreamedImageURL atomically:NO];
-    NSLog(@"Output file at path:'%@' length=%lu", outputStreamedImageURL.path, mediaPayload.length);
 
     // Verifying thumbnail content
     NSData *thumbnailPayload = ATLTestAttachmentDataFromStream(mediaAttachment.thumbnailInputStream);
@@ -275,7 +273,6 @@
     NSURL *outputStreamedImageURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"streamed-image.jpeg"]];
     [[NSFileManager defaultManager] removeItemAtURL:outputStreamedImageURL error:nil];
     [mediaPayload writeToURL:outputStreamedImageURL atomically:NO];
-    NSLog(@"Output file at path:'%@' length=%lu", outputStreamedImageURL.path, mediaPayload.length);
     
     // Verifying thumbnail content
     NSData *thumbnailPayload = ATLTestAttachmentDataFromStream(mediaAttachment.thumbnailInputStream);
@@ -344,7 +341,6 @@
     NSURL *outputStreamedVideoURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"streamed-video.mp4"]];
     [[NSFileManager defaultManager] removeItemAtURL:outputStreamedVideoURL error:nil];
     [mediaPayload writeToURL:outputStreamedVideoURL atomically:NO];
-    NSLog(@"Output file at path:'%@' length=%lu", outputStreamedVideoURL.path, mediaPayload.length);
 
     // Verifying thumbnail content
     NSData *thumbnailPayload = ATLTestAttachmentDataFromStream(mediaAttachment.thumbnailInputStream);
@@ -397,7 +393,6 @@
     NSURL *outputStreamedVideoURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"streamed-video.mp4"]];
     [[NSFileManager defaultManager] removeItemAtURL:outputStreamedVideoURL error:nil];
     [mediaPayload writeToURL:outputStreamedVideoURL atomically:NO];
-    NSLog(@"Output file at path:'%@' length=%lu", outputStreamedVideoURL.path, mediaPayload.length);
     
     // Verifying thumbnail content
     NSData *thumbnailPayload = ATLTestAttachmentDataFromStream(mediaAttachment.thumbnailInputStream);
