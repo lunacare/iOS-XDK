@@ -19,7 +19,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <LayerKit/LayerKit.h>
+@import LayerKit;
 #import "ATLConversationTableViewCell.h"
 #import "ATLAvatarItem.h"
 
