@@ -267,4 +267,14 @@
  */
 - (void)reloadCellForConversation:(LYRConversation *)conversation;
 
+///------------------
+/// @name Subclassing
+///------------------
+
+/**
+ @abstract The `LYRQueryController` which contains the results currently being displayed.
+ @discussion This may be the results of a search if search is currently active. It is the data source for the table view controller. May be used to access conversations by their location in the table view.
+ */
+@property (nonatomic, readonly) LYRQueryController *queryController;
+
 @end
