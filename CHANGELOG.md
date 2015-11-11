@@ -1,5 +1,11 @@
 # Atlas Changelog
 
+## 1.0.15
+
+### Bug Fixes
+
+* Changed dependency to LayerKit v0.17.1 to pick up module import changes.
+
 ## 1.0.14
 
 ### Enhancements
