@@ -181,6 +181,11 @@
 @property (nonatomic) LYRClient *layerClient;
 
 /**
+ @abstract The `LYRQueryController` object managing data displayed in the controller.
+ */
+@property (nonatomic, readonly) LYRQueryController *queryController;
+
+/**
  @abstract The object that is informed when specific events occur
  within the `LYRConversationListViewController`.
  */
