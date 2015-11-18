@@ -181,6 +181,11 @@
 @property (nonatomic) LYRClient *layerClient;
 
 /**
+ @abstract The `LYRQueryController` object managing data displayed in the controller.
+ */
+@property (nonatomic, readonly) LYRQueryController *queryController;
+
+/**
  @abstract The object that is informed when specific events occur
  within the `LYRConversationListViewController`.
  */
@@ -266,10 +271,5 @@
  @param conversation The Conversation object to reload the corresponding cell of. Cannot be `nil`.
  */
 - (void)reloadCellForConversation:(LYRConversation *)conversation;
-
-/**
- @abstract The `LYRQueryController` object managing data displayed in the controller.
- */
-@property (nonatomic, readonly) LYRQueryController *queryController;
 
 @end
