@@ -267,10 +267,6 @@
  */
 - (void)reloadCellForConversation:(LYRConversation *)conversation;
 
-///------------------
-/// @name Subclassing
-///------------------
-
 /**
  @abstract The `LYRQueryController` object managing data displayed in the controller.
  */
