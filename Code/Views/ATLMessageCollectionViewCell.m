@@ -23,7 +23,7 @@
 #import "ATLUIImageHelper.h"
 #import "ATLIncomingMessageCollectionViewCell.h"
 #import "ATLOutgoingMessageCollectionViewCell.h"
-#import <LayerKit/LayerKit.h>
+@import LayerKit;
 
 NSString *const ATLGIFAccessibilityLabel = @"Message: GIF";
 NSString *const ATLImageAccessibilityLabel = @"Message: Image";
@@ -43,6 +43,7 @@ NSInteger const kATLSharedCellTag = 1000;
 @property (nonatomic) NSUInteger lastProgressFractionCompleted;
 @property (nonatomic) NSLayoutConstraint *bubbleWithAvatarLeadConstraint;
 @property (nonatomic) NSLayoutConstraint *bubbleWithoutAvatarLeadConstraint;
+@property (nonatomic) NSLayoutConstraint *bubbleViewWidthConstraint;
 @property (nonatomic) dispatch_queue_t imageProcessingConcurrentQueue;
 
 @end
@@ -153,12 +154,14 @@ NSInteger const kATLSharedCellTag = 1000;
     [self.bubbleView updateWithAttributedText:[self attributedStringForText:text]];
     [self.bubbleView updateProgressIndicatorWithProgress:0.0 visible:NO animated:NO];
     self.accessibilityLabel = [NSString stringWithFormat:@"Message: %@", text];
+    self.bubbleViewWidthConstraint.constant = [[self class] cellSizeForTextMessage:self.message inView:nil].width;
 }
 
 - (void)configureBubbleViewForImageContent
 {
     self.accessibilityLabel = ATLImageAccessibilityLabel;
-    
+    self.bubbleViewWidthConstraint.constant = [[self class] cellSizeForImageMessage:self.message].width;
+
     LYRMessagePart *fullResImagePart = ATLMessagePartForMIMEType(self.message, ATLMIMETypeImageJPEG);
     if (!fullResImagePart) {
         fullResImagePart = ATLMessagePartForMIMEType(self.message, ATLMIMETypeImagePNG);
@@ -237,7 +240,8 @@ NSInteger const kATLSharedCellTag = 1000;
 - (void)configureBubbleViewForVideoContent
 {
     self.accessibilityLabel = ATLVideoAccessibilityLabel;
-    
+    self.bubbleViewWidthConstraint.constant = [[self class] cellSizeForImageMessage:self.message].width;
+
     LYRMessagePart *fullResVideoPart = ATLMessagePartForMIMEType(self.message, ATLMIMETypeVideoMP4);
     if (fullResVideoPart && ((fullResVideoPart.transferStatus == LYRContentTransferAwaitingUpload) ||
                              (fullResVideoPart.transferStatus == LYRContentTransferUploading))) {
@@ -269,7 +273,8 @@ NSInteger const kATLSharedCellTag = 1000;
 - (void)configureBubbleViewForGIFContent
 {
     self.accessibilityLabel = ATLGIFAccessibilityLabel;
-    
+    self.bubbleViewWidthConstraint.constant = [[self class] cellSizeForImageMessage:self.message].width;
+
     LYRMessagePart *fullResImagePart = ATLMessagePartForMIMEType(self.message, ATLMIMETypeImageGIF);
     
     if (fullResImagePart && ((fullResImagePart.transferStatus == LYRContentTransferAwaitingUpload) ||
@@ -355,6 +360,7 @@ NSInteger const kATLSharedCellTag = 1000;
                                                                  error:nil];
     double lat = [dictionary[ATLLocationLatitudeKey] doubleValue];
     double lon = [dictionary[ATLLocationLongitudeKey] doubleValue];
+    self.bubbleViewWidthConstraint.constant = [[self class] cellHeightForMessage:self.message inView:nil];
     [self.bubbleView updateWithLocation:CLLocationCoordinate2DMake(lat, lon)];
     [self.bubbleView updateProgressIndicatorWithProgress:0.0 visible:NO animated:NO];
 }
@@ -439,7 +445,8 @@ NSInteger const kATLSharedCellTag = 1000;
 - (void)configureLayoutConstraints
 {
     CGFloat maxBubbleWidth = ATLMaxCellWidth() + ATLMessageBubbleLabelHorizontalPadding * 2;
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.bubbleView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:maxBubbleWidth]];
+    self.bubbleViewWidthConstraint = [NSLayoutConstraint constraintWithItem:self.bubbleView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:maxBubbleWidth];
+    [self.contentView addConstraint:self.bubbleViewWidthConstraint];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.bubbleView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.bubbleView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.avatarImageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
@@ -480,7 +487,7 @@ NSInteger const kATLSharedCellTag = 1000;
     if ([part.MIMEType isEqualToString:ATLMIMETypeTextPlain]) {
         height = [self cellHeightForTextMessage:message inView:view];
     } else if ([part.MIMEType isEqualToString:ATLMIMETypeImageJPEG] || [part.MIMEType isEqualToString:ATLMIMETypeImagePNG] || [part.MIMEType isEqualToString:ATLMIMETypeImageGIF]|| [part.MIMEType isEqualToString:ATLMIMETypeVideoMP4]) {
-        height = [self cellHeightForImageMessage:message];
+        height = [self cellSizeForImageMessage:message].height;
     } else if ([part.MIMEType isEqualToString:ATLMIMETypeLocation]) {
         height = ATLMessageBubbleMapHeight;
     }
@@ -491,8 +498,13 @@ NSInteger const kATLSharedCellTag = 1000;
 
 + (CGFloat)cellHeightForTextMessage:(LYRMessage *)message inView:(id)view
 {
+    return [[self class] cellSizeForTextMessage:message inView:view].height;
+}
+
++ (CGSize)cellSizeForTextMessage:(LYRMessage *)message inView:(id)view
+{
     if ([[self sharedHeightCache] objectForKey:message.identifier]) {
-        return [[[self sharedHeightCache] objectForKey:message.identifier] floatValue];
+        return [[[self sharedHeightCache] objectForKey:message.identifier] CGSizeValue];
     }
     //  Adding  the view to the hierarchy so that UIAppearance property values will be set based on containment.
     ATLMessageCollectionViewCell *cell = [self sharedCell];
@@ -507,20 +519,22 @@ NSInteger const kATLSharedCellTag = 1000;
         font = cell.messageTextFont;
     }
     CGSize size = ATLTextPlainSize(text, font);
-    CGFloat height = size.height + ATLMessageBubbleLabelVerticalPadding * 2;
+    size.width += ATLMessageBubbleLabelHorizontalPadding * 2 + ATLMessageBubbleLabelWidthMargin;
+    size.height += ATLMessageBubbleLabelVerticalPadding * 2;
     if (![[self sharedHeightCache] objectForKey:message.identifier]) {
-        [[self sharedHeightCache] setObject:@(height) forKey:message.identifier];
+        [[self sharedHeightCache] setObject:[NSValue valueWithCGSize:size] forKey:message.identifier];
     }
-    return height;
+    return size;
 }
 
-+ (CGFloat)cellHeightForImageMessage:(LYRMessage *)message
++ (CGSize)cellSizeForImageMessage:(LYRMessage *)message
 {
     CGSize size = CGSizeZero;
     LYRMessagePart *sizePart = ATLMessagePartForMIMEType(message, ATLMIMETypeImageSize);
     if (sizePart) {
         size = ATLImageSizeForJSONData(sizePart.data);
         size = ATLConstrainImageSizeToCellSize(size);
+        return size;
     }
     if (CGSizeEqualToSize(size, CGSizeZero)) {
         LYRMessagePart *imagePart = ATLMessagePartForMIMEType(message, ATLMIMETypeImageJPEGPreview);
@@ -539,7 +553,7 @@ NSInteger const kATLSharedCellTag = 1000;
             size = ATLConstrainImageSizeToCellSize(CGSizeMake(3000, 4000));
         }
     }
-    return size.height;
+    return size;
 }
 
 @end

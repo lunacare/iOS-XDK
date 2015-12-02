@@ -10,7 +10,7 @@
 #import "ATLSampleConversationListViewController.h"
 #import "LayerKitMock.h"
 #import <Atlas/Atlas.h>
-#import <LayerKit/LayerKit.h> 
+@import LayerKit; 
 
 static BOOL ATLIsRunningTests()
 {

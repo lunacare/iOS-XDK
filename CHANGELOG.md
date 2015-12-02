@@ -1,5 +1,22 @@
 # Atlas Changelog
 
+## 1.0.15
+
+### Bug Fixes
+
+* Changed dependency to LayerKit v0.17.1 to pick up module import changes.
+
+## 1.0.14
+
+### Enhancements
+
+* Added support for configuring the right button title in `ATLMessageInputToolbar`.
+
+### Bug Fixes
+
+* Fixed an issue with slow scrolling performance under iOS 9.
+* Fixed build problems in Swift projects regarding non-module header imports.
+
 ## 1.0.13
 
 ### Public API Changes

@@ -19,7 +19,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <LayerKit/LayerKit.h>
+@import LayerKit;
 #import "ATLConversationTableViewCell.h"
 #import "ATLAvatarItem.h"
 
@@ -179,6 +179,11 @@
  @raises NSInternalInconsistencyException Raised if the value is mutated after the receiver has been presented.
  */
 @property (nonatomic) LYRClient *layerClient;
+
+/**
+ @abstract The `LYRQueryController` object managing data displayed in the controller.
+ */
+@property (nonatomic, readonly) LYRQueryController *queryController;
 
 /**
  @abstract The object that is informed when specific events occur

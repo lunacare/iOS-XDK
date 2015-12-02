@@ -1,4 +1,6 @@
 language: objective-c
+osx_image: xcode7
+install: bundle install && bundle exec pod install
 
 script: 
   - bundle exec rake test
