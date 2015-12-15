@@ -460,6 +460,8 @@ NSString *const ATLConversationListViewControllerDeletionModeGlobal = @"Global";
 
 #pragma mark - UISearchDisplayDelegate
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
 {
@@ -491,6 +493,8 @@ NSString *const ATLConversationListViewControllerDeletionModeGlobal = @"Global";
     }
     return NO;
 }
+
+#pragma GCC diagnostic pop
 
 - (LYRQueryController *)queryController
 {
