@@ -169,7 +169,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
 
 - (void)updateWithLocation:(CLLocationCoordinate2D)location
 {
-    self.imageWidthConstraint.constant = ATLMaxCellWidth();
+    self.imageWidthConstraint.constant = ATLMessageBubbleMapWidth;
     [self applyImageWidthConstraint:YES];
     [self setBubbleViewContentType:ATLBubbleViewContentTypeLocation];
     [self setNeedsUpdateConstraints];
@@ -302,6 +302,11 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
     }];
     [[UIMenuController sharedMenuController] setMenuItems:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor
+{
+    [super setBackgroundColor:backgroundColor];
 }
 
 - (BOOL)canBecomeFirstResponder
