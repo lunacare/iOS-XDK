@@ -97,6 +97,7 @@ CGFloat const ATLAvatarImageTailPadding = 4.0f;
     if ([self.contentView.constraints containsObject:self.bubbleViewWidthConstraint]) {
         [self.contentView removeConstraints:@[self.bubbleViewWidthConstraint]];
     }
+    NSLog(@"Bubble Width: %f", bubbleWidth);
     self.bubbleViewWidthConstraint.constant = bubbleWidth;
     [self.contentView addConstraint:self.bubbleViewWidthConstraint];
 }
@@ -149,6 +150,10 @@ CGFloat const ATLAvatarImageTailPadding = 4.0f;
 {
     if ([self.contentView.constraints containsObject:self.bubbleWithAvatarLeadConstraint]) {
         [self.contentView removeConstraint:self.bubbleWithAvatarLeadConstraint];
+    }
+    
+    if ([self.contentView.constraints containsObject:self.bubbleWithoutAvatarLeadConstraint]) {
+        [self.contentView removeConstraint:self.bubbleWithoutAvatarLeadConstraint];
     }
     
     switch (cellType) {
