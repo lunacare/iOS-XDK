@@ -19,14 +19,8 @@ typedef NS_ENUM(NSInteger, ATLCellType) {
 };
 
 extern CGFloat const ATLMessageCellHorizontalMargin;
-extern CGFloat const ATLAvatarImageLeadPadding;
-extern CGFloat const ATLAvatarImageTailPadding;
 
 @interface ATLBaseCollectionViewCell : UICollectionViewCell <ATLMessagePresenting>
-
-@property (nonatomic) NSLayoutConstraint *bubbleWithAvatarLeadConstraint;
-@property (nonatomic) NSLayoutConstraint *bubbleWithoutAvatarLeadConstraint;
-@property (nonatomic) NSLayoutConstraint *bubbleViewWidthConstraint;
 
 /**
  @abstract The background color for the bubble view displayed in the cell. Default is light gray.
@@ -53,8 +47,14 @@ extern CGFloat const ATLAvatarImageTailPadding;
  */
 @property (nonatomic) LYRMessage *message;
 
+/**
+ @abstract Configures the message bubble's width.
+ */
 - (void)updateBubbleWidth:(CGFloat)bubbleWidth;
 
+/**
+ @abstract Updates the message cell's `ATLCellType`.
+ */
 - (void)configureCellForType:(ATLCellType)cellType;
 
 @end

@@ -30,8 +30,13 @@ CGFloat const ATLAvatarImageTailPadding = 4.0f;
 
 @interface ATLBaseCollectionViewCell ()
 
+@property (nonatomic) NSLayoutConstraint *bubbleWithAvatarLeadConstraint;
+@property (nonatomic) NSLayoutConstraint *bubbleWithoutAvatarLeadConstraint;
+@property (nonatomic) NSLayoutConstraint *bubbleViewWidthConstraint;
+
 @property (nonatomic) BOOL messageSentState;
 @property (nonatomic) BOOL shouldDisplayAvatar;
+
 @end
 
 @implementation ATLBaseCollectionViewCell
@@ -97,7 +102,7 @@ CGFloat const ATLAvatarImageTailPadding = 4.0f;
     if ([self.contentView.constraints containsObject:self.bubbleViewWidthConstraint]) {
         [self.contentView removeConstraints:@[self.bubbleViewWidthConstraint]];
     }
-    NSLog(@"Bubble Width: %f", bubbleWidth);
+
     self.bubbleViewWidthConstraint.constant = bubbleWidth;
     [self.contentView addConstraint:self.bubbleViewWidthConstraint];
 }

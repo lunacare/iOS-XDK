@@ -698,10 +698,6 @@ static NSInteger const ATLPhotoActionSheet = 1000;
             case 2:
                 [self displayImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
                 break;
-            
-            case 3:
-                [self displayBoxFolderViewController];
-                break;
                 
             default:
                 break;
@@ -723,11 +719,6 @@ static NSInteger const ATLPhotoActionSheet = 1000;
         picker.videoQuality = UIImagePickerControllerQualityTypeHigh;
         [self.navigationController presentViewController:picker animated:YES completion:nil];
     }
-}
-
-- (void)displayBoxFolderViewController
-{
-    
 }
 
 - (void)captureLastPhotoTaken
