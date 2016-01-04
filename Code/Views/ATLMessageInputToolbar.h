@@ -181,10 +181,4 @@ extern NSString *const ATLMessageInputToolbarAccessibilityLabel;
  */
 @property (nonatomic, weak) UIViewController *containerViewController;
 
-/**
- @abstract Configures rightAccessoryButton on setup, when textInputView value changes and when media is attached. Override this method to customize right button behavior and appearance.
- @default Configures button with atl.messagetoolbar.send.key label if textInputView has text value or image attached, shows button with rightAccessoryImage otherwise.
- */
-- (void)configureRightAccessoryButtonState;
-
 @end
