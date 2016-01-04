@@ -60,7 +60,7 @@ NSString *const ATLOutgoingMessageCellIdentifier = @"ATLOutgoingMessageCellIdent
 
 - (void)lyr_outgoingCommonInit
 {
-    [self configureCellForType:ATLOutgoingCellType];
+    [super configureCellForType:ATLOutgoingCellType];
 }
 
 

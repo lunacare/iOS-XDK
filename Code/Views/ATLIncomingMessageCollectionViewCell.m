@@ -58,7 +58,7 @@ NSString *const ATLIncomingMessageCellIdentifier = @"ATLIncomingMessageCellIdent
 
 - (void)lyr_incommingCommonInit
 {
-    [self configureCellForType:ATLIncomingCellType];
+    [super configureCellForType:ATLIncomingCellType];
 }
 
 @end

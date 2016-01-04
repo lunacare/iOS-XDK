@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ATLMessageBubbleView.h"
 #import "ATLAvatarImageView.h"
-#import "ATLmessagePresenting.h"
+#import "ATLMessagePresenting.h"
 
 @import LayerKit;
 
@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger, ATLCellType) {
 extern CGFloat const ATLMessageCellHorizontalMargin;
 
 /**
- @abstract The ATLBaseCollectionViewCell provides for building custom UI on top of a basic Atlas 'Bubble Cell'. 
+ @abstract The `ATLBaseCollectionViewCell` provides for building custom UI on top of a basic Atlas 'Bubble Cell'.
  @discussion Applications that wish to build custom UI inside of a bubble should create a subclass of `ATLBaseCollectionViewCell`
  and add subviews to the `bubbleView` property.
  */
