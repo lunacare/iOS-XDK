@@ -20,6 +20,11 @@ typedef NS_ENUM(NSInteger, ATLCellType) {
 
 extern CGFloat const ATLMessageCellHorizontalMargin;
 
+/**
+ @abstract The ATLBaseCollectionViewCell provides for building custom UI on top of a basic Atlas 'Bubble Cell'. 
+ @discussion Applications that wish to build custom UI inside of a bubble should create a subclass of `ATLBaseCollectionViewCell`
+ and add subviews to the `bubbleView` property.
+ */
 @interface ATLBaseCollectionViewCell : UICollectionViewCell <ATLMessagePresenting>
 
 /**
@@ -54,6 +59,8 @@ extern CGFloat const ATLMessageCellHorizontalMargin;
 
 /**
  @abstract Updates the message cell's `ATLCellType`.
+ @discussion The cell type determines the alignment of the cell in the conversation view. Cells with `ATLOutgoingCellType` will 
+ right aligned and cells with `ATLIncomingCellType` will be left aligned.
  */
 - (void)configureCellForType:(ATLCellType)cellType;
 
