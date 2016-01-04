@@ -46,6 +46,7 @@ NSString *const ATLMessageInputToolbarSendButton  = @"Message Input Toolbar Send
 // Compose View Margin Constants
 static CGFloat const ATLLeftButtonHorizontalMargin = 6.0f;
 static CGFloat const ATLRightButtonHorizontalMargin = 4.0f;
+static CGFloat const ATLVerticalMargin = 7.0f;
 
 // Compose View Button Constants
 static CGFloat const ATLLeftAccessoryButtonWidth = 40.0f;
@@ -59,7 +60,6 @@ static CGFloat const ATLButtonHeight = 28.0f;
     proxy.rightAccessoryButtonActiveColor = ATLBlueColor();
     proxy.rightAccessoryButtonDisabledColor = [UIColor grayColor];
     proxy.rightAccessoryButtonFont = [UIFont boldSystemFontOfSize:17];
-    proxy.verticalMargin = 7.0f;
 }
 
 - (id)init
@@ -90,6 +90,8 @@ static CGFloat const ATLButtonHeight = 28.0f;
         self.textInputView.layer.borderWidth = 0.5;
         self.textInputView.layer.cornerRadius = 5.0f;
         [self addSubview:self.textInputView];
+        
+        self.verticalMargin = ATLVerticalMargin;
         
         self.rightAccessoryButton = [[UIButton alloc] init];
         [self.rightAccessoryButton addTarget:self action:@selector(rightAccessoryButtonTapped) forControlEvents:UIControlEventTouchUpInside];
