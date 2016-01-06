@@ -110,6 +110,33 @@ $ pod install
 
 These instructions will setup your local CocoaPods environment and import Atlas into your project.
 
+#### Carthage Installation
+
+Atlas and LayerKit also support installation via [Carthage](https://github.com/Carthage/Carthage). Carthage is a simple decentralized package manager that is designed to be as simple as possible. Carthage will not make any modifications to your project, so installation is moderately more involved than with CocoaPods. To get started, ensure that you have [installed Carthage](https://github.com/Carthage/Carthage#installing-carthage) and then create a `Cartfile` with the following content:
+
+```
+github "layerhq/Atlas-iOS"
+```
+
+Next bootstrap your environment by executing `carthage update`:
+
+```
+$ carthage update
+```
+
+Next drag `LayerKit.framework` and `Atlas.framework` from `Carthage/Build/iOS` onto your project and link it with your application target. Then select your application target within Xcode, navigate to the *Build Phases* panel and click the `+` icon and select *New Run Script Phase*. Set the content to:
+
+```sh
+/usr/local/bin/carthage copy-frameworks
+```
+
+In the *Input Files* section add:
+
+* $(SRCROOT)/Carthage/Build/iOS/LayerKit.framework
+* $(SRCROOT)/Carthage/Build/iOS/Atlas.framework
+
+Now build your application target and everything should be set.
+
 #### Source Code Installation
 
 If you wish to install Atlas directly into your application from source, then clone the repository and add code and resources to your application:
