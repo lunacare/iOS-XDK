@@ -1,5 +1,11 @@
 # Atlas Changelog
 
+## 1.0.16
+
+### Enhancements
+
+* Added support for installing Atlas via [Carthage](https://github.com/Carthage/Carthage).
+
 ## 1.0.15
 
 ### Bug Fixes
