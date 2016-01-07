@@ -75,7 +75,7 @@ static CGFloat const ATLMaxScrollDistanceFromBottom = 150;
     [super viewDidLoad];
     
     // Add message input tool bar
-    self.messageInputToolbar = [ATLMessageInputToolbar new];
+    self.messageInputToolbar = [self initializeMessageInputToolbar];
     // Fixes an ios9 bug that causes the background of the input accessory view to be black when being presented on screen.
     self.messageInputToolbar.translucent = NO;
     // An apparent system bug causes a view controller to not be deallocated
@@ -99,6 +99,11 @@ static CGFloat const ATLMaxScrollDistanceFromBottom = 150;
         [self configureAddressbarLayoutConstraints];
     }
     [self atl_baseRegisterForNotifications];
+}
+
+- (ATLMessageInputToolbar *)initializeMessageInputToolbar
+{
+    return [ATLMessageInputToolbar new];
 }
 
 - (void)viewWillAppear:(BOOL)animated
