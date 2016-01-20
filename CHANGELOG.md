@@ -2,6 +2,12 @@
 
 ## 1.0.17
 
+### Public API Changes
+
+* Introduced `ATLBaseCollectionViewCell` which is now the base cell for all message cells containing a message bubble. Developers can now subclass the `ATLBaseCollectionViewCell` and add their own custom UI to a message bubble cell. 
+* Moved the following properties from `ATLMessageCollectionViewCell` to `ATLBaseCollectionViewCell`: `bubbleViewColor`, `bubbleViewCornerRadius`, `bubbleView`, `avatarImageView`, and `message`.
+
+
 ### Bug Fixes 
 
 * Fixes an issue which prevented application archives from being submitted to the app store. The issue was caused by and unnecessary key in the `Resources/info.plist` file. 
