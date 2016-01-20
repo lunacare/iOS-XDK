@@ -80,7 +80,6 @@
 #import "ATLConversationView.h"
 #import "ATLIncomingMessageCollectionViewCell.h"
 #import "ATLMessageBubbleView.h"
-#import "ATLBaseCollectionViewCell.h"
 #import "ATLMessageCollectionViewCell.h"
 #import "ATLMessageComposeTextView.h"
 #import "ATLOutgoingMessageCollectionViewCell.h"
