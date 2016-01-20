@@ -19,25 +19,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ATLBaseCollectionViewCell.h"
 #import "ATLMessagePresenting.h"
 #import "ATLMessageBubbleView.h"
 #import "ATLConstants.h"
 #import "ATLAvatarImageView.h"
 
-extern CGFloat const ATLMessageCellHorizontalMargin;
 extern NSString *const ATLGIFAccessibilityLabel;
 extern NSString *const ATLImageAccessibilityLabel;
 extern NSString *const ATLVideoAccessibilityLabel;
-
-extern CGFloat const ATLAvatarImageLeadPadding;
-extern CGFloat const ATLAvatarImageTailPadding;
 
 /**
  @abstract The `ATLMessageCollectionViewCell` class provides a lightweight, customizable collection
  view cell for presenting Layer message objects. The class is subclassed by `ATLIncomingMessageCollectionViewCell`
  and `ATLOutgoingMessageCollectionViewCell`.
  */
-@interface ATLMessageCollectionViewCell : UICollectionViewCell <ATLMessagePresenting>
+@interface ATLMessageCollectionViewCell : ATLBaseCollectionViewCell 
 
 /**
  @abstract The font for text displayed in the cell. Default is 14pt system font.
@@ -54,10 +51,6 @@ extern CGFloat const ATLAvatarImageTailPadding;
  */
 @property (nonatomic) UIColor *messageLinkTextColor UI_APPEARANCE_SELECTOR;
 
-/**
- @abstract The background color for the bubble view displayed in the cell. Default is light gray.
- */
-@property (nonatomic) UIColor *bubbleViewColor UI_APPEARANCE_SELECTOR;
 
 /**
   @abstract The NSTextCheckingTypes that will be passed to the bubbleView
@@ -65,26 +58,6 @@ extern CGFloat const ATLAvatarImageTailPadding;
   @default NSTextCheckingTypeLink
 */
 @property (nonatomic) NSTextCheckingType messageTextCheckingTypes UI_APPEARANCE_SELECTOR;
-
-/**
- @abstract The corner radius of the bubble view displayed in the cell. Default is 16.
- */
-@property (nonatomic) CGFloat bubbleViewCornerRadius UI_APPEARANCE_SELECTOR;
-
-/**
- @abstract The view that handles displaying the cell content.
- */
-@property (nonatomic) ATLMessageBubbleView *bubbleView;
-
-/**
- @abstract The optional avatar image view representing a user.
- */
-@property (nonatomic) ATLAvatarImageView *avatarImageView;
-
-/**
- @abstract The `LYRMessage` object passed in `ATLMessagePresenting` protocol `presentMessage:`.
- */
-@property (nonatomic) LYRMessage *message;
 
 /**
  @abstract Performs calculations to determine a cell's height.
