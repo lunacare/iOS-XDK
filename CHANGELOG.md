@@ -1,5 +1,11 @@
 # Atlas Changelog
 
+## 1.0.17
+
+### Bug Fixes 
+
+* Fixes an issue which prevented application archives from being submitted to the app store. The issue was caused by and unnecessary key in the `Resources/info.plist` file. 
+
 ## 1.0.16
 
 ### Enhancements
