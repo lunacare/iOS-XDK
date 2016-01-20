@@ -309,6 +309,26 @@ Atlas takes advantage of Apple's `UIAppearance` protocol which lets you change U
 @property (nonatomic) UIColor *titleColor
 ```
 
+## Custom Message Bubbles
+
+Applications that wish to take advantage of the Atlas message bubble appearance in the [ATLMessageCollectionViewCell](Code/Views/ATLMessageCollectionViewCell.h), but wish to display their own UI inside of the bubble, should create a subclass of [ATLBaseCollectionViewCell](Code/Views/ATLBaseCollectionViewCell.h).
+
+Applications should add their subviews to the `bubbleView` property of the subclass, and configure the bubble width by calling `updateBubbleWidth:`.
+
+```
+[self updateBubbleWidth:<cell_width>];
+```
+
+Additionally, applications can specify if a cell is incoming or outgoing by calling `configureCellForType:`. Outgoing cells will be anchored to the right hand side of the collection view, and incoming cells will be anchored to the left.
+
+```    
+[self configureCellForType:ATLOutgoingCellType];
+
+or
+
+[self configureCellForType:ATLIncomingCellType];
+```
+
 ## Contributing
 
 Atlas is an Open Source project maintained by Layer. Feedback and contributions are always welcome and the maintainers try to process patches as quickly as possible. Feel free to open up a Pull Request or Issue on Github.
