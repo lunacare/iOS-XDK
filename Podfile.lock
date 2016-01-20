@@ -7,9 +7,9 @@ PODS:
   - KIF/Core (3.3.1)
   - KIFViewControllerActions (1.0.1):
     - KIF (>= 2.0.0)
-  - LayerKit (0.17.6)
+  - LayerKit (0.17.7)
   - LYRCountDownLatch (0.9.0)
-  - OCMock (3.2)
+  - OCMock (3.2.1)
 
 DEPENDENCIES:
   - Atlas (from `.`)
@@ -41,8 +41,8 @@ SPEC CHECKSUMS:
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   KIF: ff9f0e585503871bcd096937cc760081d770c5e2
   KIFViewControllerActions: fc3a8e1352a6609624bda1fe6cfad410d0e88552
-  LayerKit: 8fb2a7997ae354f5b00854dd6a3104c622477276
+  LayerKit: 9241eed42666fd5a73da90b99eeca17ada43103b
   LYRCountDownLatch: 9b440b42a19ddbf4e75bdd4b43726baa1527606a
-  OCMock: 28def049ef47f996b515a8eeea958be7ccab2dbb
+  OCMock: f9622770761b680e505f893885780d369ae30016
 
 COCOAPODS: 0.39.0
