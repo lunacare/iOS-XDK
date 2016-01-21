@@ -19,7 +19,7 @@
 //
 
 #import <UIKit/UIKit.h> 
-#import <LayerKit/LayerKit.h>
+@import LayerKit;
 NS_ASSUME_NONNULL_BEGIN
 extern NSInteger const ATLNumberOfSectionsBeforeFirstMessageSection;
 
