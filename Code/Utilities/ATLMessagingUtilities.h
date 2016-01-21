@@ -19,7 +19,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <LayerKit/LayerKit.h>
+@import LayerKit;
 #import <MapKit/MapKit.h>
 #import <ImageIO/ImageIO.h>
 #import "ATLMediaAttachment.h"

@@ -60,15 +60,8 @@ NSString *const ATLOutgoingMessageCellIdentifier = @"ATLOutgoingMessageCellIdent
 
 - (void)lyr_outgoingCommonInit
 {
-    [self configureConstraintsForOutgoingMessage];
+    [self configureCellForType:ATLOutgoingCellType];
 }
 
-- (void)configureConstraintsForOutgoingMessage
-{
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.avatarImageView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0 constant:-ATLAvatarImageLeadPadding]];
-    self.bubbleWithAvatarLeadConstraint = [NSLayoutConstraint constraintWithItem:self.avatarImageView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem: self.bubbleView attribute: NSLayoutAttributeRight multiplier:1.0 constant:ATLAvatarImageTailPadding];
-    [self.contentView addConstraint:self.bubbleWithAvatarLeadConstraint];
-    self.bubbleWithoutAvatarLeadConstraint = [NSLayoutConstraint constraintWithItem:self.bubbleView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem: self.contentView attribute:NSLayoutAttributeRight multiplier:1.0 constant:-ATLMessageCellHorizontalMargin];
-}
 
 @end

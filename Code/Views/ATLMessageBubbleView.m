@@ -24,6 +24,7 @@
 
 CGFloat const ATLMessageBubbleLabelVerticalPadding = 8.0f;
 CGFloat const ATLMessageBubbleLabelHorizontalPadding = 13.0f;
+CGFloat const ATLMessageBubbleLabelWidthMargin = 1.0f;
 
 CGFloat const ATLMessageBubbleMapWidth = 200.0f;
 CGFloat const ATLMessageBubbleMapHeight = 200.0f;
@@ -168,7 +169,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
 
 - (void)updateWithLocation:(CLLocationCoordinate2D)location
 {
-    self.imageWidthConstraint.constant = ATLMaxCellWidth();
+    self.imageWidthConstraint.constant = ATLMessageBubbleMapWidth;
     [self applyImageWidthConstraint:YES];
     [self setBubbleViewContentType:ATLBubbleViewContentTypeLocation];
     [self setNeedsUpdateConstraints];
@@ -301,6 +302,11 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
     }];
     [[UIMenuController sharedMenuController] setMenuItems:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor
+{
+    [super setBackgroundColor:backgroundColor];
 }
 
 - (BOOL)canBecomeFirstResponder

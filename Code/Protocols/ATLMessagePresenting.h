@@ -20,7 +20,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ATLParticipant.h"
-#import <LayerKit/LayerKit.h>
+@import LayerKit;
 
 NS_ASSUME_NONNULL_BEGIN
 /**

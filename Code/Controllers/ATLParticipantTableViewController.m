@@ -180,6 +180,9 @@ NSString *const ATLParticipantTableViewControllerTitle = @"Participants";
 
 #pragma mark - UISearchDisplayDelegate
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 - (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
 {
     tableView.allowsMultipleSelection = self.allowsMultipleSelection;
@@ -204,6 +207,8 @@ NSString *const ATLParticipantTableViewControllerTitle = @"Participants";
     }];
     return NO;
 }
+
+#pragma GCC diagnostic pop
 
 #pragma mark - UITableViewDataSource
 

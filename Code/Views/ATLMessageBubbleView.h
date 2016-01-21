@@ -25,6 +25,7 @@
 NS_ASSUME_NONNULL_BEGIN
 extern CGFloat const ATLMessageBubbleLabelVerticalPadding;
 extern CGFloat const ATLMessageBubbleLabelHorizontalPadding;
+extern CGFloat const ATLMessageBubbleLabelWidthMargin;
 extern CGFloat const ATLMessageBubbleMapWidth;
 extern CGFloat const ATLMessageBubbleMapHeight;
 extern CGFloat const ATLMessageBubbleDefaultHeight;

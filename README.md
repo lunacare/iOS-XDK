@@ -110,6 +110,33 @@ $ pod install
 
 These instructions will setup your local CocoaPods environment and import Atlas into your project.
 
+#### Carthage Installation
+
+Atlas and LayerKit also support installation via [Carthage](https://github.com/Carthage/Carthage). Carthage is a simple decentralized package manager that is designed to be as simple as possible. Carthage will not make any modifications to your project, so installation is moderately more involved than with CocoaPods. To get started, ensure that you have [installed Carthage](https://github.com/Carthage/Carthage#installing-carthage) and then create a `Cartfile` with the following content:
+
+```
+github "layerhq/Atlas-iOS"
+```
+
+Next bootstrap your environment by executing `carthage update`:
+
+```
+$ carthage update
+```
+
+Next drag `LayerKit.framework` and `Atlas.framework` from `Carthage/Build/iOS` onto your project and link it with your application target. Then select your application target within Xcode, navigate to the *Build Phases* panel and click the `+` icon and select *New Run Script Phase*. Set the content to:
+
+```sh
+/usr/local/bin/carthage copy-frameworks
+```
+
+In the *Input Files* section add:
+
+* $(SRCROOT)/Carthage/Build/iOS/LayerKit.framework
+* $(SRCROOT)/Carthage/Build/iOS/Atlas.framework
+
+Now build your application target and everything should be set.
+
 #### Source Code Installation
 
 If you wish to install Atlas directly into your application from source, then clone the repository and add code and resources to your application:
@@ -280,6 +307,26 @@ Atlas takes advantage of Apple's `UIAppearance` protocol which lets you change U
 @property (nonatomic) UIFont *titleFont
 @property (nonatomic) UIFont *boldTitleFont
 @property (nonatomic) UIColor *titleColor
+```
+
+## Custom Message Bubbles
+
+Applications that wish to take advantage of the Atlas message bubble appearance in the [ATLMessageCollectionViewCell](Code/Views/ATLMessageCollectionViewCell.h), but wish to display their own UI inside of the bubble, should create a subclass of [ATLBaseCollectionViewCell](Code/Views/ATLBaseCollectionViewCell.h).
+
+Applications should add their subviews to the `bubbleView` property of the subclass, and configure the bubble width by calling `updateBubbleWidth:`.
+
+```
+[self updateBubbleWidth:<cell_width>];
+```
+
+Additionally, applications can specify if a cell is incoming or outgoing by calling `configureCellForType:`. Outgoing cells will be anchored to the right hand side of the collection view, and incoming cells will be anchored to the left.
+
+```    
+[self configureCellForType:ATLOutgoingCellType];
+
+or
+
+[self configureCellForType:ATLIncomingCellType];
 ```
 
 ## Contributing

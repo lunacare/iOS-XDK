@@ -107,6 +107,11 @@ NSString *const ATLConversationListViewControllerDeletionModeGlobal = @"Global";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (!self.queryController) {
+        [self setupConversationDataSource];
+    }
+    
     self.title = ATLLocalizedString(@"atl.conversationlist.title.key", ATLConversationListViewControllerTitle, nil);
     self.accessibilityLabel = ATLConversationListViewControllerTitle;
 
@@ -144,9 +149,6 @@ NSString *const ATLConversationListViewControllerDeletionModeGlobal = @"Global";
         self.tableView.rowHeight = self.rowHeight;
         [self.tableView registerClass:self.cellClass forCellReuseIdentifier:ATLConversationCellReuseIdentifier];
         if (self.allowsEditing) [self addEditButton];
-    }
-    if (!self.queryController) {
-        [self setupConversationDataSource];
     }
    
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
@@ -460,6 +462,8 @@ NSString *const ATLConversationListViewControllerDeletionModeGlobal = @"Global";
 
 #pragma mark - UISearchDisplayDelegate
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
 {
@@ -491,6 +495,8 @@ NSString *const ATLConversationListViewControllerDeletionModeGlobal = @"Global";
     }
     return NO;
 }
+
+#pragma GCC diagnostic pop
 
 - (LYRQueryController *)queryController
 {

@@ -19,7 +19,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <LayerKit/LayerKit.h>
+@import LayerKit;
 #import <MapKit/MapKit.h>
 #import "ATLParticipant.h"
 #import "ATLBaseConversationViewController.h"
@@ -182,7 +182,7 @@ typedef NS_ENUM(NSUInteger, ATLAvatarItemDisplayFrequency) {
  a Layer conversation and the ability to send messages. The controller's design and functionality closely correlates with
  the conversation view controller in Messages.
 */
-@interface ATLConversationViewController : ATLBaseConversationViewController <ATLAddressBarViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, LYRQueryControllerDelegate>
+@interface ATLConversationViewController : ATLBaseConversationViewController <ATLAddressBarViewControllerDelegate, ATLMessageInputToolbarDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, LYRQueryControllerDelegate>
 
 ///---------------------------------------
 /// @name Initializing a Controller

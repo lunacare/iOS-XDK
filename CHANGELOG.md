@@ -1,5 +1,40 @@
 # Atlas Changelog
 
+## 1.0.17
+
+### Public API Changes
+
+* Introduced `ATLBaseCollectionViewCell` which is now the base cell for all message cells containing a message bubble. Developers can now subclass the `ATLBaseCollectionViewCell` and add easily their own custom UI to a message bubble cell. 
+* Moved the following properties from `ATLMessageCollectionViewCell` to `ATLBaseCollectionViewCell`: `bubbleViewColor`, `bubbleViewCornerRadius`, `bubbleView`, `avatarImageView`, and `message`.
+
+### Bug Fixes 
+
+* Fixes an issue which prevented application archives from being submitted to the app store. The issue was caused by and unnecessary key in the `Resources/info.plist` file. 
+* Fixes a `UILayoutConstraint` conflict when displaying a UIMapView in the `ATLMessageBubbleView`.
+
+## 1.0.16
+
+### Enhancements
+
+* Added support for installing Atlas via [Carthage](https://github.com/Carthage/Carthage).
+
+## 1.0.15
+
+### Bug Fixes
+
+* Changed dependency to LayerKit v0.17.1 to pick up module import changes.
+
+## 1.0.14
+
+### Enhancements
+
+* Added support for configuring the right button title in `ATLMessageInputToolbar`.
+
+### Bug Fixes
+
+* Fixed an issue with slow scrolling performance under iOS 9.
+* Fixed build problems in Swift projects regarding non-module header imports.
+
 ## 1.0.13
 
 ### Public API Changes
