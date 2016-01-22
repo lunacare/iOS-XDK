@@ -433,8 +433,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
     return NO;
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     if (gestureRecognizer == self.panGestureRecognizer || otherGestureRecognizer == self.panGestureRecognizer) {
         return YES;
     }
