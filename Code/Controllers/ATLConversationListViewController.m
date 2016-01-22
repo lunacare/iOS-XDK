@@ -49,8 +49,8 @@ static NSString *const ATLGIFMIMETypePlaceholderText = @"Attachment: GIF";
 NSString *const ATLConversationListViewControllerTitle = @"Messages";
 NSString *const ATLConversationTableViewAccessibilityLabel = @"Conversation Table View";
 NSString *const ATLConversationTableViewAccessibilityIdentifier = @"Conversation Table View Identifier";
-NSString *const ATLConversationListViewControllerDeletionModeLocal = @"Sync";
-NSString *const ATLConversationListViewControllerDeletionModeGlobal = @"Global";
+NSString *const ATLConversationListViewControllerDeletionModeLocal = @"My Devices";
+NSString *const ATLConversationListViewControllerDeletionModeGlobal = @"Everyone";
 
 + (instancetype)conversationListViewControllerWithLayerClient:(LYRClient *)layerClient
 {
