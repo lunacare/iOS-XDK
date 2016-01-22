@@ -49,8 +49,8 @@ static NSString *const ATLGIFMIMETypePlaceholderText = @"Attachment: GIF";
 NSString *const ATLConversationListViewControllerTitle = @"Messages";
 NSString *const ATLConversationTableViewAccessibilityLabel = @"Conversation Table View";
 NSString *const ATLConversationTableViewAccessibilityIdentifier = @"Conversation Table View Identifier";
-NSString *const ATLConversationListViewControllerDeletionModeLocal = @"My Devices";
-NSString *const ATLConversationListViewControllerDeletionModeGlobal = @"Everyone";
+NSString *const ATLConversationListViewControllerDeletionModeMyDevices = @"My Devices";
+NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyone";
 
 + (instancetype)conversationListViewControllerWithLayerClient:(LYRClient *)layerClient
 {
@@ -330,10 +330,10 @@ NSString *const ATLConversationListViewControllerDeletionModeGlobal = @"Everyone
         } else {
             switch (deletionMode.integerValue) {
                 case LYRDeletionModeMyDevices:
-                    actionString = ATLLocalizedString(@"atl.conversationlist.deletionmode.local.key", ATLConversationListViewControllerDeletionModeLocal, nil);
+                    actionString = ATLLocalizedString(@"atl.conversationlist.deletionmode.local.key", ATLConversationListViewControllerDeletionModeMyDevices, nil);
                     break;
                 case LYRDeletionModeAllParticipants:
-                    actionString = ATLLocalizedString(@"atl.conversationlist.deletionmode.global.key", ATLConversationListViewControllerDeletionModeGlobal, nil);
+                    actionString = ATLLocalizedString(@"atl.conversationlist.deletionmode.global.key", ATLConversationListViewControllerDeletionModeEveryone, nil);
                     break;
                 default:
                     break;
@@ -365,7 +365,7 @@ NSString *const ATLConversationListViewControllerDeletionModeGlobal = @"Everyone
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.conversationToDelete = [self.queryController objectAtIndexPath:indexPath];
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:ATLConversationListViewControllerDeletionModeGlobal otherButtonTitles:ATLConversationListViewControllerDeletionModeLocal, nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:ATLConversationListViewControllerDeletionModeEveryone otherButtonTitles:ATLConversationListViewControllerDeletionModeMyDevices, nil];
     [actionSheet showInView:self.view];
 }
 
