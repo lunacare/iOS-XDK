@@ -1,5 +1,13 @@
 # Atlas Changelog
 
+## 1.0.18
+
+### Enhancements 
+
+* Added support for new `LayerKit` deletion mode `LYRDeletionModeMyDevices`.
+* Removed support for `LYRDeletionModeLocal` as it has been deprecated. 
+* Changed default conversation deletion option strings to `My Devices` and `Everyone` to make the options more explicit. 
+
 ## 1.0.17
 
 ### Public API Changes
