@@ -142,9 +142,11 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     if (!self.conversationDataSource) {
         [self fetchLayerMessages];
     }
+    
     [self configureControllerForConversation];
     self.messageInputToolbar.inputToolBarDelegate = self;
     self.addressBarController.delegate = self;
@@ -999,9 +1001,16 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 
 - (void)reloadCellsForMessagesSentByParticipantWithIdentifier:(NSString *)participantIdentifier
 {
+    if (self.conversationDataSource.queryController.query == nil) {
+        return;
+    }
+    
     dispatch_async(self.animationQueue, ^{
         // Query for all of the message identifiers in the conversation
         LYRQuery *messageIdentifiersQuery = [self.conversationDataSource.queryController.query copy];
+        if (messageIdentifiersQuery == nil) {
+            return;
+        }
         messageIdentifiersQuery.resultType = LYRQueryResultTypeIdentifiers;
         NSError *error = nil;
         NSOrderedSet *messageIdentifiers = [self.layerClient executeQuery:messageIdentifiersQuery error:&error];
