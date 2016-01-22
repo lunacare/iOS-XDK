@@ -330,10 +330,10 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         } else {
             switch (deletionMode.integerValue) {
                 case LYRDeletionModeMyDevices:
-                    actionString = ATLLocalizedString(@"atl.conversationlist.deletionmode.local.key", ATLConversationListViewControllerDeletionModeMyDevices, nil);
+                    actionString = ATLLocalizedString(@"atl.conversationlist.deletionmode.mydevices.key", ATLConversationListViewControllerDeletionModeMyDevices, nil);
                     break;
                 case LYRDeletionModeAllParticipants:
-                    actionString = ATLLocalizedString(@"atl.conversationlist.deletionmode.global.key", ATLConversationListViewControllerDeletionModeEveryone, nil);
+                    actionString = ATLLocalizedString(@"atl.conversationlist.deletionmode.everyone.key", ATLConversationListViewControllerDeletionModeEveryone, nil);
                     break;
                 default:
                     break;
