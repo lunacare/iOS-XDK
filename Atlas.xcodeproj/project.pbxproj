@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		23EEC65DFA023EDAE8E59226 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DE31FA9B1906CEA04D0C891 /* Pods.framework */; };
 		251C57AD1C5A9E3C00110871 /* ATLBaseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 251C57AC1C5A9E3C00110871 /* ATLBaseCollectionViewCell.m */; };
+		251C57AE1C5AA20200110871 /* ATLBaseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 251C57AC1C5A9E3C00110871 /* ATLBaseCollectionViewCell.m */; };
+		251C57AF1C5AA21200110871 /* ATLBaseCollectionViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 251C57AB1C5A9E3C00110871 /* ATLBaseCollectionViewCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		253C2A051C3C9E0000ED1549 /* Atlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 253C29AF1C3C9E0000ED1549 /* Atlas.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		253C2A061C3C9E0000ED1549 /* Atlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 253C29B01C3C9E0000ED1549 /* Atlas.m */; };
 		253C2A071C3C9E0000ED1549 /* ATLAddressBarViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 253C29B21C3C9E0000ED1549 /* ATLAddressBarViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -819,6 +821,7 @@
 				253C2A2E1C3C9E0000ED1549 /* ATLAddressBarContainerView.h in Headers */,
 				253C2A241C3C9E0000ED1549 /* ATLLocationManager.h in Headers */,
 				253C2A091C3C9E0000ED1549 /* ATLBaseConversationViewController.h in Headers */,
+				251C57AF1C5AA21200110871 /* ATLBaseCollectionViewCell.h in Headers */,
 				253C2A441C3C9E0000ED1549 /* ATLMessageBubbleView.h in Headers */,
 				253C2A1F1C3C9E0000ED1549 /* ATLParticipantPresenting.h in Headers */,
 				253C2A421C3C9E0000ED1549 /* ATLIncomingMessageCollectionViewCell.h in Headers */,
@@ -1226,6 +1229,7 @@
 			files = (
 				253C2A271C3C9E0000ED1549 /* ATLMediaInputStream.m in Sources */,
 				253C2A0E1C3C9E0000ED1549 /* ATLConversationViewController.m in Sources */,
+				251C57AE1C5AA20200110871 /* ATLBaseCollectionViewCell.m in Sources */,
 				253C2A311C3C9E0000ED1549 /* ATLAddressBarTextView.m in Sources */,
 				253C2A351C3C9E0000ED1549 /* ATLAvatarImageView.m in Sources */,
 				253C2A121C3C9E0000ED1549 /* ATLTypingIndicatorViewController.m in Sources */,
