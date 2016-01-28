@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		23EEC65DFA023EDAE8E59226 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DE31FA9B1906CEA04D0C891 /* Pods.framework */; };
+		251C57AD1C5A9E3C00110871 /* ATLBaseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 251C57AC1C5A9E3C00110871 /* ATLBaseCollectionViewCell.m */; };
 		253C2A051C3C9E0000ED1549 /* Atlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 253C29AF1C3C9E0000ED1549 /* Atlas.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		253C2A061C3C9E0000ED1549 /* Atlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 253C29B01C3C9E0000ED1549 /* Atlas.m */; };
 		253C2A071C3C9E0000ED1549 /* ATLAddressBarViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 253C29B21C3C9E0000ED1549 /* ATLAddressBarViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -187,6 +188,8 @@
 
 /* Begin PBXFileReference section */
 		19C4C79B004C78E70ECD099C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		251C57AB1C5A9E3C00110871 /* ATLBaseCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLBaseCollectionViewCell.h; sourceTree = "<group>"; };
+		251C57AC1C5A9E3C00110871 /* ATLBaseCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLBaseCollectionViewCell.m; sourceTree = "<group>"; };
 		253C29A51C3C9D7100ED1549 /* Atlas.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Atlas.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		253C29AF1C3C9E0000ED1549 /* Atlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Atlas.h; sourceTree = "<group>"; };
 		253C29B01C3C9E0000ED1549 /* Atlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Atlas.m; sourceTree = "<group>"; };
@@ -496,6 +499,8 @@
 		253C29DC1C3C9E0000ED1549 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				251C57AB1C5A9E3C00110871 /* ATLBaseCollectionViewCell.h */,
+				251C57AC1C5A9E3C00110871 /* ATLBaseCollectionViewCell.m */,
 				253C29DD1C3C9E0000ED1549 /* ATLAddressBarContainerView.h */,
 				253C29DE1C3C9E0000ED1549 /* ATLAddressBarContainerView.m */,
 				253C29DF1C3C9E0000ED1549 /* ATLAddressBarTextView.h */,
@@ -1282,6 +1287,7 @@
 				D6F405C51A8FDDE300AE9581 /* LYRClientMock.m in Sources */,
 				D02CDCDB1A9FFC930013CBE8 /* ATLTestUtilities.m in Sources */,
 				D6F405B01A8FDDAA00AE9581 /* ATLSampleConversationListViewController.m in Sources */,
+				251C57AD1C5A9E3C00110871 /* ATLBaseCollectionViewCell.m in Sources */,
 				D6F405C81A8FDDE300AE9581 /* LYRMessagePartMock.m in Sources */,
 				D6F405B21A8FDDAA00AE9581 /* ATLSampleParticipantTableViewController.m in Sources */,
 				D6F405C61A8FDDE300AE9581 /* LYRConversationMock.m in Sources */,
