@@ -86,6 +86,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     _allowsEditing = YES;
     _rowHeight = 76.0f;
     _shouldDisplaySearchController = YES;
+    _hasAppeared = NO;
 }
 
 - (id)init
@@ -107,10 +108,6 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    if (!self.queryController) {
-        [self setupConversationDataSource];
-    }
     
     self.title = ATLLocalizedString(@"atl.conversationlist.title.key", ATLConversationListViewControllerTitle, nil);
     self.accessibilityLabel = ATLConversationListViewControllerTitle;
@@ -149,6 +146,10 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         self.tableView.rowHeight = self.rowHeight;
         [self.tableView registerClass:self.cellClass forCellReuseIdentifier:ATLConversationCellReuseIdentifier];
         if (self.allowsEditing) [self addEditButton];
+    }
+    
+    if (!self.queryController) {
+        [self setupConversationDataSource];
     }
    
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
@@ -310,6 +311,9 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 {
     if (!conversation) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"`conversation` cannot be nil." userInfo:nil];
+    }
+    if (!self.queryController) {
+        return;
     }
     NSIndexPath *indexPath = [self.queryController indexPathForObject:conversation];
     if (indexPath) {
