@@ -120,7 +120,7 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     ATLUserMock *mockUser1 = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
     LYRConversationMock *conversation1 = [self newConversationWithMockUser:mockUser1 lastMessageText:@"Test Message"];
     [tester swipeViewWithAccessibilityLabel:[self.testInterface conversationLabelForConversation:conversation1] inDirection:KIFSwipeDirectionLeft];
-    [self deleteConversation:conversation1 deletionMode:LYRDeletionModeLocal];
+    [self deleteConversation:conversation1 deletionMode:LYRDeletionModeMyDevices];
 }
 
 //Test editing mode and deleting several conversations at once. Verify that all conversations selected are deleted from the table and from the Layer client.
@@ -141,13 +141,13 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     [tester tapViewWithAccessibilityLabel:@"Edit"];
     
     [tester tapViewWithAccessibilityLabel:[NSString stringWithFormat:@"Delete %@", mockUser1.fullName]];
-    [self deleteConversation:conversation1 deletionMode:LYRDeletionModeLocal];
+    [self deleteConversation:conversation1 deletionMode:LYRDeletionModeMyDevices];
     
     [tester tapViewWithAccessibilityLabel:[NSString stringWithFormat:@"Delete %@", mockUser2.fullName]];
-    [self deleteConversation:conversation2 deletionMode:LYRDeletionModeLocal];
+    [self deleteConversation:conversation2 deletionMode:LYRDeletionModeMyDevices];
     
     [tester tapViewWithAccessibilityLabel:[NSString stringWithFormat:@"Delete %@", mockUser3.fullName]];
-    [self deleteConversation:conversation3 deletionMode:LYRDeletionModeLocal];
+    [self deleteConversation:conversation3 deletionMode:LYRDeletionModeMyDevices];
     
     LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
     NSError *error;
@@ -391,7 +391,7 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     ATLUserMock *mockUser1 = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
     LYRConversationMock *conversation1 = [self newConversationWithMockUser:mockUser1 lastMessageText:@"Test Message"];
     
-    LYRDeletionMode deletionMode = LYRDeletionModeLocal;
+    LYRDeletionMode deletionMode = LYRDeletionModeMyDevices;
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
         ATLConversationListViewController *controller;
         [invocation getArgument:&controller atIndex:2];
@@ -556,7 +556,7 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
             [tester tapViewWithAccessibilityLabel:[NSString stringWithFormat:@"Global"]];
             [tester waitForAbsenceOfViewWithAccessibilityLabel:[self.testInterface conversationLabelForConversation:conversation]];
             break;
-        case LYRDeletionModeLocal:
+        case LYRDeletionModeMyDevices:
             [tester waitForViewWithAccessibilityLabel:@"Local"];
             [tester tapViewWithAccessibilityLabel:[NSString stringWithFormat:@"Local"]];
             [tester waitForAbsenceOfViewWithAccessibilityLabel:[self.testInterface conversationLabelForConversation:conversation]];
