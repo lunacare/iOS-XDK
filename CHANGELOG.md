@@ -1,5 +1,12 @@
 # Atlas Changelog
 
+## 1.0.19
+
+## Bug Fixes
+
+* Fixed an issue in the `ATLConversationListViewController` that caused an exception to be thrown during cell dequeueing.
+* Added missing files into the `Atlas` target to fix a bug with Carthage installations.
+
 ## 1.0.18
 
 ### Enhancements 
