@@ -176,6 +176,10 @@ NSArray *ATLMessagePartsWithMediaAttachment(ATLMediaAttachment *mediaAttachment)
         @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Cannot create an LYRMessagePart with `nil` mediaInputStream." userInfo:nil];
     }
     
+    if ([mediaAttachment.mediaMIMEType isEqualToString:ATLMIMETypeTextPlain]) {
+        return @[[LYRMessagePart messagePartWithText:mediaAttachment.textRepresentation]];
+    }
+    
     // Create the message part for the main media (should be on index zero).
     [messageParts addObject:[LYRMessagePart messagePartWithMIMEType:mediaAttachment.mediaMIMEType stream:mediaAttachment.mediaInputStream]];
     

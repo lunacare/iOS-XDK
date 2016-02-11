@@ -248,7 +248,32 @@ extern NSString *const ATLMessageInputToolbarSendButton;
         expect(message).to.beKindOf([LYRMessageMock class]);
     }] conversationViewController:[OCMArg any] didSendMessage:[OCMArg any]];
     
-    [tester enterText:@"test" intoViewWithAccessibilityLabel:ATLMessageInputToolbarTextInputView];
+    [tester enterText:@"Test" intoViewWithAccessibilityLabel:ATLMessageInputToolbarTextInputView];
+    [tester tapViewWithAccessibilityLabel:ATLMessageInputToolbarSendButton];
+    [delegateMock verify];
+}
+
+- (void)testToVerifyTextMessagePartDataIsHydratedAfterMessageSend
+{
+    [self setupConversationViewController];
+    [self setRootViewController:self.viewController];
+    
+    id delegateMock = OCMProtocolMock(@protocol(ATLConversationViewControllerDelegate));
+    self.viewController.delegate = delegateMock;
+    
+    [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        ATLConversationViewController *controller;
+        [invocation getArgument:&controller atIndex:2];
+        expect(controller).to.equal(self.viewController);
+        
+        LYRMessage *message;
+        [invocation getArgument:&message atIndex:3];
+        expect(message).to.beKindOf([LYRMessageMock class]);
+        LYRMessagePart *messagePart = message.parts[0];
+        expect(messagePart.data).toNot.beNil();
+    }] conversationViewController:[OCMArg any] didSendMessage:[OCMArg any]];
+    
+    [tester enterText:@"Test" intoViewWithAccessibilityLabel:ATLMessageInputToolbarTextInputView];
     [tester tapViewWithAccessibilityLabel:ATLMessageInputToolbarSendButton];
     [delegateMock verify];
 }
