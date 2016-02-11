@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract An array containing a string for each section.
  */
-@property (nonatomic, readonly) NSArray <NSString*>*sectionTitles;
+@property (nonatomic, readonly) NSArray <NSString*> *sectionTitles;
 
 /**
  @abstract The number of sections of participants in the data set.

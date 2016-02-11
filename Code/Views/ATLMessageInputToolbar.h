@@ -169,7 +169,7 @@ extern NSString *const ATLMessageInputToolbarAccessibilityLabel;
  @abstract An array of all media attachments displayed in the text view.
  @discussion Any existing media attachments will be removed when the right accessory button is tapped.
  */
-@property (nonatomic, readonly, nullable) NSArray <ATLMediaAttachment*>*mediaAttachments;
+@property (nonatomic, readonly, nullable) NSArray <ATLMediaAttachment*> *mediaAttachments;
 
 //-------------------
 // Layout Accessories

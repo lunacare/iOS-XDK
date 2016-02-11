@@ -88,13 +88,13 @@ CGFloat ATLDegreeToRadians(CGFloat degrees);
 // @name Message Utilities
 //------------------------
 
-LYRMessage *__nullable ATLMessageForParts(LYRClient *layerClient, NSArray <LYRMessagePart*>*messageParts, NSString *pushText, NSString *pushSound);
+LYRMessage *__nullable ATLMessageForParts(LYRClient *layerClient, NSArray <LYRMessagePart*> *messageParts, NSString *pushText, NSString *pushSound);
 
 //-----------------------------
 // @name Message Part Utilities
 //-----------------------------
 
-NSArray <LYRMessagePart*>*ATLMessagePartsWithMediaAttachment(ATLMediaAttachment *mediaAttachment);
+NSArray <LYRMessagePart*> *ATLMessagePartsWithMediaAttachment(ATLMediaAttachment *mediaAttachment);
 
 LYRMessagePart *__nullable ATLMessagePartForMIMEType(LYRMessage *message, NSString *MIMEType);
 
