@@ -20,6 +20,7 @@
 
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+
 NS_ASSUME_NONNULL_BEGIN
 extern NSString *const ATLMediaInputStreamErrorDomain;
 
@@ -90,7 +91,7 @@ typedef NS_ENUM(NSUInteger, ATLMediaInputStreamError) {
    image. Passing `nil` won't embed any metadata information.
  @return A `ATLMediaInputStream` instance ready to be open.
  */
-+ (instancetype)mediaInputStreamWithImage:(UIImage *)image metadata:(nullable NSDictionary <NSString*,id>*)metadata;
++ (instancetype)mediaInputStreamWithImage:(UIImage *)image metadata:(nullable NSDictionary <NSString*,id> *)metadata;
 
 /**
  @abstract Creates an input stream capable of direct or re-encoded media

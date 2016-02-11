@@ -19,9 +19,10 @@
 //
 
 #import <UIKit/UIKit.h>
-NS_ASSUME_NONNULL_BEGIN
+
 @class LYRMessage;
 
+NS_ASSUME_NONNULL_BEGIN
 extern NSString *const ATLConversationViewHeaderIdentifier;
 
 /**

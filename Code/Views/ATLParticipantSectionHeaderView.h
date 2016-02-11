@@ -19,6 +19,7 @@
 //
 
 #import <UIKit/UIKit.h>
+
 NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The `ATLParticipantSectionHeaderView` displays a letter representing a section

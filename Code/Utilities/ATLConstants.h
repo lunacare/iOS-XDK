@@ -35,8 +35,7 @@ UIColor *ATLRedColor();
 
 UIFont *ATLLightFont(CGFloat size);
 
-UIFont * __null_unspecified ATLMediumFont(CGFloat size);
+UIFont *ATLMediumFont(CGFloat size);
 
-UIFont * __null_unspecified ATLBoldFont(CGFloat size);
-
+UIFont * ATLBoldFont(CGFloat size);
 NS_ASSUME_NONNULL_END

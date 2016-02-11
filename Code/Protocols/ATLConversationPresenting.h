@@ -56,5 +56,4 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateWithLastMessageText:(NSString *)lastMessageText;
 
 @end
-
 NS_ASSUME_NONNULL_END

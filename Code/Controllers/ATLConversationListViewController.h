@@ -24,13 +24,13 @@
 #import "ATLAvatarItem.h"
 #import "ATLParticipant.h"
 
-NS_ASSUME_NONNULL_BEGIN
 @class ATLConversationListViewController;
 
 ///---------------------------------------
 /// @name Delegate
 ///---------------------------------------
 
+NS_ASSUME_NONNULL_BEGIN
 @protocol ATLConversationListViewControllerDelegate <NSObject>
 
 /**

@@ -20,6 +20,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ATLAvatarItem.h"
+
 NS_ASSUME_NONNULL_BEGIN
 extern CGFloat const ATLAvatarImageDiameter;
 

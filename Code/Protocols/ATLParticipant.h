@@ -50,5 +50,4 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSString *participantIdentifier;
 
 @end
-
 NS_ASSUME_NONNULL_END

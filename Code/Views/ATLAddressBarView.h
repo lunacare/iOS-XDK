@@ -20,6 +20,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ATLAddressBarTextView.h"
+
 NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The `ATLAddressBarView handles displaying the contents of the `ATLAddressBarController`.

@@ -24,7 +24,6 @@
 #import "ATLParticipant.h"
 #import "ATLBaseConversationViewController.h"
 
-NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSUInteger, ATLAvatarItemDisplayFrequency) {
     ATLAvatarItemDisplayFrequencySection,
     ATLAvatarItemDisplayFrequencyCluster,
@@ -38,6 +37,7 @@ typedef NS_ENUM(NSUInteger, ATLAvatarItemDisplayFrequency) {
 /// @name Delegate
 ///---------------------------------------
 
+NS_ASSUME_NONNULL_BEGIN
 @protocol ATLConversationViewControllerDelegate <NSObject>
 
 @optional
@@ -97,7 +97,7 @@ typedef NS_ENUM(NSUInteger, ATLAvatarItemDisplayFrequency) {
  current conversation for the controller. If implemented, applications should also register custom `UICollectionViewCell` classes with the controller via
  a call to `registerClass:forMessageCellWithReuseIdentifier:`. They should also implement the optional data source method, `conversationViewController:reuseIdentifierForMessage:`.
  */
-- (NSOrderedSet <LYRMessage*>*)conversationViewController:(ATLConversationViewController *)viewController messagesForMediaAttachments:(NSArray <ATLMediaAttachment*>*)mediaAttachments;
+- (NSOrderedSet <LYRMessage*> *)conversationViewController:(ATLConversationViewController *)viewController messagesForMediaAttachments:(NSArray <ATLMediaAttachment*> *)mediaAttachments;
 
 @end
 

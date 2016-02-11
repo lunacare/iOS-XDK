@@ -20,6 +20,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ATLConversationPresenting.h"
+
 NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The `ATLConversationTableViewCell` class provides a lightweight, customizable table

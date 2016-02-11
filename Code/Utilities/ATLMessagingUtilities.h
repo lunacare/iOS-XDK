@@ -25,6 +25,7 @@
 #import "ATLMediaAttachment.h"
 #import "UIResponder+ATLFirstResponder.h"
 #import "ATLMessageComposeTextView.h"
+
 NS_ASSUME_NONNULL_BEGIN
 extern NSString *const ATLMIMETypeTextPlain;          // text/plain
 extern NSString *const ATLMIMETypeImagePNG;           // image/png
@@ -107,7 +108,7 @@ void ATLLastPhotoTaken(void(^completionHandler)(UIImage *__nullable image, NSErr
 
 UIImage *__null_unspecified ATLPinPhotoForSnapshot(MKMapSnapshot *snapshot, CLLocationCoordinate2D location);
 
-NSArray <NSTextCheckingResult *>*__nullable ATLTextCheckingResultsForText(NSString *text, NSTextCheckingType linkTypes);
+NSArray <NSTextCheckingResult *> *__nullable ATLTextCheckingResultsForText(NSString *text, NSTextCheckingType linkTypes);
 
 //---------------------------------
 // @name Resources Bundle Utilities

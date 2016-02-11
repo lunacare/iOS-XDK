@@ -22,6 +22,7 @@
 #import "ATLAddressBarViewController.h"
 #import "ATLMessageInputToolbar.h"
 #import "ATLTypingIndicatorViewController.h"
+
 NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The `ATLBaseConversationViewController` manages a suite of user interface components associated with a messaging view controller.

@@ -20,7 +20,8 @@
 
 #import <UIKit/UIKit.h>
 #import "ATLParticipantPresenting.h"
-#import "ATLParticipant.h"    
+#import "ATLParticipant.h"
+
 NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The `ATLParticipantTableViewCell` class provides a lightweight, customizable table

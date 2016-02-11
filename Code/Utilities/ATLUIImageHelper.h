@@ -19,6 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+
 NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract Processes GIFs by finding frame count and duration and returns an auto-looping GIF

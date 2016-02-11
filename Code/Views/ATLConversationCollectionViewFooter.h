@@ -21,6 +21,7 @@
 #import <UIKit/UIKit.h>
 
 @class LYRMessage;
+
 NS_ASSUME_NONNULL_BEGIN
 extern NSString *const ATLConversationViewFooterIdentifier;
 

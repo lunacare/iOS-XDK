@@ -27,6 +27,7 @@
 ///---------------------------------------
 /// @name Delegate
 ///---------------------------------------
+
 NS_ASSUME_NONNULL_BEGIN
 @protocol ATLAddressBarViewControllerDelegate <NSObject>
 

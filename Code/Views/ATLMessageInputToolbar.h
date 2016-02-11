@@ -22,9 +22,9 @@
 #import "ATLMessageComposeTextView.h"
 #import "ATLMediaAttachment.h"
 
-NS_ASSUME_NONNULL_BEGIN
 @class ATLMessageInputToolbar;
 
+NS_ASSUME_NONNULL_BEGIN
 extern NSString *const ATLMessageInputToolbarDidChangeHeightNotification;
 extern NSString *const ATLMessageInputToolbarAccessibilityLabel;
 

@@ -20,7 +20,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
-NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSUInteger, ATLMediaAttachmentType) {
     /**
      @constant Media attachment containing text.
@@ -44,6 +44,7 @@ typedef NS_ENUM(NSUInteger, ATLMediaAttachmentType) {
     ATLMediaAttachmentTypeVideo
 };
 
+NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The `ATLMediaAttachment` class serves as a media container and as
  an inlined text attachment for the UITextView. Use an appropriate initializer
@@ -70,7 +71,7 @@ typedef NS_ENUM(NSUInteger, ATLMediaAttachmentType) {
  @param thumbnailSize The size of the thumbnail.
  @return Instance of `ATLMediaAttachment` containing the streams.
  */
-+ (instancetype)mediaAttachmentWithImage:(UIImage *)image metadata:(nullable NSDictionary <NSString*, id>*)metadata thumbnailSize:(NSUInteger)thumbnailSize;
++ (instancetype)mediaAttachmentWithImage:(UIImage *)image metadata:(nullable NSDictionary <NSString*, id> *)metadata thumbnailSize:(NSUInteger)thumbnailSize;
 
 /**
  @abstract Creates a new `ATLMediaAttachment` instance either of type `ATLMediaAttachmentTypeImage` or `ATLMediaAttachmentTypeVideo`, depending on the input file.

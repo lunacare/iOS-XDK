@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract Informs the receiver of its sender.
  */
-- (void)updateWithSender:(id<ATLParticipant> __nullable)sender;
+- (void)updateWithSender:(nullable id<ATLParticipant>)sender;
 
 /**
  @abstract A boolean to determine whether or not the receiver should display an avatar item.
@@ -45,5 +45,4 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)shouldDisplayAvatarItem:(BOOL)shouldDisplayAvatarItem;
 
 @end
-
 NS_ASSUME_NONNULL_END
