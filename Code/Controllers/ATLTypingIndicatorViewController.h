@@ -19,7 +19,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ATLParticipant.h"
 
+NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract Displays a simple typing indicator view with a list of participant names.
  */
@@ -32,6 +34,7 @@
  @discussion If an empty array is supplied, the typing indicator opacity will be set to 0.0. If
  a non-empty array is supplied, the opacity will be set to 1.0.
  */
-- (void)updateWithParticipants:(NSOrderedSet *)participants animated:(BOOL)animated;
+- (void)updateWithParticipants:(NSOrderedSet <id<ATLParticipant>> *)participants animated:(BOOL)animated;
 
 @end
+NS_ASSUME_NONNULL_END

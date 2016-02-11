@@ -20,6 +20,7 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
 extern NSString *const ATLAddressBarPartAttributeName;
 extern NSString *const ATLAddressBarNamePart;
 extern NSString *const ATLAddressBarDelimiterPart;
@@ -29,10 +30,11 @@ extern CGFloat const ATLAddressBarTextContainerInset;
 
 @interface ATLAddressBarTextView : UITextView
 
-@property (nonatomic) UIFont *addressBarFont UI_APPEARANCE_SELECTOR;
+@property (nonatomic, null_unspecified) UIFont *addressBarFont UI_APPEARANCE_SELECTOR;
 
 @property (nonatomic) UIColor *addressBarTextColor UI_APPEARANCE_SELECTOR;
 
 @property (nonatomic) UIColor *addressBarHighlightColor UI_APPEARANCE_SELECTOR;
 
 @end
+NS_ASSUME_NONNULL_END

@@ -29,6 +29,7 @@ typedef NS_ENUM(NSUInteger, ATLParticipantPickerSortType) {
     ATLParticipantPickerSortTypeLastName,
 };
 
+NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The `ATLParticipantPresenting` protocol must be adopted by objects that wish to present Layer
  participants in the user interface.
@@ -47,3 +48,4 @@ typedef NS_ENUM(NSUInteger, ATLParticipantPickerSortType) {
 
 
 @end
+NS_ASSUME_NONNULL_END

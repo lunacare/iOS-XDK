@@ -20,6 +20,7 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The ATLMessageComposeTextView handles displaying content in an 
  `ATLMessageInputToolbar`. The class provides support for displaying text, 
@@ -39,3 +40,4 @@
 @property (nonatomic, weak) UIResponder *overrideNextResponder;
 
 @end
+NS_ASSUME_NONNULL_END

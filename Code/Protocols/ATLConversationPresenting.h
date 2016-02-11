@@ -22,6 +22,7 @@
 @import LayerKit;
 #import "ATLAvatarItem.h"
 
+NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The `ATLConversationPresenting` protocol must be adopted by any view component
  that wishes to present a Layer conversation object.
@@ -55,3 +56,4 @@
 - (void)updateWithLastMessageText:(NSString *)lastMessageText;
 
 @end
+NS_ASSUME_NONNULL_END

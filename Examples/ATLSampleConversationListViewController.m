@@ -79,7 +79,7 @@
     return [ATLSampleConversationAvatarItem new];
 }
 
-- (void)conversationListViewController:(ATLConversationListViewController *)conversationListViewController didSearchForText:(NSString *)searchText completion:(void (^)(NSSet *))completion
+- (void)conversationListViewController:(ATLConversationListViewController *)conversationListViewController didSearchForText:(NSString *)searchText completion:(void (^)(NSSet <id<ATLParticipant>> *filteredParticipants))completion
 {
     NSSet *participants = [ATLUserMock allMockParticipants];
     NSSet *filteredParticipants = [participants filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.fullName CONTAINS[cd] %@", searchText]];

@@ -21,12 +21,12 @@
 #import <UIKit/UIKit.h>
 #import "ATLParticipantTableViewCell.h"
 
-
 @class ATLParticipantTableViewController;
 
 /**
  @abstract The `ATLParticipantViewControllerDelegate` protocol provides a method for notifying the adopting delegate about information changes.
  */
+NS_ASSUME_NONNULL_BEGIN
 @protocol ATLParticipantTableViewControllerDelegate <NSObject>
 
 /**
@@ -66,18 +66,18 @@
  @param sortType The sort order applied to the participants. 
  @return A new participant picker initialized with the given participant set and sort type.
  */
-+ (instancetype)participantTableViewControllerWithParticipants:(NSSet *)participants sortType:(ATLParticipantPickerSortType)sortType;
++ (instancetype)participantTableViewControllerWithParticipants:(NSSet <id<ATLParticipant>> *)participants sortType:(ATLParticipantPickerSortType)sortType;
 
 /**
  @abstract The participants to display.
  @raises NSInternalInconsistencyException Raised if the value is mutated after the receiver has been presented.
  */
-@property (nonatomic) NSSet *participants;
+@property (nonatomic) NSSet <id<ATLParticipant>> *participants;
 
 /**
  @abstract An `NSSet` of identifiers representing blocked participants.
  */
-@property (nonatomic) NSSet *blockedParticipantIdentifiers;
+@property (nonatomic) NSSet <NSString*> *blockedParticipantIdentifiers;
 
 /**
  @abstract Defines the sort ordering of the participant list.
@@ -115,3 +115,4 @@
 @property (nonatomic, assign) BOOL allowsMultipleSelection;
 
 @end
+NS_ASSUME_NONNULL_END

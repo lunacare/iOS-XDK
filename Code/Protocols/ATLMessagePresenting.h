@@ -22,6 +22,7 @@
 #import "ATLParticipant.h"
 @import LayerKit;
 
+NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The `ATLMessagePresenting` protocol must be adopted by objects wishing to present
  Layer message parts via a user interface.
@@ -36,7 +37,7 @@
 /**
  @abstract Informs the receiver of its sender.
  */
-- (void)updateWithSender:(id<ATLParticipant>)sender;
+- (void)updateWithSender:(nullable id<ATLParticipant>)sender;
 
 /**
  @abstract A boolean to determine whether or not the receiver should display an avatar item.
@@ -44,3 +45,4 @@
 - (void)shouldDisplayAvatarItem:(BOOL)shouldDisplayAvatarItem;
 
 @end
+NS_ASSUME_NONNULL_END

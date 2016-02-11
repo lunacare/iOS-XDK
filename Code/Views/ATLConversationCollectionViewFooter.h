@@ -22,6 +22,7 @@
 
 @class LYRMessage;
 
+NS_ASSUME_NONNULL_BEGIN
 extern NSString *const ATLConversationViewFooterIdentifier;
 
 /**
@@ -39,7 +40,7 @@ extern NSString *const ATLConversationViewFooterIdentifier;
  @abstract Displays a string of text representing the read status of a message.
  @param recipientStatus The string representing the status.
  */
-- (void)updateWithAttributedStringForRecipientStatus:(NSAttributedString *)recipientStatus;
+- (void)updateWithAttributedStringForRecipientStatus:(nullable NSAttributedString *)recipientStatus;
 
 /**
  @abstract Performs calculations to determine the footer height.
@@ -47,6 +48,7 @@ extern NSString *const ATLConversationViewFooterIdentifier;
  @param clustered A boolean value to determines whether the message cell corresponding to the footer should be clustered with the previous cell. Messages sent within 60 seconds of each other are clustered.
  @return The height for the footer.
  */
-+ (CGFloat)footerHeightWithRecipientStatus:(NSAttributedString *)recipientStatus  clustered:(BOOL)clustered;
++ (CGFloat)footerHeightWithRecipientStatus:(nullable NSAttributedString *)recipientStatus  clustered:(BOOL)clustered;
 
 @end
+NS_ASSUME_NONNULL_END

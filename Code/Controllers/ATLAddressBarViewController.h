@@ -28,6 +28,7 @@
 /// @name Delegate
 ///---------------------------------------
 
+NS_ASSUME_NONNULL_BEGIN
 @protocol ATLAddressBarViewControllerDelegate <NSObject>
 
 @optional
@@ -112,7 +113,7 @@
 /**
  @abstract An ordered set of the currently selected participants.
  */
-@property (nonatomic) NSOrderedSet *selectedParticipants;
+@property (nonatomic) NSOrderedSet <id<ATLParticipant>>*selectedParticipants;
 
 /**
  @abstract Informs the receiver that a selection occurred outside of the controller and a participant should be added to the address
@@ -145,3 +146,4 @@
 - (BOOL)isDisabled;
 
 @end
+NS_ASSUME_NONNULL_END

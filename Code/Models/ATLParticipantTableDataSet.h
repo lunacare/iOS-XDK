@@ -20,7 +20,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ATLParticipantPresenting.h"
-
+NS_ASSUME_NONNULL_BEGIN
 @interface ATLParticipantTableDataSet : NSObject
 
 /**
@@ -29,12 +29,12 @@
  @param sortType The type of sorting to use.
  @return A new data set initialized with the given set of participants.
  */
-+ (instancetype)dataSetWithParticipants:(NSSet *)participants sortType:(ATLParticipantPickerSortType)sortType;
++ (instancetype)dataSetWithParticipants:(NSSet <id<ATLParticipant>>*)participants sortType:(ATLParticipantPickerSortType)sortType;
 
 /**
  @abstract An array containing a string for each section.
  */
-@property (nonatomic, readonly) NSArray *sectionTitles;
+@property (nonatomic, readonly) NSArray <NSString*> *sectionTitles;
 
 /**
  @abstract The number of sections of participants in the data set.
@@ -49,11 +49,12 @@
 /**
  @abstract The index path for the supplied participant.
  */
-- (NSIndexPath *)indexPathForParticipant:(id<ATLParticipant>)participant;
+- (nullable NSIndexPath *)indexPathForParticipant:(id<ATLParticipant>)participant;
 
 /**
  @abstract The participant at the supplied index path.
  */
-- (id<ATLParticipant>)participantAtIndexPath:(NSIndexPath *)indexPath;
+- (nullable id<ATLParticipant>)participantAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
+NS_ASSUME_NONNULL_END

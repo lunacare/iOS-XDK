@@ -21,6 +21,7 @@
 #import <UIKit/UIKit.h>
 #import "ATLConversationPresenting.h"
 
+NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The `ATLConversationTableViewCell` class provides a lightweight, customizable table
  view cell for presenting Layer conversation objects.
@@ -68,3 +69,4 @@
 @property (nonatomic) UIColor *cellBackgroundColor UI_APPEARANCE_SELECTOR;
 
 @end
+NS_ASSUME_NONNULL_END

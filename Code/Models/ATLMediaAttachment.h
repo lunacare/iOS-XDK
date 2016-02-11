@@ -44,6 +44,7 @@ typedef NS_ENUM(NSUInteger, ATLMediaAttachmentType) {
     ATLMediaAttachmentTypeVideo
 };
 
+NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The `ATLMediaAttachment` class serves as a media container and as
  an inlined text attachment for the UITextView. Use an appropriate initializer
@@ -61,7 +62,7 @@ typedef NS_ENUM(NSUInteger, ATLMediaAttachmentType) {
  @param thumbnailSize The size of the thumbnail.
  @return Instance of `ATLMediaAttachment` containing the streams.
  */
-+ (instancetype)mediaAttachmentWithAssetURL:(NSURL *)assetURL thumbnailSize:(NSUInteger)thumbnailSize;
++ (nullable instancetype)mediaAttachmentWithAssetURL:(NSURL *)assetURL thumbnailSize:(NSUInteger)thumbnailSize;
 
 /**
  @abstract Creates a new `ATLMediaAttachment` instance of type `ATLMediaAttachmentTypeImage` based on `UIImage`.
@@ -70,7 +71,7 @@ typedef NS_ENUM(NSUInteger, ATLMediaAttachmentType) {
  @param thumbnailSize The size of the thumbnail.
  @return Instance of `ATLMediaAttachment` containing the streams.
  */
-+ (instancetype)mediaAttachmentWithImage:(UIImage *)image metadata:(NSDictionary *)metadata thumbnailSize:(NSUInteger)thumbnailSize;
++ (instancetype)mediaAttachmentWithImage:(UIImage *)image metadata:(nullable NSDictionary <NSString*, id> *)metadata thumbnailSize:(NSUInteger)thumbnailSize;
 
 /**
  @abstract Creates a new `ATLMediaAttachment` instance either of type `ATLMediaAttachmentTypeImage` or `ATLMediaAttachmentTypeVideo`, depending on the input file.
@@ -120,36 +121,37 @@ typedef NS_ENUM(NSUInteger, ATLMediaAttachmentType) {
  @abstract A text representation of the media, useful for push alert texts or cells that don't display media items (like conversation list view).
  @see `ATLMediaAttachmentType` what `textRepresentation` contains for different media attachment types.
  */
-@property (nonatomic, readonly) NSString *textRepresentation;
+@property (nonatomic, readonly, null_unspecified) NSString *textRepresentation;
 
 /**
  @abstract MIMEType of the main media this media attachment instance contains.
  */
-@property (nonatomic, readonly) NSString *mediaMIMEType;
+@property (nonatomic, readonly, null_unspecified) NSString *mediaMIMEType;
 /**
  @abstract A closed NSInputStream ready to stream the content of the main media this media attachment instance contains.
  @warning NSInputStream is not reusable and may only be used once for streaming.
  */
-@property (nonatomic, readonly) NSInputStream *mediaInputStream;
+@property (nonatomic, readonly, null_unspecified) NSInputStream *mediaInputStream;
 
 /**
  @abstract MIMEType of the thumbnail representing the main media this media attachment instance contains, or `nil` if the attachment doesn't contain the thumbnail.
  */
-@property (nonatomic, readonly) NSString *thumbnailMIMEType;
+@property (nonatomic, readonly, null_unspecified) NSString *thumbnailMIMEType;
 /**
  @abstract A closed NSInputStream ready to stream thumbnail content this media attachment instance contains, or `nil` if the attachment doesn't contain the thumbnail.
  @warning NSInputStream is not reusable and may only be used once for streaming.
  */
-@property (nonatomic, readonly) NSInputStream *thumbnailInputStream;
+@property (nonatomic, readonly, nullable) NSInputStream *thumbnailInputStream;
 
 /**
  @abstract MIMEType of any additional data that accompanies the main media (such as image resolution, length of audio or video content, etc.), or `nil` if the attachment doesn't contain the metadata.
  */
-@property (nonatomic, readonly) NSString *metadataMIMEType;
+@property (nonatomic, readonly, nullable) NSString *metadataMIMEType;
 /**
  @abstract A closed NSInputStream ready to stream the metadata content this media attachment instance contains, or `nil` if the attachment doesn't contain the metadata.
  @warning NSInputStream is not reusable and may only be used once for streaming.
  */
-@property (nonatomic, readonly) NSInputStream *metadataInputStream;
+@property (nonatomic, readonly, nullable) NSInputStream *metadataInputStream;
 
 @end
+NS_ASSUME_NONNULL_END

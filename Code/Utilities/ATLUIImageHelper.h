@@ -20,16 +20,18 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract Processes GIFs by finding frame count and duration and returns an auto-looping GIF
  @param data The NSData instance that should be returned as a looping GIF
  @return Returns a UIImage instance that has a looping GIF.  Can be used with any UIImageView
  */
-UIImage *ATLAnimatedImageWithAnimatedGIFData(NSData *data);
+UIImage *__nullable ATLAnimatedImageWithAnimatedGIFData(NSData *data);
 
 /**
  @abstract Processes GIFs by finding frame count and duration and returns an auto-looping GIF
  @param url The NSURL instance that should be returned as a looping GIF
  @return Returns a UIImage instance that has a looping GIF.  Can be used with any UIImageView
  */
- UIImage *ATLAnimatedImageWithAnimatedGIFURL(NSURL *url);
+ UIImage *__nullable ATLAnimatedImageWithAnimatedGIFURL(NSURL *url);
+NS_ASSUME_NONNULL_END

@@ -24,6 +24,7 @@
 
 @class ATLMessageInputToolbar;
 
+NS_ASSUME_NONNULL_BEGIN
 extern NSString *const ATLMessageInputToolbarDidChangeHeightNotification;
 extern NSString *const ATLMessageInputToolbarAccessibilityLabel;
 
@@ -168,7 +169,7 @@ extern NSString *const ATLMessageInputToolbarAccessibilityLabel;
  @abstract An array of all media attachments displayed in the text view.
  @discussion Any existing media attachments will be removed when the right accessory button is tapped.
  */
-@property (nonatomic, readonly) NSArray *mediaAttachments;
+@property (nonatomic, readonly, nullable) NSArray <ATLMediaAttachment*> *mediaAttachments;
 
 //-------------------
 // Layout Accessories
@@ -182,3 +183,4 @@ extern NSString *const ATLMessageInputToolbarAccessibilityLabel;
 @property (nonatomic, weak) UIViewController *containerViewController;
 
 @end
+NS_ASSUME_NONNULL_END

@@ -20,6 +20,7 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
 UIColor *ATLBlueColor();
 
 UIColor *ATLDarkGrayColor();
@@ -36,4 +37,5 @@ UIFont *ATLLightFont(CGFloat size);
 
 UIFont *ATLMediumFont(CGFloat size);
 
-UIFont *ATLBoldFont(CGFloat size);
+UIFont * ATLBoldFont(CGFloat size);
+NS_ASSUME_NONNULL_END

@@ -21,6 +21,7 @@
 #import <UIKit/UIKit.h>
 #import "ATLAvatarItem.h"
 
+NS_ASSUME_NONNULL_BEGIN
 extern CGFloat const ATLAvatarImageDiameter;
 
 /**
@@ -33,7 +34,7 @@ extern CGFloat const ATLAvatarImageDiameter;
  @abstract An object conforming to the `ATLAvatarItem` protocol. 
  @disucssion The object's image or initials will be used for display in the receiver.
  */
-@property (nonatomic) id<ATLAvatarItem> avatarItem;
+@property (nonatomic, null_resettable) id<ATLAvatarItem> avatarItem;
 
 /**
  @abstract Sets the diameter for the avatar image view. Default is 30.
@@ -63,3 +64,4 @@ extern CGFloat const ATLAvatarImageDiameter;
 - (void)resetView;
 
 @end
+NS_ASSUME_NONNULL_END

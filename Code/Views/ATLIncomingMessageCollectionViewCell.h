@@ -20,7 +20,7 @@
 
 #import "ATLMessageCollectionViewCell.h"
 
-extern NSString *const ATLIncomingMessageCellIdentifier;
+extern NSString *__nonnull const ATLIncomingMessageCellIdentifier;
 
 /**
  @abstract The `ATLIncomingMessageCollectionViewCell` class provides a lightweight, customizable collection

@@ -26,6 +26,7 @@
 #import "UIResponder+ATLFirstResponder.h"
 #import "ATLMessageComposeTextView.h"
 
+NS_ASSUME_NONNULL_BEGIN
 extern NSString *const ATLMIMETypeTextPlain;          // text/plain
 extern NSString *const ATLMIMETypeImagePNG;           // image/png
 extern NSString *const ATLMIMETypeImageJPEG;          // image/jpeg
@@ -87,30 +88,31 @@ CGFloat ATLDegreeToRadians(CGFloat degrees);
 // @name Message Utilities
 //------------------------
 
-LYRMessage *ATLMessageForParts(LYRClient *layerClient, NSArray *messageParts, NSString *pushText, NSString *pushSound);
+LYRMessage *__nullable ATLMessageForParts(LYRClient *layerClient, NSArray <LYRMessagePart*> *messageParts, NSString *pushText, NSString *pushSound);
 
 //-----------------------------
 // @name Message Part Utilities
 //-----------------------------
 
-NSArray *ATLMessagePartsWithMediaAttachment(ATLMediaAttachment *mediaAttachment);
+NSArray <LYRMessagePart*> *ATLMessagePartsWithMediaAttachment(ATLMediaAttachment *mediaAttachment);
 
-LYRMessagePart *ATLMessagePartForMIMEType(LYRMessage *message, NSString *MIMEType);
+LYRMessagePart *__nullable ATLMessagePartForMIMEType(LYRMessage *message, NSString *MIMEType);
 
 //------------------------------
 // @name Image Capture Utilities
 //------------------------------
 
-void ATLAssetURLOfLastPhotoTaken(void(^completionHandler)(NSURL *assetURL, NSError *error));
+void ATLAssetURLOfLastPhotoTaken(void(^completionHandler)(NSURL *__nullable assetURL, NSError *__nullable error));
 
-void ATLLastPhotoTaken(void(^completionHandler)(UIImage *image, NSError *error));
+void ATLLastPhotoTaken(void(^completionHandler)(UIImage *__nullable image, NSError *__nullable error));
 
-UIImage *ATLPinPhotoForSnapshot(MKMapSnapshot *snapshot, CLLocationCoordinate2D location);
+UIImage *__null_unspecified ATLPinPhotoForSnapshot(MKMapSnapshot *snapshot, CLLocationCoordinate2D location);
 
-NSArray *ATLTextCheckingResultsForText(NSString *text, NSTextCheckingType linkTypes);
+NSArray <NSTextCheckingResult *> *__nullable ATLTextCheckingResultsForText(NSString *text, NSTextCheckingType linkTypes);
 
 //---------------------------------
 // @name Resources Bundle Utilities
 //---------------------------------
 
 NSBundle *ATLResourcesBundle(void);
+NS_ASSUME_NONNULL_END

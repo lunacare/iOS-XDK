@@ -21,6 +21,7 @@
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
+NS_ASSUME_NONNULL_BEGIN
 extern NSString *const ATLMediaInputStreamErrorDomain;
 
 typedef NS_ENUM(NSUInteger, ATLMediaInputStreamError) {
@@ -80,7 +81,7 @@ typedef NS_ENUM(NSUInteger, ATLMediaInputStreamError) {
    will be serialized for streaming.
  @return A `ATLMediaInputStream` instance ready to be open.
  */
-+ (instancetype)mediaInputStreamWithAssetURL:(NSURL *)assetURL;
++ (nullable instancetype)mediaInputStreamWithAssetURL:(NSURL *)assetURL;
 
 /**
  @abstract Creates an input stream capable of direct or re-encoded streaming
@@ -90,7 +91,7 @@ typedef NS_ENUM(NSUInteger, ATLMediaInputStreamError) {
    image. Passing `nil` won't embed any metadata information.
  @return A `ATLMediaInputStream` instance ready to be open.
  */
-+ (instancetype)mediaInputStreamWithImage:(UIImage *)image metadata:(NSDictionary *)metadata;
++ (instancetype)mediaInputStreamWithImage:(UIImage *)image metadata:(nullable NSDictionary <NSString*,id> *)metadata;
 
 /**
  @abstract Creates an input stream capable of direct or re-encoded media
@@ -107,21 +108,21 @@ typedef NS_ENUM(NSUInteger, ATLMediaInputStreamError) {
  @discussion Set only when input stream is initialized with the `assetURL`,
    otherwise it's `nil`.
  */
-@property (nonatomic, readonly) NSURL *sourceAssetURL;
+@property (nonatomic, readonly, nullable) NSURL *sourceAssetURL;
 
 /**
  @abstract The source image in a form of an `UIImage`.
  @discussion Set only when input stream is initialized with the `image`,
    otherwise it's `nil`.
  */
-@property (nonatomic, readonly) UIImage *sourceImage;
+@property (nonatomic, readonly, nullable) UIImage *sourceImage;
 
 /**
  @abstract The source media file URL in a form of `NSURL`.
  @discussion Set only when input stream is initialized with the `fileURL`,
    otherwise it's `nil`.
  */
-@property (nonatomic, readonly) NSURL *sourceFileURL;
+@property (nonatomic, readonly, nullable) NSURL *sourceFileURL;
 
 /**
  @abstract A boolean value indicating if streaming is going to be lossless.
@@ -145,3 +146,4 @@ typedef NS_ENUM(NSUInteger, ATLMediaInputStreamError) {
 @property (nonatomic) float compressionQuality;
 
 @end
+NS_ASSUME_NONNULL_END

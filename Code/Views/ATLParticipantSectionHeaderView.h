@@ -20,6 +20,7 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The `ATLParticipantSectionHeaderView` displays a letter representing a section
  in the participant picker.
@@ -47,3 +48,4 @@
 @property (nonatomic) UIColor *sectionHeaderBackgroundColor UI_APPEARANCE_SELECTOR;
 
 @end
+NS_ASSUME_NONNULL_END
