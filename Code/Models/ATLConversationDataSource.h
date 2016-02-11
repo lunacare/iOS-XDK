@@ -20,7 +20,7 @@
 
 #import <UIKit/UIKit.h> 
 @import LayerKit;
-
+NS_ASSUME_NONNULL_BEGIN
 extern NSInteger const ATLNumberOfSectionsBeforeFirstMessageSection;
 
 /**
@@ -96,11 +96,12 @@ extern NSInteger const ATLNumberOfSectionsBeforeFirstMessageSection;
 /**
  @abstract Fetches the `LYRMessage` object corresponding to an `ATLConversationViewController` index path.
  */
-- (LYRMessage *)messageAtCollectionViewIndexPath:(NSIndexPath *)collectionViewIndexPath;
+- (LYRMessage *__nullable)messageAtCollectionViewIndexPath:(NSIndexPath *)collectionViewIndexPath;
 
 /**
  @abstract Fetches the `LYRMessage` object corresponding to an `ATLConversationViewController` section.
  */
-- (LYRMessage *)messageAtCollectionViewSection:(NSInteger)collectionViewSection;
+- (LYRMessage *__nullable)messageAtCollectionViewSection:(NSInteger)collectionViewSection;
 
 @end
+NS_ASSUME_NONNULL_END

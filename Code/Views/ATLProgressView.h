@@ -20,6 +20,7 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract A custom progress view that displays the progress in a circular
    shape. It includes two visual components: a subtle transparent background
@@ -46,3 +47,4 @@
 - (void)setProgress:(float)newProgress animated:(BOOL)animated;
 
 @end
+NS_ASSUME_NONNULL_END

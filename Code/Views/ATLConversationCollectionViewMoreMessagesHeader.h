@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-extern NSString *const ATLMoreMessagesHeaderIdentifier;
+extern NSString *__nonnull const ATLMoreMessagesHeaderIdentifier;
 
 @interface ATLConversationCollectionViewMoreMessagesHeader : UICollectionReusableView
 

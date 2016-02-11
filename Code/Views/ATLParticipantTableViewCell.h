@@ -21,7 +21,7 @@
 #import <UIKit/UIKit.h>
 #import "ATLParticipantPresenting.h"
 #import "ATLParticipant.h"    
-
+NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The `ATLParticipantTableViewCell` class provides a lightweight, customizable table
  view cell for presenting Layer conversation participants.
@@ -44,3 +44,4 @@
 @property (nonatomic) UIColor *titleColor UI_APPEARANCE_SELECTOR;
 
 @end
+NS_ASSUME_NONNULL_END

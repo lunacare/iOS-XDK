@@ -21,6 +21,7 @@
 #import <Foundation/Foundation.h>
 #import "ATLAvatarItem.h"
 
+NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The `ATLParticipant` protocol must be adopted by objects wishing to represent Layer
  participants in the user interface.
@@ -50,3 +51,4 @@
 
 @end
 
+NS_ASSUME_NONNULL_END

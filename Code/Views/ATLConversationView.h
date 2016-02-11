@@ -19,9 +19,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+NS_ASSUME_NONNULL_BEGIN
 @interface ATLConversationView : UIView
 
-@property (nonatomic) UIView *inputAccessoryView;
+@property (nonatomic, null_unspecified) UIView *inputAccessoryView;
 
 @end
+NS_ASSUME_NONNULL_END

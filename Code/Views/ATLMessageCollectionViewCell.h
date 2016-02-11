@@ -25,6 +25,8 @@
 #import "ATLConstants.h"
 #import "ATLAvatarImageView.h"
 
+NS_ASSUME_NONNULL_BEGIN
+extern CGFloat const ATLMessageCellHorizontalMargin;
 extern NSString *const ATLGIFAccessibilityLabel;
 extern NSString *const ATLImageAccessibilityLabel;
 extern NSString *const ATLVideoAccessibilityLabel;
@@ -68,3 +70,4 @@ extern NSString *const ATLVideoAccessibilityLabel;
 + (CGFloat)cellHeightForMessage:(LYRMessage *)message inView:(UIView *)view;
 
 @end
+NS_ASSUME_NONNULL_END

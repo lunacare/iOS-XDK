@@ -19,7 +19,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+NS_ASSUME_NONNULL_BEGIN
 @class LYRMessage;
 
 extern NSString *const ATLConversationViewHeaderIdentifier;
@@ -33,7 +33,7 @@ extern NSString *const ATLConversationViewHeaderIdentifier;
 /**
  @abstract The message associated with the header.
  */
-@property (nonatomic) LYRMessage *message;
+@property (nonatomic, null_unspecified) LYRMessage *message;
 
 /**
  @abstract The font for the participant label displayed in the header. Default is 10pt system font.
@@ -68,3 +68,4 @@ extern NSString *const ATLConversationViewHeaderIdentifier;
 + (CGFloat)headerHeightWithDateString:(NSAttributedString *)dateString participantName:(NSString *)participantName inView:(UIView *)view;
 
 @end
+NS_ASSUME_NONNULL_END

@@ -22,7 +22,7 @@
 #import "ATLAddressBarViewController.h"
 #import "ATLMessageInputToolbar.h"
 #import "ATLTypingIndicatorViewController.h"
-
+NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The `ATLBaseConversationViewController` manages a suite of user interface components associated with a messaging view controller.
  @discussion The controller handles presenting the `ATLMessageInputToolbar`, the `ATLTypingIndicatorViewController`, and optionally, the `ATLAddressBarViewController`. It also manages configuring the layout and content insets of its collection view property in response to changes in the state or size of its `addressBarController`, `messageInputToolbar`, and `typingIndicatorController` properties.
@@ -52,7 +52,7 @@
  @abstract The `UICollectionView` responsible for displaying messaging content. 
  @discussion Subclasses should set the collection view property in their `loadView` method. The controller will then handle configuring autolayout constraints for the collection view.
  */
-@property (nonatomic) UICollectionView *collectionView;
+@property (nonatomic, null_unspecified) UICollectionView *collectionView;
 
 ///----------------------------------------------
 /// @name Configuring View Options
@@ -95,3 +95,4 @@
 - (CGPoint)bottomOffsetForContentSize:(CGSize)contentSize;
 
 @end
+NS_ASSUME_NONNULL_END
