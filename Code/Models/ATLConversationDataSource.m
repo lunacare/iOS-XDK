@@ -128,6 +128,7 @@ NSInteger const ATLQueryControllerPaginationWindow = 30;
         if (observer) {
             [[NSNotificationCenter defaultCenter] removeObserver:observer];
         }
+        [weakSelf finishExpandingPaginationWindow];
         return;
     }
 }
