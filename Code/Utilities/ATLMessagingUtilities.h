@@ -47,6 +47,9 @@ extern NSString *const ATLImagePreviewHeightKey;
 extern NSString *const ATLLocationLatitudeKey;
 extern NSString *const ATLLocationLongitudeKey;
 
+extern NSString *const ATLUserNotificationInlineReplyActionIdentifier;
+extern NSString *const ATLUserNotificationDefaultActionsCategoryIdentifier;
+
 //---------------------------------
 // @name Internationalization Macro
 //---------------------------------

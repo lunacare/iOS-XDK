@@ -44,6 +44,9 @@ NSString *const ATLImagePreviewHeightKey = @"height";
 NSString *const ATLLocationLatitudeKey = @"lat";
 NSString *const ATLLocationLongitudeKey = @"lon";
 
+NSString *const ATLUserNotificationInlineReplyActionIdentifier = @"layer:///actions/inline-reply";
+NSString *const ATLUserNotificationDefaultActionsCategoryIdentifier = @"layer:///categories/default";
+
 #pragma mark - Max Cell Dimensions
 
 CGFloat ATLMaxCellWidth()
@@ -158,6 +161,8 @@ LYRMessage *ATLMessageForParts(LYRClient *layerClient, NSArray *messageParts, NS
     LYRPushNotificationConfiguration *defaultConfiguration = [LYRPushNotificationConfiguration new];
     defaultConfiguration.alert = pushText;
     defaultConfiguration.sound = pushSound;
+    defaultConfiguration.category = ATLUserNotificationDefaultActionsCategoryIdentifier;
+    
     NSDictionary *options = @{ LYRMessageOptionsPushNotificationConfigurationKey: defaultConfiguration };
     NSError *error;
     LYRMessage *message = [layerClient newMessageWithParts:messageParts options:options error:&error];
