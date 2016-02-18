@@ -64,6 +64,8 @@
 #import "ATLConstants.h"
 #import "ATLErrors.h"
 #import "ATLMessagingUtilities.h"
+#import "ATLLocationManager.h"
+#import "ATLMediaInputStream.h"
 
 ///------------
 /// @name Views
@@ -86,6 +88,8 @@
 #import "ATLParticipantSectionHeaderView.h"
 #import "ATLParticipantTableViewCell.h"
 #import "ATLProgressView.h"
+#import "ATLUIImageHelper.h"
+#import "ATLPlayView.h"
 
 /**
  @abstract Returns the Atlas version as a string.
