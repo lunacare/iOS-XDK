@@ -21,7 +21,7 @@
 #import <XCTest/XCTest.h>
 #import "ATLTestInterface.h"
 #import "ATLParticipantTableViewCell.h"
-#import "ATLParticipant.h"
+#import "ATLIdentity.h"
 #import "ATLSampleParticipantTableViewController.h"
 
 @interface ATLParticipantTableViewCell ()

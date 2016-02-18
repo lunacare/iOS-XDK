@@ -249,7 +249,7 @@ NSString *const ATLParticipantTableViewControllerTitle = @"Participants";
 {
     id<ATLParticipant> participant = [self participantForTableView:tableView atIndexPath:indexPath];
     [cell presentParticipant:participant withSortType:self.sortType shouldShowAvatarItem:YES];
-    if ([self.blockedParticipantIdentifiers containsObject:[participant participantIdentifier]]) {
+    if ([self.blockedParticipantIdentifiers containsObject:[participant userID]]) {
         NSBundle *resourcesBundle = ATLResourcesBundle();
         cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"block"  inBundle:resourcesBundle compatibleWithTraitCollection:nil]];
     }

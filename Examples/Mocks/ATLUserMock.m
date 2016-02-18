@@ -33,14 +33,14 @@ NSString *const ATLMockUserIDAmar = @"5";
 
 @implementation ATLUserMock
 
-- (instancetype)initWithFirstName:(NSString *)firstName lastName:(NSString *)lastName participantIdentifier:(NSString *)participantIdentifier
+- (instancetype)initWithFirstName:(NSString *)firstName lastName:(NSString *)lastName userID:(NSString *)userID
 {
     self = [super init];
     if (self) {
         _firstName = firstName;
         _lastName = lastName;
-        _participantIdentifier = participantIdentifier;
-        _fullName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+        _userID = userID;
+        _displayName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
         _avatarImageURL = [NSURL URLWithString:@"http://lorempixel.com/400/200/"];
     }
     return self;
@@ -50,22 +50,22 @@ NSString *const ATLMockUserIDAmar = @"5";
 {
     switch (mockUserName) {
         case ATLMockUserNameBlake:
-            return [[ATLUserMock alloc] initWithFirstName:@"Blake" lastName:@"Watter" participantIdentifier:ATLMockUserIDBlake];
+            return [[ATLUserMock alloc] initWithFirstName:@"Blake" lastName:@"Watter" userID:ATLMockUserIDBlake];
             break;
         case ATLMockUserNameKlemen:
-            return [[ATLUserMock alloc] initWithFirstName:@"Klemen" lastName:@"Verdnik" participantIdentifier:ATLMockUserIDKlemen];
+            return [[ATLUserMock alloc] initWithFirstName:@"Klemen" lastName:@"Verdnik" userID:ATLMockUserIDKlemen];
             break;
         case ATLMockUserNameKevin:
-            return [[ATLUserMock alloc] initWithFirstName:@"Kevin" lastName:@"Coleman" participantIdentifier:ATLMockUserIDKevin];
+            return [[ATLUserMock alloc] initWithFirstName:@"Kevin" lastName:@"Coleman" userID:ATLMockUserIDKevin];
             break;
         case ATLMockUserNameSteven:
-            return [[ATLUserMock alloc] initWithFirstName:@"Steven" lastName:@"Jones" participantIdentifier:ATLMockUserIDSteven];
+            return [[ATLUserMock alloc] initWithFirstName:@"Steven" lastName:@"Jones" userID:ATLMockUserIDSteven];
             break;
         case ATLMockUserNameVivek:
-            return [[ATLUserMock alloc] initWithFirstName:@"Vivek" lastName:@"Trehan" participantIdentifier:ATLMockUserIDVivek];
+            return [[ATLUserMock alloc] initWithFirstName:@"Vivek" lastName:@"Trehan" userID:ATLMockUserIDVivek];
             break;
         case ATLMockUserNameAmar:
-            return [[ATLUserMock alloc] initWithFirstName:@"Amar" lastName:@"Srivisan" participantIdentifier:ATLMockUserIDAmar];
+            return [[ATLUserMock alloc] initWithFirstName:@"Amar" lastName:@"Srivisan" userID:ATLMockUserIDAmar];
             break;
         default:
             break;
@@ -116,7 +116,7 @@ NSString *const ATLMockUserIDAmar = @"5";
     NSMutableArray *users = [NSMutableArray new];
     NSMutableSet *allUsers = [[self allMockParticipants] mutableCopy];
     for (ATLUserMock *mock in allUsers) {
-        if ([mock.fullName rangeOfString:text options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        if ([mock.displayName rangeOfString:text options:NSCaseInsensitiveSearch].location != NSNotFound) {
             [users addObject:mock];
         }
     }
@@ -129,9 +129,9 @@ NSString *const ATLMockUserIDAmar = @"5";
     return  [self userWithMockUserName:randomUserName];
 }
 
-- (NSString *)fullName
+- (NSString *)displayName
 {
-    return _fullName;
+    return _displayName;
 }
 
 - (NSString *)avatarInitials

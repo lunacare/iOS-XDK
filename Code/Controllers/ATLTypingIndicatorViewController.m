@@ -82,7 +82,7 @@
         return nil;
     }
     
-    NSMutableArray *fullNameComponents = [[[participants valueForKey:@"fullName"] allObjects] mutableCopy];
+    NSMutableArray *fullNameComponents = [[[participants valueForKey:@"displayName"] allObjects] mutableCopy];
     NSString *fullNamesText = [self typingIndicatorTextWithParticipantStrings:fullNameComponents participantsCount:participantsCount];
     if ([self typingIndicatorLabelHasSpaceForText:fullNamesText]) {
         return fullNamesText;

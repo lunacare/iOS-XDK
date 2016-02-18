@@ -20,7 +20,6 @@
 
 #import "ATLSampleConversationViewController.h"
 #import "LYRClientMock.h"
-#import "ATLParticipant.h"
 #import "ATLSampleParticipantTableViewController.h"
 
 @interface ATLSampleConversationViewController () <ATLConversationViewControllerDataSource>
@@ -49,9 +48,9 @@
 
 #pragma mark - ATLConversationViewControllerDataSource methods
 
-- (id<ATLParticipant>)conversationViewController:(ATLConversationViewController *)conversationViewController participantForIdentifier:(NSString *)participantIdentifier
+- (id<ATLParticipant>)conversationViewController:(ATLConversationViewController *)conversationViewController participantForIdentity:(nonnull LYRIdentity *)identity
 {
-    return [ATLUserMock mockUserForIdentifier:participantIdentifier];
+    return [ATLUserMock mockUserForIdentifier:identity.userID];
 }
 
 - (NSAttributedString *)conversationViewController:(ATLConversationViewController *)conversationViewController attributedStringForDisplayOfDate:(NSDate *)date
@@ -85,7 +84,7 @@
         return;
     }
     
-    NSMutableSet *otherParticipantIDs = [self.conversation.participants mutableCopy];
+    NSMutableSet *otherParticipantIDs = [[self.conversation.participants valueForKey:@"userID"]  mutableCopy];
     if (self.layerClient.authenticatedUserID) [otherParticipantIDs removeObject:self.layerClient.authenticatedUserID];
     
     if (otherParticipantIDs.count == 0) {

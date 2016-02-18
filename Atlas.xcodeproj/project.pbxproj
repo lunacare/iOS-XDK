@@ -96,6 +96,8 @@
 		427E3A203E8300A1E7A18A4F /* Pods_UnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED379E4FE835A9A9C48091B7 /* Pods_UnitTests.framework */; };
 		5A86A2D11B82BB11005AF74B /* ATLMessageCollectionViewCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86A2D01B82BB11005AF74B /* ATLMessageCollectionViewCellTests.m */; };
 		5A86A2D21B82BB11005AF74B /* ATLMessageCollectionViewCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86A2D01B82BB11005AF74B /* ATLMessageCollectionViewCellTests.m */; };
+		5AEF68811C75284300808463 /* LYRIdentity+ATLParticipant.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AEF687F1C75284300808463 /* LYRIdentity+ATLParticipant.h */; };
+		5AEF68821C75284300808463 /* LYRIdentity+ATLParticipant.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF68801C75284300808463 /* LYRIdentity+ATLParticipant.m */; };
 		5AEFC5CB1B79834300ADE4EC /* boatgif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5AEFC5CA1B79834300ADE4EC /* boatgif.gif */; };
 		5AEFC5CC1B79834300ADE4EC /* boatgif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5AEFC5CA1B79834300ADE4EC /* boatgif.gif */; };
 		5AF32FD31AA59C39005C13D7 /* ATLUserMockTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF32FD21AA59C39005C13D7 /* ATLUserMockTest.m */; };
@@ -280,6 +282,8 @@
 		511D715DFD8A8962334A2194 /* Pods-UnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		55792E6A592D8AB80A1C483E /* Pods_ProgrammaticTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProgrammaticTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A86A2D01B82BB11005AF74B /* ATLMessageCollectionViewCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATLMessageCollectionViewCellTests.m; path = Tests/ATLMessageCollectionViewCellTests.m; sourceTree = "<group>"; };
+		5AEF687F1C75284300808463 /* LYRIdentity+ATLParticipant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LYRIdentity+ATLParticipant.h"; sourceTree = "<group>"; };
+		5AEF68801C75284300808463 /* LYRIdentity+ATLParticipant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LYRIdentity+ATLParticipant.m"; sourceTree = "<group>"; };
 		5AEFC5CA1B79834300ADE4EC /* boatgif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = boatgif.gif; sourceTree = "<group>"; };
 		5AF32FD21AA59C39005C13D7 /* ATLUserMockTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLUserMockTest.m; sourceTree = "<group>"; };
 		5DE31FA9B1906CEA04D0C891 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -505,6 +509,8 @@
 				253C29D91C3C9E0000ED1549 /* ATLUIImageHelper.m */,
 				253C29DA1C3C9E0000ED1549 /* UIResponder+ATLFirstResponder.h */,
 				253C29DB1C3C9E0000ED1549 /* UIResponder+ATLFirstResponder.m */,
+				5AEF687F1C75284300808463 /* LYRIdentity+ATLParticipant.h */,
+				5AEF68801C75284300808463 /* LYRIdentity+ATLParticipant.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -810,6 +816,7 @@
 				253C2A111C3C9E0000ED1549 /* ATLTypingIndicatorViewController.h in Headers */,
 				253C2A1E1C3C9E0000ED1549 /* ATLParticipant.h in Headers */,
 				253C2A151C3C9E0000ED1549 /* ATLDataSourceChange.h in Headers */,
+				5AEF68811C75284300808463 /* LYRIdentity+ATLParticipant.h in Headers */,
 				253C2A191C3C9E0000ED1549 /* ATLParticipantTableDataSet.h in Headers */,
 				253C2A051C3C9E0000ED1549 /* Atlas.h in Headers */,
 				253C2A221C3C9E0000ED1549 /* ATLErrors.h in Headers */,
@@ -1311,6 +1318,7 @@
 				253C2A491C3C9E0000ED1549 /* ATLMessageComposeTextView.m in Sources */,
 				253C2A1A1C3C9E0000ED1549 /* ATLParticipantTableDataSet.m in Sources */,
 				253C2A161C3C9E0000ED1549 /* ATLDataSourceChange.m in Sources */,
+				5AEF68821C75284300808463 /* LYRIdentity+ATLParticipant.m in Sources */,
 				253C2A531C3C9E0000ED1549 /* ATLPlayView.m in Sources */,
 				253C2A2D1C3C9E0000ED1549 /* UIResponder+ATLFirstResponder.m in Sources */,
 				253C2A231C3C9E0000ED1549 /* ATLErrors.m in Sources */,

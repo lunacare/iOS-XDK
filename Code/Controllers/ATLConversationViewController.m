@@ -30,6 +30,7 @@
 #import "ATLConversationDataSource.h"
 #import "ATLMediaAttachment.h"
 #import "ATLLocationManager.h"
+#import "LYRIdentity+ATLParticipant.h"
 
 @import AVFoundation;
 
@@ -425,7 +426,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     [cell shouldDisplayAvatarItem:willDisplayAvatarItem];
     
     if ([self shouldDisplayAvatarItemAtIndexPath:indexPath]) {
-        [cell updateWithSender:[self participantForIdentifier:message.sender.userID]];
+        [cell updateWithSender:[self participantForIdentity:message.sender]];
     } else {
         [cell updateWithSender:nil];
     }
@@ -616,7 +617,8 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 
 - (LYRMessage *)messageForMessageParts:(NSArray *)parts MIMEType:(NSString *)MIMEType pushText:(NSString *)pushText;
 {
-    NSString *senderName = [[self participantForIdentifier:self.layerClient.authenticatedUserID] fullName];
+    LYRIdentity *identity = ATLIdentityFromSet(self.layerClient.authenticatedUserID, self.conversation.participants);
+    NSString *senderName = [[self participantForIdentity:identity] displayName];
     NSString *completePushText;
     if (!pushText) {
         if ([MIMEType isEqualToString:ATLMIMETypeImageGIF]) {
@@ -829,7 +831,8 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 {
     NSMutableOrderedSet *knownParticipantsTyping = [NSMutableOrderedSet new];
     [self.typingParticipantIDs enumerateObjectsUsingBlock:^(NSString *participantID, NSUInteger idx, BOOL *stop) {
-        id<ATLParticipant> participant = [self participantForIdentifier:participantID];
+        LYRIdentity *identity = ATLIdentityFromSet(participantID, self.conversation.participants);
+        id<ATLParticipant> participant = [self participantForIdentity:identity];
         if (participant) [knownParticipantsTyping addObject:participant];
     }];
     [self.typingIndicatorController updateWithParticipants:knownParticipantsTyping animated:animated];
@@ -934,7 +937,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 - (void)configureConversationForAddressBar
 {
     NSSet *participants = self.addressBarController.selectedParticipants.set;
-    NSSet *participantIdentifiers = [participants valueForKey:@"participantIdentifier"];
+    NSSet *participantIdentifiers = [participants valueForKey:@"userID"];
     
     if (!participantIdentifiers && !self.conversation.participants) return;
     
@@ -956,15 +959,15 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     if (!self.addressBarController) return;
     
     NSOrderedSet *existingParticipants = self.addressBarController.selectedParticipants;
-    NSOrderedSet *existingParticipantIdentifiers = [existingParticipants valueForKey:@"participantIdentifier"];
+    NSOrderedSet *existingParticipantIdentifiers = [existingParticipants valueForKey:@"userID"];
     
     if (!existingParticipantIdentifiers && !self.conversation.participants) return;
-    if ([existingParticipantIdentifiers.set isEqual:self.conversation.participants]) return;
+    if ([existingParticipantIdentifiers.set isEqual:[self.conversation.participants valueForKey:@"userID"]]) return;
     
     NSMutableOrderedSet *removedIdentifiers = [NSMutableOrderedSet orderedSetWithOrderedSet:existingParticipantIdentifiers];
-    [removedIdentifiers minusSet:self.conversation.participants];
+    [removedIdentifiers minusSet:[self.conversation.participants valueForKey:@"userID"]];
     
-    NSMutableOrderedSet *addedIdentifiers = [NSMutableOrderedSet orderedSetWithSet:self.conversation.participants];
+    NSMutableOrderedSet *addedIdentifiers = [NSMutableOrderedSet orderedSetWithSet:[self.conversation.participants valueForKey:@"userID"]];
     [addedIdentifiers minusOrderedSet:existingParticipantIdentifiers];
     
     NSString *authenticatedUserID = self.layerClient.authenticatedUserID;
@@ -1098,12 +1101,12 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 
 #pragma mark - Data Source
 
-- (id<ATLParticipant>)participantForIdentifier:(NSString *)identifier
+- (id<ATLParticipant>)participantForIdentity:(LYRIdentity *)identity;
 {
-    if ([self.dataSource respondsToSelector:@selector(conversationViewController:participantForIdentifier:)]) {
-        return [self.dataSource conversationViewController:self participantForIdentifier:identifier];
+    if ([self.dataSource respondsToSelector:@selector(conversationViewController:participantForIdentity:)]) {
+        return [self.dataSource conversationViewController:self participantForIdentity:identity];
     } else {
-        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"ATLConversationViewControllerDelegate must return a participant for an identifier" userInfo:nil];
+        return identity;
     }
 }
 
@@ -1157,7 +1160,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
         conversation = [self.dataSource conversationViewController:self conversationWithParticipants:participants];
         if (conversation) return conversation;
     }
-    NSSet *participantIdentifiers = [participants valueForKey:@"participantIdentifier"];
+    NSSet *participantIdentifiers = [participants valueForKey:@"userID"];
     conversation = [self existingConversationWithParticipantIdentifiers:participantIdentifiers];
     if (conversation) return conversation;
     
@@ -1318,7 +1321,8 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 {
     NSMutableOrderedSet *participants = [NSMutableOrderedSet new];
     for (NSString *participantIdentifier in identifiers) {
-        id<ATLParticipant> participant = [self participantForIdentifier:participantIdentifier];
+        LYRIdentity *identity = ATLIdentityFromSet(participantIdentifier, self.conversation.participants);
+        id<ATLParticipant> participant = [self participantForIdentity:identity];
         if (!participant) continue;
         [participants addObject:participant];
     }
@@ -1329,10 +1333,10 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 {
     NSString *participantName;
     if (message.sender.userID) {
-        id<ATLParticipant> participant = [self participantForIdentifier:message.sender.userID];
-        participantName = participant.fullName ?: ATLLocalizedString(@"atl.conversation.participant.unknown.key", @"Unknown User", nil);
+        id<ATLParticipant> participant = [self participantForIdentity:message.sender];
+        participantName = participant.displayName ?: ATLLocalizedString(@"atl.conversation.participant.unknown.key", @"Unknown User", nil);
     } else {
-        participantName = message.sender.name;
+        participantName = message.sender.displayName;
     }
     return participantName;
 }

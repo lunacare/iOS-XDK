@@ -63,7 +63,7 @@
 {
     self.authenticatedUserID = authenticatedUserID;
     ATLUserMock *user = [ATLUserMock randomUser];
-    LYRConversationMock *conversation = [LYRConversationMock newConversationWithParticipants:[NSSet setWithObjects:user.participantIdentifier, self.authenticatedUserID, nil] options:nil];
+    LYRConversationMock *conversation = [LYRConversationMock newConversationWithParticipants:[NSSet setWithObjects:user.userID, self.authenticatedUserID, nil] options:nil];
     [self hydrateMessagesForConversation:conversation];
 }
 
@@ -77,7 +77,7 @@
 - (void)hydrateMessagesForConversation:(LYRConversationMock *)conversation
 {
     // Get the other participants ID
-    NSMutableSet *participantCopy = [conversation.participants mutableCopy];
+    NSMutableSet *participantCopy = [[conversation.participants valueForKey:@"userID"] mutableCopy];
     [participantCopy minusSet:[NSSet setWithObject:self.authenticatedUserID]];
     NSString *participant = [[participantCopy allObjects] lastObject];
     

@@ -82,7 +82,7 @@
 - (void)conversationListViewController:(ATLConversationListViewController *)conversationListViewController didSearchForText:(NSString *)searchText completion:(void (^)(NSSet <id<ATLParticipant>> *filteredParticipants))completion
 {
     NSSet *participants = [ATLUserMock allMockParticipants];
-    NSSet *filteredParticipants = [participants filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.fullName CONTAINS[cd] %@", searchText]];
+    NSSet *filteredParticipants = [participants filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.displayName CONTAINS[cd] %@", searchText]];
     completion(filteredParticipants);
 }
 
@@ -91,7 +91,7 @@
 - (NSString *)conversationListViewController:(ATLConversationListViewController *)conversationListViewController titleForConversation:(LYRConversation *)conversation
 {
     if (!self.layerClient.authenticatedUserID) return @"Not auth'd";
-    NSMutableSet *participantIdentifiers = [conversation.participants mutableCopy];
+    NSMutableSet *participantIdentifiers = [[conversation.participants valueForKey:@"userID"] mutableCopy];
     [participantIdentifiers removeObject:self.layerClient.authenticatedUserID];
     
     if (participantIdentifiers.count == 0) return @"Personal Conversation";
@@ -114,10 +114,10 @@
         firstUser = [[participants allObjects] objectAtIndex:0];
     }
     
-    NSString *conversationLabel = firstUser.fullName;
+    NSString *conversationLabel = firstUser.displayName;
     for (int i = 1; i < [[participants allObjects] count]; i++) {
         ATLUserMock *user = [[participants allObjects] objectAtIndex:i];
-        conversationLabel = [NSString stringWithFormat:@"%@, %@", conversationLabel, user.fullName];
+        conversationLabel = [NSString stringWithFormat:@"%@, %@", conversationLabel, user.displayName];
     }
     return conversationLabel;
 }

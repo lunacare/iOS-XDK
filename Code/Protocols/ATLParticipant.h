@@ -41,13 +41,13 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The full name of the participant as it should be presented in the user interface.
  */
-@property (nonatomic, readonly) NSString *fullName;
+@property (nonatomic, readonly) NSString *displayName;
 
 /**
  @abstract The unique identifier of the participant as it should be used for Layer addressing.
  @discussion This identifier is issued by the Layer identity provider backend.
  */
-@property (nonatomic, readonly) NSString *participantIdentifier;
+@property (nonatomic, readonly) NSString *userID;
 
 @end
 NS_ASSUME_NONNULL_END

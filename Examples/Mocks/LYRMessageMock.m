@@ -20,7 +20,7 @@
 #import "LYRMessageMock.h"
 #import "LYRMockContentStore.h"
 
-@implementation LYRActorMock
+@implementation LYRIdentityMock
 @end
 
 @interface LYRMessageMock ()
@@ -29,7 +29,7 @@
 @property (nonatomic, readwrite) BOOL isSent;
 @property (nonatomic, readwrite) BOOL isDeleted;
 @property (nonatomic, readwrite) BOOL isUnread;
-@property (nonatomic, readwrite) LYRActorMock *sender;
+@property (nonatomic, readwrite) LYRIdentityMock *sender;
 
 @end
 
@@ -40,7 +40,7 @@
     self = [super init];
     if (self) {
         _parts = messageParts;
-        _sender = [LYRActorMock new];
+        _sender = [LYRIdentityMock new];
         _sender.userID = senderID;
     }
     return self;    
@@ -51,8 +51,8 @@
     self = [super init];
     if (self) {
         _parts = messageParts;
-        _sender = [LYRActorMock new];
-        _sender.name = senderName;
+        _sender = [LYRIdentityMock new];
+        _sender.displayName = senderName;
     }
     return self;
 }

@@ -113,7 +113,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param participantForIdentifier The participant identifier.
  @return An object conforming to the `ATLParticipant` protocol.
  */
-- (nullable id<ATLParticipant>)conversationViewController:(ATLConversationViewController *)conversationViewController participantForIdentifier:(NSString *)participantIdentifier;
+- (id<ATLParticipant>)conversationViewController:(ATLConversationViewController *)conversationViewController participantForIdentity:(LYRIdentity *)identity;
 
 /**
  @abstract Asks the data source for an `NSAttributedString` representation of a given date.

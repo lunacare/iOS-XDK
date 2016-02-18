@@ -226,7 +226,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 - (void)setupConversationDataSource
 {
     LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
-    query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsIn value:self.layerClient.authenticatedUserID];
+    query.predicate = [LYRPredicate predicateWithProperty:@"participants.userID" predicateOperator:LYRPredicateOperatorIsIn value:self.layerClient.authenticatedUserID];
     query.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"lastMessage.receivedAt" ascending:NO]];
     
     if ([self.dataSource respondsToSelector:@selector(conversationListViewController:willLoadWithQuery:)]) {
@@ -490,7 +490,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     if ([self.delegate respondsToSelector:@selector(conversationListViewController:didSearchForText:completion:)]) {
         [self.delegate conversationListViewController:self didSearchForText:searchString completion:^(NSSet *filteredParticipants) {
             if (![searchString isEqualToString:controller.searchBar.text]) return;
-            NSSet *participantIdentifiers = [filteredParticipants valueForKey:@"participantIdentifier"];
+            NSSet *participantIdentifiers = [filteredParticipants valueForKey:@"userID"];
             
             LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
             query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsIn value:participantIdentifiers];
