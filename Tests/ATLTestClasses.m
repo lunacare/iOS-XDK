@@ -19,6 +19,7 @@
 //
 
 #import "ATLTestClasses.h"
+#import <OCMock/OCMock.h>
 
 @implementation ATLTestClasses
 
@@ -40,7 +41,8 @@
 
 - (void)updateWithConversationImage:(UIImage *)image
 {
-    [super updateWithAvatarItem:nil];
+    id mockAvatar = OCMProtocolMock(@protocol(ATLAvatarItem));
+    [super updateWithAvatarItem:mockAvatar];
 }
 
 @end
