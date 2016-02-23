@@ -44,6 +44,27 @@ NSString *const ATLImagePreviewHeightKey = @"height";
 NSString *const ATLLocationLatitudeKey = @"lat";
 NSString *const ATLLocationLongitudeKey = @"lon";
 
+NSString *const ATLUserNotificationInlineReplyActionIdentifier = @"layer:///actions/inline-reply";
+NSString *const ATLUserNotificationDefaultActionsCategoryIdentifier = @"layer:///categories/default";
+
+#pragma mark - Push Support
+
+UIMutableUserNotificationCategory *ATLDefaultUserNotificationCategory()
+{
+    UIMutableUserNotificationAction *replyAction = [UIMutableUserNotificationAction new];
+    replyAction.identifier = ATLUserNotificationInlineReplyActionIdentifier;
+    replyAction.title = @"Reply";
+    replyAction.activationMode = UIUserNotificationActivationModeBackground;
+    replyAction.authenticationRequired = NO;
+    replyAction.behavior = UIUserNotificationActionBehaviorTextInput;
+    
+    UIMutableUserNotificationCategory *category = [UIMutableUserNotificationCategory new];
+    category.identifier = ATLUserNotificationDefaultActionsCategoryIdentifier;
+    [category setActions:@[ replyAction ] forContext:UIUserNotificationActionContextDefault];
+    
+    return category;
+}
+
 #pragma mark - Max Cell Dimensions
 
 CGFloat ATLMaxCellWidth()
@@ -158,6 +179,8 @@ LYRMessage *ATLMessageForParts(LYRClient *layerClient, NSArray *messageParts, NS
     LYRPushNotificationConfiguration *defaultConfiguration = [LYRPushNotificationConfiguration new];
     defaultConfiguration.alert = pushText;
     defaultConfiguration.sound = pushSound;
+    defaultConfiguration.category = ATLUserNotificationDefaultActionsCategoryIdentifier;
+    
     NSDictionary *options = @{ LYRMessageOptionsPushNotificationConfigurationKey: defaultConfiguration };
     NSError *error;
     LYRMessage *message = [layerClient newMessageWithParts:messageParts options:options error:&error];
