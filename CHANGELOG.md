@@ -1,5 +1,11 @@
 # Atlas Changelog
 
+## 1.0.20
+
+### Enchancements
+
+* Integrates LayerKit's partial-sync feature in the `ATLConversationDataSource` class.
+
 ## 1.0.19
 
 ## Bug Fixes
