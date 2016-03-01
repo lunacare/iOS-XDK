@@ -50,6 +50,7 @@
 @property (nonatomic) BOOL shouldShareLocation;
 @property (nonatomic) BOOL canDisableAddressBar;
 @property (nonatomic) dispatch_queue_t animationQueue;
+@property (nonatomic) BOOL expandingPaginationWindow;
 
 @end
 
@@ -904,6 +905,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     BOOL nearTop = distanceFromTop <= minimumDistanceFromTopToTriggerLoadingMore;
     if (!nearTop) return;
     
+    self.expandingPaginationWindow = YES;
     [self.conversationDataSource expandPaginationWindow];
 }
 
@@ -1173,7 +1175,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
           forChangeType:(LYRQueryControllerChangeType)type
            newIndexPath:(NSIndexPath *)newIndexPath
 {
-    if (self.conversationDataSource.isExpandingPaginationWindow) return;
+    if (self.expandingPaginationWindow) return;
     NSInteger currentIndex = indexPath ? [self.conversationDataSource collectionViewSectionForQueryControllerRow:indexPath.row] : NSNotFound;
     NSInteger newIndex = newIndexPath ? [self.conversationDataSource collectionViewSectionForQueryControllerRow:newIndexPath.row] : NSNotFound;
     [self.objectChanges addObject:[ATLDataSourceChange changeObjectWithType:type newIndex:newIndex currentIndex:currentIndex]];
@@ -1189,7 +1191,8 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     NSArray *objectChanges = [self.objectChanges copy];
     [self.objectChanges removeAllObjects];
     
-    if (self.conversationDataSource.isExpandingPaginationWindow) {
+    if (self.expandingPaginationWindow) {
+        self.expandingPaginationWindow = NO;
         self.showingMoreMessagesIndicator = [self.conversationDataSource moreMessagesAvailable];
         [self reloadCollectionViewAdjustingForContentHeightChange];
         return;

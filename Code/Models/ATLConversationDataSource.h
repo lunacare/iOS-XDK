@@ -69,11 +69,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)expandPaginationWindow;
 
-/**
- @abstract Returns `YES` if the data source is currently in the process of expanding its pagination window.
- */
-@property (nonatomic, readonly, getter=isExpandingPaginationWindow) BOOL expandingPaginationWindow;
-
 ///---------------------------------------
 /// @name Index Translation Methods
 ///---------------------------------------
