@@ -12,7 +12,10 @@
 
 - (NSString *)avatarInitials
 {
-    return [NSString stringWithFormat:@"%@%@", [self.firstName substringToIndex:1], [self.lastName substringToIndex:1]];
+    if (self.firstName && self.lastName) {
+        return [NSString stringWithFormat:@"%@%@", [self.firstName substringToIndex:1], [self.lastName substringToIndex:1]];
+    }
+    return [self.displayName substringToIndex:2];
 }
 
 - (UIImage *)avatarImage
