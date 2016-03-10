@@ -28,6 +28,7 @@
 #define EXP_SHORTHAND
 #import <Expecta/Expecta.h>
 #import <OCMock/OCMock.h>
+#import <KIF/KIF.h>
 
 @interface ATLMediaAttachmentTests : XCTestCase
 
@@ -126,10 +127,6 @@
 
 #pragma mark Tests for Media Attachment With Images
 
-/**
- @warning Make sure you allowed the XCTestCase to access the photo library.
- It's a manual process on the UI in the simulator.
- */
 - (void)testMediaAttachmentWithImageFromAsset
 {
     // Generate a test image and put it into the photo library.
@@ -139,6 +136,10 @@
     [library writeImageToSavedPhotosAlbum:image.CGImage metadata:@{ @"Orientation": @(UIImageOrientationUp) } completionBlock:^(NSURL *outAssetURL, NSError *error) {
         assetURL = outAssetURL;
     }];
+
+    // Automatically authorize the photo library access
+    [tester acknowledgeSystemAlert];
+
     expect(assetURL).willNot.beNil();
     
     ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithAssetURL:assetURL thumbnailSize:512];
@@ -293,10 +294,6 @@
 
 #pragma mark Tests for Media Attachment With Videos
 
-/**
- @warning Make sure you allowed the XCTestCase to access the photo library.
-   It's a manual process on the UI in the simulator.
- */
 - (void)testMediaAttachmentWithVideoFromAsset
 {
     // Generate a test video and put in into the library.
@@ -308,6 +305,10 @@
     [library writeVideoAtPathToSavedPhotosAlbum:videoFileURL completionBlock:^(NSURL *outAssetURL, NSError *error) {
         assetURL = outAssetURL;
     }];
+
+    // Automatically authorize the photo library access
+    [tester acknowledgeSystemAlert];
+
     expect(assetURL).willNot.beNil();
     
     // Get Last Video
