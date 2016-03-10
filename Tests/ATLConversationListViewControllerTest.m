@@ -578,7 +578,11 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     self.viewController = [ATLSampleConversationListViewController conversationListViewControllerWithLayerClient:(LYRClient *)self.testInterface.layerClient];
     self.viewController.displaysAvatarItem = YES;
     [self setRootViewController:self.viewController];
-    
+
+    ATLUserMock *mockUser1 = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
+    [self newConversationWithMockUser:mockUser1 lastMessageText:@"Test Message"];
+    [tester waitForAnimationsToFinish];
+
     ATLAvatarImageView *imageView = (ATLAvatarImageView *)[tester waitForViewWithAccessibilityLabel:ATLAvatarImageViewAccessibilityLabel];
     expect(imageView.image).will.beTruthy;
 }
