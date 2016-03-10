@@ -350,6 +350,8 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     LYRConversationMock *conversation1 = [self newConversationWithMockUser:mockUser1 lastMessageText:@"Test Message"];
     
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationListViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
@@ -378,6 +380,8 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     
     LYRDeletionMode deletionMode = LYRDeletionModeAllParticipants;
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationListViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
@@ -411,6 +415,8 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     
     LYRDeletionMode deletionMode = LYRDeletionModeMyDevices;
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationListViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
@@ -444,6 +450,8 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     
     __block NSString *searchText = @"T";
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationListViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
@@ -471,8 +479,10 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     
     id delegateMock = OCMProtocolMock(@protocol(ATLConversationListViewControllerDataSource));
     self.viewController.dataSource = delegateMock;
-    
+
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationListViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
@@ -482,6 +492,8 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     }] conversationListViewController:[OCMArg any] textForButtonWithDeletionMode:LYRDeletionModeAllParticipants];
     
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationListViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
@@ -489,10 +501,10 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
         UIColor *green = [UIColor greenColor];
         [invocation setReturnValue:&green];
     }] conversationListViewController:[OCMArg any] colorForButtonWithDeletionMode:LYRDeletionModeAllParticipants];
-    
+
     [tester swipeViewWithAccessibilityLabel:[self.testInterface conversationLabelForConversation:conversation1]  inDirection:KIFSwipeDirectionLeft];
     [delegateMock verify];
-    
+
     UIView *deleteButton = [tester waitForViewWithAccessibilityLabel:@"Test"];
     expect(deleteButton.backgroundColor).to.equal([UIColor greenColor]);
 }
@@ -506,6 +518,8 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     self.viewController.dataSource = delegateMock;
     
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationListViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
@@ -531,6 +545,8 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     
     __block NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"identifier" ascending:YES];
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationListViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
