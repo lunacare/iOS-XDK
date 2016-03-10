@@ -251,7 +251,8 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
 {
     self.viewController = [ATLSampleConversationListViewController conversationListViewControllerWithLayerClient:(LYRClient *)self.testInterface.layerClient];
     [self setRootViewController:self.viewController];
-    expect(^{ [self.viewController setCellClass:[UITableViewCell class]]; }).to.raise(NSInternalInconsistencyException);
+    __block typeof(self.viewController)blockFriendlyViewController = self.viewController;
+    expect(^{ [blockFriendlyViewController setCellClass:[UITableViewCell class]]; }).to.raise(NSInternalInconsistencyException);
 }
 
 //Verify that attempting to change the cell class after the table is loaded results in a runtime error.
@@ -260,7 +261,8 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     self.viewController = [ATLSampleConversationListViewController conversationListViewControllerWithLayerClient:(LYRClient *)self.testInterface.layerClient];
     [self setRootViewController:self.viewController];
     [tester waitForTimeInterval:1.0]; // Allow controller to be presented.
-    expect(^{ [self.viewController setCellClass:[ATLTestConversationCell class]]; }).to.raise(NSInternalInconsistencyException);
+    __block typeof(self.viewController)blockFriendlyViewController = self.viewController;
+    expect(^{ [blockFriendlyViewController setCellClass:[ATLTestConversationCell class]]; }).to.raise(NSInternalInconsistencyException);
 }
 
 //Verify that attempting to change the cell class after the table is loaded results in a runtime error.
@@ -269,7 +271,8 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     self.viewController = [ATLSampleConversationListViewController conversationListViewControllerWithLayerClient:(LYRClient *)self.testInterface.layerClient];
     [self setRootViewController:self.viewController];
     [tester waitForTimeInterval:1.0]; // Allow controller to be presented.
-    expect(^{ [self.viewController setRowHeight:40]; }).to.raise(NSInternalInconsistencyException);
+    __block typeof(self.viewController)blockFriendlyViewController = self.viewController;
+    expect(^{ [blockFriendlyViewController setRowHeight:40]; }).to.raise(NSInternalInconsistencyException);
 }
 
 //Verify that attempting to change the cell class after the table is loaded results in a runtime error.
@@ -278,7 +281,8 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     self.viewController = [ATLSampleConversationListViewController conversationListViewControllerWithLayerClient:(LYRClient *)self.testInterface.layerClient];
     [self setRootViewController:self.viewController];
     [tester waitForTimeInterval:1.0]; // Allow controller to be presented.
-    expect(^{ [self.viewController setAllowsEditing:YES]; }).to.raise(NSInternalInconsistencyException);
+    __block typeof(self.viewController)blockFriendlyViewController = self.viewController;
+    expect(^{ [blockFriendlyViewController setAllowsEditing:YES]; }).to.raise(NSInternalInconsistencyException);
 }
 
 #pragma mark - ATLConversationListViewControllerDataSource
