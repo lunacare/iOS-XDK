@@ -40,7 +40,7 @@
 /**
  @abstract Singleton Accessor for the mock content store
  */
-+ (id)sharedStore;
++ (instancetype)sharedStore;
 
 /**
  @abstrace Creates an arbitrary number of Layer conversations, each with 11 messages.
