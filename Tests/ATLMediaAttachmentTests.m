@@ -52,19 +52,23 @@
     }).to.raiseWithReason(NSInternalInconsistencyException, @"Failed to call designated initializer. Use one of the following initialiers: mediaAttachmentWithAssetURL:thumbnailSize:, mediaAttachmentWithImage:metadata:thumbnailSize:, mediaAttachmentWithText:, mediaAttachmentWithLocation:");
     
     expect(^{
-        __unused ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithAssetURL:nil thumbnailSize:0];
+        NSURL *url = nil;
+        __unused ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithAssetURL:url thumbnailSize:0];
     }).to.raiseWithReason(NSInternalInconsistencyException, @"Cannot initialize ATLMediaAttachment with `nil` assetURL.");
 
     expect(^{
-        __unused ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithImage:nil metadata:nil thumbnailSize:0];
+        UIImage *image = nil;
+        __unused ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithImage:image metadata:nil thumbnailSize:0];
     }).to.raiseWithReason(NSInternalInconsistencyException, @"Cannot initialize ATLMediaAttachment with `nil` image.");
 
     expect(^{
-        __unused ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithText:nil];
+        NSString *text = nil;
+        __unused ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithText:text];
     }).to.raiseWithReason(NSInternalInconsistencyException, @"Cannot initialize ATLMediaAttachment with `nil` text.");
 
     expect(^{
-        __unused ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithLocation:nil];
+        CLLocation *location = nil;
+        __unused ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithLocation:location];
     }).to.raiseWithReason(NSInternalInconsistencyException, @"Cannot initialize ATLMediaAttachment with `nil` location.");
 }
 
