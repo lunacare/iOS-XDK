@@ -289,37 +289,45 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     self.viewController.displaysAvatarItem = YES;
     [self setRootViewController:self.viewController];
     [tester waitForTimeInterval:0.5];
-    
+
     id delegateMock = OCMProtocolMock(@protocol(ATLConversationListViewControllerDataSource));
     self.viewController.dataSource = delegateMock;
     
     ATLUserMock *mockUser1 = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
-    
-    LYRConversation *conversation;
+    LYRConversationMock *conversation = [self.testInterface.layerClient newConversationWithParticipants:[NSSet setWithObject:mockUser1.participantIdentifier] options:nil error:nil];;
+
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationListViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
         
-        LYRConversation *conversation;
-        [invocation getArgument:&conversation atIndex:3];
-        expect(conversation).to.equal(conversation);
+        LYRConversation *conv;
+        [invocation getArgument:&conv atIndex:3];
+        expect(conv).to.equal(conversation);
         
         NSString *conversationTitle = mockUser1.fullName;
         [invocation setReturnValue:&conversationTitle];
     }] conversationListViewController:[OCMArg any] titleForConversation:[OCMArg any]];
     
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationListViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
         
-        LYRConversation *conversation;
-        [invocation getArgument:&conversation atIndex:3];
-        expect(conversation).to.equal(conversation);
+        LYRConversation *conv;
+        [invocation getArgument:&conv atIndex:3];
+        expect(conv).to.equal(conversation);
     }] conversationListViewController:[OCMArg any] avatarItemForConversation:[OCMArg any]];
-    
-    conversation = (LYRConversation *)[self newConversationWithMockUser:mockUser1 lastMessageText:@"Test Message"];
+
+    // now send the message
+    LYRMessagePart *part = [LYRMessagePart messagePartWithText:@"Test Message"];
+    LYRMessageMock *message = [self.testInterface.layerClient newMessageWithParts:@[part] options:nil error:nil];
+    [conversation sendMessage:message error:nil];
+
     [delegateMock verify];
 }
 
