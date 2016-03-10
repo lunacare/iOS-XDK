@@ -44,20 +44,25 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
 - (void)setUp
 {
     [super setUp];
-    
+
     ATLUserMock *mockUser = [ATLUserMock userWithMockUserName:ATLMockUserNameBlake];
     LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.participantIdentifier];
     self.testInterface = [ATLTestInterface testIntefaceWithLayerClient:layerClient];
+
+    [LYRMockContentStore sharedStore].shouldBroadcastChanges = YES;
 }
 
 - (void)tearDown
 {
     [super tearDown];
-    [tester waitForAnimationsToFinish];
-    [self.testInterface dismissPresentedViewController];
-    if (self.viewController) self.viewController = nil;
-    
+
+    [LYRMockContentStore sharedStore].shouldBroadcastChanges = NO;
     [[LYRMockContentStore sharedStore] resetContentStore];
+
+    [self.testInterface dismissPresentedViewController];
+    [tester waitForAnimationsToFinish];
+    if (self.viewController) self.viewController = nil;
+
     [self resetAppearance];
     self.testInterface = nil;
 }
