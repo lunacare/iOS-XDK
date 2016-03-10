@@ -59,6 +59,14 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     [LYRMockContentStore sharedStore].shouldBroadcastChanges = NO;
     [[LYRMockContentStore sharedStore] resetContentStore];
 
+    // HACK: workaround to ensure the `queryController` is properly removed from the observers
+    //       because in some cases KIF is leaking memory which leads to retaining the `viewController`
+    //       which leads to not deallocating the `queryController`.
+    //       Until KIF fixes it, we are forced to keep this not-perfect-workaround
+    if (self.viewController && self.viewController.queryController) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self.viewController.queryController];
+    }
+
     [self.testInterface dismissPresentedViewController];
     [tester waitForAnimationsToFinish];
     if (self.viewController) self.viewController = nil;
