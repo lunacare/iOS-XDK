@@ -146,7 +146,7 @@ NS_ASSUME_NONNULL_BEGIN
  This can be done via a call to `registerClass:forMessageCellWithReuseIdentifier:`. Applications should then return the registered reuse identifier only when necessary.
  If `nil` is returned, the collection view will default to internal values for reuse identifiers.
  */
-- (NSString *)conversationViewController:(ATLConversationViewController *)viewController reuseIdentifierForMessage:(LYRMessage *)message;
+- (nullable NSString *)conversationViewController:(ATLConversationViewController *)viewController reuseIdentifierForMessage:(LYRMessage *)message;
 
 /**
  @abstract Asks the data source to provide a conversation for a set of participants.
