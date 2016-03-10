@@ -58,7 +58,7 @@ if defined?(XCTasks)
   XCTasks::TestTask.new(:test) do |t|
     t.workspace = 'Atlas.xcworkspace'
     t.schemes_dir = 'Tests/Schemes'
-    t.runner = :xcpretty
+    t.runner = :xctool
     t.output_log = 'xcodebuild.log'
     t.subtasks = { progammatic: 'Programmatic'}
     t.destination do |d|
