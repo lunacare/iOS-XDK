@@ -271,7 +271,7 @@
     } while (bytesRead > 0);
     free(buffer);
     
-    expect(stream.streamStatus).to.equal(NSStreamStatusAtEnd);
+    expect(stream.streamStatus).will.to.equal(NSStreamStatusAtEnd);
     [stream close];
     expect(stream.streamStatus).to.equal(NSStreamStatusClosed);
     expect(stream.streamError).to.beNil();
@@ -366,7 +366,7 @@
     } while (bytesRead > 0);
     free(buffer);
     
-    expect(stream.streamStatus).to.equal(NSStreamStatusAtEnd);
+    expect(stream.streamStatus).will.to.equal(NSStreamStatusAtEnd);
     [stream close];
     expect(stream.streamStatus).to.equal(NSStreamStatusClosed);
     expect(stream.streamError).to.beNil();
@@ -460,7 +460,7 @@
     } while (bytesRead > 0);
     free(buffer);
     
-    expect(stream.streamStatus).to.equal(NSStreamStatusAtEnd);
+    expect(stream.streamStatus).will.to.equal(NSStreamStatusAtEnd);
     [stream close];
     expect(stream.streamStatus).to.equal(NSStreamStatusClosed);
     expect(stream.streamError).to.beNil();
@@ -495,7 +495,7 @@
         [data appendBytes:buffer length:bytesRead];
     } while (bytesRead > 0);
     free(buffer);
-    expect(stream.streamStatus).to.equal(NSStreamStatusAtEnd);
+    expect(stream.streamStatus).will.to.equal(NSStreamStatusAtEnd);
     [stream close];
     
     NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:NULL];
