@@ -60,7 +60,7 @@ if defined?(XCTasks)
     t.schemes_dir = 'Tests/Schemes'
     t.runner = :xcpretty
     t.output_log = 'xcodebuild.log'
-    t.subtasks = { progammatic: 'ProgrammaticTests'}
+    t.subtasks = { progammatic: 'Programmatic'}
     t.destination do |d|
       d.platform = :iossimulator
       d.os = :latest
