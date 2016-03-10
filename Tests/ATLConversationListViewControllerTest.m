@@ -116,9 +116,10 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
 {
     self.viewController = [ATLSampleConversationListViewController conversationListViewControllerWithLayerClient:(LYRClient *)self.testInterface.layerClient];
     [self setRootViewController:self.viewController];
-    
+
+    NSString *message1 = @"Message1";
     ATLUserMock *mockUser1 = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
-    LYRConversationMock *conversation1 = [self newConversationWithMockUser:mockUser1 lastMessageText:@"Test Message"];
+    LYRConversationMock *conversation1 = [self.testInterface conversationWithParticipants:[NSSet setWithObject:mockUser1.participantIdentifier] lastMessageText:message1];
     [tester swipeViewWithAccessibilityLabel:[self.testInterface conversationLabelForConversation:conversation1] inDirection:KIFSwipeDirectionLeft];
     [self deleteConversation:conversation1 deletionMode:LYRDeletionModeMyDevices];
 }
@@ -552,13 +553,13 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
 {
     switch (deletionMode) {
         case LYRDeletionModeAllParticipants:
-            [tester waitForViewWithAccessibilityLabel:@"Global"];
-            [tester tapViewWithAccessibilityLabel:[NSString stringWithFormat:@"Global"]];
+            [tester waitForViewWithAccessibilityLabel:@"Everyone"];
+            [tester tapViewWithAccessibilityLabel:[NSString stringWithFormat:@"Everyone"]];
             [tester waitForAbsenceOfViewWithAccessibilityLabel:[self.testInterface conversationLabelForConversation:conversation]];
             break;
         case LYRDeletionModeMyDevices:
-            [tester waitForViewWithAccessibilityLabel:@"Local"];
-            [tester tapViewWithAccessibilityLabel:[NSString stringWithFormat:@"Local"]];
+            [tester waitForViewWithAccessibilityLabel:@"My Devices"];
+            [tester tapViewWithAccessibilityLabel:[NSString stringWithFormat:@"My Devices"]];
             [tester waitForAbsenceOfViewWithAccessibilityLabel:[self.testInterface conversationLabelForConversation:conversation]];
             break;
         default:
