@@ -148,7 +148,7 @@ CGFloat const ATLRightAccessoryButtonPadding = 5.3f;
     id delegateMock = OCMProtocolMock(@protocol(ATLMessageInputToolbarDelegate));
     toolBar.inputToolBarDelegate = delegateMock;
     
-    NSString *testText = @"This is a test";
+    NSString *testText = @"Test";
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
         ATLMessageInputToolbar *toolbar;
         [invocation getArgument:&toolbar atIndex:2];
@@ -199,7 +199,7 @@ CGFloat const ATLRightAccessoryButtonPadding = 5.3f;
     id delegateMock = OCMProtocolMock(@protocol(ATLMessageInputToolbarDelegate));
     toolBar.inputToolBarDelegate = delegateMock;
     
-    __block NSString *testText = @"This is a test";
+    __block NSString *testText = @"Test";
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
         ATLMessageInputToolbar *newToolbar;
         [invocation getArgument:&newToolbar atIndex:2];
@@ -227,7 +227,7 @@ CGFloat const ATLRightAccessoryButtonPadding = 5.3f;
     id delegateMock = OCMProtocolMock(@protocol(ATLMessageInputToolbarDelegate));
     toolBar.inputToolBarDelegate = delegateMock;
     
-    __block NSString *testText = @"This is a test";
+    __block NSString *testText = @"Test";
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
         NSArray *parts = toolBar.mediaAttachments;
         expect(parts.count).to.equal(3);
