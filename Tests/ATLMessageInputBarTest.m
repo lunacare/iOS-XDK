@@ -104,7 +104,7 @@ CGFloat const ATLRightAccessoryButtonPadding = 5.3f;
     toolBar.textInputView.text = @"heyhey";
     [toolBar layoutSubviews];
     CGFloat width = [toolBar.rightAccessoryButtonTitle boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:0 attributes:@{NSFontAttributeName: toolBar.rightAccessoryButtonFont} context:nil].size.width + ATLRightAccessoryButtonPadding;
-    expect(toolBar.rightAccessoryButton.frame.size.width).to.equal(width);
+    expect(toolBar.rightAccessoryButton.frame.size.width).to.beCloseToWithin(width, 0.5);
 }
 
 - (void)testToVerifyRightAccessoryButtonDelegateFunctionality
