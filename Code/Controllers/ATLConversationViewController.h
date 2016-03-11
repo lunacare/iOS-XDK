@@ -212,7 +212,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The `LYRConversation` object whose messages will be displayed in the controller.
  */
-@property (nonatomic, nullable) LYRConversation *conversation;
+@property (nonatomic) LYRConversation *conversation;
 
 /**
  @abstract The `LYRQueryController` object managing data displayed in the controller.
