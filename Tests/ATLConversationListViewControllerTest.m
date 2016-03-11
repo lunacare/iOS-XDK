@@ -181,8 +181,8 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     LYRConversationMock *conversation1 = [self newConversationWithMockUser:mockUser1 lastMessageText:@"Test Message"];
     
     [tester swipeViewWithAccessibilityLabel:[self.testInterface conversationLabelForConversation:conversation1] inDirection:KIFSwipeDirectionLeft];
-    [tester waitForAbsenceOfViewWithAccessibilityLabel:[NSString stringWithFormat:@"Global"]];
-    [tester waitForAbsenceOfViewWithAccessibilityLabel:[NSString stringWithFormat:@"Local"]];
+    [tester waitForAbsenceOfViewWithAccessibilityLabel:[NSString stringWithFormat:@"Everyone"]];
+    [tester waitForAbsenceOfViewWithAccessibilityLabel:[NSString stringWithFormat:@"My Devices"]];
 }
 
 //Customize the fonts and colors using UIAppearance and verify that the configuration is respected.
