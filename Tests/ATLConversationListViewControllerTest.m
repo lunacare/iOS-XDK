@@ -54,8 +54,6 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
 
 - (void)tearDown
 {
-    [super tearDown];
-
     [LYRMockContentStore sharedStore].shouldBroadcastChanges = NO;
     [[LYRMockContentStore sharedStore] resetContentStore];
 
@@ -73,6 +71,8 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
 
     [self resetAppearance];
     self.testInterface = nil;
+
+    [super tearDown];
 }
 
 - (void)testToVerifyConversationListBaseUI
