@@ -293,15 +293,13 @@ NSInteger const kATLSharedCellTag = 1000;
                     [weakSelf.bubbleView updateProgressIndicatorWithProgress:progress.fractionCompleted visible:YES animated:NO];
                     [weakSelf.bubbleView updateWithImage:displayingImage width:size.width];
                 } else {
-                    dispatch_async(weakSelf.imageProcessingConcurrentQueue, ^{
-                        displayingImage = ATLAnimatedImageWithAnimatedGIFData(fullResImagePart.data);
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            if (weakSelf.message != previousMessage) {
-                                return;
-                            }
-                            [weakSelf.bubbleView updateProgressIndicatorWithProgress:1.0 visible:NO animated:YES];
-                            [weakSelf.bubbleView updateWithImage:displayingImage width:size.width];
-                        });
+                    displayingImage = ATLAnimatedImageWithAnimatedGIFData(fullResImagePart.data);
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if (weakSelf.message != previousMessage) {
+                            return;
+                        }
+                        [weakSelf.bubbleView updateProgressIndicatorWithProgress:1.0 visible:NO animated:YES];
+                        [weakSelf.bubbleView updateWithImage:displayingImage width:size.width];
                     });
                 }
             }
