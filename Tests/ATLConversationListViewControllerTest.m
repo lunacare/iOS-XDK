@@ -450,13 +450,13 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     [self setRootViewController:self.viewController];
     [tester waitForTimeInterval:0.5];
     
-    id delegateMock = OCMProtocolMock(@protocol(ATLConversationListViewControllerDelegate));
-    self.viewController.delegate = delegateMock;
-    
     ATLUserMock *mockUser1 = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
     LYRConversationMock *conversation1 = [self newConversationWithMockUser:mockUser1 lastMessageText:@"Test Message"];
-    
-    __block NSString *searchText = @"T";
+    [tester waitForAnimationsToFinish];
+
+    id delegateMock = OCMProtocolMock(@protocol(ATLConversationListViewControllerDelegate));
+    self.viewController.delegate = delegateMock;
+
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
         [invocation retainArguments];
 
@@ -464,14 +464,14 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
         
-        NSString *searchText;
-        [invocation getArgument:&searchText atIndex:3];
-        expect(searchText).to.equal(searchText);
-    }] conversationListViewController:[OCMArg any] didSearchForText:searchText completion:[OCMArg any]];
+        NSString *text;
+        [invocation getArgument:&text atIndex:3];
+        expect(text).to.equal(@"T");
+    }] conversationListViewController:[OCMArg any] didSearchForText: @"T" completion:[OCMArg any]];
     
     [tester swipeViewWithAccessibilityLabel:[self.testInterface conversationLabelForConversation:conversation1]  inDirection:KIFSwipeDirectionDown];
     [tester tapViewWithAccessibilityLabel:@"Search Bar"];
-    [tester enterText:searchText intoViewWithAccessibilityLabel:@"Search Bar"];
+    [tester enterText:@"T" intoViewWithAccessibilityLabel:@"Search Bar"];
     [delegateMock verify];
 }
 
