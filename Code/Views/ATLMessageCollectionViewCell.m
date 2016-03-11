@@ -192,11 +192,11 @@ NSInteger const kATLSharedCellTag = 1000;
                 [weakSelf.bubbleView updateProgressIndicatorWithProgress:1.0 visible:NO animated:YES];
             }
         }
-        if (weakSelf.message != previousMessage) {
-            return;
-        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            if (weakSelf.message != previousMessage) {
+                return;
+            }
             [weakSelf.bubbleView updateWithImage:displayingImage width:size.width];
         });
     });
