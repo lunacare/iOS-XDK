@@ -473,6 +473,9 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     [tester tapViewWithAccessibilityLabel:@"Search Bar"];
     [tester enterText:@"T" intoViewWithAccessibilityLabel:@"Search Bar"];
     [delegateMock verify];
+
+    [tester tapViewWithAccessibilityLabel:@"Cancel"];
+    [tester waitForAnimationsToFinish];
 }
 
 - (void)testToVerifyCustomDeletionColorAndText
