@@ -255,7 +255,7 @@ NSInteger const kATLSharedCellTag = 1000;
     }
     __weak typeof(self) weakSelf = self;
     __block LYRMessage *previousMessage = weakSelf.message;
-    
+
     dispatch_async(self.imageProcessingConcurrentQueue, ^{
         if (previewImagePart.fileURL) {
             displayingImage = ATLAnimatedImageWithAnimatedGIFURL(previewImagePart.fileURL);
@@ -264,7 +264,7 @@ NSInteger const kATLSharedCellTag = 1000;
         }
         
         CGSize size = CGSizeZero;
-        LYRMessagePart *sizePart = ATLMessagePartForMIMEType(self.message, ATLMIMETypeImageSize);
+        LYRMessagePart *sizePart = ATLMessagePartForMIMEType(weakSelf.message, ATLMIMETypeImageSize);
         if (sizePart) {
             size = ATLImageSizeForJSONData(sizePart.data);
             size = ATLConstrainImageSizeToCellSize(size);
