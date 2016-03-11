@@ -239,6 +239,8 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     self.viewController.delegate = delegateMock;
         
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
@@ -262,6 +264,8 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     self.viewController.delegate = delegateMock;
     
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
@@ -288,6 +292,8 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     self.viewController.delegate = delegateMock;
     
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
@@ -312,6 +318,8 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     self.viewController.delegate = delegateMock;
     
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
@@ -343,6 +351,8 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     LYRMessageMock *newMessage = [self.testInterface.layerClient newMessageWithParts:@[part] options:nil error:nil];
     __block NSOrderedSet *messages = [[NSOrderedSet alloc] initWithObject:newMessage];
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
@@ -371,6 +381,8 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     self.viewController.delegate = delegateMock;
     
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
@@ -656,6 +668,8 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     self.viewController.delegate = delegateMock;
     
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
@@ -690,6 +704,8 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     self.viewController.delegate = delegateMock;
     
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
@@ -715,6 +731,8 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     self.viewController.dataSource = delegateMock;
     
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationListViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
@@ -740,6 +758,8 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     
     __block NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"identifier" ascending:YES];
     [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        [invocation retainArguments];
+
         ATLConversationListViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
@@ -768,6 +788,8 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     
     expect(^{
         [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+            [invocation retainArguments];
+
             ATLConversationListViewController *controller;
             [invocation getArgument:&controller atIndex:2];
             expect(controller).to.equal(self.viewController);

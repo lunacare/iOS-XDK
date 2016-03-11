@@ -393,11 +393,11 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
         ATLConversationListViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
-        
+
         LYRConversation *conversation;
         [invocation getArgument:&conversation atIndex:3];
         expect(conversation).to.equal(conversation1);
-        
+
         LYRDeletionMode mode;
         [invocation getArgument:&mode atIndex:4];
         expect(mode).to.equal(deletionMode);
@@ -428,11 +428,11 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
         ATLConversationListViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
-        
+
         LYRConversation *conversation;
         [invocation getArgument:&conversation atIndex:3];
         expect(conversation).to.equal(conversation1);
-        
+
         LYRDeletionMode mode;
         [invocation getArgument:&mode atIndex:4];
         expect(mode).to.equal(deletionMode);
