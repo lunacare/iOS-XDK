@@ -92,7 +92,9 @@ GEM
       claide (~> 0.9.1)
       colored (~> 1.2)
     xcpretty (0.1.12)
-    xctasks (0.2.2)
+    xctasks (0.6.0)
+      nokogiri (~> 1.6, >= 1.6.3.1)
+      rake (~> 10.0, >= 10.0.0)
 
 PLATFORMS
   ruby
@@ -103,7 +105,7 @@ DEPENDENCIES
   rake (>= 10.3.2)
   shenzhen (= 0.10.2)
   xcpretty (~> 0.1.7)
-  xctasks (~> 0.2.2)
+  xctasks (~> 0.6.0)
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
