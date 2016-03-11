@@ -67,7 +67,7 @@ extern NSString *const ATLAddContactsButtonAccessibilityLabel;
         expect(controller).to.beKindOf([ATLAddressBarViewController class]);
     }] addressBarViewControllerDidBeginSearching:[OCMArg any]];
     
-    [tester enterText:@"test" intoViewWithAccessibilityLabel:ATLAddressBarTextViewAccesssibilityLabel];
+    [tester enterText:@"Test" intoViewWithAccessibilityLabel:ATLAddressBarTextViewAccesssibilityLabel];
     [delegateMock verify];
 }
 
