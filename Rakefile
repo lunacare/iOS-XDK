@@ -59,13 +59,14 @@ if defined?(XCTasks)
     t.workspace = 'Atlas.xcworkspace'
     t.schemes_dir = 'Tests/Schemes'
     t.runner = :xctool
+    t.actions = %w{clean build test -resetSimulator}
     t.output_log = 'xcodebuild.log'
     t.subtasks = { progammatic: 'Programmatic'}
     t.destination do |d|
       d.platform = :iossimulator
       d.os = :latest
       d.name = 'iPhone 6 Plus'
-    end    
+    end
   end
 end
 
