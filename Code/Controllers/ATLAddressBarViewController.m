@@ -481,7 +481,7 @@ static NSString *const ATLAddressBarParticipantAttributeName = @"ATLAddressBarPa
                 *stop = YES;
             }
         } else {
-            disabledString = [NSString stringWithFormat:@"%lu participants", (unsigned long)remainingParticipants];
+            disabledString = [NSString stringWithFormat:@"%lu participants", (unsigned long)participants.count];
             *stop = YES;
         }
     }];
