@@ -124,7 +124,7 @@ Next bootstrap your environment by executing `carthage update`:
 $ carthage update
 ```
 
-Next drag `LayerKit.framework` and `Atlas.framework` from `Carthage/Build/iOS` onto your project and link it with your application target. Then select your application target within Xcode, navigate to the *Build Phases* panel and click the `+` icon and select *New Run Script Phase*. Set the content to:
+Next drag `Atlas.framework` from `Carthage/Build/iOS` and `LayerKit.framework` from `Carthage/Checkouts/releases-ios` onto your project and link it with your application target. Then select your application target within Xcode, navigate to the *Build Phases* panel and click the `+` icon and select *New Run Script Phase*. Set the content to:
 
 ```sh
 /usr/local/bin/carthage copy-frameworks
@@ -132,8 +132,8 @@ Next drag `LayerKit.framework` and `Atlas.framework` from `Carthage/Build/iOS` o
 
 In the *Input Files* section add:
 
-* $(SRCROOT)/Carthage/Build/iOS/LayerKit.framework
-* $(SRCROOT)/Carthage/Build/iOS/Atlas.framework
+* `$(SRCROOT)/Carthage/Checkouts/releases-ios/LayerKit.framework`
+* `$(SRCROOT)/Carthage/Build/iOS/Atlas.framework`
 
 Now build your application target and everything should be set.
 
@@ -199,7 +199,7 @@ The [ATLConversationViewController](Code/Controllers/ATLConversationViewControll
 
 #### Initialization
 
-```objc
+​```objc
 ATLConverationViewController *viewController = [ATLConversationViewController conversationViewControllerWithLayerClient:self.layerClient];
 ```
 
