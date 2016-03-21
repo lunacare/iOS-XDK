@@ -1,0 +1,101 @@
+PODS:
+  - Atlas (1.0.19):
+    - LayerKit (>= 0.19.0)
+  - CocoaLumberjack (2.2.0):
+    - CocoaLumberjack/Default (= 2.2.0)
+    - CocoaLumberjack/Extensions (= 2.2.0)
+  - CocoaLumberjack/Core (2.2.0)
+  - CocoaLumberjack/Default (2.2.0):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Extensions (2.2.0):
+    - CocoaLumberjack/Default
+  - CocoaSPDY (20151203203757026)
+  - Expecta (1.0.5)
+  - FMDB/standard (2.5-20151203150449028)
+  - FMDBMigrationManager/System (1.4.1):
+    - FMDB/standard (>= 2.3)
+  - GCNetworkReachability (1.3.2)
+  - KIF (3.4.1):
+    - KIF/Core (= 3.4.1)
+  - KIF/Core (3.4.1)
+  - KIFViewControllerActions (1.0.1):
+    - KIF (>= 2.0.0)
+  - layer-client-messaging-schema (20160314154801167)
+  - LayerKit (0.20.0-rc4):
+    - CocoaLumberjack (~> 2.2.0)
+    - CocoaSPDY (= 20151203203757026)
+    - FMDB/standard (= 2.5-20151203150449028)
+    - FMDBMigrationManager/System (~> 1.4.1)
+    - GCNetworkReachability (~> 1.3.2)
+    - layer-client-messaging-schema (= 20160314154801167)
+    - LayerKit/Public (= 0.20.0-rc4)
+    - LayerThrift (= 0.89.2)
+    - thrift (~> 0.9.3)
+    - TransitionKit (~> 2.2.1)
+    - ZipArchive (~> 1.4)
+  - LayerKit/Public (0.20.0-rc4):
+    - CocoaLumberjack (~> 2.2.0)
+    - CocoaSPDY (= 20151203203757026)
+    - FMDB/standard (= 2.5-20151203150449028)
+    - FMDBMigrationManager/System (~> 1.4.1)
+    - GCNetworkReachability (~> 1.3.2)
+    - layer-client-messaging-schema (= 20160314154801167)
+    - LayerThrift (= 0.89.2)
+    - thrift (~> 0.9.3)
+    - TransitionKit (~> 2.2.1)
+    - ZipArchive (~> 1.4)
+  - LayerThrift (0.89.2):
+    - thrift (~> 0.9.3)
+  - LYRCountDownLatch (0.9.0)
+  - OCMock (3.2.2)
+  - thrift (0.9.3)
+  - TransitionKit (2.2.1)
+  - ZipArchive (1.4.0)
+
+DEPENDENCIES:
+  - Atlas (from `.`)
+  - Expecta
+  - KIF
+  - KIFViewControllerActions (from `https://github.com/blakewatters/KIFViewControllerActions.git`)
+  - LayerKit (from `~/Documents/Code/LayerKit2/LayerKit/`)
+  - LYRCountDownLatch (from `https://github.com/layerhq/LYRCountDownLatch.git`)
+  - OCMock
+
+EXTERNAL SOURCES:
+  Atlas:
+    :path: "."
+  KIFViewControllerActions:
+    :git: https://github.com/blakewatters/KIFViewControllerActions.git
+  LayerKit:
+    :path: "~/Documents/Code/LayerKit2/LayerKit/"
+  LYRCountDownLatch:
+    :git: https://github.com/layerhq/LYRCountDownLatch.git
+
+CHECKOUT OPTIONS:
+  KIFViewControllerActions:
+    :commit: c3691ae0014d642f1d1228c12350ee8a0369e30b
+    :git: https://github.com/blakewatters/KIFViewControllerActions.git
+  LYRCountDownLatch:
+    :commit: 02119f855ad14e7fc0dae32bbbf17c735a281cfe
+    :git: https://github.com/layerhq/LYRCountDownLatch.git
+
+SPEC CHECKSUMS:
+  Atlas: 1aba12f78e26f4d727d326ab009ae67eba4f5014
+  CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
+  CocoaSPDY: 0b06986c8eed0240ee1c3893415675106d3a44cf
+  Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
+  FMDB: d635067c2ae14f3e1884d31d1ecaad2d2f2d9399
+  FMDBMigrationManager: d52007f328ea0665e8985ca8a33500707aef084f
+  GCNetworkReachability: 2a7dd53d362220326b3e38df68c91b3ef84418d1
+  KIF: 2275c6d59c77e5e56f660f006b99d73780130540
+  KIFViewControllerActions: fc3a8e1352a6609624bda1fe6cfad410d0e88552
+  layer-client-messaging-schema: 39d5e2da34157f13d03342b7f630108a9c146473
+  LayerKit: 5cda760a11b484727bd4eacbd90eb0b4e3999393
+  LayerThrift: 26224304d4b284a61bf6e50f1db65be290f69a98
+  LYRCountDownLatch: 9b440b42a19ddbf4e75bdd4b43726baa1527606a
+  OCMock: 18c9b7e67d4c2770e95bb77a9cc1ae0c91fe3835
+  thrift: 206849d78773b19e1be3cc1bbe094371c0adfbe2
+  TransitionKit: 9ceccda4cd0cdc0a05ef85eb235e5a3292c3c250
+  ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
+
+COCOAPODS: 0.39.0
