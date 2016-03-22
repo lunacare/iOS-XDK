@@ -178,7 +178,6 @@ CGFloat const ATLRightAccessoryButtonPadding = 5.3f;
 - (void)testToVerifyTextEnterendDoesNotEnableButtons
 {
     [self setRootViewController];
-    self.viewController.conversation = nil;
     
     ATLMessageInputToolbar *toolBar = (ATLMessageInputToolbar *)[tester waitForViewWithAccessibilityLabel:ATLMessageInputToolbarAccessibilityLabel];
     toolBar.rightAccessoryButton.enabled = NO;

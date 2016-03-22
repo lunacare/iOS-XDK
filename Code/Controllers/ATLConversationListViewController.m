@@ -326,42 +326,52 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSMutableArray *actions = [NSMutableArray new];
-    for (NSNumber *deletionMode in self.deletionModes) {
-        NSString *actionString;
-        UIColor *actionColor;
-        if ([self.dataSource respondsToSelector:@selector(conversationListViewController:textForButtonWithDeletionMode:)]) {
-            actionString = [self.dataSource conversationListViewController:self textForButtonWithDeletionMode:deletionMode.integerValue];
-        } else {
-            switch (deletionMode.integerValue) {
-                case LYRDeletionModeMyDevices:
-                    actionString = ATLLocalizedString(@"atl.conversationlist.deletionmode.mydevices.key", ATLConversationListViewControllerDeletionModeMyDevices, nil);
-                    break;
-                case LYRDeletionModeAllParticipants:
-                    actionString = ATLLocalizedString(@"atl.conversationlist.deletionmode.everyone.key", ATLConversationListViewControllerDeletionModeEveryone, nil);
-                    break;
-                default:
-                    break;
+    if ([self.dataSource respondsToSelector:@selector(conversationListViewController:rowActionsForDeletionModes:)]) {
+        NSArray *customActions = [self.dataSource conversationListViewController:self rowActionsForDeletionModes:self.deletionModes];
+        for (id action in customActions) {
+            if (![action isKindOfClass:[UITableViewRowAction class]]) {
+                @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"must supply an array of `UITableViewRowAction` objects" userInfo:nil];
             }
         }
-        if ([self.dataSource respondsToSelector:@selector(conversationListViewController:colorForButtonWithDeletionMode:)]) {
-            actionColor = [self.dataSource conversationListViewController:self colorForButtonWithDeletionMode:deletionMode.integerValue];
-        } else {
-            switch (deletionMode.integerValue) {
-                case LYRDeletionModeMyDevices:
-                    actionColor = [UIColor redColor];
-                    break;
-                case LYRDeletionModeAllParticipants:
-                    actionColor = [UIColor grayColor];
-                    break;
-                default:
-                    break;
+        return customActions;
+    } else {
+        for (NSNumber *deletionMode in self.deletionModes) {
+            NSString *actionString;
+            UIColor *actionColor;
+            if ([self.dataSource respondsToSelector:@selector(conversationListViewController:textForButtonWithDeletionMode:)]) {
+                actionString = [self.dataSource conversationListViewController:self textForButtonWithDeletionMode:deletionMode.integerValue];
+            } else {
+                switch (deletionMode.integerValue) {
+                    case LYRDeletionModeMyDevices:
+                        actionString = ATLLocalizedString(@"atl.conversationlist.deletionmode.mydevices.key", ATLConversationListViewControllerDeletionModeMyDevices, nil);
+                        break;
+                    case LYRDeletionModeAllParticipants:
+                        actionString = ATLLocalizedString(@"atl.conversationlist.deletionmode.everyone.key", ATLConversationListViewControllerDeletionModeEveryone, nil);
+                        break;
+                    default:
+                        break;
+                }
             }
+            if ([self.dataSource respondsToSelector:@selector(conversationListViewController:colorForButtonWithDeletionMode:)]) {
+                actionColor = [self.dataSource conversationListViewController:self colorForButtonWithDeletionMode:deletionMode.integerValue];
+            } else {
+                switch (deletionMode.integerValue) {
+                    case LYRDeletionModeMyDevices:
+                        actionColor = [UIColor redColor];
+                        break;
+                    case LYRDeletionModeAllParticipants:
+                        actionColor = [UIColor grayColor];
+                        break;
+                    default:
+                        break;
+                }
+            }
+            UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:actionString handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+                [self deleteConversationAtIndexPath:indexPath withDeletionMode:deletionMode.integerValue];
+            }];
+            deleteAction.backgroundColor = actionColor;
+            [actions addObject:deleteAction];
         }
-        UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:actionString handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-            [self deleteConversationAtIndexPath:indexPath withDeletionMode:deletionMode.integerValue];
-        }];
-        deleteAction.backgroundColor = actionColor;
-        [actions addObject:deleteAction];
     }
     return actions;
 }
