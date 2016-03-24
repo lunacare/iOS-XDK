@@ -121,6 +121,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (UIColor *)conversationListViewController:(ATLConversationListViewController *)conversationListViewController colorForButtonWithDeletionMode:(LYRDeletionMode)deletionMode;
 
 /**
+ @abstract Asks the data source for an `NSArray` of `UITableViewRowAction` objects for the given deletion modes.
+ @param conversationListViewController The `LYRConversationListViewController` in which the edit actions title will appear.
+ @param deletionModes An `NSArray` of deletion modes that are supported by the controller.
+ @return An `NSArray` of `UITableViewRowAction` objects to be implemented by the controller.
+ @note If this data source method is implemented, other data source methods conversationListViewController:textForButtonWithDeletionMode: and conversationListViewController:colorForButtonWithDeletionMode: will not be called.
+ */
+- (NSArray *)conversationListViewController:(ATLConversationListViewController *)conversationListViewController rowActionsForDeletionModes:(NSArray < UITableViewRowAction*> *)deletionModes;
+
+/**
  @abstract Asks the data source for the string to display as the conversation's last sent message.
  @params conversation The conversation for which the last message text should be returned.
  @return A string representing the content of the last message.  If `nil` is returned the controller will fall back to default behavior.

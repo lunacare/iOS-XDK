@@ -479,6 +479,29 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     expect(deleteButton.backgroundColor).to.equal([UIColor greenColor]);
 }
 
+- (void)testToVerifyCustomRowActions
+{
+    self.viewController = [ATLSampleConversationListViewController conversationListViewControllerWithLayerClient:(LYRClient *)self.testInterface.layerClient];
+    self.viewController.allowsEditing = YES;
+    [self setRootViewController:self.viewController];
+    
+    ATLUserMock *mockUser1 = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
+    LYRConversationMock *conversation1 = [self newConversationWithMockUser:mockUser1 lastMessageText:@"Test Message"];
+    [tester waitForAnimationsToFinish];
+    
+    id delegateMock = OCMProtocolMock(@protocol(ATLConversationListViewControllerDataSource));
+    self.viewController.dataSource = delegateMock;
+    
+    [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
+        ATLConversationListViewController *controller;
+        [invocation getArgument:&controller atIndex:2];
+        expect(controller).to.equal(self.viewController);
+    }] conversationListViewController:[OCMArg any] rowActionsForDeletionModes:self.viewController.deletionModes];
+    
+    [tester swipeViewWithAccessibilityLabel:[self.testInterface conversationLabelForConversation:conversation1]  inDirection:KIFSwipeDirectionLeft];
+    [delegateMock verify];
+}
+
 - (void)testToVerifyDefaultQueryConfigurationDataSourceMethod
 {
     self.viewController = [ATLConversationListViewController conversationListViewControllerWithLayerClient:(LYRClient *)self.testInterface.layerClient];
