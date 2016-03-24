@@ -27,12 +27,14 @@ static BOOL ATLIsRunningTests()
 {    
     ATLUserMock *mockUser = [ATLUserMock userWithMockUserName:ATLMockUserNameBlake];
     LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.participantIdentifier];
-    [[LYRMockContentStore sharedStore] hydrateConversationsForAuthenticatedUserID:layerClient.authenticatedUserID count:1];
     
     UIViewController *controller;
     if (ATLIsRunningTests()) {
         controller = [UIViewController new];
     } else {
+        // NB: only hydrate a conversation with a random user when it's not test related, to avoid odd collisions
+        [[LYRMockContentStore sharedStore] hydrateConversationsForAuthenticatedUserID:layerClient.authenticatedUserID count:1];
+
         controller = [ATLSampleConversationListViewController conversationListViewControllerWithLayerClient:(LYRClient *)layerClient];
         controller.view.backgroundColor = [UIColor whiteColor];
     }

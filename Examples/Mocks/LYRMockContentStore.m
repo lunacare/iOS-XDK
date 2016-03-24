@@ -29,7 +29,7 @@
 
 @implementation LYRMockContentStore
 
-+ (id)sharedStore
++ (instancetype)sharedStore
 {
     static LYRMockContentStore *sharedStore = nil;
     static dispatch_once_t onceToken;
@@ -39,7 +39,7 @@
     return sharedStore;
 }
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self) {

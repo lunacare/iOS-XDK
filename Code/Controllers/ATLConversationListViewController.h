@@ -194,7 +194,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The `LYRQueryController` object managing data displayed in the controller.
  */
-@property (nonatomic, readonly) LYRQueryController *queryController;
+@property (nonatomic, readonly) LYRQueryController * _Nullable queryController;
 
 /**
  @abstract The object that is informed when specific events occur

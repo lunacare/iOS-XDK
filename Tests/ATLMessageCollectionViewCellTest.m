@@ -42,19 +42,32 @@ extern NSString *const ATLConversationCollectionViewAccessibilityIdentifier;
 {
     [super setUp];
 
+    [LYRMockContentStore sharedStore].shouldBroadcastChanges = YES;
+
     ATLUserMock *mockUser = [ATLUserMock userWithMockUserName:ATLMockUserNameBlake];
     LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.participantIdentifier];
     self.testInterface = [ATLTestInterface testIntefaceWithLayerClient:layerClient];
     [self setRootViewController];
-    [self resetAppearance];
 }
 
 - (void)tearDown
 {
+    [LYRMockContentStore sharedStore].shouldBroadcastChanges = NO;
+    [[LYRMockContentStore sharedStore] resetContentStore];
+
+    // HACK: workaround to ensure the `queryController` is properly removed from the observers
+    //       because in some cases KIF is leaking memory which leads to retaining the `viewController`
+    //       which leads to not deallocating the `queryController`.
+    //       Until KIF fixes it, we are forced to keep this not-perfect-workaround
+    if (self.controller && self.controller.queryController) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self.controller.queryController];
+    }
+
     [tester waitForAnimationsToFinish];
     self.conversation = nil;
     self.controller = nil;
-    [[LYRMockContentStore sharedStore] resetContentStore];
+    [self resetAppearance];
+
     [super tearDown];
 }
 

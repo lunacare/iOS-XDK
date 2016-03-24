@@ -40,7 +40,7 @@
     if (self) {
         _query = query;
         _objects = [NSOrderedSet new];
-        _objects = [NSOrderedSet new];
+        _oldObjects = [NSOrderedSet new];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(mockObjectsDidChange:)
                                                      name:LYRMockObjectsDidChangeNotification

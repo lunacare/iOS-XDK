@@ -28,6 +28,7 @@
 #define EXP_SHORTHAND
 #import <Expecta/Expecta.h>
 #import <OCMock/OCMock.h>
+#import <KIF/KIF.h>
 
 @interface ATLMediaAttachmentTests : XCTestCase
 
@@ -52,19 +53,23 @@
     }).to.raiseWithReason(NSInternalInconsistencyException, @"Failed to call designated initializer. Use one of the following initialiers: mediaAttachmentWithAssetURL:thumbnailSize:, mediaAttachmentWithImage:metadata:thumbnailSize:, mediaAttachmentWithText:, mediaAttachmentWithLocation:");
     
     expect(^{
-        __unused ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithAssetURL:nil thumbnailSize:0];
+        NSURL *url = nil;
+        __unused ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithAssetURL:url thumbnailSize:0];
     }).to.raiseWithReason(NSInternalInconsistencyException, @"Cannot initialize ATLMediaAttachment with `nil` assetURL.");
 
     expect(^{
-        __unused ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithImage:nil metadata:nil thumbnailSize:0];
+        UIImage *image = nil;
+        __unused ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithImage:image metadata:nil thumbnailSize:0];
     }).to.raiseWithReason(NSInternalInconsistencyException, @"Cannot initialize ATLMediaAttachment with `nil` image.");
 
     expect(^{
-        __unused ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithText:nil];
+        NSString *text = nil;
+        __unused ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithText:text];
     }).to.raiseWithReason(NSInternalInconsistencyException, @"Cannot initialize ATLMediaAttachment with `nil` text.");
 
     expect(^{
-        __unused ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithLocation:nil];
+        CLLocation *location = nil;
+        __unused ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithLocation:location];
     }).to.raiseWithReason(NSInternalInconsistencyException, @"Cannot initialize ATLMediaAttachment with `nil` location.");
 }
 
@@ -122,10 +127,6 @@
 
 #pragma mark Tests for Media Attachment With Images
 
-/**
- @warning Make sure you allowed the XCTestCase to access the photo library.
- It's a manual process on the UI in the simulator.
- */
 - (void)testMediaAttachmentWithImageFromAsset
 {
     // Generate a test image and put it into the photo library.
@@ -135,6 +136,10 @@
     [library writeImageToSavedPhotosAlbum:image.CGImage metadata:@{ @"Orientation": @(UIImageOrientationUp) } completionBlock:^(NSURL *outAssetURL, NSError *error) {
         assetURL = outAssetURL;
     }];
+
+    // Automatically authorize the photo library access
+    [tester acknowledgeSystemAlert];
+
     expect(assetURL).willNot.beNil();
     
     ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithAssetURL:assetURL thumbnailSize:512];
@@ -289,10 +294,6 @@
 
 #pragma mark Tests for Media Attachment With Videos
 
-/**
- @warning Make sure you allowed the XCTestCase to access the photo library.
-   It's a manual process on the UI in the simulator.
- */
 - (void)testMediaAttachmentWithVideoFromAsset
 {
     // Generate a test video and put in into the library.
@@ -304,6 +305,10 @@
     [library writeVideoAtPathToSavedPhotosAlbum:videoFileURL completionBlock:^(NSURL *outAssetURL, NSError *error) {
         assetURL = outAssetURL;
     }];
+
+    // Automatically authorize the photo library access
+    [tester acknowledgeSystemAlert];
+
     expect(assetURL).willNot.beNil();
     
     // Get Last Video
