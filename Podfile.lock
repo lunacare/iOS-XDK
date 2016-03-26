@@ -29,7 +29,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   KIFViewControllerActions:
-    :commit: c3691ae0014d642f1d1228c12350ee8a0369e30b
+    :commit: 181b4f56bc36274288f6b6d3ab3969d749345290
     :git: https://github.com/blakewatters/KIFViewControllerActions.git
   LYRCountDownLatch:
     :commit: 02119f855ad14e7fc0dae32bbbf17c735a281cfe
@@ -39,7 +39,7 @@ SPEC CHECKSUMS:
   Atlas: 0d0586aaa9bf73608f20d47a6031e98718dc4929
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   KIF: 2275c6d59c77e5e56f660f006b99d73780130540
-  KIFViewControllerActions: fc3a8e1352a6609624bda1fe6cfad410d0e88552
+  KIFViewControllerActions: 8d2f9ec9f185fa70ca9f54a297de544afe71ea55
   LayerKit: cbde0a98ee0cc19c2b14a512ce481ad6ff3d8e63
   LYRCountDownLatch: 9b440b42a19ddbf4e75bdd4b43726baa1527606a
   OCMock: 18c9b7e67d4c2770e95bb77a9cc1ae0c91fe3835
