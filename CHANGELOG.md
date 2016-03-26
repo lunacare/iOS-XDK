@@ -12,6 +12,7 @@
 ### Public API Changes
 
 * `ATLConversationViewController` datasource method `conversationViewController:participantForIdentifier:` has been changed to `conversationViewController:participantForIdentity:`.
+* Adds `conversationListViewController:rowActionsForDeletionModes:` method to `ATLConversationListViewControllerDataSource`.
 
 ### Bug Fixes
 
