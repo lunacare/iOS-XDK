@@ -158,6 +158,19 @@ CGFloat ATLDegreeToRadians(CGFloat degrees)
     return ((M_PI * degrees)/ 180);
 }
 
+#pragma mark - Conversation Helpers
+
+LYRIdentity *ATLIdentityFromSet(NSString *userID, NSSet *participants)
+{
+    for (LYRIdentity *identity in participants) {
+        if ([identity.userID isEqualToString:userID]) {
+            return identity;
+        }
+    }
+    return nil;
+}
+
+
 #pragma mark - Private Message Part Helpers
 
 CGSize  ATLSizeFromOriginalSizeWithConstraint(CGSize originalSize, CGFloat constraint)

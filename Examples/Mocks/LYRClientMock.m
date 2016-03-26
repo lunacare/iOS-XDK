@@ -51,6 +51,8 @@ NSString *const LYRMockObjectChangeChangeTypeKey = @"mockObjectChangeChangeTypeK
 {
     self = [super init];
     if (self) {
+        _authenticatedUser = [LYRIdentityMock new];
+        _authenticatedUser.userID = authenticatedUserID;
         _authenticatedUserID = authenticatedUserID;
     }
     return self;

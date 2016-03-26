@@ -20,7 +20,6 @@
 
 #import "ATLSampleConversationViewController.h"
 #import "LYRClientMock.h"
-#import "ATLParticipant.h"
 #import "ATLSampleParticipantTableViewController.h"
 
 @interface ATLSampleConversationViewController () <ATLConversationViewControllerDataSource>
@@ -49,9 +48,9 @@
 
 #pragma mark - ATLConversationViewControllerDataSource methods
 
-- (id<ATLParticipant>)conversationViewController:(ATLConversationViewController *)conversationViewController participantForIdentifier:(NSString *)participantIdentifier
+- (id<ATLParticipant>)conversationViewController:(ATLConversationViewController *)conversationViewController participantForIdentity:(nonnull LYRIdentity *)identity
 {
-    return [ATLUserMock mockUserForIdentifier:participantIdentifier];
+    return [ATLUserMock mockUserForIdentifier:identity.userID];
 }
 
 - (NSAttributedString *)conversationViewController:(ATLConversationViewController *)conversationViewController attributedStringForDisplayOfDate:(NSDate *)date
@@ -67,7 +66,7 @@
     NSMutableAttributedString *mergedStatuses = [[NSMutableAttributedString alloc] init];
 
     [[recipientStatus allKeys] enumerateObjectsUsingBlock:^(NSString *participant, NSUInteger idx, BOOL *stop) {
-        if ([participant isEqualToString:self.layerClient.authenticatedUserID]) {
+        if ([participant isEqualToString:self.layerClient.authenticatedUser.userID]) {
             return;
         }
         NSString *participantNameWithCheckmark = [NSString stringWithFormat:@"%@✔︎ ", [ATLUserMock mockUserForIdentifier:participant].firstName];
@@ -85,8 +84,8 @@
         return;
     }
     
-    NSMutableSet *otherParticipantIDs = [self.conversation.participants mutableCopy];
-    if (self.layerClient.authenticatedUserID) [otherParticipantIDs removeObject:self.layerClient.authenticatedUserID];
+    NSMutableSet *otherParticipantIDs = [[self.conversation.participants valueForKey:@"userID"]  mutableCopy];
+    if (self.layerClient.authenticatedUser) [otherParticipantIDs removeObject:self.layerClient.authenticatedUser.userID];
     
     if (otherParticipantIDs.count == 0) {
         self.title = @"Personal";

@@ -8,7 +8,6 @@ use_frameworks!
 link_with 'Programmatic', 'Storyboard'
 
 pod 'Atlas', path: '.'
-pod 'LayerKit'
 
 target 'ProgrammaticTests' do
   pod 'KIFViewControllerActions', git: 'https://github.com/blakewatters/KIFViewControllerActions.git'

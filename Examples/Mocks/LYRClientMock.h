@@ -20,6 +20,7 @@
 
 #import <Foundation/Foundation.h>
 #import "LayerKitMock.h"
+#import "LYRMessageMock.h"
 
 extern NSString *const LYRMockObjectsDidChangeNotification;
 extern NSString *const LYRMockObjectChangeObjectKey;
@@ -32,6 +33,7 @@ extern NSString *const LYRMockObjectChangeChangeTypeKey;
 @interface LYRClientMock : NSObject
 
 @property (nonatomic, readonly) NSString *authenticatedUserID;
+@property (nonatomic, readonly) LYRIdentityMock *authenticatedUser;
 @property (nonatomic, weak) id<LYRClientDelegate> delegate;
 
 + (instancetype)layerClientMockWithAuthenticatedUserID:(NSString *)authenticatedUserID;
