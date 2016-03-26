@@ -90,9 +90,9 @@
 
 - (NSString *)conversationListViewController:(ATLConversationListViewController *)conversationListViewController titleForConversation:(LYRConversation *)conversation
 {
-    if (!self.layerClient.authenticatedUserID) return @"Not auth'd";
+    if (!self.layerClient.authenticatedUser) return @"Not auth'd";
     NSMutableSet *participantIdentifiers = [[conversation.participants valueForKey:@"userID"] mutableCopy];
-    [participantIdentifiers removeObject:self.layerClient.authenticatedUserID];
+    [participantIdentifiers removeObject:self.layerClient.authenticatedUser.userID];
     
     if (participantIdentifiers.count == 0) return @"Personal Conversation";
     
@@ -101,9 +101,9 @@
     
     // Put the latest message sender's name first
     ATLUserMock *firstUser;
-    if (![conversation.lastMessage.sender.userID isEqualToString:self.layerClient.authenticatedUserID]) {
+    if (![conversation.lastMessage.sender.userID isEqualToString:self.layerClient.authenticatedUser.userID]) {
         if (conversation.lastMessage) {
-            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"SELF.participantIdentifier IN %@", conversation.lastMessage.sender.userID];
+            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"SELF.userID IN %@", conversation.lastMessage.sender.userID];
             ATLUserMock *lastMessageSender = [[[participants filteredSetUsingPredicate:searchPredicate] allObjects] lastObject];
             if (lastMessageSender) {
                 firstUser = lastMessageSender;

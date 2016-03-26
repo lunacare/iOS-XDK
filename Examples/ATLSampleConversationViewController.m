@@ -66,7 +66,7 @@
     NSMutableAttributedString *mergedStatuses = [[NSMutableAttributedString alloc] init];
 
     [[recipientStatus allKeys] enumerateObjectsUsingBlock:^(NSString *participant, NSUInteger idx, BOOL *stop) {
-        if ([participant isEqualToString:self.layerClient.authenticatedUserID]) {
+        if ([participant isEqualToString:self.layerClient.authenticatedUser.userID]) {
             return;
         }
         NSString *participantNameWithCheckmark = [NSString stringWithFormat:@"%@✔︎ ", [ATLUserMock mockUserForIdentifier:participant].firstName];
@@ -85,7 +85,7 @@
     }
     
     NSMutableSet *otherParticipantIDs = [[self.conversation.participants valueForKey:@"userID"]  mutableCopy];
-    if (self.layerClient.authenticatedUserID) [otherParticipantIDs removeObject:self.layerClient.authenticatedUserID];
+    if (self.layerClient.authenticatedUser) [otherParticipantIDs removeObject:self.layerClient.authenticatedUser.userID];
     
     if (otherParticipantIDs.count == 0) {
         self.title = @"Personal";
