@@ -327,7 +327,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 {
     NSMutableArray *actions = [NSMutableArray new];
     if ([self.dataSource respondsToSelector:@selector(conversationListViewController:rowActionsForDeletionModes:)]) {
-        NSArray *customActions = [self.dataSource conversationListViewController:self rowActionsForDeletionModes:self.deletionModes];
+        NSArray *customActions = [self.dataSource conversationListViewController:self rowActionsForDeletionModes:(NSArray<UITableViewRowAction *> *)self.deletionModes];
         for (id action in customActions) {
             if (![action isKindOfClass:[UITableViewRowAction class]]) {
                 @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"must supply an array of `UITableViewRowAction` objects" userInfo:nil];
