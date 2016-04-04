@@ -124,7 +124,6 @@ NSInteger const ATLQueryControllerPaginationWindow = 30;
     }];
     BOOL success = [self.conversation synchronizeMoreMessages:numberOfMessagesToSynchronize error:&error];
     if (!success) {
-        NSLog(@"error synchronizing more messages: %@", error);
         if (observer) {
             [[NSNotificationCenter defaultCenter] removeObserver:observer];
         }
