@@ -1,5 +1,11 @@
 # Atlas Changelog
 
+## 1.0.21
+
+### Bug Fixes
+
+* Fixes an issue where a loading spinner wouldn't dissapear after pulling to load more messages in a conversation view controller.
+
 ## 1.0.20
 
 ### Enhancements

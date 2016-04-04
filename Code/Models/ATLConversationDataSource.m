@@ -145,7 +145,7 @@ NSInteger const ATLQueryControllerPaginationWindow = 30;
 
 - (NSUInteger)messagesAvailableRemotely
 {
-    return MAX(0, self.conversation.totalNumberOfMessages - ABS(self.queryController.count));
+    return (NSUInteger)MAX((NSInteger)0, (NSInteger)self.conversation.totalNumberOfMessages - (NSInteger)ABS(self.queryController.count));
 }
 
 - (NSIndexPath *)queryControllerIndexPathForCollectionViewIndexPath:(NSIndexPath *)collectionViewIndexPath
