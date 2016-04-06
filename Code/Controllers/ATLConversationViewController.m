@@ -256,7 +256,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     }
     self.conversationDataSource.queryController.delegate = self;
     self.queryController = self.conversationDataSource.queryController;
-    self.showingMoreMessagesIndicator = [self.conversationDataSource moreMessagesAvailable];
+    self.showingMoreMessagesIndicator = NO;
     [self.collectionView reloadData];
 }
 
