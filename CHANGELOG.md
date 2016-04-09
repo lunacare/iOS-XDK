@@ -1,10 +1,16 @@
 # Atlas Changelog
 
+## 1.0.22
+
+### Bug Fixes
+
+* Fixes an issue where a loading spinner wouldn't disappear for conversations deleted with `My Devices` deletion mode.
+
 ## 1.0.21
 
 ### Bug Fixes
 
-* Fixes an issue where a loading spinner wouldn't dissapear after pulling to load more messages in a conversation view controller.
+* Fixes an issue where a loading spinner wouldn't disappear after pulling to load more messages in a conversation view controller.
 * Fixes an issue where info.plist key could prevent app store submission.
 
 ## 1.0.20
@@ -35,22 +41,22 @@
 
 ## 1.0.18
 
-### Enhancements 
+### Enhancements
 
 * Added support for new `LayerKit` deletion mode `LYRDeletionModeMyDevices`.
-* Removed support for `LYRDeletionModeLocal` as it has been deprecated. 
-* Changed default conversation deletion option strings to `My Devices` and `Everyone` to make the options more explicit. 
+* Removed support for `LYRDeletionModeLocal` as it has been deprecated.
+* Changed default conversation deletion option strings to `My Devices` and `Everyone` to make the options more explicit.
 
 ## 1.0.17
 
 ### Public API Changes
 
-* Introduced `ATLBaseCollectionViewCell` which is now the base cell for all message cells containing a message bubble. Developers can now subclass the `ATLBaseCollectionViewCell` and add easily their own custom UI to a message bubble cell. 
+* Introduced `ATLBaseCollectionViewCell` which is now the base cell for all message cells containing a message bubble. Developers can now subclass the `ATLBaseCollectionViewCell` and add easily their own custom UI to a message bubble cell.
 * Moved the following properties from `ATLMessageCollectionViewCell` to `ATLBaseCollectionViewCell`: `bubbleViewColor`, `bubbleViewCornerRadius`, `bubbleView`, `avatarImageView`, and `message`.
 
-### Bug Fixes 
+### Bug Fixes
 
-* Fixes an issue which prevented application archives from being submitted to the app store. The issue was caused by and unnecessary key in the `Resources/info.plist` file. 
+* Fixes an issue which prevented application archives from being submitted to the app store. The issue was caused by and unnecessary key in the `Resources/info.plist` file.
 * Fixes a `UILayoutConstraint` conflict when displaying a UIMapView in the `ATLMessageBubbleView`.
 
 ## 1.0.16
@@ -155,38 +161,38 @@
 
 ### Public API Changes
 
-* Implemented `conversationListViewController:configurationForDefaultQuery:` to provide for query customization in the `ATLConversationListViewController`. 
-* Implemented `conversationViewController:configurationForDefaultQuery:` to provide for query customization in the `ATLConversationViewController`. 
+* Implemented `conversationListViewController:configurationForDefaultQuery:` to provide for query customization in the `ATLConversationListViewController`.
+* Implemented `conversationViewController:configurationForDefaultQuery:` to provide for query customization in the `ATLConversationViewController`.
 
 ## 1.0.6
 
 ### Bug Fixes
 
-* Removed all compiler warnings. 
+* Removed all compiler warnings.
 
 ## 1.0.5
 
 ### Public API Changes
 
-* Added `avatarImageURL` property to `ATLAvatarItem`. 
+* Added `avatarImageURL` property to `ATLAvatarItem`.
 
 ### Enhancements
 
-* Added logic to fetch image from a URL to `ATLAvatarImageView`. 
-* Added image cache to `ATLAvatarImageView`. 
+* Added logic to fetch image from a URL to `ATLAvatarImageView`.
+* Added image cache to `ATLAvatarImageView`.
 
 ### Bug Fixes
 
-* Fixed bug which caused `ATLConversationViewController` animation assertions when attempting to reload cells via the public API. 
-* Fixed bug which prevented cell font customizations from being appied. 
+* Fixed bug which caused `ATLConversationViewController` animation assertions when attempting to reload cells via the public API.
+* Fixed bug which prevented cell font customizations from being appied.
 
 ## 1.0.4
 
 ### Public API Changes
 
-* Moved `searchController` property to public API on `ATLConversationListViewController`. 
+* Moved `searchController` property to public API on `ATLConversationListViewController`.
 * Moved `UIImagePickerControllerDelegate` and `UINavigationControllerDelegate` declarations to header of `ATLConversationViewController`.
-* Added `leftAccessoryImage`, `rightAccessoryImage` and `displaysRightAccessoryImage` to `ATLMessageInputToolbar`. 
+* Added `leftAccessoryImage`, `rightAccessoryImage` and `displaysRightAccessoryImage` to `ATLMessageInputToolbar`.
 
 ## 1.0.3
 
@@ -205,7 +211,7 @@
 
 * Added `conversationListViewController:textForButtonWithDeletionMode:` to `ATLConversationListViewController`
 * Added `conversationListViewController:colorForButtonWithDeletionMode:` to `ATLConversationListViewController`
- 		
+
 ## 1.0.1
 
 * Updated LayerKit dependency to v0.10.3
@@ -264,7 +270,7 @@
 * `layerClient` property is no longer read only in `LYRUIConversationViewController`.
 * `layerClient` property is no longer read only in `LYRUIConversationListViewController`.
 
-## 0.5.0 
+## 0.5.0
 
 ### Public API Changes
 
@@ -274,7 +280,7 @@
 * Removed `conversationTitle` property in `LYRUIConversationViewController`.
 * Removed `conversationViewController:shouldMarkMessagesAsRead:`
 * Added `marksMessagesAsRead` property.
-* Changed `layerClient` property to be readonly. 
+* Changed `layerClient` property to be readonly.
 * Changed `conversationViewControllerWithConversation:layerClient:` to `conversationViewControllerWithLayerClient:`
 
 ## 0.2.2
