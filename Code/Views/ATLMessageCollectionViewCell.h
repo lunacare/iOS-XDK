@@ -59,7 +59,7 @@ extern NSString *const ATLVideoAccessibilityLabel;
   @discussion Currently supports NSTextCheckingTypeLink and NSTextCheckingTypePhoneNumber
   @default NSTextCheckingTypeLink
 */
-@property (nonatomic) NSTextCheckingType messageTextCheckingTypes UI_APPEARANCE_SELECTOR;
+@property (nonatomic) NSTextCheckingType messageTextCheckingTypes;
 
 /**
  @abstract Performs calculations to determine a cell's height.
