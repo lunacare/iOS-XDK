@@ -243,6 +243,9 @@
 
 - (NSPredicate *)constructPredicateForMockPredicate:(LYRPredicate *)predicate
 {
+    if ([predicate.property isEqualToString:@"participants"]) {
+        predicate = [LYRPredicate predicateWithProperty:@"participants.userID" predicateOperator:predicate.predicateOperator value:predicate.value];
+    }
     switch (predicate.predicateOperator) {
         case LYRPredicateOperatorIsEqualTo:
             return [NSPredicate predicateWithFormat:@"SELF.%@ == %@", predicate.property, predicate.value];

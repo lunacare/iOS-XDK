@@ -37,7 +37,7 @@ extern NSString *const ATLParticipantSectionHeaderViewAccessibilityLabel;
 {
     [super setUp];
     ATLUserMock *mockUser = [ATLUserMock userWithMockUserName:ATLMockUserNameBlake];
-    LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.participantIdentifier];
+    LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.userID];
     self.testInterface = [ATLTestInterface testIntefaceWithLayerClient:layerClient];
     self.userMock = [ATLUserMock new];
 }
@@ -57,7 +57,7 @@ extern NSString *const ATLParticipantSectionHeaderViewAccessibilityLabel;
     [self presentParticipantPicker];
     
     ATLUserMock *user = [[[ATLUserMock allMockParticipants] allObjects] firstObject];
-    ATLParticipantTableViewCell *cell = (ATLParticipantTableViewCell *)[tester waitForViewWithAccessibilityLabel:user.fullName];
+    ATLParticipantTableViewCell *cell = (ATLParticipantTableViewCell *)[tester waitForViewWithAccessibilityLabel:user.displayName];
     expect(cell.titleColor).to.equal(testColor);
 }
 
@@ -68,7 +68,7 @@ extern NSString *const ATLParticipantSectionHeaderViewAccessibilityLabel;
     [self presentParticipantPicker];
     
     ATLUserMock *user = [[[ATLUserMock allMockParticipants] allObjects] firstObject];
-    ATLParticipantTableViewCell *cell = (ATLParticipantTableViewCell *)[tester waitForViewWithAccessibilityLabel:user.fullName];
+    ATLParticipantTableViewCell *cell = (ATLParticipantTableViewCell *)[tester waitForViewWithAccessibilityLabel:user.displayName];
     expect(cell.titleFont).to.equal(testFont);
 }
 
@@ -79,7 +79,7 @@ extern NSString *const ATLParticipantSectionHeaderViewAccessibilityLabel;
     [self presentParticipantPicker];
     
     ATLUserMock *user = [[[ATLUserMock allMockParticipants] allObjects] firstObject];
-    ATLParticipantTableViewCell *cell = (ATLParticipantTableViewCell *)[tester waitForViewWithAccessibilityLabel:user.fullName];;
+    ATLParticipantTableViewCell *cell = (ATLParticipantTableViewCell *)[tester waitForViewWithAccessibilityLabel:user.displayName];
     expect(cell.boldTitleFont).to.equal(testFont);
 }
 
@@ -90,7 +90,7 @@ extern NSString *const ATLParticipantSectionHeaderViewAccessibilityLabel;
     [self presentParticipantPicker];
     
     ATLUserMock *user = [[[ATLUserMock allMockParticipants] allObjects] firstObject];
-    NSString *name = user.fullName;
+    NSString *name = user.displayName;
     NSString *firstInitial = [name substringToIndex:1];
     
     ATLParticipantSectionHeaderView *header = (ATLParticipantSectionHeaderView *)[tester waitForViewWithAccessibilityLabel:[NSString stringWithFormat:@"%@ - %@", ATLParticipantSectionHeaderViewAccessibilityLabel, firstInitial]];
@@ -104,7 +104,7 @@ extern NSString *const ATLParticipantSectionHeaderViewAccessibilityLabel;
     [self presentParticipantPicker];
     
     ATLUserMock *user = [[[ATLUserMock allMockParticipants] allObjects] firstObject];
-    NSString *name = user.fullName;
+    NSString *name = user.displayName;
     NSString *firstInitial = [name substringToIndex:1];
     
     ATLParticipantSectionHeaderView *header = (ATLParticipantSectionHeaderView *)[tester waitForViewWithAccessibilityLabel:[NSString stringWithFormat:@"%@ - %@", ATLParticipantSectionHeaderViewAccessibilityLabel, firstInitial]];
@@ -118,7 +118,7 @@ extern NSString *const ATLParticipantSectionHeaderViewAccessibilityLabel;
     [self presentParticipantPicker];
     
     ATLUserMock *user = [[[ATLUserMock allMockParticipants] allObjects] firstObject];
-    NSString *name = user.fullName;
+    NSString *name = user.displayName;
     NSString *firstInitial = [name substringToIndex:1];
     
     ATLParticipantSectionHeaderView *header = (ATLParticipantSectionHeaderView *)[tester waitForViewWithAccessibilityLabel:[NSString stringWithFormat:@"%@ - %@", ATLParticipantSectionHeaderViewAccessibilityLabel, firstInitial]];

@@ -45,7 +45,7 @@ extern NSString *const ATLConversationCollectionViewAccessibilityIdentifier;
     [LYRMockContentStore sharedStore].shouldBroadcastChanges = YES;
 
     ATLUserMock *mockUser = [ATLUserMock userWithMockUserName:ATLMockUserNameBlake];
-    LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.participantIdentifier];
+    LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.userID];
     self.testInterface = [ATLTestInterface testIntefaceWithLayerClient:layerClient];
     [self setRootViewController];
 }
@@ -310,7 +310,7 @@ extern NSString *const ATLConversationCollectionViewAccessibilityIdentifier;
 {
     [[ATLAvatarImageView appearance] setAvatarImageViewDiameter:40];
     ATLUserMock *mockUser = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
-    LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.participantIdentifier];
+    LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.userID];
     
     LYRMessagePartMock *part = [LYRMessagePartMock messagePartWithText:@"test"];
     LYRMessageMock *message = [layerClient newMessageWithParts:@[part] options:nil error:nil];
@@ -327,7 +327,7 @@ extern NSString *const ATLConversationCollectionViewAccessibilityIdentifier;
     [tester waitForTimeInterval:1];
     [[ATLAvatarImageView appearance] setImageViewBackgroundColor:[UIColor redColor]];
     ATLUserMock *mockUser = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
-    LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.participantIdentifier];
+    LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.userID];
     
     LYRMessagePartMock *part = [LYRMessagePartMock messagePartWithText:@"test"];
     LYRMessageMock *message = [layerClient newMessageWithParts:@[part] options:nil error:nil];
@@ -349,7 +349,7 @@ extern NSString *const ATLConversationCollectionViewAccessibilityIdentifier;
 - (void)createIncomingMesssageWithText:(NSString *)text
 {
     ATLUserMock *mockUser = [ATLUserMock userWithMockUserName:ATLMockUserNameKevin];
-    LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.participantIdentifier];
+    LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.userID];
     
     LYRMessagePartMock *part = [LYRMessagePartMock messagePartWithText:text];
     LYRMessageMock *message = [layerClient newMessageWithParts:@[part] options:nil error:nil];
@@ -361,7 +361,7 @@ extern NSString *const ATLConversationCollectionViewAccessibilityIdentifier;
 {
     ATLUserMock *mockUser1 = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
     ATLUserMock *mockUser2 = [ATLUserMock userWithMockUserName:ATLMockUserNameKevin];
-    self.conversation = [self.testInterface conversationWithParticipants:[NSSet setWithObjects:mockUser1.participantIdentifier, mockUser2.participantIdentifier, nil] lastMessageText:nil];
+    self.conversation = [self.testInterface conversationWithParticipants:[NSSet setWithObjects:mockUser1.userID, mockUser2.userID, nil] lastMessageText:nil];
     
     self.controller = [ATLSampleConversationViewController conversationViewControllerWithLayerClient:(LYRClient *)self.testInterface.layerClient];;
     self.controller.conversation = (LYRConversation *)self.conversation;
