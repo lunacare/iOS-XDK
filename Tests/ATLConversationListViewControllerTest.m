@@ -537,7 +537,7 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
         ATLConversationListViewController *controller;
         [invocation getArgument:&controller atIndex:2];
         expect(controller).to.equal(self.viewController);
-    }] conversationListViewController:[OCMArg any] rowActionsForDeletionModes:@[[UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+    }] conversationListViewController:[OCMArg any] rowActionsForDeletionModes:@[[UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"TestDelete" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         // do nothing
     }]]];
     
