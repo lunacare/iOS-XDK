@@ -94,7 +94,7 @@ LYRMessagePartMock *ATLMessagePartWithLocation(CLLocation *location)
 - (NSString *)conversationLabelForConversation:(LYRConversationMock *)conversation
 {
     if (!self.layerClient.authenticatedUserID) return @"Not auth'd";
-    NSMutableSet *participantIdentifiers = [conversation.participants mutableCopy];
+    NSMutableSet *participantIdentifiers = [[conversation.participants valueForKey:@"userID"] mutableCopy];
     [participantIdentifiers removeObject:self.layerClient.authenticatedUserID];
     
     if (participantIdentifiers.count == 0) return @"Personal Conversation";
@@ -106,7 +106,7 @@ LYRMessagePartMock *ATLMessagePartWithLocation(CLLocation *location)
     ATLUserMock *firstUser;
     if (![conversation.lastMessage.sender.userID isEqualToString:self.layerClient.authenticatedUserID]) {
         if (conversation.lastMessage) {
-            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"SELF.participantIdentifier IN %@", conversation.lastMessage.sender.userID];
+            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"SELF.userID IN %@", conversation.lastMessage.sender.userID];
             ATLUserMock *lastMessageSender = [[[participants filteredSetUsingPredicate:searchPredicate] allObjects] lastObject];
             if (lastMessageSender) {
                 firstUser = lastMessageSender;
@@ -117,10 +117,10 @@ LYRMessagePartMock *ATLMessagePartWithLocation(CLLocation *location)
         firstUser = [[participants allObjects] objectAtIndex:0];
     }
     
-    NSString *conversationLabel = firstUser.fullName;
+    NSString *conversationLabel = firstUser.displayName;
     for (int i = 1; i < [[participants allObjects] count]; i++) {
         ATLUserMock *user = [[participants allObjects] objectAtIndex:i];
-        conversationLabel = [NSString stringWithFormat:@"%@, %@", conversationLabel, user.fullName];
+        conversationLabel = [NSString stringWithFormat:@"%@, %@", conversationLabel, user.displayName];
     }
     return conversationLabel;
 }

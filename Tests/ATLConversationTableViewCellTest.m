@@ -44,7 +44,7 @@ NSString *ATLLastMessageText = @"ATLLastMessageText";
     [super setUp];
     
     ATLUserMock *mockUser = [ATLUserMock userWithMockUserName:ATLMockUserNameBlake];
-    LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.participantIdentifier];
+    LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.userID];
     self.testInterface = [ATLTestInterface testIntefaceWithLayerClient:layerClient];
     
     ATLSampleConversationListViewController *controller = [ATLSampleConversationListViewController conversationListViewControllerWithLayerClient:(LYRClient *)layerClient];
@@ -161,7 +161,7 @@ NSString *ATLLastMessageText = @"ATLLastMessageText";
 
 - (void)createNewConversation
 {
-    NSSet *participants = [NSSet setWithObject:[ATLUserMock userWithMockUserName:ATLMockUserNameKlemen].participantIdentifier];
+    NSSet *participants = [NSSet setWithObject:[ATLUserMock userWithMockUserName:ATLMockUserNameKlemen].userID];
     LYRMessagePartMock *part = [LYRMessagePartMock messagePartWithText:ATLLastMessageText];
     LYRMessageMock *message = [self.testInterface.layerClient newMessageWithParts:@[part] options:nil error:nil];
     self.conversation = [self.testInterface.layerClient newConversationWithParticipants:participants options:nil error:nil];

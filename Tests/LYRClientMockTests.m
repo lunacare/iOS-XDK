@@ -50,9 +50,9 @@
 - (void)testAddMessages
 {
     ATLUserMock *mockUser = [ATLUserMock userWithMockUserName:ATLMockUserNameBlake];
-    LYRClientMock *client = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.participantIdentifier];
+    LYRClientMock *client = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.userID];
     
-    NSSet *participants = [NSSet setWithObject:[[ATLUserMock randomUser] participantIdentifier]];
+    NSSet *participants = [NSSet setWithObject:[[ATLUserMock randomUser] userID]];
     LYRConversationMock *conversation = [client newConversationWithParticipants:participants options:nil error:nil];
     
     LYRMessagePartMock *messagePart1 = [LYRMessagePartMock messagePartWithText:@"How are you?"];
@@ -72,9 +72,9 @@
 - (void)testFetchingConversationByIdentifier
 {
     ATLUserMock *mockUser = [ATLUserMock userWithMockUserName:ATLMockUserNameBlake];
-    LYRClientMock *client = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.participantIdentifier];
+    LYRClientMock *client = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.userID];
     
-    NSSet *participants = [NSSet setWithObject:[[ATLUserMock randomUser] participantIdentifier]];
+    NSSet *participants = [NSSet setWithObject:[[ATLUserMock randomUser] userID]];
     LYRConversationMock *conversation1 = [client newConversationWithParticipants:participants options:nil error:nil];
     
     LYRMessagePartMock *messagePart1 = [LYRMessagePartMock messagePartWithText:@"How are you?"];
