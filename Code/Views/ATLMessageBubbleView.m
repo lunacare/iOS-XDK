@@ -85,6 +85,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
         [self addSubview:_bubbleViewLabel];
         
         _textCheckingTypes = NSTextCheckingTypeLink;
+        _textCheckingTypes = NSTextCheckingTypePhoneNumber;
         
         _bubbleImageView = [[UIImageView alloc] init];
         _bubbleImageView.translatesAutoresizingMaskIntoConstraints = NO;
