@@ -20,16 +20,16 @@
 - (void)testToVerifyCaseInsensitiveSearch
 {
     NSSet *set1 = [ATLUserMock participantsWithText:@"Kleme"];
-    NSString *fullName1 = ((ATLUserMock*)set1.allObjects.firstObject).fullName;
-    expect(fullName1).to.equal([ATLUserMock userWithMockUserName:ATLMockUserNameKlemen].fullName);
+    NSString *fullName1 = ((ATLUserMock*)set1.allObjects.firstObject).displayName;
+    expect(fullName1).to.equal([ATLUserMock userWithMockUserName:ATLMockUserNameKlemen].displayName);
     
     NSSet *set2 = [ATLUserMock participantsWithText:@"kleme"];
-    NSString *fullName2 = ((ATLUserMock*)set2.allObjects.firstObject).fullName;
-    expect(fullName2).to.equal([ATLUserMock userWithMockUserName:ATLMockUserNameKlemen].fullName);
+    NSString *fullName2 = ((ATLUserMock*)set2.allObjects.firstObject).displayName;
+    expect(fullName2).to.equal([ATLUserMock userWithMockUserName:ATLMockUserNameKlemen].displayName);
 
     NSSet *set3 = [ATLUserMock participantsWithText:@"bob"];
-    NSString *fullName3 = ((ATLUserMock*)set3.allObjects.firstObject).fullName;
-    expect(fullName3).toNot.equal([ATLUserMock userWithMockUserName:ATLMockUserNameKlemen].fullName);
+    NSString *fullName3 = ((ATLUserMock*)set3.allObjects.firstObject).displayName;
+    expect(fullName3).toNot.equal([ATLUserMock userWithMockUserName:ATLMockUserNameKlemen].displayName);
 }
 
 @end

@@ -124,7 +124,6 @@ NSInteger const ATLQueryControllerPaginationWindow = 30;
     }];
     BOOL success = [self.conversation synchronizeMoreMessages:numberOfMessagesToSynchronize error:&error];
     if (!success) {
-        NSLog(@"error synchronizing more messages: %@", error);
         if (observer) {
             [[NSNotificationCenter defaultCenter] removeObserver:observer];
         }
@@ -145,7 +144,7 @@ NSInteger const ATLQueryControllerPaginationWindow = 30;
 
 - (NSUInteger)messagesAvailableRemotely
 {
-    return MAX(0, self.conversation.totalNumberOfMessages - ABS(self.queryController.count));
+    return (NSUInteger)MAX((NSInteger)0, (NSInteger)self.conversation.totalNumberOfMessages - (NSInteger)ABS(self.queryController.count));
 }
 
 - (NSIndexPath *)queryControllerIndexPathForCollectionViewIndexPath:(NSIndexPath *)collectionViewIndexPath

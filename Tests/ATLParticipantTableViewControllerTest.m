@@ -21,7 +21,6 @@
 #import <XCTest/XCTest.h>
 #import "ATLTestInterface.h"
 #import "ATLParticipantTableViewCell.h"
-#import "ATLIdentity.h"
 #import "ATLSampleParticipantTableViewController.h"
 
 @interface ATLParticipantTableViewCell ()
@@ -46,7 +45,7 @@ NSString *const ATLParticipantTableViewAccessibilityIdentifier;
     [super setUp];
 
     ATLUserMock *mockUser = [ATLUserMock userWithMockUserName:ATLMockUserNameBlake];
-    LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.participantIdentifier];
+    LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.userID];
     self.testInterface = [ATLTestInterface testIntefaceWithLayerClient:layerClient];
     
     NSSet *participants = [ATLUserMock allMockParticipants];
@@ -70,7 +69,7 @@ NSString *const ATLParticipantTableViewAccessibilityIdentifier;
     [self setRootViewController];
     NSSet *participants = [ATLUserMock allMockParticipants];
     for (ATLUserMock *mock in participants) {
-        NSString *name = [NSString stringWithFormat:@"%@", mock.fullName];
+        NSString *name = [NSString stringWithFormat:@"%@", mock.displayName];
         [tester waitForViewWithAccessibilityLabel:name];
     }
 }
@@ -80,8 +79,8 @@ NSString *const ATLParticipantTableViewAccessibilityIdentifier;
     [self setRootViewController];
     ATLUserMock *mock = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
     [tester tapViewWithAccessibilityLabel:@"Search Bar"];
-    [tester enterText:mock.fullName intoViewWithAccessibilityLabel:@"Search Bar"];
-    [tester waitForViewWithAccessibilityLabel:mock.fullName];
+    [tester enterText:mock.displayName intoViewWithAccessibilityLabel:@"Search Bar"];
+    [tester waitForViewWithAccessibilityLabel:mock.displayName];
 }
 
 //Search for a participant with an unknown name and verify that the list is empty.
@@ -104,7 +103,7 @@ NSString *const ATLParticipantTableViewAccessibilityIdentifier;
     [self setRootViewController];
     
     ATLUserMock *mock = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
-    ATLParticipantTableViewCell *cell = (ATLParticipantTableViewCell *)[tester waitForViewWithAccessibilityLabel:mock.fullName];
+    ATLParticipantTableViewCell *cell = (ATLParticipantTableViewCell *)[tester waitForViewWithAccessibilityLabel:mock.displayName];
     expect(cell.titleFont).to.equal(testFont);
     expect(cell.titleColor).to.equal(testColor);
 }
@@ -116,8 +115,8 @@ NSString *const ATLParticipantTableViewAccessibilityIdentifier;
     [self setRootViewController];
     
     ATLUserMock *mock = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
-    expect([[tester waitForViewWithAccessibilityLabel:mock.fullName] class]).to.equal([ATLTestParticipantCell class]);
-    expect([[tester waitForViewWithAccessibilityLabel:mock.fullName] class]).toNot.equal([ATLParticipantTableViewCell class]);
+    expect([[tester waitForViewWithAccessibilityLabel:mock.displayName] class]).to.equal([ATLTestParticipantCell class]);
+    expect([[tester waitForViewWithAccessibilityLabel:mock.displayName] class]).toNot.equal([ATLParticipantTableViewCell class]);
 }
 
 //Verify that the row height can be configured.
@@ -126,7 +125,7 @@ NSString *const ATLParticipantTableViewAccessibilityIdentifier;
     ATLUserMock *mock = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
     self.viewController.rowHeight = 80;
     [self setRootViewController];
-    expect([tester waitForViewWithAccessibilityLabel:mock.fullName].frame.size.height).to.equal(80);
+    expect([tester waitForViewWithAccessibilityLabel:mock.displayName].frame.size.height).to.equal(80);
 }
 
 -(void)testToVerifySectionTextPropertyFunctionality
@@ -136,15 +135,15 @@ NSString *const ATLParticipantTableViewAccessibilityIdentifier;
     NSSet *participants = [ATLUserMock allMockParticipants];
     NSArray *sortedParticipantsFirst = [[participants allObjects] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"firstName" ascending:YES]]];
     ATLUserMock *firstUser = (ATLUserMock *)[sortedParticipantsFirst firstObject];
-    ATLParticipantTableViewCell *cell = (ATLParticipantTableViewCell *)[tester waitForViewWithAccessibilityLabel:firstUser.fullName];
-    expect(cell.nameLabel.text).to.equal(firstUser.fullName);
+    ATLParticipantTableViewCell *cell = (ATLParticipantTableViewCell *)[tester waitForViewWithAccessibilityLabel:firstUser.displayName];
+    expect(cell.nameLabel.text).to.equal(firstUser.displayName);
     
     NSArray *sortedParticipantsLast = [[participants allObjects] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"lastName" ascending:YES]]];
     self.viewController = [ATLSampleParticipantTableViewController participantTableViewControllerWithParticipants:participants sortType:ATLParticipantPickerSortTypeLastName];
     [self setRootViewController];
     firstUser = (ATLUserMock *)[sortedParticipantsLast firstObject];
-    cell = (ATLParticipantTableViewCell *)[tester waitForViewWithAccessibilityLabel:firstUser.fullName];
-    expect(cell.nameLabel.text).to.equal(firstUser.fullName);
+    cell = (ATLParticipantTableViewCell *)[tester waitForViewWithAccessibilityLabel:firstUser.displayName];
+    expect(cell.nameLabel.text).to.equal(firstUser.displayName);
 }
 
 //Test that attempts to change the cell class after the view is loaded results in a runtime error.
@@ -189,7 +188,7 @@ NSString *const ATLParticipantTableViewAccessibilityIdentifier;
     }] participantTableViewController:[OCMArg any] didSelectParticipant:[OCMArg any]];
     
     ATLUserMock *mock = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
-    [tester tapViewWithAccessibilityLabel:mock.fullName];
+    [tester tapViewWithAccessibilityLabel:mock.displayName];
     [delegateMock verify];
 }
 
