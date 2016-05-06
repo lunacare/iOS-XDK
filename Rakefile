@@ -175,6 +175,8 @@ task :release => [:fetch_origin] do
       puts green("Pushing podspec to CocoaPods trunk")
       run "pod trunk push --allow-warnings #{podspec}"
     end
+    
+    Rake::Task["publish_github_release"].invoke
   end
 end
 
@@ -213,4 +215,53 @@ end
 
 def grey(string)
  "\033[0;37m#{string}\033[0m"
+end
+
+def changelog_for_version(version)
+  capturing = false
+  Array.new.tap do |release_notes|
+    File.read('./CHANGELOG.md').each_line do |line|
+      if line =~ /^\#\#\s#{Regexp.escape(version)}$/
+        capturing = true
+      else
+        if line =~ /^\#\#\s[\d\.]+$/
+          capturing = false
+        else
+          if capturing
+            release_notes << line
+          end
+        end
+      end
+    end
+  end.join
+end
+
+def current_version
+  root_dir = File.expand_path(File.dirname(__FILE__))
+  path = File.join(root_dir, 'Atlas.podspec')
+  File.read(path).match(/\.version\s+=\s+['"](.+)['"]$/)[1]
+end
+
+desc "Publishes a Github release including the changelog"
+task :publish_github_release do
+  if ENV['GITHUB_TOKEN']
+    require 'rest-client'
+    require 'json'
+    run "rm -rf ~/Library/Caches/com.layer.Atlas"
+    version = ENV['VERSION'] || current_version
+    version_tag = "v#{version}"
+    release_notes = changelog_for_version(version)
+    puts "Creating Github release #{version_tag}..."
+    puts "Release Notes:\n#{release_notes}"
+    release = { tag_name: version_tag, body: release_notes }
+    release_json = RestClient.post("https://#{ENV['GITHUB_TOKEN']}:x-oauth-basic@api.github.com/repos/layerhq/Atlas-iOS/releases", JSON.generate(release))
+    release = JSON.parse(release_json)
+    puts "Created release: #{release_json.inspect}"
+  else
+    puts "!! Cannot create Github release on releases-ios: Please configure a personal Github token and export it as the `GITHUB_TOKEN` environment variable."
+  end
+end
+
+task :extract_changelog do
+  puts changelog_for_version(current_version)
 end

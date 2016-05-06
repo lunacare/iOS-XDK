@@ -42,7 +42,7 @@ static CGFloat const ATLMaxScrollDistanceFromBottom = 150;
 
 - (id)init
 {
-    self = [super init];
+    self = [super initWithNibName:nil bundle:nil];
     if (self) {
         [self baseCommonInit];
     }
