@@ -813,7 +813,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     }
 }
 
-- (void)handleApplicationWillEnterForeground:(NSNotification *)notification
+- (void)handleApplicationDidBecomeActive:(NSNotification *)notification
 {
     if (self.conversation && self.marksMessagesAsRead) {
         NSError *error;
@@ -1349,7 +1349,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientObjectsDidChange:) name:LYRClientObjectsDidChangeNotification object:nil];
     
     // Application State Notifications
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 @end
