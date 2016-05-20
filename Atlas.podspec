@@ -19,5 +19,5 @@ Pod::Spec.new do |s|
   s.ios.resource_bundle         = { 'AtlasResource' => 'Resources/*' }
   s.ios.frameworks              = %w{ UIKit CoreLocation MobileCoreServices }
   s.ios.deployment_target       = '8.0'
-  s.dependency                  'LayerKit', '>= 0.20.2'
+  s.dependency                  'LayerKit', '>= 0.21.0'
 end
