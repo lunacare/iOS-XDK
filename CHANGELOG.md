@@ -1,5 +1,12 @@
 # Atlas Changelog
 
+## 1.0.23
+
+### Enhancements
+
+* Adds support for `CocoaPods` 1.0.0.
+* Bumps `LayerKit` version to `0.21.0`.
+
 ## 1.0.22
 
 ### Bug Fixes
