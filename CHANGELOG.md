@@ -1,5 +1,11 @@
 # Atlas Changelog
 
+## 1.0.24
+
+### Enhancements
+
+* `ATLAddressBarController` now uses the `ATLParticipant` `displayName` property when displaying names in the `ATLAddressBarTextView`.
+
 ## 1.0.23
 
 ### Enhancements
