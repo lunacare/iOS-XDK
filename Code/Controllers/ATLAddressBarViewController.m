@@ -215,7 +215,6 @@ static NSString *const ATLAddressBarParticipantAttributeName = @"ATLAddressBarPa
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ATLParticipantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ATLMParticpantCellIdentifier];
-
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
@@ -530,7 +529,7 @@ static NSString *const ATLAddressBarParticipantAttributeName = @"ATLAddressBarPa
 {
     [self.addressBarView.addressBarTextView layoutIfNeeded]; // Layout text view so we can have an accurate width.
     
-    __block NSString *disabledString = [participants.firstObject firstName];
+    __block NSString *disabledString = [participants.firstObject displayName];
     NSMutableOrderedSet *mutableParticipants = [participants mutableCopy];
     [mutableParticipants removeObject:participants.firstObject];
     
@@ -541,9 +540,9 @@ static NSString *const ATLAddressBarParticipantAttributeName = @"ATLAddressBarPa
         if ([self textViewHasSpaceForParticipantString:truncatedString]) {
             remainingParticipants -= 1;
             othersString = [self otherStringWithRemainingParticipants:remainingParticipants];
-            NSString *expandedString = [NSString stringWithFormat:@"%@, %@ %@", disabledString, participant.firstName, othersString];
+            NSString *expandedString = [NSString stringWithFormat:@"%@, %@ %@", disabledString, participant.displayName, othersString];
             if ([self textViewHasSpaceForParticipantString:expandedString]) {
-                disabledString = [NSString stringWithFormat:@"%@, %@", disabledString, participant.firstName];
+                disabledString = [NSString stringWithFormat:@"%@, %@", disabledString, participant.displayName];
             } else {
                 disabledString = truncatedString;
                 *stop = YES;
