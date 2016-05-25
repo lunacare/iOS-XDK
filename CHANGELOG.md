@@ -4,7 +4,7 @@
 
 ### Enhancements
 
-* `ATLAddressBarController` now uses the `ATLParticipant` `displayName` property when displaying names in the `ATLAddressBarTextView`.
+* `ATLAddressBarController` now uses the `ATLParticipant` `displayName` property instead of `firstName` when displaying names in the `ATLAddressBarTextView`.
 
 ## 1.0.23
 
