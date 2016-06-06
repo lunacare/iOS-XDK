@@ -203,7 +203,7 @@ The [ATLConversationViewController](Code/Controllers/ATLConversationViewControll
 
 #### Initialization
 
-​```objc
+```objc
 ATLConverationViewController *viewController = [ATLConversationViewController conversationViewControllerWithLayerClient:self.layerClient];
 ```
 
