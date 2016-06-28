@@ -1,5 +1,5 @@
 PODS:
-  - Atlas (1.0.22):
+  - Atlas (1.0.23):
     - LayerKit (>= 0.21.0)
   - Expecta (1.0.5)
   - KIF (3.4.2):
@@ -21,7 +21,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Atlas:
-    :path: "."
+    :path: .
   KIFViewControllerActions:
     :git: https://github.com/blakewatters/KIFViewControllerActions.git
   LYRCountDownLatch:
@@ -36,7 +36,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/layerhq/LYRCountDownLatch.git
 
 SPEC CHECKSUMS:
-  Atlas: cf9f1792cc9d9992ec8b3de1f4f62e5ab9ab9eff
+  Atlas: acf154ee2a10c6257a47e872366154653932302f
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   KIF: b518c9831453abea5afdbbde3908ec47832d6d56
   KIFViewControllerActions: 8d2f9ec9f185fa70ca9f54a297de544afe71ea55
@@ -46,4 +46,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 31c94cbd9f9d85fc7e9aae02109733cba464cd83
 
-COCOAPODS: 1.0.0
+COCOAPODS: 1.0.1
