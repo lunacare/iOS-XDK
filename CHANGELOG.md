@@ -1,5 +1,11 @@
 # Atlas Changelog
 
+## 1.0.25
+
+### Enhancements
+
+* Upgraded `LayerKit` to version `0.22.0`. Due to breaking API changes introduced in LayerKit, affected code has been fixed.
+
 ## 1.0.24
 
 ### Enhancements
