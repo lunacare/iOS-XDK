@@ -173,7 +173,7 @@ task :release => [:fetch_origin] do
     with_clean_env do
       podspec = File.join(root_dir, "Atlas.podspec")
       puts green("Pushing podspec to CocoaPods trunk")
-      run "pod trunk push --allow-warnings #{podspec}"
+      run "rbenv exec bundle exec pod trunk push --allow-warnings #{podspec}"
     end
     
     Rake::Task["publish_github_release"].invoke
