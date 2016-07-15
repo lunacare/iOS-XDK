@@ -1,5 +1,11 @@
 # Atlas Changelog
 
+## 1.0.26
+
+### Bug Fixes
+
+* Fix of the conversation list query in the `ATLConversationListViewController`. [APPS-2506]
+
 ## 1.0.25
 
 ### Enhancements
