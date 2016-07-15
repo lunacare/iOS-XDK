@@ -245,7 +245,6 @@ end
 desc "Publishes a Github release including the changelog"
 task :publish_github_release do
   if ENV['GITHUB_TOKEN']
-    require 'rest-client'
     require 'json'
     run "rm -rf ~/Library/Caches/com.layer.Atlas"
     version = ENV['VERSION'] || current_version
@@ -254,9 +253,17 @@ task :publish_github_release do
     puts "Creating Github release #{version_tag}..."
     puts "Release Notes:\n#{release_notes}"
     release = { tag_name: version_tag, body: release_notes }
-    release_json = RestClient.post("https://#{ENV['GITHUB_TOKEN']}:x-oauth-basic@api.github.com/repos/layerhq/Atlas-iOS/releases", JSON.generate(release))
-    release = JSON.parse(release_json)
-    puts "Created release: #{release_json.inspect}"
+    uri = URI('https://api.github.com/repos/layerhq/Atlas-iOS/releases')
+    request = Net::HTTP::Post.new(uri)
+    request.basic_auth ENV['GITHUB_TOKEN'], 'x-oauth-basic'
+    request.body = JSON.generate(release)
+    request["Content-Type"] = "application/json"
+    http = Net::HTTP.new(uri.hostname, uri.port)
+    http.use_ssl = true
+    response = http.request(request)
+    puts "Got response: #{response}"
+    release = JSON.parse(response.body)
+    puts "Created release: #{release.inspect}"
   else
     puts "!! Cannot create Github release on releases-ios: Please configure a personal Github token and export it as the `GITHUB_TOKEN` environment variable."
   end
