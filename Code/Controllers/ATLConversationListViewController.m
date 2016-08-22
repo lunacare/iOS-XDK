@@ -225,10 +225,13 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 
 - (void)setupConversationDataSource
 {
-    LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
     if (!self.layerClient.authenticatedUser.userID) {
-        query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsIn value:@[ self.layerClient.authenticatedUser.userID ]];
+        // Doing an early exit due to the LYRClient currently deauthenticating,
+        // and the view controller is about to be dismissed.
+        return;
     }
+    LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
+    query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsIn value:@[ self.layerClient.authenticatedUser.userID ]];
     query.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"lastMessage.receivedAt" ascending:NO]];
     
     if ([self.dataSource respondsToSelector:@selector(conversationListViewController:willLoadWithQuery:)]) {
