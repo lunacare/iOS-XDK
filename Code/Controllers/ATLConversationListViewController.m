@@ -116,7 +116,8 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     self.tableView.accessibilityIdentifier = ATLConversationTableViewAccessibilityIdentifier;
     self.tableView.isAccessibilityElement = YES;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
+    [self.tableView registerClass:self.cellClass forCellReuseIdentifier:ATLConversationCellReuseIdentifier];
+
     if (self.shouldDisplaySearchController) {
         self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
         [self.searchBar sizeToFit];
@@ -144,7 +145,6 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         CGFloat contentOffset = self.tableView.contentOffset.y + self.searchBar.frame.size.height;
         self.tableView.contentOffset = CGPointMake(0, contentOffset);
         self.tableView.rowHeight = self.rowHeight;
-        [self.tableView registerClass:self.cellClass forCellReuseIdentifier:ATLConversationCellReuseIdentifier];
         if (self.allowsEditing) [self addEditButton];
     }
     
@@ -228,6 +228,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     if (!self.layerClient.authenticatedUser.userID) {
         // Doing an early exit due to the LYRClient currently deauthenticating,
         // and the view controller is about to be dismissed.
+        [self.tableView reloadData];
         return;
     }
     LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
@@ -248,6 +249,11 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         return;
     }
     self.queryController.delegate = self;
+    // We need to tell tableView to refresh data before executing the new query
+    // controller. That because the new query controller starts with a
+    // different number of row/sections than the previous one that
+    // might currently be in flight.
+    [self.tableView reloadData];
     BOOL success = [self.queryController execute:&error];
     if (!success) {
         NSLog(@"LayerKit failed to execute query with error: %@", error);
