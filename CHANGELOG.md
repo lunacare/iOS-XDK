@@ -1,5 +1,11 @@
 # Atlas Changelog
 
+## 1.0.27
+
+### Bug Fixes
+
+* Fixes the crash related to the new `LYRQueryController` behavior introduced in LayerKit v0.23.0. [APPS-2560]
+
 ## 1.0.26
 
 ### Bug Fixes
