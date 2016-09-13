@@ -134,22 +134,25 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         self.searchController.searchResultsDelegate = self;
         self.searchController.searchResultsDataSource = self;
     }
+    
+    // Track changes in authentication state to manipulate the query controller appropriately
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidAuthenticate:) name:LYRClientDidAuthenticateNotification object:self.layerClient];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidDeauthenticate:) name:LYRClientDidDeauthenticateNotification object:self.layerClient];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    // Hide the search bar
+    // Perform setup here so that our children can initialize via viewDidLoad
     if (!self.hasAppeared) {
+        [self setupConversationQueryController];
+        
+        // Hide the search bar
         CGFloat contentOffset = self.tableView.contentOffset.y + self.searchBar.frame.size.height;
         self.tableView.contentOffset = CGPointMake(0, contentOffset);
         self.tableView.rowHeight = self.rowHeight;
         if (self.allowsEditing) [self addEditButton];
-    }
-    
-    if (!self.queryController) {
-        [self setupConversationDataSource];
     }
    
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
@@ -167,6 +170,11 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 {
     [super viewDidAppear:animated];
     self.hasAppeared = YES;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Public Setters
@@ -223,12 +231,10 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
-- (void)setupConversationDataSource
+- (void)setupConversationQueryController
 {
-    if (!self.layerClient.authenticatedUser.userID) {
-        // Doing an early exit due to the LYRClient currently deauthenticating,
-        // and the view controller is about to be dismissed.
-        [self.tableView reloadData];
+    NSAssert(self.queryController == nil, @"Cannot initialize more than once");
+    if (!self.layerClient.authenticatedUser) {
         return;
     }
     LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
@@ -249,16 +255,22 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         return;
     }
     self.queryController.delegate = self;
-    // We need to tell tableView to refresh data before executing the new query
-    // controller. That because the new query controller starts with a
-    // different number of row/sections than the previous one that
-    // might currently be in flight.
-    [self.tableView reloadData];
+    
     BOOL success = [self.queryController execute:&error];
     if (!success) {
         NSLog(@"LayerKit failed to execute query with error: %@", error);
         return;
     }
+}
+
+- (void)layerClientDidAuthenticate:(NSNotification *)notification
+{
+    [self setupConversationQueryController];
+}
+
+- (void)layerClientDidDeauthenticate:(NSNotification *)notification
+{
+    self.queryController = nil;
     [self.tableView reloadData];
 }
 
