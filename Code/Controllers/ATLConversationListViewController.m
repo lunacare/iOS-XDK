@@ -140,7 +140,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 {
     [super viewWillAppear:animated];
     
-    // Perform setup here so that our children can initialize via viewDidLoad    
+    // Perform setup here so that our children can initialize via viewDidLoad
     if (!self.hasAppeared) {
         [self setupConversationQueryController];
         
@@ -250,17 +250,12 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         return;
     }
     self.queryController.delegate = self;
-    // We need to tell tableView to refresh data before executing the new query
-    // controller. That because the new query controller starts with a
-    // different number of row/sections than the previous one that
-    // might currently be in flight.
-//    [self.tableView reloadData];
+    
     BOOL success = [self.queryController execute:&error];
     if (!success) {
         NSLog(@"LayerKit failed to execute query with error: %@", error);
         return;
     }
-//    [self.tableView reloadData];
     
     // Track changes in authentication state to manipulate the predicate appropriately
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidAuthenticate:) name:LYRClientDidAuthenticateNotification object:self.layerClient];
