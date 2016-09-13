@@ -134,6 +134,10 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         self.searchController.searchResultsDelegate = self;
         self.searchController.searchResultsDataSource = self;
     }
+    
+    // Track changes in authentication state to manipulate the query controller appropriately
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidAuthenticate:) name:LYRClientDidAuthenticateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidDeauthenticate:) name:LYRClientDidDeauthenticateNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -230,10 +234,11 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 - (void)setupConversationQueryController
 {
     NSAssert(self.queryController == nil, @"Cannot initialize more than once");
-    LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
-    if (self.layerClient.authenticatedUser) {
-        query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsIn value:@[ self.layerClient.authenticatedUser.userID ]];
+    if (!self.layerClient.authenticatedUser) {
+        return;
     }
+    LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
+    query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsIn value:@[ self.layerClient.authenticatedUser.userID ]];
     query.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"lastMessage.receivedAt" ascending:NO]];
     
     if ([self.dataSource respondsToSelector:@selector(conversationListViewController:willLoadWithQuery:)]) {
@@ -256,32 +261,17 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         NSLog(@"LayerKit failed to execute query with error: %@", error);
         return;
     }
-    
-    // Track changes in authentication state to manipulate the predicate appropriately
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidAuthenticate:) name:LYRClientDidAuthenticateNotification object:self.layerClient];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidDeauthenticate:) name:LYRClientDidDeauthenticateNotification object:self.layerClient];
 }
 
 - (void)layerClientDidAuthenticate:(NSNotification *)notification
 {
-   self.queryController.query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsIn value:@[ self.layerClient.authenticatedUser.userID ]];
-    NSError *error;
-    BOOL success = [self.queryController execute:&error];
-    if (!success) {
-        NSLog(@"LayerKit failed to execute query with error: %@", error);
-        return;
-    }
+    [self setupConversationQueryController];
 }
 
 - (void)layerClientDidDeauthenticate:(NSNotification *)notification
 {
-    self.queryController.query.predicate = nil;
-    NSError *error;
-    BOOL success = [self.queryController execute:&error];
-    if (!success) {
-        NSLog(@"LayerKit failed to execute query with error: %@", error);
-        return;
-    }
+    self.queryController = nil;
+    [self.tableView reloadData];
 }
 
 #pragma mark - UITableViewDataSource
