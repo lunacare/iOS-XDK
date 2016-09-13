@@ -140,16 +140,15 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 {
     [super viewWillAppear:animated];
     
-    // Hide the search bar
+    // Perform setup here so that our children can initialize via viewDidLoad    
     if (!self.hasAppeared) {
+        [self setupConversationQueryController];
+        
+        // Hide the search bar
         CGFloat contentOffset = self.tableView.contentOffset.y + self.searchBar.frame.size.height;
         self.tableView.contentOffset = CGPointMake(0, contentOffset);
         self.tableView.rowHeight = self.rowHeight;
         if (self.allowsEditing) [self addEditButton];
-    }
-    
-    if (!self.queryController) {
-        [self setupConversationDataSource];
     }
    
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
@@ -167,6 +166,11 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 {
     [super viewDidAppear:animated];
     self.hasAppeared = YES;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Public Setters
@@ -223,16 +227,13 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
-- (void)setupConversationDataSource
+- (void)setupConversationQueryController
 {
-    if (!self.layerClient.authenticatedUser.userID) {
-        // Doing an early exit due to the LYRClient currently deauthenticating,
-        // and the view controller is about to be dismissed.
-        [self.tableView reloadData];
-        return;
-    }
+    NSAssert(self.queryController == nil, @"Cannot initialize more than once");
     LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
-    query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsIn value:@[ self.layerClient.authenticatedUser.userID ]];
+    if (self.layerClient.authenticatedUser) {
+        query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsIn value:@[ self.layerClient.authenticatedUser.userID ]];
+    }
     query.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"lastMessage.receivedAt" ascending:NO]];
     
     if ([self.dataSource respondsToSelector:@selector(conversationListViewController:willLoadWithQuery:)]) {
@@ -253,13 +254,39 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     // controller. That because the new query controller starts with a
     // different number of row/sections than the previous one that
     // might currently be in flight.
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
     BOOL success = [self.queryController execute:&error];
     if (!success) {
         NSLog(@"LayerKit failed to execute query with error: %@", error);
         return;
     }
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
+    
+    // Track changes in authentication state to manipulate the predicate appropriately
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidAuthenticate:) name:LYRClientDidAuthenticateNotification object:self.layerClient];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidDeauthenticate:) name:LYRClientDidDeauthenticateNotification object:self.layerClient];
+}
+
+- (void)layerClientDidAuthenticate:(NSNotification *)notification
+{
+   self.queryController.query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsIn value:@[ self.layerClient.authenticatedUser.userID ]];
+    NSError *error;
+    BOOL success = [self.queryController execute:&error];
+    if (!success) {
+        NSLog(@"LayerKit failed to execute query with error: %@", error);
+        return;
+    }
+}
+
+- (void)layerClientDidDeauthenticate:(NSNotification *)notification
+{
+    self.queryController.query.predicate = nil;
+    NSError *error;
+    BOOL success = [self.queryController execute:&error];
+    if (!success) {
+        NSLog(@"LayerKit failed to execute query with error: %@", error);
+        return;
+    }
 }
 
 #pragma mark - UITableViewDataSource
