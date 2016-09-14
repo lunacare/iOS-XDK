@@ -66,7 +66,7 @@ NSData *MediaAttachmentDataFromInputStream(NSInputStream *inputStream)
 + (instancetype)newConversationWithParticipants:(NSSet *)participants options:(NSDictionary *)options
 {
     LYRConversationMock *mock = [[self alloc] initWithParticipants:participants];
-    mock.metadata = [options valueForKey:LYRConversationOptionsMetadataKey];
+    //mock.metadata = [options valueForKey:LYRConversationOptionsMetadataKey];
     return mock;
 }
 
@@ -182,7 +182,7 @@ NSData *MediaAttachmentDataFromInputStream(NSInputStream *inputStream)
 
 #pragma mark - Typing Indicator
 
-- (void)sendTypingIndicator:(LYRTypingIndicator)typingIndicator
+- (void)sendTypingIndicator:(LYRTypingIndicator*)typingIndicator
 {
     //
 }
