@@ -138,6 +138,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     // Track changes in authentication state to manipulate the query controller appropriately
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidAuthenticate:) name:LYRClientDidAuthenticateNotification object:self.layerClient];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidDeauthenticate:) name:LYRClientDidDeauthenticateNotification object:self.layerClient];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidSwitchSession:) name:LYRClientDidSwitchSessionNotification object:self.layerClient];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -263,6 +264,12 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     }
 }
 
+- (void)deinitializeQueryController
+{
+    self.queryController = nil;
+    [self.tableView reloadData];
+}
+
 - (void)layerClientDidAuthenticate:(NSNotification *)notification
 {
     if (self.queryController == nil) {
@@ -270,10 +277,15 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     }
 }
 
+- (void)layerClientDidSwitchSession:(NSNotification *)notification
+{
+    [self deinitializeQueryController];
+    [self setupConversationQueryController];
+}
+
 - (void)layerClientDidDeauthenticate:(NSNotification *)notification
 {
-    self.queryController = nil;
-    [self.tableView reloadData];
+    [self deinitializeQueryController];
 }
 
 #pragma mark - UITableViewDataSource
