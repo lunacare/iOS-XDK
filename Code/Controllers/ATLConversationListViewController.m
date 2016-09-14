@@ -265,7 +265,9 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 
 - (void)layerClientDidAuthenticate:(NSNotification *)notification
 {
-    [self setupConversationQueryController];
+    if (self.queryController == nil) {
+        [self setupConversationQueryController];
+    }
 }
 
 - (void)layerClientDidDeauthenticate:(NSNotification *)notification
