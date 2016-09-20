@@ -1,5 +1,12 @@
 # Atlas Changelog
 
+## 1.0.28
+
+### Bug Fixes
+* Fixes an issue where messages in a new conversation would not appear until the conversation was reloaded.
+* Fixes a crash in the `ATLConversationListViewController` related to the query controller being initialized multiple times.
+* Fixes a crash when trying to get the avatar initials from a `LYRIdentity` object if it wasn't fully synced.
+
 ## 1.0.27
 
 ### Bug Fixes
