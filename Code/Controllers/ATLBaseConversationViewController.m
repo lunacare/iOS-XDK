@@ -22,7 +22,7 @@
 #import "ATLConversationView.h"
 
 static inline BOOL atl_systemVersionLessThan(NSString * _Nonnull systemVersion) {
-    return [[UIDevice currentDevice].systemVersion compare:systemVersion options:NSOrderedAscending];
+    return [[[UIDevice currentDevice] systemVersion] compare:systemVersion options:NSNumericSearch] == NSOrderedAscending;
 }
 
 @interface ATLBaseConversationViewController ()
@@ -155,7 +155,7 @@ static CGFloat const ATLMaxScrollDistanceFromBottom = 150;
     
     self.messageInputToolbar.translucent = NO;
     if (atl_systemVersionLessThan(@"10.0")) {
-        // Workaround for view's content flashing onscreen after pop animation concludes on iOS 8.
+        // Workaround for view's content flashing onscreen after pop animation concludes on iOS 9.
         BOOL isPopping = ![self.navigationController.viewControllers containsObject:self];
         if (isPopping) {
             [self.messageInputToolbar.textInputView resignFirstResponder];
