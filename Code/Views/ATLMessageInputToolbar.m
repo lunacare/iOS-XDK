@@ -22,10 +22,6 @@
 #import "ATLMediaAttachment.h"
 #import "ATLMessagingUtilities.h"
 
-static inline BOOL ATLSystemVersionLessThanOrEqualTo(NSString * _Nonnull systemVersion) {
-    return [[[UIDevice currentDevice] systemVersion] compare:systemVersion options:NSNumericSearch] != NSOrderedDescending;
-}
-
 NSString *const ATLMessageInputToolbarDidChangeHeightNotification = @"ATLMessageInputToolbarDidChangeHeightNotification";
 
 @interface ATLMessageInputToolbar () <UITextViewDelegate>
