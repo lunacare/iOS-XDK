@@ -1,5 +1,14 @@
 # Atlas Changelog
 
+## 1.0.29
+
+### Bug Fixes
+
+* Fixes a crash when updating the `ATLConversationListViewController` while the search bar is active. [APPS-2587]
+* Fixes an issue in the `ATLMessageInputToolbar` where adding a new line would result in text misalignment. [APPS-2593]
+* Fixes an issue in iOS 9 where the list of conversations would briefly flash when returning from a view with an active keyboard. [APPS-2594]
+* Fixes the build errors in the included Example classes.
+
 ## 1.0.28
 
 ### Bug Fixes
