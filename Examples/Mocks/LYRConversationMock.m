@@ -61,6 +61,8 @@ NSData *MediaAttachmentDataFromInputStream(NSInputStream *inputStream)
 
 @end
 
+NSString *const LYRConversationOptionsMetadataKey = @"metadata";
+
 @implementation LYRConversationMock
 
 + (instancetype)newConversationWithParticipants:(NSSet *)participants options:(NSDictionary *)options
@@ -182,7 +184,7 @@ NSData *MediaAttachmentDataFromInputStream(NSInputStream *inputStream)
 
 #pragma mark - Typing Indicator
 
-- (void)sendTypingIndicator:(LYRTypingIndicator)typingIndicator
+- (void)sendTypingIndicator:(LYRTypingIndicator *)typingIndicator
 {
     //
 }

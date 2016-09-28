@@ -19,6 +19,8 @@
 //
 #import <Foundation/Foundation.h>
 #import "LYRMessageMock.h"
+#import <Atlas/Atlas.h>
+
 
 @class LYRMessageMock;
 
@@ -46,7 +48,7 @@
 
 - (void)deleteValueForMetadataAtKeyPath:(NSString *)keyPath;
 
-- (void)sendTypingIndicator:(LYRTypingIndicator)typingIndicator;
+- (void)sendTypingIndicator:(LYRTypingIndicator *)typingIndicator;
 
 - (BOOL)delete:(LYRDeletionMode)deletionMode error:(NSError **)error;
 
