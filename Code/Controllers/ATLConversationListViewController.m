@@ -135,11 +135,6 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         self.searchController.searchResultsDelegate = self;
         self.searchController.searchResultsDataSource = self;
     }
-    
-    // Track changes in authentication state to manipulate the query controller appropriately
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidAuthenticate:) name:LYRClientDidAuthenticateNotification object:self.layerClient];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidDeauthenticate:) name:LYRClientDidDeauthenticateNotification object:self.layerClient];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidSwitchSession:) name:LYRClientDidSwitchSessionNotification object:self.layerClient];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -171,6 +166,11 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
             [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
         }];
     }
+    
+    // Track changes in authentication state to manipulate the query controller appropriately
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidAuthenticate:) name:LYRClientDidAuthenticateNotification object:self.layerClient];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidDeauthenticate:) name:LYRClientDidDeauthenticateNotification object:self.layerClient];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidSwitchSession:) name:LYRClientDidSwitchSessionNotification object:self.layerClient];
 }
 
 - (void)viewDidAppear:(BOOL)animated
