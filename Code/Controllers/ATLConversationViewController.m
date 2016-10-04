@@ -228,6 +228,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     if (conversation) {
         [self fetchLayerMessages];
     } else {
+        self.conversationDataSource.queryController.delegate = nil;
         self.conversationDataSource = nil;
         [self.collectionView reloadData];
     }
