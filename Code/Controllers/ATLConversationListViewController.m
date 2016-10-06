@@ -27,6 +27,7 @@ static NSString *const ATLImageMIMETypePlaceholderText = @"Attachment: Image";
 static NSString *const ATLVideoMIMETypePlaceholderText = @"Attachment: Video";
 static NSString *const ATLLocationMIMETypePlaceholderText = @"Attachment: Location";
 static NSString *const ATLGIFMIMETypePlaceholderText = @"Attachment: GIF";
+static NSInteger const ATLConverstionListPaginationWindow = 30;
 
 @interface ATLConversationListViewController () <UIActionSheetDelegate, LYRQueryControllerDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchDisplayDelegate>
 
@@ -261,6 +262,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         NSLog(@"LayerKit failed to create a query controller with error: %@", error);
         return;
     }
+    self.queryController.paginationWindow = ATLConverstionListPaginationWindow;
     self.queryController.delegate = self;
     
     BOOL success = [self.queryController execute:&error];
@@ -517,7 +519,51 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     }
 }
 
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (decelerate) return;
+    [self configurePaginationWindow];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self configurePaginationWindow];
+}
+
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
+{
+    [self configurePaginationWindow];
+}
+
+#pragma mark - Pagination
+
+- (void)configurePaginationWindow
+{
+    if ([self moreConversationsAvailable] && [self isNearBottom]) {
+        [self expandPaginationWindow];
+    }
+}
+
+- (void) expandPaginationWindow
+{
+    self.queryController.paginationWindow += self.queryController.paginationWindow + ATLConverstionListPaginationWindow < self.queryController.totalNumberOfObjects ? ATLConverstionListPaginationWindow : self.queryController.totalNumberOfObjects - self.queryController.paginationWindow;
+}
+
+- (BOOL)moreConversationsAvailable
+{
+    return self.queryController.paginationWindow < self.queryController.totalNumberOfObjects;
+}
+
+- (BOOL)isNearBottom
+{
+    CGFloat minimumDistanceFromBottomToTriggerLoadingMore = 200;
+    return self.tableView.contentOffset.y >= (self.tableView.contentSize.height - self.tableView.frame.size.height) - minimumDistanceFromBottomToTriggerLoadingMore;
+}
+
 #pragma mark - UISearchDisplayDelegate
+
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
     self.searchQueryControllerIsActive = YES;
