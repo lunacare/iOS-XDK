@@ -38,6 +38,7 @@ static NSInteger const ATLConverstionListPaginationWindow = 30;
 @property (nonatomic) UISearchBar *searchBar;
 @property (nonatomic) BOOL hasAppeared;
 @property (nonatomic) BOOL searchQueryControllerIsActive;
+@property (nonatomic) BOOL showingMoreConversationsIndicator;
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
@@ -117,7 +118,8 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     self.tableView.accessibilityLabel = ATLConversationTableViewAccessibilityLabel;
     self.tableView.accessibilityIdentifier = ATLConversationTableViewAccessibilityIdentifier;
     self.tableView.isAccessibilityElement = YES;
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.tableFooterView = [self makeMoreConversationsFooterView];
+    [self configureMoreConversationsFooterView];
     [self.tableView registerClass:self.cellClass forCellReuseIdentifier:ATLConversationCellReuseIdentifier];
     
     if (self.shouldDisplaySearchController) {
@@ -262,6 +264,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         NSLog(@"LayerKit failed to create a query controller with error: %@", error);
         return;
     }
+    self.showingMoreConversationsIndicator = [self moreConversationsAvailable];
     self.queryController.paginationWindow = ATLConverstionListPaginationWindow;
     self.queryController.delegate = self;
     
@@ -510,6 +513,9 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 - (void)queryControllerDidChangeContent:(LYRQueryController *)queryController
 {
     [self.tableView endUpdates];
+
+    [self configureMoreConversationsFooterView];
+
     if (self.conversationSelectedBeforeContentChange) {
         NSIndexPath *indexPath = [self.queryController indexPathForObject:self.conversationSelectedBeforeContentChange];
         if (indexPath) {
@@ -560,6 +566,36 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 {
     CGFloat minimumDistanceFromBottomToTriggerLoadingMore = 200;
     return self.tableView.contentOffset.y >= (self.tableView.contentSize.height - self.tableView.frame.size.height) - minimumDistanceFromBottomToTriggerLoadingMore;
+}
+
+- (void)configureMoreConversationsFooterView
+{
+    BOOL moreConversationsAvailable = [self moreConversationsAvailable];
+    if (moreConversationsAvailable == self.showingMoreConversationsIndicator) return;
+    self.showingMoreConversationsIndicator = moreConversationsAvailable;
+
+    // This footer view holds an activity indicator view. When there are more conversations to load, the height of the view is set to expose the activity indicator. Otherwise, the height is set to zero, but the footer remains installed in the table view. This is required in order to suppress the dummy separator lines that UITableView draws to simulate empty rows.
+    UIView* footer = self.tableView.tableFooterView;
+    footer.frame = self.showingMoreConversationsIndicator ? CGRectMake(0, 0, 0, 30) : CGRectZero;
+
+    // Must reassign tableFooterView in order for UITableView to recognize the size change.
+    self.tableView.tableFooterView = footer;
+}
+
+- (UIView*)makeMoreConversationsFooterView
+{
+    UIView* view = [[UIView alloc] init];
+
+    UIActivityIndicatorView* activityIndicatorView = [[UIActivityIndicatorView alloc] init];
+    activityIndicatorView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    activityIndicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    [activityIndicatorView startAnimating];
+    [view addSubview:activityIndicatorView];
+
+    // At times, the footer will be set to zero height, so this clips out the activity indicator.
+    view.clipsToBounds = YES;
+
+    return view;
 }
 
 #pragma mark - UISearchDisplayDelegate
