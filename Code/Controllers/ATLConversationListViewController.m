@@ -28,6 +28,17 @@ static NSString *const ATLVideoMIMETypePlaceholderText = @"Attachment: Video";
 static NSString *const ATLLocationMIMETypePlaceholderText = @"Attachment: Location";
 static NSString *const ATLGIFMIMETypePlaceholderText = @"Attachment: GIF";
 static NSInteger const ATLConverstionListPaginationWindow = 30;
+static CGFloat const ATLConversationListLoadMoreConversationsDistanceThreshold = 200.0f;
+static CGFloat const ATLConversationListLoadingMoreConversationsIndicatorViewWidth = 30.0f;
+static CGFloat const ATLConversationListLoadingMoreConversationsIndicatorViewHeight = 30.0f;
+
+static UIView *ATLMakeLoadingMoreConversationsIndicatorView()
+{
+    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0.0, 0.0, ATLConversationListLoadingMoreConversationsIndicatorViewWidth, ATLConversationListLoadingMoreConversationsIndicatorViewHeight)];
+    activityIndicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    [activityIndicatorView startAnimating];
+    return activityIndicatorView;
+}
 
 @interface ATLConversationListViewController () <UIActionSheetDelegate, LYRQueryControllerDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchDisplayDelegate>
 
@@ -118,8 +129,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     self.tableView.accessibilityLabel = ATLConversationTableViewAccessibilityLabel;
     self.tableView.accessibilityIdentifier = ATLConversationTableViewAccessibilityIdentifier;
     self.tableView.isAccessibilityElement = YES;
-    self.tableView.tableFooterView = [self makeMoreConversationsFooterView];
-    [self configureMoreConversationsFooterView];
+    [self configureLoadingMoreConversationsIndicatorView];
     [self.tableView registerClass:self.cellClass forCellReuseIdentifier:ATLConversationCellReuseIdentifier];
     
     if (self.shouldDisplaySearchController) {
@@ -514,7 +524,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 {
     [self.tableView endUpdates];
 
-    [self configureMoreConversationsFooterView];
+    [self configureLoadingMoreConversationsIndicatorView];
 
     if (self.conversationSelectedBeforeContentChange) {
         NSIndexPath *indexPath = [self.queryController indexPathForObject:self.conversationSelectedBeforeContentChange];
@@ -529,16 +539,13 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    if (decelerate) return;
+    if (decelerate) {
+        return;
+    }
     [self configurePaginationWindow];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    [self configurePaginationWindow];
-}
-
-- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
 {
     [self configurePaginationWindow];
 }
@@ -564,38 +571,19 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 
 - (BOOL)isNearBottom
 {
-    CGFloat minimumDistanceFromBottomToTriggerLoadingMore = 200;
-    return self.tableView.contentOffset.y >= (self.tableView.contentSize.height - self.tableView.frame.size.height) - minimumDistanceFromBottomToTriggerLoadingMore;
+    return self.tableView.contentOffset.y >= (self.tableView.contentSize.height - self.tableView.frame.size.height) - ATLConversationListLoadMoreConversationsDistanceThreshold;
 }
 
-- (void)configureMoreConversationsFooterView
+- (void)configureLoadingMoreConversationsIndicatorView
 {
     BOOL moreConversationsAvailable = [self moreConversationsAvailable];
-    if (moreConversationsAvailable == self.showingMoreConversationsIndicator) return;
+    if (moreConversationsAvailable == self.showingMoreConversationsIndicator) {
+        return;
+    }
     self.showingMoreConversationsIndicator = moreConversationsAvailable;
 
-    // This footer view holds an activity indicator view. When there are more conversations to load, the height of the view is set to expose the activity indicator. Otherwise, the height is set to zero, but the footer remains installed in the table view. This is required in order to suppress the dummy separator lines that UITableView draws to simulate empty rows.
-    UIView* footer = self.tableView.tableFooterView;
-    footer.frame = self.showingMoreConversationsIndicator ? CGRectMake(0, 0, 0, 30) : CGRectZero;
-
-    // Must reassign tableFooterView in order for UITableView to recognize the size change.
-    self.tableView.tableFooterView = footer;
-}
-
-- (UIView*)makeMoreConversationsFooterView
-{
-    UIView* view = [[UIView alloc] init];
-
-    UIActivityIndicatorView* activityIndicatorView = [[UIActivityIndicatorView alloc] init];
-    activityIndicatorView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-    activityIndicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-    [activityIndicatorView startAnimating];
-    [view addSubview:activityIndicatorView];
-
-    // At times, the footer will be set to zero height, so this clips out the activity indicator.
-    view.clipsToBounds = YES;
-
-    return view;
+    // The indicator view is installed as the table's footer view. When no indicator is needed, install an empty view. This is required in order to suppress the dummy separator lines that UITableView draws to simulate empty rows.
+    self.tableView.tableFooterView = self.showingMoreConversationsIndicator ? ATLMakeLoadingMoreConversationsIndicatorView() : [[UIView alloc] init];
 }
 
 #pragma mark - UISearchDisplayDelegate
