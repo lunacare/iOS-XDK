@@ -482,7 +482,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     
     NSDate *date = message.sentAt ?: [NSDate date];
     NSTimeInterval interval = [date timeIntervalSinceDate:previousMessage.sentAt];
-    if (interval > self.dateDisplayTimeInterval) {
+    if (abs(interval) > self.dateDisplayTimeInterval) {
         return YES;
     }
     return NO;
