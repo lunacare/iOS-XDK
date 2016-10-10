@@ -135,11 +135,6 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         self.searchController.searchResultsDelegate = self;
         self.searchController.searchResultsDataSource = self;
     }
-    
-    // Track changes in authentication state to manipulate the query controller appropriately
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidAuthenticate:) name:LYRClientDidAuthenticateNotification object:self.layerClient];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidDeauthenticate:) name:LYRClientDidDeauthenticateNotification object:self.layerClient];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidSwitchSession:) name:LYRClientDidSwitchSessionNotification object:self.layerClient];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -147,9 +142,11 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     [super viewWillAppear:animated];
     
     // Perform setup here so that our children can initialize via viewDidLoad
-    if (!self.hasAppeared) {
+    if (!self.queryController) {
         [self setupConversationQueryController];
-        
+    }
+    
+    if (!self.hasAppeared) {
         // Hide the search bar
         CGFloat contentOffset = self.tableView.contentOffset.y + self.searchBar.frame.size.height;
         self.tableView.contentOffset = CGPointMake(0, contentOffset);
@@ -171,12 +168,26 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
             [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
         }];
     }
+    
+    // Track changes in authentication state to manipulate the query controller appropriately
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidAuthenticate:) name:LYRClientDidAuthenticateNotification object:self.layerClient];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidDeauthenticate:) name:LYRClientDidDeauthenticateNotification object:self.layerClient];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidSwitchSession:) name:LYRClientDidSwitchSessionNotification object:self.layerClient];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     self.hasAppeared = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LYRClientDidAuthenticateNotification object:self.layerClient];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LYRClientDidDeauthenticateNotification object:self.layerClient];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:LYRClientDidSwitchSessionNotification object:self.layerClient];
 }
 
 - (void)dealloc
