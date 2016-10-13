@@ -89,7 +89,7 @@ static NSString *ATLInitialForName(NSString *name)
 
 #pragma mark -
 
-- (void) addParticipant:(id<ATLParticipant>)participant
+- (void)addParticipant:(id<ATLParticipant>)participant
 {
     if (![self.participants containsObject:participant]) {
         [self.participants addObject:participant];
@@ -97,7 +97,7 @@ static NSString *ATLInitialForName(NSString *name)
     }
 }
 
-- (void) removeParticipant:(id<ATLParticipant>)participant
+- (void)removeParticipant:(id<ATLParticipant>)participant
 {
     if ([self.participants containsObject:participant]) {
         [self.participants removeObject:participant];
@@ -105,7 +105,7 @@ static NSString *ATLInitialForName(NSString *name)
     }
 }
 
-- (void) particpant:(id<ATLParticipant>)participant updatedProperty:(NSString *)property
+- (void)particpant:(id<ATLParticipant>)participant updatedProperty:(NSString *)property
 {
     if ([self.participants containsObject:participant] && [self.sortDescriptor.key isEqualToString:property]) {
         self.sectionsNeedUpdating = YES;
@@ -163,7 +163,7 @@ static NSString *ATLInitialForName(NSString *name)
 
 #pragma mark -
 
-- (void) updateSectionsIfNeeded
+- (void)updateSectionsIfNeeded
 {
     if (!self.sectionsNeedUpdating) {
         return;

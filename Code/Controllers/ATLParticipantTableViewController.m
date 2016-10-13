@@ -354,8 +354,7 @@ NSString *const ATLParticipantTableViewControllerTitle = @"Participants";
 
         id<ATLParticipant> particpant = change.object;
 
-        switch (change.type)
-        {
+        switch (change.type) {
             case LYRObjectChangeTypeCreate:
                 [self.unfilteredDataSet addParticipant:particpant];
                 break;
