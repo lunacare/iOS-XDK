@@ -343,6 +343,7 @@ NSString *const ATLParticipantTableViewControllerTitle = @"Participants";
 - (void)layerClientObjectsDidChange:(NSNotification *)notification
 {
     NSArray *changes = notification.userInfo[LYRClientObjectChangesUserInfoKey];
+    NSInteger changeCount = 0;
     for (LYRObjectChange *change in changes) {
         // Interested only in LYRIdentity objects who are potential participants.
         if (![change.object isKindOfClass:[LYRIdentity class]]) {
@@ -357,28 +358,32 @@ NSString *const ATLParticipantTableViewControllerTitle = @"Participants";
         switch (change.type) {
             case LYRObjectChangeTypeCreate:
                 [self.unfilteredDataSet addParticipant:particpant];
+                changeCount++;
                 break;
 
             case LYRObjectChangeTypeUpdate:
                 [self.unfilteredDataSet particpant:particpant updatedProperty:change.property];
+                changeCount++;
                 break;
 
             case LYRObjectChangeTypeDelete:
                 [self.unfilteredDataSet removeParticipant:particpant];
+                changeCount++;
                 break;
 
             default:
                 NSAssert(YES, @"Unrecognized LYRObjectChangeType.");
-                continue;
                 break;
         }
     }
 
-    [self.tableView reloadData];
+    if (changeCount > 0) {
+        [self.tableView reloadData];
 
-    // Perform the search again to update self.filteredDataSet
-    if (self.searchController.isActive) {
-        [self searchDisplayController:self.searchController shouldReloadTableForSearchString:self.searchController.searchBar.text];
+        // Perform the search again to update self.filteredDataSet
+        if (self.searchController.isActive) {
+            [self searchDisplayController:self.searchController shouldReloadTableForSearchString:self.searchController.searchBar.text];
+        }
     }
 }
 
