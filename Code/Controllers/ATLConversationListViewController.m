@@ -559,7 +559,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     }
 }
 
-- (void) expandPaginationWindow
+- (void)expandPaginationWindow
 {
     self.queryController.paginationWindow += self.queryController.paginationWindow + ATLConverstionListPaginationWindow < self.queryController.totalNumberOfObjects ? ATLConverstionListPaginationWindow : self.queryController.totalNumberOfObjects - self.queryController.paginationWindow;
 }
