@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                        = "Atlas"
-  s.version                     = '1.0.29'
+  s.version                     = '1.0.30'
   s.summary                     = "Atlas is a library of communications user interface components integrated with LayerKit."
   s.homepage                    = 'https://atlas.layer.com/'
   s.social_media_url            = 'http://twitter.com/layer'
@@ -10,7 +10,8 @@ Pod::Spec.new do |s|
                                     'Blake Watters'   => 'blake@layer.com',
                                     'Klemen Verdnik'  => 'klemen@layer.com',
                                     'Ben Blakely'     => 'ben@layer.com',
-                                    'Daniel Maness'   => 'daniel@layer.com' }
+                                    'Daniel Maness'   => 'daniel@layer.com',
+                                    'Mark Krenek'     => 'mark@layer.com' }
   s.source                      = { git: "https://github.com/layerhq/Atlas-iOS.git", tag: "v#{s.version}" }
   s.platform                    = :ios, '8.0'
 
