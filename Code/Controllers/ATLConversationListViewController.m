@@ -27,6 +27,18 @@ static NSString *const ATLImageMIMETypePlaceholderText = @"Attachment: Image";
 static NSString *const ATLVideoMIMETypePlaceholderText = @"Attachment: Video";
 static NSString *const ATLLocationMIMETypePlaceholderText = @"Attachment: Location";
 static NSString *const ATLGIFMIMETypePlaceholderText = @"Attachment: GIF";
+static NSInteger const ATLConverstionListPaginationWindow = 30;
+static CGFloat const ATLConversationListLoadMoreConversationsDistanceThreshold = 200.0f;
+static CGFloat const ATLConversationListLoadingMoreConversationsIndicatorViewWidth = 30.0f;
+static CGFloat const ATLConversationListLoadingMoreConversationsIndicatorViewHeight = 30.0f;
+
+static UIView *ATLMakeLoadingMoreConversationsIndicatorView()
+{
+    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0.0, 0.0, ATLConversationListLoadingMoreConversationsIndicatorViewWidth, ATLConversationListLoadingMoreConversationsIndicatorViewHeight)];
+    activityIndicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    [activityIndicatorView startAnimating];
+    return activityIndicatorView;
+}
 
 @interface ATLConversationListViewController () <UIActionSheetDelegate, LYRQueryControllerDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchDisplayDelegate>
 
@@ -37,6 +49,7 @@ static NSString *const ATLGIFMIMETypePlaceholderText = @"Attachment: GIF";
 @property (nonatomic) UISearchBar *searchBar;
 @property (nonatomic) BOOL hasAppeared;
 @property (nonatomic) BOOL searchQueryControllerIsActive;
+@property (nonatomic) BOOL showingMoreConversationsIndicator;
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
@@ -116,7 +129,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     self.tableView.accessibilityLabel = ATLConversationTableViewAccessibilityLabel;
     self.tableView.accessibilityIdentifier = ATLConversationTableViewAccessibilityIdentifier;
     self.tableView.isAccessibilityElement = YES;
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self configureLoadingMoreConversationsIndicatorView];
     [self.tableView registerClass:self.cellClass forCellReuseIdentifier:ATLConversationCellReuseIdentifier];
     
     if (self.shouldDisplaySearchController) {
@@ -272,6 +285,8 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         NSLog(@"LayerKit failed to create a query controller with error: %@", error);
         return;
     }
+    self.showingMoreConversationsIndicator = [self moreConversationsAvailable];
+    self.queryController.paginationWindow = ATLConverstionListPaginationWindow;
     self.queryController.delegate = self;
     
     BOOL success = [self.queryController execute:&error];
@@ -519,6 +534,9 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 - (void)queryControllerDidChangeContent:(LYRQueryController *)queryController
 {
     [self.tableView endUpdates];
+
+    [self configureLoadingMoreConversationsIndicatorView];
+
     if (self.conversationSelectedBeforeContentChange) {
         NSIndexPath *indexPath = [self.queryController indexPathForObject:self.conversationSelectedBeforeContentChange];
         if (indexPath) {
@@ -528,7 +546,59 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     }
 }
 
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (decelerate) {
+        return;
+    }
+    [self configurePaginationWindow];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self configurePaginationWindow];
+}
+
+#pragma mark - Pagination
+
+- (void)configurePaginationWindow
+{
+    if ([self moreConversationsAvailable] && [self isNearBottom]) {
+        [self expandPaginationWindow];
+    }
+}
+
+- (void)expandPaginationWindow
+{
+    self.queryController.paginationWindow += self.queryController.paginationWindow + ATLConverstionListPaginationWindow < self.queryController.totalNumberOfObjects ? ATLConverstionListPaginationWindow : self.queryController.totalNumberOfObjects - self.queryController.paginationWindow;
+}
+
+- (BOOL)moreConversationsAvailable
+{
+    return self.queryController.paginationWindow < self.queryController.totalNumberOfObjects;
+}
+
+- (BOOL)isNearBottom
+{
+    return self.tableView.contentOffset.y >= (self.tableView.contentSize.height - self.tableView.frame.size.height) - ATLConversationListLoadMoreConversationsDistanceThreshold;
+}
+
+- (void)configureLoadingMoreConversationsIndicatorView
+{
+    BOOL moreConversationsAvailable = [self moreConversationsAvailable];
+    if (moreConversationsAvailable == self.showingMoreConversationsIndicator) {
+        return;
+    }
+    self.showingMoreConversationsIndicator = moreConversationsAvailable;
+
+    // The indicator view is installed as the table's footer view. When no indicator is needed, install an empty view. This is required in order to suppress the dummy separator lines that UITableView draws to simulate empty rows.
+    self.tableView.tableFooterView = self.showingMoreConversationsIndicator ? ATLMakeLoadingMoreConversationsIndicatorView() : [[UIView alloc] init];
+}
+
 #pragma mark - UISearchDisplayDelegate
+
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
     self.searchQueryControllerIsActive = YES;
