@@ -1,5 +1,11 @@
 # Atlas Changelog
 
+## Unreleased
+
+### Bug Fixes
+
+* `ATLConversationListViewController` no longer filters out conversations the authenticated user was removed from. This allows the user to access the conversation and mark messages as read in order to have an accurate unread badge count.
+
 ## 1.0.30
 
 ### Enhancements
