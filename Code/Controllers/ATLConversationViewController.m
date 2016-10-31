@@ -156,10 +156,6 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 {
     [super viewWillAppear:animated];
     
-    if (!self.conversationDataSource) {
-        [self setupConversationDataSource];
-    }
-    
     if (self.addressBarController && self.conversation.lastMessage && self.canDisableAddressBar) {
         [self.addressBarController disable];
         [self configureAddressBarForConversation];
@@ -182,7 +178,9 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
     self.hasAppeared = YES;
+    [self configurePaginationWindow];
     
     if (self.addressBarController && !self.addressBarController.isDisabled) {
         [self.addressBarController.addressBarView.addressBarTextView becomeFirstResponder];
@@ -270,6 +268,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 {
     self.conversationDataSource = nil;
     self.conversationDataSource.queryController.delegate = nil;
+    self.queryController = nil;
     [self.collectionView reloadData];
 }
 
