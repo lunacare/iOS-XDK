@@ -4,6 +4,7 @@
 
 ### Enhancements
 
+* Replaced deprecated `UISearchDisplayController` with `UISearchController` in `ATLConversationListViewController`. This reduces complexity by removing the need to switch between different query controllers.
 * Refactored `ATLConversationViewController` to harden against mismanagement and prevent common crashes and issues.
 
 ### Bug Fixes

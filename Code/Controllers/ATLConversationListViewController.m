@@ -40,21 +40,14 @@ static UIView *ATLMakeLoadingMoreConversationsIndicatorView()
     return activityIndicatorView;
 }
 
-@interface ATLConversationListViewController () <UIActionSheetDelegate, LYRQueryControllerDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchDisplayDelegate>
+@interface ATLConversationListViewController () <UIActionSheetDelegate, LYRQueryControllerDelegate, UISearchResultsUpdating>
 
 @property (nonatomic) LYRQueryController *queryController;
-@property (nonatomic) LYRQueryController *searchQueryController;
 @property (nonatomic) LYRConversation *conversationToDelete;
 @property (nonatomic) LYRConversation *conversationSelectedBeforeContentChange;
-@property (nonatomic) UISearchBar *searchBar;
 @property (nonatomic) BOOL hasAppeared;
-@property (nonatomic) BOOL searchQueryControllerIsActive;
 @property (nonatomic) BOOL showingMoreConversationsIndicator;
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-@property (nonatomic, readwrite) UISearchDisplayController *searchController;
-#pragma GCC diagnostic pop
+@property (nonatomic, readwrite) UISearchController *searchController;
 
 @end
 
@@ -133,20 +126,21 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     [self.tableView registerClass:self.cellClass forCellReuseIdentifier:ATLConversationCellReuseIdentifier];
     
     if (self.shouldDisplaySearchController) {
-        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
-        [self.searchBar sizeToFit];
-        self.searchBar.translucent = NO;
-        self.searchBar.accessibilityLabel = @"Search Bar";
-        self.searchBar.delegate = self;
-        self.tableView.tableHeaderView = self.searchBar;
+        // UISearchController
+        self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+        self.searchController.searchResultsUpdater = self;
+        self.searchController.dimsBackgroundDuringPresentation = NO;
+
+        // UISearchBar
+        self.searchController.searchBar.delegate = self;
+        self.searchController.searchBar.translucent = NO;
+        self.searchController.searchBar.accessibilityLabel = @"Search Bar";
+        [self.searchController.searchBar sizeToFit];
+        self.tableView.tableHeaderView = self.searchController.searchBar;
         
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-        self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-#pragma GCC diagnostic pop
-        self.searchController.delegate = self;
-        self.searchController.searchResultsDelegate = self;
-        self.searchController.searchResultsDataSource = self;
+        // Since the search view covers the table view when active we make the
+        // table view controller define the presentation context
+        self.definesPresentationContext = YES;
     }
 }
 
@@ -161,15 +155,12 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     
     if (!self.hasAppeared) {
         // Hide the search bar
-        CGFloat contentOffset = self.tableView.contentOffset.y + self.searchBar.frame.size.height;
+        CGFloat contentOffset = self.tableView.contentOffset.y + self.searchController.searchBar.frame.size.height;
         self.tableView.contentOffset = CGPointMake(0, contentOffset);
         self.tableView.rowHeight = self.rowHeight;
-        if (self.allowsEditing) [self addEditButton];
-    }
-    
-    if (self.shouldDisplaySearchController && self.searchController.isActive) {
-        self.searchQueryControllerIsActive = YES;
-        [self.searchController.searchResultsTableView reloadData];
+        if (self.allowsEditing) {
+            [self addEditButton];
+        }
     }
     
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
@@ -596,66 +587,25 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     self.tableView.tableFooterView = self.showingMoreConversationsIndicator ? ATLMakeLoadingMoreConversationsIndicatorView() : [[UIView alloc] init];
 }
 
-#pragma mark - UISearchDisplayDelegate
+#pragma mark - UISearchResultsUpdating
 
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
-    self.searchQueryControllerIsActive = YES;
-}
-
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
-{
-    self.searchQueryControllerIsActive = NO;
-}
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
-    self.searchQueryControllerIsActive = NO;
-}
-
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
-- (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
-{
-    tableView.rowHeight = self.rowHeight;
-    [tableView registerClass:self.cellClass forCellReuseIdentifier:ATLConversationCellReuseIdentifier];
-}
-
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
-{
+    NSString *searchString = searchController.searchBar.text;
     if ([self.delegate respondsToSelector:@selector(conversationListViewController:didSearchForText:completion:)]) {
         [self.delegate conversationListViewController:self didSearchForText:searchString completion:^(NSSet *filteredParticipants) {
-            if (![searchString isEqualToString:controller.searchBar.text]) return;
+            if (![searchString isEqualToString:self.searchController.searchBar.text]) return;
             NSSet *participantIdentifiers = [filteredParticipants valueForKey:@"userID"];
             
             LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
-            query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsIn value:participantIdentifiers];
-            query.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"lastMessage.receivedAt" ascending:NO]];
+            self.queryController.query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsIn value:participantIdentifiers];
+            self.queryController.query.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"lastMessage.receivedAt" ascending:NO]];
             
             NSError *error;
-            self.searchQueryController = [self.layerClient queryControllerWithQuery:query error:&error];
-            if (!self.queryController) {
-                NSLog(@"LayerKit failed to create a query controller with error: %@", error);
-                return;
-            }
+            [self.queryController execute:&error];
             
-            [self.searchQueryController execute:&error];
-            [self.searchController.searchResultsTableView reloadData];
+            [self.tableView reloadData];
         }];
-    }
-    return NO;
-}
-
-#pragma GCC diagnostic pop
-
-- (LYRQueryController *)queryController
-{
-    if (self.searchQueryControllerIsActive && self.searchController.isActive) {
-        return _searchQueryController;
-    } else {
-        return _queryController;
     }
 }
 
