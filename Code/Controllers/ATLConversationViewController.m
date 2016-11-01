@@ -145,10 +145,6 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 {
     [super viewDidLoad];
     
-    if (!self.conversationDataSource) {
-        [self fetchLayerMessages];
-    }
-    
     [self configureControllerForConversation];
     self.messageInputToolbar.inputToolBarDelegate = self;
     self.addressBarController.delegate = self;
@@ -159,6 +155,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     if (self.addressBarController && self.conversation.lastMessage && self.canDisableAddressBar) {
         [self.addressBarController disable];
         [self configureAddressBarForConversation];
@@ -171,12 +168,19 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     if (!self.hasAppeared && [[[self class] sharedMediaAttachmentCache] objectForKey:self.conversation.identifier]) {
         [self loadCachedMediaAttachments];
     }
+    
+    // Track changes in authentication state to manipulate the query controller appropriately
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidAuthenticate:) name:LYRClientDidAuthenticateNotification object:self.layerClient];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidDeauthenticate:) name:LYRClientDidDeauthenticateNotification object:self.layerClient];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerClientDidSwitchSession:) name:LYRClientDidSwitchSessionNotification object:self.layerClient];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
     self.hasAppeared = YES;
+    [self configurePaginationWindow];
     
     if (self.addressBarController && !self.addressBarController.isDisabled) {
         [self.addressBarController.addressBarView.addressBarTextView becomeFirstResponder];
@@ -226,18 +230,17 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     [self configureAddressBarForChangedParticipants];
     
     if (conversation) {
-        [self fetchLayerMessages];
+        [self setupConversationDataSource];
     } else {
-        self.conversationDataSource.queryController.delegate = nil;
-        self.conversationDataSource = nil;
-        [self.collectionView reloadData];
+        [self deinitializeConversationDataSource];
     }
     CGSize contentSize = self.collectionView.collectionViewLayout.collectionViewContentSize;
     [self.collectionView setContentOffset:[self bottomOffsetForContentSize:contentSize] animated:NO];
 }
 
-- (void)fetchLayerMessages
+- (void)setupConversationDataSource
 {
+    NSAssert(self.conversationDataSource == nil, @"Cannot initialize more than once");
     if (!self.conversation) return;
     
     LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRMessage class]];
@@ -261,7 +264,33 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     [self.collectionView reloadData];
 }
 
-#pragma mark - Conntroller Setup
+- (void)deinitializeConversationDataSource
+{
+    self.conversationDataSource = nil;
+    self.conversationDataSource.queryController.delegate = nil;
+    self.queryController = nil;
+    [self.collectionView reloadData];
+}
+
+- (void)layerClientDidAuthenticate:(NSNotification *)notification
+{
+    if (!self.conversationDataSource) {
+        [self setupConversationDataSource];
+    }
+}
+
+- (void)layerClientDidSwitchSession:(NSNotification *)notification
+{
+    [self deinitializeConversationDataSource];
+    [self setupConversationDataSource];
+}
+
+- (void)layerClientDidDeauthenticate:(NSNotification *)notification
+{
+    [self deinitializeConversationDataSource];
+}
+
+#pragma mark - Controller Setup
 
 - (void)configureControllerForConversation
 {
@@ -482,7 +511,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     
     NSDate *date = message.sentAt ?: [NSDate date];
     NSTimeInterval interval = [date timeIntervalSinceDate:previousMessage.sentAt];
-    if (abs(interval) > self.dateDisplayTimeInterval) {
+    if (fabs(interval) > self.dateDisplayTimeInterval) {
         return YES;
     }
     return NO;
