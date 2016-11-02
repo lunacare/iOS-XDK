@@ -592,24 +592,32 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
     NSString *searchString = searchController.searchBar.text;
+    if ([searchString isEqualToString:@""]) {
+        [self updateQueryControllerWithPredicate:nil];
+        return;
+    }
     if ([self.delegate respondsToSelector:@selector(conversationListViewController:didSearchForText:completion:)]) {
         [self.delegate conversationListViewController:self didSearchForText:searchString completion:^(NSSet *filteredParticipants) {
             if (![searchString isEqualToString:self.searchController.searchBar.text]) return;
             NSSet *participantIdentifiers = [filteredParticipants valueForKey:@"userID"];
-            
-            LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRConversation class]];
-            self.queryController.query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsIn value:participantIdentifiers];
-            self.queryController.query.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"lastMessage.receivedAt" ascending:NO]];
-            
-            NSError *error;
-            [self.queryController execute:&error];
-            
-            [self.tableView reloadData];
+
+            LYRPredicate *predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsIn value:participantIdentifiers];
+
+            [self updateQueryControllerWithPredicate: predicate];
         }];
     }
 }
 
 #pragma mark - Helpers
+
+- (void)updateQueryControllerWithPredicate:(LYRPredicate *)predicate {
+    self.queryController.query.predicate = predicate;
+    
+    NSError *error;
+    [self.queryController execute:&error];
+    
+    [self.tableView reloadData];
+}
 
 - (NSString *)defaultLastMessageTextForConversation:(LYRConversation *)conversation
 {
