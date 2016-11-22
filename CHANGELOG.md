@@ -5,6 +5,8 @@
 ### Enhancements
 
 * Replaced deprecated `UISearchDisplayController` with `UISearchController` in `ATLConversationListViewController`. This reduces complexity by removing the need to switch between different query controllers.
+* Replaced deprecated `UISearchDisplayController` with `UISearchController` in `ATLParticipantTableViewController`.
+* Updated some deprecated `NSCalendar` objects in `ATLConversationTableViewCell`.
 * Refactored `ATLConversationViewController` to harden against mismanagement and prevent common crashes and issues.
 
 ### Bug Fixes
