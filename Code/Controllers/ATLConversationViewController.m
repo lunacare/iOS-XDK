@@ -226,14 +226,11 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     [self updateTypingIndicatorOverlay:NO];
     
     // Set up the controller for the conversation
+    [self deinitializeConversationDataSource];
+    [self setupConversationDataSource];
     [self configureControllerForConversation];
     [self configureAddressBarForChangedParticipants];
     
-    if (conversation) {
-        [self setupConversationDataSource];
-    } else {
-        [self deinitializeConversationDataSource];
-    }
     CGSize contentSize = self.collectionView.collectionViewLayout.collectionViewContentSize;
     [self.collectionView setContentOffset:[self bottomOffsetForContentSize:contentSize] animated:NO];
 }

@@ -11,6 +11,7 @@
 
 * Fixed a pagination issue in `ATLConversationViewController` where, after navigating to a conversation, additional messages would not sync and the activity indicator would continue to spin until the user pulled down.
 * `ATLConversationListViewController` no longer filters out conversations the authenticated user was removed from. This allows the user to access the conversation and mark messages as read in order to have an accurate unread badge count.
+* Fixed a crash in `ATLAddressBarViewController` that could occur if a participant was selected while the `displayName` was `nil`. It will now appear as `Unknown Participant` instead.
 
 ## 1.0.30
 
