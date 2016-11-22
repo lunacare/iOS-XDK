@@ -481,7 +481,7 @@ static NSString *const ATLAddressBarParticipantAttributeName = @"ATLAddressBarPa
     ATLAddressBarTextView *textView = self.addressBarView.addressBarTextView;
     NSMutableAttributedString *attributedString = [NSMutableAttributedString new];
 
-    NSString *participantName = participant.displayName.length ? participant.displayName : @"Unknown Participant";
+    NSString *participantName = participant.displayName?: @"Unknown Participant";
     NSAttributedString *attributedName = [[NSAttributedString alloc] initWithString:participantName attributes:@{ATLAddressBarPartAttributeName: ATLAddressBarNamePart, ATLAddressBarPartAttributeName: ATLAddressBarNamePart, NSForegroundColorAttributeName: textView.addressBarHighlightColor}];
     [attributedString appendAttributedString:attributedName];
 
