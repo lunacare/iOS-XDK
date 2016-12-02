@@ -54,6 +54,8 @@ LYRConversation *LYRConversationDataSourceConversationFromPredicate(LYRPredicate
 
 NSInteger const ATLNumberOfSectionsBeforeFirstMessageSection = 1;
 NSInteger const ATLQueryControllerPaginationWindow = 30;
+NSInteger messageCountBeforeSync;
+BOOL shouldSynchronizeRemoteMessages;
 
 + (instancetype)dataSourceWithLayerClient:(LYRClient *)layerClient query:(LYRQuery *)query
 {
@@ -82,6 +84,9 @@ NSInteger const ATLQueryControllerPaginationWindow = 30;
         
         BOOL success = [_queryController execute:&error];
         if (!success) NSLog(@"LayerKit failed to execute query with error: %@", error);
+        
+        messageCountBeforeSync = _queryController.count;
+        shouldSynchronizeRemoteMessages = NO;
     }
     return self;
 }
@@ -122,8 +127,14 @@ NSInteger const ATLQueryControllerPaginationWindow = 30;
         if (observer) {
             [[NSNotificationCenter defaultCenter] removeObserver:observer];
         }
+        if (self.queryController.count <= messageCountBeforeSync) {
+            shouldSynchronizeRemoteMessages = NO;
+        } else {
+            shouldSynchronizeRemoteMessages = YES;
+        }
         [weakSelf finishExpandingPaginationWindow];
     }];
+    messageCountBeforeSync = self.queryController.count;
     BOOL success = [self.conversation synchronizeMoreMessages:numberOfMessagesToSynchronize error:&error];
     if (!success) {
         if (observer) {
@@ -146,6 +157,14 @@ NSInteger const ATLQueryControllerPaginationWindow = 30;
 
 - (NSUInteger)messagesAvailableRemotely
 {
+    /*  Remote messages may exist in the conversation but are unavailable to the current user.
+        For example, they're marked as Deleted for that user.
+        `shouldSynchronizeRemoteMessages` is determined within `requestToSynchronizeMoreMessages`
+     */
+    if (!shouldSynchronizeRemoteMessages) {
+        return 0;
+    }
+    
     return (NSUInteger)MAX((NSInteger)0, (NSInteger)self.conversation.totalNumberOfMessages - (NSInteger)ABS(self.queryController.count));
 }
 
