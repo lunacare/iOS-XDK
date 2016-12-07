@@ -137,7 +137,7 @@
 
 - (void)configureNameLabel
 {
-    NSString *participantName = self.participant.displayName.length ? self.participant.displayName : @"Unknown Participant";
+    NSString *participantName = self.participant.displayName?: @"Unknown Participant";
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:participantName attributes:@{NSFontAttributeName: self.titleFont}];
 
     NSRange rangeToBold = NSMakeRange(NSNotFound, 0);
