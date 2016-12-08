@@ -181,6 +181,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     
     self.hasAppeared = YES;
     [self configurePaginationWindow];
+    [self configureMoreMessagesIndicatorVisibility];
     
     if (self.addressBarController && !self.addressBarController.isDisabled) {
         [self.addressBarController.addressBarView.addressBarTextView becomeFirstResponder];
@@ -429,16 +430,19 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 {
     if (decelerate) return;
     [self configurePaginationWindow];
+    [self configureMoreMessagesIndicatorVisibility];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [self configurePaginationWindow];
+    [self configureMoreMessagesIndicatorVisibility];
 }
 
 - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
 {
     [self configurePaginationWindow];
+    [self configureMoreMessagesIndicatorVisibility];
 }
 
 #pragma mark - Reusable View Configuration
