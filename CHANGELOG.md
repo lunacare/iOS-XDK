@@ -1,6 +1,6 @@
 # Atlas Changelog
 
-## Unreleased
+## 1.0.31
 
 ### Enhancements
 
