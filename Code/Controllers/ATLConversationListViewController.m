@@ -40,7 +40,7 @@ static UIView *ATLMakeLoadingMoreConversationsIndicatorView()
     return activityIndicatorView;
 }
 
-@interface ATLConversationListViewController () <UIActionSheetDelegate, LYRQueryControllerDelegate, UISearchResultsUpdating>
+@interface ATLConversationListViewController () <UIActionSheetDelegate, LYRQueryControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating>
 
 @property (nonatomic) LYRQueryController *queryController;
 @property (nonatomic) LYRConversation *conversationToDelete;

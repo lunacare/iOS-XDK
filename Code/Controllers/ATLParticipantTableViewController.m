@@ -28,7 +28,7 @@
 static NSString *const ATLParticipantTableSectionHeaderIdentifier = @"ATLParticipantTableSectionHeaderIdentifier";
 static NSString *const ATLParticipantCellIdentifier = @"ATLParticipantCellIdentifier";
 
-@interface ATLParticipantTableViewController () <UISearchResultsUpdating>
+@interface ATLParticipantTableViewController () <UISearchBarDelegate, UISearchResultsUpdating>
 
 @property (nonatomic) ATLParticipantTableDataSet *participantsDataSet;
 @property (nonatomic) NSMutableSet *selectedParticipants;
