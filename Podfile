@@ -17,6 +17,8 @@ abstract_target 'test' do
   pod 'KIF'
   pod 'Expecta'
   pod 'OCMock'
+  pod 'LayerKit'
+  pod 'Atlas', path: '.'
 
   target 'ProgrammaticTests'
   target 'StoryboardTests'
@@ -25,6 +27,9 @@ end
 target 'UnitTests' do
   pod 'Expecta'
   pod 'OCMock'
+  pod 'KIF'
+  pod 'LayerKit'
+  pod 'Atlas', path: '.'
 end
 
 

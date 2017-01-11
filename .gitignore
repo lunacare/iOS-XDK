@@ -3,9 +3,6 @@ xcuserdata
 *.framework
 *.bundle
 Pods
-Atlas.xcworkspace/xcshareddata/xcschemes/*Tests.xcscheme
-Atlas.xcworkspace/xcshareddata/
-Atlas.xcodeproj/xcshareddata/
 *.xccheckout
 Releases
 xcodebuild.log

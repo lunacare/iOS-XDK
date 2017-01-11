@@ -854,7 +854,7 @@ ALAsset *ATLMediaInputStreamAssetForAssetURL(NSURL *assetURL, ALAssetsLibrary *a
                 }];
             }
         } failureBlock:^(NSError *libraryError) {
-            if (libraryError) {
+            if (libraryError && error) {
                 *error = libraryError;
             }
             dispatch_semaphore_signal(semaphore);

@@ -28,7 +28,61 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D0294DD71A93F33900702856"
+               BuildableName = "UnitTests.xctest"
+               BlueprintName = "UnitTests"
+               ReferencedContainer = "container:Atlas.xcodeproj">
+            </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "ATLMediaAttachmentTests/testMediaAttachmentWithImageFromAsset">
+               </Test>
+               <Test
+                  Identifier = "ATLMediaAttachmentTests/testMediaAttachmentWithVideoFromAsset">
+               </Test>
+               <Test
+                  Identifier = "ATLMediaInputStreamTest/testInputMediaStreamForVideo">
+               </Test>
+               <Test
+                  Identifier = "ATLMediaInputStreamTest/testMediaStreamClosesStreamForPhotoAsset">
+               </Test>
+               <Test
+                  Identifier = "ATLMediaInputStreamTest/testMediaStreamOpensStreamForPhotoAsset">
+               </Test>
+               <Test
+                  Identifier = "ATLMediaInputStreamTest/testMediaStreamReadsPhotoAsset">
+               </Test>
+               <Test
+                  Identifier = "ATLMediaInputStreamTest/testMediaStreamReadsStreamForPhotoAssetFromDifferentThread">
+               </Test>
+               <Test
+                  Identifier = "ATLMediaInputStreamTest/testTempVideoFilesCleaned">
+               </Test>
+               <Test
+                  Identifier = "ATLMediaInputStreamTest/testVideoStreamCloseStream">
+               </Test>
+               <Test
+                  Identifier = "ATLMediaInputStreamTest/testVideoStreamOpenStream">
+               </Test>
+               <Test
+                  Identifier = "ATLMediaInputStreamTest/testVideoStreamReadsStreamRenameMe">
+               </Test>
+            </SkippedTests>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "253C29A41C3C9D7100ED1549"
+            BuildableName = "Atlas.framework"
+            BlueprintName = "Atlas"
+            ReferencedContainer = "container:Atlas.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

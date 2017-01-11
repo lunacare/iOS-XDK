@@ -5,7 +5,6 @@ begin
   require 'date' 
   begin
     Bundler.setup
-    require 'xctasks/test_task'
   rescue Bundler::GemNotFound => gemException
     raise LoadError, gemException.to_s
   end
@@ -30,7 +29,7 @@ task :init do
   run("which brew > /dev/null && brew update; true")
   run("which brew > /dev/null || ruby -e \"$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)\"")
   puts green("Bundling Homebrew packages...")
-  packages = %w{rbenv ruby-build rbenv-gem-rehash rbenv-binstubs xctool thrift}
+  packages = %w{rbenv ruby-build rbenv-binstubs thrift}
   packages.each { |package| run("brew install #{package} || brew upgrade #{package}") }
   puts green("Checking rbenv version...")
   run("rbenv version-name || rbenv install")
@@ -38,41 +37,41 @@ task :init do
   run("rbenv whence bundle | grep `cat .ruby-version` || rbenv exec gem install bundler")
   puts green("Bundling Ruby Gems...")
   run("rbenv exec bundle install --binstubs .bundle/bin --quiet")
+  run("rbenv rehash")
   puts green("Ensuring Layer Specs repository")
   run("[ -d ~/.cocoapods/repos/layer ] || rbenv exec bundle exec pod repo add layer git@github.com:layerhq/cocoapods-specs.git")
   puts green("Installing CocoaPods...")
   run("rbenv exec bundle exec pod install --verbose")
-  puts green("Checking rbenv configuration...")
-  system <<-SH
-  if [ -f ~/.zshrc ]; then
-    grep -q 'rbenv init' ~/.zshrc || echo 'eval "$(rbenv init - --no-rehash)"' >> ~/.zshrc
-  else
-    grep -q 'rbenv init' ~/.bash_profile || echo 'eval "$(rbenv init - --no-rehash)"' >> ~/.bash_profile
-  fi
-  SH
-  puts "\n" + yellow("If first initialization, load rbenv by executing:")
-  puts grey("$ `eval \"$(rbenv init - --no-rehash)\"`")
 end
 
-if defined?(XCTasks)
-  XCTasks::TestTask.new(:test) do |t|
-    t.workspace = 'Atlas.xcworkspace'
-    t.schemes_dir = 'Tests/Schemes'
-    t.runner = :xctool
-    t.actions = %w{clean build test -resetSimulator}
-    t.output_log = 'xcodebuild.log'
-    t.subtasks = { progammatic: 'Programmatic'}
-    t.destination do |d|
-      d.platform = :iossimulator
-      d.os = :latest
-      d.name = 'iPhone 6 Plus'
-    end
+desc "Clean project and run unit tests via xcodebuild"
+task :test do
+  unitTestsPassed = runTestsForScheme 'Atlas', { :clean => true }
+  programmaticTestsPassed = runTestsForScheme 'Programmatic'
+  storyboardTestsPassed = runTestsForScheme 'Storyboard'
+  
+  if unitTestsPassed != 0
+    puts 'Unit tests failed'
+  end
+  if programmaticTestsPassed != 0
+    puts 'Programmatic tests failed'
+  end
+  if storyboardTestsPassed != 0
+    puts 'Storyboard tests failed'
+  end
+  
+  if (programmaticTestsPassed | storyboardTestsPassed | unitTestsPassed) != 0
+    fail('Testing failed.')
   end
 end
 
-desc "Initialize the project for build and test with Travis-CI"
-task :travis do
-  
+def runTestsForScheme schemeName, options = {}
+  command = "xcodebuild #{options[:clean]?'clean':''} test \
+              -workspace Atlas.xcworkspace \
+              -scheme #{schemeName} \
+              -destination 'platform=iOS Simulator,OS=10.2,name=iPhone SE' \
+              -configuration Debug"
+  return run command, { :noautofail => true }
 end
 
 desc "Creates a Testing Simulator configured for Atlas Testing"
@@ -196,8 +195,14 @@ end
 def run(command, options = {})
   puts "Executing `#{command}`" unless options[:quiet]
   unless with_clean_env { system(command) }
-    fail("Command exited with non-zero exit status (#{$?}): `#{command}`")
+    unless options[:noautofail]
+      fail("Command exited with non-zero exit status (#{$?}): `#{command}`")
+    else
+      return $?.exitstatus
+    end
   end
+  
+  return $?.exitstatus
 end
 
 def atlas_version

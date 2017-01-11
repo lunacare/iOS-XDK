@@ -1,44 +1,44 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "FAC91FF60B60E6856BFECF250238B5EE8E4E482B",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "FAC91FF60B60E6856BFECF250238B5EE8E4E482B+++FF10A3E",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "704F552CEB6415A9F52EE9446435355DF9848168" : 0,
-    "FAC91FF60B60E6856BFECF250238B5EE8E4E482B" : 0,
-    "EAAE8758868D96AE0CC81549580E3DAC04D82AD6" : 0,
-    "555B8AD8B8A34913DE837AE8E32AA22302CA6BED" : 0
+    "704F552CEB6415A9F52EE9446435355DF9848168+++821C385" : 0,
+    "EAAE8758868D96AE0CC81549580E3DAC04D82AD6+++A876D9B" : 0,
+    "704F552CEB6415A9F52EE9446435355DF9848168+++76E059A" : 0,
+    "FAC91FF60B60E6856BFECF250238B5EE8E4E482B+++FF10A3E" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "C5BA0911-6750-4D47-9009-D632F18364A1",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "704F552CEB6415A9F52EE9446435355DF9848168" : "",
-    "FAC91FF60B60E6856BFECF250238B5EE8E4E482B" : "Atlas",
-    "EAAE8758868D96AE0CC81549580E3DAC04D82AD6" : "LayerKit",
-    "555B8AD8B8A34913DE837AE8E32AA22302CA6BED" : ""
+    "704F552CEB6415A9F52EE9446435355DF9848168+++821C385" : "",
+    "EAAE8758868D96AE0CC81549580E3DAC04D82AD6+++A876D9B" : "LayerKit\/",
+    "704F552CEB6415A9F52EE9446435355DF9848168+++76E059A" : "",
+    "FAC91FF60B60E6856BFECF250238B5EE8E4E482B+++FF10A3E" : "Atlas-iOS\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Atlas",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Atlas.xcworkspace",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:layerhq\/Atlas-Messenger-iOS.git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "555B8AD8B8A34913DE837AE8E32AA22302CA6BED"
-    },
-    {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:layerhq\/Layer-Messenger-iOS.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "704F552CEB6415A9F52EE9446435355DF9848168"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "704F552CEB6415A9F52EE9446435355DF9848168+++76E059A"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:layerhq\/Atlas-Messenger-iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "704F552CEB6415A9F52EE9446435355DF9848168+++821C385"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:layerhq\/LayerKit.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "EAAE8758868D96AE0CC81549580E3DAC04D82AD6"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "EAAE8758868D96AE0CC81549580E3DAC04D82AD6+++A876D9B"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:layerhq\/Atlas-iOS.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "FAC91FF60B60E6856BFECF250238B5EE8E4E482B"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "FAC91FF60B60E6856BFECF250238B5EE8E4E482B+++FF10A3E"
     }
   ]
 }

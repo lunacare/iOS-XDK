@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0720"
+   LastUpgradeVersion = "0810"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D6F57E291A8BE4AF00B62BD9"
-               BuildableName = "Programmatic.app"
-               BlueprintName = "Programmatic"
+               BlueprintIdentifier = "D6F57E531A8BE4B500B62BD9"
+               BuildableName = "Storyboard.app"
+               BlueprintName = "Storyboard"
                ReferencedContainer = "container:Atlas.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,20 +32,41 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D6F57E411A8BE4AF00B62BD9"
-               BuildableName = "ProgrammaticTests.xctest"
-               BlueprintName = "ProgrammaticTests"
+               BlueprintIdentifier = "D6F57E6B1A8BE4B500B62BD9"
+               BuildableName = "StoryboardTests.xctest"
+               BlueprintName = "StoryboardTests"
                ReferencedContainer = "container:Atlas.xcodeproj">
             </BuildableReference>
             <SkippedTests>
                <Test
+                  Identifier = "ATLConversationListViewControllerTest/testToVerifyColorAndFontChangeFunctionality">
+               </Test>
+               <Test
                   Identifier = "ATLConversationListViewControllerTest/testToVerifyConversationListBaseUI">
+               </Test>
+               <Test
+                  Identifier = "ATLConversationListViewControllerTest/testToVerifyConversationListDisplaysAllConversationsInLayer">
+               </Test>
+               <Test
+                  Identifier = "ATLConversationListViewControllerTest/testToVerifyConversationListViewControllerDataSource">
+               </Test>
+               <Test
+                  Identifier = "ATLConversationListViewControllerTest/testToVerifyCreatingANewConversationLiveUpdatesConversationList">
+               </Test>
+               <Test
+                  Identifier = "ATLConversationListViewControllerTest/testToVerifyCustomCellClassFunctionality">
                </Test>
                <Test
                   Identifier = "ATLConversationListViewControllerTest/testToVerifyCustomDeletionColorAndText">
                </Test>
                <Test
                   Identifier = "ATLConversationListViewControllerTest/testToVerifyCustomRowActions">
+               </Test>
+               <Test
+                  Identifier = "ATLConversationListViewControllerTest/testToVerifyCustomRowHeightFunctionality">
+               </Test>
+               <Test
+                  Identifier = "ATLConversationListViewControllerTest/testToVerifyDelegateIsNotifiedOfConversationSelection">
                </Test>
                <Test
                   Identifier = "ATLConversationListViewControllerTest/testToVerifyDelegateIsNotifiedOfGlobalConversationDeletion">
@@ -57,6 +78,9 @@
                   Identifier = "ATLConversationListViewControllerTest/testToVerifyDelegateIsNotifiedOfSearch">
                </Test>
                <Test
+                  Identifier = "ATLConversationListViewControllerTest/testToVerifyDisablingEditModeDoesNotAllowUserToDeleteConversations">
+               </Test>
+               <Test
                   Identifier = "ATLConversationListViewControllerTest/testToVerifyEditingModeAndMultipleConversationDeletionFunctionality">
                </Test>
                <Test
@@ -64,6 +88,39 @@
                </Test>
                <Test
                   Identifier = "ATLConversationListViewControllerTest/testToVerifyLocalDeletionButtonFunctionality">
+               </Test>
+               <Test
+                  Identifier = "ATLConversationListViewControllerTest/testToVerifyQueryConfigurationTakesEffect">
+               </Test>
+               <Test
+                  Identifier = "ATLConversationTableViewCellTest/testToVerifyCustomCellBackgroundColor">
+               </Test>
+               <Test
+                  Identifier = "ATLConversationTableViewCellTest/testToVerifyCustomConversationLabelColor">
+               </Test>
+               <Test
+                  Identifier = "ATLConversationTableViewCellTest/testToVerifyCustomConversationLabelFont">
+               </Test>
+               <Test
+                  Identifier = "ATLConversationTableViewCellTest/testToVerifyCustomDateLabelColor">
+               </Test>
+               <Test
+                  Identifier = "ATLConversationTableViewCellTest/testToVerifyCustomDateLabelFont">
+               </Test>
+               <Test
+                  Identifier = "ATLConversationTableViewCellTest/testToVerifyCustomLastMessageLabelColor">
+               </Test>
+               <Test
+                  Identifier = "ATLConversationTableViewCellTest/testToVerifyCustomLastMessageLabelFont">
+               </Test>
+               <Test
+                  Identifier = "ATLConversationTableViewCellTest/testToVerifyCustomUnreadMessageIndicatorBackgrounColor">
+               </Test>
+               <Test
+                  Identifier = "ATLConversationTableViewCellTest/testToVerifyLastMessageTextWhenMessageIsALocation">
+               </Test>
+               <Test
+                  Identifier = "ATLConversationTableViewCellTest/testToVerifyLastMessageTextWhenMessageIsAnImage">
                </Test>
                <Test
                   Identifier = "ATLConversationViewControllerTest/testToVerifyAvatarImageIsDisplayedForEveryMessage">
@@ -135,6 +192,42 @@
                   Identifier = "ATLConversationViewControllerTest/testtoVerifyReloadingCellsDuringQueryControllerAnimationDoesNotRaise">
                </Test>
                <Test
+                  Identifier = "ATLMessageCollectionViewCellTest/testToVerifyAvatarImageBackgroundColor">
+               </Test>
+               <Test
+                  Identifier = "ATLMessageCollectionViewCellTest/testToVerifyAvatarImageDiameter">
+               </Test>
+               <Test
+                  Identifier = "ATLMessageCollectionViewCellTest/testToVerifyIncomingCustomBubbleViewColor">
+               </Test>
+               <Test
+                  Identifier = "ATLMessageCollectionViewCellTest/testToVerifyIncomingCustomBubbleViewCornerRadius">
+               </Test>
+               <Test
+                  Identifier = "ATLMessageCollectionViewCellTest/testToVerifyIncomingCustomMessageLinkTextColor">
+               </Test>
+               <Test
+                  Identifier = "ATLMessageCollectionViewCellTest/testToVerifyIncomingCustomMessageTextColor">
+               </Test>
+               <Test
+                  Identifier = "ATLMessageCollectionViewCellTest/testToVerifyIncomingCustomMessageTextFont">
+               </Test>
+               <Test
+                  Identifier = "ATLMessageCollectionViewCellTest/testToVerifyOutgoingCustomBubbleViewColor">
+               </Test>
+               <Test
+                  Identifier = "ATLMessageCollectionViewCellTest/testToVerifyOutgoingCustomBubbleViewCornerRadius">
+               </Test>
+               <Test
+                  Identifier = "ATLMessageCollectionViewCellTest/testToVerifyOutgoingCustomMessageLinkTextColor">
+               </Test>
+               <Test
+                  Identifier = "ATLMessageCollectionViewCellTest/testToVerifyOutgoingCustomMessageTextColor">
+               </Test>
+               <Test
+                  Identifier = "ATLMessageCollectionViewCellTest/testToVerifyOutgoingCustomMessageTextFont">
+               </Test>
+               <Test
                   Identifier = "ATLMessageCollectionViewCellTest/testToVerifyTextCheckingTypeLink">
                </Test>
                <Test
@@ -203,9 +296,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D6F57E291A8BE4AF00B62BD9"
-            BuildableName = "Programmatic.app"
-            BlueprintName = "Programmatic"
+            BlueprintIdentifier = "D6F57E531A8BE4B500B62BD9"
+            BuildableName = "Storyboard.app"
+            BlueprintName = "Storyboard"
             ReferencedContainer = "container:Atlas.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -221,16 +314,14 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      allowLocationSimulation = "YES"
-      language = "en"
-      region = "US">
+      allowLocationSimulation = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D6F57E291A8BE4AF00B62BD9"
-            BuildableName = "Programmatic.app"
-            BlueprintName = "Programmatic"
+            BlueprintIdentifier = "D6F57E531A8BE4B500B62BD9"
+            BuildableName = "Storyboard.app"
+            BlueprintName = "Storyboard"
             ReferencedContainer = "container:Atlas.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -247,9 +338,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D6F57E291A8BE4AF00B62BD9"
-            BuildableName = "Programmatic.app"
-            BlueprintName = "Programmatic"
+            BlueprintIdentifier = "D6F57E531A8BE4B500B62BD9"
+            BuildableName = "Storyboard.app"
+            BlueprintName = "Storyboard"
             ReferencedContainer = "container:Atlas.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

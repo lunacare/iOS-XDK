@@ -20,5 +20,7 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>"This app needs access to Photo Library to run unit tests on access functions"</string>
 </dict>
 </plist>

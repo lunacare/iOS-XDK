@@ -643,7 +643,7 @@ extern NSString *const ATLMessageInputToolbarSendButton;
 - (void)testToVerifyCustomAvatarImageDiameter
 {
     [[ATLAvatarImageView appearance] setAvatarImageViewDiameter:40];
-    
+
     ATLUserMock *mockUser2 = [ATLUserMock userWithMockUserName:ATLMockUserNameKevin];
     LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser2.userID];
     [self.conversation addParticipants:[NSSet setWithObject:mockUser2.userID] error:nil];
