@@ -1,5 +1,11 @@
 # Atlas Changelog
 
+## Unreleased
+
+### Bug Fixes
+
+* Fixed an issue in `ATLMessageInputToolbar` where creating a new line would incorrectly offset the text above until the next character was entered. This also fixed a crash that could happen if Return was pressed rapidly in succession. [APPS-2663]
+
 ## 1.0.31
 
 ### Enhancements
