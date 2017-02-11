@@ -47,6 +47,8 @@ LYRConversation *LYRConversationDataSourceConversationFromPredicate(LYRPredicate
 @property (nonatomic, readwrite) LYRQueryController *queryController;
 @property (nonatomic, readwrite) BOOL expandingPaginationWindow;
 @property (nonatomic, readwrite) LYRConversation *conversation;
+@property (nonatomic) NSInteger messageCountBeforeSync;
+@property (nonatomic) BOOL shouldSynchronizeRemoteMessages;
 
 @end
 
@@ -54,8 +56,6 @@ LYRConversation *LYRConversationDataSourceConversationFromPredicate(LYRPredicate
 
 NSInteger const ATLNumberOfSectionsBeforeFirstMessageSection = 1;
 NSInteger const ATLQueryControllerPaginationWindow = 30;
-NSInteger messageCountBeforeSync;
-BOOL shouldSynchronizeRemoteMessages;
 
 + (instancetype)dataSourceWithLayerClient:(LYRClient *)layerClient query:(LYRQuery *)query
 {
@@ -85,8 +85,8 @@ BOOL shouldSynchronizeRemoteMessages;
         BOOL success = [_queryController execute:&error];
         if (!success) NSLog(@"LayerKit failed to execute query with error: %@", error);
         
-        messageCountBeforeSync = _queryController.count;
-        shouldSynchronizeRemoteMessages = NO;
+        _messageCountBeforeSync = _queryController.count;
+        _shouldSynchronizeRemoteMessages = YES;
     }
     return self;
 }
@@ -127,14 +127,14 @@ BOOL shouldSynchronizeRemoteMessages;
         if (observer) {
             [[NSNotificationCenter defaultCenter] removeObserver:observer];
         }
-        if (self.queryController.count <= messageCountBeforeSync) {
-            shouldSynchronizeRemoteMessages = NO;
+        if (weakSelf.queryController.count <= weakSelf.messageCountBeforeSync) {
+            weakSelf.shouldSynchronizeRemoteMessages = NO;
         } else {
-            shouldSynchronizeRemoteMessages = YES;
+            weakSelf.shouldSynchronizeRemoteMessages = YES;
         }
         [weakSelf finishExpandingPaginationWindow];
     }];
-    messageCountBeforeSync = self.queryController.count;
+    self.messageCountBeforeSync = self.queryController.count;
     BOOL success = [self.conversation synchronizeMoreMessages:numberOfMessagesToSynchronize error:&error];
     if (!success) {
         if (observer) {
@@ -161,7 +161,7 @@ BOOL shouldSynchronizeRemoteMessages;
         For example, they're marked as Deleted for that user.
         `shouldSynchronizeRemoteMessages` is determined within `requestToSynchronizeMoreMessages`
      */
-    if (!shouldSynchronizeRemoteMessages) {
+    if (!self.shouldSynchronizeRemoteMessages) {
         return 0;
     }
     
