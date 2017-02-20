@@ -1,5 +1,11 @@
 # Atlas Changelog
 
+## 1.0.32
+
+### Bug Fixes
+
+* Fixed an issue where pulling to load more messages in a conversations wouldn't work when it should
+
 ## 1.0.31
 
 ### Enhancements
