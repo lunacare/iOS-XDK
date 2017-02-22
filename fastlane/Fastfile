@@ -9,9 +9,9 @@ platform :ios do
 
   desc "Runs all the tests"
   lane :test do
-    scan( 
-      scheme: "Atlas"
-    )
+    scan(
+      scheme: "AtlasHost"
+    ) 
     scan(
       scheme: "Programmatic"
     )
