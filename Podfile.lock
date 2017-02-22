@@ -33,13 +33,13 @@ CHECKOUT OPTIONS:
     :commit: f9bb47771e29adfa0873aff9bc3652587613608e
     :git: https://github.com/blakewatters/KIFViewControllerActions.git
   LYRCountDownLatch:
-    :commit: '02119f855ad14e7fc0dae32bbbf17c735a281cfe'
+    :commit: 02119f855ad14e7fc0dae32bbbf17c735a281cfe
     :git: https://github.com/layerhq/LYRCountDownLatch.git
 
 SPEC CHECKSUMS:
   Atlas: 47ecba14740d7521cacb5e22e1dc4ee8359db126
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
-  KIF: '082eb65279e51c3092923802849eb796a04982ab'
+  KIF: 082eb65279e51c3092923802849eb796a04982ab
   KIFViewControllerActions: 923795dc4bd4ca5657841ce7455ce67447693861
   LayerKit: 247c0099a6c09ef8ac9fd93ded3559d81dcfdc31
   LYRCountDownLatch: 9b440b42a19ddbf4e75bdd4b43726baa1527606a

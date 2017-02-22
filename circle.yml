@@ -1,0 +1,9 @@
+machine:
+  xcode:
+    version: 8.2
+dependencies:
+  pre:
+    - gem install bundler
+test:
+  override: 
+    - bundle exec fastlane test
