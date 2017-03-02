@@ -121,17 +121,19 @@ NSInteger const ATLQueryControllerPaginationWindow = 30;
 
 - (void)requestToSynchronizeMoreMessages:(NSUInteger)numberOfMessagesToSynchronize
 {
+    if (!self.shouldSynchronizeRemoteMessages) {
+        return;
+    }
+    
+    self.shouldSynchronizeRemoteMessages = NO;
     NSError *error;
     __weak typeof(self) weakSelf = self;
     __block __weak id observer = [[NSNotificationCenter defaultCenter] addObserverForName:LYRConversationDidFinishSynchronizingNotification object:self.conversation queue:nil usingBlock:^(NSNotification * _Nonnull note) {
         if (observer) {
             [[NSNotificationCenter defaultCenter] removeObserver:observer];
         }
-        if (weakSelf.queryController.count <= weakSelf.messageCountBeforeSync) {
-            weakSelf.shouldSynchronizeRemoteMessages = NO;
-        } else {
-            weakSelf.shouldSynchronizeRemoteMessages = YES;
-        }
+
+        weakSelf.shouldSynchronizeRemoteMessages = YES;
         [weakSelf finishExpandingPaginationWindow];
     }];
     self.messageCountBeforeSync = self.queryController.count;
@@ -157,14 +159,6 @@ NSInteger const ATLQueryControllerPaginationWindow = 30;
 
 - (NSUInteger)messagesAvailableRemotely
 {
-    /*  Remote messages may exist in the conversation but are unavailable to the current user.
-        For example, they're marked as Deleted for that user.
-        `shouldSynchronizeRemoteMessages` is determined within `requestToSynchronizeMoreMessages`
-     */
-    if (!self.shouldSynchronizeRemoteMessages) {
-        return 0;
-    }
-    
     return (NSUInteger)MAX((NSInteger)0, (NSInteger)self.conversation.totalNumberOfMessages - (NSInteger)ABS(self.queryController.count));
 }
 

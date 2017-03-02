@@ -15,7 +15,7 @@ DEPENDENCIES:
   - Atlas (from `.`)
   - Expecta
   - KIF
-  - KIFViewControllerActions (from `https://github.com/blakewatters/KIFViewControllerActions.git`)
+  - KIFViewControllerActions
   - LayerKit
   - LYRCountDownLatch (from `https://github.com/layerhq/LYRCountDownLatch.git`)
   - OCMock
@@ -23,15 +23,10 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   Atlas:
     :path: "."
-  KIFViewControllerActions:
-    :git: https://github.com/blakewatters/KIFViewControllerActions.git
   LYRCountDownLatch:
     :git: https://github.com/layerhq/LYRCountDownLatch.git
 
 CHECKOUT OPTIONS:
-  KIFViewControllerActions:
-    :commit: f9bb47771e29adfa0873aff9bc3652587613608e
-    :git: https://github.com/blakewatters/KIFViewControllerActions.git
   LYRCountDownLatch:
     :commit: 02119f855ad14e7fc0dae32bbbf17c735a281cfe
     :git: https://github.com/layerhq/LYRCountDownLatch.git
@@ -45,6 +40,6 @@ SPEC CHECKSUMS:
   LYRCountDownLatch: 9b440b42a19ddbf4e75bdd4b43726baa1527606a
   OCMock: f3f61e6eaa16038c30caa5798c5e49d3307b6f22
 
-PODFILE CHECKSUM: 9e55be12cb563fcf55f618983ac3ed4ed828761c
+PODFILE CHECKSUM: 9f43a2d9e902f6855e7fec592db3b3f6e009109d
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.0

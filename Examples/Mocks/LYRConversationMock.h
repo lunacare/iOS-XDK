@@ -33,6 +33,7 @@
 @property (nonatomic, readonly) BOOL hasUnreadMessages LYR_QUERYABLE_PROPERTY;
 @property (nonatomic, readonly) BOOL isDeleted;
 @property (nonatomic, readonly) NSDictionary *metadata;
+@property (nonatomic, readonly) NSUInteger totalNumberOfMessages;
 
 + (instancetype)newConversationWithParticipants:(NSSet *)participants options:(NSDictionary *)options;
 

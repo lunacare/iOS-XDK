@@ -122,7 +122,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     self.tableView.accessibilityLabel = ATLConversationTableViewAccessibilityLabel;
     self.tableView.accessibilityIdentifier = ATLConversationTableViewAccessibilityIdentifier;
     self.tableView.isAccessibilityElement = YES;
-    [self configureLoadingMoreConversationsIndicatorView];
+    self.tableView.tableFooterView = [[UIView alloc] init];
     [self.tableView registerClass:self.cellClass forCellReuseIdentifier:ATLConversationCellReuseIdentifier];
     
     if (self.shouldDisplaySearchController) {
