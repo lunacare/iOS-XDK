@@ -4,6 +4,7 @@
 
 ### Bug Fixes
 
+* Fixed a crash that could occur if the `tableFooterView` in the `ATLConversationListViewController` wasn't initialized. `[APPS-2774]`
 * Fixed an issue where pulling to load more messages in a conversations wouldn't work when it should
 
 ## 1.0.31
