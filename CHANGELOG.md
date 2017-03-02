@@ -5,7 +5,7 @@
 ### Bug Fixes
 
 * Fixed an issue in `ATLMessageInputToolbar` where creating a new line would incorrectly offset the text above until the next character was entered. This also fixed a crash that could happen if Return was pressed rapidly in succession. [APPS-2663]
-* Fixed a crash that could occur if the `tableFooterView` in the `ATLConversationListViewController` wasn't initialized. `[APPS-2774]`
+* Fixed a crash that could occur if the `tableFooterView` in the `ATLConversationListViewController` wasn't initialized. [APPS-2774]
 * Fixed an issue where pulling to load more messages in a conversations wouldn't work when it should
 
 ## 1.0.31
