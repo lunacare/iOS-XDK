@@ -135,7 +135,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return A string representing the content of the last message.  If `nil` is returned the controller will fall back to default behavior.
  @discussion This is used when the application uses custom `MIMEType`s and wants to customize how they are displayed.
  */
-- (NSString *)conversationListViewController:(ATLConversationListViewController *)conversationListViewController lastMessageTextForConversation:(LYRConversation *)conversation;
+- (nullable NSString *)conversationListViewController:(ATLConversationListViewController *)conversationListViewController lastMessageTextForConversation:(LYRConversation *)conversation;
 
 /**
  @abstract Asks the data source to configure the query used to fetch content for the controller if necessary.
