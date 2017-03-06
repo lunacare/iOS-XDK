@@ -12,7 +12,7 @@ target 'Storyboard' do
 end
 
 abstract_target 'test' do
-  pod 'KIFViewControllerActions'
+  pod 'KIFViewControllerActions', '~> 1.0.2' 
   pod 'LYRCountDownLatch', git: 'https://github.com/layerhq/LYRCountDownLatch.git'
   pod 'KIF'
   pod 'Expecta'

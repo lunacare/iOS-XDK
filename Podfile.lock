@@ -15,7 +15,7 @@ DEPENDENCIES:
   - Atlas (from `.`)
   - Expecta
   - KIF
-  - KIFViewControllerActions
+  - KIFViewControllerActions (~> 1.0.2)
   - LayerKit
   - LYRCountDownLatch (from `https://github.com/layerhq/LYRCountDownLatch.git`)
   - OCMock
@@ -32,7 +32,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/layerhq/LYRCountDownLatch.git
 
 SPEC CHECKSUMS:
-  Atlas: 5044148d34341f56be7c70b503c5c644fdfb3097
+  Atlas: a4052ee9f8eb0f044b0d03ba21c0300742a8332b
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   KIF: 082eb65279e51c3092923802849eb796a04982ab
   KIFViewControllerActions: 923795dc4bd4ca5657841ce7455ce67447693861
@@ -40,6 +40,6 @@ SPEC CHECKSUMS:
   LYRCountDownLatch: 9b440b42a19ddbf4e75bdd4b43726baa1527606a
   OCMock: 35ae71d6a8fcc1b59434d561d1520b9dd4f15765
 
-PODFILE CHECKSUM: 9f43a2d9e902f6855e7fec592db3b3f6e009109d
+PODFILE CHECKSUM: 397ddf108df18c8108f28424e3c015a369c77b13
 
 COCOAPODS: 1.2.0
