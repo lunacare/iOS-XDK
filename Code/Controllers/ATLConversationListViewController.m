@@ -48,6 +48,9 @@ static UIView *ATLMakeLoadingMoreConversationsIndicatorView()
 @property (nonatomic) BOOL hasAppeared;
 @property (nonatomic) BOOL showingMoreConversationsIndicator;
 @property (nonatomic, readwrite) UISearchController *searchController;
+@property (nonatomic) NSMutableArray *insertedRowIndexPaths;
+@property (nonatomic) NSMutableArray *deletedRowIndexPaths;
+@property (nonatomic) NSMutableArray *updatedRowIndexPaths;
 
 @end
 
@@ -488,7 +491,6 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         selectedConversation = [self.queryController objectAtIndexPath:indexPath];
     }
     self.conversationSelectedBeforeContentChange = selectedConversation;
-    [self.tableView beginUpdates];
 }
 
 - (void)queryController:(LYRQueryController *)controller
@@ -499,22 +501,17 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 {
     switch (type) {
         case LYRQueryControllerChangeTypeInsert:
-            [self.tableView insertRowsAtIndexPaths:@[newIndexPath]
-                                  withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.insertedRowIndexPaths addObject:newIndexPath];
             break;
         case LYRQueryControllerChangeTypeUpdate:
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath]
-                                  withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.updatedRowIndexPaths addObject:indexPath];
             break;
         case LYRQueryControllerChangeTypeMove:
-            [self.tableView deleteRowsAtIndexPaths:@[indexPath]
-                                  withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.tableView insertRowsAtIndexPaths:@[newIndexPath]
-                                  withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.deletedRowIndexPaths addObject:indexPath];
+            [self.insertedRowIndexPaths addObject:newIndexPath];
             break;
         case LYRQueryControllerChangeTypeDelete:
-            [self.tableView deleteRowsAtIndexPaths:@[indexPath]
-                                  withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.deletedRowIndexPaths addObject:indexPath];
             break;
         default:
             break;
@@ -523,8 +520,16 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 
 - (void)queryControllerDidChangeContent:(LYRQueryController *)queryController
 {
+    [self.tableView beginUpdates];
+    [self.tableView deleteRowsAtIndexPaths:self.deletedRowIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView insertRowsAtIndexPaths:self.insertedRowIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView reloadRowsAtIndexPaths:self.updatedRowIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
-
+    
+    self.insertedRowIndexPaths = nil;
+    self.deletedRowIndexPaths = nil;
+    self.updatedRowIndexPaths = nil;
+    
     [self configureLoadingMoreConversationsIndicatorView];
 
     if (self.conversationSelectedBeforeContentChange) {
@@ -534,6 +539,21 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         }
         self.conversationSelectedBeforeContentChange = nil;
     }
+}
+
+- (NSMutableArray *)insertedRowIndexPaths
+{
+    return _insertedRowIndexPaths ?: (_insertedRowIndexPaths = [[NSMutableArray alloc] init]);
+}
+
+- (NSMutableArray *)deletedRowIndexPaths
+{
+    return _deletedRowIndexPaths ?: (_deletedRowIndexPaths = [[NSMutableArray alloc] init]);
+}
+
+- (NSMutableArray *)updatedRowIndexPaths
+{
+    return _updatedRowIndexPaths ?: (_updatedRowIndexPaths = [[NSMutableArray alloc] init]);
 }
 
 #pragma mark - UIScrollViewDelegate
