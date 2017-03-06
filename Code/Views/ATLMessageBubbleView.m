@@ -304,11 +304,6 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)setBackgroundColor:(UIColor *)backgroundColor
-{
-    [super setBackgroundColor:backgroundColor];
-}
-
 - (BOOL)canBecomeFirstResponder
 {
     return YES;
