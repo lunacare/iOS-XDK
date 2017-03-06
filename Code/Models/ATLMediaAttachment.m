@@ -239,7 +239,7 @@ static float const ATLMediaAttachmentDefaultThumbnailJPEGCompression = 0.5f;
         if ((UTTypeConformsTo(fileUTI, kUTTypeVideo) || UTTypeConformsTo(fileUTI, kUTTypeQuickTimeMovie))) {
             thumbnailImage = ATLMediaAttachmentGenerateThumbnailFromVideoFileURL(fileURL);
         }
-        self.thumbnailInputStream = [ATLMediaInputStream mediaInputStreamWithImage:thumbnailImage metadata:nil];
+        self.thumbnailInputStream = (thumbnailImage != nil) ? [ATLMediaInputStream mediaInputStreamWithImage:thumbnailImage metadata:nil] : nil;
         self.thumbnailMIMEType = ATLMIMETypeImageJPEGPreview;
     }
     ((ATLMediaInputStream *)self.thumbnailInputStream).maximumSize = thumbnailSize;

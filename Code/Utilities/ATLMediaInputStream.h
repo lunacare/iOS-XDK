@@ -101,7 +101,7 @@ typedef NS_ENUM(NSUInteger, ATLMediaInputStreamError) {
  @discussion The input stream will attempt to preserve any embedded
    metadata information of the media content.
  */
-+ (instancetype)mediaInputStreamWithFileURL:(NSURL *)fileURL;
++ (nullable instancetype)mediaInputStreamWithFileURL:(NSURL *)fileURL;
 
 /**
  @abstract The source media asset in a form of an `NSURL`.

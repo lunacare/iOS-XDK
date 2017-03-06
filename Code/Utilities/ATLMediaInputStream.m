@@ -524,7 +524,7 @@ static size_t ATLMediaInputStreamPutBytesIntoStreamCallback(void *assetStreamRef
     // Prepare the temporary file URL (it should be a member property).
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-    NSURL *baseURL = [NSURL fileURLWithPath:basePath isDirectory:YES];
+    NSURL *baseURL = (basePath != nil) ? [NSURL fileURLWithPath:basePath isDirectory:YES] : nil;
     NSURL *outputDirURL = [NSURL URLWithString:ATLMediaInputStreamTempDirectory relativeToURL:baseURL];
     NSURL *outputURL = [NSURL URLWithString:[NSString stringWithFormat:@"exported-video-%@.mp4", [[NSUUID UUID] UUIDString]] relativeToURL:outputDirURL];
     [[NSFileManager defaultManager] createDirectoryAtURL:outputDirURL withIntermediateDirectories:YES attributes:nil error:nil];

@@ -177,7 +177,7 @@ NSInteger const kATLSharedCellTag = 1000;
             size = ATLImageSizeForData(fullResImagePart.data); // Resort to image's size, if no dimensions metadata message parts found.
         }
         
-        // Fall-back to programatically requesting for a content download of single message part messages (Android compatibillity).
+        // Fall-back to programatically requesting for a content download of single message part messages (Android compatibility).
         if ([[weakSelf.message valueForKeyPath:@"parts.MIMEType"] isEqual:@[ATLMIMETypeImageJPEG]]) {
             if (fullResImagePart && (fullResImagePart.transferStatus == LYRContentTransferReadyForDownload)) {
                 NSError *error;
