@@ -62,7 +62,6 @@
 
 - (NSAttributedString *)conversationViewController:(ATLConversationViewController *)conversationViewController attributedStringForDisplayOfRecipientStatus:(NSDictionary *)recipientStatus
 {
-    if (recipientStatus.count == 0) return nil;
     NSMutableAttributedString *mergedStatuses = [[NSMutableAttributedString alloc] init];
 
     [[recipientStatus allKeys] enumerateObjectsUsingBlock:^(NSString *participant, NSUInteger idx, BOOL *stop) {
