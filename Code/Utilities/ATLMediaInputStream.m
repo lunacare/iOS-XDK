@@ -297,7 +297,7 @@ static size_t ATLMediaInputStreamPutBytesIntoStreamCallback(void *assetStreamRef
     }
     
     // Get source image's properties, because we'll copy it to the destination later.
-    self.sourceImageProperties = (__bridge NSDictionary *)(CGImageSourceCopyProperties(_source, NULL));
+    self.sourceImageProperties = (__bridge_transfer NSDictionary *)(CGImageSourceCopyProperties(_source, NULL));
     return count;
 }
 
@@ -360,6 +360,7 @@ static size_t ATLMediaInputStreamPutBytesIntoStreamCallback(void *assetStreamRef
         CFStringRef fileExtension = (__bridge CFStringRef)[self.sourceFileURL pathExtension];
         CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, NULL);
         _destination = CGImageDestinationCreateWithDataConsumer(_consumer, fileUTI, numberOfSourceImages, NULL);
+        CFRelease(fileUTI);
     } else {
         // In case source is the UIImage.
         _destination = CGImageDestinationCreateWithDataConsumer(_consumer, kUTTypeJPEG, 1, NULL);
@@ -592,6 +593,7 @@ static size_t ATLMediaInputStreamPutBytesIntoStreamCallback(void *assetStreamRef
     [exportedVideoFileInputStream open];
     
     if (exportedVideoFileInputStream.streamStatus != NSStreamStatusOpen) {
+        free(buffer);
         self.mediaStreamError = exportedVideoFileInputStream.streamError;
         self.mediaStreamStatus = exportedVideoFileInputStream.streamStatus;
         dispatch_semaphore_signal(self.streamFlowRequesterSemaphore);
@@ -666,16 +668,30 @@ static size_t ATLMediaInputStreamPutBytesIntoStreamCallback(void *assetStreamRef
     if (!fileURL) {
         return nil;
     }
+    ATLMediaInputStream *result = nil;
     CFStringRef fileExtension = (__bridge CFStringRef)[fileURL pathExtension];
     CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, NULL);
-    if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-        return [[ATLPhotoFileInputStream alloc] initWithPhotoFileURL:fileURL];
-    } else if (UTTypeConformsTo(fileUTI, kUTTypeMovie)) {
-        return [[ATLFileVideoInputStream alloc] initWithFileURL:fileURL];
+    
+    if (fileUTI != NULL) {
+        if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
+            result = [[ATLPhotoFileInputStream alloc] initWithPhotoFileURL:fileURL];
+        } else if (UTTypeConformsTo(fileUTI, kUTTypeMovie)) {
+            result = [[ATLFileVideoInputStream alloc] initWithFileURL:fileURL];
+        } else {
+            CFStringRef description = UTTypeCopyDescription(fileUTI);
+            if (description != NULL) {
+                NSLog(@"Failed to initialize an input stream for an unkown type: '%@'", description);
+                CFRelease(description);
+            } else {
+                NSLog(@"Failed to initialize an input stream for a file type: '%@'", fileUTI);
+            }
+        }
+        CFRelease(fileUTI);
     } else {
-        NSLog(@"Failed to initialize an input stream for an unkown type: '%@'", (__bridge NSString *)UTTypeCopyDescription(fileUTI));
-        return nil;
+        NSLog(@"Failed to initialize an input stream for file: '%@'", fileURL);
     }
+    
+    return result;
 }
 
 #pragma mark - Initializers

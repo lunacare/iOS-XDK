@@ -119,7 +119,7 @@
         ATLUserMock *user = [[participants allObjects] objectAtIndex:i];
         conversationLabel = [NSString stringWithFormat:@"%@, %@", conversationLabel, user.displayName];
     }
-    return conversationLabel;
+    return (conversationLabel?:@"Unknown User");
 }
 
 @end

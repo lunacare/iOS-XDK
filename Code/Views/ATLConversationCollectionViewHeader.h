@@ -66,7 +66,7 @@ extern NSString *const ATLConversationViewHeaderIdentifier;
  @param view The superview for the header.
  @return The height for the header.
  */
-+ (CGFloat)headerHeightWithDateString:(NSAttributedString *)dateString participantName:(NSString *)participantName inView:(UIView *)view;
++ (CGFloat)headerHeightWithDateString:(nullable NSAttributedString *)dateString participantName:(nullable NSString *)participantName inView:(UIView *)view;
 
 @end
 NS_ASSUME_NONNULL_END

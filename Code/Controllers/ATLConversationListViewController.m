@@ -344,6 +344,10 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 - (void)configureCell:(UITableViewCell<ATLConversationPresenting> *)conversationCell atIndexPath:(NSIndexPath *)indexPath
 {
     LYRConversation *conversation = [self.queryController numberOfObjectsInSection:indexPath.section] ? [self.queryController objectAtIndexPath:indexPath] : nil;
+    if (conversation == nil) {
+        return;     // NOTE the early return if the conversation isn't found!
+    }
+    
     [conversationCell presentConversation:conversation];
     
     if (self.displaysAvatarItem) {
