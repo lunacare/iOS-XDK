@@ -668,16 +668,30 @@ static size_t ATLMediaInputStreamPutBytesIntoStreamCallback(void *assetStreamRef
     if (!fileURL) {
         return nil;
     }
+    ATLMediaInputStream *result = nil;
     CFStringRef fileExtension = (__bridge CFStringRef)[fileURL pathExtension];
     CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, NULL);
-    if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-        return [[ATLPhotoFileInputStream alloc] initWithPhotoFileURL:fileURL];
-    } else if (UTTypeConformsTo(fileUTI, kUTTypeMovie)) {
-        return [[ATLFileVideoInputStream alloc] initWithFileURL:fileURL];
+    
+    if (fileUTI != NULL) {
+        if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
+            result = [[ATLPhotoFileInputStream alloc] initWithPhotoFileURL:fileURL];
+        } else if (UTTypeConformsTo(fileUTI, kUTTypeMovie)) {
+            result = [[ATLFileVideoInputStream alloc] initWithFileURL:fileURL];
+        } else {
+            CFStringRef description = UTTypeCopyDescription(fileUTI);
+            if (description != NULL) {
+                NSLog(@"Failed to initialize an input stream for an unkown type: '%@'", description);
+                CFRelease(description);
+            } else {
+                NSLog(@"Failed to initialize an input stream for a file type: '%@'", fileUTI);
+            }
+        }
+        CFRelease(fileUTI);
     } else {
-        NSLog(@"Failed to initialize an input stream for an unkown type: '%@'", (__bridge NSString *)UTTypeCopyDescription(fileUTI));
-        return nil;
+        NSLog(@"Failed to initialize an input stream for file: '%@'", fileURL);
     }
+    
+    return result;
 }
 
 #pragma mark - Initializers
