@@ -1,5 +1,5 @@
 //
-//  ATLUIAvatarView.h
+//  ATLAvatarView.h
 //  Atlas
 //
 //  Created by Kevin Coleman on 10/22/14.

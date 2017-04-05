@@ -57,8 +57,6 @@
 		253C2A311C3C9E0000ED1549 /* ATLAddressBarTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 253C29E01C3C9E0000ED1549 /* ATLAddressBarTextView.m */; };
 		253C2A321C3C9E0000ED1549 /* ATLAddressBarView.h in Headers */ = {isa = PBXBuildFile; fileRef = 253C29E11C3C9E0000ED1549 /* ATLAddressBarView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		253C2A331C3C9E0000ED1549 /* ATLAddressBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 253C29E21C3C9E0000ED1549 /* ATLAddressBarView.m */; };
-		253C2A341C3C9E0000ED1549 /* ATLAvatarImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 253C29E31C3C9E0000ED1549 /* ATLAvatarImageView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		253C2A351C3C9E0000ED1549 /* ATLAvatarImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 253C29E41C3C9E0000ED1549 /* ATLAvatarImageView.m */; };
 		253C2A361C3C9E0000ED1549 /* ATLConversationCollectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = 253C29E51C3C9E0000ED1549 /* ATLConversationCollectionView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		253C2A371C3C9E0000ED1549 /* ATLConversationCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 253C29E61C3C9E0000ED1549 /* ATLConversationCollectionView.m */; };
 		253C2A381C3C9E0000ED1549 /* ATLConversationCollectionViewFooter.h in Headers */ = {isa = PBXBuildFile; fileRef = 253C29E71C3C9E0000ED1549 /* ATLConversationCollectionViewFooter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -91,6 +89,8 @@
 		253C2A531C3C9E0000ED1549 /* ATLPlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 253C2A021C3C9E0000ED1549 /* ATLPlayView.m */; };
 		253C2A541C3C9E0000ED1549 /* ATLProgressView.h in Headers */ = {isa = PBXBuildFile; fileRef = 253C2A031C3C9E0000ED1549 /* ATLProgressView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		253C2A551C3C9E0000ED1549 /* ATLProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 253C2A041C3C9E0000ED1549 /* ATLProgressView.m */; };
+		40EBBF101E95A2D600C25041 /* ATLAvatarView.h in Headers */ = {isa = PBXBuildFile; fileRef = 40EBBF0E1E95A2D600C25041 /* ATLAvatarView.h */; };
+		40EBBF111E95A2D600C25041 /* ATLAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40EBBF0F1E95A2D600C25041 /* ATLAvatarView.m */; };
 		58239E45B91E3CD954E75554 /* Pods_test_ProgrammaticTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8050D6CFBC2EA1D5D6B800A /* Pods_test_ProgrammaticTests.framework */; };
 		5A86A2D11B82BB11005AF74B /* ATLMessageCollectionViewCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86A2D01B82BB11005AF74B /* ATLMessageCollectionViewCellTests.m */; };
 		5A86A2D21B82BB11005AF74B /* ATLMessageCollectionViewCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86A2D01B82BB11005AF74B /* ATLMessageCollectionViewCellTests.m */; };
@@ -291,8 +291,6 @@
 		253C29E01C3C9E0000ED1549 /* ATLAddressBarTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLAddressBarTextView.m; sourceTree = "<group>"; };
 		253C29E11C3C9E0000ED1549 /* ATLAddressBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLAddressBarView.h; sourceTree = "<group>"; };
 		253C29E21C3C9E0000ED1549 /* ATLAddressBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLAddressBarView.m; sourceTree = "<group>"; };
-		253C29E31C3C9E0000ED1549 /* ATLAvatarImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLAvatarImageView.h; sourceTree = "<group>"; };
-		253C29E41C3C9E0000ED1549 /* ATLAvatarImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLAvatarImageView.m; sourceTree = "<group>"; };
 		253C29E51C3C9E0000ED1549 /* ATLConversationCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLConversationCollectionView.h; sourceTree = "<group>"; };
 		253C29E61C3C9E0000ED1549 /* ATLConversationCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLConversationCollectionView.m; sourceTree = "<group>"; };
 		253C29E71C3C9E0000ED1549 /* ATLConversationCollectionViewFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLConversationCollectionViewFooter.h; sourceTree = "<group>"; };
@@ -326,6 +324,8 @@
 		253C2A031C3C9E0000ED1549 /* ATLProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLProgressView.h; sourceTree = "<group>"; };
 		253C2A041C3C9E0000ED1549 /* ATLProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLProgressView.m; sourceTree = "<group>"; };
 		34C06B1C4F6FE86629A3C050 /* Pods-test-ProgrammaticTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-test-ProgrammaticTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-test-ProgrammaticTests/Pods-test-ProgrammaticTests.release.xcconfig"; sourceTree = "<group>"; };
+		40EBBF0E1E95A2D600C25041 /* ATLAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLAvatarView.h; sourceTree = "<group>"; };
+		40EBBF0F1E95A2D600C25041 /* ATLAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLAvatarView.m; sourceTree = "<group>"; };
 		4160065E3D4E4D6CA1EF3F99 /* Pods-Storyboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storyboard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Storyboard/Pods-Storyboard.debug.xcconfig"; sourceTree = "<group>"; };
 		5A86A2D01B82BB11005AF74B /* ATLMessageCollectionViewCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATLMessageCollectionViewCellTests.m; path = Tests/ATLMessageCollectionViewCellTests.m; sourceTree = "<group>"; };
 		5AEF687F1C75284300808463 /* LYRIdentity+ATLParticipant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LYRIdentity+ATLParticipant.h"; sourceTree = "<group>"; };
@@ -576,16 +576,16 @@
 		253C29DC1C3C9E0000ED1549 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				251C57AB1C5A9E3C00110871 /* ATLBaseCollectionViewCell.h */,
-				251C57AC1C5A9E3C00110871 /* ATLBaseCollectionViewCell.m */,
 				253C29DD1C3C9E0000ED1549 /* ATLAddressBarContainerView.h */,
 				253C29DE1C3C9E0000ED1549 /* ATLAddressBarContainerView.m */,
 				253C29DF1C3C9E0000ED1549 /* ATLAddressBarTextView.h */,
 				253C29E01C3C9E0000ED1549 /* ATLAddressBarTextView.m */,
 				253C29E11C3C9E0000ED1549 /* ATLAddressBarView.h */,
 				253C29E21C3C9E0000ED1549 /* ATLAddressBarView.m */,
-				253C29E31C3C9E0000ED1549 /* ATLAvatarImageView.h */,
-				253C29E41C3C9E0000ED1549 /* ATLAvatarImageView.m */,
+				40EBBF0E1E95A2D600C25041 /* ATLAvatarView.h */,
+				40EBBF0F1E95A2D600C25041 /* ATLAvatarView.m */,
+				251C57AB1C5A9E3C00110871 /* ATLBaseCollectionViewCell.h */,
+				251C57AC1C5A9E3C00110871 /* ATLBaseCollectionViewCell.m */,
 				253C29E51C3C9E0000ED1549 /* ATLConversationCollectionView.h */,
 				253C29E61C3C9E0000ED1549 /* ATLConversationCollectionView.m */,
 				253C29E71C3C9E0000ED1549 /* ATLConversationCollectionViewFooter.h */,
@@ -909,8 +909,8 @@
 				253C2A1B1C3C9E0000ED1549 /* ATLAvatarItem.h in Headers */,
 				253C2A0F1C3C9E0000ED1549 /* ATLParticipantTableViewController.h in Headers */,
 				253C2A1C1C3C9E0000ED1549 /* ATLConversationPresenting.h in Headers */,
+				40EBBF101E95A2D600C25041 /* ATLAvatarView.h in Headers */,
 				253C2A1D1C3C9E0000ED1549 /* ATLMessagePresenting.h in Headers */,
-				253C2A341C3C9E0000ED1549 /* ATLAvatarImageView.h in Headers */,
 				253C2A071C3C9E0000ED1549 /* ATLAddressBarViewController.h in Headers */,
 				253C2A201C3C9E0000ED1549 /* ATLConstants.h in Headers */,
 				253C2A3E1C3C9E0000ED1549 /* ATLConversationTableViewCell.h in Headers */,
@@ -1457,7 +1457,6 @@
 				253C2A0E1C3C9E0000ED1549 /* ATLConversationViewController.m in Sources */,
 				251C57AE1C5AA20200110871 /* ATLBaseCollectionViewCell.m in Sources */,
 				253C2A311C3C9E0000ED1549 /* ATLAddressBarTextView.m in Sources */,
-				253C2A351C3C9E0000ED1549 /* ATLAvatarImageView.m in Sources */,
 				253C2A121C3C9E0000ED1549 /* ATLTypingIndicatorViewController.m in Sources */,
 				253C2A061C3C9E0000ED1549 /* Atlas.m in Sources */,
 				253C2A211C3C9E0000ED1549 /* ATLConstants.m in Sources */,
@@ -1491,6 +1490,7 @@
 				253C2A3F1C3C9E0000ED1549 /* ATLConversationTableViewCell.m in Sources */,
 				253C2A0A1C3C9E0000ED1549 /* ATLBaseConversationViewController.m in Sources */,
 				253C2A3B1C3C9E0000ED1549 /* ATLConversationCollectionViewHeader.m in Sources */,
+				40EBBF111E95A2D600C25041 /* ATLAvatarView.m in Sources */,
 				253C2A2B1C3C9E0000ED1549 /* ATLUIImageHelper.m in Sources */,
 				253C2A101C3C9E0000ED1549 /* ATLParticipantTableViewController.m in Sources */,
 			);

@@ -34,7 +34,7 @@ typedef NS_ENUM(NSInteger, ATLMPresenceStatusViewMode) {
 /**
  @abstract Sets the color of the presence status background color. Default is [UIColor whiteColor]
  */
-@property (nonatomic) UIColor *statusBackgroundColor;
+@property (nonatomic) UIColor *statusBackgroundColor UI_APPEARANCE_SELECTOR;
 
 /**
  @abstract Sets the mode for the ATLMPresenceStatusView. Default is ATLMPresenceStatusViewModeFill

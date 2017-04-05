@@ -1,5 +1,5 @@
 //
-//  ATLUIAvatarView.m
+//  ATLAvatarView.m
 //  Atlas
 //
 //  Created by Kevin Coleman on 10/22/14.
@@ -68,7 +68,6 @@ NSString *const ATLAvatarViewAccessibilityLabel = @"ATLAvatarViewAccessibilityLa
     _initialsFont = [UIFont systemFontOfSize:14];
     _initialsColor = [UIColor blackColor];
 
-    self.clipsToBounds = NO;
     self.contentMode = UIViewContentModeScaleAspectFill;
     self.accessibilityLabel = ATLAvatarViewAccessibilityLabel;
     

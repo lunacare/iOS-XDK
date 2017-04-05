@@ -24,7 +24,7 @@
 #import "LYRClientMock.h"
 #import "ATLSampleConversationListViewController.h"
 
-extern NSString *const ATLAvatarImageViewAccessibilityLabel;
+extern NSString *const ATLAvatarViewAccessibilityLabel;
 
 @interface ATLConversationListViewController ()
 
@@ -611,7 +611,7 @@ extern NSString *const ATLAvatarImageViewAccessibilityLabel;
     [self newConversationWithMockUser:mockUser1 lastMessageText:@"Test Message"];
     [tester waitForAnimationsToFinish];
 
-    ATLAvatarImageView *imageView = (ATLAvatarImageView *)[tester waitForViewWithAccessibilityLabel:ATLAvatarImageViewAccessibilityLabel];
+    ATLAvatarView *imageView = (ATLAvatarView *)[tester waitForViewWithAccessibilityLabel:ATLAvatarViewAccessibilityLabel];
     expect(imageView.image).will.beTruthy;
 }
 

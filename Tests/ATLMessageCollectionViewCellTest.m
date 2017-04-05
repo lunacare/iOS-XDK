@@ -82,7 +82,7 @@ extern NSString *const ATLConversationCollectionViewAccessibilityIdentifier;
 {
     ATLMessageCollectionViewCell *cell = [ATLMessageCollectionViewCell new];
     [cell presentMessage:(LYRMessage *)self.message];
-    expect(cell.avatarImageView).toNot.beNil;
+    expect(cell.avatarView).toNot.beNil;
 }
 
 - (void)testToVerifyMessageBubbleViewWithText
@@ -308,7 +308,7 @@ extern NSString *const ATLConversationCollectionViewAccessibilityIdentifier;
 
 - (void)testToVerifyAvatarImageDiameter
 {
-    [[ATLAvatarImageView appearance] setAvatarImageViewDiameter:40];
+    [[ATLAvatarView appearance] setAvatarImageViewDiameter:40];
     ATLUserMock *mockUser = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
     LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.userID];
     
@@ -319,13 +319,13 @@ extern NSString *const ATLConversationCollectionViewAccessibilityIdentifier;
     
     ATLMessageCollectionViewCell *cell = (ATLMessageCollectionViewCell *)[tester waitForCellAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]
                                                                      inCollectionViewWithAccessibilityIdentifier:ATLConversationCollectionViewAccessibilityIdentifier];
-    expect(cell.avatarImageView.avatarImageViewDiameter).to.equal(40);
+    expect(cell.avatarView.avatarViewDiameter).to.equal(40);
 }
 
 - (void)testToVerifyAvatarImageBackgroundColor
 {
     [tester waitForTimeInterval:1];
-    [[ATLAvatarImageView appearance] setImageViewBackgroundColor:[UIColor redColor]];
+    [[ATLAvatarView appearance] setImageViewBackgroundColor:[UIColor redColor]];
     ATLUserMock *mockUser = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
     LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.userID];
     
@@ -336,7 +336,7 @@ extern NSString *const ATLConversationCollectionViewAccessibilityIdentifier;
 
     ATLMessageCollectionViewCell *cell = (ATLMessageCollectionViewCell *)[tester waitForCellAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]
                                                                      inCollectionViewWithAccessibilityIdentifier:ATLConversationCollectionViewAccessibilityIdentifier];
-    expect(cell.avatarImageView.imageViewBackgroundColor).to.equal([UIColor redColor]);
+    expect(cell.avatarView.imageViewBackgroundColor).to.equal([UIColor redColor]);
 }
 
 - (void)sendMessageWithText:(NSString *)text
@@ -383,7 +383,7 @@ extern NSString *const ATLConversationCollectionViewAccessibilityIdentifier;
     [[ATLOutgoingMessageCollectionViewCell appearance] setBubbleViewColor:ATLBlueColor()];
     [[ATLOutgoingMessageCollectionViewCell appearance] setBubbleViewCornerRadius:12];
     
-    [[ATLAvatarImageView appearance] setBackgroundColor:ATLLightGrayColor()];
+    [[ATLAvatarView appearance] setBackgroundColor:ATLLightGrayColor()];
 }
 
 @end
