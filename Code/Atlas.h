@@ -73,7 +73,7 @@
 
 #import "ATLAddressBarContainerView.h"
 #import "ATLAddressBarView.h"
-#import "ATLAvatarImageView.h"
+#import "ATLAvatarView.h"
 #import "ATLConversationCollectionView.h"
 #import "ATLConversationCollectionViewFooter.h"
 #import "ATLConversationCollectionViewHeader.h"

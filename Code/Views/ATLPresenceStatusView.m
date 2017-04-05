@@ -15,7 +15,7 @@
 
 -(instancetype)initWithFrame:(CGRect)rect Color:(UIColor *)color mode:(ATLMPresenceStatusViewMode)mode
 {
-    self = [super initWithFrame:rect];
+    self = [self initWithFrame:rect];
     if (self) {
         _color = color;
         _mode = mode;
@@ -28,7 +28,9 @@
     self = [super initWithFrame:frame];
     if (self) {
         _color = [UIColor lightGrayColor];
-        _mode = ATLMPresenceStatusViewModeBordered;
+        _mode = ATLMPresenceStatusViewModeFill;
+        
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
@@ -60,21 +62,31 @@
     CGFloat radius = diameter * 0.5;
     
     CGContextSaveGState(context);
-    
+
     switch (_mode) {
         case ATLMPresenceStatusViewModeFill:
+        {
             // Fill the circle
             CGContextSetFillColorWithColor(context, _color.CGColor);
+            CGContextAddArc(context, center.x, center.y, radius, 0.0, M_PI*2, YES);
+            CGContextFillPath(context);
             break;
+        }
         case ATLMPresenceStatusViewModeBordered:
-            // Set width to 1/4 the circle width
-            CGContextSetLineWidth(context, diameter * 0.25);
+        {
+            // Set width to 1/6 the circle width
+            CGFloat borderWidth = diameter * 0.166;
+            
+            // Inset the radius
+            CGContextAddArc(context, center.x, center.y, radius - borderWidth, 0.0, M_PI*2, YES);
+
+            CGContextSetLineWidth(context, borderWidth);
             CGContextSetStrokeColorWithColor(context, _color.CGColor);
+            CGContextStrokePath(context);
             break;
+        }
     }
     
-    CGContextAddArc(context, center.x, center.y, radius, 0.0, M_2_PI, YES);
-    CGContextStrokePath(context);
 }
 
 @end

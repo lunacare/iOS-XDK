@@ -1,5 +1,5 @@
 //
-//  ATLUIAvatarImageView.h
+//  ATLUIAvatarView.h
 //  Atlas
 //
 //  Created by Kevin Coleman on 10/22/14.
@@ -18,6 +18,8 @@
 //  limitations under the License.
 //
 
+@import LayerKit;
+
 #import <UIKit/UIKit.h>
 #import "ATLAvatarItem.h"
 
@@ -25,23 +27,21 @@ NS_ASSUME_NONNULL_BEGIN
 extern CGFloat const ATLAvatarImageDiameter;
 
 /**
- @abstract The `ATLAvatarImageView` displays a circular avatar image representing a participant in a conversation. 
+ @abstract The `ATLAvatarView` displays a circular avatar image representing a participant in a conversation.
  If no image is present, the image view can optionally display initials for a participant.
  */
-@interface ATLAvatarImageView : UIImageView
+@interface ATLAvatarView : UIView
+
+/**
+ @abstract the imageView for the AvatarView
+ */
+@property (nonatomic) UIImageView *imageView;
 
 /**
  @abstract An object conforming to the `ATLAvatarItem` protocol. 
  @disucssion The object's image or initials will be used for display in the receiver.
  */
 @property (nonatomic, null_resettable) id<ATLAvatarItem> avatarItem;
-
-/**
- @abstract Sets the diameter for the avatar image view. Default is 30.
- @discussion Bounds for the image view are clipped to half of the diameter to create a circular
- image.
- */
-@property (nonatomic) CGFloat avatarImageViewDiameter UI_APPEARANCE_SELECTOR;
 
 /**
  @abstract Sets the font for the avatar initials. Default is 14pt system font.
@@ -59,9 +59,14 @@ extern CGFloat const ATLAvatarImageDiameter;
 @property (nonatomic) UIColor *imageViewBackgroundColor UI_APPEARANCE_SELECTOR;
 
 /**
- @abstract Sets whether the presence status is shown for this AvatarImageView. Default is true.
+ @abstract Sets whether the presence status is shown for this AvatarView. Default is true.
  */
 @property (nonatomic) BOOL presenceStatusEnabled;
+
+/**
+ @abstract Sets the presenceStatus for the AvatarView, which automatically styles the ATLPresenceStatusView
+ */
+@property (nonatomic) LYRIdentityPresenceStatus presenceStatus;
 
 /**
  @abstract Sets the avatar item, image view, and initial view to nil in preparation for reuse.

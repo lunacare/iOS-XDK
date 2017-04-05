@@ -23,7 +23,7 @@
 #import "ATLMessagePresenting.h"
 #import "ATLMessageBubbleView.h"
 #import "ATLConstants.h"
-#import "ATLAvatarImageView.h"
+#import "ATLAvatarView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 extern CGFloat const ATLMessageCellHorizontalMargin;

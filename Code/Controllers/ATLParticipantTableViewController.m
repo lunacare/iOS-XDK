@@ -22,7 +22,7 @@
 #import "ATLParticipantTableDataSet.h"
 #import "ATLParticipantSectionHeaderView.h"
 #import "ATLConstants.h"
-#import "ATLAvatarImageView.h"
+#import "ATLAvatarView.h"
 #import "ATLMessagingUtilities.h"
 
 static NSString *const ATLParticipantTableSectionHeaderIdentifier = @"ATLParticipantTableSectionHeaderIdentifier";

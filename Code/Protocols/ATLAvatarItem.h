@@ -21,7 +21,7 @@
 
 /**
  @abstract Objects conforming to the `ATLAvatarItem` protocol will be used to display images or
- initials in a `ATLAvatarImageView`.  The objects can return `nil` if they do not want to use the
+ initials in a `ATLAvatarView`.  The objects can return `nil` if they do not want to use the
  specific property.
  */
 @protocol ATLAvatarItem <NSObject>
