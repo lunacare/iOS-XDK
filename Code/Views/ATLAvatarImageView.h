@@ -59,6 +59,11 @@ extern CGFloat const ATLAvatarImageDiameter;
 @property (nonatomic) UIColor *imageViewBackgroundColor UI_APPEARANCE_SELECTOR;
 
 /**
+ @abstract Sets whether the presence status is shown for this AvatarImageView. Default is true.
+ */
+@property (nonatomic) BOOL presenceStatusEnabled;
+
+/**
  @abstract Sets the avatar item, image view, and initial view to nil in preparation for reuse.
  */
 - (void)resetView;
