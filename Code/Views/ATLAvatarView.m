@@ -172,14 +172,29 @@ NSString *const ATLAvatarViewAccessibilityLabel = @"ATLAvatarViewAccessibilityLa
 {
     switch (_presenceStatus) {
         case LYRIdentityPresenceStatusUnavailable:
+            _presenceStatusView.statusBackgroundColor = [UIColor whiteColor];
+            _presenceStatusView.statusColor = [UIColor grayColor];
+            _presenceStatusView.mode = ATLMPresenceStatusViewModeBordered;
             break;
         case LYRIdentityPresenceStatusAvailable:
+            _presenceStatusView.statusBackgroundColor = [UIColor whiteColor];
+            _presenceStatusView.statusColor = [UIColor greenColor];
+            _presenceStatusView.mode = ATLMPresenceStatusViewModeFill;
             break;
         case LYRIdentityPresenceStatusBusy:
+            _presenceStatusView.statusBackgroundColor = [UIColor whiteColor];
+            _presenceStatusView.statusColor = [UIColor redColor];
+            _presenceStatusView.mode = ATLMPresenceStatusViewModeFill;
             break;
         case LYRIdentityPresenceStatusAway:
+            _presenceStatusView.statusBackgroundColor = [UIColor whiteColor];
+            _presenceStatusView.statusColor = [UIColor colorWithRed:247.0/255.0 green:202.0/255.0 blue:64.0/255.0 alpha:1.0];
+            _presenceStatusView.mode = ATLMPresenceStatusViewModeFill;
             break;
         case LYRIdentityPresenceStatusInvisible:
+            _presenceStatusView.statusBackgroundColor = [UIColor whiteColor];
+            _presenceStatusView.statusColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:156.0/255.0 alpha:1.0];
+            _presenceStatusView.mode = ATLMPresenceStatusViewModeFill;
             break;
     }
 }

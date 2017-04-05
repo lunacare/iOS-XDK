@@ -16,9 +16,14 @@ typedef NS_ENUM(NSInteger, ATLMPresenceStatusViewMode) {
 @interface ATLPresenceStatusView : UIView
 
 /**
- @abstract Sets the color of the presence status fill or border. Default is [UIColor lightGray]
+ @abstract Sets the color of the presence status fill or border. Default is [UIColor lightGrayColor]
  */
-@property (nonatomic) UIColor *color;
+@property (nonatomic) UIColor *statusColor;
+
+/**
+ @abstract Sets the color of the presence status background color. Default is [UIColor whiteColor]
+ */
+@property (nonatomic) UIColor *statusBackgroundColor;
 
 /**
  @abstract Sets the mode for the ATLMPresenceStatusView. Default is ATLMPresenceStatusViewModeFill
@@ -28,6 +33,6 @@ typedef NS_ENUM(NSInteger, ATLMPresenceStatusViewMode) {
 /**
  @abstract Initialize with a color and mode
  */
--(instancetype)initWithFrame:(CGRect)rect Color:(UIColor *)color mode:(ATLMPresenceStatusViewMode)mode;
+-(instancetype)initWithFrame:(CGRect)rect statusColor:(UIColor *)statusColor mode:(ATLMPresenceStatusViewMode)mode;
 
 @end
