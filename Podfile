@@ -3,6 +3,14 @@ platform :ios, '8.0'
 
 use_frameworks!
 
+if !ENV['LAYER_USE_CORE_SDK_LOCATION'].blank? then
+  source 'git@github.com:layerhq/cocoapods-specs.git'
+  pod 'LayerKit', path: ENV['LAYER_USE_CORE_SDK_LOCATION']
+else
+  pod 'LayerKit'
+end
+
+
 target 'Programmatic' do
   pod 'Atlas', path: '.'
 end
@@ -17,7 +25,6 @@ abstract_target 'test' do
   pod 'KIF'
   pod 'Expecta'
   pod 'OCMock'
-  pod 'LayerKit'
   pod 'Atlas', path: '.'
 
   target 'ProgrammaticTests'
@@ -28,9 +35,15 @@ target 'UnitTests' do
   pod 'Expecta'
   pod 'OCMock'
   pod 'KIF'
-  pod 'LayerKit'
   pod 'Atlas', path: '.'
 end
 
-
+# If we are building LayerKit from source then we need a post install hook to handle non-modular SQLite imports
+unless ENV['LAYER_USE_CORE_SDK_LOCATION'].blank?
+  post_install do |installer|
+    installer.pods_project.build_configuration_list.build_configurations.each do |configuration|
+      configuration.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
+    end
+  end
+end
 
