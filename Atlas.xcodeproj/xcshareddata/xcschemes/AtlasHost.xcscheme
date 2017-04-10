@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0730"
+   LastUpgradeVersion = "0830"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "253C29A41C3C9D7100ED1549"
+               BlueprintIdentifier = "4DB1DFDB984A929FACAE4D76400F69D8"
                BuildableName = "Atlas.framework"
                BlueprintName = "Atlas"
-               ReferencedContainer = "container:Atlas.xcodeproj">
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -99,10 +99,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "253C29A41C3C9D7100ED1549"
+            BlueprintIdentifier = "4DB1DFDB984A929FACAE4D76400F69D8"
             BuildableName = "Atlas.framework"
             BlueprintName = "Atlas"
-            ReferencedContainer = "container:Atlas.xcodeproj">
+            ReferencedContainer = "container:Pods/Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -114,15 +114,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "253C29A41C3C9D7100ED1549"
-            BuildableName = "Atlas.framework"
-            BlueprintName = "Atlas"
-            ReferencedContainer = "container:Atlas.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
