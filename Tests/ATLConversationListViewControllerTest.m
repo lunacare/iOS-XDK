@@ -611,8 +611,8 @@ extern NSString *const ATLAvatarViewAccessibilityLabel;
     [self newConversationWithMockUser:mockUser1 lastMessageText:@"Test Message"];
     [tester waitForAnimationsToFinish];
 
-    ATLAvatarView *imageView = (ATLAvatarView *)[tester waitForViewWithAccessibilityLabel:ATLAvatarViewAccessibilityLabel];
-    expect(imageView.image).will.beTruthy;
+    ATLAvatarView *avatarView = (ATLAvatarView *)[tester waitForViewWithAccessibilityLabel:ATLAvatarViewAccessibilityLabel];
+    expect(avatarView.imageView.image).will.beTruthy;
 }
 
 - (LYRConversationMock *)newConversationWithMockUser:(ATLUserMock *)mockUser lastMessageText:(NSString *)lastMessageText

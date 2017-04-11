@@ -640,25 +640,6 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     expect(cellThree.avatarView.hidden).to.equal(NO);
 }
 
-- (void)testToVerifyCustomAvatarImageDiameter
-{
-    [[ATLAvatarView appearance] setAvatarImageViewDiameter:40];
-
-    ATLUserMock *mockUser2 = [ATLUserMock userWithMockUserName:ATLMockUserNameKevin];
-    LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser2.userID];
-    [self.conversation addParticipants:[NSSet setWithObject:mockUser2.userID] error:nil];
-    
-    LYRMessagePartMock *part = [LYRMessagePartMock messagePartWithText:@"Test"];
-    LYRMessageMock *message = [layerClient newMessageWithParts:@[part] options:nil error:nil];
-    [self.conversation sendMessage:message error:nil];
-    
-    [self setupConversationViewController];
-    [self setRootViewController:self.viewController];
-    
-    ATLAvatarView *imageView = (ATLAvatarView *)[tester waitForViewWithAccessibilityLabel:ATLAvatarViewAccessibilityLabel];
-    expect(imageView.avatarViewDiameter).to.equal(40);
-}
-
 - (void)testtoVerifyReloadingCellsDuringQueryControllerAnimationDoesNotRaise
 {
     [self setupConversationViewController];

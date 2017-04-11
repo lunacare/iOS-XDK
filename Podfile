@@ -1,15 +1,15 @@
 source 'https://github.com/CocoaPods/Specs.git'
+if !ENV['LAYER_USE_CORE_SDK_LOCATION'].blank? then
+  source ENV['LAYER_ADDITIONAL_SOURCE']
+end
+
 platform :ios, '8.0'
 
 use_frameworks!
 
 if !ENV['LAYER_USE_CORE_SDK_LOCATION'].blank? then
-  source 'git@github.com:layerhq/cocoapods-specs.git'
   pod 'LayerKit', path: ENV['LAYER_USE_CORE_SDK_LOCATION']
-else
-  pod 'LayerKit'
 end
-
 
 target 'Programmatic' do
   pod 'Atlas', path: '.'

@@ -306,22 +306,6 @@ extern NSString *const ATLConversationCollectionViewAccessibilityIdentifier;
     expect(cell.bubbleViewCornerRadius).to.equal(radius);
 }
 
-- (void)testToVerifyAvatarImageDiameter
-{
-    [[ATLAvatarView appearance] setAvatarImageViewDiameter:40];
-    ATLUserMock *mockUser = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
-    LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser.userID];
-    
-    LYRMessagePartMock *part = [LYRMessagePartMock messagePartWithText:@"test"];
-    LYRMessageMock *message = [layerClient newMessageWithParts:@[part] options:nil error:nil];
-    [tester waitForTimeInterval:0.5];
-    [self.conversation sendMessage:message error:nil];
-    
-    ATLMessageCollectionViewCell *cell = (ATLMessageCollectionViewCell *)[tester waitForCellAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]
-                                                                     inCollectionViewWithAccessibilityIdentifier:ATLConversationCollectionViewAccessibilityIdentifier];
-    expect(cell.avatarView.avatarViewDiameter).to.equal(40);
-}
-
 - (void)testToVerifyAvatarImageBackgroundColor
 {
     [tester waitForTimeInterval:1];
