@@ -90,6 +90,7 @@
 #import "ATLProgressView.h"
 #import "ATLUIImageHelper.h"
 #import "ATLPlayView.h"
+#import "ATLPresenceStatusView.h"
 
 /**
  @abstract Returns the Atlas version as a string.
