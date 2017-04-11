@@ -20,14 +20,14 @@
 #import <XCTest/XCTest.h>
 #import "ATLTestInterface.h"
 
-@interface ATLPresenceStatusViewTest : XCTestCase
-@end
-
 @interface ATLAvatarView (Tests)
 @property (nonatomic, readwrite) ATLPresenceStatusView *presenceStatusView;
 @end
 
-@implementation ATLPresenceStatusViewTest{
+@interface ATLAvatarViewTest : XCTestCase
+@end
+
+@implementation ATLAvatarViewTest {
     ATLAvatarView *_avatarView;
 }
 
@@ -76,6 +76,17 @@
     _avatarView.presenceStatus = LYRIdentityPresenceStatusAvailable;
     expect(_avatarView.presenceStatusView.statusColor).to.equal([UIColor colorWithRed:247.0/255.0 green:202.0/255.0 blue:64.0/255.0 alpha:1.0]);
     expect(_avatarView.presenceStatusView.mode).to.equal(ATLMPresenceStatusViewModeFill);
+}
+
+- (void)testPresenceStatusViewEnabled
+{
+    expect(_avatarView.presenceStatusView.isHidden).to.beFalsy();
+    
+    _avatarView.presenceStatusEnabled = NO;
+    expect(_avatarView.presenceStatusView.isHidden).to.beTruthy();
+    
+    _avatarView.presenceStatusEnabled = YES;
+    expect(_avatarView.presenceStatusView.isHidden).to.beFalsy();
 }
 
 @end
