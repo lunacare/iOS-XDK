@@ -43,7 +43,7 @@
     [super tearDown];
 }
 
-- (void)testPresenceStatusView
+- (void)testPresenceStatusViewStyling
 {
     _avatarView.presenceStatus = LYRIdentityPresenceStatusUnknown;
     expect(_avatarView.presenceStatusView.statusColor).to.equal([UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:156.0/255.0 alpha:1.0]);
