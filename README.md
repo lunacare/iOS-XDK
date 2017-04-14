@@ -268,13 +268,24 @@ Atlas takes advantage of Apple's `UIAppearance` protocol which lets you change U
 @property (nonatomic) UIColor *addressBarHighlightColor
 ```
 
-### [ATLAvatarImageView](Code/Views/ATLAvatarImageView.h)
+### [ATLAvatarView](Code/Views/ATLAvatarView.h)
 
 ```objc
+@property (nonatomic) UIImage *imageView;
 @property (nonatomic) CGFloat avatarImageViewDiameter
 @property (nonatomic) UIFont *initialsFont
 @property (nonatomic) UIColor *initialsColor
 @property (nonatomic) UIColor *imageViewBackgroundColor
+@property (nonatomic) BOOL presenceStatusEnabled;
+@property (nonatomic) LYRIdentityPresenceStatus presenceStatus;
+```
+
+### [ATLPresenceStatusView](Code/Views/ATLPresenceStatusView.h)
+
+```objc
+@property (nonatomic) UIColor *statusColor;
+@property (nonatomic) UIColor *statusBackgroundColor;
+@property (nonatomic) ATLMPresenceStatusViewMode mode;
 ```
 
 ### [ATLConversationCollectionViewHeader](Code/Views/ATLConversationCollectionViewHeader.h)
