@@ -24,6 +24,7 @@
 
 @property (nonatomic) UILabel *initialsLabel;
 @property (nonatomic) NSURLSessionDownloadTask *downloadTask;
+@property (nonatomic) NSURL *remoteImageURL;
 
 @end
 
@@ -184,6 +185,11 @@ NSString *const ATLAvatarImageViewAccessibilityLabel = @"ATLAvatarImageViewAcces
 
 - (void)updateWithImage:(UIImage *)image forRemoteImageURL:(NSURL *)remoteImageURL;
 {
+    if (self.remoteImageURL.absoluteString == remoteImageURL.absoluteString) {
+        return;
+    }
+    self.remoteImageURL = remoteImageURL;
+    
     [UIView animateWithDuration:0.2 animations:^{
         self.alpha = 0.0;
     } completion:^(BOOL finished) {
