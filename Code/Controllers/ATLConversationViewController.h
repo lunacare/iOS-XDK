@@ -110,7 +110,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract Asks the data source for an object conforming to the `ATLParticipant` protocol for a given identifier.
  @param conversationViewController The `ATLConversationViewController` requesting the object.
- @param participantForIdentifier The participant identifier.
+ @param participantForIdentity The participant identity.
  @return An object conforming to the `ATLParticipant` protocol.
  */
 - (id<ATLParticipant>)conversationViewController:(ATLConversationViewController *)conversationViewController participantForIdentity:(LYRIdentity *)identity;
