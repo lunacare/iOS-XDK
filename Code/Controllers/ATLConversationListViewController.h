@@ -92,7 +92,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return An object conforming to the `ATLAvatarItem` protocol. 
  @discussion The data provided by the object conforming to the `ATLAvatarItem` protocol will be displayed in an `LYRAvatarImageView`.
  */
-- (id<ATLAvatarItem>)conversationListViewController:(ATLConversationListViewController *)conversationListViewController avatarItemForConversation:(LYRConversation *)conversation;
+- (nullable id<ATLAvatarItem>)conversationListViewController:(ATLConversationListViewController *)conversationListViewController avatarItemForConversation:(LYRConversation *)conversation;
 
 /**
  @abstract Asks the data source for the table view cell reuse identifier for a conversation.
