@@ -41,4 +41,9 @@
  */
 @property (nonatomic, readonly, nullable) NSString *avatarInitials;
 
+/**
+ @abstract Returns the presence status information.
+ */
+@property (nonatomic, readonly, assign) LYRIdentityPresenceStatus presenceStatus;
+
 @end

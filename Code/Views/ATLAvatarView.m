@@ -90,8 +90,6 @@ NSString *const ATLAvatarViewAccessibilityLabel = @"ATLAvatarViewAccessibilityLa
     // Presence Status View
     _presenceStatusView = [[ATLPresenceStatusView alloc] init];
     _presenceStatusEnabled = true;
-    _presenceStatus = LYRIdentityPresenceStatusOffline;
-    [self updatePresenceView];
     [self addSubview:_presenceStatusView];
 }
 
@@ -125,6 +123,30 @@ NSString *const ATLAvatarViewAccessibilityLabel = @"ATLAvatarViewAccessibilityLa
         self.imageView.image = nil;
         self.initialsLabel.text = avatarItem.avatarInitials;
     }
+    switch (avatarItem.presenceStatus) {
+        case LYRIdentityPresenceStatusAvailable:
+            self.presenceStatusView.statusColor = [UIColor colorWithRed:79.0/255.0 green:191.0/255.0 blue:98.0/255.0 alpha:1.0];
+            self.presenceStatusView.mode = ATLMPresenceStatusViewModeFill;
+            break;
+        case LYRIdentityPresenceStatusBusy:
+            self.presenceStatusView.statusColor = [UIColor colorWithRed:230.0/255.0 green:68.0/255.0 blue:63.0/255.0 alpha:1.0];
+            self.presenceStatusView.mode = ATLMPresenceStatusViewModeFill;
+            break;
+        case LYRIdentityPresenceStatusAway:
+            self.presenceStatusView.statusColor = [UIColor colorWithRed:247.0/255.0 green:202.0/255.0 blue:64.0/255.0 alpha:1.0];
+            self.presenceStatusView.mode = ATLMPresenceStatusViewModeFill;
+            break;
+        case LYRIdentityPresenceStatusInvisible:
+            self.presenceStatusView.statusColor = [UIColor colorWithRed:79.0/255.0 green:191.0/255.0 blue:98.0/255.0 alpha:1.0];
+            self.presenceStatusView.mode = ATLMPresenceStatusViewModeBordered;
+            break;
+        case LYRIdentityPresenceStatusOffline:
+        default:
+            self.presenceStatusView.statusColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:156.0/255.0 alpha:1.0];
+            self.presenceStatusView.mode = ATLMPresenceStatusViewModeBordered;
+            break;
+    }
+
     _avatarItem = avatarItem;
 }
 
@@ -148,46 +170,10 @@ NSString *const ATLAvatarViewAccessibilityLabel = @"ATLAvatarViewAccessibilityLa
 
 - (void)setPresenceStatusEnabled:(BOOL)presenceStatusEnabled
 {
+    self.presenceStatusView.hidden = !presenceStatusEnabled;
     _presenceStatusEnabled = presenceStatusEnabled;
-    _presenceStatusView.hidden = !presenceStatusEnabled;
 }
 
-- (void)setPresenceStatus:(LYRIdentityPresenceStatus)presenceStatus
-{
-    if (presenceStatus == _presenceStatus) {
-        return;
-    }
-    
-    _presenceStatus = presenceStatus;
-    [self updatePresenceView];
-}
-
-- (void)updatePresenceView
-{
-    switch (_presenceStatus) {
-        case LYRIdentityPresenceStatusOffline:
-            _presenceStatusView.statusColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:156.0/255.0 alpha:1.0];
-            _presenceStatusView.mode = ATLMPresenceStatusViewModeBordered;
-            break;
-        case LYRIdentityPresenceStatusAvailable:
-            _presenceStatusView.statusColor = [UIColor colorWithRed:79.0/255.0 green:191.0/255.0 blue:98.0/255.0 alpha:1.0];
-            _presenceStatusView.mode = ATLMPresenceStatusViewModeFill;
-            break;
-        case LYRIdentityPresenceStatusBusy:
-            _presenceStatusView.statusColor = [UIColor colorWithRed:230.0/255.0 green:68.0/255.0 blue:63.0/255.0 alpha:1.0];
-            _presenceStatusView.mode = ATLMPresenceStatusViewModeFill;
-            break;
-        case LYRIdentityPresenceStatusAway:
-            _presenceStatusView.statusColor = [UIColor colorWithRed:247.0/255.0 green:202.0/255.0 blue:64.0/255.0 alpha:1.0];
-            _presenceStatusView.mode = ATLMPresenceStatusViewModeFill;
-            break;
-        case LYRIdentityPresenceStatusInvisible:
-            _presenceStatusView.statusColor = [UIColor colorWithRed:79.0/255.0 green:191.0/255.0 blue:98.0/255.0 alpha:1.0];
-            _presenceStatusView.mode = ATLMPresenceStatusViewModeBordered;
-            break;
-    }
-}
-         
 - (void)loadAvatarImageWithURL:(NSURL *)imageURL
 {
     if (![imageURL isKindOfClass:[NSURL class]] || imageURL.absoluteString.length == 0) {

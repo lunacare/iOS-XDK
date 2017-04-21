@@ -64,11 +64,6 @@ extern CGFloat const ATLAvatarImageDiameter;
 @property (nonatomic) BOOL presenceStatusEnabled;
 
 /**
- @abstract Sets the presenceStatus for the AvatarView, which automatically styles the ATLPresenceStatusView
- */
-@property (nonatomic) LYRIdentityPresenceStatus presenceStatus;
-
-/**
  @abstract Sets the avatar item, image view, and initial view to nil in preparation for reuse.
  */
 - (void)resetView;
