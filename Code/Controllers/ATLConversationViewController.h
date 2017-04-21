@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
  @discussion Applications should only return a value if the `message` object requires a custom cell class. If `nil` is returned, the collection view will default
  to internal height calculations.
  */
-- (nullable CGFloat)conversationViewController:(ATLConversationViewController *)viewController heightForMessage:(LYRMessage *)message withCellWidth:(CGFloat)cellWidth;
+- (CGFloat)conversationViewController:(ATLConversationViewController *)viewController heightForMessage:(LYRMessage *)message withCellWidth:(CGFloat)cellWidth;
 
 /**
  @abstract Informs the delegate of a cell being configured for the specified message.
