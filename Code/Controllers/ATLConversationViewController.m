@@ -483,9 +483,14 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     header.message = message;
     if ([self shouldDisplayDateLabelForSection:indexPath.section]) {
         [header updateWithAttributedStringForDate:[self attributedStringForMessageDate:message]];
+    } else {
+        [header updateWithAttributedStringForDate:[[NSAttributedString alloc] initWithString:@"" attributes:nil]];
     }
+    
     if ([self shouldDisplaySenderLabelForSection:indexPath.section]) {
         [header updateWithParticipantName:[self participantNameForMessage:message]];
+    } else {
+        [header updateWithAttributedStringForDate:[[NSAttributedString alloc] initWithString:@"" attributes:nil]];
     }
 }
 
