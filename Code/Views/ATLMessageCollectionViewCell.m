@@ -24,7 +24,7 @@
 #import "ATLIncomingMessageCollectionViewCell.h"
 #import "ATLOutgoingMessageCollectionViewCell.h"
 
-@import LayerKit;
+#import <LayerKit/LayerKit.h>
 
 
 NSString *const ATLGIFAccessibilityLabel = @"Message: GIF";

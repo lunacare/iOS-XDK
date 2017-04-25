@@ -11,7 +11,7 @@
 #import "ATLAvatarImageView.h"
 #import "ATLMessagePresenting.h"
 
-@import LayerKit;
+#import <LayerKit/LayerKit.h>
 
 typedef NS_ENUM(NSInteger, ATLCellType) {
     ATLOutgoingCellType,
