@@ -117,7 +117,7 @@ static CGFloat const ATLChevronIconViewRightPadding = 14.0f;
     // Initialize Avatar Image
     _conversationImageView = [[ATLAvatarView alloc] init];
     _conversationImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    _conversationImageView.layer.masksToBounds = YES;
+    _conversationImageView.imageView.layer.masksToBounds = YES;
     _conversationImageView.hidden = YES;
     [self.contentView addSubview:_conversationImageView];
     
