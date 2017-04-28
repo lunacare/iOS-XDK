@@ -1,15 +1,6 @@
 PODS:
-  - Atlas (1.0.32):
-    - LayerKit (>= 0.25.0)
-  - CocoaLumberjack (2.2.0):
-    - CocoaLumberjack/Default (= 2.2.0)
-    - CocoaLumberjack/Extensions (= 2.2.0)
-  - CocoaLumberjack/Core (2.2.0)
-  - CocoaLumberjack/Default (2.2.0):
-    - CocoaLumberjack/Core
-  - CocoaLumberjack/Extensions (2.2.0):
-    - CocoaLumberjack/Default
-  - CocoaSPDY (20151203203757026)
+  - Atlas (1.0.33):
+    - LayerKit (>= 0.25.2)
   - Expecta (1.0.5)
   - FMDB/standard (2.5-20151203150449028)
   - FMDBMigrationManager/System (1.4.1):
@@ -75,13 +66,8 @@ CHECKOUT OPTIONS:
     :git: https://github.com/layerhq/LYRCountDownLatch.git
 
 SPEC CHECKSUMS:
-  Atlas: a4052ee9f8eb0f044b0d03ba21c0300742a8332b
-  CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
-  CocoaSPDY: 0b06986c8eed0240ee1c3893415675106d3a44cf
+  Atlas: aa7bab3d495c6970e4545da9c1ed947a666c7ac4
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
-  FMDB: d635067c2ae14f3e1884d31d1ecaad2d2f2d9399
-  FMDBMigrationManager: d52007f328ea0665e8985ca8a33500707aef084f
-  GCNetworkReachability: 2a7dd53d362220326b3e38df68c91b3ef84418d1
   KIF: 082eb65279e51c3092923802849eb796a04982ab
   KIFViewControllerActions: 923795dc4bd4ca5657841ce7455ce67447693861
   layer-client-messaging-schema: a04d387d1dcbb026628110e926b40851817e0c25

@@ -19,7 +19,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@import LayerKit;
+#import <LayerKit/LayerKit.h>
 #import "ATLConversationTableViewCell.h"
 #import "ATLAvatarItem.h"
 #import "ATLParticipant.h"
@@ -92,7 +92,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return An object conforming to the `ATLAvatarItem` protocol. 
  @discussion The data provided by the object conforming to the `ATLAvatarItem` protocol will be displayed in an `ATLAvatarView`.
  */
-- (id<ATLAvatarItem>)conversationListViewController:(ATLConversationListViewController *)conversationListViewController avatarItemForConversation:(LYRConversation *)conversation;
+- (nullable id<ATLAvatarItem>)conversationListViewController:(ATLConversationListViewController *)conversationListViewController avatarItemForConversation:(LYRConversation *)conversation;
 
 /**
  @abstract Asks the data source for the table view cell reuse identifier for a conversation.
@@ -102,7 +102,7 @@ NS_ASSUME_NONNULL_BEGIN
  The cell must be given a reuse identifier in the UIStoryboard and that string needs to be passed into the ATLConversationListViewController so it can properly dequeue a
  reuseable cell. If 'nil' is returned, the table view will default to internal values for reuse identifiers.
  */
-- (NSString *)reuseIdentifierForConversationListViewController:(ATLConversationListViewController *)conversationListViewController;
+- (nullable NSString *)reuseIdentifierForConversationListViewController:(ATLConversationListViewController *)conversationListViewController;
 
 /**
  @abstract Asks the data source for a string to display on the delete button for a given deletion mode.

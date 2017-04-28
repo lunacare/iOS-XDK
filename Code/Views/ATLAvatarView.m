@@ -26,6 +26,7 @@
 @property (nonatomic) UILabel *initialsLabel;
 @property (nonatomic) ATLPresenceStatusView *presenceStatusView;
 @property (nonatomic) NSURLSessionDownloadTask *downloadTask;
+@property (nonatomic) NSURL *remoteImageURL;
 
 @end
 
@@ -113,6 +114,8 @@ NSString *const ATLAvatarViewAccessibilityLabel = @"ATLAvatarViewAccessibilityLa
 
 - (void)setAvatarItem:(id<ATLAvatarItem>)avatarItem
 {
+    self.imageView.image = nil;
+    
     if ([avatarItem avatarImageURL]) {
         self.initialsLabel.text = nil;
         [self loadAvatarImageWithURL:[avatarItem avatarImageURL]];
@@ -121,6 +124,9 @@ NSString *const ATLAvatarViewAccessibilityLabel = @"ATLAvatarViewAccessibilityLa
         self.imageView.image = avatarItem.avatarImage;
     } else if (avatarItem.avatarInitials) {
         self.imageView.image = nil;
+    }
+    
+    if (self.imageView.image == nil && avatarItem.avatarInitials) {
         self.initialsLabel.text = avatarItem.avatarInitials;
     }
     switch (avatarItem.presenceStatus) {
@@ -211,10 +217,16 @@ NSString *const ATLAvatarViewAccessibilityLabel = @"ATLAvatarViewAccessibilityLa
 
 - (void)updateWithImage:(UIImage *)image forRemoteImageURL:(NSURL *)remoteImageURL;
 {
+    if (self.remoteImageURL.absoluteString == remoteImageURL.absoluteString) {
+        return;
+    }
+    self.remoteImageURL = remoteImageURL;
+    
     [UIView animateWithDuration:0.2 animations:^{
         self.alpha = 0.0;
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.5 animations:^{
+            self.initialsLabel.text = nil;
             self.imageView.image = image;
             self.alpha = 1.0;
         }];
