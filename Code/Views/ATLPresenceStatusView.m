@@ -3,7 +3,7 @@
 //  Atlas
 //
 //  Created by JP McGlone on 4/5/17.
-//  Copyright (c) 2015 Layer, Inc. All rights reserved.
+//  Copyright (c) 2017 Layer, Inc. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
