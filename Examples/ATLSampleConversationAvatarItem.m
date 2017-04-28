@@ -21,6 +21,8 @@
 
 @implementation ATLSampleConversationAvatarItem 
 
+@synthesize presenceStatus;
+
 - (UIImage *)avatarImage
 {
     return nil;

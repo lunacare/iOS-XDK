@@ -33,7 +33,7 @@ NSString *const ATLMockUserIDAmar = @"5";
 
 @implementation ATLUserMock
 
-- (instancetype)initWithFirstName:(NSString *)firstName lastName:(NSString *)lastName userID:(NSString *)userID
+- (instancetype)initWithFirstName:(NSString *)firstName lastName:(NSString *)lastName userID:(NSString *)userID presenceStatus:(LYRIdentityPresenceStatus)presenceStatus
 {
     self = [super init];
     if (self) {
@@ -42,30 +42,36 @@ NSString *const ATLMockUserIDAmar = @"5";
         _userID = userID;
         _displayName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
         _avatarImageURL = [NSURL URLWithString:@"http://lorempixel.com/400/200/"];
+        _presenceStatus = presenceStatus;
     }
     return self;
 }
 
 + (instancetype)userWithMockUserName:(ATLMockUserName)mockUserName
 {
+    return [self userWithMockUserName:mockUserName presenceStatus:LYRIdentityPresenceStatusAvailable];
+}
+
++ (instancetype)userWithMockUserName:(ATLMockUserName)mockUserName presenceStatus:(LYRIdentityPresenceStatus)presenceStatus
+{
     switch (mockUserName) {
         case ATLMockUserNameBlake:
-            return [[ATLUserMock alloc] initWithFirstName:@"Blake" lastName:@"Watter" userID:ATLMockUserIDBlake];
+            return [[ATLUserMock alloc] initWithFirstName:@"Blake" lastName:@"Watter" userID:ATLMockUserIDBlake presenceStatus:presenceStatus];
             break;
         case ATLMockUserNameKlemen:
-            return [[ATLUserMock alloc] initWithFirstName:@"Klemen" lastName:@"Verdnik" userID:ATLMockUserIDKlemen];
+            return [[ATLUserMock alloc] initWithFirstName:@"Klemen" lastName:@"Verdnik" userID:ATLMockUserIDKlemen presenceStatus:presenceStatus];
             break;
         case ATLMockUserNameKevin:
-            return [[ATLUserMock alloc] initWithFirstName:@"Kevin" lastName:@"Coleman" userID:ATLMockUserIDKevin];
+            return [[ATLUserMock alloc] initWithFirstName:@"Kevin" lastName:@"Coleman" userID:ATLMockUserIDKevin presenceStatus:presenceStatus];
             break;
         case ATLMockUserNameSteven:
-            return [[ATLUserMock alloc] initWithFirstName:@"Steven" lastName:@"Jones" userID:ATLMockUserIDSteven];
+            return [[ATLUserMock alloc] initWithFirstName:@"Steven" lastName:@"Jones" userID:ATLMockUserIDSteven presenceStatus:presenceStatus];
             break;
         case ATLMockUserNameVivek:
-            return [[ATLUserMock alloc] initWithFirstName:@"Vivek" lastName:@"Trehan" userID:ATLMockUserIDVivek];
+            return [[ATLUserMock alloc] initWithFirstName:@"Vivek" lastName:@"Trehan" userID:ATLMockUserIDVivek presenceStatus:presenceStatus];
             break;
         case ATLMockUserNameAmar:
-            return [[ATLUserMock alloc] initWithFirstName:@"Amar" lastName:@"Srivisan" userID:ATLMockUserIDAmar];
+            return [[ATLUserMock alloc] initWithFirstName:@"Amar" lastName:@"Srivisan" userID:ATLMockUserIDAmar presenceStatus:presenceStatus];
             break;
         default:
             break;

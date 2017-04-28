@@ -45,36 +45,29 @@
 
 - (void)testPresenceStatusViewStyling
 {
-    _avatarView.presenceStatus = LYRIdentityPresenceStatusUnknown;
+    // Offline
+    _avatarView.avatarItem = [ATLUserMock userWithMockUserName:ATLMockUserNameAmar presenceStatus:LYRIdentityPresenceStatusOffline];
     expect(_avatarView.presenceStatusView.statusColor).to.equal([UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:156.0/255.0 alpha:1.0]);
     expect(_avatarView.presenceStatusView.mode).to.equal(ATLMPresenceStatusViewModeBordered);
 
-    _avatarView.presenceStatus = LYRIdentityPresenceStatusOffline;
-    expect(_avatarView.presenceStatusView.statusColor).to.equal([UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:156.0/255.0 alpha:1.0]);
-    expect(_avatarView.presenceStatusView.mode).to.equal(ATLMPresenceStatusViewModeBordered);
-
-    _avatarView.presenceStatus = LYRIdentityPresenceStatusUnset;
-    expect(_avatarView.presenceStatusView.statusColor).to.equal([UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:156.0/255.0 alpha:1.0]);
-    expect(_avatarView.presenceStatusView.mode).to.equal(ATLMPresenceStatusViewModeBordered);
-
-    _avatarView.presenceStatus = LYRIdentityPresenceStatusIdle;
-    expect(_avatarView.presenceStatusView.statusColor).to.equal([UIColor colorWithRed:247.0/255.0 green:202.0/255.0 blue:64.0/255.0 alpha:1.0]);
-    expect(_avatarView.presenceStatusView.mode).to.equal(ATLMPresenceStatusViewModeBordered);
-
-    _avatarView.presenceStatus = LYRIdentityPresenceStatusInvisible;
+    // Invisible
+    _avatarView.avatarItem = [ATLUserMock userWithMockUserName:ATLMockUserNameBlake presenceStatus:LYRIdentityPresenceStatusInvisible];
     expect(_avatarView.presenceStatusView.statusColor).to.equal([UIColor colorWithRed:79.0/255.0 green:191.0/255.0 blue:98.0/255.0 alpha:1.0]);
     expect(_avatarView.presenceStatusView.mode).to.equal(ATLMPresenceStatusViewModeBordered);
+    
+    // Available
+    _avatarView.avatarItem = [ATLUserMock userWithMockUserName:ATLMockUserNameKevin presenceStatus:LYRIdentityPresenceStatusAvailable];
+    expect(_avatarView.presenceStatusView.statusColor).to.equal([UIColor colorWithRed:79.0/255.0 green:191.0/255.0 blue:98.0/255.0 alpha:1.0]);
+    expect(_avatarView.presenceStatusView.mode).to.equal(ATLMPresenceStatusViewModeFill);
 
-    _avatarView.presenceStatus = LYRIdentityPresenceStatusAway;
+    // Away
+    _avatarView.avatarItem = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen presenceStatus:LYRIdentityPresenceStatusAway];
     expect(_avatarView.presenceStatusView.statusColor).to.equal([UIColor colorWithRed:247.0/255.0 green:202.0/255.0 blue:64.0/255.0 alpha:1.0]);
     expect(_avatarView.presenceStatusView.mode).to.equal(ATLMPresenceStatusViewModeFill);
 
-    _avatarView.presenceStatus = LYRIdentityPresenceStatusBusy;
+    // Busy
+    _avatarView.avatarItem = [ATLUserMock userWithMockUserName:ATLMockUserNameSteven presenceStatus:LYRIdentityPresenceStatusBusy];
     expect(_avatarView.presenceStatusView.statusColor).to.equal([UIColor colorWithRed:230.0/255.0 green:68.0/255.0 blue:63.0/255.0 alpha:1.0]);
-    expect(_avatarView.presenceStatusView.mode).to.equal(ATLMPresenceStatusViewModeFill);
-
-    _avatarView.presenceStatus = LYRIdentityPresenceStatusAvailable;
-    expect(_avatarView.presenceStatusView.statusColor).to.equal([UIColor colorWithRed:247.0/255.0 green:202.0/255.0 blue:64.0/255.0 alpha:1.0]);
     expect(_avatarView.presenceStatusView.mode).to.equal(ATLMPresenceStatusViewModeFill);
 }
 
