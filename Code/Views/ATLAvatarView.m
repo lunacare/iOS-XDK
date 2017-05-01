@@ -238,9 +238,9 @@ NSString *const ATLAvatarViewAccessibilityLabel = @"ATLAvatarViewAccessibilityLa
     [super layoutSubviews];
     
     // Image View
-    self.imageView.frame = self.bounds;
+    self.imageView.frame = CGRectMake(CGRectGetMinX(self.bounds), CGRectGetMinY(self.bounds), CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
     
-    CGFloat avatarViewDiamater = MIN(self.imageView.bounds.size.width, self.imageView.bounds.size.height);
+    CGFloat avatarViewDiamater = MIN(CGRectGetWidth(self.imageView.bounds), CGRectGetHeight(self.imageView.bounds));
     self.imageView.layer.cornerRadius = avatarViewDiamater * 0.5;
 
     // Initials Label

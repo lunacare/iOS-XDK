@@ -23,6 +23,9 @@
 
 @implementation ATLPresenceStatusView
 
+CGFloat const ATLMStartAngle = 0.0;
+CGFloat const ATLMEndAngle = M_PI*2;
+
 # pragma mark - Initialize
 
 -(instancetype)initWithFrame:(CGRect)rect statusColor:(UIColor *)statusColor mode:(ATLMPresenceStatusViewMode)mode
@@ -75,34 +78,33 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
 
-    CGPoint center = CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 0.5);
+    CGPoint center = CGPointMake(CGRectGetWidth(self.bounds) * 0.5, CGRectGetHeight(self.bounds) * 0.5);
     
     // We are drawing a circle to fit the bounds, so we need the smallest side
-    CGFloat diameter = MIN(self.bounds.size.width, self.bounds.size.height);
+    CGFloat diameter = MIN(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
     CGFloat radius = diameter * 0.5;
     
     // Draw background first
     CGContextSetFillColorWithColor(context, _statusBackgroundColor.CGColor);
-    CGContextAddArc(context, center.x, center.y, radius, 0.0, M_PI*2, YES);
+    CGContextAddArc(context, center.x, center.y, radius, ATLMStartAngle, ATLMEndAngle, YES);
     CGContextFillPath(context);
     CGContextSaveGState(context);
 
-    // Set width to 1/6 the circle width
-    CGFloat borderWidth = diameter * 0.166;
+    CGFloat borderWidth = diameter / 6.0;
     
     switch (_mode) {
         case ATLMPresenceStatusViewModeFill:
         {
             // Fill the circle
             CGContextSetFillColorWithColor(context, _statusColor.CGColor);
-            CGContextAddArc(context, center.x, center.y, radius - (borderWidth * 0.5), 0.0, M_PI*2, YES);
+            CGContextAddArc(context, center.x, center.y, radius - (borderWidth * 0.5), ATLMStartAngle, ATLMEndAngle, YES);
             CGContextFillPath(context);
             break;
         }
         case ATLMPresenceStatusViewModeBordered:
         {
             // Inset the radius
-            CGContextAddArc(context, center.x, center.y, radius - borderWidth, 0.0, M_PI*2, YES);
+            CGContextAddArc(context, center.x, center.y, radius - borderWidth, ATLMStartAngle, ATLMEndAngle, YES);
 
             CGContextSetLineWidth(context, borderWidth);
             CGContextSetStrokeColorWithColor(context, _statusColor.CGColor);
