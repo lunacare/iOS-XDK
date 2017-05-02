@@ -18,8 +18,7 @@
 //  limitations under the License.
 
 #import "ATLPresenceStatusView.h"
-
-@import CoreGraphics;
+#import <CoreGraphics/CoreGraphics.h>
 
 @implementation ATLPresenceStatusView
 

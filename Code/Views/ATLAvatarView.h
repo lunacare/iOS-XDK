@@ -18,8 +18,7 @@
 //  limitations under the License.
 //
 
-@import LayerKit;
-
+#import <LayerKit/LayerKit.h>
 #import <UIKit/UIKit.h>
 #import "ATLAvatarItem.h"
 
