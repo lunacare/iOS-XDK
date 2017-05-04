@@ -43,6 +43,13 @@ extern CGFloat const ATLAvatarImageDiameter;
 @property (nonatomic, null_resettable) id<ATLAvatarItem> avatarItem;
 
 /**
+ @abstract Sets the diameter for the avatar image view. Default is 30.
+ @discussion Bounds for the image view are clipped to half of the diameter to create a circular
+ image.
+ */
+@property (nonatomic) CGFloat avatarImageViewDiameter UI_APPEARANCE_SELECTOR;
+
+/**
  @abstract Sets the font for the avatar initials. Default is 14pt system font.
  */
 @property (nonatomic) UIFont *initialsFont UI_APPEARANCE_SELECTOR;

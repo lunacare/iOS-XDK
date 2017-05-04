@@ -68,6 +68,7 @@ NSString *const ATLAvatarViewAccessibilityLabel = @"ATLAvatarViewAccessibilityLa
     // Default UI Appearance
     _initialsFont = [UIFont systemFontOfSize:14];
     _initialsColor = [UIColor blackColor];
+    _avatarImageViewDiameter = 30;
 
     self.contentMode = UIViewContentModeScaleAspectFill;
     self.accessibilityLabel = ATLAvatarViewAccessibilityLabel;
@@ -96,8 +97,7 @@ NSString *const ATLAvatarViewAccessibilityLabel = @"ATLAvatarViewAccessibilityLa
 
 - (CGSize)intrinsicContentSize
 {
-    CGFloat avatarViewDiameter = MIN(CGRectGetWidth(self.imageView.bounds), CGRectGetHeight(self.imageView.bounds));
-    return CGSizeMake(avatarViewDiameter, avatarViewDiameter);
+    return CGSizeMake(self.avatarImageViewDiameter, self.avatarImageViewDiameter);
 }
 
 - (void)resetView
