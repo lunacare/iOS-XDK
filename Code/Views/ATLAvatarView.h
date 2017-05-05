@@ -1,5 +1,5 @@
 //
-//  ATLUIAvatarImageView.h
+//  ATLAvatarView.h
 //  Atlas
 //
 //  Created by Kevin Coleman on 10/22/14.
@@ -18,6 +18,7 @@
 //  limitations under the License.
 //
 
+#import <LayerKit/LayerKit.h>
 #import <UIKit/UIKit.h>
 #import "ATLAvatarItem.h"
 
@@ -25,10 +26,15 @@ NS_ASSUME_NONNULL_BEGIN
 extern CGFloat const ATLAvatarImageDiameter;
 
 /**
- @abstract The `ATLAvatarImageView` displays a circular avatar image representing a participant in a conversation. 
+ @abstract The `ATLAvatarView` displays a circular avatar image representing a participant in a conversation.
  If no image is present, the image view can optionally display initials for a participant.
  */
-@interface ATLAvatarImageView : UIImageView
+@interface ATLAvatarView : UIView
+
+/**
+ @abstract the imageView for the AvatarView
+ */
+@property (nonatomic) UIImageView *imageView;
 
 /**
  @abstract An object conforming to the `ATLAvatarItem` protocol. 
@@ -57,6 +63,11 @@ extern CGFloat const ATLAvatarImageDiameter;
  @abstract Sets the background color for the avatar image view. Default is light gray.
  */
 @property (nonatomic) UIColor *imageViewBackgroundColor UI_APPEARANCE_SELECTOR;
+
+/**
+ @abstract Sets whether the presence status is shown for this AvatarView. Default is true.
+ */
+@property (nonatomic) BOOL presenceStatusEnabled;
 
 /**
  @abstract Sets the avatar item, image view, and initial view to nil in preparation for reuse.

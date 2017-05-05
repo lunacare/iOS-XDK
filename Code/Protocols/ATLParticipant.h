@@ -19,6 +19,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <LayerKit/LayerKit.h>
 #import "ATLAvatarItem.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -48,6 +49,11 @@ NS_ASSUME_NONNULL_BEGIN
  @discussion This identifier is issued by the Layer identity provider backend.
  */
 @property (nonatomic, readonly) NSString *userID;
+
+/**
+ @abstract The presence status of the participant.
+ */
+@property (nonatomic, readonly) LYRIdentityPresenceStatus presenceStatus;
 
 @end
 NS_ASSUME_NONNULL_END

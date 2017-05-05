@@ -90,7 +90,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param conversationListViewController The `LYRConversationListViewController` in which the item's data will appear.
  @param conversation The `LYRConversation` object.
  @return An object conforming to the `ATLAvatarItem` protocol. 
- @discussion The data provided by the object conforming to the `ATLAvatarItem` protocol will be displayed in an `LYRAvatarImageView`.
+ @discussion The data provided by the object conforming to the `ATLAvatarItem` protocol will be displayed in an `ATLAvatarView`.
  */
 - (nullable id<ATLAvatarItem>)conversationListViewController:(ATLConversationListViewController *)conversationListViewController avatarItemForConversation:(LYRConversation *)conversation;
 

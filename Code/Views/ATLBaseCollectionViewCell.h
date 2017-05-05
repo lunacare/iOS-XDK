@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ATLMessageBubbleView.h"
-#import "ATLAvatarImageView.h"
+#import "ATLAvatarView.h"
 #import "ATLMessagePresenting.h"
 
 #import <LayerKit/LayerKit.h>
@@ -45,7 +45,7 @@ extern CGFloat const ATLMessageCellHorizontalMargin;
 /**
  @abstract The optional avatar image view representing a user.
  */
-@property (nonatomic) ATLAvatarImageView *avatarImageView;
+@property (nonatomic) ATLAvatarView *avatarView;
 
 /**
  @abstract The `LYRMessage` object passed in `ATLMessagePresenting` protocol `presentMessage:`.

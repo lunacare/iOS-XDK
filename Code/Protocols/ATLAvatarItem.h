@@ -17,11 +17,13 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
+
+#import <LayerKit/LayerKit.h>
 #import <UIKit/UIKit.h>
 
 /**
  @abstract Objects conforming to the `ATLAvatarItem` protocol will be used to display images or
- initials in a `ATLAvatarImageView`.  The objects can return `nil` if they do not want to use the
+ initials in a `ATLAvatarView`.  The objects can return `nil` if they do not want to use the
  specific property.
  */
 @protocol ATLAvatarItem <NSObject>
@@ -40,5 +42,10 @@
  @abstract Returns the avatar initials of the receiver.
  */
 @property (nonatomic, readonly, nullable) NSString *avatarInitials;
+
+/**
+ @abstract Returns the presence status information.
+ */
+@property (nonatomic, readonly, assign) LYRIdentityPresenceStatus presenceStatus;
 
 @end

@@ -20,12 +20,12 @@
 
 #import "ATLParticipantTableViewCell.h"
 #import "ATLConstants.h"
-#import "ATLAvatarImageView.h"
+#import "ATLAvatarView.h"
 
 @interface ATLParticipantTableViewCell ()
 
 @property (nonatomic) UILabel *nameLabel;
-@property (nonatomic) ATLAvatarImageView *avatarImageView;
+@property (nonatomic) ATLAvatarView *avatarView;
 @property (nonatomic) id<ATLParticipant> participant;
 @property (nonatomic) ATLParticipantPickerSortType sortType;
 
@@ -66,36 +66,37 @@
     self.nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:self.nameLabel];
     
-    self.avatarImageView = [[ATLAvatarImageView alloc] init];
-    self.avatarImageView.backgroundColor = ATLLightGrayColor();
-    self.avatarImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addSubview:self.avatarImageView];
+    self.avatarView = [[ATLAvatarView alloc] init];
+    self.avatarView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.avatarView.imageView.layer.masksToBounds = YES;
+    self.avatarView.hidden = YES;
+    [self.contentView addSubview:self.avatarView];
     
     [self configureNameLabelConstraints];
-    [self configureAvatarImageViewConstraints];
+    [self configureAvatarViewLayoutConstraints];
 }
 
 - (void)prepareForReuse
 {
     [super prepareForReuse];
     self.accessoryView = nil;
-    [self.avatarImageView resetView];
+    [self.avatarView resetView];
 }
 
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
 {
     // We don't want the default behavior that changes image view backgrounds to transparent while highlighted.
-    UIColor *preservedAvatarBackgroundColor = self.avatarImageView.backgroundColor;
+    UIColor *preservedAvatarBackgroundColor = self.avatarView.imageView.backgroundColor;
     [super setHighlighted:highlighted animated:animated];
-    self.avatarImageView.backgroundColor = preservedAvatarBackgroundColor;
+    self.avatarView.imageView.backgroundColor = preservedAvatarBackgroundColor;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     // We don't want the default behavior that changes image view backgrounds to transparent while selected.
-    UIColor *preservedAvatarBackgroundColor = self.avatarImageView.backgroundColor;
+    UIColor *preservedAvatarBackgroundColor = self.avatarView.imageView.backgroundColor;
     [super setSelected:selected animated:animated];
-    self.avatarImageView.backgroundColor = preservedAvatarBackgroundColor;
+    self.avatarView.imageView.backgroundColor = preservedAvatarBackgroundColor;
 }
 
 - (void)presentParticipant:(id<ATLParticipant>)participant withSortType:(ATLParticipantPickerSortType)sortType shouldShowAvatarItem:(BOOL)shouldShowAvatarItem
@@ -106,13 +107,13 @@
     if (shouldShowAvatarItem) {
         [self removeConstraint:self.nameWithoutAvatarLeftConstraint];
         [self addConstraint:self.nameWithAvatarLeftConstraint];
-        self.avatarImageView.hidden = NO;
+        self.avatarView.hidden = NO;
     } else {
         [self removeConstraint:self.nameWithAvatarLeftConstraint];
         [self addConstraint:self.nameWithoutAvatarLeftConstraint];
-        self.avatarImageView.hidden = YES;
+        self.avatarView.hidden = YES;
     }
-    self.avatarImageView.avatarItem = self.participant;
+    self.avatarView.avatarItem = self.participant;
     [self configureNameLabel];
     self.accessibilityLabel = participant.displayName;
 }
@@ -169,14 +170,16 @@
     
     // NOTE: We're not using NSLayoutRelationLessThanOrEqual here because doing so would cause iOS 8.0 to not update the label's intrinsic content size constraints when the label's value is changed / the cell is reused.
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.nameLabel attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0 constant:-10]];
-    self.nameWithAvatarLeftConstraint = [NSLayoutConstraint constraintWithItem:self.nameLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.avatarImageView attribute:NSLayoutAttributeRight multiplier:1.0 constant:15];
+    self.nameWithAvatarLeftConstraint = [NSLayoutConstraint constraintWithItem:self.nameLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.avatarView attribute:NSLayoutAttributeRight multiplier:1.0 constant:15];
     self.nameWithoutAvatarLeftConstraint = [NSLayoutConstraint constraintWithItem:self.nameLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:15];
 }
 
-- (void)configureAvatarImageViewConstraints
+- (void)configureAvatarViewLayoutConstraints
 {
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.avatarImageView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:15]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.avatarImageView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.avatarView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeHeight multiplier:0.6 constant:0]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.avatarView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.avatarView attribute:NSLayoutAttributeWidth multiplier:1 constant:0]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.avatarView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:10]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.avatarView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
 }
 
 @end

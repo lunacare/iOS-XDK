@@ -1,5 +1,16 @@
 # Atlas Changelog
 
+## 1.1.0
+
+Introducing the presence feature, which allows you to display a user's presence status as a color-coded icon next to their avatar image. [APPS-2740]
+
+### Public API Changes
+
+* Added a new `ATLPresenceStatusView` object, which renders a color-coded circle to represent a user's presence status. Added this to the `ATLAvatarItem`.
+* `ATLAvatarImageView` was renamed to `ATLAvatarView`.
+* Added the `presenceStatusEnabled` property to `ATLAvatarView`, which sets whether the presence status is shown. Default is `YES`.
+* Added a read-only accessor `presenceStatus` to the `ATLAvatarItem`.
+
 ## 1.0.33
 
 ### Public API Changes

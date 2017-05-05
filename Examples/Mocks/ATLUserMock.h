@@ -45,12 +45,20 @@ typedef NS_ENUM(NSUInteger, ATLMockUserName){
 @property (nonatomic) UIImage *avatarImage;
 @property (nonatomic) NSURL *avatarImageURL;
 @property (nonatomic) NSString *userID;
+@property (nonatomic, readonly) LYRIdentityPresenceStatus presenceStatus;
 
 /**
  @abstract Creates and returns an instance of `ATLUserMock` for the given `ATLMockUserName` enumeration.
  @param mockUserName An `ATLMockUserName` enumerated value.
  */
 + (instancetype)userWithMockUserName:(ATLMockUserName)mockUserName;
+
+/**
+ @abstract Creates and returns an instance of `ATLUserMock` for the given `ATLMockUserName` enumeration.
+ @param mockUserName An `ATLMockUserName` enumerated value.
+ @param presenceStatus A `LYRIdentityPresenceStatus` enumerated value.
+ */
++ (instancetype)userWithMockUserName:(ATLMockUserName)mockUserName presenceStatus:(LYRIdentityPresenceStatus)presenceStatus;
 
 /**
  @abstract Creates and retruns an instance of `ATLUserMock` for a given identifier. 

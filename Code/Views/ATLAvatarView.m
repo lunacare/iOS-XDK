@@ -1,5 +1,5 @@
 //
-//  ATLUIAvatarImageView.m
+//  ATLAvatarView.m
 //  Atlas
 //
 //  Created by Kevin Coleman on 10/22/14.
@@ -17,20 +17,22 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
-#import "ATLAvatarImageView.h"
+#import "ATLAvatarView.h"
 #import "ATLConstants.h"
+#import "ATLPresenceStatusView.h"
 
-@interface ATLAvatarImageView ()
+@interface ATLAvatarView ()
 
 @property (nonatomic) UILabel *initialsLabel;
+@property (nonatomic) ATLPresenceStatusView *presenceStatusView;
 @property (nonatomic) NSURLSessionDownloadTask *downloadTask;
 @property (nonatomic) NSURL *remoteImageURL;
 
 @end
 
-@implementation ATLAvatarImageView
+@implementation ATLAvatarView
 
-NSString *const ATLAvatarImageViewAccessibilityLabel = @"ATLAvatarImageViewAccessibilityLabel";
+NSString *const ATLAvatarViewAccessibilityLabel = @"ATLAvatarViewAccessibilityLabel";
 
 
 + (NSCache *)sharedImageCache
@@ -41,12 +43,6 @@ NSString *const ATLAvatarImageViewAccessibilityLabel = @"ATLAvatarImageViewAcces
         _sharedImageCache = [NSCache new];
     });
     return _sharedImageCache;
-}
-
-+ (void)initialize
-{
-    ATLAvatarImageView *proxy = [self appearance];
-    proxy.backgroundColor = ATLLightGrayColor();
 }
 
 - (id)init
@@ -72,13 +68,18 @@ NSString *const ATLAvatarImageViewAccessibilityLabel = @"ATLAvatarImageViewAcces
     // Default UI Appearance
     _initialsFont = [UIFont systemFontOfSize:14];
     _initialsColor = [UIColor blackColor];
-    _avatarImageViewDiameter = 27;
-    
-    self.clipsToBounds = YES;
-    self.layer.cornerRadius = _avatarImageViewDiameter / 2;
+    _avatarImageViewDiameter = 30;
+
     self.contentMode = UIViewContentModeScaleAspectFill;
-    self.accessibilityLabel = ATLAvatarImageViewAccessibilityLabel;
+    self.accessibilityLabel = ATLAvatarViewAccessibilityLabel;
     
+    // Image View
+    _imageView = [[UIImageView alloc] init];
+    _imageView.backgroundColor = ATLLightGrayColor();
+    _imageView.clipsToBounds = YES;
+    [self addSubview:_imageView];
+    
+    // Initials Label
     _initialsLabel = [[UILabel alloc] init];
     _initialsLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _initialsLabel.textAlignment = NSTextAlignmentCenter;
@@ -87,7 +88,11 @@ NSString *const ATLAvatarImageViewAccessibilityLabel = @"ATLAvatarImageViewAcces
     _initialsLabel.textColor = _initialsColor;
     _initialsLabel.font = _initialsFont;
     [self addSubview:_initialsLabel];
-    [self configureInitialsLabelConstraint];
+    
+    // Presence Status View
+    _presenceStatusView = [[ATLPresenceStatusView alloc] init];
+    _presenceStatusEnabled = true;
+    [self addSubview:_presenceStatusView];
 }
 
 - (CGSize)intrinsicContentSize
@@ -98,7 +103,7 @@ NSString *const ATLAvatarImageViewAccessibilityLabel = @"ATLAvatarImageViewAcces
 - (void)resetView
 {
     self.avatarItem = nil;
-    self.image = nil;
+    self.imageView.image = nil;
     self.initialsLabel.text = nil;
     [self.downloadTask cancel];
 }
@@ -110,19 +115,45 @@ NSString *const ATLAvatarImageViewAccessibilityLabel = @"ATLAvatarImageViewAcces
 
 - (void)setAvatarItem:(id<ATLAvatarItem>)avatarItem
 {
-    self.image = nil;
+    self.imageView.image = nil;
     
     if ([avatarItem avatarImageURL]) {
         self.initialsLabel.text = nil;
         [self loadAvatarImageWithURL:[avatarItem avatarImageURL]];
     } else if (avatarItem.avatarImage) {
         self.initialsLabel.text = nil;
-        self.image = avatarItem.avatarImage;
+        self.imageView.image = avatarItem.avatarImage;
+    } else if (avatarItem.avatarInitials) {
+        self.imageView.image = nil;
     }
     
-    if (self.image == nil && avatarItem.avatarInitials) {
+    if (self.imageView.image == nil && avatarItem.avatarInitials) {
         self.initialsLabel.text = avatarItem.avatarInitials;
     }
+    switch (avatarItem.presenceStatus) {
+        case LYRIdentityPresenceStatusAvailable:
+            self.presenceStatusView.statusColor = [UIColor colorWithRed:79.0/255.0 green:191.0/255.0 blue:98.0/255.0 alpha:1.0];
+            self.presenceStatusView.mode = ATLMPresenceStatusViewModeFill;
+            break;
+        case LYRIdentityPresenceStatusBusy:
+            self.presenceStatusView.statusColor = [UIColor colorWithRed:230.0/255.0 green:68.0/255.0 blue:63.0/255.0 alpha:1.0];
+            self.presenceStatusView.mode = ATLMPresenceStatusViewModeFill;
+            break;
+        case LYRIdentityPresenceStatusAway:
+            self.presenceStatusView.statusColor = [UIColor colorWithRed:247.0/255.0 green:202.0/255.0 blue:64.0/255.0 alpha:1.0];
+            self.presenceStatusView.mode = ATLMPresenceStatusViewModeFill;
+            break;
+        case LYRIdentityPresenceStatusInvisible:
+            self.presenceStatusView.statusColor = [UIColor colorWithRed:79.0/255.0 green:191.0/255.0 blue:98.0/255.0 alpha:1.0];
+            self.presenceStatusView.mode = ATLMPresenceStatusViewModeBordered;
+            break;
+        case LYRIdentityPresenceStatusOffline:
+        default:
+            self.presenceStatusView.statusColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:156.0/255.0 alpha:1.0];
+            self.presenceStatusView.mode = ATLMPresenceStatusViewModeBordered;
+            break;
+    }
+
     _avatarItem = avatarItem;
 }
 
@@ -138,19 +169,18 @@ NSString *const ATLAvatarImageViewAccessibilityLabel = @"ATLAvatarImageViewAcces
     _initialsFont = initialsFont;
 }
 
-- (void)setAvatarImageViewDiameter:(CGFloat)avatarImageViewDiameter
-{
-    self.layer.cornerRadius = avatarImageViewDiameter / 2;
-    _avatarImageViewDiameter = avatarImageViewDiameter;
-    [self invalidateIntrinsicContentSize];
-}
-
 - (void)setImageViewBackgroundColor:(UIColor *)imageViewBackgroundColor
 {
     self.backgroundColor = imageViewBackgroundColor;
     _imageViewBackgroundColor = imageViewBackgroundColor;
 }
-         
+
+- (void)setPresenceStatusEnabled:(BOOL)presenceStatusEnabled
+{
+    self.presenceStatusView.hidden = !presenceStatusEnabled;
+    _presenceStatusEnabled = presenceStatusEnabled;
+}
+
 - (void)loadAvatarImageWithURL:(NSURL *)imageURL
 {
     if (![imageURL isKindOfClass:[NSURL class]] || imageURL.absoluteString.length == 0) {
@@ -162,7 +192,7 @@ NSString *const ATLAvatarImageViewAccessibilityLabel = @"ATLAvatarImageViewAcces
     __block NSString *stringURL = imageURL.absoluteString;
     UIImage *image = [[[self class] sharedImageCache] objectForKey:stringURL];
     if (image) {
-        self.image = image;
+        self.imageView.image = image;
         return;
     }
     
@@ -198,18 +228,34 @@ NSString *const ATLAvatarImageViewAccessibilityLabel = @"ATLAvatarImageViewAcces
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.5 animations:^{
             self.initialsLabel.text = nil;
-            self.image = image;
+            self.imageView.image = image;
             self.alpha = 1.0;
         }];
     }];
 }
 
-- (void)configureInitialsLabelConstraint
+- (void)layoutSubviews
 {
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.initialsLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:3]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.initialsLabel attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:-3]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.initialsLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:3]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.initialsLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-3]];
+    [super layoutSubviews];
+    
+    // Image View
+    self.imageView.frame = CGRectMake(CGRectGetMinX(self.bounds), CGRectGetMinY(self.bounds), CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
+    
+    CGFloat avatarViewDiameter = MIN(CGRectGetWidth(self.imageView.bounds), CGRectGetHeight(self.imageView.bounds));
+    self.imageView.layer.cornerRadius = avatarViewDiameter * 0.5;
+
+    // Initials Label
+    self.initialsLabel.frame = CGRectInset(self.bounds, 3, 3);
+    
+    // Presence Status View
+    // The width of the presence status is 0.4 the height of the AvatarView
+    CGFloat width = self.bounds.size.height * 0.4;
+    self.presenceStatusView.frame = CGRectMake(
+                                               self.bounds.size.width - width,
+                                               self.bounds.size.height - width,
+                                               width,
+                                               width
+                                               );
 }
     
 @end

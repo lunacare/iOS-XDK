@@ -19,9 +19,9 @@
 //
 
 #import "ATLMediaInputStream.h"
+#import <AVFoundation/AVFoundation.h>
 #import <ImageIO/ImageIO.h>
 #import <MobileCoreServices/MobileCoreServices.h>
-@import AVFoundation;
 
 #ifdef DEBUG_ATLMediaInputStreamLog
 #define ATLMediaInputStreamLog(fmt, ...) NSLog(fmt, ##__VA_ARGS__)

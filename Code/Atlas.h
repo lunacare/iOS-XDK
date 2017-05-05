@@ -30,12 +30,12 @@
 ///------------------
 
 #import "ATLAddressBarViewController.h"
+#import "ATLBaseConversationViewController.h"
 #import "ATLConversationListViewController.h"
 #import "ATLConversationViewController.h"
 #import "ATLMessageInputToolbar.h"
 #import "ATLParticipantTableViewController.h"
 #import "ATLTypingIndicatorViewController.h"
-#import "ATLBaseConversationViewController.h"
 
 ///-------------
 /// @name Models
@@ -45,7 +45,6 @@
 #import "ATLDataSourceChange.h"
 #import "ATLMediaAttachment.h"
 #import "ATLParticipantTableDataSet.h"
-#import "ATLMediaAttachment.h"
 
 ///----------------
 /// @name Protocols
@@ -54,8 +53,8 @@
 #import "ATLAvatarItem.h"
 #import "ATLConversationPresenting.h"
 #import "ATLMessagePresenting.h"
-#import "ATLParticipantPresenting.h"
 #import "ATLParticipant.h"
+#import "ATLParticipantPresenting.h"
 
 ///----------------
 /// @name Utilities
@@ -63,8 +62,8 @@
 
 #import "ATLConstants.h"
 #import "ATLErrors.h"
-#import "ATLMessagingUtilities.h"
 #import "ATLLocationManager.h"
+#import "ATLMessagingUtilities.h"
 #import "ATLMediaInputStream.h"
 
 ///------------
@@ -73,7 +72,7 @@
 
 #import "ATLAddressBarContainerView.h"
 #import "ATLAddressBarView.h"
-#import "ATLAvatarImageView.h"
+#import "ATLAvatarView.h"
 #import "ATLConversationCollectionView.h"
 #import "ATLConversationCollectionViewFooter.h"
 #import "ATLConversationCollectionViewHeader.h"
@@ -87,9 +86,10 @@
 #import "ATLOutgoingMessageCollectionViewCell.h"
 #import "ATLParticipantSectionHeaderView.h"
 #import "ATLParticipantTableViewCell.h"
+#import "ATLPlayView.h"
+#import "ATLPresenceStatusView.h"
 #import "ATLProgressView.h"
 #import "ATLUIImageHelper.h"
-#import "ATLPlayView.h"
 
 /**
  @abstract Returns the Atlas version as a string.

@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract Gives the receiver an object conforming to the `ATLAvatarItem` protocol.
  @param avatarItem The object conforming to `ATLAvatarItem` protocol.
- @discussion The avatarItem is used to display either an image or initials with an `ATLAvatarImageView`
+ @discussion The avatarItem is used to display either an image or initials with an `ATLAvatarView`
  in an `ATLConversationTableViewCell.`
  */
 - (void)updateWithAvatarItem:(id<ATLAvatarItem>)avatarItem;

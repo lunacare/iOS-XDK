@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40EBBF671E9D4C2300C25041 /* ATLAvatarViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 40EBBF651E9D4C1B00C25041 /* ATLAvatarViewTest.m */; };
+		40EBBF681E9D4C2400C25041 /* ATLAvatarViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 40EBBF651E9D4C1B00C25041 /* ATLAvatarViewTest.m */; };
 		58239E45B91E3CD954E75554 /* Pods_test_ProgrammaticTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8050D6CFBC2EA1D5D6B800A /* Pods_test_ProgrammaticTests.framework */; };
 		5A86A2D11B82BB11005AF74B /* ATLMessageCollectionViewCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86A2D01B82BB11005AF74B /* ATLMessageCollectionViewCellTests.m */; };
 		5A86A2D21B82BB11005AF74B /* ATLMessageCollectionViewCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A86A2D01B82BB11005AF74B /* ATLMessageCollectionViewCellTests.m */; };
@@ -136,6 +138,7 @@
 		1886043CF840E83E9A77B78B /* Pods_UnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		250C5EF21C7656610084EB18 /* LayerKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LayerKit.framework; path = Carthage/Build/iOS/LayerKit.framework; sourceTree = "<group>"; };
 		34C06B1C4F6FE86629A3C050 /* Pods-test-ProgrammaticTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-test-ProgrammaticTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-test-ProgrammaticTests/Pods-test-ProgrammaticTests.release.xcconfig"; sourceTree = "<group>"; };
+		40EBBF651E9D4C1B00C25041 /* ATLAvatarViewTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLAvatarViewTest.m; sourceTree = "<group>"; };
 		4160065E3D4E4D6CA1EF3F99 /* Pods-Storyboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storyboard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Storyboard/Pods-Storyboard.debug.xcconfig"; sourceTree = "<group>"; };
 		5A86A2D01B82BB11005AF74B /* ATLMessageCollectionViewCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATLMessageCollectionViewCellTests.m; path = Tests/ATLMessageCollectionViewCellTests.m; sourceTree = "<group>"; };
 		5AEFC5CA1B79834300ADE4EC /* boatgif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = boatgif.gif; sourceTree = "<group>"; };
@@ -435,6 +438,7 @@
 				D6F406021A8FDEEB00AE9581 /* ATLConversationTableViewCellTest.m */,
 				D6F406041A8FDEEB00AE9581 /* ATLMessageCollectionViewCellTest.m */,
 				D6F406081A8FDEEB00AE9581 /* ATLParticipantTableViewCellTest.m */,
+				40EBBF651E9D4C1B00C25041 /* ATLAvatarViewTest.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1048,6 +1052,7 @@
 				5AF32FD31AA59C39005C13D7 /* ATLUserMockTest.m in Sources */,
 				D6F4062F1A8FE28000AE9581 /* ATLMessageCollectionViewCellTest.m in Sources */,
 				D6F406301A8FE28000AE9581 /* ATLMessageInputBarTest.m in Sources */,
+				40EBBF671E9D4C2300C25041 /* ATLAvatarViewTest.m in Sources */,
 				D6C0454F1A9953C70028E9D0 /* ALTAddressBarControllerTest.m in Sources */,
 				5A86A2D11B82BB11005AF74B /* ATLMessageCollectionViewCellTests.m in Sources */,
 				D6F406321A8FE28000AE9581 /* ATLParticipantTableViewControllerTest.m in Sources */,
@@ -1081,6 +1086,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6A122B51A9D2CA2004F67BE /* ATLTestClasses.m in Sources */,
+				40EBBF681E9D4C2400C25041 /* ATLAvatarViewTest.m in Sources */,
 				D6A122B61A9D2CA2004F67BE /* ATLTestInterface.m in Sources */,
 				D6A122B71A9D2CA2004F67BE /* LYRClientMockTests.m in Sources */,
 				D6A122B81A9D2CA2004F67BE /* ATLConversationTableViewCellTest.m in Sources */,

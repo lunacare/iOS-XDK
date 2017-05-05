@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                        = "Atlas"
-  s.version                     = '1.0.33'
+  s.version                     = '1.1.0'
   s.summary                     = "Atlas is a library of communications user interface components integrated with LayerKit."
   s.homepage                    = 'https://github.com/layerhq/Atlas-iOS'
   s.social_media_url            = 'http://twitter.com/layer'
@@ -21,5 +21,5 @@ Pod::Spec.new do |s|
   s.ios.resource_bundle         = { 'AtlasResource' => 'Resources/*' }
   s.ios.frameworks              = %w{ UIKit CoreLocation MobileCoreServices }
   s.ios.deployment_target       = '8.0'
-  s.dependency                  'LayerKit', '>= 0.25.2'
+  s.dependency                  'LayerKit', '>= 0.26.2'
 end

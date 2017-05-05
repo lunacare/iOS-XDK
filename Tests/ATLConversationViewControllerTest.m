@@ -24,7 +24,7 @@
 #import "ATLUserMock.h"
 #import "ATLTestUtilities.h"
 
-extern NSString *const ATLAvatarImageViewAccessibilityLabel;
+extern NSString *const ATLAvatarViewAccessibilityLabel;
 
 @interface ATLConversationViewController ()
 
@@ -451,7 +451,7 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     [self setupConversationViewController];
     [self setRootViewController:self.viewController];
     
-    [tester waitForAbsenceOfViewWithAccessibilityLabel:ATLAvatarImageViewAccessibilityLabel];
+    [tester waitForAbsenceOfViewWithAccessibilityLabel:ATLAvatarViewAccessibilityLabel];
 }
 
 - (void)testToVerifyAvatarImageIsDisplayedInGroupConversation
@@ -467,7 +467,7 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     [self setupConversationViewController];
     [self setRootViewController:self.viewController];
     
-    [tester waitForViewWithAccessibilityLabel:ATLAvatarImageViewAccessibilityLabel];
+    [tester waitForViewWithAccessibilityLabel:ATLAvatarViewAccessibilityLabel];
 }
 
 - (void)testToVerifySenderNameIsDisplayedInGroupConversation
@@ -517,7 +517,7 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     
     [self setRootViewController:self.viewController];
     
-    [tester waitForViewWithAccessibilityLabel:ATLAvatarImageViewAccessibilityLabel];
+    [tester waitForViewWithAccessibilityLabel:ATLAvatarViewAccessibilityLabel];
 }
 
 - (void)testToVerifyAvatarImageIsDisplayedOncePerSection
@@ -553,11 +553,11 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     [self setRootViewController:self.viewController];
     
     ATLMessageCollectionViewCell *cellOne = (ATLMessageCollectionViewCell *)[tester waitForViewWithAccessibilityLabel:@"Message: One"];
-    expect(cellOne.avatarImageView.hidden).to.equal(YES);
+    expect(cellOne.avatarView.hidden).to.equal(YES);
     ATLMessageCollectionViewCell *cellTwo = (ATLMessageCollectionViewCell *)[tester waitForViewWithAccessibilityLabel:@"Message: Two"];
-    expect(cellTwo.avatarImageView.hidden).to.equal(YES);
+    expect(cellTwo.avatarView.hidden).to.equal(YES);
     ATLMessageCollectionViewCell *cellThree = (ATLMessageCollectionViewCell *)[tester waitForViewWithAccessibilityLabel:@"Message: Three"];
-    expect(cellThree.avatarImageView.hidden).to.equal(NO);
+    expect(cellThree.avatarView.hidden).to.equal(NO);
 }
 
 - (void)testToVerifyAvatarImageIsDisplayedOncePerCluster
@@ -593,11 +593,11 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     [self setRootViewController:self.viewController];
     
     ATLMessageCollectionViewCell *cellOne = (ATLMessageCollectionViewCell *)[tester waitForViewWithAccessibilityLabel:@"Message: One"];
-    expect(cellOne.avatarImageView.hidden).to.equal(NO);
+    expect(cellOne.avatarView.hidden).to.equal(NO);
     ATLMessageCollectionViewCell *cellTwo = (ATLMessageCollectionViewCell *)[tester waitForViewWithAccessibilityLabel:@"Message: Two"];
-    expect(cellTwo.avatarImageView.hidden).to.equal(YES);
+    expect(cellTwo.avatarView.hidden).to.equal(YES);
     ATLMessageCollectionViewCell *cellThree = (ATLMessageCollectionViewCell *)[tester waitForViewWithAccessibilityLabel:@"Message: Three"];
-    expect(cellThree.avatarImageView.hidden).to.equal(NO);
+    expect(cellThree.avatarView.hidden).to.equal(NO);
 }
 
 - (void)testToVerifyAvatarImageIsDisplayedForEveryMessage
@@ -633,30 +633,11 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     [self setRootViewController:self.viewController];
     
     ATLMessageCollectionViewCell *cellOne = (ATLMessageCollectionViewCell *)[tester waitForViewWithAccessibilityLabel:@"Message: One"];
-    expect(cellOne.avatarImageView.hidden).to.equal(NO);
+    expect(cellOne.avatarView.hidden).to.equal(NO);
     ATLMessageCollectionViewCell *cellTwo = (ATLMessageCollectionViewCell *)[tester waitForViewWithAccessibilityLabel:@"Message: Two"];
-    expect(cellTwo.avatarImageView.hidden).to.equal(NO);
+    expect(cellTwo.avatarView.hidden).to.equal(NO);
     ATLMessageCollectionViewCell *cellThree = (ATLMessageCollectionViewCell *)[tester waitForViewWithAccessibilityLabel:@"Message: Three"];
-    expect(cellThree.avatarImageView.hidden).to.equal(NO);
-}
-
-- (void)testToVerifyCustomAvatarImageDiameter
-{
-    [[ATLAvatarImageView appearance] setAvatarImageViewDiameter:40];
-
-    ATLUserMock *mockUser2 = [ATLUserMock userWithMockUserName:ATLMockUserNameKevin];
-    LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser2.userID];
-    [self.conversation addParticipants:[NSSet setWithObject:mockUser2.userID] error:nil];
-    
-    LYRMessagePartMock *part = [LYRMessagePartMock messagePartWithText:@"Test"];
-    LYRMessageMock *message = [layerClient newMessageWithParts:@[part] options:nil error:nil];
-    [self.conversation sendMessage:message error:nil];
-    
-    [self setupConversationViewController];
-    [self setRootViewController:self.viewController];
-    
-    ATLAvatarImageView *imageView = (ATLAvatarImageView *)[tester waitForViewWithAccessibilityLabel:ATLAvatarImageViewAccessibilityLabel];
-    expect(imageView.avatarImageViewDiameter).to.equal(40);
+    expect(cellThree.avatarView.hidden).to.equal(NO);
 }
 
 - (void)testtoVerifyReloadingCellsDuringQueryControllerAnimationDoesNotRaise
