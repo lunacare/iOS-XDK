@@ -1,5 +1,11 @@
 # Atlas Changelog
 
+## 1.1.1
+
+### Bug Fixes
+
+* Fixes a bug where the queryController pagination window could be set to zero, causing a crash. [iOS-3074]
+
 ## 1.1.0
 
 Introducing the presence feature, which allows you to display a user's presence status as a color-coded icon next to their avatar image. [APPS-2740]
