@@ -114,7 +114,9 @@ NSInteger const ATLQueryControllerPaginationWindow = 30;
 
 - (void)finishExpandingPaginationWindow
 {
-    NSUInteger numberOfMessagesToDisplay = MIN(-self.queryController.paginationWindow + ATLQueryControllerPaginationWindow, self.queryController.totalNumberOfObjects);
+    NSUInteger numberOfMessagesAvailable = MIN(-self.queryController.paginationWindow + ATLQueryControllerPaginationWindow, self.queryController.totalNumberOfObjects);
+    NSUInteger numberOfMessagesToDisplay = MAX(1, numberOfMessagesAvailable);
+    
     self.queryController.paginationWindow = -numberOfMessagesToDisplay;
     self.expandingPaginationWindow = NO;
 }

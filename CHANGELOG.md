@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 * Fixes a bug where re-creating a previously deleted conversation would cause the more-messages spinner to continously display without actually loading anything. [iOS-3013]
+* Fixes a bug where the queryController pagination window could be set to zero, causing a crash. [iOS-3074]
 
 ## 1.1.0
 
