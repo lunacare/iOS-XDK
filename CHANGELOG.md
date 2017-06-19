@@ -1,5 +1,11 @@
 # Atlas Changelog
 
+## 1.1.1
+
+### Bug Fixes
+
+* Fixes a bug where re-creating a previously deleted conversation would cause the more-messages spinner to continously display without actually loading anything. [iOS-3013]
+
 ## 1.1.0
 
 Introducing the presence feature, which allows you to display a user's presence status as a color-coded icon next to their avatar image. [APPS-2740]
