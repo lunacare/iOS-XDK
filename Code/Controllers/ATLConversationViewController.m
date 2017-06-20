@@ -489,7 +489,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     if ([self shouldDisplaySenderLabelForSection:indexPath.section]) {
         [header updateWithParticipantName:[self participantNameForMessage:message]];
     } else {
-        [header updateWithAttributedStringForDate:[[NSAttributedString alloc] initWithString:@"" attributes:nil]];
+        [header updateWithParticipantName:@""];
     }
 }
 
