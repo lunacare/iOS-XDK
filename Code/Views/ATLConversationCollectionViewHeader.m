@@ -107,7 +107,7 @@ CGFloat const ATLConversationViewHeaderEmptyHeight = 1;
 
 - (void)updateWithParticipantName:(NSString *)participantName
 {
-    if (participantName.length) {
+    if (participantName) {
         self.participantLabel.text = participantName;
     } else {
         self.participantLabel.text = @"Unknown User";
