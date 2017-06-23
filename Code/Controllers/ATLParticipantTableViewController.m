@@ -55,6 +55,8 @@ NSString *const ATLParticipantTableViewControllerTitle = @"Participants";
     if (self) {
         _participants = participants;
         _sortType = sortType;
+        _shouldShowAvatarItem = YES;
+        _presenceStatusEnabled = YES;
         [self lyr_commonInit];
     }
     return self;
@@ -236,7 +238,7 @@ NSString *const ATLParticipantTableViewControllerTitle = @"Participants";
 - (void)configureCell:(UITableViewCell<ATLParticipantPresenting> *)cell atIndexPath:(NSIndexPath *)indexPath forTableView:(UITableView *)tableView
 {
     id<ATLParticipant> participant = [self participantForTableView:tableView atIndexPath:indexPath];
-    [cell presentParticipant:participant withSortType:self.sortType shouldShowAvatarItem:YES];
+    [cell presentParticipant:participant withSortType:self.sortType shouldShowAvatarItem:self.shouldShowAvatarItem presenceStatusEnabled:self.presenceStatusEnabled];
     if ([self.blockedParticipantIdentifiers containsObject:[participant userID]]) {
         NSBundle *resourcesBundle = ATLResourcesBundle();
         cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"block"  inBundle:resourcesBundle compatibleWithTraitCollection:nil]];

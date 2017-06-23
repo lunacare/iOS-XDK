@@ -230,7 +230,7 @@ static NSString *const ATLAddressBarParticipantAttributeName = @"ATLAddressBarPa
 - (void)configureCell:(UITableViewCell<ATLParticipantPresenting> *)participantCell atIndexPath:(NSIndexPath *)indexPath
 {
     id<ATLParticipant> participant = self.participants[indexPath.row];
-    [participantCell presentParticipant:participant withSortType:self.sortType shouldShowAvatarItem:self.shouldShowParticipantAvatars];
+    [participantCell presentParticipant:participant withSortType:self.sortType shouldShowAvatarItem:self.shouldShowParticipantAvatars presenceStatusEnabled:YES];
 }
 
 #pragma mark - UIScrollViewDelegate
