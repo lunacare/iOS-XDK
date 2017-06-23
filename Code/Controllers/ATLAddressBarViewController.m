@@ -50,8 +50,8 @@ static NSString *const ATLAddressBarParticipantAttributeName = @"ATLAddressBarPa
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.shouldShowParticipantAvatars = NO;
-    self.presenceStatusEnabled = NO;
+    self.shouldShowParticipantAvatars = YES;
+    self.presenceStatusEnabled = YES;
     self.defaultCellTitleColor = ATLBlueColor();
     self.sortType = ATLParticipantPickerSortTypeFirstName;
     self.rowHeight = 56.f;

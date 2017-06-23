@@ -5,11 +5,13 @@
 ### Public API Changes
 
 * Added the `presenceStatusEnabled` property to the `ATLParticipantPresenting` protocol.
+* Added the `presenceStatusEnabled` property to the `ATLAddressBarViewController`.
 * Added the `shouldShowAvatarItem` and `presenceStatusEnabled` properties to the `ATLParticipantTableViewController`.
 
 ### Enhancements
 
 * `ATLParticipantTableViewCell` will now show presence status based on the value of `presenceStatusEnabled` defined in the `ATLParticipantTableViewController`.
+* The address bar's search results will now show presence status based on the value of `presenceStatusEnabled` defined in `ATLAddressBarViewController`.
 
 ### Bug Fixes
 
