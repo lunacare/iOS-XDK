@@ -86,6 +86,17 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign) ATLParticipantPickerSortType sortType;
 
+/**
+ @abstract Defines whether the avatar item is shown in each cell.
+ @default `YES`.
+ */
+@property (nonatomic, assign) BOOL shouldShowAvatarItem;
+
+/**
+ @abstract Defines whether presence status is enabled for each cell's avatar item.
+ @default `YES`.
+ */
+@property (nonatomic, assign) BOOL presenceStatusEnabled;
 
 /**
  @abstract The delegate for the participant table view controller.

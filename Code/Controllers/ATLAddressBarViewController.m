@@ -51,6 +51,7 @@ static NSString *const ATLAddressBarParticipantAttributeName = @"ATLAddressBarPa
 {
     [super viewDidLoad];
     self.shouldShowParticipantAvatars = NO;
+    self.presenceStatusEnabled = NO;
     self.defaultCellTitleColor = ATLBlueColor();
     self.sortType = ATLParticipantPickerSortTypeFirstName;
     self.rowHeight = 56.f;
@@ -230,7 +231,7 @@ static NSString *const ATLAddressBarParticipantAttributeName = @"ATLAddressBarPa
 - (void)configureCell:(UITableViewCell<ATLParticipantPresenting> *)participantCell atIndexPath:(NSIndexPath *)indexPath
 {
     id<ATLParticipant> participant = self.participants[indexPath.row];
-    [participantCell presentParticipant:participant withSortType:self.sortType shouldShowAvatarItem:self.shouldShowParticipantAvatars];
+    [participantCell presentParticipant:participant withSortType:self.sortType shouldShowAvatarItem:self.shouldShowParticipantAvatars presenceStatusEnabled:self.presenceStatusEnabled];
 }
 
 #pragma mark - UIScrollViewDelegate

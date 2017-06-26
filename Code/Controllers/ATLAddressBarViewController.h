@@ -146,6 +146,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic) BOOL shouldShowParticipantAvatars;
 
+/**
+ @abstract Whether the view controller should show presence status on the avatar items in the participant list. Default is NO.
+ */
+@property (nonatomic) BOOL presenceStatusEnabled;
+
 ///------------------------------------
 // @name Managing Participant Selection
 ///------------------------------------

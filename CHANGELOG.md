@@ -2,6 +2,17 @@
 
 ## 1.1.1
 
+### Public API Changes
+
+* Added the `presenceStatusEnabled` property to the `ATLParticipantPresenting` protocol.
+* Added the `presenceStatusEnabled` property to the `ATLAddressBarViewController`.
+* Added the `shouldShowAvatarItem` and `presenceStatusEnabled` properties to the `ATLParticipantTableViewController`.
+
+### Enhancements
+
+* `ATLParticipantTableViewCell` will now show presence status based on the value of `presenceStatusEnabled` defined in the `ATLParticipantTableViewController`.
+* The address bar's search results will now show presence status based on the value of `presenceStatusEnabled` defined in `ATLAddressBarViewController`.
+
 ### Bug Fixes
 
 * Fixes a bug where re-creating a previously deleted conversation would cause the more-messages spinner to continously display without actually loading anything. [iOS-3013]

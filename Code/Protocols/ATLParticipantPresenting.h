@@ -41,11 +41,9 @@ NS_ASSUME_NONNULL_BEGIN
  @param participant The participant to present.
  @param sortType The type of sorting currently used.
  @param shouldShowAvatarItem A boolean to determine whether or not the receiver should display an avatar item.
+ @param presenceStatusEnabled A boolean to determine whether or not the receiver should enable a presence status icon on an avatar item.
  */
-- (void)presentParticipant:(id<ATLParticipant>)participant
-              withSortType:(ATLParticipantPickerSortType)sortType
-      shouldShowAvatarItem:(BOOL)shouldShowAvatarItem;
-
+- (void)presentParticipant:(id<ATLParticipant>)participant withSortType:(ATLParticipantPickerSortType)sortType shouldShowAvatarItem:(BOOL)shouldShowAvatarItem presenceStatusEnabled:(BOOL)presenceStatusEnabled;
 
 @end
 NS_ASSUME_NONNULL_END

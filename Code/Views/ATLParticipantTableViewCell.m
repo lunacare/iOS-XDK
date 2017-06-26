@@ -99,7 +99,7 @@
     self.avatarView.imageView.backgroundColor = preservedAvatarBackgroundColor;
 }
 
-- (void)presentParticipant:(id<ATLParticipant>)participant withSortType:(ATLParticipantPickerSortType)sortType shouldShowAvatarItem:(BOOL)shouldShowAvatarItem
+- (void)presentParticipant:(id<ATLParticipant>)participant withSortType:(ATLParticipantPickerSortType)sortType shouldShowAvatarItem:(BOOL)shouldShowAvatarItem presenceStatusEnabled:(BOOL)presenceStatusEnabled
 {
     self.accessibilityLabel = [participant displayName];
     self.participant = participant;
@@ -114,6 +114,7 @@
         self.avatarView.hidden = YES;
     }
     self.avatarView.avatarItem = self.participant;
+    self.avatarView.presenceStatusEnabled = presenceStatusEnabled;
     [self configureNameLabel];
     self.accessibilityLabel = participant.displayName;
 }
