@@ -19,6 +19,8 @@
 //
 
 #import "LYRUIConversationItemView.h"
+#import "LYRUIConversationItemViewMediumLayout.h"
+#import "LYRUISampleAccessoryView.h"
 
 @implementation LYRUIConversationItemView
 @synthesize conversationTitleLabel = _conversationTitleLabel,
@@ -52,17 +54,38 @@
 }
 
 - (void)commonInitialization {
-    UILabel *conversationTitleLabel = [UILabel new];
-    [self addSubview:conversationTitleLabel];
-    self.conversationTitleLabel = conversationTitleLabel;
+    // TODO: update with colors from color palette
+    UIColor *blackColor = [UIColor colorWithRed:27.0/255.0 green:28.0/255.0 blue:29.0/255.0 alpha:1.0];
+    UIColor *grayColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
     
-    UILabel *lastMessageLabel = [UILabel new];
-    [self addSubview:lastMessageLabel];
-    self.lastMessageLabel = lastMessageLabel;
+    self.conversationTitleLabel = [self addLabelWithFont:[UIFont systemFontOfSize:16]
+                                               textColor:blackColor];
+    self.lastMessageLabel = [self addLabelWithFont:[UIFont systemFontOfSize:14]
+                                         textColor:grayColor];
+    self.dateLabel = [self addLabelWithFont:[UIFont systemFontOfSize:12]
+                                  textColor:grayColor];
+
+    self.layout = [[LYRUIConversationItemViewMediumLayout alloc] init];
+}
+
+- (UILabel *)addLabelWithFont:(UIFont *)font textColor:(UIColor *)textColor {
+    UILabel *label = [UILabel new];
+    label.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:label];
+    label.font = font;
+    label.textColor = textColor;
+    return label;
+}
+
+- (void)prepareForInterfaceBuilder {
+    self.conversationTitleLabel.text = @"Name(s) / Title";
+    self.dateLabel.text = @"8:30am";
     
-    UILabel *dateLabel = [UILabel new];
-    [self addSubview:dateLabel];
-    self.dateLabel = dateLabel;
+    UIView *accessoryView = [[LYRUISampleAccessoryView alloc] init];
+    [self addSubview:accessoryView];
+    self.accessoryView = accessoryView;
+    
+    [self setNeedsUpdateConstraints];
 }
 
 #pragma mark - IBInspectable properties

@@ -46,9 +46,9 @@ IB_DESIGNABLE
 @interface LYRUIConversationItemView : LYRUIViewWithLayout <LYRUIConversationItemView>
 
 /**
- @abstract The font for the conversation label displayed in the cell. Default is 14pt system font.
+ @abstract The font for the conversation label displayed in the cell. Default is 16pt system font.
  */
-@property (nonatomic, copy) IBInspectable UIFont *conversationTitleLabelFont;
+@property (nonatomic, copy) UIFont *conversationTitleLabelFont;
 
 /**
  @abstract The text color for the conversation label displayed in the cell. Default is black.
@@ -56,9 +56,9 @@ IB_DESIGNABLE
 @property (nonatomic, copy) IBInspectable UIColor *conversationTitleLabelColor;
 
 /**
- @abstract The font for the last message label displayed in the cell. Default is 12pt system font.
+ @abstract The font for the last message label displayed in the cell. Default is 14pt system font.
  */
-@property (nonatomic, copy) IBInspectable UIFont *lastMessageLabelFont;
+@property (nonatomic, copy) UIFont *lastMessageLabelFont;
 
 /**
  @abstract The text color for the last message label displayed in the cell. Default is gray.
@@ -68,7 +68,7 @@ IB_DESIGNABLE
 /**
  @abstract The font for the date label displayed in the cell. Default is 12pt system font.
  */
-@property (nonatomic, copy) IBInspectable UIFont *dateLabelFont;
+@property (nonatomic, copy) UIFont *dateLabelFont;
 
 /**
  @abstract The text color for the date label displayed in the cell. Default is gray.

@@ -29,6 +29,7 @@
 		158273091F0D071E00F8974C /* LYRUIConversationItemViewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 158273081F0D071E00F8974C /* LYRUIConversationItemViewSpec.m */; };
 		1582730B1F0D09AA00F8974C /* LYRUIViewWithLayoutSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 1582730A1F0D09AA00F8974C /* LYRUIViewWithLayoutSpec.m */; };
 		1582730D1F0D0C2400F8974C /* LYRUIConversationItemViewControllerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 1582730C1F0D0C2400F8974C /* LYRUIConversationItemViewControllerSpec.m */; };
+		15A4C44C1F0E584700741D91 /* LYRUIConversationItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15A4C44B1F0E584700741D91 /* LYRUIConversationItemView.xib */; };
 		40EBBF671E9D4C2300C25041 /* ATLAvatarViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 40EBBF651E9D4C1B00C25041 /* ATLAvatarViewTest.m */; };
 		40EBBF681E9D4C2400C25041 /* ATLAvatarViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 40EBBF651E9D4C1B00C25041 /* ATLAvatarViewTest.m */; };
 		58239E45B91E3CD954E75554 /* Pods_test_ProgrammaticTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8050D6CFBC2EA1D5D6B800A /* Pods_test_ProgrammaticTests.framework */; };
@@ -179,6 +180,7 @@
 		158273081F0D071E00F8974C /* LYRUIConversationItemViewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIConversationItemViewSpec.m; sourceTree = "<group>"; };
 		1582730A1F0D09AA00F8974C /* LYRUIViewWithLayoutSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIViewWithLayoutSpec.m; sourceTree = "<group>"; };
 		1582730C1F0D0C2400F8974C /* LYRUIConversationItemViewControllerSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIConversationItemViewControllerSpec.m; sourceTree = "<group>"; };
+		15A4C44B1F0E584700741D91 /* LYRUIConversationItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIConversationItemView.xib; sourceTree = "<group>"; };
 		1886043CF840E83E9A77B78B /* Pods_UnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		250C5EF21C7656610084EB18 /* LayerKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LayerKit.framework; path = Carthage/Build/iOS/LayerKit.framework; sourceTree = "<group>"; };
 		34C06B1C4F6FE86629A3C050 /* Pods-test-ProgrammaticTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-test-ProgrammaticTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-test-ProgrammaticTests/Pods-test-ProgrammaticTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -529,6 +531,7 @@
 				15654C271F264F4000255309 /* LYRUIAvatarViewSpec.m */,
 				15654C201F260F6500255309 /* LYRUIAvatarView.xib */,
 				158273081F0D071E00F8974C /* LYRUIConversationItemViewSpec.m */,
+				15A4C44B1F0E584700741D91 /* LYRUIConversationItemView.xib */,
 				1582730A1F0D09AA00F8974C /* LYRUIViewWithLayoutSpec.m */,
 			);
 			name = Views;
@@ -804,6 +807,7 @@
 				150373F21F1CD7E500FA6AAB /* LYRUIShapedView.xib in Resources */,
 				15654C211F260F6500255309 /* LYRUIAvatarView.xib in Resources */,
 				150771EB1F2771B100E903D1 /* boatgif.gif in Resources */,
+				15A4C44C1F0E584700741D91 /* LYRUIConversationItemView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
