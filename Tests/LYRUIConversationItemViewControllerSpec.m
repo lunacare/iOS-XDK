@@ -5,6 +5,7 @@
 #import <OCHamcrest/OCHamcrest.h>
 #import <Atlas/LYRUIConversationItemViewController.h>
 #import <Atlas/LYRUIConversationItemView.h>
+#import <Atlas/LYRUIMessageTimeDefaultFormatter.h>
 #import <LayerKit/LayerKit.h>
 
 SpecBegin(LYRUIConversationItemViewController)
@@ -14,22 +15,32 @@ describe(@"LYRUIConversationItemViewController", ^{
     __block id<LYRUIConversationItemAccessoryViewProviding> accessoryViewProviderMock;
     __block id<LYRUIConversationItemTitleFormatting> titleFormatterMock;
     __block id<LYRUIConversationItemLastMessageFormatting> lastMessageFormatterMock;
-    __block id<LYRUIConversationItemDateFormatting> dateFormatterMock;
+    __block id<LYRUIMessageTimeFormatting> messageTimeFormatterMock;
     
     beforeEach(^{
         accessoryViewProviderMock = mockProtocol(@protocol(LYRUIConversationItemAccessoryViewProviding));
         titleFormatterMock = mockProtocol(@protocol(LYRUIConversationItemTitleFormatting));
         lastMessageFormatterMock = mockProtocol(@protocol(LYRUIConversationItemLastMessageFormatting));
-        dateFormatterMock = mockProtocol(@protocol(LYRUIConversationItemDateFormatting));
+        messageTimeFormatterMock = mockProtocol(@protocol(LYRUIMessageTimeFormatting));
         
         viewController = [[LYRUIConversationItemViewController alloc] initWithAccessoryViewProvider:accessoryViewProviderMock
                                                                                      titleFormatter:titleFormatterMock
                                                                                lastMessageFormatter:lastMessageFormatterMock
-                                                                                      dateFormatter:dateFormatterMock];
+                                                                                      messageTimeFormatter:messageTimeFormatterMock];
     });
     
     afterEach(^{
         viewController = nil;
+    });
+    
+    describe(@"after initialization with convenience initializer", ^{
+        beforeEach(^{
+            viewController = [[LYRUIConversationItemViewController alloc] init];
+        });
+        
+        it(@"should have default message time formatter set", ^{
+            expect(viewController.messageTimeFormatter).to.beAKindOf([LYRUIMessageTimeDefaultFormatter class]);
+        });
     });
     
     describe(@"setupConversationItemView:withConversation:", ^{
@@ -49,8 +60,8 @@ describe(@"LYRUIConversationItemViewController", ^{
             [given([accessoryViewProviderMock accessoryViewForConversation:conversationMock]) willReturn:accessoryView];
             [given([titleFormatterMock titleForConversation:conversationMock]) willReturn:@"test title"];
             [given([lastMessageFormatterMock stringForConversationLastMessage:lastMessageMock]) willReturn:@"test last message"];
-            [given([dateFormatterMock stringForConversationLastMessageTime:lastMessageTimeMock
-                                                           withCurrentTime:anything()]) willReturn:@"test time description"];
+            [given([messageTimeFormatterMock stringForMessageTime:lastMessageTimeMock
+                                                  withCurrentTime:anything()]) willReturn:@"test time description"];
             
             [viewController setupConversationItemView:view
                                      withConversation:conversationMock];

@@ -21,6 +21,7 @@
 #import <Foundation/Foundation.h>
 #import "LYRUIConversationItemView.h"
 #import <LayerKit/LayerKit.h>
+@protocol LYRUIMessageTimeFormatting;
 
 NS_ASSUME_NONNULL_BEGIN
 @protocol LYRUIConversationItemAccessoryViewProviding <NSObject>
@@ -57,18 +58,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@protocol LYRUIConversationItemDateFormatting <NSObject>
-
-/**
- @abstract Provides a formatted date string to display for a given message time in accordance to provided current time.
- @param lastMessageTime  An `NSDate` representing time of last message in conversation.
- @param currentTime An `NSDate` representing current time.
- @return The string to be displayed as the time of last message in the conversation list.
- */
-- (NSString *)stringForConversationLastMessageTime:(NSDate *)lastMessageTime withCurrentTime:(NSDate *)currentTime;
-
-@end
-
 @interface LYRUIConversationItemViewController : NSObject
 
 /**
@@ -89,20 +78,20 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The object provides formatted date of last message for the conversation item.
  */
-@property(nonatomic, strong) id<LYRUIConversationItemDateFormatting> dateFormatter;
+@property(nonatomic, strong) id<LYRUIMessageTimeFormatting> messageTimeFormatter;
 
 /**
  @abstract Initializes a new `LYRUIConversationItemViewController` object with the given accessory view provider and formatters.
  @param accessoryViewProvider The object conforming to `LYRUIConversationItemAccessoryViewProviding` protocol from which to retrieve the accessory view for display.
  @param titleFormatter The object conforming to `LYRUIConversationItemTitleFormatting` protocol from which to retrieve the conversation title for display.
  @param lastMessageFormatter The object conforming to `LYRUIConversationItemLastMessageFormatting` protocol from which to retrieve the conversation's last message summary for display.
- @param dateFormatter The object conforming to `LYRUIConversationItemDateFormatting` protocol from which to retrieve the conversation's last message time for display.
+ @param messageTimeFormatter The object conforming to `LYRUIMessageTimeFormatting` protocol from which to retrieve the conversation's last message time for display.
  @return An `LYRUIConversationItemViewController` object.
  */
 - (instancetype)initWithAccessoryViewProvider:(nullable id<LYRUIConversationItemAccessoryViewProviding>)accessoryViewProvider
                                titleFormatter:(nullable id<LYRUIConversationItemTitleFormatting>)titleFormatter
                          lastMessageFormatter:(nullable id<LYRUIConversationItemLastMessageFormatting>)lastMessageFormatter
-                                dateFormatter:(nullable id<LYRUIConversationItemDateFormatting>)dateFormatter NS_DESIGNATED_INITIALIZER;
+                         messageTimeFormatter:(nullable id<LYRUIMessageTimeFormatting>)messageTimeFormatter NS_DESIGNATED_INITIALIZER;
 
 /**
  @abstract Updates the view conforming to `LYRUIConversationItemView` protocol with data from given Conversation.

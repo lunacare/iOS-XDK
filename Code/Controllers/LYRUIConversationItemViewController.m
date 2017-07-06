@@ -19,6 +19,7 @@
 //
 
 #import "LYRUIConversationItemViewController.h"
+#import "LYRUIMessageTimeDefaultFormatter.h"
 
 @implementation LYRUIConversationItemViewController
 
@@ -26,14 +27,14 @@
     self = [self initWithAccessoryViewProvider:nil
                                 titleFormatter:nil
                           lastMessageFormatter:nil
-                                 dateFormatter:nil];
+                          messageTimeFormatter:nil];
     return self;
 }
 
 - (instancetype)initWithAccessoryViewProvider:(id<LYRUIConversationItemAccessoryViewProviding>)accessoryViewProvider
                                titleFormatter:(id<LYRUIConversationItemTitleFormatting>)titleFormatter
                          lastMessageFormatter:(id<LYRUIConversationItemLastMessageFormatting>)lastMessageFormatter
-                                dateFormatter:(id<LYRUIConversationItemDateFormatting>)dateFormatter {
+                         messageTimeFormatter:(id<LYRUIMessageTimeFormatting>)messageTimeFormatter {
     self = [super init];
     if (self) {
         if (accessoryViewProvider == nil) {
@@ -48,10 +49,10 @@
             //TODO: set default formatter;
         }
         self.lastMessageFormatter = lastMessageFormatter;
-        if (dateFormatter == nil) {
-            //TODO: set default formatter;
+        if (messageTimeFormatter == nil) {
+            messageTimeFormatter = [[LYRUIMessageTimeDefaultFormatter alloc] init];
         }
-        self.dateFormatter = dateFormatter;
+        self.messageTimeFormatter = messageTimeFormatter;
     }
     return self;
 }
@@ -63,8 +64,8 @@
     view.conversationTitleLabel.text = [self.titleFormatter titleForConversation:conversation];
     LYRMessage *lastMessage = conversation.lastMessage;
     if (lastMessage) {
-        view.dateLabel.text = [self.dateFormatter stringForConversationLastMessageTime:lastMessage.sentAt
-                                                                       withCurrentTime:[NSDate date]];
+        view.dateLabel.text = [self.messageTimeFormatter stringForMessageTime:lastMessage.sentAt
+                                                              withCurrentTime:[NSDate date]];
         view.lastMessageLabel.text = [self.lastMessageFormatter stringForConversationLastMessage:lastMessage];
     }
     [view.accessoryView removeFromSuperview];
