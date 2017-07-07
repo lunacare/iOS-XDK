@@ -3,16 +3,16 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
-#import <Atlas/LYRUIConversationItemViewController.h>
+#import <Atlas/LYRUIConversationItemViewConfigurator.h>
 #import <Atlas/LYRUIConversationItemView.h>
 #import <Atlas/LYRUIMessageTimeDefaultFormatter.h>
 #import <Atlas/LYRUIConversationItemTitleFormatter.h>
 #import <LayerKit/LayerKit.h>
 
-SpecBegin(LYRUIConversationItemViewController)
+SpecBegin(LYRUIConversationItemViewConfigurator)
 
-describe(@"LYRUIConversationItemViewController", ^{
-    __block LYRUIConversationItemViewController *viewController;
+describe(@"LYRUIConversationItemViewConfigurator", ^{
+    __block LYRUIConversationItemViewConfigurator *viewController;
     __block id<LYRUIConversationItemAccessoryViewProviding> accessoryViewProviderMock;
     __block id<LYRUIConversationItemTitleFormatting> titleFormatterMock;
     __block id<LYRUIConversationItemLastMessageFormatting> lastMessageFormatterMock;
@@ -24,7 +24,7 @@ describe(@"LYRUIConversationItemViewController", ^{
         lastMessageFormatterMock = mockProtocol(@protocol(LYRUIConversationItemLastMessageFormatting));
         messageTimeFormatterMock = mockProtocol(@protocol(LYRUIMessageTimeFormatting));
         
-        viewController = [[LYRUIConversationItemViewController alloc] initWithAccessoryViewProvider:accessoryViewProviderMock
+        viewController = [[LYRUIConversationItemViewConfigurator alloc] initWithAccessoryViewProvider:accessoryViewProviderMock
                                                                                      titleFormatter:titleFormatterMock
                                                                                lastMessageFormatter:lastMessageFormatterMock
                                                                                       messageTimeFormatter:messageTimeFormatterMock];
@@ -36,7 +36,7 @@ describe(@"LYRUIConversationItemViewController", ^{
     
     describe(@"after initialization with convenience initializer", ^{
         beforeEach(^{
-            viewController = [[LYRUIConversationItemViewController alloc] init];
+            viewController = [[LYRUIConversationItemViewConfigurator alloc] init];
         });
         
         it(@"should have default title formatter set", ^{

@@ -1,5 +1,5 @@
 //
-//  LYRUIConversationItemViewController.h
+//  LYRUIConversationItemViewConfigurator.h
 //  Layer-iOS-UI
 //
 //  Created by Łukasz Przytuła on 05.07.2017.
@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface LYRUIConversationItemViewController : NSObject
+@interface LYRUIConversationItemViewConfigurator : NSObject
 
 /**
  @abstract The object provides an accessory view for conversation item.
@@ -71,12 +71,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) id<LYRUIMessageTimeFormatting> messageTimeFormatter;
 
 /**
- @abstract Initializes a new `LYRUIConversationItemViewController` object with the given accessory view provider and formatters.
+ @abstract Initializes a new `LYRUIConversationItemViewConfigurator` object with the given accessory view provider and formatters.
  @param accessoryViewProvider The object conforming to `LYRUIConversationItemAccessoryViewProviding` protocol from which to retrieve the accessory view for display.
  @param titleFormatter The object conforming to `LYRUIConversationItemTitleFormatting` protocol from which to retrieve the conversation title for display.
  @param lastMessageFormatter The object conforming to `LYRUIConversationItemLastMessageFormatting` protocol from which to retrieve the conversation's last message summary for display.
  @param messageTimeFormatter The object conforming to `LYRUIMessageTimeFormatting` protocol from which to retrieve the conversation's last message time for display.
- @return An `LYRUIConversationItemViewController` object.
+ @return An `LYRUIConversationItemViewConfigurator` object.
  */
 - (instancetype)initWithAccessoryViewProvider:(nullable id<LYRUIConversationItemAccessoryViewProviding>)accessoryViewProvider
                                titleFormatter:(nullable id<LYRUIConversationItemTitleFormatting>)titleFormatter

@@ -1,5 +1,5 @@
 //
-//  LYRUIConversationItemViewController.m
+//  LYRUIConversationItemViewConfigurator.m
 //  Layer-iOS-UI
 //
 //  Created by Łukasz Przytuła on 05.07.2017.
@@ -18,11 +18,11 @@
 //  limitations under the License.
 //
 
-#import "LYRUIConversationItemViewController.h"
+#import "LYRUIConversationItemViewConfigurator.h"
 #import "LYRUIMessageTimeDefaultFormatter.h"
 #import "LYRUIConversationItemTitleFormatter.h"
 
-@implementation LYRUIConversationItemViewController
+@implementation LYRUIConversationItemViewConfigurator
 
 - (instancetype)init {
     self = [self initWithAccessoryViewProvider:nil
