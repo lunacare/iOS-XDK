@@ -20,6 +20,7 @@
 
 #import "LYRUIConversationItemViewController.h"
 #import "LYRUIMessageTimeDefaultFormatter.h"
+#import "LYRUIConversationItemTitleFormatter.h"
 
 @implementation LYRUIConversationItemViewController
 
@@ -42,7 +43,7 @@
         }
         self.accessoryViewProvider = accessoryViewProvider;
         if (titleFormatter == nil) {
-            //TODO: set default formatter;
+            titleFormatter = [[LYRUIConversationItemTitleFormatter alloc] init];
         }
         self.titleFormatter = titleFormatter;
         if (lastMessageFormatter == nil) {

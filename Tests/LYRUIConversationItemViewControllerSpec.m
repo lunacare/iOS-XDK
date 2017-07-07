@@ -6,6 +6,7 @@
 #import <Atlas/LYRUIConversationItemViewController.h>
 #import <Atlas/LYRUIConversationItemView.h>
 #import <Atlas/LYRUIMessageTimeDefaultFormatter.h>
+#import <Atlas/LYRUIConversationItemTitleFormatter.h>
 #import <LayerKit/LayerKit.h>
 
 SpecBegin(LYRUIConversationItemViewController)
@@ -38,6 +39,9 @@ describe(@"LYRUIConversationItemViewController", ^{
             viewController = [[LYRUIConversationItemViewController alloc] init];
         });
         
+        it(@"should have default title formatter set", ^{
+            expect(viewController.titleFormatter).to.beAKindOf([LYRUIConversationItemTitleFormatter class]);
+        });
         it(@"should have default message time formatter set", ^{
             expect(viewController.messageTimeFormatter).to.beAKindOf([LYRUIMessageTimeDefaultFormatter class]);
         });

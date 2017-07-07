@@ -21,6 +21,7 @@
 #import <Foundation/Foundation.h>
 #import "LYRUIConversationItemView.h"
 #import <LayerKit/LayerKit.h>
+@protocol LYRUIConversationItemTitleFormatting;
 @protocol LYRUIMessageTimeFormatting;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -33,17 +34,6 @@ NS_ASSUME_NONNULL_BEGIN
  @discussion The view will be added to the `LYRUIConversationItemView` as an accessory view.
  */
 - (UIView *)accessoryViewForConversation:(LYRConversation *)conversation;
-
-@end
-
-@protocol LYRUIConversationItemTitleFormatting <NSObject>
-
-/**
- @abstract Provides a title string to display for a given conversation.
- @param conversation The `LYRConversation` object.
- @return The string to be displayed as the title for a given conversation in the conversation list.
- */
-- (NSString *)titleForConversation:(LYRConversation *)conversation;
 
 @end
 
