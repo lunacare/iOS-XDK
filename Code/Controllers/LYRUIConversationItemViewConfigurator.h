@@ -71,6 +71,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) id<LYRUIMessageTimeFormatting> messageTimeFormatter;
 
 /**
+ @abstract Initializes a new `LYRUIConversationItemViewConfigurator` object with currently logged in user.
+ @param currentUser An `LYRIdentity` object used to create the title formatter.
+ @return An `LYRUIConversationItemViewConfigurator` object.
+ */
+- (instancetype)initWithCurrentUser:(LYRIdentity *)currentUser;
+
+/**
  @abstract Initializes a new `LYRUIConversationItemViewConfigurator` object with the given accessory view provider and formatters.
  @param accessoryViewProvider The object conforming to `LYRUIConversationItemAccessoryViewProviding` protocol from which to retrieve the accessory view for display.
  @param titleFormatter The object conforming to `LYRUIConversationItemTitleFormatting` protocol from which to retrieve the conversation title for display.

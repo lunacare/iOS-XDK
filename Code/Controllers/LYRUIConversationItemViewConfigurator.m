@@ -32,6 +32,15 @@
     return self;
 }
 
+- (instancetype)initWithCurrentUser:(LYRIdentity *)currentUser {
+    LYRUIConversationItemTitleFormatter *titleFormatter = [[LYRUIConversationItemTitleFormatter alloc] initWithCurrentUser:currentUser];
+    self = [self initWithAccessoryViewProvider:nil
+                                titleFormatter:titleFormatter
+                          lastMessageFormatter:nil
+                          messageTimeFormatter:nil];
+    return self;
+}
+
 - (instancetype)initWithAccessoryViewProvider:(id<LYRUIConversationItemAccessoryViewProviding>)accessoryViewProvider
                                titleFormatter:(id<LYRUIConversationItemTitleFormatting>)titleFormatter
                          lastMessageFormatter:(id<LYRUIConversationItemLastMessageFormatting>)lastMessageFormatter
