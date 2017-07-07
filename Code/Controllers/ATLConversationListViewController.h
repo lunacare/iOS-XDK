@@ -20,10 +20,10 @@
 
 #import <UIKit/UIKit.h>
 #import <LayerKit/LayerKit.h>
-#import "ATLConversationTableViewCell.h"
 #import "ATLAvatarItem.h"
 #import "ATLParticipant.h"
 
+@protocol LYRUIConversationItemView;
 @class ATLConversationListViewController;
 
 ///---------------------------------------
@@ -213,11 +213,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  @abstract The `UITableViewCell` subclass for customizing the display of the conversations.
- @discussion If you wish to provide your own custom class, your class must conform to the `ATLConversationPresenting` protocol.
- @default `ATLConversationTableViewCell`
+ @default `LYRUIConversationItemTableViewCell`
  @raises NSInternalInconsistencyException Raised if the value is mutated after the receiver has been presented.
  */
-@property (nonatomic) Class<ATLConversationPresenting> cellClass;
+@property (nonatomic) Class<LYRUIConversationItemView> cellClass;
 
 
 /**

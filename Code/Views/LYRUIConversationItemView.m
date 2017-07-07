@@ -25,14 +25,14 @@
 @interface LYRUIConversationItemView ()
 
 @property(nonatomic, weak, readwrite) UIView *accessoryViewContainer;
+@property(nonatomic, weak, readwrite) UILabel *conversationTitleLabel;
+@property(nonatomic, weak, readwrite) UILabel *lastMessageLabel;
+@property(nonatomic, weak, readwrite) UILabel *dateLabel;
 
 @end
 
 @implementation LYRUIConversationItemView
-@synthesize conversationTitleLabel = _conversationTitleLabel,
-            lastMessageLabel = _lastMessageLabel,
-            dateLabel = _dateLabel,
-            accessoryView = _accessoryView;
+@synthesize accessoryView = _accessoryView;
 @dynamic layout;
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
