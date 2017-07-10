@@ -76,12 +76,7 @@
                                                               withCurrentTime:[NSDate date]];
         view.lastMessageLabel.text = [self.lastMessageFormatter stringForConversationLastMessage:lastMessage];
     }
-    [view.accessoryView removeFromSuperview];
-    UIView *accessoryView = [self.accessoryViewProvider accessoryViewForConversation:conversation];
-    if (accessoryView) {
-        [view addSubview:accessoryView];
-        view.accessoryView = accessoryView;
-    }
+    view.accessoryView = [self.accessoryViewProvider accessoryViewForConversation:conversation];
     [view setNeedsUpdateConstraints];
 }
 

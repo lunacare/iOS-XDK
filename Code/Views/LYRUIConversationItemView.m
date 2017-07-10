@@ -64,6 +64,11 @@
                                          textColor:grayColor];
     self.dateLabel = [self addLabelWithFont:[UIFont systemFontOfSize:12]
                                   textColor:grayColor];
+    
+    UIView *accessoryViewContainer = [[UIView alloc] init];
+    accessoryViewContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:accessoryViewContainer];
+    self.accessoryViewContainer = accessoryViewContainer;
 
     self.layout = [[LYRUIConversationItemViewMediumLayout alloc] init];
 }
@@ -86,6 +91,18 @@
     self.accessoryView = accessoryView;
     
     [self setNeedsUpdateConstraints];
+}
+
+#pragma mark - Properties
+
+- (void)setAccessoryView:(UIView *)accessoryView {
+    if (self.accessoryView) {
+        [self.accessoryView removeFromSuperview];
+    }
+    if (accessoryView) {
+        [self.accessoryViewContainer addSubview:accessoryView];
+    }
+    _accessoryView = accessoryView;
 }
 
 #pragma mark - IBInspectable properties

@@ -46,6 +46,11 @@ IB_DESIGNABLE
 @interface LYRUIConversationItemView : LYRUIViewWithLayout <LYRUIConversationItemView>
 
 /**
+ @abstract The view in which the accessory view will be contained;
+ */
+@property(nonatomic, weak) UIView *accessoryViewContainer;
+
+/**
  @abstract The font for the conversation label displayed in the cell. Default is 16pt system font.
  */
 @property (nonatomic, copy) UIFont *conversationTitleLabelFont;
