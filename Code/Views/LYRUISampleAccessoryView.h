@@ -21,7 +21,4 @@
 #import <UIKit/UIKit.h>
 
 @interface LYRUISampleAccessoryView : UIView
-
-- (instancetype)initWithSize:(CGSize)size;
-
 @end

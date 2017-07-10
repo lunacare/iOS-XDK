@@ -85,9 +85,9 @@
 - (void)prepareForInterfaceBuilder {
     self.conversationTitleLabel.text = @"Name(s) / Title";
     self.dateLabel.text = @"8:30am";
+    self.lastMessageLabel.text = @"Message";
     
     UIView *accessoryView = [[LYRUISampleAccessoryView alloc] init];
-    [self addSubview:accessoryView];
     self.accessoryView = accessoryView;
     
     [self setNeedsUpdateConstraints];
