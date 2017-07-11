@@ -62,6 +62,13 @@
 
 - (void)setupConversationItemView:(UIView<LYRUIConversationItemView> *)view
                  withConversation:(LYRConversation *)conversation {
+    if (view == nil) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot setup Conversation Item View with nil `view` argument." userInfo:nil];
+    }
+    if (conversation == nil) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot setup Conversation Item View with nil `conversation` argument." userInfo:nil];
+    }
+    
     view.conversationTitleLabel.text = [self.titleFormatter titleForConversation:conversation];
     LYRMessage *lastMessage = conversation.lastMessage;
     if (lastMessage) {

@@ -55,36 +55,65 @@ describe(@"LYRUIConversationItemViewConfigurator", ^{
         beforeEach(^{
             view = [[LYRUIConversationItemView alloc] init];
             conversationMock = mock([LYRConversation class]);
-            LYRMessage *lastMessageMock = mock([LYRMessage class]);
-            [given(conversationMock.lastMessage) willReturn:lastMessageMock];
-            NSDate *lastMessageTimeMock = mock([NSDate class]);
-            [given(lastMessageMock.sentAt) willReturn:lastMessageTimeMock];
-            accessoryView = [[UIView alloc] init];
-            
-            [given([accessoryViewProviderMock accessoryViewForConversation:conversationMock]) willReturn:accessoryView];
-            [given([titleFormatterMock titleForConversation:conversationMock]) willReturn:@"test title"];
-            [given([lastMessageFormatterMock stringForConversationLastMessage:lastMessageMock]) willReturn:@"test last message"];
-            [given([messageTimeFormatterMock stringForMessageTime:lastMessageTimeMock
-                                                  withCurrentTime:anything()]) willReturn:@"test time description"];
-            
-            [viewController setupConversationItemView:view
-                                     withConversation:conversationMock];
         });
         
-        it(@"should set the text of conversationTitleLabel", ^{
-            expect(view.conversationTitleLabel.text).to.equal(@"test title");
+        context(@"with nil 'view' argument", ^{
+            it(@"should throw a NSInvalidArgumentException with proper reason", ^{
+                void(^callWithNil)() = ^{
+                    view = nil;
+                    [viewController setupConversationItemView:view
+                                             withConversation:conversationMock];
+                };
+                NSString *exceptionReason = @"Cannot setup Conversation Item View with nil `view` argument.";
+                expect(callWithNil).to.raiseWithReason(NSInvalidArgumentException, exceptionReason);
+            });
         });
-        it(@"should set the text of lastMessageLabel", ^{
-            expect(view.lastMessageLabel.text).to.equal(@"test last message");
+        
+        context(@"with nil 'conversation' argument", ^{
+            it(@"should throw a NSInvalidArgumentException with proper reason", ^{
+                void(^callWithNil)() = ^{
+                    conversationMock = nil;
+                    [viewController setupConversationItemView:view
+                                             withConversation:conversationMock];
+                };
+                NSString *exceptionReason = @"Cannot setup Conversation Item View with nil `conversation` argument.";
+                expect(callWithNil).to.raiseWithReason(NSInvalidArgumentException, exceptionReason);
+            });
         });
-        it(@"should set the text of dateLabel", ^{
-            expect(view.dateLabel.text).to.equal(@"test time description");
-        });
-        it(@"should set the accessory view", ^{
-            expect(view.accessoryView).to.equal(accessoryView);
-        });
-        it(@"should add the accessory view as a subview of conversation item view", ^{
-            expect(accessoryView.superview).to.equal(view);
+        
+        context(@"with both arguments passed", ^{
+            beforeEach(^{
+                LYRMessage *lastMessageMock = mock([LYRMessage class]);
+                [given(conversationMock.lastMessage) willReturn:lastMessageMock];
+                NSDate *lastMessageTimeMock = mock([NSDate class]);
+                [given(lastMessageMock.sentAt) willReturn:lastMessageTimeMock];
+                accessoryView = [[UIView alloc] init];
+                
+                [given([accessoryViewProviderMock accessoryViewForConversation:conversationMock]) willReturn:accessoryView];
+                [given([titleFormatterMock titleForConversation:conversationMock]) willReturn:@"test title"];
+                [given([lastMessageFormatterMock stringForConversationLastMessage:lastMessageMock]) willReturn:@"test last message"];
+                [given([messageTimeFormatterMock stringForMessageTime:lastMessageTimeMock
+                                                      withCurrentTime:anything()]) willReturn:@"test time description"];
+                
+                [viewController setupConversationItemView:view
+                                         withConversation:conversationMock];
+            });
+            
+            it(@"should set the text of conversationTitleLabel", ^{
+                expect(view.conversationTitleLabel.text).to.equal(@"test title");
+            });
+            it(@"should set the text of lastMessageLabel", ^{
+                expect(view.lastMessageLabel.text).to.equal(@"test last message");
+            });
+            it(@"should set the text of dateLabel", ^{
+                expect(view.dateLabel.text).to.equal(@"test time description");
+            });
+            it(@"should set the accessory view", ^{
+                expect(view.accessoryView).to.equal(accessoryView);
+            });
+            it(@"should add the accessory view as a subview of conversation item view", ^{
+                expect(accessoryView.superview).to.equal(view);
+            });
         });
     });
 });
