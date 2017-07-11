@@ -3,7 +3,7 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <Atlas/LYRUIConversationItemView.h>
-#import <Atlas/LYRUIConversationItemViewMediumLayout.h>
+#import <Atlas/LYRUIConversationItemViewLayout.h>
 
 SpecBegin(LYRUIConversationItemView)
 
@@ -54,7 +54,7 @@ describe(@"LYRUIConversationItemView", ^{
             expect(view.accessoryView).to.beNil();
         });
         it(@"should have layout set to Medium Layout", ^{
-            expect(view.layout).to.beAKindOf([LYRUIConversationItemViewMediumLayout class]);
+            expect(view.layout).to.beAKindOf([LYRUIConversationItemViewLayout class]);
         });
     });
     

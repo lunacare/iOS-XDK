@@ -19,7 +19,7 @@
 //
 
 #import "LYRUIConversationItemView.h"
-#import "LYRUIConversationItemViewMediumLayout.h"
+#import "LYRUIConversationItemViewLayout.h"
 #import "LYRUISampleAccessoryView.h"
 
 @implementation LYRUIConversationItemView
@@ -70,7 +70,7 @@
     [self addSubview:accessoryViewContainer];
     self.accessoryViewContainer = accessoryViewContainer;
 
-    self.layout = [[LYRUIConversationItemViewMediumLayout alloc] init];
+    self.layout = [[LYRUIConversationItemViewLayout alloc] init];
 }
 
 - (UILabel *)addLabelWithFont:(UIFont *)font textColor:(UIColor *)textColor {
