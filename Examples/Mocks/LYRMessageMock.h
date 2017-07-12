@@ -24,6 +24,7 @@
 
 @interface LYRIdentityMock : NSObject
 
+@property (nonatomic, readwrite) NSURL *identifier;
 @property (nonatomic, readwrite) NSString *userID;
 @property (nonatomic, readwrite) NSString *firstName;
 @property (nonatomic, readwrite) NSString *lastName;

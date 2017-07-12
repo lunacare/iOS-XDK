@@ -219,6 +219,9 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     if (self.hasAppeared) {
         @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Cannot change cell class after the view has been presented" userInfo:nil];
     }
+    if (!class_conformsToProtocol(cellClass, @protocol(LYRUIConversationItemView))) {
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Cell class must conform to LYRUIConversationItemView" userInfo:nil];
+    }
     _cellClass = cellClass;
 }
 

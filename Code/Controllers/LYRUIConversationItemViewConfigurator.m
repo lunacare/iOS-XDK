@@ -78,7 +78,10 @@
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot setup Conversation Item View with nil `conversation` argument." userInfo:nil];
     }
     
-    view.conversationTitleLabel.text = [self.titleFormatter titleForConversation:conversation];
+    NSString *conversationTitle = [self.titleFormatter titleForConversation:conversation];
+    view.conversationTitleLabel.text = conversationTitle;
+    view.accessibilityLabel = conversationTitle;
+    
     LYRMessage *lastMessage = conversation.lastMessage;
     if (lastMessage) {
         view.dateLabel.text = [self.messageTimeFormatter stringForMessageTime:lastMessage.sentAt
