@@ -99,7 +99,7 @@ static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationNam
 - (NSSet *)filteredParticipants:(NSSet *)participants {
     __weak __typeof(self) weakSelf = self;
     NSPredicate *notCurrentUserPredicate = [NSPredicate predicateWithBlock:^BOOL(LYRIdentity * _Nullable identity, NSDictionary<NSString *,id> * _Nullable bindings) {
-        return ![identity.identifier isEqual:weakSelf.currentUser.identifier];
+        return ![identity.userID isEqual:weakSelf.currentUser.userID];
     }];
     return [participants filteredSetUsingPredicate:notCurrentUserPredicate];
 }
