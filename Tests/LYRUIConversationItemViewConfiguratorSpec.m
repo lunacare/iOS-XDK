@@ -112,7 +112,7 @@ describe(@"LYRUIConversationItemViewConfigurator", ^{
                 expect(view.accessoryView).to.equal(accessoryView);
             });
             it(@"should add the accessory view as a subview of conversation item view", ^{
-                expect(accessoryView.superview).to.equal(view);
+                expect(accessoryView.superview).to.equal(view.accessoryViewContainer);
             });
         });
     });

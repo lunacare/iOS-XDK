@@ -32,7 +32,7 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self commonInitialization];
+        [self commonInitializationWithLayout:nil];
     }
     return self;
 }
@@ -40,7 +40,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self commonInitialization];
+        [self commonInitializationWithLayout:nil];
     }
     return self;
 }
@@ -48,12 +48,12 @@
 - (instancetype)initWithLayout:(id<LYRUIConversationItemViewLayout>)layout {
     self = [self initWithFrame:CGRectZero];
     if (self) {
-        self.layout = layout;
+        [self commonInitializationWithLayout:layout];
     }
     return self;
 }
 
-- (void)commonInitialization {
+- (void)commonInitializationWithLayout:(id<LYRUIConversationItemViewLayout>)layout {
     // TODO: update with colors from color palette
     UIColor *blackColor = [UIColor colorWithRed:27.0/255.0 green:28.0/255.0 blue:29.0/255.0 alpha:1.0];
     UIColor *grayColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
@@ -70,7 +70,10 @@
     [self addSubview:accessoryViewContainer];
     self.accessoryViewContainer = accessoryViewContainer;
 
-    self.layout = [[LYRUIConversationItemViewLayout alloc] init];
+    if (layout == nil) {
+        layout = [[LYRUIConversationItemViewLayout alloc] init];
+    }
+    self.layout = layout;
 }
 
 - (UILabel *)addLabelWithFont:(UIFont *)font textColor:(UIColor *)textColor {

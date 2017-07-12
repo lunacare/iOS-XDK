@@ -153,12 +153,11 @@
     UIView *accessoryContainer = view.accessoryViewContainer;
     UIView *messageLabel = view.lastMessageLabel;
     CGFloat margin = self.metrics.horizontalMarginSize;
-    CGFloat variableMargin = self.metrics.horizontalVariableMarginSize;
     
     NSMutableArray *constraints = [NSMutableArray new];
     if (view.accessoryView != nil) {
         [constraints addObject:[messageLabel.leftAnchor constraintEqualToAnchor:accessoryContainer.rightAnchor
-                                                                       constant:variableMargin]];
+                                                                       constant:margin]];
     } else {
         [constraints addObject:[messageLabel.leftAnchor constraintEqualToAnchor:view.leftAnchor constant:margin]];
     }
@@ -182,7 +181,7 @@
     
     [constraints addObject:[accessoryContainer.topAnchor constraintGreaterThanOrEqualToAnchor:view.topAnchor
                                                                                      constant:margin]];
-    [constraints addObject:[accessoryContainer.bottomAnchor constraintGreaterThanOrEqualToAnchor:view.bottomAnchor
+    [constraints addObject:[accessoryContainer.bottomAnchor constraintLessThanOrEqualToAnchor:view.bottomAnchor
                                                                                         constant:-margin]];
     
     [view addConstraints:constraints];
