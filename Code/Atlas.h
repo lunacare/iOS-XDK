@@ -36,6 +36,7 @@
 #import "ATLMessageInputToolbar.h"
 #import "ATLParticipantTableViewController.h"
 #import "ATLTypingIndicatorViewController.h"
+#import "LYRUIConversationItemViewConfigurator.h"
 
 ///-------------
 /// @name Models
@@ -90,6 +91,15 @@
 #import "ATLPresenceStatusView.h"
 #import "ATLProgressView.h"
 #import "ATLUIImageHelper.h"
+#import "LYRUIViewLayout.h"
+#import "LYRUIConversationItemView.h"
+#import "LYRUIConversationItemTableViewCell.h"
+
+///------------
+/// @name Layouts
+///------------
+
+#import "LYRUIConversationItemViewMediumLayout.h"
 
 /**
  @abstract Returns the Atlas version as a string.
