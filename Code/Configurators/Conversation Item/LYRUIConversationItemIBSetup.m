@@ -26,9 +26,9 @@
 @implementation LYRUIConversationItemIBSetup
 
 - (void)prepareConversationItemForInterfaceBuilder:(LYRUIConversationItemView *)conversationItem {
-    conversationItem.conversationTitleLabel.text = @"Name(s) / Title";
-    conversationItem.dateLabel.text = @"8:30am";
-    conversationItem.lastMessageLabel.text = @"Message";
+    conversationItem.titleLabel.text = @"Name(s) / Title";
+    conversationItem.timeLabel.text = @"8:30am";
+    conversationItem.messageLabel.text = @"Message";
     
     LYRUIAvatarView *avatarView = [[LYRUIAvatarView alloc] init];
     avatarView.translatesAutoresizingMaskIntoConstraints = NO;

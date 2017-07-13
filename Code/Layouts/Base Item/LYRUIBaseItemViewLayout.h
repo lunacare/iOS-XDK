@@ -1,5 +1,5 @@
 //
-//  LYRUIConversationItemViewLayout.h
+//  LYRUIBaseItemViewLayout.h
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 06.07.2017.
@@ -18,7 +18,11 @@
 //  limitations under the License.
 //
 
-#import "LYRUIConversationItemView.h"
+#import "LYRUIBaseItemView.h"
+#import "LYRUIBaseItemViewLayoutMetricsProviding.h"
 
-@interface LYRUIConversationItemViewLayout : NSObject <LYRUIConversationItemViewLayout>
+@interface LYRUIBaseItemViewLayout : NSObject <LYRUIBaseItemViewLayout, LYRUIBaseItemViewLayoutMetricsDelegate>
+
+- (instancetype)initWithMetrics:(id<LYRUIBaseItemViewLayoutMetricsProviding>)metrics;
+
 @end

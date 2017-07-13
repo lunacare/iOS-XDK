@@ -21,9 +21,10 @@
 #import "LYRUIConversationItemViewLayoutMetrics.h"
 
 @implementation LYRUIConversationItemViewLayoutMetrics
+@synthesize delegate;
 
-- (LYRUIConversationItemViewLayoutSize)layoutSize {
-    return [self.delegate conversationItemViewLayoutMetricsCurrentLayoutSize];
+- (LYRUIBaseItemViewLayoutSize)layoutSize {
+    return [self.delegate baseItemViewLayoutMetricsCurrentLayoutSize];
 }
 
 #pragma mark - Margins
@@ -34,23 +35,23 @@
 
 - (CGFloat)horizontalVariableMarginSize {
     switch (self.layoutSize) {
-        case LYRUIConversationItemViewLayoutSizeTiny:
+        case LYRUIBaseItemViewLayoutSizeTiny:
             return 8.0;
-        case LYRUIConversationItemViewLayoutSizeSmall:
-        case LYRUIConversationItemViewLayoutSizeMedium:
-        case LYRUIConversationItemViewLayoutSizeLarge:
+        case LYRUIBaseItemViewLayoutSizeSmall:
+        case LYRUIBaseItemViewLayoutSizeMedium:
+        case LYRUIBaseItemViewLayoutSizeLarge:
             return 12.0;
     }
 }
 
 - (CGFloat)verticalMarginSize {
     switch (self.layoutSize) {
-        case LYRUIConversationItemViewLayoutSizeTiny:
-        case LYRUIConversationItemViewLayoutSizeSmall:
+        case LYRUIBaseItemViewLayoutSizeTiny:
+        case LYRUIBaseItemViewLayoutSizeSmall:
             return 8.0;
-        case LYRUIConversationItemViewLayoutSizeMedium:
+        case LYRUIBaseItemViewLayoutSizeMedium:
             return 10.0;
-        case LYRUIConversationItemViewLayoutSizeLarge:
+        case LYRUIBaseItemViewLayoutSizeLarge:
             return 12.0;
     }
 }
@@ -67,13 +68,13 @@
 
 - (CGFloat)accessoryViewContainerMaxSize {
     switch (self.layoutSize) {
-        case LYRUIConversationItemViewLayoutSizeTiny:
+        case LYRUIBaseItemViewLayoutSizeTiny:
             return 12.0;
-        case LYRUIConversationItemViewLayoutSizeSmall:
+        case LYRUIBaseItemViewLayoutSizeSmall:
             return 32.0;
-        case LYRUIConversationItemViewLayoutSizeMedium:
+        case LYRUIBaseItemViewLayoutSizeMedium:
             return 40.0;
-        case LYRUIConversationItemViewLayoutSizeLarge:
+        case LYRUIBaseItemViewLayoutSizeLarge:
             return 48.0;
     }
 }
@@ -82,37 +83,37 @@
 
 - (CGFloat)conversationTitleFontSize {
     switch (self.layoutSize) {
-        case LYRUIConversationItemViewLayoutSizeTiny:
-        case LYRUIConversationItemViewLayoutSizeSmall:
+        case LYRUIBaseItemViewLayoutSizeTiny:
+        case LYRUIBaseItemViewLayoutSizeSmall:
             return 14.0;
-        case LYRUIConversationItemViewLayoutSizeMedium:
-        case LYRUIConversationItemViewLayoutSizeLarge:
+        case LYRUIBaseItemViewLayoutSizeMedium:
+        case LYRUIBaseItemViewLayoutSizeLarge:
             return 16.0;
     }
 }
 
 - (CGFloat)dateFontSize {
     switch (self.layoutSize) {
-        case LYRUIConversationItemViewLayoutSizeTiny:
-        case LYRUIConversationItemViewLayoutSizeSmall:
+        case LYRUIBaseItemViewLayoutSizeTiny:
+        case LYRUIBaseItemViewLayoutSizeSmall:
             return 10.0;
-        case LYRUIConversationItemViewLayoutSizeMedium:
-        case LYRUIConversationItemViewLayoutSizeLarge:
+        case LYRUIBaseItemViewLayoutSizeMedium:
+        case LYRUIBaseItemViewLayoutSizeLarge:
             return 12.0;
     }
 }
 
 #pragma mark - Layout
 
-- (LYRUIConversationItemViewLayoutSize)laytoutSizeForViewHeight:(CGFloat)viewHeight {
+- (LYRUIBaseItemViewLayoutSize)laytoutSizeForViewHeight:(CGFloat)viewHeight {
     if (viewHeight < 48.0) {
-        return LYRUIConversationItemViewLayoutSizeTiny;
+        return LYRUIBaseItemViewLayoutSizeTiny;
     } else if (viewHeight < 60.0) {
-        return LYRUIConversationItemViewLayoutSizeSmall;
+        return LYRUIBaseItemViewLayoutSizeSmall;
     } else if (viewHeight < 72.0) {
-        return LYRUIConversationItemViewLayoutSizeMedium;
+        return LYRUIBaseItemViewLayoutSizeMedium;
     } else {
-        return LYRUIConversationItemViewLayoutSizeLarge;
+        return LYRUIBaseItemViewLayoutSizeLarge;
     }
 }
 

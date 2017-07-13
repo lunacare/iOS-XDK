@@ -3,7 +3,7 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <Atlas/LYRUIConversationItemView.h>
-#import <Atlas/LYRUIConversationItemViewLayout.h>
+#import <Atlas/LYRUIBaseItemViewLayout.h>
 
 SpecBegin(LYRUIConversationItemView)
 
@@ -20,53 +20,53 @@ describe(@"LYRUIConversationItemView", ^{
     });
     
     describe(@"after initialization", ^{
-        it(@"should have conversationTitleLabel set", ^{
-            expect(view.conversationTitleLabel).to.beAKindOf([UILabel class]);
+        it(@"should have titleLabel set", ^{
+            expect(view.titleLabel).to.beAKindOf([UILabel class]);
         });
-        it(@"should have conversationTitleLabel's font set by the default layout", ^{
+        it(@"should have titleLabel's font set by the default layout", ^{
             NSString *fontName = [UIFont systemFontOfSize:1].fontName;
             UIFont *expectedFont = [UIFont fontWithName:fontName size:14];
-            expect(view.conversationTitleLabel.font).to.equal(expectedFont);
+            expect(view.titleLabel.font).to.equal(expectedFont);
         });
-        it(@"should have conversationTitleLabel's default text color set", ^{
+        it(@"should have titleLabel's default text color set", ^{
             UIColor *blackColor = [UIColor colorWithRed:27.0/255.0 green:28.0/255.0 blue:29.0/255.0 alpha:1.0];
-            expect(view.conversationTitleLabel.textColor).to.equal(blackColor);
+            expect(view.titleLabel.textColor).to.equal(blackColor);
         });
-        it(@"should have lastMessageLabel set", ^{
-            expect(view.lastMessageLabel).to.beAKindOf([UILabel class]);
+        it(@"should have messageLabel set", ^{
+            expect(view.messageLabel).to.beAKindOf([UILabel class]);
         });
-        it(@"should have lastMessageLabel's default font set by the default layout", ^{
-            expect(view.lastMessageLabel.font).to.equal([UIFont systemFontOfSize:14]);
+        it(@"should have messageLabel's default font set by the default layout", ^{
+            expect(view.messageLabel.font).to.equal([UIFont systemFontOfSize:14]);
         });
-        it(@"should have lastMessageLabel's default text color set", ^{
+        it(@"should have messageLabel's default text color set", ^{
             UIColor *grayColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
-            expect(view.lastMessageLabel.textColor).to.equal(grayColor);
+            expect(view.messageLabel.textColor).to.equal(grayColor);
         });
-        it(@"should have dateLabel set", ^{
-            expect(view.dateLabel).to.beAKindOf([UILabel class]);
+        it(@"should have timeLabel set", ^{
+            expect(view.timeLabel).to.beAKindOf([UILabel class]);
         });
-        it(@"should have dateLabel's default font set", ^{
+        it(@"should have timeLabel's default font set", ^{
             NSString *fontName = [UIFont systemFontOfSize:1].fontName;
             UIFont *expectedFont = [UIFont fontWithName:fontName size:10];
-            expect(view.dateLabel.font).to.equal(expectedFont);
+            expect(view.timeLabel.font).to.equal(expectedFont);
         });
-        it(@"should have dateLabel's default text color set", ^{
+        it(@"should have timeLabel's default text color set", ^{
             UIColor *grayColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
-            expect(view.dateLabel.textColor).to.equal(grayColor);
+            expect(view.timeLabel.textColor).to.equal(grayColor);
         });
         it(@"should not have accessoryView set", ^{
             expect(view.accessoryView).to.beNil();
         });
-        it(@"should have layout set to `LYRUIConversationItemViewLayout`", ^{
-            expect(view.layout).to.beAKindOf([LYRUIConversationItemViewLayout class]);
+        it(@"should have layout set to `LYRUIBaseItemViewLayout`", ^{
+            expect(view.layout).to.beAKindOf([LYRUIBaseItemViewLayout class]);
         });
     });
     
     describe(@"after initialization with layout", ^{
-        __block id<LYRUIConversationItemViewLayout> layoutMock;
+        __block id<LYRUIBaseItemViewLayout> layoutMock;
         
         beforeEach(^{
-            layoutMock = mockProtocol(@protocol(LYRUIConversationItemViewLayout));
+            layoutMock = mockProtocol(@protocol(LYRUIBaseItemViewLayout));
             
             view = [[LYRUIConversationItemView alloc] initWithLayout:layoutMock];
         });
@@ -74,11 +74,11 @@ describe(@"LYRUIConversationItemView", ^{
         it(@"should have layout set to the one passed to initializator", ^{
             expect(view.layout).to.equal(layoutMock);
         });
-        it(@"should have conversationTitleLabel's default font set", ^{
-            expect(view.conversationTitleLabel.font).to.equal([UIFont systemFontOfSize:16]);
+        it(@"should have titleLabel's default font set", ^{
+            expect(view.titleLabel.font).to.equal([UIFont systemFontOfSize:16]);
         });
-        it(@"should have dateLabel's default font set", ^{
-            expect(view.dateLabel.font).to.equal([UIFont systemFontOfSize:12]);
+        it(@"should have timeLabel's default font set", ^{
+            expect(view.timeLabel.font).to.equal([UIFont systemFontOfSize:12]);
         });
     });
     
@@ -89,21 +89,21 @@ describe(@"LYRUIConversationItemView", ^{
             view = [xibViews objectAtIndex:0];
         });
         
-        it(@"should have conversationTitleLabel's text color set to value from Interface Builder", ^{
+        it(@"should have titleLabel's text color set to value from Interface Builder", ^{
             UIColor *redColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0];
-            expect(view.conversationTitleLabel.textColor).to.equal(redColor);
+            expect(view.titleLabel.textColor).to.equal(redColor);
         });
-        it(@"should have lastMessageLabel's text color set to value from Interface Builder", ^{
+        it(@"should have messageLabel's text color set to value from Interface Builder", ^{
             UIColor *greenColor = [UIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0];
-            expect(view.lastMessageLabel.textColor).to.equal(greenColor);
+            expect(view.messageLabel.textColor).to.equal(greenColor);
         });
-        it(@"should have dateLabel's text color set to value from Interface Builder", ^{
+        it(@"should have timeLabel's text color set to value from Interface Builder", ^{
             UIColor *blueColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:1.0];
-            expect(view.dateLabel.textColor).to.equal(blueColor);
+            expect(view.timeLabel.textColor).to.equal(blueColor);
         });
     });
     
-    describe(@"conversationTitleLabelFont", ^{
+    describe(@"titleLabelFont", ^{
         __block UIFont *fontMock;
         
         beforeEach(^{
@@ -112,48 +112,48 @@ describe(@"LYRUIConversationItemView", ^{
         
         context(@"getter", ^{
             beforeEach(^{
-                view.conversationTitleLabel.font = fontMock;
+                view.titleLabel.font = fontMock;
             });
             
-            it(@"should return the font of conversationTitleLabel", ^{
-                expect(view.conversationTitleLabelFont).to.equal(fontMock);
+            it(@"should return the font of titleLabel", ^{
+                expect(view.titleLabelFont).to.equal(fontMock);
             });
         });
         
         context(@"setter", ^{
             beforeEach(^{
-                view.conversationTitleLabelFont = fontMock;
+                view.titleLabelFont = fontMock;
             });
             
-            it(@"should update the font of conversationTitleLabel", ^{
-                expect(view.conversationTitleLabel.font).to.equal(fontMock);
+            it(@"should update the font of titleLabel", ^{
+                expect(view.titleLabel.font).to.equal(fontMock);
             });
         });
     });
     
-    describe(@"conversationTitleLabelColor", ^{
+    describe(@"titleLabelColor", ^{
         context(@"getter", ^{
             beforeEach(^{
-                view.conversationTitleLabel.textColor = [UIColor redColor];
+                view.titleLabel.textColor = [UIColor redColor];
             });
             
-            it(@"should return the text color of conversationTitleLabel", ^{
-                expect(view.conversationTitleLabelColor).to.equal([UIColor redColor]);
+            it(@"should return the text color of titleLabel", ^{
+                expect(view.titleLabelColor).to.equal([UIColor redColor]);
             });
         });
         
         context(@"setter", ^{
             beforeEach(^{
-                view.conversationTitleLabelColor = [UIColor greenColor];
+                view.titleLabelColor = [UIColor greenColor];
             });
             
-            it(@"should update the text color of conversationTitleLabel", ^{
-                expect(view.conversationTitleLabel.textColor).to.equal([UIColor greenColor]);
+            it(@"should update the text color of titleLabel", ^{
+                expect(view.titleLabel.textColor).to.equal([UIColor greenColor]);
             });
         });
     });
     
-    describe(@"lastMessageLabelFont", ^{
+    describe(@"messageLabelFont", ^{
         __block UIFont *fontMock;
         
         beforeEach(^{
@@ -162,48 +162,48 @@ describe(@"LYRUIConversationItemView", ^{
         
         context(@"getter", ^{
             beforeEach(^{
-                view.lastMessageLabel.font = fontMock;
+                view.messageLabel.font = fontMock;
             });
             
-            it(@"should return the font of lastMessageLabel", ^{
-                expect(view.lastMessageLabelFont).to.equal(fontMock);
+            it(@"should return the font of messageLabel", ^{
+                expect(view.messageLabelFont).to.equal(fontMock);
             });
         });
         
         context(@"setter", ^{
             beforeEach(^{
-                view.lastMessageLabelFont = fontMock;
+                view.messageLabelFont = fontMock;
             });
             
-            it(@"should update the font of lastMessageLabel", ^{
-                expect(view.lastMessageLabel.font).to.equal(fontMock);
+            it(@"should update the font of messageLabel", ^{
+                expect(view.messageLabel.font).to.equal(fontMock);
             });
         });
     });
     
-    describe(@"lastMessageLabelColor", ^{
+    describe(@"messageLabelColor", ^{
         context(@"getter", ^{
             beforeEach(^{
-                view.lastMessageLabel.textColor = [UIColor redColor];
+                view.messageLabel.textColor = [UIColor redColor];
             });
             
-            it(@"should return the text color of lastMessageLabel", ^{
-                expect(view.lastMessageLabelColor).to.equal([UIColor redColor]);
+            it(@"should return the text color of messageLabel", ^{
+                expect(view.messageLabelColor).to.equal([UIColor redColor]);
             });
         });
         
         context(@"setter", ^{
             beforeEach(^{
-                view.lastMessageLabelColor = [UIColor greenColor];
+                view.messageLabelColor = [UIColor greenColor];
             });
             
-            it(@"should update the text color of lastMessageLabel", ^{
-                expect(view.lastMessageLabel.textColor).to.equal([UIColor greenColor]);
+            it(@"should update the text color of messageLabel", ^{
+                expect(view.messageLabel.textColor).to.equal([UIColor greenColor]);
             });
         });
     });
     
-    describe(@"dateLabelFont", ^{
+    describe(@"timeLabelFont", ^{
         __block UIFont *fontMock;
         
         beforeEach(^{
@@ -212,43 +212,43 @@ describe(@"LYRUIConversationItemView", ^{
         
         context(@"getter", ^{
             beforeEach(^{
-                view.dateLabel.font = fontMock;
+                view.timeLabel.font = fontMock;
             });
             
-            it(@"should return the font of dateLabel", ^{
-                expect(view.dateLabelFont).to.equal(fontMock);
+            it(@"should return the font of timeLabel", ^{
+                expect(view.timeLabelFont).to.equal(fontMock);
             });
         });
         
         context(@"setter", ^{
             beforeEach(^{
-                view.dateLabelFont = fontMock;
+                view.timeLabelFont = fontMock;
             });
             
-            it(@"should update the font of dateLabel", ^{
-                expect(view.dateLabel.font).to.equal(fontMock);
+            it(@"should update the font of timeLabel", ^{
+                expect(view.timeLabel.font).to.equal(fontMock);
             });
         });
     });
     
-    describe(@"dateLabelColor", ^{
+    describe(@"timeLabelColor", ^{
         context(@"getter", ^{
             beforeEach(^{
-                view.dateLabel.textColor = [UIColor redColor];
+                view.timeLabel.textColor = [UIColor redColor];
             });
             
-            it(@"should return the text color of dateLabel", ^{
-                expect(view.dateLabelColor).to.equal([UIColor redColor]);
+            it(@"should return the text color of timeLabel", ^{
+                expect(view.timeLabelColor).to.equal([UIColor redColor]);
             });
         });
         
         context(@"setter", ^{
             beforeEach(^{
-                view.dateLabelColor = [UIColor greenColor];
+                view.timeLabelColor = [UIColor greenColor];
             });
             
-            it(@"should update the text color of dateLabel", ^{
-                expect(view.dateLabel.textColor).to.equal([UIColor greenColor]);
+            it(@"should update the text color of timeLabel", ^{
+                expect(view.timeLabel.textColor).to.equal([UIColor greenColor]);
             });
         });
     });

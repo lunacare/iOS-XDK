@@ -100,14 +100,14 @@ describe(@"LYRUIConversationItemViewConfigurator", ^{
                                          withConversation:conversationMock];
             });
             
-            it(@"should set the text of conversationTitleLabel", ^{
-                expect(view.conversationTitleLabel.text).to.equal(@"test title");
+            it(@"should set the text of titleLabel", ^{
+                expect(view.titleLabel.text).to.equal(@"test title");
             });
             it(@"should set the text of lastMessageLabel", ^{
-                expect(view.lastMessageLabel.text).to.equal(@"test last message");
+                expect(view.messageLabel.text).to.equal(@"test last message");
             });
             it(@"should set the text of dateLabel", ^{
-                expect(view.dateLabel.text).to.equal(@"test time description");
+                expect(view.timeLabel.text).to.equal(@"test time description");
             });
             it(@"should set the accessory view", ^{
                 expect(view.accessoryView).to.equal(accessoryView);

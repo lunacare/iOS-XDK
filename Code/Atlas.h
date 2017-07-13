@@ -99,7 +99,7 @@
 /// @name Layouts
 ///------------
 
-#import "LYRUIConversationItemViewLayout.h"
+#import "LYRUIBaseItemViewLayout.h"
 
 /**
  @abstract Returns the Atlas version as a string.

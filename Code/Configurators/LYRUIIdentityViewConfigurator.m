@@ -63,8 +63,8 @@
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot setup Conversation Item View with nil `identity` argument." userInfo:nil];
     }
     
-    view.conversationTitleLabel.text = [self.nameFormatter nameForIdentity:identity];
-    view.dateLabel.text = [self.lastSeenAtTimeFormatter timeAgoStringForTime:identity.lastSeenAt
+    view.titleLabel.text = [self.nameFormatter nameForIdentity:identity];
+    view.timeLabel.text = [self.lastSeenAtTimeFormatter timeAgoStringForTime:identity.lastSeenAt
                                                              withCurrentTime:[NSDate date]];
     
     [view.accessoryView removeFromSuperview];

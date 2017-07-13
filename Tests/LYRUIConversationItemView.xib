@@ -27,6 +27,15 @@
                 <userDefinedRuntimeAttribute type="color" keyPath="dateLabelColor">
                     <color key="value" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="color" keyPath="titleLabelColor">
+                    <color key="value" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="color" keyPath="messageLabelColor">
+                    <color key="value" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="color" keyPath="timeLabelColor">
+                    <color key="value" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <point key="canvasLocation" x="-295" y="-101"/>
         </view>

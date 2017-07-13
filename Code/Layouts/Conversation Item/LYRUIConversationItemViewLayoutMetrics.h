@@ -18,35 +18,7 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-@class LYRUIConversationItemViewLayoutMetrics;
+#import "LYRUIBaseItemViewLayoutMetricsProviding.h"
 
-typedef enum : NSUInteger {
-    LYRUIConversationItemViewLayoutSizeTiny,
-    LYRUIConversationItemViewLayoutSizeSmall,
-    LYRUIConversationItemViewLayoutSizeMedium,
-    LYRUIConversationItemViewLayoutSizeLarge,
-} LYRUIConversationItemViewLayoutSize;
-
-@protocol LYRUIConversationItemViewLayoutMetricsDelegate <NSObject>
-
-- (LYRUIConversationItemViewLayoutSize)conversationItemViewLayoutMetricsCurrentLayoutSize;
-
-@end
-
-@interface LYRUIConversationItemViewLayoutMetrics : NSObject
-
-@property(nonatomic, weak) id <LYRUIConversationItemViewLayoutMetricsDelegate> delegate;
-
-@property (nonatomic, readonly) CGFloat horizontalMarginSize;
-@property (nonatomic, readonly) CGFloat horizontalVariableMarginSize;
-@property (nonatomic, readonly) CGFloat verticalMarginSize;
-@property (nonatomic, readonly) CGFloat topGuideShift;
-@property (nonatomic, readonly) CGFloat labelsVerticalMargin;
-@property (nonatomic, readonly) CGFloat accessoryViewContainerMaxSize;
-@property (nonatomic, readonly) CGFloat conversationTitleFontSize;
-@property (nonatomic) CGFloat dateFontSize;
-
-- (LYRUIConversationItemViewLayoutSize)laytoutSizeForViewHeight:(CGFloat)viewHeight;
-
+@interface LYRUIConversationItemViewLayoutMetrics : NSObject <LYRUIBaseItemViewLayoutMetricsProviding>
 @end

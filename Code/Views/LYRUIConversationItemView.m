@@ -19,7 +19,8 @@
 //
 
 #import "LYRUIConversationItemView.h"
-#import "LYRUIConversationItemViewLayout.h"
+#import "LYRUIBaseItemViewLayout.h"
+#import "LYRUIConversationItemViewLayoutMetrics.h"
 #import "LYRUIConversationItemIBSetup.h"
 
 @interface LYRUIConversationItemView ()
@@ -32,13 +33,13 @@
 @end
 
 @implementation LYRUIConversationItemView
-@synthesize accessoryView = _accessoryView;
-@dynamic layout;
+@dynamic accessoryViewContainer;
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self lyr_commonInitWithLayout:nil];
+        LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
+        self.layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
     }
     return self;
 }
@@ -46,115 +47,23 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self lyr_commonInitWithLayout:nil];
+        LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
+        self.layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
     }
     return self;
 }
 
-- (instancetype)initWithLayout:(id<LYRUIConversationItemViewLayout>)layout {
-    self = [self initWithFrame:CGRectZero];
-    if (self) {
-        [self lyr_commonInitWithLayout:layout];
-    }
-    return self;
-}
-
-- (void)lyr_commonInitWithLayout:(id<LYRUIConversationItemViewLayout>)layout {
-    // TODO: update with colors from color palette
-    UIColor *blackColor = [UIColor colorWithRed:27.0/255.0 green:28.0/255.0 blue:29.0/255.0 alpha:1.0];
-    UIColor *grayColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
-    
-    self.conversationTitleLabel = [self addLabelWithFont:[UIFont systemFontOfSize:16]
-                                               textColor:blackColor];
-    self.lastMessageLabel = [self addLabelWithFont:[UIFont systemFontOfSize:14]
-                                         textColor:grayColor];
-    self.dateLabel = [self addLabelWithFont:[UIFont systemFontOfSize:12]
-                                  textColor:grayColor];
-    
-    UIView *accessoryViewContainer = [[UIView alloc] init];
-    accessoryViewContainer.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview:accessoryViewContainer];
-    self.accessoryViewContainer = accessoryViewContainer;
-
+- (instancetype)initWithLayout:(id<LYRUIBaseItemViewLayout>)layout {
     if (layout == nil) {
-        layout = [[LYRUIConversationItemViewLayout alloc] init];
+        LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
+        layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
     }
-    self.layout = layout;
-}
-
-- (UILabel *)addLabelWithFont:(UIFont *)font textColor:(UIColor *)textColor {
-    UILabel *label = [UILabel new];
-    label.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview:label];
-    label.font = font;
-    label.textColor = textColor;
-    return label;
+    self = [super initWithLayout:layout];
+    return self;
 }
 
 - (void)prepareForInterfaceBuilder {
     [[[LYRUIConversationItemIBSetup alloc] init] prepareConversationItemForInterfaceBuilder:self];
-}
-
-#pragma mark - Properties
-
-- (void)setAccessoryView:(UIView *)accessoryView {
-    if (self.accessoryView) {
-        [self.accessoryView removeFromSuperview];
-    }
-    if (accessoryView) {
-        [self.accessoryViewContainer addSubview:accessoryView];
-    }
-    _accessoryView = accessoryView;
-}
-
-#pragma mark - IBInspectable properties
-
-- (UIFont *)conversationTitleLabelFont {
-    return self.conversationTitleLabel.font;
-}
-
-- (void)setConversationTitleLabelFont:(UIFont *)conversationTitleLabelFont {
-    self.conversationTitleLabel.font = conversationTitleLabelFont;
-}
-
-- (UIColor *)conversationTitleLabelColor {
-    return self.conversationTitleLabel.textColor;
-}
-
-- (void)setConversationTitleLabelColor:(UIColor *)conversationTitleLabelColor {
-    self.conversationTitleLabel.textColor = conversationTitleLabelColor;
-}
-
-- (UIFont *)lastMessageLabelFont {
-    return self.lastMessageLabel.font;
-}
-
-- (void)setLastMessageLabelFont:(UIFont *)lastMessageLabelFont {
-    self.lastMessageLabel.font = lastMessageLabelFont;
-}
-
-- (UIColor *)lastMessageLabelColor {
-    return self.lastMessageLabel.textColor;
-}
-
-- (void)setLastMessageLabelColor:(UIColor *)lastMessageLabelColor {
-    self.lastMessageLabel.textColor = lastMessageLabelColor;
-}
-
-- (UIFont *)dateLabelFont {
-    return self.dateLabel.font;
-}
-
-- (void)setDateLabelFont:(UIFont *)dateLabelFont {
-    self.dateLabel.font = dateLabelFont;
-}
-
-- (UIColor *)dateLabelColor {
-    return self.dateLabel.textColor;
-}
-
-- (void)setDateLabelColor:(UIColor *)dateLabelColor {
-    self.dateLabel.textColor = dateLabelColor;
 }
 
 @end
