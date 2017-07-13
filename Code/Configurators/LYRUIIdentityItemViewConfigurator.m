@@ -18,11 +18,11 @@
 //  limitations under the License.
 //
 
-#import "LYRUIIdentityViewConfigurator.h"
+#import "LYRUIIdentityItemViewConfigurator.h"
 #import "LYRUITimeAgoDateFormatting.h"
 #import "LYRUIIdentityNameFormatting.h"
 
-@implementation LYRUIIdentityViewConfigurator
+@implementation LYRUIIdentityItemViewConfigurator
 
 - (instancetype)init {
     self = [self initWithAccessoryViewProvider:nil
@@ -31,7 +31,7 @@
     return self;
 }
 
-- (instancetype)initWithAccessoryViewProvider:(nullable id<LYRUIIdentityAccessoryViewProviding>)accessoryViewProvider
+- (instancetype)initWithAccessoryViewProvider:(nullable id<LYRUIIdentityItemAccessoryViewProviding>)accessoryViewProvider
                                 nameFormatter:(nullable id<LYRUIIdentityNameFormatting>)nameFormatter
                       lastSeenAtTimeFormatter:(nullable id<LYRUITimeAgoDateFormatting>)lastSeenAtTimeFormatter {
     self = [super init];
@@ -54,13 +54,13 @@
 
 #pragma mark - LYRUIConversationItemView setup
 
-- (void)setupConversationItemView:(UIView<LYRUIConversationItemView> *)view
-                     withIdentity:(LYRIdentity *)identity {
+- (void)setupIdentityItemView:(UIView<LYRUIIdentityItemView> *)view
+                 withIdentity:(LYRIdentity *)identity {
     if (view == nil) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot setup Conversation Item View with nil `view` argument." userInfo:nil];
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot setup Identity Item View with nil `view` argument." userInfo:nil];
     }
     if (identity == nil) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot setup Conversation Item View with nil `identity` argument." userInfo:nil];
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot setup Identity Item View with nil `identity` argument." userInfo:nil];
     }
     
     view.titleLabel.text = [self.nameFormatter nameForIdentity:identity];

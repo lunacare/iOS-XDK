@@ -19,13 +19,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "LYRUIConversationItemView.h"
+#import "LYRUIIdentityItemView.h"
 #import <LayerKit/LayerKit.h>
 @protocol LYRUIIdentityNameFormatting;
 @protocol LYRUITimeAgoDateFormatting;
 
 NS_ASSUME_NONNULL_BEGIN
-@protocol LYRUIIdentityAccessoryViewProviding <NSObject>
+@protocol LYRUIIdentityItemAccessoryViewProviding <NSObject>
 
 /**
  @abstract Provides an accessory view representing a conversation.
@@ -37,12 +37,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface LYRUIIdentityViewConfigurator : NSObject
+@interface LYRUIIdentityItemViewConfigurator : NSObject
 
 /**
  @abstract The object provides an accessory view for identity item.
  */
-@property(nonatomic, strong) id<LYRUIIdentityAccessoryViewProviding> accessoryViewProvider;
+@property(nonatomic, strong) id<LYRUIIdentityItemAccessoryViewProviding> accessoryViewProvider;
 
 /**
  @abstract The object provides a formatted name for the identity item.
@@ -55,23 +55,23 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) id<LYRUITimeAgoDateFormatting> lastSeenAtTimeFormatter;
 
 /**
- @abstract Initializes a new `LYRUIIdentityViewConfigurator` object with the given accessory view provider and formatters.
- @param accessoryViewProvider The object conforming to `LYRUIIdentityAccessoryViewProviding` protocol from which to retrieve the accessory view for display.
+ @abstract Initializes a new `LYRUIIdentityItemViewConfigurator` object with the given accessory view provider and formatters.
+ @param accessoryViewProvider The object conforming to `LYRUIIdentityItemAccessoryViewProviding` protocol from which to retrieve the accessory view for display.
  @param nameFormatter The object conforming to `LYRUIIdentityNameFormatting` protocol from which to retrieve the identity name for display.
  @param lastSeenAtTimeFormatter The object conforming to `LYRUITimeAgoDateFormatting` protocol from which to retrieve the time passed since identity last seen at.
- @return An `LYRUIConversationItemViewConfigurator` object.
+ @return An `LYRUIIdentityItemViewConfigurator` object.
  */
-- (instancetype)initWithAccessoryViewProvider:(nullable id<LYRUIIdentityAccessoryViewProviding>)accessoryViewProvider
+- (instancetype)initWithAccessoryViewProvider:(nullable id<LYRUIIdentityItemAccessoryViewProviding>)accessoryViewProvider
                                 nameFormatter:(nullable id<LYRUIIdentityNameFormatting>)nameFormatter
                       lastSeenAtTimeFormatter:(nullable id<LYRUITimeAgoDateFormatting>)lastSeenAtTimeFormatter NS_DESIGNATED_INITIALIZER;
 
 /**
- @abstract Updates the view conforming to `LYRUIConversationItemView` protocol with data from given identity.
- @param view The UIView conforming to `LYRUIConversationItemView` protocol to be set up.
+ @abstract Updates the view conforming to `LYRUIIdentityItemView` protocol with data from given identity.
+ @param view The UIView conforming to `LYRUIIdentityItemView` protocol to be set up.
  @param identity The `LYRIdentity` object to be presented on identity list.
  */
-- (void)setupConversationItemView:(UIView<LYRUIConversationItemView> *)view
-                     withIdentity:(LYRIdentity *)identity;
+- (void)setupIdentityItemView:(UIView<LYRUIIdentityItemView> *)view
+                 withIdentity:(LYRIdentity *)identity;
 
 @end
 NS_ASSUME_NONNULL_END
