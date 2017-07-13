@@ -6,7 +6,7 @@
 #import <Atlas/LYRUIIdentityItemViewConfigurator.h>
 #import <Atlas/LYRUIIdentityItemView.h>
 #import <Atlas/LYRUITimeAgoDateFormatting.h>
-#import <Atlas/LYRUIIdentityNameFormatting.h>
+#import <Atlas/LYRUIIdentityNameFormatter.h>
 #import <LayerKit/LayerKit.h>
 
 SpecBegin(LYRUIIdentityItemViewConfigurator)
@@ -28,6 +28,16 @@ describe(@"LYRUIIdentityItemViewConfigurator", ^{
     
     afterEach(^{
         viewConfigurator = nil;
+    });
+    
+    describe(@"after initialization with convenience initializer", ^{
+        beforeEach(^{
+            viewConfigurator = [[LYRUIIdentityItemViewConfigurator alloc] init];
+        });
+        
+        it(@"should have default name formatter set", ^{
+            expect(viewConfigurator.nameFormatter).to.beAKindOf([LYRUIIdentityNameFormatter class]);
+        });
     });
     
     describe(@"setupIdentityItemView:withIdentity:", ^{

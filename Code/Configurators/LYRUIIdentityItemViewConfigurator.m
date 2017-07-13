@@ -20,7 +20,7 @@
 
 #import "LYRUIIdentityItemViewConfigurator.h"
 #import "LYRUITimeAgoDateFormatting.h"
-#import "LYRUIIdentityNameFormatting.h"
+#import "LYRUIIdentityNameFormatter.h"
 
 @implementation LYRUIIdentityItemViewConfigurator
 
@@ -41,7 +41,7 @@
         }
         self.accessoryViewProvider = accessoryViewProvider;
         if (nameFormatter == nil) {
-            //TODO: set default formatter
+            nameFormatter = [[LYRUIIdentityNameFormatter alloc] init];
         }
         self.nameFormatter = nameFormatter;
         if (lastSeenAtTimeFormatter == nil) {

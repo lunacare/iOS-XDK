@@ -19,9 +19,16 @@
 //
 
 #import "LYRUIConversationItemTitleFormatter.h"
+#import "LYRUIIdentityNameFormatter.h"
 #import <LayerKit/LayerKit.h>
 
 static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationName";
+
+@interface LYRUIConversationItemTitleFormatter ()
+
+@property(nonatomic, strong, nonnull) id <LYRUIIdentityNameFormatting> participantNameFormatter;
+
+@end
 
 @implementation LYRUIConversationItemTitleFormatter
 @synthesize participantsFilter = _participantsFilter;
@@ -32,9 +39,19 @@ static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationNam
 }
 
 - (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter {
+    self = [self initWithParticipantsFilter:participantsFilter nameFormatter:nil];
+    return self;
+}
+
+- (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter
+                             nameFormatter:(id <LYRUIIdentityNameFormatting>)nameFormatter {
     self = [super init];
     if (self) {
         self.participantsFilter = participantsFilter;
+        if (nameFormatter == nil) {
+            nameFormatter = [[LYRUIIdentityNameFormatter alloc] init];
+        }
+        self.participantNameFormatter = nameFormatter;
     }
     return self;
 }
@@ -52,7 +69,7 @@ static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationNam
         participants = self.participantsFilter(conversation.participants);
     }
     if (participants.count == 1) {
-        return [self participantName:participants.anyObject];
+        return [self.participantNameFormatter nameForIdentity:participants.anyObject];
     }
     
     // TODO: Add other participants sorting
@@ -64,16 +81,6 @@ static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationNam
 
 - (nullable NSString *)metadataTitleForConversation:(nonnull LYRConversation *)conversation {
     return conversation.metadata[LYRUIConversationItemTitleMetadataKey];
-}
-
-- (nonnull NSString *)participantName:(nonnull LYRIdentity *)participant {
-    if (participant.firstName == nil && participant.lastName == nil) {
-        return participant.displayName ?: @"";
-    }
-    return [NSString stringWithFormat:@"%@%@%@",
-            participant.firstName ?: @"",
-            participant.firstName && participant.lastName ? @" " : @"",
-            participant.lastName ?: @""];
 }
 
 - (nonnull NSString *)titleWithParticipantsNames:(nonnull NSSet<LYRIdentity *> *)participants {

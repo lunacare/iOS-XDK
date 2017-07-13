@@ -1,8 +1,8 @@
 //
-//  LYURIIdentityNameFormatting.h
+//  LYRUIIdentityNameFormatter.m
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 12.07.2017.
+//  Created by Łukasz Przytuła on 13.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,19 +18,19 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-@class LYRIdentity;
+#import "LYRUIIdentityNameFormatter.h"
+#import <LayerKit/LayerKit.h>
 
-/**
- @abstract The `LYRUIIdentityNameFormatting` protocol must be adopted by objects that will be providing a formatted name of `LYRIdentity`.
- */
-@protocol LYRUIIdentityNameFormatting <NSObject>
+@implementation LYRUIIdentityNameFormatter
 
-/**
- @abstract Provides a formatted name to display for a given identity.
- @param identity The `LYRIdentity` object.
- @return The string to be displayed as the name for a given identity in the identity list.
- */
-- (nullable NSString *)nameForIdentity:(nonnull LYRIdentity *)identity;
+- (NSString *)nameForIdentity:(LYRIdentity *)identity {
+    if (identity.firstName == nil && identity.lastName == nil) {
+        return identity.displayName ?: @"";
+    }
+    return [NSString stringWithFormat:@"%@%@%@",
+            identity.firstName ?: @"",
+            identity.firstName && identity.lastName ? @" " : @"",
+            identity.lastName ?: @""];
+}
 
 @end
