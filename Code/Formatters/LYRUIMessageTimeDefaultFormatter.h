@@ -21,7 +21,7 @@
 #import "LYRUIMessageTimeFormatting.h"
 
 /**
- @abstract The `LYRUIMessageTimeFormatting` protocol must be adopted by objects that will be used for providing a string describing the time of sending a message.
+ @abstract The `LYRUIMessageTimeFormatter` objects will be used for providing a string describing the time of sending a message.
  */
 @interface LYRUIMessageTimeDefaultFormatter : NSObject <LYRUIMessageTimeFormatting>
 

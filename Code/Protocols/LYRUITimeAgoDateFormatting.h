@@ -31,6 +31,6 @@
  @param currentTime An `NSDate` representing current time.
  @return The string to be displayed as the time passed since `time` to `currentTime`.
  */
-- (NSString *)timeAgoStringForTime:(NSDate *)time withCurrentTime:(NSDate *)currentTime;
+- (nullable NSString *)timeAgoStringForTime:(nonnull NSDate *)time withCurrentTime:(nonnull NSDate *)currentTime;
 
 @end

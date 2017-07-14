@@ -5,7 +5,7 @@
 #import <OCHamcrest/OCHamcrest.h>
 #import <Atlas/LYRUIIdentityItemViewConfigurator.h>
 #import <Atlas/LYRUIIdentityItemView.h>
-#import <Atlas/LYRUITimeAgoDateFormatting.h>
+#import <Atlas/LYRUITimeAgoFormatter.h>
 #import <Atlas/LYRUIIdentityNameFormatter.h>
 #import <LayerKit/LayerKit.h>
 
@@ -37,6 +37,10 @@ describe(@"LYRUIIdentityItemViewConfigurator", ^{
         
         it(@"should have default name formatter set", ^{
             expect(viewConfigurator.nameFormatter).to.beAKindOf([LYRUIIdentityNameFormatter class]);
+        });
+        
+        it(@"should have default last seen at time formatter set", ^{
+            expect(viewConfigurator.lastSeenAtTimeFormatter).to.beAKindOf([LYRUITimeAgoFormatter class]);
         });
     });
     
