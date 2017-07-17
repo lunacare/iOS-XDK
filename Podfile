@@ -20,7 +20,7 @@ target 'Storyboard' do
 end
 
 abstract_target 'test' do
-  pod 'KIFViewControllerActions', '~> 1.0.2' 
+  pod 'KIFViewControllerActions', '~> 1.0.2'
   pod 'LYRCountDownLatch', git: 'https://github.com/layerhq/LYRCountDownLatch.git'
   pod 'KIF'
   pod 'Expecta'
@@ -32,8 +32,10 @@ abstract_target 'test' do
 end
 
 target 'UnitTests' do
+  pod 'Specta'
   pod 'Expecta'
   pod 'OCMock'
+  pod 'OCMockito'
   pod 'KIF'
   pod 'Atlas', path: '.'
 end
@@ -46,4 +48,3 @@ unless ENV['LAYER_USE_CORE_SDK_LOCATION'].blank?
     end
   end
 end
-
