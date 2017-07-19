@@ -18,31 +18,28 @@
 //  limitations under the License.
 //
 
-#if 0
-#pragma mark Imports
-#endif
-
 #import <UIKit/UIKit.h>
 #import <LayerKit/LayerKit.h>
 
 NS_ASSUME_NONNULL_BEGIN     // {
+@protocol LYRUIPresenceViewShapeProviding <NSObject>
 
+- (UIBezierPath *)shapeWithSize:(CGSize)size;
 
-#if 0
-#pragma mark -
-#endif
+@end
 
 IB_DESIGNABLE
 @interface LYRUIPresenceView : UIView
 
-@property (nonatomic, assign, readwrite) LYRIdentityPresenceStatus presenceStatus;
+@property (nonatomic, copy) IBInspectable UIColor *fillColor;
+@property (nonatomic, copy) IBInspectable UIColor *insideStrokeColor;
+@property (nonatomic, copy) IBInspectable UIColor *outsideStrokeColor;
 
-- (nullable UIColor *)fillColorForPresenceStatus:(LYRIdentityPresenceStatus)status;
-- (nullable UIColor *)strokeColorForPresenceStatus:(LYRIdentityPresenceStatus)status;
+@property (nonatomic, strong) IBOutlet id<LYRUIPresenceViewShapeProviding> shapeProvider;
 
-- (void)setFillColor:(nullable UIColor *)color forPresenceStatus:(LYRIdentityPresenceStatus)status UI_APPEARANCE_SELECTOR;
-- (void)setStrokeColor:(nullable UIColor *)color forPresenceStatus:(LYRIdentityPresenceStatus)status UI_APPEARANCE_SELECTOR;
+- (void)updateWithFillColor:(UIColor *)fillColor
+          insideStrokeColor:(UIColor *)insideStrokeColor
+         outsideStrokeColor:(UIColor *)outsideStrokeColor;
 
 @end
-
 NS_ASSUME_NONNULL_END       // }
