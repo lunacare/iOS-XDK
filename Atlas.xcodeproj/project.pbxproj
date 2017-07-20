@@ -12,6 +12,7 @@
 		159A26F41F1F9AF200BC416C /* LYRUIPresenceViewConfiguratorSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 159A26F31F1F9AF200BC416C /* LYRUIPresenceViewConfiguratorSpec.m */; };
 		159A26F61F1FA9B600BC416C /* LYRUIPresenceViewDefaultThemeSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 159A26F51F1FA9B600BC416C /* LYRUIPresenceViewDefaultThemeSpec.m */; };
 		159A26F81F1FAB4F00BC416C /* LYRUIPresenceViewDefaultShapeProviderSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 159A26F71F1FAB4F00BC416C /* LYRUIPresenceViewDefaultShapeProviderSpec.m */; };
+		159A27071F20D40E00BC416C /* LYRUIImageWithLettersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 159A27061F20D40E00BC416C /* LYRUIImageWithLettersView.xib */; };
 		40EBBF671E9D4C2300C25041 /* ATLAvatarViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 40EBBF651E9D4C1B00C25041 /* ATLAvatarViewTest.m */; };
 		40EBBF681E9D4C2400C25041 /* ATLAvatarViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 40EBBF651E9D4C1B00C25041 /* ATLAvatarViewTest.m */; };
 		58239E45B91E3CD954E75554 /* Pods_test_ProgrammaticTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8050D6CFBC2EA1D5D6B800A /* Pods_test_ProgrammaticTests.framework */; };
@@ -145,6 +146,7 @@
 		159A26F31F1F9AF200BC416C /* LYRUIPresenceViewConfiguratorSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIPresenceViewConfiguratorSpec.m; sourceTree = "<group>"; };
 		159A26F51F1FA9B600BC416C /* LYRUIPresenceViewDefaultThemeSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIPresenceViewDefaultThemeSpec.m; sourceTree = "<group>"; };
 		159A26F71F1FAB4F00BC416C /* LYRUIPresenceViewDefaultShapeProviderSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIPresenceViewDefaultShapeProviderSpec.m; sourceTree = "<group>"; };
+		159A27061F20D40E00BC416C /* LYRUIImageWithLettersView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIImageWithLettersView.xib; sourceTree = "<group>"; };
 		1886043CF840E83E9A77B78B /* Pods_UnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		250C5EF21C7656610084EB18 /* LayerKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LayerKit.framework; path = Carthage/Build/iOS/LayerKit.framework; sourceTree = "<group>"; };
 		34C06B1C4F6FE86629A3C050 /* Pods-test-ProgrammaticTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-test-ProgrammaticTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-test-ProgrammaticTests/Pods-test-ProgrammaticTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 				40EBBF651E9D4C1B00C25041 /* ATLAvatarViewTest.m */,
 				159A26F01F1F8F4000BC416C /* LYRUIPresenceViewSpec.m */,
 				150373F11F1CD7E500FA6AAB /* LYRUIPresenceView.xib */,
+				159A27061F20D40E00BC416C /* LYRUIImageWithLettersView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -724,6 +727,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				159A27071F20D40E00BC416C /* LYRUIImageWithLettersView.xib in Resources */,
 				150373F21F1CD7E500FA6AAB /* LYRUIPresenceView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
