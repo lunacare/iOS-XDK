@@ -20,5 +20,8 @@
 
 #import "LYRUIPresenceViewConfigurator.h"
 
+/**
+ @abstract The `LYRUIPresenceViewDefaultTheme` class is a set of default colors for the `LYRUIPresenceView`.
+ */
 @interface LYRUIPresenceViewDefaultTheme : NSObject <LYRUIPresenceViewTheming>
 @end

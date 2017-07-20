@@ -21,5 +21,8 @@
 #import <UIKit/UIKit.h>
 #import "LYRUIPresenceView.h"
 
+/**
+ @abstract The `LYRUIPresenceViewDefaultShapeProvider` class is responsible for providing a default circle shape to the `LYRUIPresenceView`.
+ */
 @interface LYRUIPresenceViewDefaultShapeProvider : NSObject <LYRUIPresenceViewShapeProviding>
 @end

@@ -30,13 +30,33 @@ NS_ASSUME_NONNULL_BEGIN     // {
 
 @end
 
+/**
+ @abstract The `LYRUIPresenceViewConfigurator` class is responsible for configuring `LYRUIPresenceView` colors according to the `LYRIdentityPresenceStatus`.
+ */
 @interface LYRUIPresenceViewConfigurator : NSObject
 
+/**
+ @abstract The outside stroke color to set on `LYRUIPresenceView`. Default is clear color.
+ */
 @property (nonatomic, copy) UIColor *outsideStrokeColor;
+
+/**
+ @abstract An object returning a set of colors for each `LYRIdentityPresenceStatus`. Default is an `LYRUIPresenceViewDefaultTheme` instance.
+ */
 @property (nonatomic, copy, readonly) id<LYRUIPresenceViewTheming> theme;
 
+/**
+ @abstract Initializes a new `LYRUIPresenceViewConfigurator` object with the given theme conforming to `LYRUIPresenceViewTheming` protocol.
+ @param theme An object conforming to `LYRUIPresenceViewTheming` protocol with a set of colors for each `LYRIdentityPresenceStatus`.
+ @return An `LYRUIPresenceViewConfigurator` object initialized with the given `theme`.
+ */
 - (instancetype)initWithTheme:(nullable id<LYRUIPresenceViewTheming>)theme NS_DESIGNATED_INITIALIZER;
 
+/**
+ @abstract Configures the `LYRUIPresenceView` instance colors according to the provided `LYRIdentityPresenceStatus`.
+ @param presenceView An `LYRUIPresenceView` which should be configured.
+ @param status An `LYRIdentityPresenceStatus` for which the `presenceView` should be configured. 
+ */
 - (void)setupPresenceView:(LYRUIPresenceView *)presenceView forPresenceStatus:(LYRIdentityPresenceStatus)status;
 
 @end
