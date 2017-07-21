@@ -1,5 +1,5 @@
 //
-//  LUIPresenceView.m
+//  LYRUIShapedView.m
 //  Layer-UI-iOS
 //
 //  Created by Jeremy Wyld on 03.07.2017.
@@ -18,11 +18,11 @@
 //  limitations under the License.
 //
 
-#import "LYRUIPresenceView.h"
-#import "LYRUIPresenceViewDefaultShapeProvider.h"
+#import "LYRUIShapedView.h"
+#import "LYRUIShapedViewDefaultShapeDrawer.h"
 
 NS_ASSUME_NONNULL_BEGIN     // {
-@implementation LYRUIPresenceView
+@implementation LYRUIShapedView
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
 - (void)lyr_CommonInit {
     [self setDefaultColors];
     self.opaque = NO;
-    self.shapeProvider = [[LYRUIPresenceViewDefaultShapeProvider alloc] init];
+    self.shapeDrawer = [[LYRUIShapedViewDefaultShapeDrawer alloc] init];
 }
 
 - (void)setDefaultColors {
@@ -64,34 +64,16 @@ NS_ASSUME_NONNULL_BEGIN     // {
 
 - (void)drawRect:(CGRect)rect {
     [super drawRect:rect];
-    
-    UIBezierPath *path = [self bezierPath];
-    if (!path) {
-        return;
-    }
-    
-    if (path.lineWidth > 0.0 && self.outsideStrokeColor && self.outsideStrokeColor != [UIColor clearColor]) {
-        [self.outsideStrokeColor setStroke];
-        [path stroke];
-    }
-    
-    if (self.fillColor && self.fillColor != [UIColor clearColor]) {
-        [self.fillColor setFill];
-        [path fill];
-    }
-    
-
-    if (path.lineWidth > 0.0 && self.insideStrokeColor && self.insideStrokeColor != [UIColor clearColor]) {
-        [self.insideStrokeColor setStroke];
-        [path addClip];
-        [path stroke];
-    }
+    [self.shapeDrawer drawInRect:rect
+                   withFillColor:self.fillColor
+               insideStrokeColor:self.insideStrokeColor
+              outsideStrokeColor:self.outsideStrokeColor];
 }
 
 #pragma mark - Properties
 
-- (void)setShapeProvider:(id<LYRUIPresenceViewShapeProviding>)shapeProvider {
-    _shapeProvider = shapeProvider;
+- (void)setShapeDrawer:(id<LYRUIShapedViewShapeDrawing>)shapeDrawer {
+    _shapeDrawer = shapeDrawer;
     [self setNeedsDisplay];
 }
 
@@ -133,16 +115,6 @@ NS_ASSUME_NONNULL_BEGIN     // {
 }
 
 #pragma mark - Bezier path
-
-- (UIBezierPath *)bezierPath {
-    UIBezierPath *path = [self.shapeProvider shapeWithSize:self.bounds.size];
-    if (path == nil) {
-        @throw [NSException exceptionWithName:NSObjectNotAvailableException
-                                       reason:@"Object conforming to `LYRUIPresenceViewShapesProviding` returned nil from `nonnull` returning method `shapeForPresenceStatus`."
-                                     userInfo:nil];
-    }
-    return path;
-}
 
 @end
 NS_ASSUME_NONNULL_END       // }

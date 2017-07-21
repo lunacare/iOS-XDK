@@ -1,5 +1,5 @@
 //
-//  LYRUIPresenceViewConfigurator.m
+//  LYRUIShapedViewConfigurator.m
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 19.07.2017.
@@ -18,28 +18,28 @@
 //  limitations under the License.
 //
 
-#import "LYRUIPresenceViewConfigurator.h"
-#import "LYRUIPresenceView.h"
-#import "LYRUIPresenceViewDefaultTheme.h"
+#import "LYRUIShapedViewConfigurator.h"
+#import "LYRUIShapedView.h"
+#import "LYRUIShapedViewDefaultTheme.h"
 
-@interface LYRUIPresenceViewConfigurator ()
+@interface LYRUIShapedViewConfigurator ()
 
-@property (nonatomic, copy, readwrite) id<LYRUIPresenceViewTheming> theme;
+@property (nonatomic, copy, readwrite) id<LYRUIShapedViewTheming> theme;
 
 @end
 
-@implementation LYRUIPresenceViewConfigurator
+@implementation LYRUIShapedViewConfigurator
 
 - (instancetype)init {
     self = [self initWithTheme:nil];
     return self;
 }
 
-- (instancetype)initWithTheme:(id<LYRUIPresenceViewTheming>)theme {
+- (instancetype)initWithTheme:(id<LYRUIShapedViewTheming>)theme {
     self = [super init];
     if (self) {
         if (theme == nil) {
-            theme = [[LYRUIPresenceViewDefaultTheme alloc] init];
+            theme = [[LYRUIShapedViewDefaultTheme alloc] init];
         }
         self.theme = theme;
         self.outsideStrokeColor = [UIColor clearColor];
@@ -49,10 +49,10 @@
 
 #pragma mark - Presence view setup
 
-- (void)setupPresenceView:(LYRUIPresenceView *)presenceView forPresenceStatus:(LYRIdentityPresenceStatus)status {
-    [presenceView updateWithFillColor:[self.theme fillColorForPresenceStatus:status]
-                    insideStrokeColor:[self.theme strokeColorForPresenceStatus:status]
-                   outsideStrokeColor:self.outsideStrokeColor];
+- (void)setupShapedView:(LYRUIShapedView *)shapedView forPresenceStatus:(LYRIdentityPresenceStatus)status {
+    [shapedView updateWithFillColor:[self.theme fillColorForPresenceStatus:status]
+                  insideStrokeColor:[self.theme strokeColorForPresenceStatus:status]
+                 outsideStrokeColor:self.outsideStrokeColor];
 }
 
 #pragma mark - Properties

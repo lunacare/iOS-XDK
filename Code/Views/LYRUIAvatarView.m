@@ -20,16 +20,16 @@
 
 #import "LYRUIAvatarView.h"
 #import "LYRUIImageWithLettersView.h"
-#import "LYRUIPresenceView.h"
-#import "LYRUIParticipantsCountView.h"
+#import "LYRUIShapedView.h"
+#import "LYRUINumberBadgeView.h"
 #import "LYRUIAvatarViewConfigurator.h"
 
 @interface LYRUIAvatarView ()
 
 @property (nonatomic, weak, readwrite) LYRUIImageWithLettersView *primaryAvatarView;
 @property (nonatomic, weak, readwrite) LYRUIImageWithLettersView *secondaryAvatarView;
-@property (nonatomic, weak, readwrite) LYRUIPresenceView *presenceView;
-@property (nonatomic, weak, readwrite) LYRUIParticipantsCountView *participantsCountView;
+@property (nonatomic, weak, readwrite) LYRUIShapedView *presenceView;
+@property (nonatomic, weak, readwrite) LYRUINumberBadgeView *participantsCountView;
 
 @property (nonatomic, strong) LYRUIAvatarViewConfigurator *configurator;
 

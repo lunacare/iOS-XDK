@@ -3,20 +3,20 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
-#import <Atlas/LYRUIPresenceViewConfigurator.h>
-#import <Atlas/LYRUIPresenceViewDefaultTheme.h>
-#import <Atlas/LYRUIPresenceView.h>
+#import <Atlas/LYRUIShapedViewConfigurator.h>
+#import <Atlas/LYRUIShapedViewDefaultTheme.h>
+#import <Atlas/LYRUIShapedView.h>
 
-SpecBegin(LYRUIPresenceViewConfigurator)
+SpecBegin(LYRUIShapedViewConfigurator)
 
-describe(@"LYRUIPresenceViewConfigurator", ^{
-    __block LYRUIPresenceViewConfigurator *configurator;
-    __block id<LYRUIPresenceViewTheming> themeMock;
+describe(@"LYRUIShapedViewConfigurator", ^{
+    __block LYRUIShapedViewConfigurator *configurator;
+    __block id<LYRUIShapedViewTheming> themeMock;
     
     beforeEach(^{
-        themeMock = mockProtocol(@protocol(LYRUIPresenceViewTheming));
+        themeMock = mockProtocol(@protocol(LYRUIShapedViewTheming));
         [[given([themeMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:themeMock];
-        configurator = [[LYRUIPresenceViewConfigurator alloc] initWithTheme:themeMock];
+        configurator = [[LYRUIShapedViewConfigurator alloc] initWithTheme:themeMock];
     });
     
     afterEach(^{
@@ -31,25 +31,25 @@ describe(@"LYRUIPresenceViewConfigurator", ^{
     
     describe(@"after initialization with designated initializer", ^{
         beforeEach(^{
-            configurator = [[LYRUIPresenceViewConfigurator alloc] init];
+            configurator = [[LYRUIShapedViewConfigurator alloc] init];
         });
         
         it(@"should have default outside stroke color set to clear color", ^{
             expect(configurator.outsideStrokeColor).to.equal([UIColor clearColor]);
         });
-        it(@"should have default theme set to instance of `LYRUIPresenceViewDefaultTheme`", ^{
-            expect(configurator.theme).to.beAKindOf([LYRUIPresenceViewDefaultTheme class]);
+        it(@"should have default theme set to instance of `LYRUIShapedViewDefaultTheme`", ^{
+            expect(configurator.theme).to.beAKindOf([LYRUIShapedViewDefaultTheme class]);
         });
     });
     
-    describe(@"setupPresenceView:forPresenceStatus:", ^{
-        __block LYRUIPresenceView *viewMock;
+    describe(@"setupShapedView:forPresenceStatus:", ^{
+        __block LYRUIShapedView *viewMock;
         __block UIColor *fillColorMock;
         __block UIColor *strokeColorMock;
         __block UIColor *outsideStrokeColorMock;
         
         beforeEach(^{
-            viewMock = mock([LYRUIPresenceView class]);
+            viewMock = mock([LYRUIShapedView class]);
             
             fillColorMock = mock([UIColor class]);
             strokeColorMock = mock([UIColor class]);
@@ -58,8 +58,8 @@ describe(@"LYRUIPresenceViewConfigurator", ^{
             [[given([themeMock fillColorForPresenceStatus:0]) withMatcher:anything()] willReturn:fillColorMock];
             [[given([themeMock strokeColorForPresenceStatus:0]) withMatcher:anything()] willReturn:strokeColorMock];
             configurator.outsideStrokeColor = outsideStrokeColorMock;
-            
-            [configurator setupPresenceView:viewMock forPresenceStatus:LYRIdentityPresenceStatusAvailable];
+
+            [configurator setupShapedView:viewMock forPresenceStatus:LYRIdentityPresenceStatusAvailable];
         });
         
         it(@"should get proper fill color from theme", ^{

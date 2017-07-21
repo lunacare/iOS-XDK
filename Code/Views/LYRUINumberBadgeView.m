@@ -1,5 +1,5 @@
 //
-//  LYRUIParticipantsCountView.m
+//  LYRUINumberBadgeView.m
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 20.07.2017.
@@ -18,15 +18,15 @@
 //  limitations under the License.
 //
 
-#import "LYRUIParticipantsCountView.h"
+#import "LYRUINumberBadgeView.h"
 
-@interface LYRUIParticipantsCountView ()
+@interface LYRUINumberBadgeView ()
 
 @property (nonatomic, weak) UILabel *label;
 
 @end
 
-@implementation LYRUIParticipantsCountView
+@implementation LYRUINumberBadgeView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -123,9 +123,9 @@
     self.label.font = font;
 }
 
-- (void)setNumberOfParticipants:(NSUInteger)numberOfParticipants {
-    _numberOfParticipants = numberOfParticipants;
-    self.label.text = @(numberOfParticipants).stringValue;
+- (void)setNumber:(NSUInteger)number {
+    _number = number;
+    self.label.text = @(number).stringValue;
 }
 
 @end

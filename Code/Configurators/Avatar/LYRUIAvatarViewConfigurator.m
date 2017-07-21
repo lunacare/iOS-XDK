@@ -21,15 +21,15 @@
 #import "LYRUIAvatarViewConfigurator.h"
 #import "LYRUIAvatarView.h"
 #import "LYRUIImageWithLettersView.h"
-#import "LYRUIPresenceView.h"
-#import "LYRUIParticipantsCountView.h"
+#import "LYRUIShapedView.h"
+#import "LYRUINumberBadgeView.h"
 #import "LYRUIImageWithLettersViewConfigurator.h"
-#import "LYRUIPresenceViewConfigurator.h"
+#import "LYRUIShapedViewConfigurator.h"
 
 @interface LYRUIAvatarViewConfigurator ()
 
 @property (nonatomic, strong) LYRUIImageWithLettersViewConfigurator *avatarViewConfigurator;
-@property (nonatomic, strong) LYRUIPresenceViewConfigurator *presenceViewConfigurator;
+@property (nonatomic, strong) LYRUIShapedViewConfigurator *presenceViewConfigurator;
 
 @end
 
@@ -37,7 +37,7 @@
 
 - (void)setupAvatarView:(LYRUIAvatarView *)avatarView withIdentity:(LYRIdentity *)identity {
     [self.avatarViewConfigurator setupImageWithLettersView:avatarView.primaryAvatarView withIdentity:identity];
-    [self.presenceViewConfigurator setupPresenceView:avatarView.presenceView forPresenceStatus:identity.presenceStatus];
+    [self.presenceViewConfigurator setupShapedView:avatarView.presenceView forPresenceStatus:identity.presenceStatus];
     // TODO: update to identity layout
 }
 
@@ -54,7 +54,7 @@
         [self.avatarViewConfigurator setupImageWithLettersViewWithMultipleParticipantsIcon:avatarView.secondaryAvatarView];
     }
     [self.avatarViewConfigurator setupImageWithLettersView:avatarView.primaryAvatarView withIdentity:participants.firstObject];
-    avatarView.participantsCountView.numberOfParticipants = identities.count;
+    avatarView.participantsCountView.number = identities.count;
     // TODO: update to conversation layout
 }
 

@@ -1,8 +1,8 @@
 //
-//  LYRUIPresenceViewDefaultTheme.h
+//  LYRUIShapedViewDefaultShapeDrawer.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 19.07.2017.
+//  Created by Łukasz Przytuła on 18.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +18,18 @@
 //  limitations under the License.
 //
 
-#import "LYRUIPresenceViewConfigurator.h"
+#import <UIKit/UIKit.h>
+#import "LYRUIShapedView.h"
 
 /**
- @abstract The `LYRUIPresenceViewDefaultTheme` class is a set of default colors for the `LYRUIPresenceView`.
+ @abstract The `LYRUIShapedViewDefaultShapeDrawer` class is responsible for drawing a default circle shape on the `LYRUIShapedView`.
  */
-@interface LYRUIPresenceViewDefaultTheme : NSObject <LYRUIPresenceViewTheming>
+@interface LYRUIShapedViewDefaultShapeDrawer : NSObject <LYRUIShapedViewShapeDrawing>
+
+- (void)drawWithBezierPath:(UIBezierPath *)path
+             withFillColor:(UIColor *)fillColor
+         insideStrokeColor:(UIColor *)insideStrokeColor
+        outsideStrokeColor:(UIColor *)outsideStrokeColor;
+- (UIBezierPath *)bezierPathForSize:(CGSize)size;
+
 @end

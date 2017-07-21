@@ -1,5 +1,5 @@
 //
-//  LYRUIPresenceView.h
+//  LYRUIShapedView.h
 //  Layer-UI-iOS
 //
 //  Created by Jeremy Wyld on 03.07.2017.
@@ -23,24 +23,26 @@
 
 NS_ASSUME_NONNULL_BEGIN     // {
 /**
- @abstract Objects conforming to the `LYRUIPresenceViewShapeProviding` protocol will be used to provide an `UIBezierPath` shapes to the `LYRUIPresenceView`.
+ @abstract Objects conforming to the `LYRUIShapedViewShapeDrawing` protocol will be used to draw an `UIBezierPath` shapes on the `LYRUIShapedView`.
  */
-@protocol LYRUIPresenceViewShapeProviding <NSObject>
+@protocol LYRUIShapedViewShapeDrawing <NSObject>
 
 /**
- @abstract Returns an `UIBezierPath` shape for a given `size` which will be rendered by the `LYRUIPresenceView`.
- @param size The size to fit the shape in.
- @return Returns an `UIBezierPath` instance with the shape for `LYRUIPresenceView`.
+ @abstract Draws an `UIBezierPath` shape for in given `rect` on current context.
+ @param rect The `CGRect` to fit the shape in.
+ @param fillColor The fill color of the rendered shape.
+ @param insideStrokeColor The inside stroke color of the rendered shape.
+ @param outsideStrokeColor The outside stroke color of the rendered shape.
  */
-- (UIBezierPath *)shapeWithSize:(CGSize)size;
+- (void)drawInRect:(CGRect)rect withFillColor:(UIColor *)fillColor insideStrokeColor:(UIColor *)insideStrokeColor outsideStrokeColor:(UIColor *)outsideStrokeColor;
 
 @end
 
 IB_DESIGNABLE
 /**
- @abstract The `LYRUIPresenceView` displays a colored shape representing the status of Identity's presence.
+ @abstract The `LYRUIShapedView` displays a colored shape representing the status of Identity's presence.
  */
-@interface LYRUIPresenceView : UIView
+@interface LYRUIShapedView : UIView
 
 /**
  @abstract The fill color of the rendered shape. Default is green color.
@@ -58,9 +60,9 @@ IB_DESIGNABLE
 @property (nonatomic, copy) IBInspectable UIColor *outsideStrokeColor;
 
 /**
- @abstract Provides the shape of the presence view. Default is an `LYRUIPresenceViewDefaultShapeProvider` instance.
+ @abstract Draws the shape in the presence view. Default is an `LYRUIShapedViewDefaultShapeDrawer` instance.
  */
-@property (nonatomic, strong) IBOutlet id<LYRUIPresenceViewShapeProviding> shapeProvider;
+@property (nonatomic, strong) IBOutlet id<LYRUIShapedViewShapeDrawing> shapeDrawer;
 
 /**
  @abstract Sets the colors of the rendered shape.

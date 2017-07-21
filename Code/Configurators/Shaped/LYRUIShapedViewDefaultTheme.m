@@ -1,5 +1,5 @@
 //
-//  LYRUIPresenceViewDefaultTheme.m
+//  LYRUIShapedViewDefaultTheme.m
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 19.07.2017.
@@ -18,9 +18,9 @@
 //  limitations under the License.
 //
 
-#import "LYRUIPresenceViewDefaultTheme.h"
+#import "LYRUIShapedViewDefaultTheme.h"
 
-@implementation LYRUIPresenceViewDefaultTheme
+@implementation LYRUIShapedViewDefaultTheme
 
 #pragma mark - NSCopying
 
@@ -28,7 +28,7 @@
     return [[[self class] allocWithZone:zone] init];
 }
 
-#pragma mark - LYRUIPresenceViewTheming methods
+#pragma mark - LYRUIShapedViewTheming methods
 
 - (UIColor *)fillColorForPresenceStatus:(LYRIdentityPresenceStatus)status {
     switch (status) {

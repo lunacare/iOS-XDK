@@ -3,15 +3,15 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
-#import <Atlas/LYRUIPresenceViewDefaultTheme.h>
+#import <Atlas/LYRUIShapedViewDefaultTheme.h>
 
-SpecBegin(LYRUIPresenceViewDefaultTheme)
+SpecBegin(LYRUIShapedViewDefaultTheme)
 
-describe(@"LYRUIPresenceViewDefaultTheme", ^{
-    __block LYRUIPresenceViewDefaultTheme *theme;
+describe(@"LYRUIShapedViewDefaultTheme", ^{
+    __block LYRUIShapedViewDefaultTheme *theme;
     
     beforeEach(^{
-        theme = [[LYRUIPresenceViewDefaultTheme alloc] init];
+        theme = [[LYRUIShapedViewDefaultTheme alloc] init];
     });
     
     afterEach(^{

@@ -1,5 +1,5 @@
 //
-//  LYRUIParticipantsCountView.h
+//  LYRUINumberBadgeView.h
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 20.07.2017.
@@ -22,9 +22,9 @@
 
 NS_ASSUME_NONNULL_BEGIN     // {
 IB_DESIGNABLE
-@interface LYRUIParticipantsCountView : UIView
+@interface LYRUINumberBadgeView : UIView
 
-@property (nonatomic) IBInspectable NSUInteger numberOfParticipants;
+@property (nonatomic) IBInspectable NSUInteger number;
 
 @property (nonatomic, copy) IBInspectable UIColor *textColor;
 @property (nonatomic, copy) IBInspectable UIColor *borderColor;

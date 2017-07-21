@@ -3,16 +3,16 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
-#import <Atlas/LYRUIParticipantsCountView.h>
+#import <Atlas/LYRUINumberBadgeView.h>
 
 SpecBegin(LYRUIParticipantsCountView)
 
-describe(@"LYRUIParticipantsCountView", ^{
-    __block LYRUIParticipantsCountView *view;
+describe(@"LYRUINumberBadgeView", ^{
+    __block LYRUINumberBadgeView *view;
     __block __weak UILabel *label;
     
     beforeEach(^{
-        view = [[LYRUIParticipantsCountView alloc] init];
+        view = [[LYRUINumberBadgeView alloc] init];
         label = view.subviews.firstObject;
     });
     
@@ -58,7 +58,7 @@ describe(@"LYRUIParticipantsCountView", ^{
         });
         
         it(@"should have number of participants set to value from Interface Builder", ^{
-            expect(view.numberOfParticipants).to.equal(7);
+            expect(view.number).to.equal(7);
         });
         it(@"should have border width set to value from Interface Builder", ^{
             expect(view.borderWidth).to.equal(2);
@@ -200,10 +200,10 @@ describe(@"LYRUIParticipantsCountView", ^{
         });
     });
     
-    describe(@"numberOfParticipants", ^{
+    describe(@"number", ^{
         context(@"setter", ^{
             beforeEach(^{
-                view.numberOfParticipants = 44;
+                view.number = 44;
             });
             
             it(@"should update text of the label", ^{

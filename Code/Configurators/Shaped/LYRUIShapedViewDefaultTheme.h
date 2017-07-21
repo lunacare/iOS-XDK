@@ -1,8 +1,8 @@
 //
-//  LYRUIPresenceViewDefaultShapeProvider.h
+//  LYRUIShapedViewDefaultTheme.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 18.07.2017.
+//  Created by Łukasz Przytuła on 19.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,11 +18,10 @@
 //  limitations under the License.
 //
 
-#import <UIKit/UIKit.h>
-#import "LYRUIPresenceView.h"
+#import "LYRUIShapedViewConfigurator.h"
 
 /**
- @abstract The `LYRUIPresenceViewDefaultShapeProvider` class is responsible for providing a default circle shape to the `LYRUIPresenceView`.
+ @abstract The `LYRUIShapedViewDefaultTheme` class is a set of default colors for the `LYRUIShapedView`.
  */
-@interface LYRUIPresenceViewDefaultShapeProvider : NSObject <LYRUIPresenceViewShapeProviding>
+@interface LYRUIShapedViewDefaultTheme : NSObject <LYRUIShapedViewTheming>
 @end
