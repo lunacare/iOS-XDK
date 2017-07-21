@@ -1,5 +1,5 @@
 //
-//  LYRUIAvatar.h
+//  LYRUIAvatarView.h
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 20.07.2017.
@@ -20,6 +20,9 @@
 
 #import <UIKit/UIKit.h>
 #import <LayerKit/LayerKit.h>
+@class LYRUIImageWithLettersView;
+@class LYRUIPresenceView;
+@class LYRUIParticipantsCountView;
 
 typedef NS_ENUM(NSUInteger, LYRUIAvatarPresenceViewPosition) {
     LYRUIAvatarPresenceViewPositionBottomRight,
@@ -28,11 +31,15 @@ typedef NS_ENUM(NSUInteger, LYRUIAvatarPresenceViewPosition) {
     LYRUIAvatarPresenceViewPositionTopRight,
 };
 
-@interface LYRUIAvatar : UIView
+@interface LYRUIAvatarView : UIView
 
 @property (nonatomic) LYRUIAvatarPresenceViewPosition presenceViewPosition;
 
-- (void)setupWithIdentity:(LYRIdentity *)identity;
-- (void)setupWithConversation:(LYRConversation *)conversation;
+@property (nonatomic, weak) NSArray<LYRIdentity *> *identities;
+
+@property (nonatomic, weak, readonly) LYRUIImageWithLettersView *primaryAvatarView;
+@property (nonatomic, weak, readonly) LYRUIImageWithLettersView *secondaryAvatarView;
+@property (nonatomic, weak, readonly) LYRUIPresenceView *presenceView;
+@property (nonatomic, weak, readonly) LYRUIParticipantsCountView *participantsCountView;
 
 @end
