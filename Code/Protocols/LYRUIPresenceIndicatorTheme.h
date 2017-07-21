@@ -1,5 +1,5 @@
 //
-//  LYRUIAvatarViewConfigurator.h
+//  LYRUIParticipantViewTheme.h
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 21.07.2017.
@@ -20,10 +20,11 @@
 
 #import <Foundation/Foundation.h>
 #import <LayerKit/LayerKit.h>
-@class LYRUIAvatarView;
 
-@interface LYRUIAvatarViewConfigurator : NSObject
+@protocol LYRUIPresenceIndicatorTheme <NSObject, NSCopying>
 
-- (void)setupAvatarView:(LYRUIAvatarView *)avatarView withIdentities:(NSArray<LYRIdentity *> *)identities;
+- (UIColor *)fillColorForPresenceStatus:(LYRIdentityPresenceStatus)status;
+- (UIColor *)insideStrokeColorForPresenceStatus:(LYRIdentityPresenceStatus)status;
+- (UIColor *)outsideStrokeColorForPresenceStatus:(LYRIdentityPresenceStatus)status;
 
 @end

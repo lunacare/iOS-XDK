@@ -11,8 +11,8 @@
 		1504137B1F21CC4A006F46BD /* LYRUIParticipantsCountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1504137A1F21CC4A006F46BD /* LYRUIParticipantsCountView.xib */; };
 		1504137D1F21D147006F46BD /* LYRUIParticipantsCountViewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 1504137C1F21D147006F46BD /* LYRUIParticipantsCountViewSpec.m */; };
 		159A26F11F1F8F4000BC416C /* LYRUIShapedViewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 159A26F01F1F8F4000BC416C /* LYRUIShapedViewSpec.m */; };
-		159A26F41F1F9AF200BC416C /* LYRUIShapedViewConfiguratorSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 159A26F31F1F9AF200BC416C /* LYRUIShapedViewConfiguratorSpec.m */; };
-		159A26F61F1FA9B600BC416C /* LYRUIShapedViewDefaultThemeSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 159A26F51F1FA9B600BC416C /* LYRUIShapedViewDefaultThemeSpec.m */; };
+		159A26F41F1F9AF200BC416C /* LYRUIPresenceViewConfiguratorSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 159A26F31F1F9AF200BC416C /* LYRUIPresenceViewConfiguratorSpec.m */; };
+		159A26F61F1FA9B600BC416C /* LYRUIPresenceViewDefaultThemeSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 159A26F51F1FA9B600BC416C /* LYRUIPresenceViewDefaultThemeSpec.m */; };
 		159A26F81F1FAB4F00BC416C /* LYRUIShapedViewDefaultShapeDrawerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 159A26F71F1FAB4F00BC416C /* LYRUIShapedViewDefaultShapeDrawerSpec.m */; };
 		159A27071F20D40E00BC416C /* LYRUIImageWithLettersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 159A27061F20D40E00BC416C /* LYRUIImageWithLettersView.xib */; };
 		40EBBF671E9D4C2300C25041 /* ATLAvatarViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 40EBBF651E9D4C1B00C25041 /* ATLAvatarViewTest.m */; };
@@ -147,8 +147,8 @@
 		1504137A1F21CC4A006F46BD /* LYRUIParticipantsCountView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIParticipantsCountView.xib; sourceTree = "<group>"; };
 		1504137C1F21D147006F46BD /* LYRUIParticipantsCountViewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIParticipantsCountViewSpec.m; sourceTree = "<group>"; };
 		159A26F01F1F8F4000BC416C /* LYRUIShapedViewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIShapedViewSpec.m; sourceTree = "<group>"; };
-		159A26F31F1F9AF200BC416C /* LYRUIShapedViewConfiguratorSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIShapedViewConfiguratorSpec.m; sourceTree = "<group>"; };
-		159A26F51F1FA9B600BC416C /* LYRUIShapedViewDefaultThemeSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIShapedViewDefaultThemeSpec.m; sourceTree = "<group>"; };
+		159A26F31F1F9AF200BC416C /* LYRUIPresenceViewConfiguratorSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIPresenceViewConfiguratorSpec.m; sourceTree = "<group>"; };
+		159A26F51F1FA9B600BC416C /* LYRUIPresenceViewDefaultThemeSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIPresenceViewDefaultThemeSpec.m; sourceTree = "<group>"; };
 		159A26F71F1FAB4F00BC416C /* LYRUIShapedViewDefaultShapeDrawerSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIShapedViewDefaultShapeDrawerSpec.m; sourceTree = "<group>"; };
 		159A27061F20D40E00BC416C /* LYRUIImageWithLettersView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIImageWithLettersView.xib; sourceTree = "<group>"; };
 		1886043CF840E83E9A77B78B /* Pods_UnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -301,11 +301,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		150413991F225E1D006F46BD /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				159A26F51F1FA9B600BC416C /* LYRUIPresenceViewDefaultThemeSpec.m */,
+			);
+			name = Themes;
+			sourceTree = "<group>";
+		};
 		159A26F21F1F9ADB00BC416C /* Configurators */ = {
 			isa = PBXGroup;
 			children = (
-				159A26F31F1F9AF200BC416C /* LYRUIShapedViewConfiguratorSpec.m */,
-				159A26F51F1FA9B600BC416C /* LYRUIShapedViewDefaultThemeSpec.m */,
+				159A26F31F1F9AF200BC416C /* LYRUIPresenceViewConfiguratorSpec.m */,
 			);
 			name = Configurators;
 			sourceTree = "<group>";
@@ -517,6 +524,7 @@
 		D6F406001A8FDEEB00AE9581 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				150413991F225E1D006F46BD /* Themes */,
 				159A26F21F1F9ADB00BC416C /* Configurators */,
 				D6C045511A9967070028E9D0 /* Utilities */,
 				D6C045501A9966FD0028E9D0 /* Mocks */,
@@ -1047,11 +1055,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				159A26F61F1FA9B600BC416C /* LYRUIShapedViewDefaultThemeSpec.m in Sources */,
+				159A26F61F1FA9B600BC416C /* LYRUIPresenceViewDefaultThemeSpec.m in Sources */,
 				D02CDCDD1A9FFC930013CBE8 /* ATLTestUtilities.m in Sources */,
 				1504137D1F21D147006F46BD /* LYRUIParticipantsCountViewSpec.m in Sources */,
 				D0294DE81A93F39300702856 /* ATLMediaStreamTests.m in Sources */,
-				159A26F41F1F9AF200BC416C /* LYRUIShapedViewConfiguratorSpec.m in Sources */,
+				159A26F41F1F9AF200BC416C /* LYRUIPresenceViewConfiguratorSpec.m in Sources */,
 				159A26F11F1F8F4000BC416C /* LYRUIShapedViewSpec.m in Sources */,
 				159A26F81F1FAB4F00BC416C /* LYRUIShapedViewDefaultShapeDrawerSpec.m in Sources */,
 				D04517141A9F9A0C00E137D9 /* ATLMediaAttachmentTests.m in Sources */,

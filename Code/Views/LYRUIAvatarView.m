@@ -20,16 +20,14 @@
 
 #import "LYRUIAvatarView.h"
 #import "LYRUIImageWithLettersView.h"
-#import "LYRUIShapedView.h"
-#import "LYRUINumberBadgeView.h"
+#import "LYRUIPresenceView.h"
 #import "LYRUIAvatarViewConfigurator.h"
 
 @interface LYRUIAvatarView ()
 
 @property (nonatomic, weak, readwrite) LYRUIImageWithLettersView *primaryAvatarView;
 @property (nonatomic, weak, readwrite) LYRUIImageWithLettersView *secondaryAvatarView;
-@property (nonatomic, weak, readwrite) LYRUIShapedView *presenceView;
-@property (nonatomic, weak, readwrite) LYRUINumberBadgeView *participantsCountView;
+@property (nonatomic, weak, readwrite) LYRUIPresenceView *presenceView;
 
 @property (nonatomic, strong) LYRUIAvatarViewConfigurator *configurator;
 
@@ -58,11 +56,6 @@
 }
 
 #pragma mark - Properties
-
-- (void)setPresenceViewPosition:(LYRUIAvatarPresenceViewPosition)presenceViewPosition {
-    _presenceViewPosition = presenceViewPosition;
-    [self setNeedsUpdateConstraints];
-}
 
 - (void)setIdentities:(NSArray<LYRIdentity *> *)identities {
     _identities = identities;

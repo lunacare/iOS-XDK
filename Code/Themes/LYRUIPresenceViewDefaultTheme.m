@@ -18,9 +18,10 @@
 //  limitations under the License.
 //
 
-#import "LYRUIShapedViewDefaultTheme.h"
+#import "LYRUIPresenceViewDefaultTheme.h"
+#import <LayerKit/LayerKit.h>
 
-@implementation LYRUIShapedViewDefaultTheme
+@implementation LYRUIPresenceViewDefaultTheme
 
 #pragma mark - NSCopying
 
@@ -28,7 +29,7 @@
     return [[[self class] allocWithZone:zone] init];
 }
 
-#pragma mark - LYRUIShapedViewTheming methods
+#pragma mark - LYRUIPresenceIndicatorTheme methods
 
 - (UIColor *)fillColorForPresenceStatus:(LYRIdentityPresenceStatus)status {
     switch (status) {
@@ -45,7 +46,7 @@
     }
 }
 
-- (UIColor *)strokeColorForPresenceStatus:(LYRIdentityPresenceStatus)status {
+- (UIColor *)insideStrokeColorForPresenceStatus:(LYRIdentityPresenceStatus)status {
     switch (status) {
         case LYRIdentityPresenceStatusOffline:
         case LYRIdentityPresenceStatusAvailable:
@@ -56,6 +57,16 @@
         case LYRIdentityPresenceStatusInvisible:
             return [UIColor colorWithRed:(87.0/255.0) green:(191.0/255.0) blue:(70.0/255.0) alpha:1.0];
     }
+}
+
+- (UIColor *)outsideStrokeColorForPresenceStatus:(LYRIdentityPresenceStatus)status {
+    return [UIColor clearColor];
+}
+
+#pragma mark - LYRUIParticipantsCountViewTheme property
+
+- (UIColor *)participantsCountColor {
+    return [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
 }
 
 @end

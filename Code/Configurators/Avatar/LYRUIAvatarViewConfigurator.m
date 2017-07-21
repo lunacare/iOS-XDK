@@ -24,37 +24,37 @@
 #import "LYRUIShapedView.h"
 #import "LYRUINumberBadgeView.h"
 #import "LYRUIImageWithLettersViewConfigurator.h"
-#import "LYRUIShapedViewConfigurator.h"
+#import "LYRUIPresenceViewConfigurator.h"
 
 @interface LYRUIAvatarViewConfigurator ()
 
 @property (nonatomic, strong) LYRUIImageWithLettersViewConfigurator *avatarViewConfigurator;
-@property (nonatomic, strong) LYRUIShapedViewConfigurator *presenceViewConfigurator;
+@property (nonatomic, strong) LYRUIPresenceViewConfigurator *presenceViewConfigurator;
 
 @end
 
 @implementation LYRUIAvatarViewConfigurator
 
-- (void)setupAvatarView:(LYRUIAvatarView *)avatarView withIdentity:(LYRIdentity *)identity {
+- (void)setupAvatarView:(LYRUIAvatarView *)avatarView withIdentities:(NSArray<LYRIdentity *> *)identities {
+    if (identities.count == 1) {
+        [self setupSingleAvatarView:avatarView withIdentity:identities.firstObject];
+    } else {
+        [self setupMultipleAvatarView:avatarView withIdentities:identities];
+    }
+}
+
+- (void)setupSingleAvatarView:(LYRUIAvatarView *)avatarView withIdentity:(LYRIdentity *)identity {
     [self.avatarViewConfigurator setupImageWithLettersView:avatarView.primaryAvatarView withIdentity:identity];
-    [self.presenceViewConfigurator setupShapedView:avatarView.presenceView forPresenceStatus:identity.presenceStatus];
     // TODO: update to identity layout
 }
 
-- (void)setupAvatarView:(LYRUIAvatarView *)avatarView withIdentities:(NSArray<LYRIdentity *> *)identities {
-    NSArray<LYRIdentity *> *participants; // TODO: filter currently logged in user from conversation and sort other participants
-    if (participants.count == 1) {
-        [self setupAvatarView:avatarView withIdentity:participants.firstObject];
-        return;
-    }
-    
-    if (participants.count == 2) {
-        [self.avatarViewConfigurator setupImageWithLettersView:avatarView.secondaryAvatarView withIdentity:participants.lastObject];
+- (void)setupMultipleAvatarView:(LYRUIAvatarView *)avatarView withIdentities:(NSArray<LYRIdentity *> *)identities {
+    if (identities.count == 2) {
+        [self.avatarViewConfigurator setupImageWithLettersView:avatarView.secondaryAvatarView withIdentity:identities.lastObject];
     } else {
         [self.avatarViewConfigurator setupImageWithLettersViewWithMultipleParticipantsIcon:avatarView.secondaryAvatarView];
     }
-    [self.avatarViewConfigurator setupImageWithLettersView:avatarView.primaryAvatarView withIdentity:participants.firstObject];
-    avatarView.participantsCountView.number = identities.count;
+    [self.avatarViewConfigurator setupImageWithLettersView:avatarView.primaryAvatarView withIdentity:identities.firstObject];
     // TODO: update to conversation layout
 }
 

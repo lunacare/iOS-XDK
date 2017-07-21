@@ -1,5 +1,5 @@
 //
-//  LYRUIAvatarViewConfigurator.h
+//  LYRUIPresenceViewConfigurator.h
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 21.07.2017.
@@ -19,11 +19,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <LayerKit/LayerKit.h>
-@class LYRUIAvatarView;
+@class LYRUIPresenceView;
+@class LYRIdentity;
+@protocol LYRUIParticipantsCountViewTheme;
+@protocol LYRUIPresenceIndicatorTheme;
 
-@interface LYRUIAvatarViewConfigurator : NSObject
+NS_ASSUME_NONNULL_BEGIN     // {
+@interface LYRUIPresenceViewConfigurator : NSObject
 
-- (void)setupAvatarView:(LYRUIAvatarView *)avatarView withIdentities:(NSArray<LYRIdentity *> *)identities;
+- (void)setupPresenceView:(LYRUIPresenceView *)presenceView
+           withIdentities:(NSArray<LYRIdentity *> *)identities
+               usingTheme:(id<LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme>)theme;
 
 @end
+NS_ASSUME_NONNULL_END     // }

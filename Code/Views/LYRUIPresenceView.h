@@ -1,5 +1,5 @@
 //
-//  LYRUIAvatarViewConfigurator.h
+//  LYRUIPresenceView.h
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 21.07.2017.
@@ -18,12 +18,23 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-#import <LayerKit/LayerKit.h>
-@class LYRUIAvatarView;
+#import <UIKit/UIKit.h>
+@class LYRIdentity;
+@class LYRUIShapedView;
+@class LYRUINumberBadgeView;
+@protocol LYRUIPresenceIndicatorTheme;
+@protocol LYRUIParticipantsCountViewTheme;
 
-@interface LYRUIAvatarViewConfigurator : NSObject
+NS_ASSUME_NONNULL_BEGIN     // {
+IB_DESIGNABLE
+@interface LYRUIPresenceView : UIView
 
-- (void)setupAvatarView:(LYRUIAvatarView *)avatarView withIdentities:(NSArray<LYRIdentity *> *)identities;
+@property (nonatomic, weak) NSArray<LYRIdentity *> *identities;
+
+@property (nonatomic, copy) id<LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme> theme UI_APPEARANCE_SELECTOR;
+
+@property (nonatomic, weak, readonly) LYRUIShapedView *presenceIndicator;
+@property (nonatomic, weak, readonly) LYRUINumberBadgeView *participantsCountView;
 
 @end
+NS_ASSUME_NONNULL_END       // }

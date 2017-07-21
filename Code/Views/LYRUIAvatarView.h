@@ -21,25 +21,14 @@
 #import <UIKit/UIKit.h>
 #import <LayerKit/LayerKit.h>
 @class LYRUIImageWithLettersView;
-@class LYRUIShapedView;
-@class LYRUINumberBadgeView;
-
-typedef NS_ENUM(NSUInteger, LYRUIAvatarPresenceViewPosition) {
-    LYRUIAvatarPresenceViewPositionBottomRight,
-    LYRUIAvatarPresenceViewPositionBottomLeft,
-    LYRUIAvatarPresenceViewPositionTopLeft,
-    LYRUIAvatarPresenceViewPositionTopRight,
-};
+@class LYRUIPresenceView;
 
 @interface LYRUIAvatarView : UIView
-
-@property (nonatomic) LYRUIAvatarPresenceViewPosition presenceViewPosition;
 
 @property (nonatomic, weak) NSArray<LYRIdentity *> *identities;
 
 @property (nonatomic, weak, readonly) LYRUIImageWithLettersView *primaryAvatarView;
 @property (nonatomic, weak, readonly) LYRUIImageWithLettersView *secondaryAvatarView;
-@property (nonatomic, weak, readonly) LYRUIShapedView *presenceView;
-@property (nonatomic, weak, readonly) LYRUINumberBadgeView *participantsCountView;
+@property (nonatomic, weak, readonly) LYRUIPresenceView *presenceView;
 
 @end

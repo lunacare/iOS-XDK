@@ -1,8 +1,8 @@
 //
-//  LYRUIShapedViewDefaultTheme.h
+//  LYRUIParticipantsCountViewTheme.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 19.07.2017.
+//  Created by Łukasz Przytuła on 21.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +18,10 @@
 //  limitations under the License.
 //
 
-#import "LYRUIShapedViewConfigurator.h"
+#import <Foundation/Foundation.h>
 
-/**
- @abstract The `LYRUIShapedViewDefaultTheme` class is a set of default colors for the `LYRUIShapedView`.
- */
-@interface LYRUIShapedViewDefaultTheme : NSObject <LYRUIShapedViewTheming>
-@end
+@protocol LYRUIParticipantsCountViewTheme <NSObject, NSCopying>
+
+@property (nonatomic, readonly) UIColor *participantsCountColor;
+
+@end;

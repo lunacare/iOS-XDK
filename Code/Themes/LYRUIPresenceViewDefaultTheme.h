@@ -1,8 +1,8 @@
 //
-//  LYRUIAvatarViewConfigurator.h
+//  LYRUIShapedViewDefaultTheme.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 21.07.2017.
+//  Created by Łukasz Przytuła on 19.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,11 +19,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <LayerKit/LayerKit.h>
-@class LYRUIAvatarView;
+#import "LYRUIPresenceIndicatorTheme.h"
+#import "LYRUIParticipantsCountViewTheme.h"
 
-@interface LYRUIAvatarViewConfigurator : NSObject
-
-- (void)setupAvatarView:(LYRUIAvatarView *)avatarView withIdentities:(NSArray<LYRIdentity *> *)identities;
-
+@interface LYRUIPresenceViewDefaultTheme : NSObject <LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme>
 @end
