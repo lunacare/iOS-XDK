@@ -25,13 +25,11 @@
 #import "LYRUIParticipantsCountView.h"
 #import "LYRUIImageWithLettersViewConfigurator.h"
 #import "LYRUIPresenceViewConfigurator.h"
-#import "LYRUIParticipantsCountViewConfigurator.h"
 
 @interface LYRUIAvatarViewConfigurator ()
 
 @property (nonatomic, strong) LYRUIImageWithLettersViewConfigurator *avatarViewConfigurator;
 @property (nonatomic, strong) LYRUIPresenceViewConfigurator *presenceViewConfigurator;
-@property (nonatomic, strong) LYRUIParticipantsCountViewConfigurator *participantsCounViewConfigurator;
 
 @end
 

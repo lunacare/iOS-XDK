@@ -19,14 +19,18 @@
 //
 
 #import <UIKit/UIKit.h>
+
+NS_ASSUME_NONNULL_BEGIN     // {
 IB_DESIGNABLE
 @interface LYRUIParticipantsCountView : UIView
+
+@property (nonatomic) IBInspectable NSUInteger numberOfParticipants;
 
 @property (nonatomic, copy) IBInspectable UIColor *textColor;
 @property (nonatomic, copy) IBInspectable UIColor *borderColor;
 @property (nonatomic) IBInspectable CGFloat borderWidth;
 @property (nonatomic) IBInspectable CGFloat cornerRadius;
-@property (nonatomic, copy) IBInspectable UIFont *textFont;
-@property (nonatomic) NSUInteger numberOfParticipants;
+@property (nonatomic, copy) UIFont *font;
 
 @end
+NS_ASSUME_NONNULL_END       // }
