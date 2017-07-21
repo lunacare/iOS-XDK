@@ -20,8 +20,6 @@
 
 #import <UIKit/UIKit.h>
 #import <LayerKit/LayerKit.h>
-@class LYRUIImageWithLettersView;
-@class LYRUIPresenceView;
 @protocol LYRUIPresenceIndicatorTheme;
 @protocol LYRUIParticipantsCountViewTheme;
 @protocol LYRUIAvatarViewTheme;
@@ -32,10 +30,6 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @property (nonatomic, weak) NSArray<LYRIdentity *> *identities;
 
 @property (nonatomic, copy, nullable) id<LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme, LYRUIAvatarViewTheme> theme UI_APPEARANCE_SELECTOR;
-
-@property (nonatomic, weak, readonly) LYRUIImageWithLettersView *primaryAvatarView;
-@property (nonatomic, weak, readonly) LYRUIImageWithLettersView *secondaryAvatarView;
-@property (nonatomic, weak, readonly) LYRUIPresenceView *presenceView;
 
 @end
 NS_ASSUME_NONNULL_END       // }

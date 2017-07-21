@@ -1,5 +1,5 @@
 //
-//  LYRUIPresenceView.h
+//  LYRUIAvatarView+PrivateProperties.h
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 21.07.2017.
@@ -18,18 +18,14 @@
 //  limitations under the License.
 //
 
-#import <UIKit/UIKit.h>
-@class LYRIdentity;
-@protocol LYRUIPresenceIndicatorTheme;
-@protocol LYRUIParticipantsCountViewTheme;
+#import "LYRUIAvatarView.h"
+@class LYRUIImageWithLettersView;
+@class LYRUIPresenceView;
 
-NS_ASSUME_NONNULL_BEGIN     // {
-IB_DESIGNABLE
-@interface LYRUIPresenceView : UIView
+@interface LYRUIAvatarView (PrivateProperties)
 
-@property (nonatomic, weak) NSArray<LYRIdentity *> *identities;
-
-@property (nonatomic, copy) id<LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme> theme UI_APPEARANCE_SELECTOR;
+@property (nonatomic, weak, readonly) LYRUIImageWithLettersView *primaryAvatarView;
+@property (nonatomic, weak, readonly) LYRUIImageWithLettersView *secondaryAvatarView;
+@property (nonatomic, weak, readonly) LYRUIPresenceView *presenceView;
 
 @end
-NS_ASSUME_NONNULL_END       // }

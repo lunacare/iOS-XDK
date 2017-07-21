@@ -19,7 +19,7 @@
 //
 
 #import "LYRUIAvatarViewConfigurator.h"
-#import "LYRUIAvatarView.h"
+#import "LYRUIAvatarView+PrivateProperties.h"
 #import "LYRUIImageWithLettersView.h"
 #import "LYRUIShapedView.h"
 #import "LYRUINumberBadgeView.h"

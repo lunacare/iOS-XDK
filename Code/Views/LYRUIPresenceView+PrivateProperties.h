@@ -1,5 +1,5 @@
 //
-//  LYRUIPresenceView.h
+//  LYRUIPresenceView+PrivateProperties.h
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 21.07.2017.
@@ -18,18 +18,13 @@
 //  limitations under the License.
 //
 
-#import <UIKit/UIKit.h>
-@class LYRIdentity;
-@protocol LYRUIPresenceIndicatorTheme;
-@protocol LYRUIParticipantsCountViewTheme;
+#import "LYRUIPresenceView.h"
+@class LYRUIShapedView;
+@class LYRUINumberBadgeView;
 
-NS_ASSUME_NONNULL_BEGIN     // {
-IB_DESIGNABLE
-@interface LYRUIPresenceView : UIView
+@interface LYRUIPresenceView (PrivateProperties)
 
-@property (nonatomic, weak) NSArray<LYRIdentity *> *identities;
-
-@property (nonatomic, copy) id<LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme> theme UI_APPEARANCE_SELECTOR;
+@property (nonatomic, weak, readonly) LYRUIShapedView *presenceIndicator;
+@property (nonatomic, weak, readonly) LYRUINumberBadgeView *participantsCountView;
 
 @end
-NS_ASSUME_NONNULL_END       // }

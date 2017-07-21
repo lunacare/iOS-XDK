@@ -5,7 +5,7 @@
 #import <OCHamcrest/OCHamcrest.h>
 #import <Atlas/LYRUIPresenceViewConfigurator.h>
 #import <Atlas/LYRUIPresenceViewDefaultTheme.h>
-#import <Atlas/LYRUIPresenceView.h>
+#import <Atlas/LYRUIPresenceView+PrivateProperties.h>
 #import <Atlas/LYRUIPresenceIndicatorTheme.h>
 #import <Atlas/LYRUIParticipantsCountViewTheme.h>
 #import <Atlas/LYRUIShapedView.h>

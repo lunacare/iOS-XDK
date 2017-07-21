@@ -19,7 +19,7 @@
 //
 
 #import "LYRUIPresenceViewConfigurator.h"
-#import "LYRUIPresenceView.h"
+#import "LYRUIPresenceView+PrivateProperties.h"
 #import "LYRUIShapedView.h"
 #import "LYRUINumberBadgeView.h"
 #import "LYRUIPresenceIndicatorTheme.h"
