@@ -62,4 +62,9 @@
     [self.configurator setupAvatarView:self withIdentities:identities];
 }
 
+- (void)setTheme:(id<LYRUIParticipantsCountViewTheme,LYRUIPresenceIndicatorTheme,LYRUIAvatarViewTheme>)theme {
+    _theme = theme;
+    self.presenceView.theme = theme;
+}
+
 @end
