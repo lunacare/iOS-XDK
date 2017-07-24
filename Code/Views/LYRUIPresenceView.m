@@ -22,6 +22,7 @@
 #import "LYRUIShapedView.h"
 #import "LYRUINumberBadgeView.h"
 #import "LYRUIPresenceViewConfigurator.h"
+#import "LYRUIPresenceViewDefaultTheme.h"
 
 @interface LYRUIPresenceView ()
 
@@ -51,6 +52,7 @@
 }
 
 - (void)lyr_commonInit {
+    self.theme = [[LYRUIPresenceViewDefaultTheme alloc] init];
     self.configurator = [[LYRUIPresenceViewConfigurator alloc] init];
     [self addPresenceIndicator];
     [self addParticipantsCountView];

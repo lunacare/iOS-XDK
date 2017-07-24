@@ -1,8 +1,8 @@
 //
-//  LYRUIAvatarViewConfigurator.h
+//  LYRUIAvatarViewSingleLayout.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 21.07.2017.
+//  Created by Łukasz Przytuła on 24.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,14 +19,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <LayerKit/LayerKit.h>
-@class LYRUIAvatarView;
-@class LYRUIImageWithLettersViewConfigurator;
+#import "LYRUIAvatarView.h"
 
-@interface LYRUIAvatarViewConfigurator : NSObject
-
-- (instancetype)initWithAvatarViewConfigurator:(LYRUIImageWithLettersViewConfigurator *)avatarViewConfigurator;
-
-- (void)setupAvatarView:(LYRUIAvatarView *)avatarView withIdentities:(NSArray<LYRIdentity *> *)identities;
-
+@interface LYRUIAvatarViewSingleLayout : NSObject <LYRUIAvatarViewLayout>
 @end

@@ -22,6 +22,8 @@
 #import "LYRUIImageWithLettersView.h"
 #import "LYRUIPresenceView.h"
 #import "LYRUIAvatarViewConfigurator.h"
+#import "LYRUIAvatarViewSingleLayout.h"
+#import "LYRUIPresenceViewDefaultTheme.h"
 
 @interface LYRUIAvatarView ()
 
@@ -52,7 +54,46 @@
 }
 
 - (void)lyr_commonInit {
+    self.secondaryAvatarView = [self addAvatarView];
+    self.primaryAvatarView = [self addAvatarView];
+    [self addPresenceView];
+    
     self.configurator = [[LYRUIAvatarViewConfigurator alloc] init];
+}
+
+- (LYRUIImageWithLettersView *)addAvatarView {
+    LYRUIImageWithLettersView *avatarView = [[LYRUIImageWithLettersView alloc] init];
+    avatarView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:avatarView];
+    return avatarView;
+}
+
+- (void)addPresenceView {
+    LYRUIPresenceView *presenceView = [[LYRUIPresenceView alloc] init];
+    LYRUIPresenceViewDefaultTheme *presenceViewTheme = [[LYRUIPresenceViewDefaultTheme alloc] init];
+    presenceViewTheme.presenceIndicatorBackgroundColor = [UIColor whiteColor];
+    presenceView.theme = presenceViewTheme;
+    presenceView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:presenceView];
+    self.presenceView = presenceView;
+}
+
+- (void)updateConstraints {
+    [self.layout updateConstraintsInView:self];
+    [super updateConstraints];
+}
+
+- (void)prepareForInterfaceBuilder {
+    self.layout = [[LYRUIAvatarViewSingleLayout alloc] init];
+    LYRIdentity *identity = [[LYRIdentity alloc] init];
+    [self.configurator setupAvatarView:self withIdentities:@[identity]];
+}
+
+- (void)setBounds:(CGRect)bounds {
+    if (!CGRectEqualToRect(self.bounds, bounds)) {
+        [self setNeedsUpdateConstraints];
+    }
+    [super setBounds:bounds];
 }
 
 #pragma mark - Properties
@@ -65,6 +106,14 @@
 - (void)setTheme:(id<LYRUIParticipantsCountViewTheme,LYRUIPresenceIndicatorTheme,LYRUIAvatarViewTheme>)theme {
     _theme = theme;
     self.presenceView.theme = theme;
+}
+
+- (void)setLayout:(id<LYRUIAvatarViewLayout>)layout {
+    if (self.layout) {
+        [self.layout removeConstraintsFromView:self];
+    }
+    _layout = layout;
+    [layout addConstraintsInView:self];
 }
 
 @end

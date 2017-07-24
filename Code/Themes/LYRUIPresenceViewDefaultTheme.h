@@ -23,4 +23,7 @@
 #import "LYRUIParticipantsCountViewTheme.h"
 
 @interface LYRUIPresenceViewDefaultTheme : NSObject <LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme>
+
+@property (nonatomic, copy) UIColor *presenceIndicatorBackgroundColor;
+
 @end

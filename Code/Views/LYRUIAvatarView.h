@@ -20,16 +20,28 @@
 
 #import <UIKit/UIKit.h>
 #import <LayerKit/LayerKit.h>
+@class LYRUIAvatarView;
 @protocol LYRUIPresenceIndicatorTheme;
 @protocol LYRUIParticipantsCountViewTheme;
 @protocol LYRUIAvatarViewTheme;
 
 NS_ASSUME_NONNULL_BEGIN     // {
+@protocol LYRUIAvatarViewLayout <NSObject, NSCopying> // TODO: make it conform to LYRUIViewLayout protocol after merging
+
+- (void)addConstraintsInView:(LYRUIAvatarView *)view;
+- (void)removeConstraintsFromView:(LYRUIAvatarView *)view;
+- (void)updateConstraintsInView:(LYRUIAvatarView *)view;
+
+@end
+
+IB_DESIGNABLE
 @interface LYRUIAvatarView : UIView
 
 @property (nonatomic, weak) NSArray<LYRIdentity *> *identities;
 
 @property (nonatomic, copy, nullable) id<LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme, LYRUIAvatarViewTheme> theme UI_APPEARANCE_SELECTOR;
+
+@property (nonatomic, copy) IBOutlet id<LYRUIAvatarViewLayout> layout;
 
 @end
 NS_ASSUME_NONNULL_END       // }

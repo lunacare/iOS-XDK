@@ -21,19 +21,39 @@
 #import "LYRUIAvatarViewConfigurator.h"
 #import "LYRUIAvatarView+PrivateProperties.h"
 #import "LYRUIImageWithLettersView.h"
-#import "LYRUIShapedView.h"
-#import "LYRUINumberBadgeView.h"
 #import "LYRUIImageWithLettersViewConfigurator.h"
-#import "LYRUIPresenceViewConfigurator.h"
+#import "LYRUIPresenceView.h"
+#import "LYRUIAvatarViewSingleLayout.h"
 
 @interface LYRUIAvatarViewConfigurator ()
 
 @property (nonatomic, strong) LYRUIImageWithLettersViewConfigurator *avatarViewConfigurator;
-@property (nonatomic, strong) LYRUIPresenceViewConfigurator *presenceViewConfigurator;
+
+@property (nonatomic, strong) LYRUIAvatarViewSingleLayout *singleLayout;
 
 @end
 
 @implementation LYRUIAvatarViewConfigurator
+
+- (instancetype)init {
+    self = [self initWithAvatarViewConfigurator:nil];
+    return self;
+}
+
+- (instancetype)initWithAvatarViewConfigurator:(LYRUIImageWithLettersViewConfigurator *)avatarViewConfigurator
+{
+    self = [super init];
+    if (self) {
+        if (avatarViewConfigurator == nil) {
+            avatarViewConfigurator = [[LYRUIImageWithLettersViewConfigurator alloc] init];
+        }
+        self.avatarViewConfigurator = avatarViewConfigurator;
+        self.singleLayout = [[LYRUIAvatarViewSingleLayout alloc] init];
+    }
+    return self;
+}
+
+#pragma mark - LYRUIAvatarView configuration
 
 - (void)setupAvatarView:(LYRUIAvatarView *)avatarView withIdentities:(NSArray<LYRIdentity *> *)identities {
     if (identities.count == 1) {
@@ -41,11 +61,12 @@
     } else {
         [self setupMultipleAvatarView:avatarView withIdentities:identities];
     }
+    avatarView.presenceView.identities = identities;
 }
 
 - (void)setupSingleAvatarView:(LYRUIAvatarView *)avatarView withIdentity:(LYRIdentity *)identity {
     [self.avatarViewConfigurator setupImageWithLettersView:avatarView.primaryAvatarView withIdentity:identity];
-    // TODO: update to identity layout
+    avatarView.layout = self.singleLayout;
 }
 
 - (void)setupMultipleAvatarView:(LYRUIAvatarView *)avatarView withIdentities:(NSArray<LYRIdentity *> *)identities {
@@ -55,7 +76,7 @@
         [self.avatarViewConfigurator setupImageWithLettersViewWithMultipleParticipantsIcon:avatarView.secondaryAvatarView];
     }
     [self.avatarViewConfigurator setupImageWithLettersView:avatarView.primaryAvatarView withIdentity:identities.firstObject];
-    // TODO: update to conversation layout
+    // TODO: update to multi avatar layout
 }
 
 @end

@@ -23,10 +23,20 @@
 
 @implementation LYRUIPresenceViewDefaultTheme
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.presenceIndicatorBackgroundColor = [UIColor clearColor];
+    }
+    return self;
+}
+
 #pragma mark - NSCopying
 
-- (id)copyWithZone:(NSZone *)zone {
-    return [[[self class] allocWithZone:zone] init];
+- (instancetype)copyWithZone:(NSZone *)zone {
+    LYRUIPresenceViewDefaultTheme *copy = [[[self class] allocWithZone:zone] init];
+    copy.presenceIndicatorBackgroundColor = self.presenceIndicatorBackgroundColor;
+    return copy;
 }
 
 #pragma mark - LYRUIPresenceIndicatorTheme methods
@@ -60,7 +70,7 @@
 }
 
 - (UIColor *)outsideStrokeColorForPresenceStatus:(LYRIdentityPresenceStatus)status {
-    return [UIColor clearColor];
+    return self.presenceIndicatorBackgroundColor;
 }
 
 #pragma mark - LYRUIParticipantsCountViewTheme property
