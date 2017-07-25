@@ -49,7 +49,8 @@
     [self addImageView];
     [self addLabel];
     
-    self.backgroundColor = [UIColor colorWithRed:219.0/255.0 green:222.0/255.0 blue:228.0/255.0 alpha:1.0];
+    self.backgroundColor = [UIColor clearColor];
+    self.avatarBackgroundColor = [UIColor colorWithRed:219.0/255.0 green:222.0/255.0 blue:228.0/255.0 alpha:1.0];
     self.lettersColor = [UIColor whiteColor];
     
     [self installConstraints];
@@ -167,14 +168,13 @@
     self.imageView.layer.borderWidth = borderWidth;
 }
 
-- (UIColor *)backgroundColor {
+- (UIColor *)avatarBackgroundColor {
     return self.imageView.backgroundColor;
 }
 
-- (void)setBackgroundColor:(UIColor *)backgroundColor {
-    [super setBackgroundColor:[UIColor clearColor]];
-    if (backgroundColor) {
-        self.imageView.backgroundColor = backgroundColor;
+- (void)setAvatarBackgroundColor:(UIColor *)avatarBackgroundColor {
+    if (avatarBackgroundColor) {
+        self.imageView.backgroundColor = avatarBackgroundColor;
     }
 }
 
