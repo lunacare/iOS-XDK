@@ -151,13 +151,29 @@
     }
 }
 
+- (UIColor *)borderColor {
+    return [UIColor colorWithCGColor:self.imageView.layer.borderColor];
+}
+
+- (void)setBorderColor:(UIColor *)borderColor {
+    self.imageView.layer.borderColor = borderColor.CGColor;
+}
+
+- (CGFloat)borderWidth {
+    return self.imageView.layer.borderWidth;
+}
+
+- (void)setBorderWidth:(CGFloat)borderWidth {
+    self.imageView.layer.borderWidth = borderWidth;
+}
+
 - (UIColor *)backgroundColor {
     return self.imageView.backgroundColor;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
+    [super setBackgroundColor:[UIColor clearColor]];
     if (backgroundColor) {
-        [super setBackgroundColor:[UIColor whiteColor]];
         self.imageView.backgroundColor = backgroundColor;
     }
 }

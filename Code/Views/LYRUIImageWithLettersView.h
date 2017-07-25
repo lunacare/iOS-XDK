@@ -27,6 +27,8 @@ IB_DESIGNABLE
 @property (nonatomic, copy, nullable) IBInspectable UIImage *image;
 @property (nonatomic, copy, nullable) IBInspectable NSString *letters;
 @property (nonatomic, copy) IBInspectable UIColor *lettersColor;
+@property (nonatomic, copy) IBInspectable UIColor *borderColor;
+@property (nonatomic) IBInspectable CGFloat borderWidth;
 @property (nonatomic, copy) UIFont *font;
 
 @property (nonatomic, strong) void(^imageFetchCallback)(UIImage *);

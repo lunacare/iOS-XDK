@@ -5,6 +5,7 @@
 #import <OCHamcrest/OCHamcrest.h>
 #import <Atlas/LYRUIAvatarView.h>
 #import <Atlas/LYRUIAvatarViewSingleLayout.h>
+#import <Atlas/LYRUIAvatarViewMultiLayout.h>
 
 SpecBegin(LYRUIAvatarView)
 
@@ -26,14 +27,28 @@ describe(@"LYRUIAvatarView", ^{
     });
     
     describe(@"after initialization from xib", ^{
-        beforeEach(^{
-            NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-            NSArray<LYRUIAvatarView *> *xibViews = [bundle loadNibNamed:@"LYRUIAvatarView" owner:self options:nil];
-            view = [xibViews objectAtIndex:1];
+        context(@"with layout outlet connected to single layout object", ^{
+            beforeEach(^{
+                NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+                NSArray<LYRUIAvatarView *> *xibViews = [bundle loadNibNamed:@"LYRUIAvatarView" owner:self options:nil];
+                view = [xibViews objectAtIndex:2];
+            });
+            
+            it(@"should have layout set to object connected via IB outlet", ^{
+                expect(view.layout).to.beAKindOf([LYRUIAvatarViewSingleLayout class]);
+            });
         });
         
-        it(@"should have layout set to object connected via IB outlet", ^{
-            expect(view.layout).to.beAKindOf([LYRUIAvatarViewSingleLayout class]);
+        context(@"with layout outlet connected to multi layout object", ^{
+            beforeEach(^{
+                NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+                NSArray<LYRUIAvatarView *> *xibViews = [bundle loadNibNamed:@"LYRUIAvatarView" owner:self options:nil];
+                view = [xibViews objectAtIndex:3];
+            });
+            
+            it(@"should have layout set to object connected via IB outlet", ^{
+                expect(view.layout).to.beAKindOf([LYRUIAvatarViewMultiLayout class]);
+            });
         });
     });
 });

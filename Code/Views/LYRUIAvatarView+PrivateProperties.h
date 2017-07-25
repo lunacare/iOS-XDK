@@ -22,6 +22,14 @@
 @class LYRUIImageWithLettersView;
 @class LYRUIPresenceView;
 
+typedef NS_ENUM(NSUInteger, LYRUIAvatarViewLayoutSize) {
+    LYRUIAvatarViewLayoutSizeTiny,
+    LYRUIAvatarViewLayoutSizeSmall,
+    LYRUIAvatarViewLayoutSizeMedium,
+    LYRUIAvatarViewLayoutSizeLarge,
+    LYRUIAvatarViewLayoutSizeXLarge,
+};
+
 @interface LYRUIAvatarView (PrivateProperties)
 
 @property (nonatomic, weak, readonly) LYRUIImageWithLettersView *primaryAvatarView;

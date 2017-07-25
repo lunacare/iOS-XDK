@@ -18,11 +18,10 @@
 //  limitations under the License.
 //
 
-#import "LYRUIAvatarView.h"
+#import "LYRUIAvatarView+PrivateProperties.h"
 #import "LYRUIImageWithLettersView.h"
 #import "LYRUIPresenceView.h"
 #import "LYRUIAvatarViewConfigurator.h"
-#import "LYRUIAvatarViewSingleLayout.h"
 #import "LYRUIPresenceViewDefaultTheme.h"
 
 @interface LYRUIAvatarView ()
@@ -32,6 +31,8 @@
 @property (nonatomic, weak, readwrite) LYRUIPresenceView *presenceView;
 
 @property (nonatomic, strong) LYRUIAvatarViewConfigurator *configurator;
+
+@property (nonatomic) BOOL renderMultiAvatar;
 
 @end
 
@@ -84,9 +85,12 @@
 }
 
 - (void)prepareForInterfaceBuilder {
-    self.layout = [[LYRUIAvatarViewSingleLayout alloc] init];
-    LYRIdentity *identity = [[LYRIdentity alloc] init];
-    [self.configurator setupAvatarView:self withIdentities:@[identity]];
+    NSMutableArray<LYRIdentity *> *identities = [[NSMutableArray alloc] init];
+    [identities addObject:[[LYRIdentity alloc] init]];
+    if (self.renderMultiAvatar) {
+        [identities addObject:[[LYRIdentity alloc] init]];
+    }
+    [self.configurator setupAvatarView:self withIdentities:identities];
 }
 
 - (void)setBounds:(CGRect)bounds {
@@ -114,6 +118,12 @@
     }
     _layout = layout;
     [layout addConstraintsInView:self];
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    [super setBackgroundColor:backgroundColor];
+    self.primaryAvatarView.borderColor = backgroundColor;
+    [self setNeedsUpdateConstraints];
 }
 
 @end

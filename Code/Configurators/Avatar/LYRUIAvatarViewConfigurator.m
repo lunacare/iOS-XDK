@@ -24,12 +24,14 @@
 #import "LYRUIImageWithLettersViewConfigurator.h"
 #import "LYRUIPresenceView.h"
 #import "LYRUIAvatarViewSingleLayout.h"
+#import "LYRUIAvatarViewMultiLayout.h"
 
 @interface LYRUIAvatarViewConfigurator ()
 
 @property (nonatomic, strong) LYRUIImageWithLettersViewConfigurator *avatarViewConfigurator;
 
 @property (nonatomic, strong) LYRUIAvatarViewSingleLayout *singleLayout;
+@property (nonatomic, strong) LYRUIAvatarViewMultiLayout *multiLayout;
 
 @end
 
@@ -40,8 +42,7 @@
     return self;
 }
 
-- (instancetype)initWithAvatarViewConfigurator:(LYRUIImageWithLettersViewConfigurator *)avatarViewConfigurator
-{
+- (instancetype)initWithAvatarViewConfigurator:(LYRUIImageWithLettersViewConfigurator *)avatarViewConfigurator {
     self = [super init];
     if (self) {
         if (avatarViewConfigurator == nil) {
@@ -49,6 +50,7 @@
         }
         self.avatarViewConfigurator = avatarViewConfigurator;
         self.singleLayout = [[LYRUIAvatarViewSingleLayout alloc] init];
+        self.multiLayout = [[LYRUIAvatarViewMultiLayout alloc] init];
     }
     return self;
 }
@@ -66,6 +68,7 @@
 
 - (void)setupSingleAvatarView:(LYRUIAvatarView *)avatarView withIdentity:(LYRIdentity *)identity {
     [self.avatarViewConfigurator setupImageWithLettersView:avatarView.primaryAvatarView withIdentity:identity];
+    avatarView.primaryAvatarView.borderWidth = 0.0;
     avatarView.layout = self.singleLayout;
 }
 
@@ -76,7 +79,8 @@
         [self.avatarViewConfigurator setupImageWithLettersViewWithMultipleParticipantsIcon:avatarView.secondaryAvatarView];
     }
     [self.avatarViewConfigurator setupImageWithLettersView:avatarView.primaryAvatarView withIdentity:identities.firstObject];
-    // TODO: update to multi avatar layout
+    avatarView.primaryAvatarView.borderWidth = 2.0;
+    avatarView.layout = self.multiLayout;
 }
 
 @end

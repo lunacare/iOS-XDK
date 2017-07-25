@@ -23,14 +23,6 @@
 #import "LYRUIImageWithLettersView.h"
 #import "LYRUIPresenceView.h"
 
-typedef NS_ENUM(NSUInteger, LYRUIAvatarViewLayoutSize) {
-    LYRUIAvatarViewLayoutSizeTiny,
-    LYRUIAvatarViewLayoutSizeSmall,
-    LYRUIAvatarViewLayoutSizeMedium,
-    LYRUIAvatarViewLayoutSizeLarge,
-    LYRUIAvatarViewLayoutSizeXLarge,
-};
-
 @interface LYRUIAvatarViewSingleLayout ()
 
 @property (nonatomic) LYRUIAvatarViewLayoutSize currentSize;
@@ -88,7 +80,7 @@ typedef NS_ENUM(NSUInteger, LYRUIAvatarViewLayoutSize) {
     [self updateViewsVisibilityInView:view];
 }
 
-#pragma mark - Constraints {
+#pragma mark - Constraints
 
 - (void)addAvatarConstraintsInView:(LYRUIAvatarView *)view {
     NSMutableArray *constraints = [NSMutableArray new];
