@@ -1,8 +1,8 @@
 //
-//  LYRUIImageFetcher.h
+//  LYRUIInitialsFormatting.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 20.07.2017.
+//  Created by Łukasz Przytuła on 26.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,20 +19,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "LYRUIImageFetching.h"
-@protocol LYRUIImageCaching;
-@protocol LYRUIImageCreating;
-@protocol LYRUIDataCreating;
-@protocol LYRUIDispatching;
+@class LYRIdentity;
 
 NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIImageFetcher : NSObject <LYRUIImageFetching>
+@protocol LYRUIInitialsFormatting <NSObject>
 
-- (instancetype)initWithImagesCache:(nullable id<LYRUIImageCaching>)imagesCache
-                       imageFactory:(nullable id<LYRUIImageCreating>)imageFactory
-                        dataFactory:(nullable id<LYRUIDataCreating>)dataFactory
-                         dispatcher:(nullable id<LYRUIDispatching>)dispatcher
-                         andSession:(nullable NSURLSession *)session;
+- (nullable NSString *)initialsForIdentity:(LYRIdentity *)identity;
 
 @end
 NS_ASSUME_NONNULL_END       // }

@@ -21,9 +21,16 @@
 #import <Foundation/Foundation.h>
 #import <LayerKit/LayerKit.h>
 @class LYRUIImageWithLettersView;
+@protocol LYRUIImageFetching;
+@protocol LYRUIImageCreating;
+@protocol LYRUIInitialsFormatting;
 
 NS_ASSUME_NONNULL_BEGIN     // {
 @interface LYRUIImageWithLettersViewConfigurator : NSObject
+
+- (instancetype)initWithImageFetcher:(nullable id<LYRUIImageFetching>)imageFetcher
+                        imageFactory:(nullable id<LYRUIImageCreating>)imageFactory
+                   initialsFormatter:(nullable id<LYRUIInitialsFormatting>)initialsFormatter;
 
 - (void)setupImageWithLettersView:(LYRUIImageWithLettersView *)view withIdentity:(LYRIdentity *)identity;
 - (void)setupImageWithLettersViewWithMultipleParticipantsIcon:(LYRUIImageWithLettersView *)view;

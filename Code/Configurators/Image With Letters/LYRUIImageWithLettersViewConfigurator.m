@@ -21,41 +21,81 @@
 #import "LYRUIImageWithLettersViewConfigurator.h"
 #import "LYRUIImageWithLettersView.h"
 #import "LYRUIImageFetcher.h"
+#import "LYRUIImageFactory.h"
+#import "LYRUIInitialsFormatter.h"
 
 @interface LYRUIImageWithLettersViewConfigurator ()
 
-@property (nonatomic, strong) LYRUIImageFetcher *imageFetcher;
+@property (nonatomic, strong) id<LYRUIImageFetching> imageFetcher;
+@property (nonatomic, strong) id<LYRUIImageCreating> imageFactory;
+@property (nonatomic, strong) id<LYRUIInitialsFormatting> initialsFormatter;
 
 @end
 
 @implementation LYRUIImageWithLettersViewConfigurator
 
-- (void)setupImageWithLettersView:(LYRUIImageWithLettersView *)view withIdentity:(LYRIdentity *)identity {
-    if (identity.avatarImageURL) {
-        view.letters = nil;
-        __weak __typeof(view) weakView = view;
-        view.imageFetchCallback = ^(UIImage * _Nonnull image) {
-            weakView.image = image;
-        };
-        [self.imageFetcher fetchImageWithURL:identity.avatarImageURL andCallback:view.imageFetchCallback];
-    } else {
-        view.image = nil;
-        view.letters = [self initialsForIdentity:identity];
-    }
+- (instancetype)init {
+    self = [self initWithImageFetcher:nil imageFactory:nil initialsFormatter:nil];
+    return self;
 }
 
-- (NSString *)initialsForIdentity:(LYRIdentity *)identity { // TODO: extract to separate class
-    NSString * initials = @"";
-    if (identity.firstName && identity.firstName.length > 0 && identity.lastName && identity.lastName.length > 0) {
-        initials = [NSString stringWithFormat:@"%@%@", [identity.firstName substringToIndex:1], [identity.lastName substringToIndex:1]];
+- (instancetype)initWithImageFetcher:(id<LYRUIImageFetching>)imageFetcher
+                        imageFactory:(id<LYRUIImageCreating>)imageFactory
+                   initialsFormatter:(id<LYRUIInitialsFormatting>)initialsFormatter {
+    self = [super init];
+    if (self) {
+        if (imageFetcher == nil) {
+            imageFetcher = [[LYRUIImageFetcher alloc] init];
+        }
+        self.imageFetcher = imageFetcher;
+        if (imageFactory == nil) {
+            imageFactory = [[LYRUIImageFactory alloc] init];
+        }
+        self.imageFactory = imageFactory;
+        if (initialsFormatter == nil) {
+            initialsFormatter = [[LYRUIInitialsFormatter alloc] init];
+        }
+        self.initialsFormatter = initialsFormatter;
     }
-    else if (identity.displayName && identity.displayName.length > 1) {
-        initials = [identity.displayName substringToIndex:2]; // TODO: split by whitespace and take first letters
+    return self;
+}
+
+#pragma mark - LYRUIImageWithLettersView configuration
+
+- (void)setupImageWithLettersView:(LYRUIImageWithLettersView *)view withIdentity:(LYRIdentity *)identity {
+    NSString *initials = [self.initialsFormatter initialsForIdentity:identity];
+    
+    if (identity.avatarImageURL) {
+        __weak __typeof(self) weakSelf = self;
+        __weak __typeof(view) weakView = view;
+        [view.imageFetchTask cancel];
+        view.imageFetchTask = [self.imageFetcher fetchImageWithURL:identity.avatarImageURL andCallback:^(UIImage * _Nullable image) {
+            if (image) {
+                weakView.image = image;
+                weakView.letters = nil;
+            } else {
+                [weakSelf setInitials:initials orPlaceholderInView:weakView];
+            }
+        }];
+    } else {
+        [self setInitials:initials orPlaceholderInView:view];
     }
-    return initials;
 }
 
 - (void)setupImageWithLettersViewWithMultipleParticipantsIcon:(LYRUIImageWithLettersView *)view {
-    // TODO: set asset
+    view.image = [self.imageFactory imageNamed:@"MultipleParticipantsPlaceholder"];
 }
+
+#pragma mark - Helpers
+
+- (void)setInitials:(nullable NSString *)initials orPlaceholderInView:(LYRUIImageWithLettersView *)view {
+    if (initials) {
+        view.image = nil;
+        view.letters = initials;
+    } else {
+        view.image = [self.imageFactory imageNamed:@"SingleParticipantPlaceholder"];
+        view.letters = nil;
+    }
+}
+
 @end

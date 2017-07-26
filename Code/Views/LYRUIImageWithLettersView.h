@@ -32,7 +32,7 @@ IB_DESIGNABLE
 @property (nonatomic, copy) IBInspectable UIColor *avatarBackgroundColor;
 @property (nonatomic, copy) UIFont *font;
 
-@property (nonatomic, strong) void(^imageFetchCallback)(UIImage *);
+@property (nonatomic, strong) NSURLSessionDownloadTask *imageFetchTask;
 
 @end
 NS_ASSUME_NONNULL_END       // }
