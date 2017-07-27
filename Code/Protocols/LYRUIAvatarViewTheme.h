@@ -20,8 +20,14 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ @abstract Objects conforming to the `LYRUIAvatarViewTheme` protocol will be used to provide colors for the avatar view.
+ */
 @protocol LYRUIAvatarViewTheme <NSObject>
 
+/**
+ @abstract The color of avatar circle view background.
+ */
 @property (nonatomic, readonly) UIColor *initialsBackgroundColor;
 
 @end

@@ -25,8 +25,17 @@
 @protocol LYRUIPresenceIndicatorTheme;
 
 NS_ASSUME_NONNULL_BEGIN     // {
+/**
+ @abstract The `LYRUIPresenceViewConfigurator` sets the `LYRUIPresenceView` with the data from provided `identities` array, with use of view theme.
+ */
 @interface LYRUIPresenceViewConfigurator : NSObject
 
+/**
+ @abstract Updates the `LYRUIPresenceView` instance with the data from provided `identities` array, with use of view theme.
+ @param presenceView The `LYRUIPresenceView` instance to be set with provided data.
+ @param identities An array of `LYRIdentity` instances to use for view setup.
+ @param theme An object conforming to `LYRUIParticipantsCountViewTheme` and `LYRUIPresenceIndicatorTheme` protocols, which provides a set of colors to use when configuring the view.
+ */
 - (void)setupPresenceView:(LYRUIPresenceView *)presenceView
            withIdentities:(NSArray<LYRIdentity *> *)identities
                usingTheme:(id<LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme>)theme;

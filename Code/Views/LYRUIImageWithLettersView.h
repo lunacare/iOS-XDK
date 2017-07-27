@@ -22,17 +22,55 @@
 
 NS_ASSUME_NONNULL_BEGIN     // {
 IB_DESIGNABLE
+/**
+ @abstract The `LYRUIImageWithLettersView` displays a circle view with image and text representing the profile photo or initials of `Identity`.
+ */
 @interface LYRUIImageWithLettersView : UIView
 
+/**
+ @abstract The image to present in the view.
+ */
 @property (nonatomic, copy, nullable) IBInspectable UIImage *image;
+/**
+ @abstract The letters to present in the view.
+ */
 @property (nonatomic, copy, nullable) IBInspectable NSString *letters;
+
+/**
+ @name Appearance customization.
+ */
+
+/**
+ @abstract The text color of the view. Default is white color.
+ */
 @property (nonatomic, copy) IBInspectable UIColor *lettersColor;
+/**
+ @abstract The border color of the view. Default is clear color.
+ */
 @property (nonatomic, copy) IBInspectable UIColor *borderColor;
+/**
+ @abstract The border width of the view. Default is 0.0.
+ */
 @property (nonatomic) IBInspectable CGFloat borderWidth;
+/**
+ @abstract The background color of the circle view. Default is light gray color.
+ */
 @property (nonatomic, copy) IBInspectable UIColor *avatarBackgroundColor;
+/**
+ @abstract The font of initials presented in view. Default is system font.
+ @warning Size of the font is changed by layout when view is resized.
+ */
 @property (nonatomic, copy) UIFont *font;
 
-@property (nonatomic, strong) NSURLSessionDownloadTask *imageFetchTask;
+/**
+ @name Asynchronous image download
+ */
+
+/**
+ @abstract The associated download task of the image to present in view.
+ @warning Old task should be canceled when the view is reused to prevent from asynchronously updating view with wrong image, in download task callback.
+ */
+@property (nonatomic, strong, nullable) NSURLSessionDownloadTask *imageFetchTask;
 
 @end
 NS_ASSUME_NONNULL_END       // }

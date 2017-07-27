@@ -22,8 +22,16 @@
 @class LYRIdentity;
 
 NS_ASSUME_NONNULL_BEGIN     // {
+/**
+ @abstract Objects conforming to the `LYRUIInitialsFormatting` protocol will be used to provide a string with formatted initials for given `LYRIdentity` object.
+ */
 @protocol LYRUIInitialsFormatting <NSObject>
 
+/**
+ @abstract Provides a string with formatted initials for given `LYRIdentity` object.
+ @param identity An `LYRIdentity` instance.
+ @return The `NSString` with formatted initials for provided `identity`. If there's no sufficient data to create initials, a nil is returned.
+ */
 - (nullable NSString *)initialsForIdentity:(LYRIdentity *)identity;
 
 @end

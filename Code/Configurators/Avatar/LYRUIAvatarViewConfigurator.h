@@ -23,10 +23,23 @@
 @class LYRUIAvatarView;
 @class LYRUIImageWithLettersViewConfigurator;
 
+/**
+ @abstract The `LYRUIAvatarViewConfigurator` sets the `LYRUIAvatarView` with the data from provided `identities` array.
+ */
 @interface LYRUIAvatarViewConfigurator : NSObject
 
+/**
+ @abstract Initializes a new `LYRUIAvatarViewConfigurator` object with the given `LYRUIImageWithLettersViewConfigurator` instance.
+ @param avatarViewConfigurator An `LYRUIImageWithLettersViewConfigurator` instance which will be used to setup contained `LYRUIImageWithLettersView` subviews.
+ @return An `LYRUIAvatarViewConfigurator` object.
+ */
 - (instancetype)initWithAvatarViewConfigurator:(LYRUIImageWithLettersViewConfigurator *)avatarViewConfigurator;
 
+/**
+ @abstract Updates the `LYRUIAvatarView` instance with the data from provided `identities` array.
+ @param avatarView The `LYRUIAvatarView` instance to be set with provided data.
+ @param identities An array of `LYRIdentity` instances to use for view setup.
+ */
 - (void)setupAvatarView:(LYRUIAvatarView *)avatarView withIdentities:(NSArray<LYRIdentity *> *)identities;
 
 @end

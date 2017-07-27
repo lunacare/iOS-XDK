@@ -22,14 +22,39 @@
 
 NS_ASSUME_NONNULL_BEGIN     // {
 IB_DESIGNABLE
+/**
+ @abstract The `LYRUINumberBadgeView` displays a badge with number representing the count of Identities in a conversation.
+ */
 @interface LYRUINumberBadgeView : UIView
 
+/**
+ @abstract The number to present in the badge.
+ */
 @property (nonatomic) IBInspectable NSUInteger number;
 
+/**
+ @name Appearance customization.
+ */
+
+/**
+ @abstract The text color of presented number. Default is gray color.
+ */
 @property (nonatomic, copy) IBInspectable UIColor *textColor;
+/**
+ @abstract The border color of the badge. Default is gray color.
+ */
 @property (nonatomic, copy) IBInspectable UIColor *borderColor;
+/**
+ @abstract The border width of the badge. Default is 1.0.
+ */
 @property (nonatomic) IBInspectable CGFloat borderWidth;
+/**
+ @abstract The corner radius of the badge. Default is 4.0.
+ */
 @property (nonatomic) IBInspectable CGFloat cornerRadius;
+/**
+ @abstract The font of presented number. Default is system font of size 9.0.
+ */
 @property (nonatomic, copy) UIFont *font;
 
 @end

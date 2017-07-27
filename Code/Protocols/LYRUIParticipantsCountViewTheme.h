@@ -20,8 +20,14 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ @abstract Objects conforming to the `LYRUIParticipantsCountViewTheme` protocol will be used to provide colors for the avatar view.
+ */
 @protocol LYRUIParticipantsCountViewTheme <NSObject, NSCopying>
 
+/**
+ @abstract The color of participants count badge text and border.
+ */
 @property (nonatomic, readonly) UIColor *participantsCountColor;
 
 @end;

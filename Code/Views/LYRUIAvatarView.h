@@ -35,12 +35,25 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @end
 
 IB_DESIGNABLE
+/**
+ @abstract The `LYRUIAvatarView` displays avatars, or a badge with number of `identities`, when set up with multiple `LYRIdentity` objects. When single `identity` object is passed, the view presents avatar with the presence view, representing presence status of `LYRIdentity`.
+ @warning When view is resized to under 32pt width or height, it hides avatars and shows only the presence view, or badge with number of `identities`.
+ */
 @interface LYRUIAvatarView : UIView
 
+/**
+ @abstract The `identities` to setup the view with. If array contains one `LYRUIIdentity` object, the view will show an avatar with presence status view. Otherwise it will present multi-avatar, replaced with a badge with number of `identities` when resized under 32pt width or height.
+ */
 @property (nonatomic, weak) NSArray<LYRIdentity *> *identities;
 
+/**
+ @abstract An object which contains set of colors to use in `LYRUIAvatarView` dependant views. Default is nil, and subviews use their defaults.
+ */
 @property (nonatomic, copy, nullable) id<LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme, LYRUIAvatarViewTheme> theme UI_APPEARANCE_SELECTOR;
 
+/**
+ @abstract Layout of the `LYRUIAvatarView` subviews. Default is nil, and is updated to `LYRUIAvatarViewSingleLayout`, or `LYRUIAvatarViewMultiLayout` depending on count of `identities` set.
+ */
 @property (nonatomic, copy) IBOutlet id<LYRUIAvatarViewLayout> layout;
 
 @end

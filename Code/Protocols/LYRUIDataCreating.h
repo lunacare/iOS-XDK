@@ -21,8 +21,16 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN     // {
+/**
+ @abstract Objects conforming to the `LYRUIDataCreating` protocol will be used to create `NSData` instances.
+ */
 @protocol LYRUIDataCreating <NSObject>
 
+/**
+ @abstract Provides a `NSData` created from contents of provided `NSURL`.
+ @param url The `NSURL` object with address of contents to use for creating the `NSData` instance.
+ @return A `NSData` instance with contents from provided `url`.
+ */
 - (nullable NSData *)dataWithContentsOfURL:(NSURL *)url;
 
 @end

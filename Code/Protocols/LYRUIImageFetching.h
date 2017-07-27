@@ -21,8 +21,17 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN     // {
+/**
+ @abstract Objects conforming to the `LYRUIImageFetching` protocol will be used to fetch an image from given `NSURL`.
+ */
 @protocol LYRUIImageFetching <NSObject>
 
+/**
+ @abstract Fetches an image from provided `URL` and calls the `callback` when finished.
+ @param URL An `NSURL` with address of the image.
+ @param callback The callback block which is called after fetch is finished. When fetch fails, this callback should be called with nil parameter.
+ @return The `NSURLSessionDownloadTask` in which the image is downloaded.
+ */
 - (nullable NSURLSessionDownloadTask *)fetchImageWithURL:(NSURL *)URL andCallback:(void(^)(UIImage * _Nullable))callback;
 
 @end

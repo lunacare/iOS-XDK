@@ -21,9 +21,23 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN     // {
+/**
+ @abstract Objects conforming to the `LYRUIImageCreating` protocol will be used to create `UIImage` instances.
+ */
 @protocol LYRUIImageCreating <NSObject>
 
+/**
+ @abstract Provides a `UIImage` created from asset with provided `imageName`.
+ @param imageName The name of an image asset.
+ @return A `UIImage` instance created from image asset with given name.
+ */
 - (UIImage *)imageNamed:(NSString *)imageName;
+
+/**
+ @abstract Provides a `UIImage` created from `NSData`.
+ @param data The `NSData` object with binary data of an image.
+ @return A `UIImage` instance created from image binary data.
+ */
 - (nullable UIImage *)imageWithData:(NSData *)data;
 
 @end

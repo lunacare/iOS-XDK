@@ -28,6 +28,14 @@
 NS_ASSUME_NONNULL_BEGIN     // {
 @interface LYRUIImageFetcher : NSObject <LYRUIImageFetching>
 
+/**
+ @abstract Initializes a new `LYRUIImageFetcher` object with the given image fetcher, image factory, and initials formatter.
+ @param imagesCache The object conforming to `LYRUIImageCaching` protocol which will be used for storing and reusing previously fetched images.
+ @param imageFactory The object conforming to `LYRUIImageCreating` protocol which will be used to create images from binary data.
+ @param dataFactory The object conforming to `LYRUIDataCreating` protocol which will be used to retrieve binary data from the download tasks.
+ @param dispatcher The object conforming to `LYRUIDispatching` protocol which will be used to dispatch the callback on main queue.
+ @return An `LYRUIImageFetcher` object.
+ */
 - (instancetype)initWithImagesCache:(nullable id<LYRUIImageCaching>)imagesCache
                        imageFactory:(nullable id<LYRUIImageCreating>)imageFactory
                         dataFactory:(nullable id<LYRUIDataCreating>)dataFactory

@@ -19,9 +19,15 @@
 //
 
 #import <Foundation/Foundation.h>
-
+/**
+ @abstract Objects conforming to the `LYRUIDispatching` protocol will be used to dispatch tasks on specified queue.
+ */
 @protocol LYRUIDispatching <NSObject>
 
+/**
+ @abstract Dispatches the task asynchronously on main queue.
+ @param block The block of code with the task to perform on main queue.
+ */
 - (void)dispatchAsyncOnMainQueue:(void(^)())block;
 
 @end

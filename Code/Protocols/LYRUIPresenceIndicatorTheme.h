@@ -21,10 +21,28 @@
 #import <Foundation/Foundation.h>
 #import <LayerKit/LayerKit.h>
 
+/**
+ @abstract Objects conforming to the `LYRUIPresenceIndicatorTheme` protocol will be used to provide colors for the presence indicator view.
+ */
 @protocol LYRUIPresenceIndicatorTheme <NSObject, NSCopying>
 
+/**
+ @abstract Provides the fill color to use in shaped Presence Indicator, to represent given presence `status`.
+ @param status The `LYRIdentityPresenceStatus` to be represented by the presence indicator.
+ @return An `UIColor` to use as the fill color of the shaped view.
+ */
 - (UIColor *)fillColorForPresenceStatus:(LYRIdentityPresenceStatus)status;
+/**
+ @abstract Provides the inside stroke color to use in shaped Presence Indicator, to represent given presence `status`.
+ @param status The `LYRIdentityPresenceStatus` to be represented by the presence indicator.
+ @return An `UIColor` to use as the inside stroke color of the shaped view.
+ */
 - (UIColor *)insideStrokeColorForPresenceStatus:(LYRIdentityPresenceStatus)status;
+/**
+ @abstract Provides the outside stroke color to use in shaped Presence Indicator, to represent given presence `status`.
+ @param status The `LYRIdentityPresenceStatus` to be represented by the presence indicator.
+ @return An `UIColor` to use as the outside stroke color of the shaped view.
+ */
 - (UIColor *)outsideStrokeColorForPresenceStatus:(LYRIdentityPresenceStatus)status;
 
 @end

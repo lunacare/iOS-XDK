@@ -25,10 +25,19 @@
 
 NS_ASSUME_NONNULL_BEGIN     // {
 IB_DESIGNABLE
+/**
+ @abstract The `LYRUIPresenceView` displays a badge with number of `identities`, or a colored shape representation of the status of `LYRIdentity` presence, when `identities` contain only one `LYRIdentity` object.
+ */
 @interface LYRUIPresenceView : UIView
 
+/**
+ @abstract The `identities` to setup the view with. If array contains one `LYRUIIdentity` object, the view will show a colored shape representation of its presence status. Otherwise it will present a badge with number of `identities`.
+ */
 @property (nonatomic, weak) NSArray<LYRIdentity *> *identities;
 
+/**
+ @abstract An object which contains set of colors to use in `LYRUIPresenceView` dependant views. Default is an `LYRUIPresenceViewDefaultTheme` instance.
+ */
 @property (nonatomic, copy) id<LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme> theme UI_APPEARANCE_SELECTOR;
 
 @end

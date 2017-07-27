@@ -21,9 +21,23 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN     // {
+/**
+ @abstract Objects conforming to the `LYRUIImageCaching` protocol will be used to store and reuse images fetched from remote servers.
+ */
 @protocol LYRUIImageCaching <NSObject>
 
+/**
+ @abstract Provides a `UIImage` stored for provided `NSURL` address.
+ @param key The `NSURL` with remote address of an image.
+ @return A `UIImage` instance, when an image was stored for provided `NSURL` key. Otherwise rerurns nil.
+ */
 - (nullable UIImage *)objectForKey:(NSURL *)key;
+
+/**
+ @abstract Stores an `UIImage` for provided `NSURL` address.
+ @param obj The `UIImage` instance to store.
+ @param key The address of image, to associate the `UIImage` instance with.
+ */
 - (void)setObject:(UIImage *)obj forKey:(NSURL *)key;
 
 @end

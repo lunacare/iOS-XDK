@@ -26,13 +26,33 @@
 @protocol LYRUIInitialsFormatting;
 
 NS_ASSUME_NONNULL_BEGIN     // {
+/**
+ @abstract The `LYRUIImageWithLettersViewConfigurator` sets the `LYRUIImageWithLettersView` with the data from provided `identity`.
+ */
 @interface LYRUIImageWithLettersViewConfigurator : NSObject
 
+/**
+ @abstract Initializes a new `LYRUIImageWithLettersViewConfigurator` object with the given image fetcher, image factory, and initials formatter.
+ @param imageFetcher The object conforming to `LYRUIImageFetching` protocol which will be used to fetch remote images.
+ @param imageFactory The object conforming to `LYRUIImageCreating` protocol which will be used to provide image assets.
+ @param initialsFormatter The object conforming to `LYRUIInitialsFormatting` protocol from which to retrieve the identity's initials for display.
+ @return An `LYRUIImageWithLettersViewConfigurator` object.
+ */
 - (instancetype)initWithImageFetcher:(nullable id<LYRUIImageFetching>)imageFetcher
                         imageFactory:(nullable id<LYRUIImageCreating>)imageFactory
                    initialsFormatter:(nullable id<LYRUIInitialsFormatting>)initialsFormatter;
 
+/**
+ @abstract Updates the `LYRUIImageWithLettersView` instance with the data from provided `identity`.
+ @param view The `LYRUIPresenceView` instance to be set with provided data.
+ @param identity An `LYRIdentity` instance to use for view setup.
+ */
 - (void)setupImageWithLettersView:(LYRUIImageWithLettersView *)view withIdentity:(LYRIdentity *)identity;
+
+/**
+ @abstract Updates the `LYRUIImageWithLettersView` instance with the multiple participants placeholder asset.
+ @param view The `LYRUIPresenceView` instance to be set with placeholder image.
+ */
 - (void)setupImageWithLettersViewWithMultipleParticipantsIcon:(LYRUIImageWithLettersView *)view;
 
 @end
