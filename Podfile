@@ -20,7 +20,7 @@ target 'Storyboard' do
 end
 
 abstract_target 'test' do
-  pod 'KIFViewControllerActions', '~> 1.0.2' 
+  pod 'KIFViewControllerActions', '~> 1.0.2'
   pod 'LYRCountDownLatch', git: 'https://github.com/layerhq/LYRCountDownLatch.git'
   pod 'KIF'
   pod 'Expecta'
@@ -32,8 +32,10 @@ abstract_target 'test' do
 end
 
 target 'UnitTests' do
+  pod 'Specta'
   pod 'Expecta'
   pod 'OCMock'
+  pod 'OCMockito'
   pod 'KIF'
   pod 'Atlas', path: '.'
 end
@@ -45,5 +47,12 @@ unless ENV['LAYER_USE_CORE_SDK_LOCATION'].blank?
       configuration.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
     end
   end
+else
+  post_install do |installer|
+    installer.pods_project.build_configurations.each do |config|
+      config.build_settings['LD_RUNPATH_SEARCH_PATHS'] = [
+        '$(FRAMEWORK_SEARCH_PATHS)'
+      ]
+    end
+  end
 end
-

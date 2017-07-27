@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		150373F21F1CD7E500FA6AAB /* LYRUIPresenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 150373F11F1CD7E500FA6AAB /* LYRUIPresenceView.xib */; };
+		159A26F11F1F8F4000BC416C /* LYRUIPresenceViewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 159A26F01F1F8F4000BC416C /* LYRUIPresenceViewSpec.m */; };
+		159A26F41F1F9AF200BC416C /* LYRUIPresenceViewConfiguratorSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 159A26F31F1F9AF200BC416C /* LYRUIPresenceViewConfiguratorSpec.m */; };
+		159A26F61F1FA9B600BC416C /* LYRUIPresenceViewDefaultThemeSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 159A26F51F1FA9B600BC416C /* LYRUIPresenceViewDefaultThemeSpec.m */; };
+		159A26F81F1FAB4F00BC416C /* LYRUIPresenceViewDefaultShapeProviderSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 159A26F71F1FAB4F00BC416C /* LYRUIPresenceViewDefaultShapeProviderSpec.m */; };
 		40EBBF671E9D4C2300C25041 /* ATLAvatarViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 40EBBF651E9D4C1B00C25041 /* ATLAvatarViewTest.m */; };
 		40EBBF681E9D4C2400C25041 /* ATLAvatarViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 40EBBF651E9D4C1B00C25041 /* ATLAvatarViewTest.m */; };
 		58239E45B91E3CD954E75554 /* Pods_test_ProgrammaticTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8050D6CFBC2EA1D5D6B800A /* Pods_test_ProgrammaticTests.framework */; };
@@ -135,6 +140,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		150373F11F1CD7E500FA6AAB /* LYRUIPresenceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIPresenceView.xib; sourceTree = "<group>"; };
+		159A26F01F1F8F4000BC416C /* LYRUIPresenceViewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIPresenceViewSpec.m; sourceTree = "<group>"; };
+		159A26F31F1F9AF200BC416C /* LYRUIPresenceViewConfiguratorSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIPresenceViewConfiguratorSpec.m; sourceTree = "<group>"; };
+		159A26F51F1FA9B600BC416C /* LYRUIPresenceViewDefaultThemeSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIPresenceViewDefaultThemeSpec.m; sourceTree = "<group>"; };
+		159A26F71F1FAB4F00BC416C /* LYRUIPresenceViewDefaultShapeProviderSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIPresenceViewDefaultShapeProviderSpec.m; sourceTree = "<group>"; };
 		1886043CF840E83E9A77B78B /* Pods_UnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		250C5EF21C7656610084EB18 /* LayerKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LayerKit.framework; path = Carthage/Build/iOS/LayerKit.framework; sourceTree = "<group>"; };
 		34C06B1C4F6FE86629A3C050 /* Pods-test-ProgrammaticTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-test-ProgrammaticTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-test-ProgrammaticTests/Pods-test-ProgrammaticTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -285,6 +295,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		159A26F21F1F9ADB00BC416C /* Configurators */ = {
+			isa = PBXGroup;
+			children = (
+				159A26F31F1F9AF200BC416C /* LYRUIPresenceViewConfiguratorSpec.m */,
+				159A26F51F1FA9B600BC416C /* LYRUIPresenceViewDefaultThemeSpec.m */,
+			);
+			name = Configurators;
+			sourceTree = "<group>";
+		};
 		412524007C3A7505AC34F33C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -439,6 +458,8 @@
 				D6F406041A8FDEEB00AE9581 /* ATLMessageCollectionViewCellTest.m */,
 				D6F406081A8FDEEB00AE9581 /* ATLParticipantTableViewCellTest.m */,
 				40EBBF651E9D4C1B00C25041 /* ATLAvatarViewTest.m */,
+				159A26F01F1F8F4000BC416C /* LYRUIPresenceViewSpec.m */,
+				150373F11F1CD7E500FA6AAB /* LYRUIPresenceView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -461,6 +482,7 @@
 				D6F4060C1A8FDEEB00AE9581 /* ATLTestInterface.m */,
 				D02CDCD91A9FFC930013CBE8 /* ATLTestUtilities.h */,
 				D02CDCDA1A9FFC930013CBE8 /* ATLTestUtilities.m */,
+				159A26F71F1FAB4F00BC416C /* LYRUIPresenceViewDefaultShapeProviderSpec.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -486,6 +508,7 @@
 		D6F406001A8FDEEB00AE9581 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				159A26F21F1F9ADB00BC416C /* Configurators */,
 				D6C045511A9967070028E9D0 /* Utilities */,
 				D6C045501A9966FD0028E9D0 /* Mocks */,
 				D6C0454D1A994B3A0028E9D0 /* Views */,
@@ -701,6 +724,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				150373F21F1CD7E500FA6AAB /* LYRUIPresenceView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -807,7 +831,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		5C91C26C5EBCE2E7CCA364BC /* [CP] Copy Pods Resources */ = {
@@ -867,7 +891,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		A6AC1293F3245E2306641C54 /* [CP] Check Pods Manifest.lock */ = {
@@ -882,7 +906,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		CBCF98B5B1502954C192D5A1 /* [CP] Check Pods Manifest.lock */ = {
@@ -897,7 +921,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		D7F25408D7A2A75304BAA423 /* [CP] Check Pods Manifest.lock */ = {
@@ -912,7 +936,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		DBB73C07ACFE371256674EFE /* [CP] Embed Pods Frameworks */ = {
@@ -1012,8 +1036,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				159A26F61F1FA9B600BC416C /* LYRUIPresenceViewDefaultThemeSpec.m in Sources */,
 				D02CDCDD1A9FFC930013CBE8 /* ATLTestUtilities.m in Sources */,
 				D0294DE81A93F39300702856 /* ATLMediaStreamTests.m in Sources */,
+				159A26F41F1F9AF200BC416C /* LYRUIPresenceViewConfiguratorSpec.m in Sources */,
+				159A26F11F1F8F4000BC416C /* LYRUIPresenceViewSpec.m in Sources */,
+				159A26F81F1FAB4F00BC416C /* LYRUIPresenceViewDefaultShapeProviderSpec.m in Sources */,
 				D04517141A9F9A0C00E137D9 /* ATLMediaAttachmentTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

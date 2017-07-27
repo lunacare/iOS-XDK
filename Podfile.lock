@@ -9,7 +9,11 @@ PODS:
     - KIF (>= 2.0.0)
   - LayerKit (0.26.5)
   - LYRCountDownLatch (0.9.0)
+  - OCHamcrest (6.1.1)
   - OCMock (3.4)
+  - OCMockito (4.1.0):
+    - OCHamcrest (~> 6.0)
+  - Specta (1.0.6)
 
 DEPENDENCIES:
   - Atlas (from `.`)
@@ -18,6 +22,8 @@ DEPENDENCIES:
   - KIFViewControllerActions (~> 1.0.2)
   - LYRCountDownLatch (from `https://github.com/layerhq/LYRCountDownLatch.git`)
   - OCMock
+  - OCMockito
+  - Specta
 
 EXTERNAL SOURCES:
   Atlas:
@@ -37,8 +43,11 @@ SPEC CHECKSUMS:
   KIFViewControllerActions: 923795dc4bd4ca5657841ce7455ce67447693861
   LayerKit: 5b2c3c6cbbf28ee20f561b31bd0fa89a17e0cbb7
   LYRCountDownLatch: 9b440b42a19ddbf4e75bdd4b43726baa1527606a
+  OCHamcrest: 363e1bf738c3e8a94abe7c2c415f70d671adde38
   OCMock: 35ae71d6a8fcc1b59434d561d1520b9dd4f15765
+  OCMockito: bceefcd365252bcdf8b59c1b2bd23890805fc0d8
+  Specta: f506f3a8361de16bc0dcf3b17b75e269072ba465
 
-PODFILE CHECKSUM: 8961daffdeefa8d5f0425798d1cff0caed066344
+PODFILE CHECKSUM: 94db25b6f56cfb34247af2494d7fea1b1fbf02bc
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.2.1
