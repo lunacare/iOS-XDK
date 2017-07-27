@@ -21,7 +21,7 @@
 #import "LYRUIPresenceView.h"
 #import "LYRUIShapedView.h"
 #import "LYRUINumberBadgeView.h"
-#import "LYRUIPresenceViewConfigurator.h"
+#import "LYRUIPresenceViewConfiguration.h"
 #import "LYRUIPresenceViewDefaultTheme.h"
 
 @interface LYRUIPresenceView ()
@@ -29,7 +29,7 @@
 @property (nonatomic, weak, readwrite) LYRUIShapedView *presenceIndicator;
 @property (nonatomic, weak, readwrite) LYRUINumberBadgeView *participantsCountView;
 
-@property (nonatomic, strong) LYRUIPresenceViewConfigurator *configurator;
+@property (nonatomic, strong) LYRUIPresenceViewConfiguration *configuration;
 
 @end
 
@@ -53,7 +53,7 @@
 
 - (void)lyr_commonInit {
     self.theme = [[LYRUIPresenceViewDefaultTheme alloc] init];
-    self.configurator = [[LYRUIPresenceViewConfigurator alloc] init];
+    self.configuration = [[LYRUIPresenceViewConfiguration alloc] init];
     [self addPresenceIndicator];
     [self addParticipantsCountView];
     [self installConstraints];
@@ -89,7 +89,7 @@
 
 - (void)setIdentities:(NSArray<LYRIdentity *> *)identities {
     _identities = identities;
-    [self.configurator setupPresenceView:self withIdentities:identities usingTheme:self.theme];
+    [self.configuration setupPresenceView:self withIdentities:identities usingTheme:self.theme];
 }
 
 @end

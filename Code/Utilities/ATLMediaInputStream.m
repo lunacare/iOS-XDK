@@ -811,7 +811,7 @@ static size_t ATLMediaInputStreamPutBytesIntoStreamCallback(void *assetStreamRef
     }
     
     // Copy the consumed data to `buffer`.
-    [self.dataConsumed getBytes:buffer length:bytesToConsume];
+    [self.dataConsumed getBytes:buffer length:MIN(bytesToConsume, self.dataConsumed.length)];
     ATLMediaInputStreamLog(@"input stream: passed data to receiver");
     
     // Clear transfer buffer.
