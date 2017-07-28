@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
 
 /**
  @abstract Initializes a new `LYRUIImageFactory` object with the given bundle.
- @param bundle An `NSBundle` instance which will be used for creating `UIImage` from image asset. Default is the bundle for this class.
+ @param bundle An `NSBundle` instance which will be used for creating `UIImage` from image asset. Default is bundle with Layer UI resources.
  @return An `LYRUIImageFactory` object.
  */
 - (instancetype)initWithBundle:(nullable NSBundle *)bundle;
