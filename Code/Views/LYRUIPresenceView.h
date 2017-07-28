@@ -2,7 +2,7 @@
 //  LYRUIPresenceView.h
 //  Layer-UI-iOS
 //
-//  Created by Jeremy Wyld on 03.07.2017.
+//  Created by Łukasz Przytuła on 21.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,58 +19,26 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <LayerKit/LayerKit.h>
+@class LYRIdentity;
+@protocol LYRUIPresenceIndicatorTheme;
+@protocol LYRUIParticipantsCountViewTheme;
 
 NS_ASSUME_NONNULL_BEGIN     // {
-/**
- @abstract Objects conforming to the `LYRUIPresenceViewShapeProviding` protocol will be used to provide an `UIBezierPath` shapes to the `LYRUIPresenceView`.
- */
-@protocol LYRUIPresenceViewShapeProviding <NSObject>
-
-/**
- @abstract Returns an `UIBezierPath` shape for a given `size` which will be rendered by the `LYRUIPresenceView`.
- @param size The size to fit the shape in.
- @return Returns an `UIBezierPath` instance with the shape for `LYRUIPresenceView`.
- */
-- (UIBezierPath *)shapeWithSize:(CGSize)size;
-
-@end
-
 IB_DESIGNABLE
 /**
- @abstract The `LYRUIPresenceView` displays a colored shape representing the status of Identity's presence.
+ @abstract The `LYRUIPresenceView` displays a badge with number of `identities`, or a colored shape representation of the status of `LYRIdentity` presence, when `identities` contain only one `LYRIdentity` object.
  */
 @interface LYRUIPresenceView : UIView
 
 /**
- @abstract The fill color of the rendered shape. Default is green color.
+ @abstract The `identities` to setup the view with. If array contains one `LYRUIIdentity` object, the view will show a colored shape representation of its presence status. Otherwise it will present a badge with number of `identities`.
  */
-@property (nonatomic, copy) IBInspectable UIColor *fillColor;
+@property (nonatomic, weak) NSArray<LYRIdentity *> *identities;
 
 /**
- @abstract The inside stroke color of the rendered shape. Default is clear color.
+ @abstract An object which contains set of colors to use in `LYRUIPresenceView` dependant views. Default is an `LYRUIPresenceViewDefaultTheme` instance.
  */
-@property (nonatomic, copy) IBInspectable UIColor *insideStrokeColor;
-
-/**
- @abstract The outside stroke color of the rendered shape. Default is clear color.
- */
-@property (nonatomic, copy) IBInspectable UIColor *outsideStrokeColor;
-
-/**
- @abstract Provides the shape of the presence view. Default is an `LYRUIPresenceViewDefaultShapeProvider` instance.
- */
-@property (nonatomic, strong) IBOutlet id<LYRUIPresenceViewShapeProviding> shapeProvider;
-
-/**
- @abstract Sets the colors of the rendered shape.
- @param fillColor The fill color of the rendered shape.
- @param insideStrokeColor The inside stroke color of the rendered shape.
- @param outsideStrokeColor The outside stroke color of the rendered shape.
- */
-- (void)updateWithFillColor:(UIColor *)fillColor
-          insideStrokeColor:(UIColor *)insideStrokeColor
-         outsideStrokeColor:(UIColor *)outsideStrokeColor;
+@property (nonatomic, copy) id<LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme> theme UI_APPEARANCE_SELECTOR;
 
 @end
 NS_ASSUME_NONNULL_END       // }

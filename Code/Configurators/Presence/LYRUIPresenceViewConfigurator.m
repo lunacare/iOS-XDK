@@ -2,7 +2,7 @@
 //  LYRUIPresenceViewConfigurator.m
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 19.07.2017.
+//  Created by Łukasz Przytuła on 21.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,49 +19,47 @@
 //
 
 #import "LYRUIPresenceViewConfigurator.h"
-#import "LYRUIPresenceView.h"
-#import "LYRUIPresenceViewDefaultTheme.h"
-
-@interface LYRUIPresenceViewConfigurator ()
-
-@property (nonatomic, copy, readwrite) id<LYRUIPresenceViewTheming> theme;
-
-@end
+#import "LYRUIPresenceView+PrivateProperties.h"
+#import "LYRUIShapedView.h"
+#import "LYRUINumberBadgeView.h"
+#import "LYRUIPresenceIndicatorTheme.h"
+#import "LYRUIParticipantsCountViewTheme.h"
+#import <LayerKit/LayerKit.h>
 
 @implementation LYRUIPresenceViewConfigurator
 
-- (instancetype)init {
-    self = [self initWithTheme:nil];
-    return self;
-}
-
-- (instancetype)initWithTheme:(id<LYRUIPresenceViewTheming>)theme {
-    self = [super init];
-    if (self) {
-        if (theme == nil) {
-            theme = [[LYRUIPresenceViewDefaultTheme alloc] init];
-        }
-        self.theme = theme;
-        self.outsideStrokeColor = [UIColor clearColor];
+- (void)setupPresenceView:(LYRUIPresenceView *)presenceView
+           withIdentities:(NSArray<LYRIdentity *> *)identities
+               usingTheme:(id<LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme>)theme {
+    BOOL singleParticipant = (identities.count == 1);
+    if (singleParticipant) {
+        LYRIdentityPresenceStatus presenceStatus = identities.firstObject.presenceStatus;
+        [self setupPresenceIndicator:presenceView.presenceIndicator
+                   forPresenceStatus:presenceStatus
+                          usingTheme:theme];
+    } else {
+        [self setupParticipantsCountView:presenceView.participantsCountView
+                              withNumber:identities.count
+                              usingTheme:theme];
     }
-    return self;
+    presenceView.presenceIndicator.hidden = !singleParticipant;
+    presenceView.participantsCountView.hidden = singleParticipant;
 }
 
-#pragma mark - Presence view setup
-
-- (void)setupPresenceView:(LYRUIPresenceView *)presenceView forPresenceStatus:(LYRIdentityPresenceStatus)status {
-    [presenceView updateWithFillColor:[self.theme fillColorForPresenceStatus:status]
-                    insideStrokeColor:[self.theme strokeColorForPresenceStatus:status]
-                   outsideStrokeColor:self.outsideStrokeColor];
+- (void)setupPresenceIndicator:(LYRUIShapedView *)presenceIndicator
+             forPresenceStatus:(LYRIdentityPresenceStatus)status
+                    usingTheme:(id<LYRUIPresenceIndicatorTheme>)theme {
+    [presenceIndicator updateWithFillColor:[theme fillColorForPresenceStatus:status]
+                         insideStrokeColor:[theme insideStrokeColorForPresenceStatus:status]
+                        outsideStrokeColor:[theme outsideStrokeColorForPresenceStatus:status]];
 }
 
-#pragma mark - Properties
-
-- (void)setOutsideStrokeColor:(UIColor *)outsideStrokeColor {
-    if (outsideStrokeColor == nil) {
-        outsideStrokeColor = [UIColor clearColor];
-    }
-    _outsideStrokeColor = outsideStrokeColor;
+- (void)setupParticipantsCountView:(LYRUINumberBadgeView *)participantsCountView
+                        withNumber:(NSUInteger)number
+                        usingTheme:(id<LYRUIParticipantsCountViewTheme>)theme {
+    participantsCountView.number = number;
+    participantsCountView.textColor = theme.participantsCountColor;
+    participantsCountView.borderColor = theme.participantsCountColor;
 }
 
 @end

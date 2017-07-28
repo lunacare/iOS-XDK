@@ -2,7 +2,7 @@
 //  LYRUIPresenceViewConfigurator.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 19.07.2017.
+//  Created by Łukasz Przytuła on 21.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,45 +19,26 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <LayerKit/LayerKit.h>
 @class LYRUIPresenceView;
+@class LYRIdentity;
+@protocol LYRUIParticipantsCountViewTheme;
+@protocol LYRUIPresenceIndicatorTheme;
 
 NS_ASSUME_NONNULL_BEGIN     // {
-@protocol LYRUIPresenceViewTheming <NSObject, NSCopying>
-
-- (UIColor *)fillColorForPresenceStatus:(LYRIdentityPresenceStatus)status;
-- (UIColor *)strokeColorForPresenceStatus:(LYRIdentityPresenceStatus)status;
-
-@end
-
 /**
- @abstract The `LYRUIPresenceViewConfigurator` class is responsible for configuring `LYRUIPresenceView` colors according to the `LYRIdentityPresenceStatus`.
+ @abstract The `LYRUIPresenceViewConfigurator` sets the `LYRUIPresenceView` with the data from provided `identities` array, with use of view theme.
  */
 @interface LYRUIPresenceViewConfigurator : NSObject
 
 /**
- @abstract The outside stroke color to set on `LYRUIPresenceView`. Default is clear color.
+ @abstract Updates the `LYRUIPresenceView` instance with the data from provided `identities` array, with use of view theme.
+ @param presenceView The `LYRUIPresenceView` instance to be set with provided data.
+ @param identities An array of `LYRIdentity` instances to use for view setup.
+ @param theme An object conforming to `LYRUIParticipantsCountViewTheme` and `LYRUIPresenceIndicatorTheme` protocols, which provides a set of colors to use when configuring the view.
  */
-@property (nonatomic, copy) UIColor *outsideStrokeColor;
-
-/**
- @abstract An object returning a set of colors for each `LYRIdentityPresenceStatus`. Default is an `LYRUIPresenceViewDefaultTheme` instance.
- */
-@property (nonatomic, copy, readonly) id<LYRUIPresenceViewTheming> theme;
-
-/**
- @abstract Initializes a new `LYRUIPresenceViewConfigurator` object with the given theme conforming to `LYRUIPresenceViewTheming` protocol.
- @param theme An object conforming to `LYRUIPresenceViewTheming` protocol with a set of colors for each `LYRIdentityPresenceStatus`.
- @return An `LYRUIPresenceViewConfigurator` object initialized with the given `theme`.
- */
-- (instancetype)initWithTheme:(nullable id<LYRUIPresenceViewTheming>)theme NS_DESIGNATED_INITIALIZER;
-
-/**
- @abstract Configures the `LYRUIPresenceView` instance colors according to the provided `LYRIdentityPresenceStatus`.
- @param presenceView An `LYRUIPresenceView` which should be configured.
- @param status An `LYRIdentityPresenceStatus` for which the `presenceView` should be configured. 
- */
-- (void)setupPresenceView:(LYRUIPresenceView *)presenceView forPresenceStatus:(LYRIdentityPresenceStatus)status;
+- (void)setupPresenceView:(LYRUIPresenceView *)presenceView
+           withIdentities:(NSArray<LYRIdentity *> *)identities
+               usingTheme:(id<LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme>)theme;
 
 @end
 NS_ASSUME_NONNULL_END     // }

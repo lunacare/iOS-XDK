@@ -1,8 +1,8 @@
 //
-//  LYRUIPresenceViewDefaultTheme.h
+//  LYRUIParticipantsCountViewTheme.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 19.07.2017.
+//  Created by Łukasz Przytuła on 21.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +18,16 @@
 //  limitations under the License.
 //
 
-#import "LYRUIPresenceViewConfigurator.h"
+#import <Foundation/Foundation.h>
 
 /**
- @abstract The `LYRUIPresenceViewDefaultTheme` class is a set of default colors for the `LYRUIPresenceView`.
+ @abstract Objects conforming to the `LYRUIParticipantsCountViewTheme` protocol will be used to provide colors for the avatar view.
  */
-@interface LYRUIPresenceViewDefaultTheme : NSObject <LYRUIPresenceViewTheming>
-@end
+@protocol LYRUIParticipantsCountViewTheme <NSObject, NSCopying>
+
+/**
+ @abstract The color of participants count badge text and border.
+ */
+@property (nonatomic, readonly) UIColor *participantsCountColor;
+
+@end;

@@ -1,8 +1,8 @@
 //
-//  LUIPresenceView.m
+//  LYRUIPresenceView.m
 //  Layer-UI-iOS
 //
-//  Created by Jeremy Wyld on 03.07.2017.
+//  Created by Łukasz Przytuła on 21.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,130 +19,77 @@
 //
 
 #import "LYRUIPresenceView.h"
-#import "LYRUIPresenceViewDefaultShapeProvider.h"
+#import "LYRUIShapedView.h"
+#import "LYRUINumberBadgeView.h"
+#import "LYRUIPresenceViewConfigurator.h"
+#import "LYRUIPresenceViewDefaultTheme.h"
 
-NS_ASSUME_NONNULL_BEGIN     // {
+@interface LYRUIPresenceView ()
+
+@property (nonatomic, weak, readwrite) LYRUIShapedView *presenceIndicator;
+@property (nonatomic, weak, readwrite) LYRUINumberBadgeView *participantsCountView;
+
+@property (nonatomic, strong) LYRUIPresenceViewConfigurator *configurator;
+
+@end
+
 @implementation LYRUIPresenceView
 
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self lyr_CommonInit];
+        [self lyr_commonInit];
     }
     return self;
 }
 
-- (nullable id)initWithCoder:(NSCoder *)aDecoder {
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self lyr_CommonInit];
+        [self lyr_commonInit];
     }
     return self;
 }
 
-- (void)lyr_CommonInit {
-    [self setDefaultColors];
-    self.opaque = NO;
-    self.shapeProvider = [[LYRUIPresenceViewDefaultShapeProvider alloc] init];
+- (void)lyr_commonInit {
+    self.theme = [[LYRUIPresenceViewDefaultTheme alloc] init];
+    self.configurator = [[LYRUIPresenceViewConfigurator alloc] init];
+    [self addPresenceIndicator];
+    [self addParticipantsCountView];
+    [self installConstraints];
 }
 
-- (void)setDefaultColors {
-    self.backgroundColor = [UIColor clearColor];
-    self.fillColor = [UIColor colorWithRed:(87.0/255.0) green:(191.0/255.0) blue:(70.0/255.0) alpha:1.0];
-    self.insideStrokeColor = [UIColor clearColor];
-    self.outsideStrokeColor = [UIColor clearColor];
+- (void)addPresenceIndicator {
+    LYRUIShapedView *presenceIndicator = [[LYRUIShapedView alloc] init];
+    presenceIndicator.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:presenceIndicator];
+    self.presenceIndicator = presenceIndicator;
 }
 
-#pragma mark - Layout and drawing
-
-- (void)setBounds:(CGRect)bounds {
-    if (!CGRectEqualToRect(bounds, self.bounds)) {
-        [self setNeedsDisplay];
-    }
-    [super setBounds:bounds];
+- (void)addParticipantsCountView {
+    LYRUINumberBadgeView *participantsCountView = [[LYRUINumberBadgeView alloc] init];
+    participantsCountView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:participantsCountView];
+    self.participantsCountView = participantsCountView;
 }
 
-- (void)drawRect:(CGRect)rect {
-    [super drawRect:rect];
+- (void)installConstraints {
+    [self.presenceIndicator.widthAnchor constraintEqualToAnchor:self.widthAnchor].active = YES;
+    [self.presenceIndicator.heightAnchor constraintEqualToAnchor:self.heightAnchor].active = YES;
+    [self.presenceIndicator.centerXAnchor constraintEqualToAnchor:self.centerXAnchor].active = YES;
+    [self.presenceIndicator.centerYAnchor constraintEqualToAnchor:self.centerYAnchor].active = YES;
     
-    UIBezierPath *path = [self bezierPath];
-    if (!path) {
-        return;
-    }
-    
-    if (path.lineWidth > 0.0 && self.outsideStrokeColor && self.outsideStrokeColor != [UIColor clearColor]) {
-        [self.outsideStrokeColor setStroke];
-        [path stroke];
-    }
-    
-    if (self.fillColor && self.fillColor != [UIColor clearColor]) {
-        [self.fillColor setFill];
-        [path fill];
-    }
-    
-
-    if (path.lineWidth > 0.0 && self.insideStrokeColor && self.insideStrokeColor != [UIColor clearColor]) {
-        [self.insideStrokeColor setStroke];
-        [path addClip];
-        [path stroke];
-    }
+    [self.participantsCountView.widthAnchor constraintEqualToAnchor:self.widthAnchor].active = YES;
+    [self.participantsCountView.heightAnchor constraintEqualToAnchor:self.heightAnchor].active = YES;
+    [self.participantsCountView.centerXAnchor constraintEqualToAnchor:self.centerXAnchor].active = YES;
+    [self.participantsCountView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor].active = YES;
 }
 
 #pragma mark - Properties
 
-- (void)setShapeProvider:(id<LYRUIPresenceViewShapeProviding>)shapeProvider {
-    _shapeProvider = shapeProvider;
-    [self setNeedsDisplay];
-}
-
-#pragma mark - Colors
-
-- (void)setFillColor:(UIColor *)fillColor {
-    if (![fillColor isEqual:self.fillColor]) {
-        _fillColor = fillColor;
-        [self setNeedsDisplay];
-    }
-}
-
-- (void)setInsideStrokeColor:(UIColor *)insideStrokeColor {
-    if (![insideStrokeColor isEqual:self.insideStrokeColor]) {
-        _insideStrokeColor = insideStrokeColor;
-        [self setNeedsDisplay];
-    }
-}
-
-- (void)setOutsideStrokeColor:(UIColor *)outsideStrokeColor {
-    if (![outsideStrokeColor isEqual:self.outsideStrokeColor]) {
-        _outsideStrokeColor = outsideStrokeColor;
-        [self setNeedsDisplay];
-    }
-}
-
-- (void)updateWithFillColor:(UIColor *)fillColor
-          insideStrokeColor:(UIColor *)insideStrokeColor
-         outsideStrokeColor:(UIColor *)outsideStrokeColor {
-    BOOL needsDisplay = (![fillColor isEqual:self.fillColor] ||
-                         ![insideStrokeColor isEqual:self.insideStrokeColor] ||
-                         ![outsideStrokeColor isEqual:self.outsideStrokeColor]);
-    _fillColor = fillColor;
-    _insideStrokeColor = insideStrokeColor;
-    _outsideStrokeColor = outsideStrokeColor;
-    if (needsDisplay) {
-        [self setNeedsDisplay];
-    }
-}
-
-#pragma mark - Bezier path
-
-- (UIBezierPath *)bezierPath {
-    UIBezierPath *path = [self.shapeProvider shapeWithSize:self.bounds.size];
-    if (path == nil) {
-        @throw [NSException exceptionWithName:NSObjectNotAvailableException
-                                       reason:@"Object conforming to `LYRUIPresenceViewShapesProviding` returned nil from `nonnull` returning method `shapeForPresenceStatus`."
-                                     userInfo:nil];
-    }
-    return path;
+- (void)setIdentities:(NSArray<LYRIdentity *> *)identities {
+    _identities = identities;
+    [self.configurator setupPresenceView:self withIdentities:identities usingTheme:self.theme];
 }
 
 @end
-NS_ASSUME_NONNULL_END       // }

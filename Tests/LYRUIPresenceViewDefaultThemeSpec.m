@@ -51,35 +51,65 @@ describe(@"LYRUIPresenceViewDefaultTheme", ^{
         });
     });
     
-    describe(@"strokeColorForPresenceStatus:", ^{
+    describe(@"insideStrokeColorForPresenceStatus:", ^{
         context(@"for LYRIdentityPresenceStatusOffline", ^{
             it(@"should return proper color", ^{
                 UIColor *expectedColor = [UIColor clearColor];
-                expect([theme strokeColorForPresenceStatus:LYRIdentityPresenceStatusOffline]).to.equal(expectedColor);
+                expect([theme insideStrokeColorForPresenceStatus:LYRIdentityPresenceStatusOffline]).to.equal(expectedColor);
             });
         });
         context(@"for LYRIdentityPresenceStatusAvailable", ^{
             it(@"should return proper color", ^{
                 UIColor *expectedColor = [UIColor clearColor];
-                expect([theme strokeColorForPresenceStatus:LYRIdentityPresenceStatusAvailable]).to.equal(expectedColor);
+                expect([theme insideStrokeColorForPresenceStatus:LYRIdentityPresenceStatusAvailable]).to.equal(expectedColor);
             });
         });
         context(@"for LYRIdentityPresenceStatusBusy", ^{
             it(@"should return proper color", ^{
                 UIColor *expectedColor = [UIColor clearColor];
-                expect([theme strokeColorForPresenceStatus:LYRIdentityPresenceStatusBusy]).to.equal(expectedColor);
+                expect([theme insideStrokeColorForPresenceStatus:LYRIdentityPresenceStatusBusy]).to.equal(expectedColor);
             });
         });
         context(@"for LYRIdentityPresenceStatusAway", ^{
             it(@"should return proper color", ^{
                 UIColor *expectedColor = [UIColor clearColor];
-                expect([theme strokeColorForPresenceStatus:LYRIdentityPresenceStatusAway]).to.equal(expectedColor);
+                expect([theme insideStrokeColorForPresenceStatus:LYRIdentityPresenceStatusAway]).to.equal(expectedColor);
             });
         });
         context(@"for LYRIdentityPresenceStatusInvisible", ^{
             it(@"should return proper color", ^{
                 UIColor *expectedColor = [UIColor colorWithRed:(87.0/255.0) green:(191.0/255.0) blue:(70.0/255.0) alpha:1.0];
-                expect([theme strokeColorForPresenceStatus:LYRIdentityPresenceStatusInvisible]).to.equal(expectedColor);
+                expect([theme insideStrokeColorForPresenceStatus:LYRIdentityPresenceStatusInvisible]).to.equal(expectedColor);
+            });
+        });
+    });
+    
+    describe(@"outsideStrokeColorForPresenceStatus:", ^{
+        UIColor *expectedColor = [UIColor clearColor];
+        
+        context(@"for LYRIdentityPresenceStatusOffline", ^{
+            it(@"should return proper color", ^{
+                expect([theme outsideStrokeColorForPresenceStatus:LYRIdentityPresenceStatusOffline]).to.equal(expectedColor);
+            });
+        });
+        context(@"for LYRIdentityPresenceStatusAvailable", ^{
+            it(@"should return proper color", ^{
+                expect([theme outsideStrokeColorForPresenceStatus:LYRIdentityPresenceStatusAvailable]).to.equal(expectedColor);
+            });
+        });
+        context(@"for LYRIdentityPresenceStatusBusy", ^{
+            it(@"should return proper color", ^{
+                expect([theme outsideStrokeColorForPresenceStatus:LYRIdentityPresenceStatusBusy]).to.equal(expectedColor);
+            });
+        });
+        context(@"for LYRIdentityPresenceStatusAway", ^{
+            it(@"should return proper color", ^{
+                expect([theme outsideStrokeColorForPresenceStatus:LYRIdentityPresenceStatusAway]).to.equal(expectedColor);
+            });
+        });
+        context(@"for LYRIdentityPresenceStatusInvisible", ^{
+            it(@"should return proper color", ^{
+                expect([theme outsideStrokeColorForPresenceStatus:LYRIdentityPresenceStatusInvisible]).to.equal(expectedColor);
             });
         });
     });

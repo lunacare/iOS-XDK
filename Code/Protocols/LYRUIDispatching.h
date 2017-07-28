@@ -1,8 +1,8 @@
 //
-//  LYRUIPresenceViewDefaultShapeProvider.h
+//  LYRUIDispatching.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 18.07.2017.
+//  Created by Łukasz Przytuła on 26.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,11 +18,16 @@
 //  limitations under the License.
 //
 
-#import <UIKit/UIKit.h>
-#import "LYRUIPresenceView.h"
+#import <Foundation/Foundation.h>
+/**
+ @abstract Objects conforming to the `LYRUIDispatching` protocol will be used to dispatch tasks on specified queue.
+ */
+@protocol LYRUIDispatching <NSObject>
 
 /**
- @abstract The `LYRUIPresenceViewDefaultShapeProvider` class is responsible for providing a default circle shape to the `LYRUIPresenceView`.
+ @abstract Dispatches the task asynchronously on main queue.
+ @param block The block of code with the task to perform on main queue.
  */
-@interface LYRUIPresenceViewDefaultShapeProvider : NSObject <LYRUIPresenceViewShapeProviding>
+- (void)dispatchAsyncOnMainQueue:(void(^)())block;
+
 @end

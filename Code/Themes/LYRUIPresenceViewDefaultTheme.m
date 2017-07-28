@@ -1,5 +1,5 @@
 //
-//  LYRUIPresenceViewDefaultTheme.m
+//  LYRUIShapedViewDefaultTheme.m
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 19.07.2017.
@@ -19,16 +19,27 @@
 //
 
 #import "LYRUIPresenceViewDefaultTheme.h"
+#import <LayerKit/LayerKit.h>
 
 @implementation LYRUIPresenceViewDefaultTheme
 
-#pragma mark - NSCopying
-
-- (id)copyWithZone:(NSZone *)zone {
-    return [[[self class] allocWithZone:zone] init];
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.presenceIndicatorBackgroundColor = [UIColor clearColor];
+    }
+    return self;
 }
 
-#pragma mark - LYRUIPresenceViewTheming methods
+#pragma mark - NSCopying
+
+- (instancetype)copyWithZone:(NSZone *)zone {
+    LYRUIPresenceViewDefaultTheme *copy = [[[self class] allocWithZone:zone] init];
+    copy.presenceIndicatorBackgroundColor = self.presenceIndicatorBackgroundColor;
+    return copy;
+}
+
+#pragma mark - LYRUIPresenceIndicatorTheme methods
 
 - (UIColor *)fillColorForPresenceStatus:(LYRIdentityPresenceStatus)status {
     switch (status) {
@@ -45,7 +56,7 @@
     }
 }
 
-- (UIColor *)strokeColorForPresenceStatus:(LYRIdentityPresenceStatus)status {
+- (UIColor *)insideStrokeColorForPresenceStatus:(LYRIdentityPresenceStatus)status {
     switch (status) {
         case LYRIdentityPresenceStatusOffline:
         case LYRIdentityPresenceStatusAvailable:
@@ -56,6 +67,16 @@
         case LYRIdentityPresenceStatusInvisible:
             return [UIColor colorWithRed:(87.0/255.0) green:(191.0/255.0) blue:(70.0/255.0) alpha:1.0];
     }
+}
+
+- (UIColor *)outsideStrokeColorForPresenceStatus:(LYRIdentityPresenceStatus)status {
+    return self.presenceIndicatorBackgroundColor;
+}
+
+#pragma mark - LYRUIParticipantsCountViewTheme property
+
+- (UIColor *)participantsCountColor {
+    return [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
 }
 
 @end
