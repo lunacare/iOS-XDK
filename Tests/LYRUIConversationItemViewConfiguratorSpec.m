@@ -7,6 +7,7 @@
 #import <Atlas/LYRUIConversationItemView.h>
 #import <Atlas/LYRUIMessageTimeDefaultFormatter.h>
 #import <Atlas/LYRUIConversationItemTitleFormatter.h>
+#import <Atlas/LYRUIConversationItemAccessoryViewProviding.h>
 #import <LayerKit/LayerKit.h>
 
 SpecBegin(LYRUIConversationItemViewConfigurator)
