@@ -23,20 +23,9 @@
 #import <LayerKit/LayerKit.h>
 @protocol LYRUIConversationItemTitleFormatting;
 @protocol LYRUIMessageTimeFormatting;
+@protocol LYRUIConversationItemAccessoryViewProviding;
 
 NS_ASSUME_NONNULL_BEGIN
-@protocol LYRUIConversationItemAccessoryViewProviding <NSObject>
-
-/**
- @abstract Provides an accessory view representing a conversation.
- @param conversation The `LYRConversation` object.
- @return An `UIView` visually representing the conversation.
- @discussion The view will be added to the `LYRUIConversationItemView` as an accessory view.
- */
-- (UIView *)accessoryViewForConversation:(LYRConversation *)conversation;
-
-@end
-
 @protocol LYRUIConversationItemLastMessageFormatting <NSObject>
 
 /**

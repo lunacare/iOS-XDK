@@ -21,6 +21,7 @@
 #import "LYRUIConversationItemViewConfigurator.h"
 #import "LYRUIMessageTimeDefaultFormatter.h"
 #import "LYRUIConversationItemTitleFormatter.h"
+#import "LYRUIConversationItemAccessoryViewProvider.h"
 
 @implementation LYRUIConversationItemViewConfigurator
 
@@ -49,7 +50,7 @@
     self = [super init];
     if (self) {
         if (accessoryViewProvider == nil) {
-            //TODO: set default provider
+            accessoryViewProvider = [[LYRUIConversationItemAccessoryViewProvider alloc] init];
         }
         self.accessoryViewProvider = accessoryViewProvider;
         if (titleFormatter == nil) {
@@ -96,7 +97,12 @@
                                                               withCurrentTime:[NSDate date]];
         view.lastMessageLabel.text = [self.lastMessageFormatter stringForConversationLastMessage:lastMessage];
     }
-    view.accessoryView = [self.accessoryViewProvider accessoryViewForConversation:conversation];
+    if (view.accessoryView == nil) {
+        view.accessoryView = [self.accessoryViewProvider accessoryViewForConversation:conversation];
+    } else {
+        [self.accessoryViewProvider setupAccessoryView:view.accessoryView forConversation:conversation];
+    }
+    view.accessoryView.backgroundColor = view.backgroundColor;
     [view setNeedsUpdateConstraints];
 }
 
