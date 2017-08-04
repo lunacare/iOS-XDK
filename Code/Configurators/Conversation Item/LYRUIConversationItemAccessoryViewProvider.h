@@ -19,6 +19,15 @@
 //
 
 #import "LYRUIConversationItemAccessoryViewProviding.h"
+@class LYRUIParticipantsFilter;
 
 @interface LYRUIConversationItemAccessoryViewProvider : NSObject <LYRUIConversationItemAccessoryViewProviding>
+
+/**
+ @abstract Initializes a new `LYRUIConversationItemAccessoryViewProvider` object with the given participants filter.
+ @param participantsFilter An `LYRUIParticipantsFilter instance which will filter currently logged in user from  the accessory view for display.
+ @return An `LYRUIConversationItemAccessoryViewProvider` object.
+ */
+- (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFilter *)participantsFilter;
+
 @end

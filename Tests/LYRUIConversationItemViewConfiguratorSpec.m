@@ -119,15 +119,18 @@ describe(@"LYRUIConversationItemViewConfigurator", ^{
     });
     
     describe(@"currentUser", ^{
+        __block LYRIdentity *currentUserMock;
+        
         context(@"setter", ^{
-            __block LYRIdentity *currentUserMock;
-            
             beforeEach(^{
                 currentUserMock = mock([LYRIdentity class]);
                 viewConfigurator.currentUser = currentUserMock;
             });
             
-            it(@"should set current user on title formatter", ^{
+            it(@"should update current user on accessory view provider", ^{
+                [verify(accessoryViewProviderMock) setCurrentUser:currentUserMock];
+            });
+            it(@"should update current user on title formatter", ^{
                 [verify(titleFormatterMock) setCurrentUser:currentUserMock];
             });
         });

@@ -1,8 +1,8 @@
 //
-//  LYRUIConversationItemTitleFormatting.h
+//  LYRUIParticipantsFiltering.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 06.07.2017.
+//  Created by Łukasz Przytuła on 04.08.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,21 +19,14 @@
 //
 
 #import <Foundation/Foundation.h>
-@class LYRConversation;
 @class LYRIdentity;
 
-@protocol LYRUIConversationItemTitleFormatting <NSObject>
+NS_ASSUME_NONNULL_BEGIN     // {
+@protocol LYRUIParticipantsFiltering <NSObject>
 
-/**
- @abstract A currently logged in user to be filtered out of the conversation title.
- */
-@property (nonatomic, strong, nullable) LYRIdentity *currentUser;
+@property(nonatomic, strong, nullable) LYRIdentity *currentUser;
 
-/**
- @abstract Provides a title string to display for a given conversation.
- @param conversation The `LYRConversation` object.
- @return The string to be displayed as the title for a given conversation in the conversation list.
- */
-- (nonnull NSString *)titleForConversation:(nonnull LYRConversation *)conversation;
+- (NSSet *)filteredParticipants:(NSSet *)participants;
 
 @end
+NS_ASSUME_NONNULL_END       // }

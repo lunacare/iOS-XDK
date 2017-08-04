@@ -34,12 +34,10 @@
 }
 
 - (instancetype)initWithCurrentUser:(LYRIdentity *)currentUser {
-    self.currentUser = currentUser;
-    LYRUIConversationItemTitleFormatter *titleFormatter = [[LYRUIConversationItemTitleFormatter alloc] initWithCurrentUser:currentUser];
-    self = [self initWithAccessoryViewProvider:nil
-                                titleFormatter:titleFormatter
-                          lastMessageFormatter:nil
-                          messageTimeFormatter:nil];
+    self = [self init];
+    if (self) {
+        self.currentUser = currentUser;
+    }
     return self;
 }
 
@@ -73,6 +71,7 @@
 
 - (void)setCurrentUser:(LYRIdentity *)currentUser {
     _currentUser = currentUser;
+    self.accessoryViewProvider.currentUser = currentUser;
     self.titleFormatter.currentUser = currentUser;
 }
 
