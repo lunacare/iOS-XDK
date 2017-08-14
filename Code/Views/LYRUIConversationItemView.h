@@ -48,7 +48,7 @@ IB_DESIGNABLE
 /**
  @abstract The view in which the accessory view will be contained;
  */
-@property(nonatomic, weak) UIView *accessoryViewContainer;
+@property(nonatomic, weak, readonly) UIView *accessoryViewContainer;
 
 /**
  @abstract The font for the conversation label displayed in the cell. Default is 16pt system font.

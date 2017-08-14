@@ -22,6 +22,12 @@
 #import "LYRUIConversationItemViewLayout.h"
 #import "LYRUISampleAccessoryView.h"
 
+@interface LYRUIConversationItemView ()
+
+@property(nonatomic, weak, readwrite) UIView *accessoryViewContainer;
+
+@end
+
 @implementation LYRUIConversationItemView
 @synthesize conversationTitleLabel = _conversationTitleLabel,
             lastMessageLabel = _lastMessageLabel,
@@ -32,7 +38,7 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self commonInitializationWithLayout:nil];
+        [self lyr_commonInitWithLayout:nil];
     }
     return self;
 }
@@ -40,7 +46,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self commonInitializationWithLayout:nil];
+        [self lyr_commonInitWithLayout:nil];
     }
     return self;
 }
@@ -48,12 +54,12 @@
 - (instancetype)initWithLayout:(id<LYRUIConversationItemViewLayout>)layout {
     self = [self initWithFrame:CGRectZero];
     if (self) {
-        [self commonInitializationWithLayout:layout];
+        [self lyr_commonInitWithLayout:layout];
     }
     return self;
 }
 
-- (void)commonInitializationWithLayout:(id<LYRUIConversationItemViewLayout>)layout {
+- (void)lyr_commonInitWithLayout:(id<LYRUIConversationItemViewLayout>)layout {
     // TODO: update with colors from color palette
     UIColor *blackColor = [UIColor colorWithRed:27.0/255.0 green:28.0/255.0 blue:29.0/255.0 alpha:1.0];
     UIColor *grayColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
