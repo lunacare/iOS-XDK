@@ -25,6 +25,11 @@
 @protocol LYRUIConversationItemTitleFormatting <NSObject>
 
 /**
+ @abstract A currently logged in user to be filtered out of the conversation title.
+ */
+@property(nonatomic, strong, nullable) LYRIdentity *currentUser;
+
+/**
  @abstract Provides a title string to display for a given conversation.
  @param conversation The `LYRConversation` object.
  @return The string to be displayed as the title for a given conversation in the conversation list.

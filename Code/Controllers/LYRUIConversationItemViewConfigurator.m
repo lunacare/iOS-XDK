@@ -33,6 +33,7 @@
 }
 
 - (instancetype)initWithCurrentUser:(LYRIdentity *)currentUser {
+    self.currentUser = currentUser;
     LYRUIConversationItemTitleFormatter *titleFormatter = [[LYRUIConversationItemTitleFormatter alloc] initWithCurrentUser:currentUser];
     self = [self initWithAccessoryViewProvider:nil
                                 titleFormatter:titleFormatter
@@ -65,6 +66,13 @@
         self.messageTimeFormatter = messageTimeFormatter;
     }
     return self;
+}
+
+#pragma mark - Properties
+
+- (void)setCurrentUser:(LYRIdentity *)currentUser {
+    _currentUser = currentUser;
+    self.titleFormatter.currentUser = currentUser;
 }
 
 #pragma mark - LYRUIConversationItemView setup

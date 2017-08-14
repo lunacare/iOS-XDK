@@ -116,6 +116,21 @@ describe(@"LYRUIConversationItemViewConfigurator", ^{
             });
         });
     });
+    
+    describe(@"currentUser", ^{
+        context(@"setter", ^{
+            __block LYRIdentity *currentUserMock;
+            
+            beforeEach(^{
+                currentUserMock = mock([LYRIdentity class]);
+                viewController.currentUser = currentUserMock;
+            });
+            
+            it(@"should set current user on title formatter", ^{
+                [verify(titleFormatterMock) setCurrentUser:currentUserMock];
+            });
+        });
+    });
 });
 
 SpecEnd

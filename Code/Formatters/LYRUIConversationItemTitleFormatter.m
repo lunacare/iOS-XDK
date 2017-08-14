@@ -23,13 +23,8 @@
 
 static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationName";
 
-@interface LYRUIConversationItemTitleFormatter ()
-
-@property(nonatomic, strong, nullable) LYRIdentity *currentUser;
-
-@end
-
 @implementation LYRUIConversationItemTitleFormatter
+@synthesize currentUser = _currentUser;
 
 - (instancetype)initWithCurrentUser:(LYRIdentity *)currentUser {
     self = [super init];
