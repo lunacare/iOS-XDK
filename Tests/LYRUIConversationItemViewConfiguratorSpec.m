@@ -12,7 +12,7 @@
 SpecBegin(LYRUIConversationItemViewConfigurator)
 
 describe(@"LYRUIConversationItemViewConfigurator", ^{
-    __block LYRUIConversationItemViewConfigurator *viewController;
+    __block LYRUIConversationItemViewConfigurator *viewConfigurator;
     __block id<LYRUIConversationItemAccessoryViewProviding> accessoryViewProviderMock;
     __block id<LYRUIConversationItemTitleFormatting> titleFormatterMock;
     __block id<LYRUIConversationItemLastMessageFormatting> lastMessageFormatterMock;
@@ -24,26 +24,26 @@ describe(@"LYRUIConversationItemViewConfigurator", ^{
         lastMessageFormatterMock = mockProtocol(@protocol(LYRUIConversationItemLastMessageFormatting));
         messageTimeFormatterMock = mockProtocol(@protocol(LYRUIMessageTimeFormatting));
         
-        viewController = [[LYRUIConversationItemViewConfigurator alloc] initWithAccessoryViewProvider:accessoryViewProviderMock
+        viewConfigurator = [[LYRUIConversationItemViewConfigurator alloc] initWithAccessoryViewProvider:accessoryViewProviderMock
                                                                                      titleFormatter:titleFormatterMock
                                                                                lastMessageFormatter:lastMessageFormatterMock
                                                                                       messageTimeFormatter:messageTimeFormatterMock];
     });
     
     afterEach(^{
-        viewController = nil;
+        viewConfigurator = nil;
     });
     
     describe(@"after initialization with convenience initializer", ^{
         beforeEach(^{
-            viewController = [[LYRUIConversationItemViewConfigurator alloc] init];
+            viewConfigurator = [[LYRUIConversationItemViewConfigurator alloc] init];
         });
         
         it(@"should have default title formatter set", ^{
-            expect(viewController.titleFormatter).to.beAKindOf([LYRUIConversationItemTitleFormatter class]);
+            expect(viewConfigurator.titleFormatter).to.beAKindOf([LYRUIConversationItemTitleFormatter class]);
         });
         it(@"should have default message time formatter set", ^{
-            expect(viewController.messageTimeFormatter).to.beAKindOf([LYRUIMessageTimeDefaultFormatter class]);
+            expect(viewConfigurator.messageTimeFormatter).to.beAKindOf([LYRUIMessageTimeDefaultFormatter class]);
         });
     });
     
@@ -61,7 +61,7 @@ describe(@"LYRUIConversationItemViewConfigurator", ^{
             it(@"should throw a NSInvalidArgumentException with proper reason", ^{
                 void(^callWithNil)() = ^{
                     view = nil;
-                    [viewController setupConversationItemView:view
+                    [viewConfigurator setupConversationItemView:view
                                              withConversation:conversationMock];
                 };
                 NSString *exceptionReason = @"Cannot setup Conversation Item View with nil `view` argument.";
@@ -73,7 +73,7 @@ describe(@"LYRUIConversationItemViewConfigurator", ^{
             it(@"should throw a NSInvalidArgumentException with proper reason", ^{
                 void(^callWithNil)() = ^{
                     conversationMock = nil;
-                    [viewController setupConversationItemView:view
+                    [viewConfigurator setupConversationItemView:view
                                              withConversation:conversationMock];
                 };
                 NSString *exceptionReason = @"Cannot setup Conversation Item View with nil `conversation` argument.";
@@ -95,7 +95,7 @@ describe(@"LYRUIConversationItemViewConfigurator", ^{
                 [given([messageTimeFormatterMock stringForMessageTime:lastMessageTimeMock
                                                       withCurrentTime:anything()]) willReturn:@"test time description"];
                 
-                [viewController setupConversationItemView:view
+                [viewConfigurator setupConversationItemView:view
                                          withConversation:conversationMock];
             });
             
@@ -123,7 +123,7 @@ describe(@"LYRUIConversationItemViewConfigurator", ^{
             
             beforeEach(^{
                 currentUserMock = mock([LYRIdentity class]);
-                viewController.currentUser = currentUserMock;
+                viewConfigurator.currentUser = currentUserMock;
             });
             
             it(@"should set current user on title formatter", ^{
