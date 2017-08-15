@@ -345,7 +345,7 @@ extern NSString *const ATLConversationCollectionViewAccessibilityIdentifier;
 {
     ATLUserMock *mockUser1 = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
     ATLUserMock *mockUser2 = [ATLUserMock userWithMockUserName:ATLMockUserNameKevin];
-    self.conversation = [self.testInterface conversationWithParticipants:[NSSet setWithObjects:mockUser1.userID, mockUser2.userID, nil] lastMessageText:nil];
+    self.conversation = [self.testInterface conversationWithParticipants:[NSSet setWithObjects:mockUser1, mockUser2, nil] lastMessageText:nil];
     
     self.controller = [ATLSampleConversationViewController conversationViewControllerWithLayerClient:(LYRClient *)self.testInterface.layerClient];;
     self.controller.conversation = (LYRConversation *)self.conversation;

@@ -32,6 +32,16 @@
     return self;
 }
 
+- (instancetype)initWithCurrentUser:(LYRIdentity *)currentUser {
+    self.currentUser = currentUser;
+    LYRUIConversationItemTitleFormatter *titleFormatter = [[LYRUIConversationItemTitleFormatter alloc] initWithCurrentUser:currentUser];
+    self = [self initWithAccessoryViewProvider:nil
+                                titleFormatter:titleFormatter
+                          lastMessageFormatter:nil
+                          messageTimeFormatter:nil];
+    return self;
+}
+
 - (instancetype)initWithAccessoryViewProvider:(id<LYRUIConversationItemAccessoryViewProviding>)accessoryViewProvider
                                titleFormatter:(id<LYRUIConversationItemTitleFormatting>)titleFormatter
                          lastMessageFormatter:(id<LYRUIConversationItemLastMessageFormatting>)lastMessageFormatter
@@ -58,6 +68,13 @@
     return self;
 }
 
+#pragma mark - Properties
+
+- (void)setCurrentUser:(LYRIdentity *)currentUser {
+    _currentUser = currentUser;
+    self.titleFormatter.currentUser = currentUser;
+}
+
 #pragma mark - LYRUIConversationItemView setup
 
 - (void)setupConversationItemView:(UIView<LYRUIConversationItemView> *)view
@@ -69,7 +86,10 @@
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot setup Conversation Item View with nil `conversation` argument." userInfo:nil];
     }
     
-    view.conversationTitleLabel.text = [self.titleFormatter titleForConversation:conversation];
+    NSString *conversationTitle = [self.titleFormatter titleForConversation:conversation];
+    view.conversationTitleLabel.text = conversationTitle;
+    view.accessibilityLabel = conversationTitle;
+    
     LYRMessage *lastMessage = conversation.lastMessage;
     if (lastMessage) {
         view.dateLabel.text = [self.messageTimeFormatter stringForMessageTime:lastMessage.sentAt

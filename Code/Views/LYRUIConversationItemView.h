@@ -32,9 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol LYRUIConversationItemView <NSObject>
 
-@property(nonatomic, weak) UILabel *conversationTitleLabel;
-@property(nonatomic, weak) UILabel *lastMessageLabel;
-@property(nonatomic, weak) UILabel *dateLabel;
+@property(nonatomic, weak, readonly) UILabel *conversationTitleLabel;
+@property(nonatomic, weak, readonly) UILabel *lastMessageLabel;
+@property(nonatomic, weak, readonly) UILabel *dateLabel;
 @property(nonatomic, weak, nullable) UIView *accessoryView;
 
 @end

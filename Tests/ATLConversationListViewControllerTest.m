@@ -119,7 +119,7 @@ extern NSString *const ATLAvatarViewAccessibilityLabel;
     
     NSString *message1 = @"Message1";
     ATLUserMock *mockUser1 = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
-    LYRConversationMock *conversation1 = [self.testInterface conversationWithParticipants:[NSSet setWithObject:mockUser1.userID] lastMessageText:message1];
+    LYRConversationMock *conversation1 = [self.testInterface conversationWithParticipants:[NSSet setWithObject:mockUser1] lastMessageText:message1];
     [tester swipeViewWithAccessibilityLabel:[self.testInterface conversationLabelForConversation:conversation1] inDirection:KIFSwipeDirectionLeft];
     [self deleteConversation:conversation1 deletionMode:LYRDeletionModeAllParticipants];
 }
@@ -132,7 +132,7 @@ extern NSString *const ATLAvatarViewAccessibilityLabel;
 
     NSString *message1 = @"Message1";
     ATLUserMock *mockUser1 = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
-    LYRConversationMock *conversation1 = [self.testInterface conversationWithParticipants:[NSSet setWithObject:mockUser1.userID] lastMessageText:message1];
+    LYRConversationMock *conversation1 = [self.testInterface conversationWithParticipants:[NSSet setWithObject:mockUser1] lastMessageText:message1];
     [tester swipeViewWithAccessibilityLabel:[self.testInterface conversationLabelForConversation:conversation1] inDirection:KIFSwipeDirectionLeft];
     [self deleteConversation:conversation1 deletionMode:LYRDeletionModeMyDevices];
 }
@@ -185,27 +185,6 @@ extern NSString *const ATLAvatarViewAccessibilityLabel;
     [tester waitForAbsenceOfViewWithAccessibilityLabel:[NSString stringWithFormat:@"My Devices"]];
 }
 
-//Customize the fonts and colors using UIAppearance and verify that the configuration is respected.
-- (void)testToVerifyColorAndFontChangeFunctionality
-{
-    self.viewController = [ATLSampleConversationListViewController conversationListViewControllerWithLayerClient:(LYRClient *)self.testInterface.layerClient];
-    [self setRootViewController:self.viewController];
-    
-    UIFont *testFont = [UIFont systemFontOfSize:20];
-    UIColor *testColor = [UIColor redColor];
-    
-    [[ATLConversationTableViewCell appearance] setConversationTitleLabelFont:testFont];
-    [[ATLConversationTableViewCell appearance] setConversationTitleLabelColor:testColor];
-    
-    ATLUserMock *mockUser1 = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
-    LYRConversationMock *conversation1 = [self newConversationWithMockUser:mockUser1 lastMessageText:@"Test Message"];
-    
-    NSString *conversationLabel = [self.testInterface conversationLabelForConversation:conversation1];
-    ATLConversationTableViewCell *cell = (ATLConversationTableViewCell *)[tester waitForViewWithAccessibilityLabel:conversationLabel];
-    expect(cell.conversationTitleLabelFont).to.equal(testFont);
-    expect(cell.conversationTitleLabelColor).to.equal(testColor);
-}
-
 //Customize the row height and ensure that it is respected.
 - (void)testToVerifyCustomRowHeightFunctionality
 {
@@ -217,7 +196,7 @@ extern NSString *const ATLAvatarViewAccessibilityLabel;
     LYRConversationMock *conversation1 = [self newConversationWithMockUser:mockUser1 lastMessageText:@"Test Message"];
     
     NSString *conversationLabel = [self.testInterface conversationLabelForConversation:conversation1];
-    ATLConversationTableViewCell *cell = (ATLConversationTableViewCell *)[tester waitForViewWithAccessibilityLabel:conversationLabel];
+    LYRUIConversationItemTableViewCell *cell = (LYRUIConversationItemTableViewCell *)[tester waitForViewWithAccessibilityLabel:conversationLabel];
     expect(cell.frame.size.height).to.equal(100);
 }
 
@@ -225,16 +204,16 @@ extern NSString *const ATLAvatarViewAccessibilityLabel;
 -(void)testToVerifyCustomCellClassFunctionality
 {
     self.viewController = [ATLSampleConversationListViewController conversationListViewControllerWithLayerClient:(LYRClient *)self.testInterface.layerClient];
-    [self.viewController setCellClass:[ATLTestConversationCell class]];
+    [self.viewController setCellClass:[LYRUITestConversationItemCell class]];
     [self setRootViewController:self.viewController];
     
     ATLUserMock *mockUser1 = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
     LYRConversationMock *conversation1 = [self newConversationWithMockUser:mockUser1 lastMessageText:@"Test Message"];
     
     NSString *conversationLabel = [self.testInterface conversationLabelForConversation:conversation1];
-    ATLConversationTableViewCell *cell = (ATLConversationTableViewCell *)[tester waitForViewWithAccessibilityLabel:conversationLabel];
-    expect([cell class]).to.equal([ATLTestConversationCell class]);
-    expect([cell class]).toNot.equal([ATLConversationTableViewCell class]);
+    LYRUITestConversationItemCell *cell = (LYRUITestConversationItemCell *)[tester waitForViewWithAccessibilityLabel:conversationLabel];
+    expect([cell class]).to.equal([LYRUITestConversationItemCell class]);
+    expect([cell class]).toNot.equal([LYRUIConversationItemTableViewCell class]);
 }
 
 //Verify search bar does show up on screen for default `shouldDisplaySearchController` value `YES`.
@@ -254,7 +233,7 @@ extern NSString *const ATLAvatarViewAccessibilityLabel;
     [tester waitForAbsenceOfViewWithAccessibilityLabel:@"Search Bar"];
 }
 
-//Verify that attempting to provide a cell class that does not conform to ATLConversationPresenting results in a runtime exception.
+//Verify that attempting to provide a cell class that does not conform to LYRUIConversationItemView results in a runtime exception.
 - (void)testToVerifyCustomCellClassNotConformingToProtocolRaisesException
 {
     self.viewController = [ATLSampleConversationListViewController conversationListViewControllerWithLayerClient:(LYRClient *)self.testInterface.layerClient];
@@ -306,34 +285,7 @@ extern NSString *const ATLAvatarViewAccessibilityLabel;
     self.viewController.dataSource = delegateMock;
     
     ATLUserMock *mockUser1 = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
-    LYRConversationMock *conversation = [self.testInterface.layerClient newConversationWithParticipants:[NSSet setWithObject:mockUser1.userID] options:nil error:nil];;
-
-    [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
-        [invocation retainArguments];
-
-        ATLConversationListViewController *controller;
-        [invocation getArgument:&controller atIndex:2];
-        expect(controller).to.equal(self.viewController);
-        
-        LYRConversation *conv;
-        [invocation getArgument:&conv atIndex:3];
-        expect(conv).to.equal(conversation);
-        
-        NSString *conversationTitle = mockUser1.displayName;
-        [invocation setReturnValue:&conversationTitle];
-    }] conversationListViewController:[OCMArg any] titleForConversation:[OCMArg any]];
-    
-    [[[delegateMock expect] andDo:^(NSInvocation *invocation) {
-        [invocation retainArguments];
-
-        ATLConversationListViewController *controller;
-        [invocation getArgument:&controller atIndex:2];
-        expect(controller).to.equal(self.viewController);
-        
-        LYRConversation *conv;
-        [invocation getArgument:&conv atIndex:3];
-        expect(conv).to.equal(conversation);
-    }] conversationListViewController:[OCMArg any] avatarItemForConversation:[OCMArg any]];
+    LYRConversationMock *conversation = [self.testInterface.layerClient newConversationWithParticipants:[NSSet setWithObject:mockUser1] options:nil error:nil];;
 
     // now send the message
     LYRMessagePart *part = [LYRMessagePart messagePartWithText:@"Test Message"];
@@ -601,23 +553,9 @@ extern NSString *const ATLAvatarViewAccessibilityLabel;
     expect(self.viewController.queryController.query.sortDescriptors).will.contain(sortDescriptor);
 }
 
-- (void)testToVerifyAvatarImageURLLoad
-{
-    self.viewController = [ATLSampleConversationListViewController conversationListViewControllerWithLayerClient:(LYRClient *)self.testInterface.layerClient];
-    self.viewController.displaysAvatarItem = YES;
-    [self setRootViewController:self.viewController];
-
-    ATLUserMock *mockUser1 = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
-    [self newConversationWithMockUser:mockUser1 lastMessageText:@"Test Message"];
-    [tester waitForAnimationsToFinish];
-
-    ATLAvatarView *avatarView = (ATLAvatarView *)[tester waitForViewWithAccessibilityLabel:ATLAvatarViewAccessibilityLabel];
-    expect(avatarView.imageView.image).will.beTruthy;
-}
-
 - (LYRConversationMock *)newConversationWithMockUser:(ATLUserMock *)mockUser lastMessageText:(NSString *)lastMessageText
 {
-    LYRConversationMock *conversation = [self.testInterface conversationWithParticipants:[NSSet setWithObject:mockUser.userID] lastMessageText:lastMessageText];
+    LYRConversationMock *conversation = [self.testInterface conversationWithParticipants:[NSSet setWithObject:mockUser] lastMessageText:lastMessageText];
     [tester waitForViewWithAccessibilityLabel:[self.testInterface conversationLabelForConversation:conversation]];
     return conversation;
 }

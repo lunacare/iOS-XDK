@@ -23,13 +23,8 @@
 
 static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationName";
 
-@interface LYRUIConversationItemTitleFormatter ()
-
-@property(nonatomic, strong, nullable) LYRIdentity *currentUser;
-
-@end
-
 @implementation LYRUIConversationItemTitleFormatter
+@synthesize currentUser = _currentUser;
 
 - (instancetype)initWithCurrentUser:(LYRIdentity *)currentUser {
     self = [super init];
@@ -43,7 +38,7 @@ static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationNam
 
 - (NSString *)titleForConversation:(LYRConversation *)conversation {
     NSString *metadataTitle = [self metadataTitleForConversation:conversation];
-    if (metadataTitle) {
+    if (metadataTitle && metadataTitle.length > 0) {
         return metadataTitle;
     }
     
@@ -77,18 +72,20 @@ static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationNam
     NSMutableString *title = [[NSMutableString alloc] init];
     for (LYRIdentity *participant in participants) {
         NSString *participantName = [self participantShortName:participant];
-        if (title.length != 0 && participantName != nil) {
-            [title appendString:@", "];
+        if (participantName != nil) {
+            if (title.length != 0) {
+                [title appendString:@", "];
+            }
+            [title appendString:participantName];
         }
-        [title appendString:participantName];
     }
     return title;
 }
 
 - (nullable NSString *)participantShortName:(nonnull LYRIdentity *)participant {
-    if (participant.firstName) {
+    if (participant.firstName && participant.firstName.length > 0) {
         return participant.firstName;
-    } else if (participant.lastName) {
+    } else if (participant.lastName && participant.lastName.length > 0) {
         return participant.lastName;
     }
     return participant.displayName;
@@ -99,7 +96,7 @@ static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationNam
 - (NSSet *)filteredParticipants:(NSSet *)participants {
     __weak __typeof(self) weakSelf = self;
     NSPredicate *notCurrentUserPredicate = [NSPredicate predicateWithBlock:^BOOL(LYRIdentity * _Nullable identity, NSDictionary<NSString *,id> * _Nullable bindings) {
-        return ![identity.identifier isEqual:weakSelf.currentUser.identifier];
+        return ![identity.userID isEqual:weakSelf.currentUser.userID];
     }];
     return [participants filteredSetUsingPredicate:notCurrentUserPredicate];
 }

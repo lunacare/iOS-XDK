@@ -16,7 +16,7 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
         formatter = [[LYRUIConversationItemTitleFormatter alloc] init];
         conversationMock = mock([LYRConversation class]);
         currentUserMock = mock([LYRIdentity class]);
-        [given(currentUserMock.identifier) willReturn:[NSURL URLWithString:@"test/identifier"]];
+        [given(currentUserMock.userID) willReturn:@"test identifier"];
     });
     
     afterEach(^{
@@ -116,7 +116,7 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                 
                 beforeEach(^{
                     LYRIdentity *participantMock1 = mock([LYRIdentity class]);
-                    [given(participantMock1.identifier) willReturn:[NSURL URLWithString:@"test/identifier"]];
+                    [given(participantMock1.userID) willReturn:@"test identifier"];
                     [given(participantMock1.displayName) willReturn:@"Enzo Ferrari"];
                     otherParticipantMock = mock([LYRIdentity class]);
                     [given(otherParticipantMock.displayName) willReturn:@"Ferdinand Porsche Display Name"];
@@ -208,7 +208,7 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
             context(@"with multiple participants", ^{
                 beforeEach(^{
                     LYRIdentity *participantMock1 = mock([LYRIdentity class]);
-                    [given(participantMock1.identifier) willReturn:[NSURL URLWithString:@"test/identifier"]];
+                    [given(participantMock1.userID) willReturn:@"test identifier"];
                     [given(participantMock1.displayName) willReturn:@"Enzo Ferrari"];
                     LYRIdentity *participantMock2 = mock([LYRIdentity class]);
                     [given(participantMock2.firstName) willReturn:@"Ferdinand"];
