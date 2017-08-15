@@ -38,7 +38,7 @@ static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationNam
 
 - (NSString *)titleForConversation:(LYRConversation *)conversation {
     NSString *metadataTitle = [self metadataTitleForConversation:conversation];
-    if (metadataTitle) {
+    if (metadataTitle && metadataTitle.length > 0) {
         return metadataTitle;
     }
     
@@ -72,18 +72,20 @@ static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationNam
     NSMutableString *title = [[NSMutableString alloc] init];
     for (LYRIdentity *participant in participants) {
         NSString *participantName = [self participantShortName:participant];
-        if (title.length != 0 && participantName != nil) {
-            [title appendString:@", "];
+        if (participantName != nil) {
+            if (title.length != 0) {
+                [title appendString:@", "];
+            }
+            [title appendString:participantName];
         }
-        [title appendString:participantName];
     }
     return title;
 }
 
 - (nullable NSString *)participantShortName:(nonnull LYRIdentity *)participant {
-    if (participant.firstName) {
+    if (participant.firstName && participant.firstName.length > 0) {
         return participant.firstName;
-    } else if (participant.lastName) {
+    } else if (participant.lastName && participant.lastName.length > 0) {
         return participant.lastName;
     }
     return participant.displayName;
