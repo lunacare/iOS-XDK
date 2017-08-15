@@ -6,6 +6,12 @@
 #import <Atlas/LYRUIParticipantsFilter.h>
 #import <LayerKit/LayerKit.h>
 
+@interface LYRUIConversationItemTitleFormatter (PrivateProperties)
+
+@property (nonatomic, strong) LYRUIParticipantsFilter *participantsFilter;
+
+@end
+
 SpecBegin(LYRUIConversationItemTitleFormatter)
 
 describe(@"LYRUIConversationItemTitleFormatter", ^{
@@ -21,6 +27,16 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
     
     afterEach(^{
         formatter = nil;
+    });
+    
+    describe(@"after initialization with convenience initializer", ^{
+        beforeEach(^{
+            formatter = [[LYRUIConversationItemTitleFormatter alloc] init];
+        });
+        
+        it(@"should have default participants filter set", ^{
+            expect(formatter.participantsFilter).notTo.beNil();
+        });
     });
     
     describe(@"titleForConversation:", ^{

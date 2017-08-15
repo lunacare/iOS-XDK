@@ -8,6 +8,12 @@
 #import <Atlas/LYRUIParticipantsFilter.h>
 #import <LayerKit/LayerKit.h>
 
+@interface LYRUIConversationItemAccessoryViewProvider (PrivateProperties)
+
+@property (nonatomic, strong) LYRUIParticipantsFilter *participantsFilter;
+
+@end
+
 SpecBegin(LYRUIConversationItemAccessoryViewProvider)
 
 describe(@"LYRUIConversationItemAccessoryViewProvider", ^{
@@ -33,6 +39,16 @@ describe(@"LYRUIConversationItemAccessoryViewProvider", ^{
         provider = nil;
         conversationMock = nil;
         participants = nil;
+    });
+    
+    describe(@"after initialization with convenience initializer", ^{
+        beforeEach(^{
+            provider = [[LYRUIConversationItemAccessoryViewProvider alloc] init];
+        });
+        
+        it(@"should have default participants filter set", ^{
+            expect(provider.participantsFilter).notTo.beNil();
+        });
     });
     
     describe(@"accessoryViewForConversation:", ^{

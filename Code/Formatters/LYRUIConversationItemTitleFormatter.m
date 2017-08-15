@@ -33,6 +33,11 @@ static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationNam
 @implementation LYRUIConversationItemTitleFormatter
 @synthesize currentUser = _currentUser;
 
+- (instancetype)init {
+    self = [self initWithParticipantsFilter:nil];
+    return self;
+}
+
 - (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFilter *)participantsFilter {
     self = [super init];
     if (self) {
