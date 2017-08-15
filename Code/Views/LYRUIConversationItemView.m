@@ -19,8 +19,14 @@
 //
 
 #import "LYRUIConversationItemView.h"
-#import "LYRUIConversationItemViewMediumLayout.h"
+#import "LYRUIConversationItemViewLayout.h"
 #import "LYRUISampleAccessoryView.h"
+
+@interface LYRUIConversationItemView ()
+
+@property(nonatomic, weak, readwrite) UIView *accessoryViewContainer;
+
+@end
 
 @implementation LYRUIConversationItemView
 @synthesize conversationTitleLabel = _conversationTitleLabel,
@@ -32,7 +38,7 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self commonInitialization];
+        [self lyr_commonInitWithLayout:nil];
     }
     return self;
 }
@@ -40,7 +46,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self commonInitialization];
+        [self lyr_commonInitWithLayout:nil];
     }
     return self;
 }
@@ -48,12 +54,12 @@
 - (instancetype)initWithLayout:(id<LYRUIConversationItemViewLayout>)layout {
     self = [self initWithFrame:CGRectZero];
     if (self) {
-        self.layout = layout;
+        [self lyr_commonInitWithLayout:layout];
     }
     return self;
 }
 
-- (void)commonInitialization {
+- (void)lyr_commonInitWithLayout:(id<LYRUIConversationItemViewLayout>)layout {
     // TODO: update with colors from color palette
     UIColor *blackColor = [UIColor colorWithRed:27.0/255.0 green:28.0/255.0 blue:29.0/255.0 alpha:1.0];
     UIColor *grayColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
@@ -64,8 +70,16 @@
                                          textColor:grayColor];
     self.dateLabel = [self addLabelWithFont:[UIFont systemFontOfSize:12]
                                   textColor:grayColor];
+    
+    UIView *accessoryViewContainer = [[UIView alloc] init];
+    accessoryViewContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:accessoryViewContainer];
+    self.accessoryViewContainer = accessoryViewContainer;
 
-    self.layout = [[LYRUIConversationItemViewMediumLayout alloc] init];
+    if (layout == nil) {
+        layout = [[LYRUIConversationItemViewLayout alloc] init];
+    }
+    self.layout = layout;
 }
 
 - (UILabel *)addLabelWithFont:(UIFont *)font textColor:(UIColor *)textColor {
@@ -80,12 +94,24 @@
 - (void)prepareForInterfaceBuilder {
     self.conversationTitleLabel.text = @"Name(s) / Title";
     self.dateLabel.text = @"8:30am";
+    self.lastMessageLabel.text = @"Message";
     
     UIView *accessoryView = [[LYRUISampleAccessoryView alloc] init];
-    [self addSubview:accessoryView];
     self.accessoryView = accessoryView;
     
     [self setNeedsUpdateConstraints];
+}
+
+#pragma mark - Properties
+
+- (void)setAccessoryView:(UIView *)accessoryView {
+    if (self.accessoryView) {
+        [self.accessoryView removeFromSuperview];
+    }
+    if (accessoryView) {
+        [self.accessoryViewContainer addSubview:accessoryView];
+    }
+    _accessoryView = accessoryView;
 }
 
 #pragma mark - IBInspectable properties

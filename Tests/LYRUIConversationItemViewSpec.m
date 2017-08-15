@@ -3,7 +3,7 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <Atlas/LYRUIConversationItemView.h>
-#import <Atlas/LYRUIConversationItemViewMediumLayout.h>
+#import <Atlas/LYRUIConversationItemViewLayout.h>
 
 SpecBegin(LYRUIConversationItemView)
 
@@ -23,8 +23,10 @@ describe(@"LYRUIConversationItemView", ^{
         it(@"should have conversationTitleLabel set", ^{
             expect(view.conversationTitleLabel).to.beAKindOf([UILabel class]);
         });
-        it(@"should have conversationTitleLabel's default font set", ^{
-            expect(view.conversationTitleLabel.font).to.equal([UIFont systemFontOfSize:16]);
+        it(@"should have conversationTitleLabel's font set by the default layout", ^{
+            NSString *fontName = [UIFont systemFontOfSize:1].fontName;
+            UIFont *expectedFont = [UIFont fontWithName:fontName size:14];
+            expect(view.conversationTitleLabel.font).to.equal(expectedFont);
         });
         it(@"should have conversationTitleLabel's default text color set", ^{
             UIColor *blackColor = [UIColor colorWithRed:27.0/255.0 green:28.0/255.0 blue:29.0/255.0 alpha:1.0];
@@ -33,7 +35,7 @@ describe(@"LYRUIConversationItemView", ^{
         it(@"should have lastMessageLabel set", ^{
             expect(view.lastMessageLabel).to.beAKindOf([UILabel class]);
         });
-        it(@"should have lastMessageLabel's default font set", ^{
+        it(@"should have lastMessageLabel's default font set by the default layout", ^{
             expect(view.lastMessageLabel.font).to.equal([UIFont systemFontOfSize:14]);
         });
         it(@"should have lastMessageLabel's default text color set", ^{
@@ -44,7 +46,9 @@ describe(@"LYRUIConversationItemView", ^{
             expect(view.dateLabel).to.beAKindOf([UILabel class]);
         });
         it(@"should have dateLabel's default font set", ^{
-            expect(view.dateLabel.font).to.equal([UIFont systemFontOfSize:12]);
+            NSString *fontName = [UIFont systemFontOfSize:1].fontName;
+            UIFont *expectedFont = [UIFont fontWithName:fontName size:10];
+            expect(view.dateLabel.font).to.equal(expectedFont);
         });
         it(@"should have dateLabel's default text color set", ^{
             UIColor *grayColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
@@ -53,8 +57,8 @@ describe(@"LYRUIConversationItemView", ^{
         it(@"should not have accessoryView set", ^{
             expect(view.accessoryView).to.beNil();
         });
-        it(@"should have layout set to Medium Layout", ^{
-            expect(view.layout).to.beAKindOf([LYRUIConversationItemViewMediumLayout class]);
+        it(@"should have layout set to `LYRUIConversationItemViewLayout`", ^{
+            expect(view.layout).to.beAKindOf([LYRUIConversationItemViewLayout class]);
         });
     });
     
@@ -69,6 +73,12 @@ describe(@"LYRUIConversationItemView", ^{
         
         it(@"should have layout set to the one passed to initializator", ^{
             expect(view.layout).to.equal(layoutMock);
+        });
+        it(@"should have conversationTitleLabel's default font set", ^{
+            expect(view.conversationTitleLabel.font).to.equal([UIFont systemFontOfSize:16]);
+        });
+        it(@"should have dateLabel's default font set", ^{
+            expect(view.dateLabel.font).to.equal([UIFont systemFontOfSize:12]);
         });
     });
     

@@ -1,5 +1,5 @@
 //
-//  LYRUIConversationItemViewMediumLayout.h
+//  LYRUIConversationItemViewLayout.h
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 06.07.2017.
@@ -20,5 +20,5 @@
 
 #import "LYRUIConversationItemView.h"
 
-@interface LYRUIConversationItemViewMediumLayout : NSObject <LYRUIConversationItemViewLayout>
+@interface LYRUIConversationItemViewLayout : NSObject <LYRUIConversationItemViewLayout>
 @end

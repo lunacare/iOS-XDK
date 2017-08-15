@@ -23,32 +23,17 @@
 @implementation LYRUISampleAccessoryView
 
 - (instancetype)init {
-    self = [self initWithSize:CGSizeMake(40, 40)];
-    return self;
-}
-
-- (instancetype)initWithSize:(CGSize)size {
     self = [super init];
     if (self) {
         self.translatesAutoresizingMaskIntoConstraints = NO;
         self.backgroundColor = [UIColor grayColor];
-        self.layer.cornerRadius = roundf(MIN(size.width, size.height) / 2);
-        [self addConstraint:[NSLayoutConstraint constraintWithItem:self
-                                                         attribute:NSLayoutAttributeWidth
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:nil
-                                                         attribute:NSLayoutAttributeNotAnAttribute
-                                                        multiplier:1.0
-                                                          constant:size.width]];
-        [self addConstraint:[NSLayoutConstraint constraintWithItem:self
-                                                         attribute:NSLayoutAttributeHeight
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:nil
-                                                         attribute:NSLayoutAttributeNotAnAttribute
-                                                        multiplier:1.0
-                                                          constant:size.height]];
     }
     return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.layer.cornerRadius = roundf(MIN(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)) / 2);
 }
 
 @end
