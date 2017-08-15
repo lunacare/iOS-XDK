@@ -48,7 +48,7 @@
 @end
 
 @implementation LYRUITestConversationItemCell
-@synthesize conversationTitleLabel, lastMessageLabel, dateLabel, accessoryView;
+@synthesize titleLabel, messageLabel, timeLabel, accessoryView;
 @end
 
 #pragma mark - Test Message Cell Implementaion

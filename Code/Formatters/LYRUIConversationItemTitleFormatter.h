@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
  @param nameFormatter An object conforming to `LYRUIIdentityNameFormatting` protocol, used to format full name of participant in 1 on 1 conversations. Default value is an `LYRUIIdentityNameFormatter` instance.
  */
 - (instancetype)initWithParticipantsFilter:(nullable LYRUIParticipantsFiltering)participantsFilter
-                                     nameFormatter:(nullable id <LYRUIIdentityNameFormatting>)nameFormatter;
+                             nameFormatter:(nullable id <LYRUIIdentityNameFormatting>)nameFormatter;
 
 @end
 NS_ASSUME_NONNULL_END       // }
