@@ -225,8 +225,11 @@
     self.sendButton.titleLabel.font = sendButtonTitleFont;
 }
 
+- (UIFont *)textFont {
+    return self.inputTextView.font;
+}
+
 - (void)setTextFont:(UIFont *)textFont {
-    _textFont = textFont;
     self.inputTextView.font = textFont;
 }
 

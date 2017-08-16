@@ -19,16 +19,14 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="color" keyPath="sendButtonEnabledColor">
-                    <color key="value" red="1" green="0.42131848059999999" blue="0.3928643302" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <color key="value" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </userDefinedRuntimeAttribute>
                 <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                    <color key="value" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="value" red="0.0" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </userDefinedRuntimeAttribute>
-                <userDefinedRuntimeAttribute type="string" keyPath="inputPlaceholder" value="type message here"/>
                 <userDefinedRuntimeAttribute type="color" keyPath="textColor">
                     <color key="value" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </userDefinedRuntimeAttribute>
-                <userDefinedRuntimeAttribute type="string" keyPath="inputText" value="my message"/>
                 <userDefinedRuntimeAttribute type="color" keyPath="messageBubbleColor">
                     <color key="value" red="1" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </userDefinedRuntimeAttribute>
@@ -41,6 +39,8 @@
                 <userDefinedRuntimeAttribute type="number" keyPath="messageBubbleCornerRadius">
                     <real key="value" value="16"/>
                 </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="placeholder"/>
+                <userDefinedRuntimeAttribute type="string" keyPath="messageText" value="message text"/>
             </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="layout" destination="Tpt-Vk-N8y" id="VBQ-xA-rg3"/>

@@ -26,6 +26,8 @@
 @property (nonatomic, copy) NSString *messageText;
 @property (nonatomic, copy) NSAttributedString *attributedMessageText;
 
+- (instancetype)initWithNotificationCenter:(NSNotificationCenter *)notificationCenter;
+
 - (void)configureComposeBar:(LYRUIComposeBar *)composeBar;
 - (void)cleanup;
 

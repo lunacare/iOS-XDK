@@ -102,7 +102,7 @@
 #pragma mark - LYRUIComposeBar logic
 
 - (void)didBeginEditing {
-    if ([self.textView.text isEqualToString:self.composeBar.placeholder]) {
+    if (self.placeholderVisible) {
         self.placeholderVisible = NO;
         self.textView.textColor = self.composeBar.textColor;
         self.textView.text = nil;
@@ -187,6 +187,7 @@
         [self showPlaceholder];
     } else {
         self.placeholderVisible = NO;
+        self.textView.textColor = self.composeBar.textColor;
         self.textView.attributedText = attributedMessageText;
     }
 }
