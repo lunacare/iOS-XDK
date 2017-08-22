@@ -46,5 +46,12 @@ NS_ASSUME_NONNULL_BEGIN     // {
 - (void)setupMessageItemView:(UIView<LYRUIMessageItemView> *)messageItemView
                  withMessage:(LYRMessage *)message;
 
+/**
+ @abstract Calculates height for displaying an UIView conforming to `LYRUIMessageItemView` protocol with data from given `LYRMessage`.
+ @param message The `LYRMessage` object which height should be calculated.
+ @param maxWidth Maximum width for presenting the `message`.
+ */
+- (CGFloat)messageViewHeightForMessage:(LYRMessage *)message maxWidth:(CGFloat)maxWidth;
+
 @end
 NS_ASSUME_NONNULL_END       // }

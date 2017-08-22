@@ -37,6 +37,11 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @property (nonatomic, strong) NSMutableArray<LYRUIListSection *> *sections;
 
 /**
+ @abstract Provides the index path of the last item in list.
+ */
+@property (nonatomic, readonly) NSIndexPath *lastItemIndexPath;
+
+/**
  @abstract Provides objects selected in the list view.
  @param collectionView The list view's `UICollectionView` in which the items were selected.
  @returns An array of model objects from the list view data source, at corresponding index paths for selected items in `UICollectionView`.
@@ -56,6 +61,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
  @returns An `NSIndexPath` for provided object.
  */
 - (NSIndexPath *)indexPathOfItem:(id)item;
+
 
 @end
 

@@ -22,6 +22,8 @@
 #import "LYRUIMessageItemViewLayout.h"
 #import "LYRUIMessageItemIBSetup.h"
 
+static CGFloat const LYRUIMessageItemViewContentDefaultCornerRadius = 16.0;
+
 @interface LYRUIMessageItemView ()
 
 @property (nonatomic, weak, readwrite) UIView *primaryAccessoryViewContainer;
@@ -62,9 +64,10 @@
 }
 
 - (void)lyr_commonInit {
+    self.updateConstraintsOnWidthChange = YES;
     self.primaryAccessoryViewContainer = [self addView];
     self.contentViewContainer = [self addView];
-    self.contentViewContainer.layer.cornerRadius = 16.0;
+    self.contentViewContainer.layer.cornerRadius = LYRUIMessageItemViewContentDefaultCornerRadius;
     self.contentViewContainer.backgroundColor = [UIColor colorWithWhite:242.0/255.0 alpha:1.0];
     self.secondaryAccessoryViewContainer = [self addView];
     self.layout = [[LYRUIMessageItemViewLayout alloc] initWithLayoutDirection:LYRUIMessageItemViewLayoutDirectionLeft];

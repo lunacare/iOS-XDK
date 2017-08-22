@@ -111,6 +111,13 @@
     return nil;
 }
 
+- (NSIndexPath *)lastItemIndexPath {
+    LYRUIListSection *section = self.sections.lastObject;
+    NSUInteger sectionIndex = self.sections.count - 1;
+    NSUInteger itemIndex = section.items.count - 1;
+    return [NSIndexPath indexPathForItem:itemIndex inSection:sectionIndex];
+}
+
 #pragma mark - LYRUIListCellConfiguring registration
 
 - (void)registerCellConfiguration:(id<LYRUIListCellConfiguring>)cellConfiguration {

@@ -20,12 +20,14 @@
 
 #import "LYRUIBaseListView.h"
 #import "LYRUIListDataSource.h"
+#import "LYRUIListQueryControllerDelegate.h"
 #import "LYRUIListSection.h"
 #import "LYRUIListDelegate.h"
 
 @interface LYRUIBaseListView ()
 
 @property (nonatomic, weak, readwrite) UICollectionView *collectionView;
+@property (nonatomic, strong) LYRUIListQueryControllerDelegate *queryControllerDelegate;
 
 @end
 
@@ -77,6 +79,20 @@
     }
 }
 
+- (void)setQueryController:(LYRQueryController *)queryController {
+    _queryController = queryController;
+    self.queryControllerDelegate = [[LYRUIListQueryControllerDelegate alloc] init];
+    self.queryControllerDelegate.listDataSource = self.dataSource;
+    self.queryControllerDelegate.collectionView = self.collectionView;
+    self.queryController.delegate = self.queryControllerDelegate;
+    LYRUIListSection *section = [[LYRUIListSection alloc] init];
+    for (id item in queryController.paginatedObjects) {
+        [section.items addObject:item];
+    }
+    [self.dataSource.sections addObject:section];
+    [self.collectionView reloadData];
+}
+
 - (NSMutableArray<LYRUIListSection *> *)items {
     return self.dataSource.sections;
 }
@@ -107,6 +123,7 @@
 - (void)setDataSource:(id<LYRUIListDataSource>)dataSource {
     _dataSource = dataSource;
     self.collectionView.dataSource = dataSource;
+    self.queryControllerDelegate.listDataSource = dataSource;
 }
 
 #pragma mark - Selection

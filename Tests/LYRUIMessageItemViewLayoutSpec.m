@@ -57,57 +57,57 @@ describe(@"LYRUIMessageItemViewLayout", ^{
             context(@"with both accessory views added", ^{
                 context(@"when view has small width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(320.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(320.0, 100.0));
                     });
                     
                     it(@"should set proper primary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(12.0, 70.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(12.0, 68.0, 32.0, 32.0);
                         expect(messageItemView.primaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(52.0, 2.0, 216.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(52.0, 0.0, 216.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper secondary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(276.0, 36.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(276.0, 34.0, 32.0, 32.0);
                         expect(messageItemView.secondaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                 });
                 
                 context(@"when view has medium width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(500.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(500.0, 100.0));
                     });
                     
                     it(@"should set proper primary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(12.0, 70.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(12.0, 68.0, 32.0, 32.0);
                         expect(messageItemView.primaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(52.0, 2.0, 375.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(52.0, 0.0, 375.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper secondary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(435.0, 36.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(435.0, 34.0, 32.0, 32.0);
                         expect(messageItemView.secondaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                 });
                 
                 context(@"when view has big width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(700.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(700.0, 100.0));
                     });
                     
                     it(@"should set proper primary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(12.0, 70.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(12.0, 68.0, 32.0, 32.0);
                         expect(messageItemView.primaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(52.0, 2.0, 420.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(52.0, 0.0, 420.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper secondary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(480.0, 36.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(480.0, 34.0, 32.0, 32.0);
                         expect(messageItemView.secondaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                 });
@@ -120,15 +120,15 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                 
                 context(@"when view has small width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(320.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(320.0, 100.0));
                     });
                     
                     it(@"should set proper primary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(12.0, 70.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(12.0, 68.0, 32.0, 32.0);
                         expect(messageItemView.primaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(52.0, 2.0, 256.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(52.0, 0.0, 256.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set secondary accessory view container frame to zero size", ^{
@@ -139,15 +139,15 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                 
                 context(@"when view has medium width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(500.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(500.0, 100.0));
                     });
                     
                     it(@"should set proper primary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(12.0, 70.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(12.0, 68.0, 32.0, 32.0);
                         expect(messageItemView.primaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(52.0, 2.0, 375.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(52.0, 0.0, 375.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set secondary accessory view container frame to zero size", ^{
@@ -158,15 +158,15 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                 
                 context(@"when view has big width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(700.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(700.0, 100.0));
                     });
                     
                     it(@"should set proper primary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(12.0, 70.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(12.0, 68.0, 32.0, 32.0);
                         expect(messageItemView.primaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(52.0, 2.0, 420.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(52.0, 0.0, 420.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set secondary accessory view container frame to zero size", ^{
@@ -183,7 +183,7 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                 
                 context(@"when view has small width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(320.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(320.0, 100.0));
                     });
                     
                     it(@"should set primary accessory view container frame to zero size", ^{
@@ -191,18 +191,18 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                         expect(messageItemView.primaryAccessoryViewContainer.frame.size).to.equal(expectedSize);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(12.0, 2.0, 256.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(12.0, 0.0, 256.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper secondary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(276.0, 36.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(276.0, 34.0, 32.0, 32.0);
                         expect(messageItemView.secondaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                 });
                 
                 context(@"when view has medium width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(500.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(500.0, 100.0));
                     });
                     
                     it(@"should set primary accessory view container frame to zero size", ^{
@@ -210,18 +210,18 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                         expect(messageItemView.primaryAccessoryViewContainer.frame.size).to.equal(expectedSize);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(12.0, 2.0, 375.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(12.0, 0.0, 375.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper secondary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(395.0, 36.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(395.0, 34.0, 32.0, 32.0);
                         expect(messageItemView.secondaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                 });
                 
                 context(@"when view has big width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(700.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(700.0, 100.0));
                     });
                     
                     it(@"should set primary accessory view container frame to zero size", ^{
@@ -229,11 +229,11 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                         expect(messageItemView.primaryAccessoryViewContainer.frame.size).to.equal(expectedSize);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(12.0, 2.0, 420.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(12.0, 0.0, 420.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper secondary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(440.0, 36.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(440.0, 34.0, 32.0, 32.0);
                         expect(messageItemView.secondaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                 });
@@ -247,7 +247,7 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                 
                 context(@"when view has small width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(320.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(320.0, 100.0));
                     });
                     
                     it(@"should set primary accessory view container frame to zero size", ^{
@@ -255,7 +255,7 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                         expect(messageItemView.primaryAccessoryViewContainer.frame.size).to.equal(expectedSize);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(12.0, 2.0, 288.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(12.0, 0.0, 288.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set secondary accessory view container frame to zero size", ^{
@@ -266,7 +266,7 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                 
                 context(@"when view has medium width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(500.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(500.0, 100.0));
                     });
                     
                     it(@"should set primary accessory view container frame to zero size", ^{
@@ -274,7 +274,7 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                         expect(messageItemView.primaryAccessoryViewContainer.frame.size).to.equal(expectedSize);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(12.0, 2.0, 375.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(12.0, 0.0, 375.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set secondary accessory view container frame to zero size", ^{
@@ -285,7 +285,7 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                 
                 context(@"when view has big width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(700.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(700.0, 100.0));
                     });
                     
                     it(@"should set primary accessory view container frame to zero size", ^{
@@ -293,7 +293,7 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                         expect(messageItemView.primaryAccessoryViewContainer.frame.size).to.equal(expectedSize);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(12.0, 2.0, 420.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(12.0, 0.0, 420.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set secondary accessory view container frame to zero size", ^{
@@ -318,57 +318,57 @@ describe(@"LYRUIMessageItemViewLayout", ^{
             context(@"with both accessory views added", ^{
                 context(@"when view has small width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(320.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(320.0, 100.0));
                     });
                     
                     it(@"should set proper primary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(276.0, 70.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(276.0, 68.0, 32.0, 32.0);
                         expect(messageItemView.primaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(52.0, 2.0, 216.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(52.0, 0.0, 216.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper secondary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(12.0, 36.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(12.0, 34.0, 32.0, 32.0);
                         expect(messageItemView.secondaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                 });
                 
                 context(@"when view has medium width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(500.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(500.0, 100.0));
                     });
                     
                     it(@"should set proper primary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(456.0, 70.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(456.0, 68.0, 32.0, 32.0);
                         expect(messageItemView.primaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(73.0, 2.0, 375.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(73.0, 0.0, 375.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper secondary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(33.0, 36.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(33.0, 34.0, 32.0, 32.0);
                         expect(messageItemView.secondaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                 });
                 
                 context(@"when view has big width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(700.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(700.0, 100.0));
                     });
                     
                     it(@"should set proper primary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(656.0, 70.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(656.0, 68.0, 32.0, 32.0);
                         expect(messageItemView.primaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(228.0, 2.0, 420.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(228.0, 0.0, 420.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper secondary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(188.0, 36.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(188.0, 34.0, 32.0, 32.0);
                         expect(messageItemView.secondaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                 });
@@ -381,15 +381,15 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                 
                 context(@"when view has small width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(320.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(320.0, 100.0));
                     });
                     
                     it(@"should set proper primary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(276.0, 70.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(276.0, 68.0, 32.0, 32.0);
                         expect(messageItemView.primaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(12.0, 2.0, 256.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(12.0, 0.0, 256.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set secondary accessory view container frame to zero size", ^{
@@ -400,15 +400,15 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                 
                 context(@"when view has medium width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(500.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(500.0, 100.0));
                     });
                     
                     it(@"should set proper primary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(456.0, 70.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(456.0, 68.0, 32.0, 32.0);
                         expect(messageItemView.primaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(73.0, 2.0, 375.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(73.0, 0.0, 375.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set secondary accessory view container frame to zero size", ^{
@@ -419,15 +419,15 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                 
                 context(@"when view has big width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(700.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(700.0, 100.0));
                     });
                     
                     it(@"should set proper primary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(656.0, 70.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(656.0, 68.0, 32.0, 32.0);
                         expect(messageItemView.primaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(228.0, 2.0, 420.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(228.0, 0.0, 420.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set secondary accessory view container frame to zero size", ^{
@@ -444,7 +444,7 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                 
                 context(@"when view has small width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(320.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(320.0, 100.0));
                     });
                     
                     it(@"should set primary accessory view container frame to zero size", ^{
@@ -452,18 +452,18 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                         expect(messageItemView.primaryAccessoryViewContainer.frame.size).to.equal(expectedSize);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(52.0, 2.0, 256.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(52.0, 0.0, 256.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper secondary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(12.0, 36.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(12.0, 34.0, 32.0, 32.0);
                         expect(messageItemView.secondaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                 });
                 
                 context(@"when view has medium width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(500.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(500.0, 100.0));
                     });
                     
                     it(@"should set primary accessory view container frame to zero size", ^{
@@ -471,18 +471,18 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                         expect(messageItemView.primaryAccessoryViewContainer.frame.size).to.equal(expectedSize);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(113.0, 2.0, 375.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(113.0, 0.0, 375.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper secondary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(73.0, 36.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(73.0, 34.0, 32.0, 32.0);
                         expect(messageItemView.secondaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                 });
                 
                 context(@"when view has big width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(700.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(700.0, 100.0));
                     });
                     
                     it(@"should set primary accessory view container frame to zero size", ^{
@@ -490,11 +490,11 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                         expect(messageItemView.primaryAccessoryViewContainer.frame.size).to.equal(expectedSize);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(268.0, 2.0, 420.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(268.0, 0.0, 420.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper secondary accessory view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(228.0, 36.0, 32.0, 32.0);
+                        CGRect expectedFrame = CGRectMake(228.0, 34.0, 32.0, 32.0);
                         expect(messageItemView.secondaryAccessoryViewContainer.frame).to.equal(expectedFrame);
                     });
                 });
@@ -508,7 +508,7 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                 
                 context(@"when view has small width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(320.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(320.0, 100.0));
                     });
                     
                     it(@"should set primary accessory view container frame to zero size", ^{
@@ -516,7 +516,7 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                         expect(messageItemView.primaryAccessoryViewContainer.frame.size).to.equal(expectedSize);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(20.0, 2.0, 288.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(20.0, 0.0, 288.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set secondary accessory view container frame to zero size", ^{
@@ -527,7 +527,7 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                 
                 context(@"when view has medium width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(500.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(500.0, 100.0));
                     });
                     
                     it(@"should set primary accessory view container frame to zero size", ^{
@@ -535,7 +535,7 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                         expect(messageItemView.primaryAccessoryViewContainer.frame.size).to.equal(expectedSize);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(113.0, 2.0, 375.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(113.0, 0.0, 375.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set secondary accessory view container frame to zero size", ^{
@@ -546,7 +546,7 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                 
                 context(@"when view has big width", ^{
                     beforeEach(^{
-                        messageItemViewSizeSetup(CGSizeMake(700.0, 104.0));
+                        messageItemViewSizeSetup(CGSizeMake(700.0, 100.0));
                     });
                     
                     it(@"should set primary accessory view container frame to zero size", ^{
@@ -554,7 +554,7 @@ describe(@"LYRUIMessageItemViewLayout", ^{
                         expect(messageItemView.primaryAccessoryViewContainer.frame.size).to.equal(expectedSize);
                     });
                     it(@"should set proper content view container frame", ^{
-                        CGRect expectedFrame = CGRectMake(268.0, 2.0, 420.0, 100.0);
+                        CGRect expectedFrame = CGRectMake(268.0, 0.0, 420.0, 100.0);
                         expect(messageItemView.contentViewContainer.frame).to.equal(expectedFrame);
                     });
                     it(@"should set secondary accessory view container frame to zero size", ^{

@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @property(nonatomic, strong, nullable) UIView *contentView;
 @property(nonatomic, strong, nullable) UIView *secondaryAccessoryView;
 
+@property(nonatomic, strong) UIColor *contentViewColor;
+
 @end
 
 typedef NS_ENUM(NSUInteger, LYRUIMessageItemViewLayoutDirection) {

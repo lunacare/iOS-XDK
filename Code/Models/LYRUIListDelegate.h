@@ -27,6 +27,11 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @protocol LYRUIListLoadingMoreDelegate <NSObject>
 
 /**
+ @abstract Flag indicating if another page of items can be loaded.
+ */
+@property (nonatomic) BOOL canLoadMoreItems;
+
+/**
  @abstract A method for determining if loading more items should begin according to `scrollView` scroll position.
  */
 - (BOOL)shouldLoadMoreItemsWithScrollView:(UIScrollView *)scrollView;

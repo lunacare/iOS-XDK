@@ -31,4 +31,14 @@
  */
 @property(nonatomic, copy, nullable) id<LYRUIViewLayout> layout;
 
+/**
+ @abstract Flag used to determine if constraints should be updated on view width change.
+ */
+@property (nonatomic) BOOL updateConstraintsOnWidthChange;
+
+/**
+ @abstract Flag used to determine if constraints should be updated on view height change.
+ */
+@property (nonatomic) BOOL updateConstraintsOnHeightChange;
+
 @end

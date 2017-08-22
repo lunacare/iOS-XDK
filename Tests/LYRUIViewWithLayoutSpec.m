@@ -2,6 +2,7 @@
 #import <Expecta/Expecta.h>
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
+#import <OCHamcrest/OCHamcrest.h>
 #import <Atlas/LYRUIViewWithLayout.h>
 
 SpecBegin(LYRUIViewWithLayout)
@@ -22,6 +23,7 @@ describe(@"LYRUIViewWithLayout", ^{
         
         beforeEach(^{
             layoutMock = mockProtocol(@protocol(LYRUIViewLayout));
+            [[given([layoutMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:layoutMock];
             
             view.layout = layoutMock;
         });
@@ -38,6 +40,7 @@ describe(@"LYRUIViewWithLayout", ^{
             
             beforeEach(^{
                 newLayoutMock = mockProtocol(@protocol(LYRUIViewLayout));
+                [[given([newLayoutMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:newLayoutMock];
                 
                 view.layout = newLayoutMock;
             });

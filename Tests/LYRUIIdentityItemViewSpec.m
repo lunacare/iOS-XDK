@@ -2,6 +2,7 @@
 #import <Expecta/Expecta.h>
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
+#import <OCHamcrest/OCHamcrest.h>
 #import <Atlas/LYRUIIdentityItemView.h>
 #import <Atlas/LYRUIBaseItemViewLayout.h>
 #import <Atlas/LYRUIBaseItemViewDefaultTheme.h>
@@ -71,6 +72,7 @@ describe(@"LYRUIIdentityItemView", ^{
         
         beforeEach(^{
             layoutMock = mockProtocol(@protocol(LYRUIBaseItemViewLayout));
+            [[given([layoutMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:layoutMock];
             
             view = [[LYRUIIdentityItemView alloc] initWithLayout:layoutMock];
         });
