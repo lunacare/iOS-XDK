@@ -20,19 +20,31 @@
 
 #import "LYRUIMessageItemIBSetup.h"
 #import "LYRUIMessageItemView.h"
-#import "LYRUISampleAccessoryView.h"
+#import "LYRUIAvatarView.h"
 
 @implementation LYRUIMessageItemIBSetup
 
 - (void)prepareMessageItemForInterfaceBuilder:(LYRUIMessageItemView *)messageItem {
-    messageItem.primaryAccessoryView = [self accessoryView];
+    messageItem.primaryAccessoryView = [self avatarView];
     messageItem.secondaryAccessoryView = [self accessoryView];
     [self addContentViewInMessageItem:messageItem];
-    messageItem.layoutDirection = LYRUIMessageItemViewLayoutDirectionRight;
 }
 
-- (LYRUISampleAccessoryView *)accessoryView {
-    LYRUISampleAccessoryView *accessoryView = [[LYRUISampleAccessoryView alloc] init];
+- (LYRUIAvatarView *)avatarView {
+    LYRUIAvatarView *avatarView = [[LYRUIAvatarView alloc] init];
+    avatarView.translatesAutoresizingMaskIntoConstraints = NO;
+    avatarView.backgroundColor = UIColor.whiteColor;
+    [avatarView.widthAnchor constraintEqualToConstant:32.0].active = YES;
+    [avatarView.heightAnchor constraintEqualToConstant:32.0].active = YES;
+    avatarView.identities = @[[LYRIdentity new]];
+    return avatarView;
+}
+
+- (UIView *)accessoryView {
+    UIView *accessoryView = [[UIView alloc] init];
+    accessoryView.layer.cornerRadius = 16.0;
+    accessoryView.clipsToBounds = YES;
+    accessoryView.backgroundColor = UIColor.grayColor;
     [accessoryView.widthAnchor constraintEqualToConstant:32.0].active = YES;
     [accessoryView.heightAnchor constraintEqualToConstant:32.0].active = YES;
     return accessoryView;
@@ -43,7 +55,7 @@
     textView.scrollEnabled = NO;
     textView.font = [UIFont systemFontOfSize:14.0];
     textView.text = @"Mistakes are always forgivable, if one has the courage to admit them. I’m not in this world to live up to your expectations and you’re not in this world to live up to mine. If you spend too much time thinking about a thing, you'll never get it done.";
-    textView.textContainerInset = UIEdgeInsetsMake(7.0, 12.0, 7.0, 12.0);
+    textView.textContainerInset = UIEdgeInsetsMake(9.0, 10.0, 9.0, 10.0);
     messageItem.contentView = textView;
 }
 

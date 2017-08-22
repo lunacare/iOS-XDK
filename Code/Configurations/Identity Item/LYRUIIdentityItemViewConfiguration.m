@@ -21,7 +21,7 @@
 #import "LYRUIIdentityItemViewConfiguration.h"
 #import "LYRUITimeAgoFormatter.h"
 #import "LYRUIIdentityNameFormatter.h"
-#import "LYRUIIdentityItemAccessoryViewProvider.h"
+#import "LYRUIAvatarViewProvider.h"
 
 @implementation LYRUIIdentityItemViewConfiguration
 
@@ -38,7 +38,7 @@
     self = [super init];
     if (self) {
         if (accessoryViewProvider == nil) {
-            accessoryViewProvider = [[LYRUIIdentityItemAccessoryViewProvider alloc] init];
+            accessoryViewProvider = [[LYRUIAvatarViewProvider alloc] init];
         }
         self.accessoryViewProvider = accessoryViewProvider;
         if (nameFormatter == nil) {

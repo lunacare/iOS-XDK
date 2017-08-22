@@ -63,7 +63,9 @@ static CGFloat const LYRUIMessageItemViewSmallHorizontalMargin = 8.0;
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-    return [[[self class] allocWithZone:zone] init];
+    LYRUIMessageItemViewLayout *layoutCopy = [[[self class] allocWithZone:zone] init];
+    layoutCopy.layoutDirection = self.layoutDirection;
+    return layoutCopy;
 }
 
 #pragma mark - LYRUIMessageItemViewLayout methods
@@ -87,6 +89,7 @@ static CGFloat const LYRUIMessageItemViewSmallHorizontalMargin = 8.0;
     [self updatePrimaryAccessoryViewConstraintsInView:view];
     [self updateContentViewConstraintsInView:view];
     [self updateSecondaryAccessoryViewConstraintsInView:view];
+    [view.contentView invalidateIntrinsicContentSize];
     self.currentLayoutDirection = self.layoutDirection;
 }
 
@@ -111,13 +114,13 @@ static CGFloat const LYRUIMessageItemViewSmallHorizontalMargin = 8.0;
     NSMutableArray *constraints = [NSMutableArray new];
     
     [constraints addObject:[content.leftAnchor constraintGreaterThanOrEqualToAnchor:view.leftAnchor
-                                                                             constant:horizontalMargin]];
+                                                                           constant:horizontalMargin]];
     [constraints addObject:[content.rightAnchor constraintLessThanOrEqualToAnchor:view.rightAnchor
-                                                                           constant:-horizontalMargin]];
+                                                                         constant:-horizontalMargin]];
     [constraints addObject:[content.topAnchor constraintEqualToAnchor:view.topAnchor
-                                                               constant:verticalMargin]];
+                                                             constant:verticalMargin]];
     [constraints addObject:[content.bottomAnchor constraintEqualToAnchor:view.bottomAnchor
-                                                                  constant:-verticalMargin]];
+                                                                constant:-verticalMargin]];
     
     [self.contentViewContainerConstraints addObjectsFromArray:constraints];
     [view addConstraints:constraints];
@@ -162,7 +165,7 @@ static CGFloat const LYRUIMessageItemViewSmallHorizontalMargin = 8.0;
 }
 
 - (void)addPrimaryAccessoryViewContainerConstraintsInView:(LYRUIMessageItemView *)view {
-    if (view.primaryAccessoryView == nil) {
+    if (self.primaryAccessoryViewContainerConstraints.count > 0 || view.primaryAccessoryView == nil) {
         return;
     }
     UIView *accessoryView = view.primaryAccessoryViewContainer;
@@ -170,13 +173,13 @@ static CGFloat const LYRUIMessageItemViewSmallHorizontalMargin = 8.0;
     NSLayoutConstraint *verticalConstraint = [content.bottomAnchor constraintEqualToAnchor:accessoryView.bottomAnchor];
     [self.primaryAccessoryViewContainerConstraints addObject:verticalConstraint];
     [self addAccessoryViewContainerConstraints:accessoryView
-                               inView:view
-                        toConstraints:self.primaryAccessoryViewContainerConstraints
-                            direction:self.layoutDirection];
+                                        inView:view
+                                 toConstraints:self.primaryAccessoryViewContainerConstraints
+                                     direction:self.layoutDirection];
 }
 
 - (void)addSecondaryAccessoryViewContainerConstraintsInView:(LYRUIMessageItemView *)view {
-    if (view.secondaryAccessoryView == nil) {
+    if (self.secondaryAccessoryViewContainerConstraints.count > 0 || view.secondaryAccessoryView == nil) {
         return;
     }
     UIView *accessoryView = view.secondaryAccessoryViewContainer;
@@ -184,9 +187,9 @@ static CGFloat const LYRUIMessageItemViewSmallHorizontalMargin = 8.0;
     NSLayoutConstraint *verticalConstraint = [accessoryView.centerYAnchor constraintEqualToAnchor:content.centerYAnchor];
     [self.secondaryAccessoryViewContainerConstraints addObject:verticalConstraint];
     [self addAccessoryViewContainerConstraints:accessoryView
-                               inView:view
-                        toConstraints:self.secondaryAccessoryViewContainerConstraints
-                            direction:self.layoutDirection];
+                                        inView:view
+                                 toConstraints:self.secondaryAccessoryViewContainerConstraints
+                                     direction:self.layoutDirection];
 }
 
 - (void)addAccessoryViewContainerConstraints:(UIView *)accessoryView

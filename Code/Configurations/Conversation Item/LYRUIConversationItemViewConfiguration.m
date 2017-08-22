@@ -21,7 +21,7 @@
 #import "LYRUIConversationItemViewConfiguration.h"
 #import "LYRUIMessageTimeDefaultFormatter.h"
 #import "LYRUIConversationItemTitleFormatter.h"
-#import "LYRUIConversationItemAccessoryViewProvider.h"
+#import "LYRUIAvatarViewProvider.h"
 #import "LYRUIMessageTextDefaultFormatter.h"
 #import "LYRUIParticipantsFiltering.h"
 
@@ -50,7 +50,7 @@
     self = [super init];
     if (self) {
         if (accessoryViewProvider == nil) {
-            accessoryViewProvider = [[LYRUIConversationItemAccessoryViewProvider alloc] init];
+            accessoryViewProvider = [[LYRUIAvatarViewProvider alloc] init];
         }
         self.accessoryViewProvider = accessoryViewProvider;
         if (titleFormatter == nil) {

@@ -1,8 +1,8 @@
 //
-//  LYRUIConversationItemAccessoryViewProvider.h
+//  LYRUIAvatarViewProvider.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 28.07.2017.
+//  Created by Łukasz Przytuła on 02.11.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,17 +18,20 @@
 //  limitations under the License.
 //
 
+#import "LYRUIIdentityItemAccessoryViewProviding.h"
 #import "LYRUIConversationItemAccessoryViewProviding.h"
+#import "LYRUIMessageItemAccessoryViewProviding.h"
 #import "LYRUIParticipantsFiltering.h"
 #import "LYRUIParticipantsSorting.h"
 
-@interface LYRUIConversationItemAccessoryViewProvider : NSObject <LYRUIConversationItemAccessoryViewProviding, LYRUIParticipantsSorting>
+@interface LYRUIAvatarViewProvider : NSObject <LYRUIIdentityItemAccessoryViewProviding, LYRUIConversationItemAccessoryViewProviding,
+                                               LYRUIMessageItemAccessoryViewProviding, LYRUIParticipantsSorting>
 
 /**
- @abstract Initializes a new `LYRUIConversationItemAccessoryViewProvider` object with the given participants filter.
+ @abstract Initializes a new `LYRUIAvatarViewProvider` object with the given participants filter and sorter blocks.
  @param participantsFilter An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the conversation title.
  @param participantsSorter An `LYRUIParticipantsSorting` block, which will sort participants to show names in the conversation title in proper order. Default is a `LYRUIParticipantsDefaultSorter`.
- @return An `LYRUIConversationItemAccessoryViewProvider` object.
+ @return An `LYRUIAvatarViewProvider` object.
  */
 - (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter
                         participantsSorter:(LYRUIParticipantsSorting)participantsSorter;

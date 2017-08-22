@@ -4,7 +4,6 @@
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
 #import <Atlas/LYRUIMessageItemViewLayout.h>
-#import <Atlas/LYRUISampleAccessoryView.h>
 
 SpecBegin(LYRUIMessageItemViewLayout)
 
@@ -17,11 +16,13 @@ describe(@"LYRUIMessageItemViewLayout", ^{
         beforeEach(^{
             messageItemView = [[LYRUIMessageItemView alloc] init];
             messageItemView.translatesAutoresizingMaskIntoConstraints = NO;
-            UIView *primaryAccessoryView = [[LYRUISampleAccessoryView alloc] init];
+            UIView *primaryAccessoryView = [[UIView alloc] init];
+            primaryAccessoryView.translatesAutoresizingMaskIntoConstraints = NO;
             messageItemView.primaryAccessoryView = primaryAccessoryView;
             [primaryAccessoryView.widthAnchor constraintEqualToConstant:32.0].active = YES;
             [primaryAccessoryView.heightAnchor constraintEqualToConstant:32.0].active = YES;
-            UIView *secondaryAccessoryView = [[LYRUISampleAccessoryView alloc] init];
+            UIView *secondaryAccessoryView = [[UIView alloc] init];
+            secondaryAccessoryView.translatesAutoresizingMaskIntoConstraints = NO;
             messageItemView.secondaryAccessoryView = secondaryAccessoryView;
             [secondaryAccessoryView.widthAnchor constraintEqualToConstant:32.0].active = YES;
             [secondaryAccessoryView.heightAnchor constraintEqualToConstant:32.0].active = YES;

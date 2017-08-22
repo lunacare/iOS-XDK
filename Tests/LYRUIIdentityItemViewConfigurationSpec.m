@@ -7,7 +7,7 @@
 #import <Atlas/LYRUIIdentityItemView.h>
 #import <Atlas/LYRUITimeAgoFormatter.h>
 #import <Atlas/LYRUIIdentityNameFormatter.h>
-#import <Atlas/LYRUIIdentityItemAccessoryViewProvider.h>
+#import <Atlas/LYRUIAvatarViewProvider.h>
 #import <LayerKit/LayerKit.h>
 
 SpecBegin(LYRUIIdentityItemViewConfiguration)
@@ -36,10 +36,12 @@ describe(@"LYRUIIdentityItemViewConfiguration", ^{
             viewConfiguration = [[LYRUIIdentityItemViewConfiguration alloc] init];
         });
         
+        it(@"should have default accessory view provider set", ^{
+            expect(viewConfiguration.accessoryViewProvider).to.beAKindOf([LYRUIAvatarViewProvider class]);
+        });
         it(@"should have default name formatter set", ^{
             expect(viewConfiguration.nameFormatter).to.beAKindOf([LYRUIIdentityNameFormatter class]);
         });
-        
         it(@"should have default last seen at time formatter set", ^{
             expect(viewConfiguration.lastSeenAtTimeFormatter).to.beAKindOf([LYRUITimeAgoFormatter class]);
         });
