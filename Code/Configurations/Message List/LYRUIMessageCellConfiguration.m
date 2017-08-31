@@ -102,11 +102,13 @@ static CGFloat const LYRUIMessageCellConfigurationViewsWithMarginsWidth = 64.0;
 
 - (void)setupMessageViewLayout:(LYRUIMessageItemView *)messageView
                     forMessage:(LYRMessage *)message {
-    LYRIdentity *currentUser = self.layerConfiguration.client.authenticatedUser;
-    BOOL outgoingMessage = [message.sender.userID isEqualToString:currentUser.userID];
+    BOOL outgoingMessage = [self isOutgoingMessage:message];
     LYRUIMessageItemViewLayoutDirection layoutDirection =
         outgoingMessage ? LYRUIMessageItemViewLayoutDirectionRight : LYRUIMessageItemViewLayoutDirectionLeft;
-    messageView.layout.layoutDirection = layoutDirection;
+    if (messageView.layout.layoutDirection != layoutDirection) {
+        messageView.layout.layoutDirection = layoutDirection;
+        [messageView setNeedsUpdateConstraints];
+    }
 }
 
 - (void)setupAccessoryViewVisibility:(UIView *)accessoryView
@@ -119,6 +121,11 @@ static CGFloat const LYRUIMessageCellConfigurationViewsWithMarginsWidth = 64.0;
         LYRMessage *nextMessage = section.items[indexPath.item + 1];
         accessoryView.hidden = [message.sender.userID isEqualToString:nextMessage.sender.userID];
     }
+}
+
+- (BOOL)isOutgoingMessage:(LYRMessage *)message {
+    NSString *currentUserId = self.layerConfiguration.client.authenticatedUser.userID;
+    return [message.sender.userID isEqualToString:currentUserId];
 }
 
 #pragma mark - LYRUIMessageListCellHeightCalculator

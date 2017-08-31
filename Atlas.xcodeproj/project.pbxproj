@@ -68,10 +68,14 @@
 		15A4C44C1F0E584700741D91 /* LYRUIConversationItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15A4C44B1F0E584700741D91 /* LYRUIConversationItemView.xib */; };
 		15A4C45A1F0E7BF500741D91 /* LYRUIMessageTimeDefaultFormatterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A4C4591F0E7BF500741D91 /* LYRUIMessageTimeDefaultFormatterSpec.m */; };
 		15A4C4621F0E86FF00741D91 /* LYRUIConversationItemTitleFormatterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A4C4611F0E86FF00741D91 /* LYRUIConversationItemTitleFormatterSpec.m */; };
+		15AF424A1F5843B500C03BE5 /* LYRUIConversationViewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 15AF42491F5843B500C03BE5 /* LYRUIConversationViewSpec.m */; };
 		15BA3A8E1F7CE9EF001AB286 /* LYRUIMessageItemViewLayoutSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 15BA3A8D1F7CE9EF001AB286 /* LYRUIMessageItemViewLayoutSpec.m */; };
 		15C19FCB1F46F72D002AA604 /* LYRUIMessageListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15C19FCA1F46F72D002AA604 /* LYRUIMessageListView.xib */; };
 		15C4A5791F7D49C300643F8F /* LYRUIMessageListDelegateSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C4A5781F7D49C300643F8F /* LYRUIMessageListDelegateSpec.m */; };
 		15CE1B101FB9DD1D00B410ED /* LYRUISendButtonSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 15CE1B0F1FB9DD1D00B410ED /* LYRUISendButtonSpec.m */; };
+		15C660AD1F5832CB0072CB16 /* LYRUIConversationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15C660AC1F5832CB0072CB16 /* LYRUIConversationView.xib */; };
+		15CF9FC31F59A1DE002232D8 /* LYRUIMessageSenderSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 15CF9FC21F59A1DE002232D8 /* LYRUIMessageSenderSpec.m */; };
+		15CF9FC41F59A5F5002232D8 /* test-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D63C68DF1A94250000D235D5 /* test-logo.png */; };
 		40EBBF671E9D4C2300C25041 /* ATLAvatarViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 40EBBF651E9D4C1B00C25041 /* ATLAvatarViewTest.m */; };
 		40EBBF681E9D4C2400C25041 /* ATLAvatarViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 40EBBF651E9D4C1B00C25041 /* ATLAvatarViewTest.m */; };
 		58239E45B91E3CD954E75554 /* Pods_test_ProgrammaticTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8050D6CFBC2EA1D5D6B800A /* Pods_test_ProgrammaticTests.framework */; };
@@ -261,11 +265,13 @@
 		15A4C44B1F0E584700741D91 /* LYRUIConversationItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIConversationItemView.xib; sourceTree = "<group>"; };
 		15A4C4591F0E7BF500741D91 /* LYRUIMessageTimeDefaultFormatterSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIMessageTimeDefaultFormatterSpec.m; sourceTree = "<group>"; };
 		15A4C4611F0E86FF00741D91 /* LYRUIConversationItemTitleFormatterSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIConversationItemTitleFormatterSpec.m; sourceTree = "<group>"; };
-		15B327B01F3076050092DEEA /* LYRUIIdentityListViewConfigurationSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIIdentityListViewConfigurationSpec.m; sourceTree = "<group>"; };
+		15AF42491F5843B500C03BE5 /* LYRUIConversationViewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIConversationViewSpec.m; sourceTree = "<group>"; };
 		15BA3A8D1F7CE9EF001AB286 /* LYRUIMessageItemViewLayoutSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUIMessageItemViewLayoutSpec.m; sourceTree = "<group>"; };
 		15C19FCA1F46F72D002AA604 /* LYRUIMessageListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIMessageListView.xib; sourceTree = "<group>"; };
 		15C4A5781F7D49C300643F8F /* LYRUIMessageListDelegateSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUIMessageListDelegateSpec.m; sourceTree = "<group>"; };
 		15CE1B0F1FB9DD1D00B410ED /* LYRUISendButtonSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUISendButtonSpec.m; sourceTree = "<group>"; };
+		15C660AC1F5832CB0072CB16 /* LYRUIConversationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIConversationView.xib; sourceTree = "<group>"; };
+		15CF9FC21F59A1DE002232D8 /* LYRUIMessageSenderSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIMessageSenderSpec.m; sourceTree = "<group>"; };
 		1886043CF840E83E9A77B78B /* Pods_UnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		250C5EF21C7656610084EB18 /* LayerKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LayerKit.framework; path = Carthage/Build/iOS/LayerKit.framework; sourceTree = "<group>"; };
 		34C06B1C4F6FE86629A3C050 /* Pods-test-ProgrammaticTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-test-ProgrammaticTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-test-ProgrammaticTests/Pods-test-ProgrammaticTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -688,6 +694,8 @@
 				15C19FCA1F46F72D002AA604 /* LYRUIMessageListView.xib */,
 				15CE1B0F1FB9DD1D00B410ED /* LYRUISendButtonSpec.m */,
 				15062C4D1FE2AC6700943614 /* LYRUIPresenceViewSpec.m */,
+				15AF42491F5843B500C03BE5 /* LYRUIConversationViewSpec.m */,
+				15C660AC1F5832CB0072CB16 /* LYRUIConversationView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -715,6 +723,7 @@
 				150771FE1F28BEF700E903D1 /* LYRUIImageFetcherSpec.m */,
 				157F36721F7C3163004D12C6 /* LYRUIParticipantsDefaultFilterSpec.m */,
 				1574522A1FAB54C200A5F857 /* LYRUIAvatarViewProviderSpec.m */,
+				15CF9FC21F59A1DE002232D8 /* LYRUIMessageSenderSpec.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -972,6 +981,8 @@
 				152475191F3DE38700777BA3 /* LYRUIMessageItemView.xib in Resources */,
 				150771EB1F2771B100E903D1 /* boatgif.gif in Resources */,
 				15A4C44C1F0E584700741D91 /* LYRUIConversationItemView.xib in Resources */,
+				15CF9FC41F59A5F5002232D8 /* test-logo.png in Resources */,
+				15C660AD1F5832CB0072CB16 /* LYRUIConversationView.xib in Resources */,
 				1507722B1F2A416D00E903D1 /* LYRUIIdentityListView.xib in Resources */,
 				150373DF1F17D52700FA6AAB /* LYRUIIdentityItemView.xib in Resources */,
 			);
@@ -1367,6 +1378,8 @@
 				D02CDCDD1A9FFC930013CBE8 /* ATLTestUtilities.m in Sources */,
 				1525151D1F3094680074CE03 /* LYRUIListHeaderViewSpec.m in Sources */,
 				152515271F30A8520074CE03 /* LYRUIConversationCollectionViewCellSpec.m in Sources */,
+				15CF9FC31F59A1DE002232D8 /* LYRUIMessageSenderSpec.m in Sources */,
+				15AF424A1F5843B500C03BE5 /* LYRUIConversationViewSpec.m in Sources */,
 				152515251F30A79F0074CE03 /* LYRUIConversationListViewSpec.m in Sources */,
 				1504137D1F21D147006F46BD /* LYRUIParticipantsCountViewSpec.m in Sources */,
 				15654C281F264F4000255309 /* LYRUIAvatarViewSpec.m in Sources */,

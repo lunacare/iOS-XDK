@@ -133,8 +133,4 @@ static CGFloat const LYRUIMessageItemViewContentDefaultCornerRadius = 16.0;
     [self setNeedsUpdateConstraints];
 }
 
-- (LYRUIMessageItemViewLayoutDirection)layoutDirection {
-    return self.layout.layoutDirection;
-}
-
 @end

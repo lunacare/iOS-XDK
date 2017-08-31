@@ -144,10 +144,7 @@
 }
 
 - (void)textChanged {
-    if (!self.placeholderVisible) {
-        self.composeBar.sendButton.enabled = (self.textView.text.length > 0 &&
-                                              ![self.composeBar.placeholder isEqualToString:self.textView.text]);
-    }
+    [self updateSendButtonState];
 }
 
 - (void)didEndEditing {
@@ -168,6 +165,13 @@
         self.textView.textColor = self.composeBar.placeholderColor;
     } else {
         self.textView.textColor = self.composeBar.textColor;
+    }
+}
+
+- (void)updateSendButtonState {
+    if (!self.placeholderVisible) {
+        self.composeBar.sendButton.enabled = (self.textView.text.length > 0 &&
+                                              ![self.composeBar.placeholder isEqualToString:self.textView.text]);
     }
 }
 
@@ -213,6 +217,7 @@
         self.placeholderVisible = NO;
         self.textView.textColor = self.composeBar.textColor;
         self.textView.text = text;
+        [self updateSendButtonState];
     }
 }
 
@@ -230,6 +235,7 @@
         self.placeholderVisible = NO;
         self.textView.textColor = self.composeBar.textColor;
         self.textView.attributedText = attributedText;
+        [self updateSendButtonState];
     }
 }
 

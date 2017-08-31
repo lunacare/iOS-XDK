@@ -28,6 +28,7 @@
     composeBar.layerConfiguration = layerConfiguration;
     
     UIView *leftItem = [[UIView alloc] init];
+    leftItem.translatesAutoresizingMaskIntoConstraints = NO;
     leftItem.backgroundColor = UIColor.grayColor;
     leftItem.clipsToBounds = YES;
     leftItem.layer.cornerRadius = 12.0;
@@ -36,7 +37,7 @@
     composeBar.leftItems = @[leftItem];
 
     composeBar.placeholderColor = [UIColor greenColor];
-    composeBar.placeholder = @"Styled placeholder";
+    composeBar.placeholder = @"placeholder";
 }
 
 @end

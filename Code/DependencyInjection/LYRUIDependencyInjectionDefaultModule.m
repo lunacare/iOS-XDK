@@ -80,6 +80,8 @@
 #import "LYRUIMessageListLayout.h"
 #import "LYRUIMessageListViewConfiguration.h"
 #import "LYRUIMessageListTimeFormatter.h"
+#import "LYRUIConversationView.h"
+#import "LYRUIConversationViewLayout.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -168,6 +170,7 @@
     [self setLayoutClass:[LYRUIMessageListMessageTimeViewLayout class] forViewClass:[LYRUIMessageListMessageTimeView class]];
     [self setLayoutClass:[LYRUIMessageListMessageStatusViewLayout class] forViewClass:[LYRUIMessageListMessageStatusView class]];
     [self setLayoutClass:[LYRUIMessageListLayout class] forViewClass:[LYRUIMessageListView class]];
+    [self setLayoutClass:[LYRUIConversationViewLayout class] forViewClass:[LYRUIConversationView class]];
 }
 
 - (void)setupProtocolImplementations {

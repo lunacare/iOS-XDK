@@ -30,6 +30,9 @@
 #import "LYRUIMessageItemView.h"
 #import "LYRUIListHeaderView.h"
 #import "LYRUIMessageListLayout.h"
+#import "LYRUIMessageCellConfiguration.h"
+#import "LYRUIMessageListStatusSupplementaryViewConfiguration.h"
+#import "LYRUIConfiguration.h"
 
 @interface LYRUIMessage : NSObject
 
@@ -74,17 +77,43 @@
 @implementation LYRUIIdentity
 @end
 
+@interface LYRUITestMessageCellConfiguration : LYRUIMessageCellConfiguration
+@property (nonatomic, strong) LYRUIConfiguration *layerConfiguration;
+@property (nonatomic, strong) LYRIdentity *currentUser;
+@end
+
+@implementation LYRUITestMessageCellConfiguration
+@synthesize layerConfiguration = _layerConfiguration;
+
+- (NSSet<Class> *)handledItemTypes {
+    return [NSSet setWithObject:[LYRUIMessage class]];
+}
+
+- (BOOL)isOutgoingMessage:(LYRMessage *)message {
+    NSString *currentUserId = self.currentUser.userID;
+    return [message.sender.userID isEqualToString:currentUserId];
+}
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    [super setLayerConfiguration:layerConfiguration];
+}
+
+@end
+
 @implementation LYRUIMessageListIBSetup
 
 - (void)prepareMessageListForInterfaceBuilder:(LYRUIMessageListView *)messageList {
-    [messageList.collectionView registerClass:[LYRUIMessageCollectionViewCell class]
-                   forCellWithReuseIdentifier:NSStringFromClass([LYRUIMessage class])];
-    [messageList.collectionView registerClass:[LYRUIListHeaderView class]
-                       forSupplementaryViewOfKind:LYRUIMessageListMessageStatusViewKind
-                              withReuseIdentifier:NSStringFromClass([LYRUIMessage class])];
-    [messageList.collectionView registerClass:[LYRUIListHeaderView class]
-                       forSupplementaryViewOfKind:LYRUIMessageListMessageTimeViewKind
-                              withReuseIdentifier:NSStringFromClass([LYRUIMessage class])];
+    LYRUIConfiguration *configuration = [[LYRUIConfiguration alloc] init];
+    messageList.layerConfiguration = configuration;
+    
+    LYRUITestMessageCellConfiguration *cellConfiguration = [[LYRUITestMessageCellConfiguration alloc] initWithConfiguration:configuration];
+    
+    LYRUIListDataSource *dataSource = messageList.dataSource;
+    [dataSource registerCellConfiguration:cellConfiguration];
+    
+    LYRUIListDelegate *delegate = (LYRUIListDelegate *)messageList.delegate;
+    [delegate registerCellSizeCalculation:cellConfiguration];
     
     NSArray<NSString *> *texts = @[
             @"Lorem ipsum dolor sit amet, ne duo posse senserit, in per hinc everti. Paulo delicata ne vim. Sit tota repudiare at, an putant pertinacia nam.",
@@ -105,6 +134,9 @@
     LYRUIIdentity *currentUser = [LYRUIIdentity new];
     currentUser.userID = @"user id";
     
+    configuration.participantsFilter = LYRUIParticipantsDefaultFilterWithCurrentUser((LYRIdentity *)currentUser);
+    cellConfiguration.currentUser = (LYRIdentity *)currentUser;
+    
     LYRUIIdentity *otherUser = [LYRUIIdentity new];
     otherUser.userID = @"other user id";
     
@@ -119,7 +151,6 @@
             [LYRUIMessage newWithSender:(LYRIdentity *)currentUser text:texts[6]],
     ] mutableCopy];
     
-    LYRUIListDataSource *dataSource = (LYRUIListDataSource *)messageList.dataSource;
     dataSource.sections = [@[section] mutableCopy];
     [messageList.collectionView reloadData];
 }

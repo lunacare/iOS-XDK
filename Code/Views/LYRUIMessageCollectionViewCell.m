@@ -65,4 +65,12 @@
     [self.contentView.leftAnchor constraintEqualToAnchor:self.leftAnchor].active = YES;
 }
 
+- (void)updateConstraints {
+    [super updateConstraints];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+}
+
 @end
