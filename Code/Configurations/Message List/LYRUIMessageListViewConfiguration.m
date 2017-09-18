@@ -42,6 +42,8 @@
 #import "LYRUIMessageListTypingIndicatorsController.h"
 #import "LYRUIPanelTypingIndicatorView.h"
 #import "LYRUITypingIndicatorFooterConfiguration.h"
+#import "LYRUIBubbleTypingIndicatorCollectionViewCell.h"
+#import "LYRUITypingIndicatorCellConfiguration.h"
 
 static NSTimeInterval const LYRUIMessageListViewDefaultGroupintTimeInterval = 60.0 * 30.0;
 static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
@@ -82,10 +84,14 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     typingIndicatorConfigurator.collectionView = messageListView.collectionView;
     messageListView.typingIndicatorsController = typingIndicatorConfigurator;
     
+    LYRUITypingIndicatorCellConfiguration *typingIndicatorCellConfiguration =
+        [injector configurationForViewClass:[LYRUIBubbleTypingIndicatorCollectionViewCell class]];
+    
     LYRUITypingIndicatorFooterConfiguration *typingIndicatorFooterConfiguration =
         [injector configurationForViewClass:[LYRUIPanelTypingIndicatorView class]];
     
-    [self registerCellsWithConfigurations:@[cellConfiguration]
+    [self registerCellsWithConfigurations:@[cellConfiguration,
+                                            typingIndicatorCellConfiguration]
                          inCollectionView:messageListView.collectionView];
     [self registerSupplementaryViewsWithConfigurations:@[messageTimeViewConfiguration,
                                                          messageStatusViewConfiguration,
@@ -98,6 +104,7 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     LYRUIListDataSource *dataSource = [[LYRUIListDataSource alloc] init];
     cellConfiguration.listDataSource = dataSource;
     [dataSource registerCellConfiguration:cellConfiguration];
+    [dataSource registerCellConfiguration:typingIndicatorCellConfiguration];
     [dataSource registerSupplementaryViewConfiguration:messageTimeViewConfiguration];
     [dataSource registerSupplementaryViewConfiguration:messageStatusViewConfiguration];
     [dataSource registerSupplementaryViewConfiguration:loadingIndicatorConfiguration];
@@ -106,6 +113,7 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     
     LYRUIMessageListDelegate *delegate = [[LYRUIMessageListDelegate alloc] init];
     [delegate registerCellSizeCalculation:cellConfiguration];
+    [delegate registerCellSizeCalculation:typingIndicatorCellConfiguration];
     [delegate registerSupplementaryViewSizeCalculation:messageTimeViewConfiguration];
     [delegate registerSupplementaryViewSizeCalculation:messageStatusViewConfiguration];
     [delegate registerSupplementaryViewSizeCalculation:loadingIndicatorConfiguration];

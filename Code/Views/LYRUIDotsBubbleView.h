@@ -1,8 +1,8 @@
 //
-//  LYRUIMessageListTypingIndicatorsController.h
+//  LYRUIDotsBubbleView.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 15.09.2017.
+//  Created by Łukasz Przytuła on 18.09.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,17 +19,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LYRUIMessageListDelegate.h"
-@class LYRConversation;
+@class LYRUIAnimator;
 
-@interface LYRUIMessageListTypingIndicatorsController : NSObject
+NS_ASSUME_NONNULL_BEGIN     // {
+@interface LYRUIDotsBubbleView : UIView
 
-@property (nonatomic, weak) UICollectionView *collectionView;
-
-@property (nonatomic, strong) NSNotificationCenter *notificationCenter;
-
-- (void)registerForNotificationsInConversation:(LYRConversation *)conversation;
-
-- (void)removeNotificationsObserver;
+@property (nonatomic) NSUInteger numberOfDots;
+@property (nonatomic, copy) UIColor *dotsColor;
+@property (nonatomic) CGFloat cornerRadius;
+@property (nonatomic, strong) LYRUIAnimator *animator;
+@property (nonatomic, getter=isAnimating) BOOL animating;
 
 @end
+NS_ASSUME_NONNULL_END       // }

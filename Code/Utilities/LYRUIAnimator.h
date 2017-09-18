@@ -1,8 +1,8 @@
 //
-//  LYRUIMessageListTypingIndicatorsController.h
+//  LYRUIAnimator.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 15.09.2017.
+//  Created by Łukasz Przytuła on 18.09.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,18 +18,16 @@
 //  limitations under the License.
 //
 
-#import <UIKit/UIKit.h>
-#import "LYRUIMessageListDelegate.h"
-@class LYRConversation;
+#import <Foundation/Foundation.h>
 
-@interface LYRUIMessageListTypingIndicatorsController : NSObject
+NS_ASSUME_NONNULL_BEGIN     // {
+@interface LYRUIAnimator : NSObject
 
-@property (nonatomic, weak) UICollectionView *collectionView;
-
-@property (nonatomic, strong) NSNotificationCenter *notificationCenter;
-
-- (void)registerForNotificationsInConversation:(LYRConversation *)conversation;
-
-- (void)removeNotificationsObserver;
+- (void)animateWithDuration:(NSTimeInterval)duration
+                      delay:(NSTimeInterval)delay
+                    options:(UIViewAnimationOptions)options
+                 animations:(void (^)(void))animations
+                 completion:(void (^ __nullable)(BOOL finished))completion;
 
 @end
+NS_ASSUME_NONNULL_END       // }

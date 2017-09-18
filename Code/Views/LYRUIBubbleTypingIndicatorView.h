@@ -1,8 +1,8 @@
 //
-//  LYRUIMessageListTypingIndicatorsController.h
+//  LYRUIBubbleTypingIndicatorView.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 15.09.2017.
+//  Created by Łukasz Przytuła on 18.09.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,17 +19,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LYRUIMessageListDelegate.h"
-@class LYRConversation;
+#import "LYRUIConfigurable.h"
+@class LYRUIDotsBubbleView;
+@class LYRIdentity;
 
-@interface LYRUIMessageListTypingIndicatorsController : NSObject
+NS_ASSUME_NONNULL_BEGIN     // {
+IB_DESIGNABLE
+@interface LYRUIBubbleTypingIndicatorView : UIView <LYRUIConfigurable>
 
-@property (nonatomic, weak) UICollectionView *collectionView;
-
-@property (nonatomic, strong) NSNotificationCenter *notificationCenter;
-
-- (void)registerForNotificationsInConversation:(LYRConversation *)conversation;
-
-- (void)removeNotificationsObserver;
+@property (nonatomic, strong, readonly) LYRUIDotsBubbleView *bubbleView;
+@property (nonatomic, copy) NSSet<LYRIdentity *> *identities;
 
 @end
+NS_ASSUME_NONNULL_END       // }

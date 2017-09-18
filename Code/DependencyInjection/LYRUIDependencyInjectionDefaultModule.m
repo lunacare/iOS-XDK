@@ -85,6 +85,8 @@
 #import "LYRUIPanelTypingIndicatorView.h"
 #import "LYRUIPanelTypingIndicatorViewLayout.h"
 #import "LYRUITypingIndicatorFooterConfiguration.h"
+#import "LYRUIBubbleTypingIndicatorCollectionViewCell.h"
+#import "LYRUITypingIndicatorCellConfiguration.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -159,6 +161,7 @@
     };
     [self setConfigurationClass:[LYRUIMessageListViewConfiguration class] forViewClass:[LYRUIMessageListView class]];
     [self setConfigurationClass:[LYRUITypingIndicatorFooterConfiguration class] forViewClass:[LYRUIPanelTypingIndicatorView class]];
+    [self setConfigurationClass:[LYRUITypingIndicatorCellConfiguration class] forViewClass:[LYRUIBubbleTypingIndicatorCollectionViewCell class]];
 }
 
 - (void)setupLayouts {

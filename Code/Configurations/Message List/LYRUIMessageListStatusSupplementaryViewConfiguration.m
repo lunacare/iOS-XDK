@@ -117,7 +117,11 @@ static CGFloat const LYRUIMessageListStatusSupplementaryViewDefaultHeight = 17.0
         return self.showStatusForIndexPath[indexPath].boolValue;
     }
     id<LYRUIListDataSource> dataSource = self.listDataSource;
-    LYRMessage *message = [dataSource itemAtIndexPath:indexPath];
+    id item = [dataSource itemAtIndexPath:indexPath];
+    if (![item isKindOfClass:[LYRMessage class]]) {
+        return NO;
+    }
+    LYRMessage *message = (LYRMessage *)item;
     BOOL shouldShowStatus = ([self isOutgoingMessage:message] &&
                              [self indexPathIsAfterFirstMessageStatusIndexPath:indexPath]);
     self.showStatusForIndexPath[indexPath] = @(shouldShowStatus);
@@ -132,7 +136,11 @@ static CGFloat const LYRUIMessageListStatusSupplementaryViewDefaultHeight = 17.0
     if (section.items.count == 0) {
         return;
     }
-    for (LYRMessage *message in [section.items reverseObjectEnumerator].allObjects) {
+    for (id item in [section.items reverseObjectEnumerator].allObjects) {
+        if (![item isKindOfClass:[LYRMessage class]]) {
+            continue;
+        }
+        LYRMessage *message = (LYRMessage *)item;
         if (![self isOutgoingMessage:message]) {
             continue;
         }
