@@ -159,7 +159,11 @@ NSString *const LYRUIMessageListMessageStatusViewKind = @"LYRUIMessageStatus";
     NSMutableArray *additionalAttributes = [NSMutableArray new];
     
     for (UICollectionViewLayoutAttributes *attributes in expandedAttributes) {
-        if (attributes.representedElementCategory != UICollectionElementCategoryCell) {
+        if (attributes.representedElementCategory == UICollectionElementCategorySupplementaryView &&
+            attributes.representedElementKind == UICollectionElementKindSectionFooter) {
+            [self fixFooterAttributes:attributes];
+            continue;
+        } else if (attributes.representedElementCategory != UICollectionElementCategoryCell) {
             continue;
         }
         CGFloat offset = self.offsetForIndexPath[attributes.indexPath].doubleValue;
@@ -191,6 +195,10 @@ NSString *const LYRUIMessageListMessageStatusViewKind = @"LYRUIMessageStatus";
                                                                      atIndexPath:(NSIndexPath *)indexPath {
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
         return [super layoutAttributesForSupplementaryViewOfKind:kind atIndexPath:indexPath];
+    } else if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
+        UICollectionViewLayoutAttributes *footerAttributes = [super layoutAttributesForSupplementaryViewOfKind:kind atIndexPath:indexPath];
+        [self fixFooterAttributes:footerAttributes];
+        return footerAttributes;
     }
     CGSize size = [self sizeForSupplementaryViewOfKind:kind atIndexPath:indexPath];
     if (CGSizeEqualToSize(size, CGSizeZero)) {
@@ -200,7 +208,7 @@ NSString *const LYRUIMessageListMessageStatusViewKind = @"LYRUIMessageStatus";
 }
 
 - (CGSize)sizeForSupplementaryViewOfKind:(NSString *)kind
-                             atIndexPath:(NSIndexPath *)indexPath{
+                             atIndexPath:(NSIndexPath *)indexPath {
     CGSize size = CGSizeZero;
     if ([kind isEqualToString:LYRUIMessageListMessageTimeViewKind]) {
         size = [self timeSupplementaryViewSizeAtIndexPath:indexPath];
@@ -224,9 +232,18 @@ NSString *const LYRUIMessageListMessageStatusViewKind = @"LYRUIMessageStatus";
     } else if ([kind isEqualToString:LYRUIMessageListMessageStatusViewKind]) {
         frame.origin.y += frame.size.height;
         frame.size = size;
+    } else if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
+        frame.origin.y += self.contentSizeAdditionalHeight;
     }
     attributes.frame = frame;
     return attributes;
+}
+
+- (void)fixFooterAttributes:(UICollectionViewLayoutAttributes *)footerAttributes {
+    CGRect frame = footerAttributes.frame;
+    frame.origin.y = self.collectionView.contentOffset.y + CGRectGetHeight(self.collectionView.bounds) - frame.size.height;
+    frame.size.width = CGRectGetWidth(self.collectionView.bounds);
+    footerAttributes.frame = frame;
 }
 
 @end

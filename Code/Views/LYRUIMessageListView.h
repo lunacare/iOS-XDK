@@ -19,6 +19,7 @@
 //
 
 #import "LYRUIBaseListView.h"
+#import "LYRUIMessageListTypingIndicatorsController.h"
 @class LYRConversation;
 @class LYRMessage;
 @class LYRIdentity;
@@ -46,6 +47,8 @@ IB_DESIGNABLE
  @discussion This property is used only when list is set up using `setupWithConversation:client:` or `setQueryController:`.
  */
 @property (nonatomic) NSUInteger pageSize;
+
+@property (nonatomic, strong) LYRUIMessageListTypingIndicatorsController *typingIndicatorsController;
 
 /**
  @abstract Scroll the messages list to last message.

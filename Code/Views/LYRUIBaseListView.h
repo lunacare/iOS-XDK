@@ -23,6 +23,7 @@
 #import "LYRUIListView.h"
 #import "LYRUIViewWithLayout.h"
 #import "LYRUIParticipantsFiltering.h"
+#import "LYRUIParticipantsSorting.h"
 @class LYRQueryController;
 @class LYRUIListSection<ModelType>;
 @protocol LYRUIListDelegate;
