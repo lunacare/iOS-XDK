@@ -33,7 +33,7 @@
 
 - (instancetype)initWithAccessoryViewProvider:(nullable id<LYRUIIdentityItemAccessoryViewProviding>)accessoryViewProvider
                                 nameFormatter:(nullable id<LYRUIIdentityNameFormatting>)nameFormatter
-                      lastSeenAtTimeFormatter:(nullable id<LYRUITimeAgoDateFormatting>)lastSeenAtTimeFormatter {
+                      lastSeenAtTimeFormatter:(nullable id<LYRUITimeFormatting>)lastSeenAtTimeFormatter {
     self = [super init];
     if (self) {
         if (accessoryViewProvider == nil) {
@@ -64,8 +64,8 @@
     }
     
     view.titleLabel.text = [self.nameFormatter nameForIdentity:identity];
-    view.timeLabel.text = [self.lastSeenAtTimeFormatter timeAgoStringForTime:identity.lastSeenAt
-                                                             withCurrentTime:[NSDate date]];
+    view.timeLabel.text = [self.lastSeenAtTimeFormatter stringForTime:identity.lastSeenAt
+                                                      withCurrentTime:[NSDate date]];
     
     [view.accessoryView removeFromSuperview];
     UIView *accessoryView = [self.accessoryViewProvider accessoryViewForIdentity:identity];

@@ -28,7 +28,7 @@ describe(@"LYRUIMessageTimeDefaultFormatter", ^{
         formatter = nil;
     });
     
-    describe(@"stringForMessageTime:withCurrentTime:", ^{
+    describe(@"stringForTime:withCurrentTime:", ^{
         __block NSDate *currentTimeFixture;
         __block NSString *returnedString;
         
@@ -39,7 +39,7 @@ describe(@"LYRUIMessageTimeDefaultFormatter", ^{
         context(@"when message time is during the same day as current time", ^{
             beforeEach(^{
                 NSDate *messageTime = [NSDate dateWithTimeIntervalSince1970:578402553];
-                returnedString = [formatter stringForMessageTime:messageTime withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:messageTime withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '11:22 AM'", ^{
@@ -49,7 +49,7 @@ describe(@"LYRUIMessageTimeDefaultFormatter", ^{
         context(@"when message time is on the midnight before the current time", ^{
             beforeEach(^{
                 NSDate *messageTime = [NSDate dateWithTimeIntervalSince1970:578361600];
-                returnedString = [formatter stringForMessageTime:messageTime withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:messageTime withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '12:00 AM'", ^{
@@ -59,7 +59,7 @@ describe(@"LYRUIMessageTimeDefaultFormatter", ^{
         context(@"when message time is one second to midnight before the current time", ^{
             beforeEach(^{
                 NSDate *messageTime = [NSDate dateWithTimeIntervalSince1970:578361599];
-                returnedString = [formatter stringForMessageTime:messageTime withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:messageTime withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return 'Apr 29, 1988'", ^{
@@ -69,7 +69,7 @@ describe(@"LYRUIMessageTimeDefaultFormatter", ^{
         context(@"when message time long before the current time", ^{
             beforeEach(^{
                 NSDate *messageTime = [NSDate dateWithTimeIntervalSince1970:0];
-                returnedString = [formatter stringForMessageTime:messageTime withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:messageTime withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return 'Jan 1, 1970'", ^{

@@ -1,8 +1,8 @@
 //
-//  LYRUIMessageTimeFormatting.h
+//  LYRUITimeFormatting.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 06.07.2017.
+//  Created by Łukasz Przytuła on 19.09.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,16 +21,16 @@
 #import <Foundation/Foundation.h>
 
 /**
- @abstract The `LYRUIMessageTimeFormatting` protocol must be adopted by objects that will be used for providing a string describing the time of sending a message.
+ @abstract The `LYRUITimeFormatting` protocol must be adopted by objects that will be used for providing a string describing the time of some event, relative to current time.
  */
-@protocol LYRUIMessageTimeFormatting <NSObject>
+@protocol LYRUITimeFormatting <NSObject>
 
 /**
- @abstract Provides a formatted date string to display for a given message time in accordance to provided current time.
- @param messageTime  An `NSDate` representing time of message.
+ @abstract Provides a formatted date string to display for a given time in relation to provided current time.
+ @param time  An `NSDate` representing time of some event.
  @param currentTime An `NSDate` representing current time.
- @return The string to be displayed as the time of the message.
+ @return The string to be displayed as the time of the event
  */
-- (NSString *)stringForMessageTime:(NSDate *)messageTime withCurrentTime:(NSDate *)currentTime;
+- (NSString *)stringForTime:(NSDate *)time withCurrentTime:(NSDate *)currentTime;
 
 @end

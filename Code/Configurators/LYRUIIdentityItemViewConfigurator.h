@@ -22,7 +22,7 @@
 #import "LYRUIIdentityItemView.h"
 #import <LayerKit/LayerKit.h>
 @protocol LYRUIIdentityNameFormatting;
-@protocol LYRUITimeAgoDateFormatting;
+@protocol LYRUITimeFormatting;
 
 NS_ASSUME_NONNULL_BEGIN
 @protocol LYRUIIdentityItemAccessoryViewProviding <NSObject>
@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The object provides formatted date of last seen at for the identity item.
  */
-@property(nonatomic, strong) id<LYRUITimeAgoDateFormatting> lastSeenAtTimeFormatter;
+@property(nonatomic, strong) id<LYRUITimeFormatting> lastSeenAtTimeFormatter;
 
 /**
  @abstract Initializes a new `LYRUIIdentityItemViewConfigurator` object with the given accessory view provider and formatters.
@@ -63,7 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (instancetype)initWithAccessoryViewProvider:(nullable id<LYRUIIdentityItemAccessoryViewProviding>)accessoryViewProvider
                                 nameFormatter:(nullable id<LYRUIIdentityNameFormatting>)nameFormatter
-                      lastSeenAtTimeFormatter:(nullable id<LYRUITimeAgoDateFormatting>)lastSeenAtTimeFormatter NS_DESIGNATED_INITIALIZER;
+                      lastSeenAtTimeFormatter:(nullable id<LYRUITimeFormatting>)lastSeenAtTimeFormatter NS_DESIGNATED_INITIALIZER;
 
 /**
  @abstract Updates the view conforming to `LYRUIIdentityItemView` protocol with data from given identity.

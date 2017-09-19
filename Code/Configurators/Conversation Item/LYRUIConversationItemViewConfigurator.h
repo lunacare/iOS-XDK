@@ -22,7 +22,7 @@
 #import "LYRUIConversationItemView.h"
 #import <LayerKit/LayerKit.h>
 @protocol LYRUIConversationItemTitleFormatting;
-@protocol LYRUIMessageTimeFormatting;
+@protocol LYRUITimeFormatting;
 @protocol LYRUIConversationItemAccessoryViewProviding;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @abstract The object provides formatted date of last message for the conversation item.
  */
-@property(nonatomic, strong) id<LYRUIMessageTimeFormatting> messageTimeFormatter;
+@property(nonatomic, strong) id<LYRUITimeFormatting> messageTimeFormatter;
 
 /**
  @abstract A currently logged in user to be filtered out of the conversation item title and accessory view.
@@ -82,7 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithAccessoryViewProvider:(nullable id<LYRUIConversationItemAccessoryViewProviding>)accessoryViewProvider
                                titleFormatter:(nullable id<LYRUIConversationItemTitleFormatting>)titleFormatter
                          lastMessageFormatter:(nullable id<LYRUIConversationItemLastMessageFormatting>)lastMessageFormatter
-                         messageTimeFormatter:(nullable id<LYRUIMessageTimeFormatting>)messageTimeFormatter NS_DESIGNATED_INITIALIZER;
+                         messageTimeFormatter:(nullable id<LYRUITimeFormatting>)messageTimeFormatter NS_DESIGNATED_INITIALIZER;
 
 /**
  @abstract Updates the view conforming to `LYRUIConversationItemView` protocol with data from given Conversation.

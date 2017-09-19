@@ -18,12 +18,12 @@
 //  limitations under the License.
 //
 
-#import "LYRUITimeAgoDateFormatting.h"
+#import "LYRUITimeFormatting.h"
 
 /**
  @abstract The `LYRUITimeAgoFormatter` objects will be used for providing a string describing the time passed between two dates.
  */
-@interface LYRUITimeAgoFormatter : NSObject <LYRUITimeAgoDateFormatting>
+@interface LYRUITimeAgoFormatter : NSObject <LYRUITimeFormatting>
 
 /**
  @abstract Initialize with a calendar and date formatter.

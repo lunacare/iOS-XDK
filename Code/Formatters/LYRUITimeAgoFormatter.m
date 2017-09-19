@@ -46,7 +46,7 @@
 
 #pragma mark - LYRUITimeAgoDateFormatting method
 
-- (NSString *)timeAgoStringForTime:(NSDate *)time withCurrentTime:(NSDate *)currentTime {
+- (NSString *)stringForTime:(NSDate *)time withCurrentTime:(NSDate *)currentTime {
     if ([self numberOfUnits:NSCalendarUnitYear sinceTime:time toCurrentTime:currentTime] > 0) {
         return [self timeAgoStringSinceTime:time toCurrentTime:currentTime inUnits:NSCalendarUnitYear];
     } else if ([self numberOfUnits:NSCalendarUnitMonth sinceTime:time toCurrentTime:currentTime] > 1) {

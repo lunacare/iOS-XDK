@@ -34,7 +34,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is one second before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:578406895];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '1 min ago", ^{
@@ -44,7 +44,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is one min before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:578406836];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '1 min ago", ^{
@@ -54,7 +54,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is 61 sec before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:578406835];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '1 min ago", ^{
@@ -64,7 +64,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is two mins before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:578406776];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '2 mins ago", ^{
@@ -74,7 +74,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is one hour before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:578403296];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '60 mins ago", ^{
@@ -84,7 +84,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is one second less than two hours before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:578399697];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '119 mins ago", ^{
@@ -94,7 +94,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is two hours before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:578399696];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '2 hours ago", ^{
@@ -104,7 +104,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is two hours and one second before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:578399695];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '2 hours ago", ^{
@@ -114,7 +114,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is one day before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:578320496];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '24 hours ago", ^{
@@ -124,7 +124,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is one second less than two days before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:578234097];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '47 hours ago", ^{
@@ -134,7 +134,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is two days before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:578234096];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '2 days ago", ^{
@@ -144,7 +144,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is two days and one second before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:578234095];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '2 days ago", ^{
@@ -154,7 +154,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is 30 days before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:575814896];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '30 days ago", ^{
@@ -164,7 +164,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is one second after midnight of the day two months before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:573177601];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '60 days ago", ^{
@@ -174,7 +174,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is on the midnight of the day two months before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:573177600];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '60 days ago", ^{
@@ -184,7 +184,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is one second to the midnight of the day two months before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:573177599];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '2 months ago", ^{
@@ -194,7 +194,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is two months before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:573136496];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '2 months ago", ^{
@@ -204,7 +204,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is 1 year before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:546784496];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '1 year ago", ^{
@@ -214,7 +214,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is 2 years before current time", ^{
             beforeEach(^{
                 NSDate *time = [NSDate dateWithTimeIntervalSince1970:515248496];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '2 years ago", ^{
@@ -224,7 +224,7 @@ describe(@"LYRUITimeAgoFormatter", ^{
         context(@"when the time is long before the current time", ^{
             beforeEach(^{
                 NSDate *time  = [NSDate dateWithTimeIntervalSince1970:0];
-                returnedString = [formatter timeAgoStringForTime:time withCurrentTime:currentTimeFixture];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
             it(@"should return '18 years ago'", ^{

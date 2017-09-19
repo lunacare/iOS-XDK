@@ -17,13 +17,13 @@ describe(@"LYRUIConversationItemViewConfigurator", ^{
     __block id<LYRUIConversationItemAccessoryViewProviding> accessoryViewProviderMock;
     __block id<LYRUIConversationItemTitleFormatting> titleFormatterMock;
     __block id<LYRUIConversationItemLastMessageFormatting> lastMessageFormatterMock;
-    __block id<LYRUIMessageTimeFormatting> messageTimeFormatterMock;
+    __block id<LYRUITimeFormatting> messageTimeFormatterMock;
     
     beforeEach(^{
         accessoryViewProviderMock = mockProtocol(@protocol(LYRUIConversationItemAccessoryViewProviding));
         titleFormatterMock = mockProtocol(@protocol(LYRUIConversationItemTitleFormatting));
         lastMessageFormatterMock = mockProtocol(@protocol(LYRUIConversationItemLastMessageFormatting));
-        messageTimeFormatterMock = mockProtocol(@protocol(LYRUIMessageTimeFormatting));
+        messageTimeFormatterMock = mockProtocol(@protocol(LYRUITimeFormatting));
         
         viewConfigurator = [[LYRUIConversationItemViewConfigurator alloc] initWithAccessoryViewProvider:accessoryViewProviderMock
                                                                                      titleFormatter:titleFormatterMock
@@ -93,7 +93,7 @@ describe(@"LYRUIConversationItemViewConfigurator", ^{
                 [given([accessoryViewProviderMock accessoryViewForConversation:conversationMock]) willReturn:accessoryView];
                 [given([titleFormatterMock titleForConversation:conversationMock]) willReturn:@"test title"];
                 [given([lastMessageFormatterMock stringForConversationLastMessage:lastMessageMock]) willReturn:@"test last message"];
-                [given([messageTimeFormatterMock stringForMessageTime:lastMessageTimeMock
+                [given([messageTimeFormatterMock stringForTime:lastMessageTimeMock
                                                       withCurrentTime:anything()]) willReturn:@"test time description"];
                 
                 [viewConfigurator setupConversationItemView:view

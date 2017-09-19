@@ -15,12 +15,12 @@ describe(@"LYRUIIdentityItemViewConfigurator", ^{
     __block LYRUIIdentityItemViewConfigurator *viewConfigurator;
     __block id<LYRUIIdentityItemAccessoryViewProviding> accessoryViewProviderMock;
     __block id<LYRUIIdentityNameFormatting> nameFormatterMock;
-    __block id<LYRUITimeAgoDateFormatting> lastSeenAtTimeFormatter;
+    __block id<LYRUITimeFormatting> lastSeenAtTimeFormatter;
     
     beforeEach(^{
         accessoryViewProviderMock = mockProtocol(@protocol(LYRUIIdentityItemAccessoryViewProviding));
         nameFormatterMock = mockProtocol(@protocol(LYRUIIdentityNameFormatting));
-        lastSeenAtTimeFormatter = mockProtocol(@protocol(LYRUITimeAgoDateFormatting));
+        lastSeenAtTimeFormatter = mockProtocol(@protocol(LYRUITimeFormatting));
         viewConfigurator = [[LYRUIIdentityItemViewConfigurator alloc] initWithAccessoryViewProvider:accessoryViewProviderMock
                                                                                     nameFormatter:nameFormatterMock
                                                                           lastSeenAtTimeFormatter:lastSeenAtTimeFormatter];
@@ -86,7 +86,7 @@ describe(@"LYRUIIdentityItemViewConfigurator", ^{
                 
                 [given([accessoryViewProviderMock accessoryViewForIdentity:identityMock]) willReturn:accessoryView];
                 [given([nameFormatterMock nameForIdentity:identityMock]) willReturn:@"test title"];
-                [given([lastSeenAtTimeFormatter timeAgoStringForTime:lastSeenAtMock withCurrentTime:anything()]) willReturn:@"test time description"];
+                [given([lastSeenAtTimeFormatter stringForTime:lastSeenAtMock withCurrentTime:anything()]) willReturn:@"test time description"];
                 
                 [viewConfigurator setupIdentityItemView:view
                                            withIdentity:identityMock];

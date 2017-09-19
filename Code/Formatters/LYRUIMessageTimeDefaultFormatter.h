@@ -18,12 +18,12 @@
 //  limitations under the License.
 //
 
-#import "LYRUIMessageTimeFormatting.h"
+#import "LYRUITimeFormatting.h"
 
 /**
  @abstract The `LYRUIMessageTimeFormatter` objects will be used for providing a string describing the time of sending a message.
  */
-@interface LYRUIMessageTimeDefaultFormatter : NSObject <LYRUIMessageTimeFormatting>
+@interface LYRUIMessageTimeDefaultFormatter : NSObject <LYRUITimeFormatting>
 
 /**
  @abstract Initialize with a calendar and date formatter.
