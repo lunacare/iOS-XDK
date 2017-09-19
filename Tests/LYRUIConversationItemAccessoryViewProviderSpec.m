@@ -5,12 +5,11 @@
 #import <OCHamcrest/OCHamcrest.h>
 #import <Atlas/LYRUIConversationItemAccessoryViewProvider.h>
 #import <Atlas/LYRUIAvatarView.h>
-#import <Atlas/LYRUIParticipantsFilter.h>
 #import <LayerKit/LayerKit.h>
 
 @interface LYRUIConversationItemAccessoryViewProvider (PrivateProperties)
 
-@property (nonatomic, strong) LYRUIParticipantsFilter *participantsFilter;
+@property (nonatomic, strong) LYRUIParticipantsFiltering participantsFilter;
 
 @end
 
@@ -18,37 +17,29 @@ SpecBegin(LYRUIConversationItemAccessoryViewProvider)
 
 describe(@"LYRUIConversationItemAccessoryViewProvider", ^{
     __block LYRUIConversationItemAccessoryViewProvider *provider;
-    __block LYRUIParticipantsFilter *participantsFilterMock;
+    __block LYRUIParticipantsFiltering participantsFilterMock;
     __block LYRConversation *conversationMock;
     __block NSArray<LYRIdentity *> *participants;
     
     beforeEach(^{
-        participantsFilterMock = mock([LYRUIParticipantsFilter class]);
-        provider = [[LYRUIConversationItemAccessoryViewProvider alloc] initWithParticipantsFilter:participantsFilterMock];
-        conversationMock = mock([LYRConversation class]);
         LYRIdentity *identityMock1 = mock([LYRIdentity class]);
         LYRIdentity *identityMock2 = mock([LYRIdentity class]);
         LYRIdentity *identityMock3 = mock([LYRIdentity class]);
         participants = @[identityMock1, identityMock2, identityMock3];
         NSSet *participantsSet = [NSSet setWithArray:participants];
+        
+        participantsFilterMock = ^NSSet *(NSSet *identities) {
+            return participantsSet;
+        };
+        provider = [[LYRUIConversationItemAccessoryViewProvider alloc] initWithParticipantsFilter:participantsFilterMock];
+        conversationMock = mock([LYRConversation class]);
         [given(conversationMock.participants) willReturn:participantsSet];
-        [given([participantsFilterMock filteredParticipants:participantsSet]) willReturn:participantsSet];
     });
     
     afterEach(^{
         provider = nil;
         conversationMock = nil;
         participants = nil;
-    });
-    
-    describe(@"after initialization with convenience initializer", ^{
-        beforeEach(^{
-            provider = [[LYRUIConversationItemAccessoryViewProvider alloc] init];
-        });
-        
-        it(@"should have default participants filter set", ^{
-            expect(provider.participantsFilter).notTo.beNil();
-        });
     });
     
     describe(@"accessoryViewForConversation:", ^{
@@ -79,32 +70,6 @@ describe(@"LYRUIConversationItemAccessoryViewProvider", ^{
         
         it(@"should setup view with identities", ^{
             assertThat(view.identities, containsInAnyOrderIn(participants));
-        });
-    });
-    
-    describe(@"currentUser", ^{
-        __block LYRIdentity *currentUserMock;
-        
-        context(@"getter", ^{
-            beforeEach(^{
-                currentUserMock = mock([LYRIdentity class]);
-                [given(participantsFilterMock.currentUser) willReturn:currentUserMock];
-            });
-            
-            it(@"should return current user from participants filter", ^{
-                expect(provider.currentUser).to.equal(currentUserMock);
-            });
-        });
-        
-        context(@"setter", ^{
-            beforeEach(^{
-                currentUserMock = mock([LYRIdentity class]);
-                provider.currentUser = currentUserMock;
-            });
-            
-            it(@"should update current user on participants filter", ^{
-                [verify(participantsFilterMock) setCurrentUser:currentUserMock];
-            });
         });
     });
 });

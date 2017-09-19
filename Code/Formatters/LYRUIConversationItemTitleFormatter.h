@@ -19,15 +19,15 @@
 //
 
 #import "LYRUIConversationItemTitleFormatting.h"
-@class LYRUIParticipantsFilter;
+#import "LYRUIParticipantsFiltering.h"
 
 @interface LYRUIConversationItemTitleFormatter : NSObject <LYRUIConversationItemTitleFormatting>
 
 /**
  @abstract Initializes a new `LYRUIConversationItemTitleFormatter` object with the given participants filter.
- @param participantsFilter An `LYRUIParticipantsFilter instance which will filter currently logged in user from  the conversation title.
+ @param participantsFilter An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the conversation title.
  @return An `LYRUIConversationItemTitleFormatter` object.
  */
-- (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFilter *)participantsFilter;
+- (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter;
 
 @end

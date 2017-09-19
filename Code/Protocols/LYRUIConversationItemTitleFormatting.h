@@ -19,15 +19,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LYRUIParticipantsFiltering.h"
 @class LYRConversation;
 @class LYRIdentity;
 
 @protocol LYRUIConversationItemTitleFormatting <NSObject>
 
 /**
- @abstract A currently logged in user to be filtered out of the conversation title.
+ @abstract An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the conversation title.
  */
-@property (nonatomic, strong, nullable) LYRIdentity *currentUser;
+@property (nonatomic, strong, nullable) LYRUIParticipantsFiltering participantsFilter;
 
 /**
  @abstract Provides a title string to display for a given conversation.

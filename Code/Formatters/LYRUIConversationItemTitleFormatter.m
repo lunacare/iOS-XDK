@@ -19,44 +19,24 @@
 //
 
 #import "LYRUIConversationItemTitleFormatter.h"
-#import "LYRUIParticipantsFilter.h"
 #import <LayerKit/LayerKit.h>
 
 static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationName";
 
-@interface LYRUIConversationItemTitleFormatter ()
-
-@property (nonatomic, strong) LYRUIParticipantsFilter *participantsFilter;
-
-@end
-
 @implementation LYRUIConversationItemTitleFormatter
-@synthesize currentUser = _currentUser;
+@synthesize participantsFilter = _participantsFilter;
 
 - (instancetype)init {
     self = [self initWithParticipantsFilter:nil];
     return self;
 }
 
-- (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFilter *)participantsFilter {
+- (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter {
     self = [super init];
     if (self) {
-        if (participantsFilter == nil) {
-            participantsFilter = [[LYRUIParticipantsFilter alloc] init];
-        }
         self.participantsFilter = participantsFilter;
     }
     return self;
-}
-
-#pragma mark - Properties
-
-- (LYRIdentity *)currentUser {
-    return self.participantsFilter.currentUser;
-}
-
-- (void)setCurrentUser:(LYRIdentity *)currentUser {
-    self.participantsFilter.currentUser = currentUser;
 }
 
 #pragma mark - LYRUIConversationItemTitleFormatting method
@@ -67,7 +47,10 @@ static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationNam
         return metadataTitle;
     }
     
-    NSSet *participants = [self.participantsFilter filteredParticipants:conversation.participants];
+    NSSet<LYRIdentity *> *participants = conversation.participants;
+    if (self.participantsFilter) {
+        participants = self.participantsFilter(conversation.participants);
+    }
     if (participants.count == 1) {
         return [self participantName:participants.anyObject];
     }

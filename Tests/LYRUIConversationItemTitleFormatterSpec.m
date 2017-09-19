@@ -3,12 +3,11 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <Atlas/LYRUIConversationItemTitleFormatter.h>
-#import <Atlas/LYRUIParticipantsFilter.h>
 #import <LayerKit/LayerKit.h>
 
 @interface LYRUIConversationItemTitleFormatter (PrivateProperties)
 
-@property (nonatomic, strong) LYRUIParticipantsFilter *participantsFilter;
+@property (nonatomic, strong) LYRUIParticipantsFiltering participantsFilter;
 
 @end
 
@@ -16,27 +15,21 @@ SpecBegin(LYRUIConversationItemTitleFormatter)
 
 describe(@"LYRUIConversationItemTitleFormatter", ^{
     __block LYRUIConversationItemTitleFormatter *formatter;
-    __block LYRUIParticipantsFilter *participantsFilterMock;
+    __block LYRUIParticipantsFiltering participantsFilterMock;
+    __block NSSet *participantsFilterMockReturnValue;
     __block LYRConversation *conversationMock;
     
     beforeEach(^{
-        participantsFilterMock = mock([LYRUIParticipantsFilter class]);
+        participantsFilterMock = ^NSSet *(NSSet *identities) {
+            return participantsFilterMockReturnValue;
+        };
         formatter = [[LYRUIConversationItemTitleFormatter alloc] initWithParticipantsFilter:participantsFilterMock];
         conversationMock = mock([LYRConversation class]);
     });
     
     afterEach(^{
         formatter = nil;
-    });
-    
-    describe(@"after initialization with convenience initializer", ^{
-        beforeEach(^{
-            formatter = [[LYRUIConversationItemTitleFormatter alloc] init];
-        });
-        
-        it(@"should have default participants filter set", ^{
-            expect(formatter.participantsFilter).notTo.beNil();
-        });
+        participantsFilterMockReturnValue = nil;
     });
     
     describe(@"titleForConversation:", ^{
@@ -52,7 +45,7 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
             context(@"with empty participants set", ^{
                 beforeEach(^{
                     [given(conversationMock.participants) willReturn:[NSSet new]];
-                    [given([participantsFilterMock filteredParticipants:[NSSet new]]) willReturn:[NSSet new]];
+                    participantsFilterMockReturnValue = [NSSet new];
                     
                     returnedString = [formatter titleForConversation:conversationMock];
                 });
@@ -74,7 +67,7 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                             participantMock2,
                     ]];
                     [given(conversationMock.participants) willReturn:participants];
-                    [given([participantsFilterMock filteredParticipants:participants]) willReturn:participants];
+                    participantsFilterMockReturnValue = participants;
                     
                     returnedString = [formatter titleForConversation:conversationMock];
                 });
@@ -102,7 +95,7 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                             participantMock4,
                     ]];
                     [given(conversationMock.participants) willReturn:participants];
-                    [given([participantsFilterMock filteredParticipants:participants]) willReturn:participants];
+                    participantsFilterMockReturnValue = participants;
                     
                     returnedString = [formatter titleForConversation:conversationMock];
                 });
@@ -149,7 +142,7 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                     NSSet *filteredParticipants = [NSSet setWithArray:@[
                             otherParticipantMock,
                     ]];
-                    [given([participantsFilterMock filteredParticipants:participants]) willReturn:filteredParticipants];
+                    participantsFilterMockReturnValue = filteredParticipants;
                 });
 
                 context(@"when other user has both first name and last name set", ^{
@@ -233,7 +226,7 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                             participantMock3,
                             participantMock4,
                     ]];
-                    [given([participantsFilterMock filteredParticipants:participants]) willReturn:filteredParticipants];
+                    participantsFilterMockReturnValue = filteredParticipants;
                 
                     returnedString = [formatter titleForConversation:conversationMock];
                 });
@@ -246,32 +239,6 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                 it(@"should return string without name of user removed from participants", ^{
                     expect(returnedString).notTo.contain(@"Enzo Ferrari");
                 });
-            });
-        });
-    });
-    
-    describe(@"currentUser", ^{
-        __block LYRIdentity *currentUserMock;
-        
-        context(@"getter", ^{
-            beforeEach(^{
-                currentUserMock = mock([LYRIdentity class]);
-                [given(participantsFilterMock.currentUser) willReturn:currentUserMock];
-            });
-            
-            it(@"should return current user from participants filter", ^{
-                expect(formatter.currentUser).to.equal(currentUserMock);
-            });
-        });
-        
-        context(@"setter", ^{
-            beforeEach(^{
-                currentUserMock = mock([LYRIdentity class]);
-                formatter.currentUser = currentUserMock;
-            });
-            
-            it(@"should update current user on participants filter", ^{
-                [verify(participantsFilterMock) setCurrentUser:currentUserMock];
             });
         });
     });

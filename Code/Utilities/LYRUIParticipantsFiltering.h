@@ -18,15 +18,9 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
+#import "LYRUIParticipantsFiltering.h"
 @class LYRIdentity;
 
-NS_ASSUME_NONNULL_BEGIN     // {
-@protocol LYRUIParticipantsFiltering <NSObject>
+typedef NSSet<LYRIdentity *> *(^LYRUIParticipantsFiltering)(NSSet<LYRIdentity *> *);
 
-@property(nonatomic, strong, nullable) LYRIdentity *currentUser;
-
-- (NSSet *)filteredParticipants:(NSSet *)participants;
-
-@end
-NS_ASSUME_NONNULL_END       // }
+extern LYRUIParticipantsFiltering(^LYRUIParticipantsDefaultFilterWithCurrentUser)(LYRIdentity *);

@@ -127,11 +127,11 @@ describe(@"LYRUIConversationItemViewConfigurator", ^{
                 viewConfigurator.currentUser = currentUserMock;
             });
             
-            it(@"should update current user on accessory view provider", ^{
-                [verify(accessoryViewProviderMock) setCurrentUser:currentUserMock];
+            it(@"should update participant filtering block on accessory view provider", ^{
+                [verify(accessoryViewProviderMock) setParticipantsFilter:anything()];
             });
-            it(@"should update current user on title formatter", ^{
-                [verify(titleFormatterMock) setCurrentUser:currentUserMock];
+            it(@"should update participant filtering block on title formatter", ^{
+                [verify(titleFormatterMock) setParticipantsFilter:anything()];
             });
         });
     });

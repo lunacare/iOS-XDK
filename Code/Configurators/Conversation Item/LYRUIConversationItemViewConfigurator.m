@@ -22,6 +22,7 @@
 #import "LYRUIMessageTimeDefaultFormatter.h"
 #import "LYRUIConversationItemTitleFormatter.h"
 #import "LYRUIConversationItemAccessoryViewProvider.h"
+#import "LYRUIParticipantsFiltering.h"
 
 @implementation LYRUIConversationItemViewConfigurator
 
@@ -71,8 +72,8 @@
 
 - (void)setCurrentUser:(LYRIdentity *)currentUser {
     _currentUser = currentUser;
-    self.accessoryViewProvider.currentUser = currentUser;
-    self.titleFormatter.currentUser = currentUser;
+    self.accessoryViewProvider.participantsFilter = LYRUIParticipantsDefaultFilterWithCurrentUser(currentUser);
+    self.titleFormatter.participantsFilter = LYRUIParticipantsDefaultFilterWithCurrentUser(currentUser);
 }
 
 #pragma mark - LYRUIConversationItemView setup

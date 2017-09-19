@@ -20,42 +20,22 @@
 
 #import "LYRUIConversationItemAccessoryViewProvider.h"
 #import "LYRUIAvatarView.h"
-#import "LYRUIParticipantsFilter.h"
 #import <LayerKit/LayerKit.h>
 
-@interface LYRUIConversationItemAccessoryViewProvider ()
-
-@property (nonatomic, strong) LYRUIParticipantsFilter *participantsFilter;
-
-@end
-
 @implementation LYRUIConversationItemAccessoryViewProvider
-@synthesize currentUser = _currentUser;
+@synthesize participantsFilter = _participantsFilter;
 
 - (instancetype)init {
     self = [self initWithParticipantsFilter:nil];
     return self;
 }
 
-- (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFilter *)participantsFilter {
+- (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter {
     self = [super init];
     if (self) {
-        if (participantsFilter == nil) {
-            participantsFilter = [[LYRUIParticipantsFilter alloc] init];
-        }
         self.participantsFilter = participantsFilter;
     }
     return self;
-}
-
-#pragma mark - Properties
-
-- (LYRIdentity *)currentUser {
-    return self.participantsFilter.currentUser;
-}
-
-- (void)setCurrentUser:(LYRIdentity *)currentUser {
-    self.participantsFilter.currentUser = currentUser;
 }
 
 #pragma mark - LYRUIConversationItemAccessoryViewProviding methods
@@ -68,7 +48,11 @@
 }
 
 - (void)setupAccessoryView:(LYRUIAvatarView *)avatarView forConversation:(LYRConversation *)conversation {
-    NSArray<LYRIdentity *> *identities = [[self.participantsFilter filteredParticipants:conversation.participants] allObjects];
+    NSSet<LYRIdentity *> *filteredIdentities = conversation.participants;
+    if (self.participantsFilter) {
+        filteredIdentities = self.participantsFilter(conversation.participants);
+    }
+    NSArray<LYRIdentity *> *identities = [filteredIdentities allObjects];
     avatarView.identities = identities;
 }
 

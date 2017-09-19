@@ -19,6 +19,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LYRUIParticipantsFiltering.h"
 @class LYRConversation;
 @class LYRIdentity;
 
@@ -26,9 +27,9 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @protocol LYRUIConversationItemAccessoryViewProviding <NSObject>
 
 /**
- @abstract A currently logged in user to be filtered out of the accessory view.
+ @abstract An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the accessory view.
  */
-@property (nonatomic, strong, nullable) LYRIdentity *currentUser;
+@property (nonatomic, strong, nullable) LYRUIParticipantsFiltering participantsFilter;
 
 /**
  @abstract Provides an accessory view representing a conversation.

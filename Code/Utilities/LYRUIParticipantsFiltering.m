@@ -1,5 +1,5 @@
 //
-//  LYRUIParticipantsFilter.m
+//  LYRUIParticipantsFiltering.m
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 04.08.2017.
@@ -18,22 +18,18 @@
 //  limitations under the License.
 //
 
-#import "LYRUIParticipantsFilter.h"
+#import "LYRUIParticipantsFiltering.h"
 #import <LayerKit/LayerKit.h>
 
-@implementation LYRUIParticipantsFilter
-@synthesize currentUser = _currentUser;
-
-- (NSSet *)filteredParticipants:(NSSet *)participants {
-    if (self.currentUser == nil) {
-        return participants;
-    }
-    
-    __weak __typeof(self) weakSelf = self;
-    NSPredicate *notCurrentUserPredicate = [NSPredicate predicateWithBlock:^BOOL(LYRIdentity * _Nullable identity, NSDictionary<NSString *,id> * _Nullable bindings) {
-        return ![identity.userID isEqual:weakSelf.currentUser.userID];
-    }];
-    return [participants filteredSetUsingPredicate:notCurrentUserPredicate];
-}
-
-@end
+LYRUIParticipantsFiltering(^LYRUIParticipantsDefaultFilterWithCurrentUser)(LYRIdentity *) = ^LYRUIParticipantsFiltering(LYRIdentity *currentUser) {
+    return ^NSSet<LYRIdentity *> *(NSSet<LYRIdentity *> *participants) {
+        if (currentUser == nil) {
+            return participants;
+        }
+        
+        NSPredicate *notCurrentUserPredicate = [NSPredicate predicateWithBlock:^BOOL(LYRIdentity * _Nullable identity, NSDictionary<NSString *,id> * _Nullable bindings) {
+            return ![identity.userID isEqual:currentUser.userID];
+        }];
+        return [participants filteredSetUsingPredicate:notCurrentUserPredicate];
+    };
+};
