@@ -24,13 +24,17 @@
 @implementation LYRUIIdentityNameFormatter
 
 - (NSString *)nameForIdentity:(LYRIdentity *)identity {
-    if (identity.firstName == nil && identity.lastName == nil) {
+    NSCharacterSet *charactersToTrim = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    NSPersonNameComponents *components = [[NSPersonNameComponents alloc] init];
+    components.givenName = [identity.firstName stringByTrimmingCharactersInSet:charactersToTrim];
+    components.familyName = [identity.lastName stringByTrimmingCharactersInSet:charactersToTrim];
+    NSString *formattedName = [NSPersonNameComponentsFormatter localizedStringFromPersonNameComponents:components
+                                                                                                 style:NSPersonNameComponentsFormatterStyleMedium
+                                                                                               options:0];
+    if (!formattedName || formattedName.length == 0) {
         return identity.displayName ?: @"";
     }
-    return [NSString stringWithFormat:@"%@%@%@",
-            identity.firstName ?: @"",
-            identity.firstName && identity.lastName ? @" " : @"",
-            identity.lastName ?: @""];
+    return formattedName;
 }
 
 @end
