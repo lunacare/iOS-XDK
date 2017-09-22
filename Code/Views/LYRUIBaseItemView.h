@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- @abstract The `LYRUIBaseListView` class provides a lightweight, customizable view for presenting item with title, time, and message.
+ @abstract The `LYRUIBaseItemView` class provides a lightweight, customizable view for presenting item with title, time, and message.
  */
 IB_DESIGNABLE
 @interface LYRUIBaseItemView : LYRUIViewWithLayout <LYRUIBaseItemView>
@@ -49,6 +49,11 @@ IB_DESIGNABLE
  @abstract The view in which the accessory view will be contained;
  */
 @property(nonatomic, weak, readonly) UIView *accessoryViewContainer;
+
+/**
+ @abstract An accessory view for the item, i.e. an avatar view;
+ */
+@property(nonatomic, weak, nullable) IBOutlet UIView *accessoryView;
 
 /**
  @abstract The font for the title label displayed in the cell. Default is 16pt system font.

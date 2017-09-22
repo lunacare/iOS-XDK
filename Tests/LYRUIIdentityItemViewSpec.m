@@ -83,12 +83,21 @@ describe(@"LYRUIIdentityItemView", ^{
     });
     
     describe(@"after initialization from xib", ^{
+        __block UIView *otherView;
+        
         beforeEach(^{
             NSBundle *bundle = [NSBundle bundleForClass:[self class]];
             NSArray *xibViews = [bundle loadNibNamed:@"LYRUIIdentityItemView" owner:self options:nil];
             view = [xibViews objectAtIndex:0];
+            otherView = [xibViews objectAtIndex:1];
         });
         
+        it(@"should have accessory view set by Interface Builder Outlet", ^{
+            expect(view.accessoryView).to.equal(otherView);
+        });
+        it(@"should have accessory view added as a subview in container", ^{
+            expect(otherView.superview).to.equal(view.accessoryViewContainer);
+        });
         it(@"should have titleLabel's text color set to value from Interface Builder", ^{
             UIColor *redColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0];
             expect(view.titleLabel.textColor).to.equal(redColor);

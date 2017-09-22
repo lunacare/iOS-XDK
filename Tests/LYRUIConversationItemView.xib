@@ -37,7 +37,18 @@
                     <color key="value" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="accessoryView" destination="Wf6-CM-MyE" id="PJ0-gM-8IU"/>
+            </connections>
             <point key="canvasLocation" x="-295" y="-101"/>
+        </view>
+        <view contentMode="scaleToFill" id="Wf6-CM-MyE">
+            <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-439" y="13"/>
         </view>
     </objects>
 </document>
