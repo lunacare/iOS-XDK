@@ -4,6 +4,8 @@
 #import <OCMockito/OCMockito.h>
 #import <Atlas/LYRUIConversationItemView.h>
 #import <Atlas/LYRUIBaseItemViewLayout.h>
+#import <Atlas/LYRUIBaseItemViewDefaultTheme.h>
+#import <Atlas/LYRUIConversationItemViewUnreadTheme.h>
 
 SpecBegin(LYRUIConversationItemView)
 
@@ -59,6 +61,12 @@ describe(@"LYRUIConversationItemView", ^{
         });
         it(@"should have layout set to `LYRUIBaseItemViewLayout`", ^{
             expect(view.layout).to.beAKindOf([LYRUIBaseItemViewLayout class]);
+        });
+        it(@"should have theme set to `LYRUIBaseItemViewDefaultTheme`", ^{
+            expect(view.theme).to.beAKindOf([LYRUIBaseItemViewDefaultTheme class]);
+        });
+        it(@"should have unread theme set to `LYRUIConversationItemViewUnreadTheme`", ^{
+            expect(view.unreadTheme).to.beAKindOf([LYRUIConversationItemViewUnreadTheme class]);
         });
     });
     
@@ -258,6 +266,228 @@ describe(@"LYRUIConversationItemView", ^{
             
             it(@"should update the text color of timeLabel", ^{
                 expect(view.timeLabel.textColor).to.equal([UIColor greenColor]);
+            });
+        });
+    });
+    
+    describe(@"theme", ^{
+        context(@"setter", ^{
+            __block id<LYRUIBaseItemViewTheme> themeMock;
+            
+            beforeEach(^{
+                themeMock = mockProtocol(@protocol(LYRUIBaseItemViewTheme));
+                [given(themeMock.titleLabelFont) willReturn:[UIFont italicSystemFontOfSize:5.0]];
+                [given(themeMock.titleLabelColor) willReturn:[UIColor redColor]];
+                [given(themeMock.messageLabelFont) willReturn:[UIFont italicSystemFontOfSize:6.0]];
+                [given(themeMock.messageLabelColor) willReturn:[UIColor greenColor]];
+                [given(themeMock.timeLabelFont) willReturn:[UIFont italicSystemFontOfSize:7.0]];
+                [given(themeMock.timeLabelColor) willReturn:[UIColor blueColor]];
+            });
+            
+            context(@"when view state is read", ^{
+                beforeEach(^{
+                    view.state = LYRUIConversationItemViewStateRead;
+                    view.theme = themeMock;
+                });
+                
+                it(@"should set theme property", ^{
+                    expect(view.theme).to.equal(themeMock);
+                });
+                it(@"should change title label font", ^{
+                    expect(view.titleLabelFont).to.equal([UIFont italicSystemFontOfSize:5.0]);
+                });
+                it(@"should change title label color", ^{
+                    expect(view.titleLabelColor).to.equal([UIColor redColor]);
+                });
+                it(@"should change message label font", ^{
+                    expect(view.messageLabelFont).to.equal([UIFont italicSystemFontOfSize:6.0]);
+                });
+                it(@"should change message label color", ^{
+                    expect(view.messageLabelColor).to.equal([UIColor greenColor]);
+                });
+                it(@"should change time label font", ^{
+                    expect(view.timeLabelFont).to.equal([UIFont italicSystemFontOfSize:7.0]);
+                });
+                it(@"should change time label color", ^{
+                    expect(view.timeLabelColor).to.equal([UIColor blueColor]);
+                });
+            });
+            
+            context(@"when view state is unread", ^{
+                beforeEach(^{
+                    view.state = LYRUIConversationItemViewStateUnread;
+                    view.theme = themeMock;
+                });
+                
+                it(@"should set theme property", ^{
+                    expect(view.theme).to.equal(themeMock);
+                });
+                it(@"should not change title label font", ^{
+                    expect(view.titleLabelFont).notTo.equal([UIFont italicSystemFontOfSize:5.0]);
+                });
+                it(@"should not change title label color", ^{
+                    expect(view.titleLabelColor).notTo.equal([UIColor redColor]);
+                });
+                it(@"should not change message label font", ^{
+                    expect(view.messageLabelFont).notTo.equal([UIFont italicSystemFontOfSize:6.0]);
+                });
+                it(@"should not change message label color", ^{
+                    expect(view.messageLabelColor).notTo.equal([UIColor greenColor]);
+                });
+                it(@"should not change time label font", ^{
+                    expect(view.timeLabelFont).notTo.equal([UIFont italicSystemFontOfSize:7.0]);
+                });
+                it(@"should not change time label color", ^{
+                    expect(view.timeLabelColor).notTo.equal([UIColor blueColor]);
+                });
+            });
+        });
+    });
+    
+    describe(@"unreadTheme", ^{
+        context(@"setter", ^{
+            __block id<LYRUIBaseItemViewTheme> themeMock;
+            
+            beforeEach(^{
+                themeMock = mockProtocol(@protocol(LYRUIBaseItemViewTheme));
+                [given(themeMock.titleLabelFont) willReturn:[UIFont italicSystemFontOfSize:5.0]];
+                [given(themeMock.titleLabelColor) willReturn:[UIColor redColor]];
+                [given(themeMock.messageLabelFont) willReturn:[UIFont italicSystemFontOfSize:6.0]];
+                [given(themeMock.messageLabelColor) willReturn:[UIColor greenColor]];
+                [given(themeMock.timeLabelFont) willReturn:[UIFont italicSystemFontOfSize:7.0]];
+                [given(themeMock.timeLabelColor) willReturn:[UIColor blueColor]];
+            });
+            
+            context(@"when view state is unread", ^{
+                beforeEach(^{
+                    view.state = LYRUIConversationItemViewStateUnread;
+                    view.unreadTheme = themeMock;
+                });
+                
+                it(@"should set unread theme property", ^{
+                    expect(view.unreadTheme).to.equal(themeMock);
+                });
+                it(@"should change title label font", ^{
+                    expect(view.titleLabelFont).to.equal([UIFont italicSystemFontOfSize:5.0]);
+                });
+                it(@"should change title label color", ^{
+                    expect(view.titleLabelColor).to.equal([UIColor redColor]);
+                });
+                it(@"should change message label font", ^{
+                    expect(view.messageLabelFont).to.equal([UIFont italicSystemFontOfSize:6.0]);
+                });
+                it(@"should change message label color", ^{
+                    expect(view.messageLabelColor).to.equal([UIColor greenColor]);
+                });
+                it(@"should change time label font", ^{
+                    expect(view.timeLabelFont).to.equal([UIFont italicSystemFontOfSize:7.0]);
+                });
+                it(@"should change time label color", ^{
+                    expect(view.timeLabelColor).to.equal([UIColor blueColor]);
+                });
+            });
+            
+            context(@"when view state is read", ^{
+                beforeEach(^{
+                    view.state = LYRUIConversationItemViewStateRead;
+                    view.unreadTheme = themeMock;
+                });
+                
+                it(@"should set unread theme property", ^{
+                    expect(view.unreadTheme).to.equal(themeMock);
+                });
+                it(@"should not change title label font", ^{
+                    expect(view.titleLabelFont).notTo.equal([UIFont italicSystemFontOfSize:5.0]);
+                });
+                it(@"should not change title label color", ^{
+                    expect(view.titleLabelColor).notTo.equal([UIColor redColor]);
+                });
+                it(@"should not change message label font", ^{
+                    expect(view.messageLabelFont).notTo.equal([UIFont italicSystemFontOfSize:6.0]);
+                });
+                it(@"should not change message label color", ^{
+                    expect(view.messageLabelColor).notTo.equal([UIColor greenColor]);
+                });
+                it(@"should not change time label font", ^{
+                    expect(view.timeLabelFont).notTo.equal([UIFont italicSystemFontOfSize:7.0]);
+                });
+                it(@"should not change time label color", ^{
+                    expect(view.timeLabelColor).notTo.equal([UIColor blueColor]);
+                });
+            });
+        });
+    });
+    
+    describe(@"state", ^{
+        context(@"setter", ^{
+            beforeEach(^{
+                id<LYRUIBaseItemViewTheme> themeMock = mockProtocol(@protocol(LYRUIBaseItemViewTheme));
+                [given(themeMock.titleLabelFont) willReturn:[UIFont italicSystemFontOfSize:5.0]];
+                [given(themeMock.titleLabelColor) willReturn:[UIColor redColor]];
+                [given(themeMock.messageLabelFont) willReturn:[UIFont italicSystemFontOfSize:6.0]];
+                [given(themeMock.messageLabelColor) willReturn:[UIColor greenColor]];
+                [given(themeMock.timeLabelFont) willReturn:[UIFont italicSystemFontOfSize:7.0]];
+                [given(themeMock.timeLabelColor) willReturn:[UIColor blueColor]];
+                view.theme = themeMock;
+                
+                id<LYRUIBaseItemViewTheme> unreadThemeMock = mockProtocol(@protocol(LYRUIBaseItemViewTheme));
+                [given(unreadThemeMock.titleLabelFont) willReturn:[UIFont italicSystemFontOfSize:2.0]];
+                [given(unreadThemeMock.titleLabelColor) willReturn:[UIColor yellowColor]];
+                [given(unreadThemeMock.messageLabelFont) willReturn:[UIFont italicSystemFontOfSize:3.0]];
+                [given(unreadThemeMock.messageLabelColor) willReturn:[UIColor purpleColor]];
+                [given(unreadThemeMock.timeLabelFont) willReturn:[UIFont italicSystemFontOfSize:4.0]];
+                [given(unreadThemeMock.timeLabelColor) willReturn:[UIColor orangeColor]];
+                view.unreadTheme = unreadThemeMock;
+            });
+            
+            context(@"when set to read", ^{
+                beforeEach(^{
+                    view.state = LYRUIConversationItemViewStateRead;
+                });
+                
+                it(@"should set title label font from theme", ^{
+                    expect(view.titleLabelFont).to.equal([UIFont italicSystemFontOfSize:5.0]);
+                });
+                it(@"should set title label color from theme", ^{
+                    expect(view.titleLabelColor).to.equal([UIColor redColor]);
+                });
+                it(@"should set message label font from theme", ^{
+                    expect(view.messageLabelFont).to.equal([UIFont italicSystemFontOfSize:6.0]);
+                });
+                it(@"should set message label color from theme", ^{
+                    expect(view.messageLabelColor).to.equal([UIColor greenColor]);
+                });
+                it(@"should set time label font from theme", ^{
+                    expect(view.timeLabelFont).to.equal([UIFont italicSystemFontOfSize:7.0]);
+                });
+                it(@"should set time label color from theme", ^{
+                    expect(view.timeLabelColor).to.equal([UIColor blueColor]);
+                });
+            });
+            
+            context(@"when set to unread", ^{
+                beforeEach(^{
+                    view.state = LYRUIConversationItemViewStateUnread;
+                });
+                
+                it(@"should set title label font from unread theme", ^{
+                    expect(view.titleLabelFont).to.equal([UIFont italicSystemFontOfSize:2.0]);
+                });
+                it(@"should set title label color from unread theme", ^{
+                    expect(view.titleLabelColor).to.equal([UIColor yellowColor]);
+                });
+                it(@"should set message label font from unread theme", ^{
+                    expect(view.messageLabelFont).to.equal([UIFont italicSystemFontOfSize:3.0]);
+                });
+                it(@"should set message label color from unread theme", ^{
+                    expect(view.messageLabelColor).to.equal([UIColor purpleColor]);
+                });
+                it(@"should set time label font from unread theme", ^{
+                    expect(view.timeLabelFont).to.equal([UIFont italicSystemFontOfSize:4.0]);
+                });
+                it(@"should set time label color from unread theme", ^{
+                    expect(view.timeLabelColor).to.equal([UIColor orangeColor]);
+                });
             });
         });
     });

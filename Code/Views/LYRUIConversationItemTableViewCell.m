@@ -82,4 +82,12 @@
     return self.conversationItemView.timeLabel;
 }
 
+- (LYRUIConversationItemViewState)state {
+    return self.conversationItemView.state;
+}
+
+- (void)setState:(LYRUIConversationItemViewState)state {
+    self.conversationItemView.state = state;
+}
+
 @end

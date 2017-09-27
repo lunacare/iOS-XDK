@@ -22,6 +22,7 @@
 #import "LYRUIBaseItemViewLayout.h"
 #import "LYRUIConversationItemViewLayoutMetrics.h"
 #import "LYRUIConversationItemIBSetup.h"
+#import "LYRUIConversationItemViewUnreadTheme.h"
 
 @interface LYRUIConversationItemView ()
 
@@ -34,12 +35,15 @@
 
 @implementation LYRUIConversationItemView
 @dynamic accessoryViewContainer;
+@synthesize theme = _theme,
+            state = _state;
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
         LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
         self.layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
+        self.unreadTheme = [[LYRUIConversationItemViewUnreadTheme alloc] init];
     }
     return self;
 }
@@ -49,6 +53,7 @@
     if (self) {
         LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
         self.layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
+        self.unreadTheme = [[LYRUIConversationItemViewUnreadTheme alloc] init];
     }
     return self;
 }
@@ -57,6 +62,7 @@
     if (layout == nil) {
         LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
         layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
+        self.unreadTheme = [[LYRUIConversationItemViewUnreadTheme alloc] init];
     }
     self = [super initWithLayout:layout];
     return self;
@@ -64,6 +70,58 @@
 
 - (void)prepareForInterfaceBuilder {
     [LYRUIConversationItemIBSetup prepareConversationItemForInterfaceBuilder:self];
+}
+
+#pragma mark - LYRUIConversationItemViewState and LYRUIBaseItemViewTheme changes
+
+- (void)setState:(LYRUIConversationItemViewState)state {
+    _state = state;
+    switch (state) {
+        case LYRUIConversationItemViewStateRead:
+            [self updateWithTheme:self.theme];
+            break;
+        case LYRUIConversationItemViewStateUnread:
+            [self updateWithTheme:self.unreadTheme];
+            break;
+    }
+}
+
+- (void)setTheme:(id<LYRUIBaseItemViewTheme>)theme {
+    _theme = theme;
+    if (self.state == LYRUIConversationItemViewStateRead) {
+        [self updateWithTheme:theme];
+    }
+}
+
+- (void)setUnreadTheme:(id<LYRUIBaseItemViewTheme>)unreadTheme {
+    _unreadTheme = unreadTheme;
+    if (self.state == LYRUIConversationItemViewStateUnread) {
+        [self updateWithTheme:unreadTheme];
+    }
+}
+
+- (void)updateWithTheme:(id<LYRUIBaseItemViewTheme>)theme {
+    if (theme == nil) {
+        return;
+    }
+    if (theme.titleLabelFont) {
+        self.titleLabelFont = theme.titleLabelFont;
+    }
+    if (theme.titleLabelColor) {
+        self.titleLabelColor = theme.titleLabelColor;
+    }
+    if (theme.messageLabelFont) {
+        self.messageLabelFont = theme.messageLabelFont;
+    }
+    if (theme.messageLabelColor) {
+        self.messageLabelColor = theme.messageLabelColor;
+    }
+    if (theme.timeLabelFont) {
+        self.timeLabelFont = theme.timeLabelFont;
+    }
+    if (theme.timeLabelColor) {
+        self.timeLabelColor = theme.timeLabelColor;
+    }
 }
 
 @end

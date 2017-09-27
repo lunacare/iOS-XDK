@@ -22,11 +22,29 @@
 #import "LYRUIBaseItemView.h"
 #import "LYRUIViewLayout.h"
 
+typedef NS_ENUM(NSUInteger, LYRUIConversationItemViewState) {
+    LYRUIConversationItemViewStateRead,
+    LYRUIConversationItemViewStateUnread,
+};
+
 @protocol LYRUIConversationItemView <LYRUIBaseItemView>
+
+/**
+ @abstract A visual state of Converastion Item. Represents the read state of the conversation. Default is LYRUIConversationItemViewStateRead.
+ @warning Changing the state changes theme of view between `theme` and `unreadTheme` when these are set.
+ */
+@property (nonatomic) LYRUIConversationItemViewState state;
+
 @end
 
 /**
  @abstract The `LYRUIConversationItemView` class provides a lightweight, customizable view for presenting Layer conversation objects.
  */
 @interface LYRUIConversationItemView : LYRUIBaseItemView <LYRUIConversationItemView>
+
+/**
+ @abstract A set of fonts and colors to use in Conversation Item view for unread state.
+ */
+@property (nonatomic, strong) id<LYRUIBaseItemViewTheme> unreadTheme UI_APPEARANCE_SELECTOR;
+
 @end

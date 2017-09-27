@@ -103,6 +103,7 @@
     } else {
         [self.accessoryViewProvider setupAccessoryView:view.accessoryView forConversation:conversation];
     }
+    view.state = conversation.hasUnreadMessages ? LYRUIConversationItemViewStateUnread : LYRUIConversationItemViewStateRead;
     view.accessoryView.backgroundColor = view.backgroundColor;
     [view setNeedsUpdateConstraints];
 }

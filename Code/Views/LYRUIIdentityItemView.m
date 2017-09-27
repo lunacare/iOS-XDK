@@ -22,8 +22,14 @@
 #import "LYRUIBaseItemViewLayout.h"
 #import "LYRUIIdentityItemViewLayoutMetrics.h"
 #import "LYRUIIdentityItemIBSetup.h"
+#import "LYRUIBaseItemViewDefaultTheme.h"
 
 @implementation LYRUIIdentityItemView
+
++ (void)load {
+    [super load];
+    [LYRUIIdentityItemView appearance].theme = [[LYRUIBaseItemViewDefaultTheme alloc] init];
+}
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];

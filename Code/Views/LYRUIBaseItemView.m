@@ -19,6 +19,7 @@
 //
 
 #import "LYRUIBaseItemView.h"
+#import "LYRUIBaseItemViewDefaultTheme.h"
 
 @interface LYRUIBaseItemView ()
 
@@ -36,7 +37,7 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self commonInitialization];
+        [self lyr_commonInit];
     }
     return self;
 }
@@ -44,7 +45,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self commonInitialization];
+        [self lyr_commonInit];
     }
     return self;
 }
@@ -52,13 +53,13 @@
 - (instancetype)initWithLayout:(id<LYRUIBaseItemViewLayout>)layout {
     self = [self initWithFrame:CGRectZero];
     if (self) {
-        [self commonInitialization];
+        [self lyr_commonInit];
         self.layout = layout;
     }
     return self;
 }
 
-- (void)commonInitialization {
+- (void)lyr_commonInit {
     // TODO: update with colors from color palette
     UIColor *blackColor = [UIColor colorWithRed:27.0/255.0 green:28.0/255.0 blue:29.0/255.0 alpha:1.0];
     UIColor *grayColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
@@ -69,6 +70,7 @@
                                          textColor:grayColor];
     self.timeLabel = [self addLabelWithFont:[UIFont systemFontOfSize:12]
                                   textColor:grayColor];
+    self.theme = [[LYRUIBaseItemViewDefaultTheme alloc] init];
     
     UIView *accessoryViewContainer = [[UIView alloc] init];
     accessoryViewContainer.translatesAutoresizingMaskIntoConstraints = NO;
@@ -97,7 +99,7 @@
     _accessoryView = accessoryView;
 }
 
-#pragma mark - IBInspectable properties
+#pragma mark - LYRUIBaseItemViewTheme properties
 
 - (UIFont *)titleLabelFont {
     return self.titleLabel.font;
@@ -145,6 +147,28 @@
 
 - (void)setTimeLabelColor:(UIColor *)timeLabelColor {
     self.timeLabel.textColor = timeLabelColor;
+}
+
+- (void)setTheme:(id<LYRUIBaseItemViewTheme>)theme {
+    _theme = theme;
+    if (theme.titleLabelFont) {
+        self.titleLabelFont = theme.titleLabelFont;
+    }
+    if (theme.titleLabelColor) {
+        self.titleLabelColor = theme.titleLabelColor;
+    }
+    if (theme.messageLabelFont) {
+        self.messageLabelFont = theme.messageLabelFont;
+    }
+    if (theme.messageLabelColor) {
+        self.messageLabelColor = theme.messageLabelColor;
+    }
+    if (theme.timeLabelFont) {
+        self.timeLabelFont = theme.timeLabelFont;
+    }
+    if (theme.timeLabelColor) {
+        self.timeLabelColor = theme.timeLabelColor;
+    }
 }
 
 @end
