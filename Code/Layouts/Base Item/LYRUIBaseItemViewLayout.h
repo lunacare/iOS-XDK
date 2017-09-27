@@ -1,5 +1,5 @@
 //
-//  LYRUIMessageTimeFormatting.h
+//  LYRUIBaseItemViewLayout.h
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 06.07.2017.
@@ -18,19 +18,11 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
+#import "LYRUIBaseItemView.h"
+#import "LYRUIBaseItemViewLayoutMetricsProviding.h"
 
-/**
- @abstract The `LYRUIMessageTimeFormatting` protocol must be adopted by objects that will be used for providing a string describing the time of sending a message.
- */
-@protocol LYRUIMessageTimeFormatting <NSObject>
+@interface LYRUIBaseItemViewLayout : NSObject <LYRUIBaseItemViewLayout, LYRUIBaseItemViewLayoutMetricsDelegate>
 
-/**
- @abstract Provides a formatted date string to display for a given message time in accordance to provided current time.
- @param messageTime  An `NSDate` representing time of message.
- @param currentTime An `NSDate` representing current time.
- @return The string to be displayed as the time of the message.
- */
-- (NSString *)stringForMessageTime:(NSDate *)messageTime withCurrentTime:(NSDate *)currentTime;
+- (instancetype)initWithMetrics:(id<LYRUIBaseItemViewLayoutMetricsProviding>)metrics;
 
 @end

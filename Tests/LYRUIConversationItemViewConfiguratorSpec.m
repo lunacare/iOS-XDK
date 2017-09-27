@@ -17,13 +17,13 @@ describe(@"LYRUIConversationItemViewConfigurator", ^{
     __block id<LYRUIConversationItemAccessoryViewProviding> accessoryViewProviderMock;
     __block id<LYRUIConversationItemTitleFormatting> titleFormatterMock;
     __block id<LYRUIConversationItemLastMessageFormatting> lastMessageFormatterMock;
-    __block id<LYRUIMessageTimeFormatting> messageTimeFormatterMock;
+    __block id<LYRUITimeFormatting> messageTimeFormatterMock;
     
     beforeEach(^{
         accessoryViewProviderMock = mockProtocol(@protocol(LYRUIConversationItemAccessoryViewProviding));
         titleFormatterMock = mockProtocol(@protocol(LYRUIConversationItemTitleFormatting));
         lastMessageFormatterMock = mockProtocol(@protocol(LYRUIConversationItemLastMessageFormatting));
-        messageTimeFormatterMock = mockProtocol(@protocol(LYRUIMessageTimeFormatting));
+        messageTimeFormatterMock = mockProtocol(@protocol(LYRUITimeFormatting));
         
         viewConfigurator = [[LYRUIConversationItemViewConfigurator alloc] initWithAccessoryViewProvider:accessoryViewProviderMock
                                                                                      titleFormatter:titleFormatterMock
@@ -93,21 +93,21 @@ describe(@"LYRUIConversationItemViewConfigurator", ^{
                 [given([accessoryViewProviderMock accessoryViewForConversation:conversationMock]) willReturn:accessoryView];
                 [given([titleFormatterMock titleForConversation:conversationMock]) willReturn:@"test title"];
                 [given([lastMessageFormatterMock stringForConversationLastMessage:lastMessageMock]) willReturn:@"test last message"];
-                [given([messageTimeFormatterMock stringForMessageTime:lastMessageTimeMock
+                [given([messageTimeFormatterMock stringForTime:lastMessageTimeMock
                                                       withCurrentTime:anything()]) willReturn:@"test time description"];
                 
                 [viewConfigurator setupConversationItemView:view
                                          withConversation:conversationMock];
             });
             
-            it(@"should set the text of conversationTitleLabel", ^{
-                expect(view.conversationTitleLabel.text).to.equal(@"test title");
+            it(@"should set the text of titleLabel", ^{
+                expect(view.titleLabel.text).to.equal(@"test title");
             });
-            it(@"should set the text of lastMessageLabel", ^{
-                expect(view.lastMessageLabel.text).to.equal(@"test last message");
+            it(@"should set the text of messageLabel", ^{
+                expect(view.messageLabel.text).to.equal(@"test last message");
             });
-            it(@"should set the text of dateLabel", ^{
-                expect(view.dateLabel.text).to.equal(@"test time description");
+            it(@"should set the text of timeLabel", ^{
+                expect(view.timeLabel.text).to.equal(@"test time description");
             });
             it(@"should set the accessory view", ^{
                 expect(view.accessoryView).to.equal(accessoryView);

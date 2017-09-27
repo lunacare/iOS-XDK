@@ -1,8 +1,8 @@
 //
-//  LYRUIConversationItemViewLayout.h
+//  LYRUITimeAgoFormatter.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 06.07.2017.
+//  Created by Łukasz Przytuła on 14.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,17 @@
 //  limitations under the License.
 //
 
-#import "LYRUIConversationItemView.h"
+#import "LYRUITimeFormatting.h"
 
-@interface LYRUIConversationItemViewLayout : NSObject <LYRUIConversationItemViewLayout>
+/**
+ @abstract The `LYRUITimeAgoFormatter` objects will be used for providing a string describing the time passed between two dates.
+ */
+@interface LYRUITimeAgoFormatter : NSObject <LYRUITimeFormatting>
+
+/**
+ @abstract Initialize with a calendar and date formatter.
+ @param calendar A calendar used to determine the time passed between two dates. Default is `currentCalendar`.
+ */
+- (nonnull instancetype)initWithCalendar:(nullable NSCalendar *)calendar NS_DESIGNATED_INITIALIZER;
+
 @end

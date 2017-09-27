@@ -1,8 +1,8 @@
 //
-//  LYRUIConversationItemViewLayoutMetrics.h
+//  LYRUIIdentityItemAccessoryViewProvider.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 11.07.2017.
+//  Created by Łukasz Przytuła on 28.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,7 @@
 //  limitations under the License.
 //
 
-#import "LYRUIBaseItemViewLayoutMetricsProviding.h"
+#import "LYRUIIdentityItemAccessoryViewProviding.h"
 
-@interface LYRUIConversationItemViewLayoutMetrics : NSObject <LYRUIBaseItemViewLayoutMetricsProviding>
+@interface LYRUIIdentityItemAccessoryViewProvider : NSObject <LYRUIIdentityItemAccessoryViewProviding>
 @end

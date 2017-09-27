@@ -1,5 +1,5 @@
 //
-//  LYRUIConversationItemViewLayout.m
+//  LYRUIBaseListViewLayout.m
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 06.07.2017.
@@ -18,14 +18,14 @@
 //  limitations under the License.
 //
 
-#import "LYRUIConversationItemViewLayout.h"
+#import "LYRUIBaseItemViewLayout.h"
 #import "LYRUIConversationItemViewLayoutMetrics.h"
 
-@interface LYRUIConversationItemViewLayout () <LYRUIConversationItemViewLayoutMetricsDelegate>
+@interface LYRUIBaseItemViewLayout ()
 
 @property(nonatomic, strong) LYRUIConversationItemViewLayoutMetrics *metrics;
 
-@property(nonatomic) LYRUIConversationItemViewLayoutSize layoutSize;
+@property(nonatomic) LYRUIBaseItemViewLayoutSize layoutSize;
 @property(nonatomic) BOOL layoutWithAccessoryView;
 
 @property(nonatomic, strong) NSMutableArray<NSLayoutConstraint *> *accessoryViewConstraints;
@@ -37,12 +37,17 @@
 
 @end
 
-@implementation LYRUIConversationItemViewLayout
+@implementation LYRUIBaseItemViewLayout
 
 - (instancetype)init {
+    self = [self initWithMetrics:nil];
+    return self;
+}
+
+- (instancetype)initWithMetrics:(id<LYRUIBaseItemViewLayoutMetricsProviding>)metrics {
     self = [super init];
     if (self) {
-        self.metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
+        self.metrics = metrics;
         self.metrics.delegate = self;
         
         self.accessoryViewConstraints = [NSMutableArray new];
@@ -61,7 +66,7 @@
 
 #pragma mark - LYRUIViewLayout methods
 
-- (void)addConstraintsInView:(LYRUIConversationItemView *)view {
+- (void)addConstraintsInView:(LYRUIBaseItemView *)view {
     self.layoutSize = [self.metrics laytoutSizeForViewHeight:CGRectGetHeight(view.frame)];
     self.layoutWithAccessoryView = (view.accessoryView != nil);
     [self setAccessoryViewContainerSizeInView:view];
@@ -74,7 +79,7 @@
     [self setupContentCompressionResistanceInView:view];
 }
 
-- (void)updateConstraintsInView:(LYRUIConversationItemView *)view {
+- (void)updateConstraintsInView:(LYRUIBaseItemView *)view {
     if (self.layoutWithAccessoryView != (view.accessoryView != nil)) {
         [self removeConstraintsFromView:view];
         [self addConstraintsInView:view];
@@ -82,8 +87,8 @@
         return;
     }
     
-    LYRUIConversationItemViewLayoutSize oldLayoutSize = self.layoutSize;
-    LYRUIConversationItemViewLayoutSize newLayoutSize = [self.metrics laytoutSizeForViewHeight:CGRectGetHeight(view.frame)];
+    LYRUIBaseItemViewLayoutSize oldLayoutSize = self.layoutSize;
+    LYRUIBaseItemViewLayoutSize newLayoutSize = [self.metrics laytoutSizeForViewHeight:CGRectGetHeight(view.frame)];
     if (oldLayoutSize != newLayoutSize) {
         if ([self toOrFromLargeLayoutChangeWithOldSize:oldLayoutSize newSize:newLayoutSize]) {
             [self updateVerticalLayoutInView:view];
@@ -99,7 +104,7 @@
     [self updateAccessoryViewConstraintsInView:view];
 }
 
-- (void)removeConstraintsFromView:(LYRUIConversationItemView *)view {
+- (void)removeConstraintsFromView:(LYRUIBaseItemView *)view {
     [self removeConstraints:self.accessoryViewContainerSizeConstraints fromView:view];
     [self removeConstraints:self.accessoryViewConstraints fromView:view.accessoryViewContainer];
     [self removeConstraints:self.messageLabelHorizontalConstraints fromView:view];
@@ -110,15 +115,15 @@
 
 #pragma mark - Horizontal layout
 
-- (void)layoutHorizontallyInView:(LYRUIConversationItemView *)view {
+- (void)layoutHorizontallyInView:(LYRUIBaseItemView *)view {
     [self layoutTitleLabelHorizontallyInView:view];
     [self layoutMessageLabelHorizontallyInView:view];
 }
 
-- (void)layoutTitleLabelHorizontallyInView:(LYRUIConversationItemView *)view {
+- (void)layoutTitleLabelHorizontallyInView:(LYRUIBaseItemView *)view {
     UIView *accessoryContainer = view.accessoryViewContainer;
-    UIView *titleLabel = view.conversationTitleLabel;
-    UIView *dateLabel = view.dateLabel;
+    UIView *titleLabel = view.titleLabel;
+    UIView *timeLabel = view.timeLabel;
     CGFloat margin = self.metrics.horizontalMarginSize;
     CGFloat variableMargin = self.metrics.horizontalVariableMarginSize;
     
@@ -131,10 +136,10 @@
     } else {
         [constraints addObject:[titleLabel.leftAnchor constraintEqualToAnchor:view.leftAnchor constant:margin]];
     }
-    [constraints addObject:[dateLabel.leftAnchor constraintGreaterThanOrEqualToAnchor:titleLabel.rightAnchor
+    [constraints addObject:[timeLabel.leftAnchor constraintGreaterThanOrEqualToAnchor:titleLabel.rightAnchor
                                                                              constant:margin]];
-    if (self.layoutSize > LYRUIConversationItemViewLayoutSizeTiny) {
-        [constraints addObject:[dateLabel.rightAnchor constraintEqualToAnchor:view.rightAnchor constant:-margin]];
+    if (self.layoutSize > LYRUIBaseItemViewLayoutSizeTiny) {
+        [constraints addObject:[timeLabel.rightAnchor constraintEqualToAnchor:view.rightAnchor constant:-margin]];
     } else {
         [constraints addObject:[titleLabel.rightAnchor constraintEqualToAnchor:view.rightAnchor constant:-margin]];
     }
@@ -143,15 +148,15 @@
     [self.titleLabelHorizontalConstraints addObjectsFromArray:constraints];
 }
 
-- (void)updateTitleLabelConstraintsInView:(LYRUIConversationItemView *)view {
+- (void)updateTitleLabelConstraintsInView:(LYRUIBaseItemView *)view {
     self.layoutSize = [self.metrics laytoutSizeForViewHeight:CGRectGetHeight(view.frame)];
     [self removeConstraints:self.titleLabelHorizontalConstraints fromView:view];
     [self layoutTitleLabelHorizontallyInView:view];
 }
 
-- (void)layoutMessageLabelHorizontallyInView:(LYRUIConversationItemView *)view {
+- (void)layoutMessageLabelHorizontallyInView:(LYRUIBaseItemView *)view {
     UIView *accessoryContainer = view.accessoryViewContainer;
-    UIView *messageLabel = view.lastMessageLabel;
+    UIView *messageLabel = view.messageLabel;
     CGFloat margin = self.metrics.horizontalMarginSize;
     
     NSMutableArray *constraints = [NSMutableArray new];
@@ -166,14 +171,14 @@
     [self.messageLabelHorizontalConstraints addObjectsFromArray:constraints];
 }
 
-- (void)setupContentCompressionResistanceInView:(LYRUIConversationItemView *)view {
-    [view.dateLabel setContentCompressionResistancePriority:UILayoutPriorityRequired
+- (void)setupContentCompressionResistanceInView:(LYRUIBaseItemView *)view {
+    [view.timeLabel setContentCompressionResistancePriority:UILayoutPriorityRequired
                                                     forAxis:UILayoutConstraintAxisHorizontal];
 }
 
 #pragma mark - Vertical layout
 
-- (void)addVerticalMarginsInView:(LYRUIConversationItemView *)view {
+- (void)addVerticalMarginsInView:(LYRUIBaseItemView *)view {
     UIView *accessoryContainer = view.accessoryViewContainer;
     CGFloat margin = self.metrics.verticalMarginSize;
     
@@ -194,24 +199,24 @@
     }
 }
 
-- (void)layoutVerticallyInView:(LYRUIConversationItemView *)view {
+- (void)layoutVerticallyInView:(LYRUIBaseItemView *)view {
     UIView *accessoryContainer = view.accessoryViewContainer;
-    UIView *titleLabel = view.conversationTitleLabel;
-    UIView *dateLabel = view.dateLabel;
-    UIView *messageLabel = view.lastMessageLabel;
+    UIView *titleLabel = view.titleLabel;
+    UIView *timeLabel = view.timeLabel;
+    UIView *messageLabel = view.messageLabel;
     CGFloat topGuideShift = self.metrics.topGuideShift;
     CGFloat margin = self.metrics.labelsVerticalMargin;
     
     NSMutableArray *constraints = [NSMutableArray new];
     
     [constraints addObject:[accessoryContainer.centerYAnchor constraintEqualToAnchor:view.centerYAnchor]];
-    if (self.layoutSize < LYRUIConversationItemViewLayoutSizeLarge) {
+    if (self.layoutSize < LYRUIBaseItemViewLayoutSizeLarge) {
         [constraints addObject:[titleLabel.centerYAnchor constraintEqualToAnchor:view.centerYAnchor]];
-        [constraints addObject:[titleLabel.centerYAnchor constraintEqualToAnchor:dateLabel.centerYAnchor]];
+        [constraints addObject:[titleLabel.centerYAnchor constraintEqualToAnchor:timeLabel.centerYAnchor]];
     } else {
         [constraints addObject:[titleLabel.topAnchor constraintEqualToAnchor:accessoryContainer.topAnchor
                                                                     constant:topGuideShift]];
-        [constraints addObject:[titleLabel.topAnchor constraintEqualToAnchor:dateLabel.topAnchor]];
+        [constraints addObject:[titleLabel.topAnchor constraintEqualToAnchor:timeLabel.topAnchor]];
     }
     [constraints addObject:[messageLabel.topAnchor constraintEqualToAnchor:titleLabel.bottomAnchor constant:margin]];
     
@@ -219,7 +224,7 @@
     [self.verticalConstraints addObjectsFromArray:constraints];
 }
 
-- (void)updateVerticalLayoutInView:(LYRUIConversationItemView *)view {
+- (void)updateVerticalLayoutInView:(LYRUIBaseItemView *)view {
     self.layoutSize = [self.metrics laytoutSizeForViewHeight:CGRectGetHeight(view.frame)];
     [self removeConstraints:self.verticalConstraints fromView:view];
     [self layoutVerticallyInView:view];
@@ -227,7 +232,7 @@
 
 #pragma mark - Accessory view layout
 
-- (void)setAccessoryViewContainerSizeInView:(LYRUIConversationItemView *)view {
+- (void)setAccessoryViewContainerSizeInView:(LYRUIBaseItemView *)view {
     UIView *accessoryContainer = view.accessoryViewContainer;
     CGFloat maxSize = self.metrics.accessoryViewContainerMaxSize;
     
@@ -246,7 +251,7 @@
     }
 }
 
-- (void)setAccessoryViewLayoutInView:(LYRUIConversationItemView *)view {
+- (void)setAccessoryViewLayoutInView:(LYRUIBaseItemView *)view {
     UIView *accessoryContainer = view.accessoryViewContainer;
     UIView *accessoryView = view.accessoryView;
     
@@ -263,7 +268,7 @@
     }
 }
 
-- (void)updateAccessoryViewConstraintsInView:(LYRUIConversationItemView *)view {
+- (void)updateAccessoryViewConstraintsInView:(LYRUIBaseItemView *)view {
     [self removeConstraints:self.accessoryViewConstraints
                    fromView:view.accessoryViewContainer];
     [self setAccessoryViewLayoutInView:view];
@@ -271,35 +276,35 @@
 
 #pragma mark - Detecting size change
 
-- (BOOL)toOrFromLargeLayoutChangeWithOldSize:(LYRUIConversationItemViewLayoutSize)oldLayoutSize
-                                     newSize:(LYRUIConversationItemViewLayoutSize)newLayoutSize {
-    LYRUIConversationItemViewLayoutSize largeSize = LYRUIConversationItemViewLayoutSizeLarge;
+- (BOOL)toOrFromLargeLayoutChangeWithOldSize:(LYRUIBaseItemViewLayoutSize)oldLayoutSize
+                                     newSize:(LYRUIBaseItemViewLayoutSize)newLayoutSize {
+    LYRUIBaseItemViewLayoutSize largeSize = LYRUIBaseItemViewLayoutSizeLarge;
     return oldLayoutSize != newLayoutSize && (oldLayoutSize == largeSize || newLayoutSize == largeSize);
 }
 
-- (BOOL)toOrFromTinyLayoutChangeWithOldSize:(LYRUIConversationItemViewLayoutSize)oldLayoutSize
-                                    newSize:(LYRUIConversationItemViewLayoutSize)newLayoutSize {
-    LYRUIConversationItemViewLayoutSize tinySize = LYRUIConversationItemViewLayoutSizeTiny;
+- (BOOL)toOrFromTinyLayoutChangeWithOldSize:(LYRUIBaseItemViewLayoutSize)oldLayoutSize
+                                    newSize:(LYRUIBaseItemViewLayoutSize)newLayoutSize {
+    LYRUIBaseItemViewLayoutSize tinySize = LYRUIBaseItemViewLayoutSizeTiny;
     return oldLayoutSize != newLayoutSize && (oldLayoutSize == tinySize || newLayoutSize == tinySize);
 }
 
 #pragma mark - Visibility updates
 
-- (void)setupViewsVisibilityInView:(LYRUIConversationItemView *)view {
-    view.lastMessageLabel.hidden = (self.layoutSize != LYRUIConversationItemViewLayoutSizeLarge);
-    view.dateLabel.hidden = (self.layoutSize == LYRUIConversationItemViewLayoutSizeTiny);
+- (void)setupViewsVisibilityInView:(LYRUIBaseItemView *)view {
+    view.messageLabel.hidden = (self.layoutSize != LYRUIBaseItemViewLayoutSizeLarge);
+    view.timeLabel.hidden = (self.layoutSize == LYRUIBaseItemViewLayoutSizeTiny);
 }
 
 #pragma mark - Font sizes updates
 
-- (void)updateFontSizesInView:(LYRUIConversationItemView *)view {
-    NSString *conversationTitleFontName = view.conversationTitleLabel.font.fontName;
+- (void)updateFontSizesInView:(LYRUIBaseItemView *)view {
+    NSString *conversationTitleFontName = view.titleLabel.font.fontName;
     UIFont *newConversationTitleFont = [UIFont fontWithName:conversationTitleFontName
                                                        size:self.metrics.conversationTitleFontSize];
-    view.conversationTitleLabel.font = newConversationTitleFont;
-    NSString *dateFontName = view.dateLabel.font.fontName;
+    view.titleLabel.font = newConversationTitleFont;
+    NSString *dateFontName = view.timeLabel.font.fontName;
     UIFont *newDateFont = [UIFont fontWithName:dateFontName size:self.metrics.dateFontSize];
-    view.dateLabel.font = newDateFont;
+    view.timeLabel.font = newDateFont;
 }
 
 #pragma mark - Helpers
@@ -313,9 +318,9 @@
     [constraints removeAllObjects];
 }
 
-#pragma mark - LYRUIConversationItemViewLayoutMetricsDelegate method
+#pragma mark - LYRUIBaseListViewLayoutMetricsDelegate method
 
-- (LYRUIConversationItemViewLayoutSize)conversationItemViewLayoutMetricsCurrentLayoutSize {
+- (LYRUIBaseItemViewLayoutSize)baseItemViewLayoutMetricsCurrentLayoutSize {
     return self.layoutSize;
 }
 

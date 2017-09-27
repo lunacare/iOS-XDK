@@ -1,8 +1,8 @@
 //
-//  LYRUIConversationItemView.m
+//  LYRUIIdentityItemView.m
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 04.07.2017.
+//  Created by Łukasz Przytuła on 13.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,27 +18,18 @@
 //  limitations under the License.
 //
 
-#import "LYRUIConversationItemView.h"
+#import "LYRUIIdentityItemView.h"
 #import "LYRUIBaseItemViewLayout.h"
-#import "LYRUIConversationItemViewLayoutMetrics.h"
-#import "LYRUIConversationItemIBSetup.h"
+#import "LYRUIIdentityItemViewLayoutMetrics.h"
+#import "LYRUISampleAccessoryView.h"
+#import "LYRUIIdentityItemIBSetup.h"
 
-@interface LYRUIConversationItemView ()
-
-@property(nonatomic, weak, readwrite) UIView *accessoryViewContainer;
-@property(nonatomic, weak, readwrite) UILabel *conversationTitleLabel;
-@property(nonatomic, weak, readwrite) UILabel *lastMessageLabel;
-@property(nonatomic, weak, readwrite) UILabel *dateLabel;
-
-@end
-
-@implementation LYRUIConversationItemView
-@dynamic accessoryViewContainer;
+@implementation LYRUIIdentityItemView
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
+        LYRUIIdentityItemViewLayoutMetrics *metrics = [[LYRUIIdentityItemViewLayoutMetrics alloc] init];
         self.layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
     }
     return self;
@@ -47,7 +38,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
+        LYRUIIdentityItemViewLayoutMetrics *metrics = [[LYRUIIdentityItemViewLayoutMetrics alloc] init];
         self.layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
     }
     return self;
@@ -55,7 +46,7 @@
 
 - (instancetype)initWithLayout:(id<LYRUIBaseItemViewLayout>)layout {
     if (layout == nil) {
-        LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
+        LYRUIIdentityItemViewLayoutMetrics *metrics = [[LYRUIIdentityItemViewLayoutMetrics alloc] init];
         layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
     }
     self = [super initWithLayout:layout];
@@ -63,7 +54,7 @@
 }
 
 - (void)prepareForInterfaceBuilder {
-    [[[LYRUIConversationItemIBSetup alloc] init] prepareConversationItemForInterfaceBuilder:self];
+    [[[LYRUIIdentityItemIBSetup alloc] init] prepareIdentityItemForInterfaceBuilder:self];
 }
 
 @end

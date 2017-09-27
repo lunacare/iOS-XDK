@@ -2,17 +2,17 @@
 #import <Expecta/Expecta.h>
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
-#import <Atlas/LYRUIConversationItemView.h>
+#import <Atlas/LYRUIIdentityItemView.h>
 #import <Atlas/LYRUIBaseItemViewLayout.h>
 
-SpecBegin(LYRUIConversationItemView)
+SpecBegin(LYRUIIdentityItemView)
 
-describe(@"LYRUIConversationItemView", ^{
-    __block LYRUIConversationItemView *view;
+describe(@"LYRUIIdentityItemView", ^{
+    __block LYRUIIdentityItemView *view;
     
     beforeEach(^{
         
-        view = [[LYRUIConversationItemView alloc] init];
+        view = [[LYRUIIdentityItemView alloc] init];
     });
     
     afterEach(^{
@@ -68,7 +68,7 @@ describe(@"LYRUIConversationItemView", ^{
         beforeEach(^{
             layoutMock = mockProtocol(@protocol(LYRUIBaseItemViewLayout));
             
-            view = [[LYRUIConversationItemView alloc] initWithLayout:layoutMock];
+            view = [[LYRUIIdentityItemView alloc] initWithLayout:layoutMock];
         });
         
         it(@"should have layout set to the one passed to initializator", ^{
@@ -87,7 +87,7 @@ describe(@"LYRUIConversationItemView", ^{
         
         beforeEach(^{
             NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-            NSArray *xibViews = [bundle loadNibNamed:@"LYRUIConversationItemView" owner:self options:nil];
+            NSArray *xibViews = [bundle loadNibNamed:@"LYRUIIdentityItemView" owner:self options:nil];
             view = [xibViews objectAtIndex:0];
             otherView = [xibViews objectAtIndex:1];
         });

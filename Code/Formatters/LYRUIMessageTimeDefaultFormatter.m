@@ -55,8 +55,8 @@
 
 #pragma mark - LYRUIMessageTimeFormatting method
 
-- (NSString *)stringForMessageTime:(NSDate *)messageTime
-                   withCurrentTime:(NSDate *)currentTime {
+- (NSString *)stringForTime:(NSDate *)messageTime
+            withCurrentTime:(NSDate *)currentTime {
     if ([self.calendar isDate:messageTime inSameDayAsDate:currentTime]) {
         [self setupDateFormatterForCurrentDay];
     } else {

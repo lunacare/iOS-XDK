@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		150373DF1F17D52700FA6AAB /* LYRUIIdentityItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 150373DE1F17D52700FA6AAB /* LYRUIIdentityItemView.xib */; };
+		150373E11F17D86A00FA6AAB /* LYRUIIdentityItemViewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 150373E01F17D86A00FA6AAB /* LYRUIIdentityItemViewSpec.m */; };
+		150373E41F17D9CE00FA6AAB /* LYRUIIdentityItemViewConfiguratorSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 150373E31F17D9CE00FA6AAB /* LYRUIIdentityItemViewConfiguratorSpec.m */; };
+		150373EA1F17E59D00FA6AAB /* LYRUIIdentityNameFormatterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 150373E91F17E59D00FA6AAB /* LYRUIIdentityNameFormatterSpec.m */; };
+		150373F01F19017800FA6AAB /* LYRUITimeAgoFormatterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 150373EF1F19017800FA6AAB /* LYRUITimeAgoFormatterSpec.m */; };
 		150373F21F1CD7E500FA6AAB /* LYRUIShapedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 150373F11F1CD7E500FA6AAB /* LYRUIShapedView.xib */; };
 		1504137B1F21CC4A006F46BD /* LYRUIParticipantsCountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1504137A1F21CC4A006F46BD /* LYRUIParticipantsCountView.xib */; };
 		1504137D1F21D147006F46BD /* LYRUIParticipantsCountViewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 1504137C1F21D147006F46BD /* LYRUIParticipantsCountViewSpec.m */; };
@@ -19,6 +24,7 @@
 		150772151F28E9AF00E903D1 /* LYRUISpecDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 150772141F28E9AF00E903D1 /* LYRUISpecDispatcher.m */; };
 		150772381F2B415A00E903D1 /* LYRUIConversationItemAccessoryViewProviderSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 150772371F2B415A00E903D1 /* LYRUIConversationItemAccessoryViewProviderSpec.m */; };
 		1525155C1F34D69C0074CE03 /* LYRUIParticipantsDefaultFilterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 1525155B1F34D69C0074CE03 /* LYRUIParticipantsDefaultFilterSpec.m */; };
+		1507724A1F2B7BFA00E903D1 /* LYRUIIdentityItemAccessoryViewProviderSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 150772491F2B7BFA00E903D1 /* LYRUIIdentityItemAccessoryViewProviderSpec.m */; };
 		15654C211F260F6500255309 /* LYRUIAvatarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15654C201F260F6500255309 /* LYRUIAvatarView.xib */; };
 		15654C241F2642F500255309 /* LYRUIAvatarViewSingleLayoutSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 15654C231F2642F500255309 /* LYRUIAvatarViewSingleLayoutSpec.m */; };
 		15654C261F2649AE00255309 /* LYRUIAvatarViewConfiguratorSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 15654C251F2649AE00255309 /* LYRUIAvatarViewConfiguratorSpec.m */; };
@@ -26,7 +32,7 @@
 		158273091F0D071E00F8974C /* LYRUIConversationItemViewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 158273081F0D071E00F8974C /* LYRUIConversationItemViewSpec.m */; };
 		1582730B1F0D09AA00F8974C /* LYRUIViewWithLayoutSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 1582730A1F0D09AA00F8974C /* LYRUIViewWithLayoutSpec.m */; };
 		1582730D1F0D0C2400F8974C /* LYRUIConversationItemViewConfiguratorSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 1582730C1F0D0C2400F8974C /* LYRUIConversationItemViewConfiguratorSpec.m */; };
-		15836DBE1F151C8C00FAF433 /* LYRUIConversationItemViewLayoutSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 15836DBD1F151C8C00FAF433 /* LYRUIConversationItemViewLayoutSpec.m */; };
+		15836DBE1F151C8C00FAF433 /* LYRUIBaseItemViewLayoutSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 15836DBD1F151C8C00FAF433 /* LYRUIBaseItemViewLayoutSpec.m */; };
 		159A26F11F1F8F4000BC416C /* LYRUIShapedViewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 159A26F01F1F8F4000BC416C /* LYRUIShapedViewSpec.m */; };
 		159A26F41F1F9AF200BC416C /* LYRUIPresenceViewConfiguratorSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 159A26F31F1F9AF200BC416C /* LYRUIPresenceViewConfiguratorSpec.m */; };
 		159A26F61F1FA9B600BC416C /* LYRUIPresenceViewDefaultThemeSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 159A26F51F1FA9B600BC416C /* LYRUIPresenceViewDefaultThemeSpec.m */; };
@@ -161,6 +167,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		150373DE1F17D52700FA6AAB /* LYRUIIdentityItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIIdentityItemView.xib; sourceTree = "<group>"; };
+		150373E01F17D86A00FA6AAB /* LYRUIIdentityItemViewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIIdentityItemViewSpec.m; sourceTree = "<group>"; };
+		150373E31F17D9CE00FA6AAB /* LYRUIIdentityItemViewConfiguratorSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIIdentityItemViewConfiguratorSpec.m; sourceTree = "<group>"; };
+		150373E91F17E59D00FA6AAB /* LYRUIIdentityNameFormatterSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIIdentityNameFormatterSpec.m; sourceTree = "<group>"; };
+		150373EF1F19017800FA6AAB /* LYRUITimeAgoFormatterSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUITimeAgoFormatterSpec.m; sourceTree = "<group>"; };
 		150373F11F1CD7E500FA6AAB /* LYRUIShapedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIShapedView.xib; sourceTree = "<group>"; };
 		1504137A1F21CC4A006F46BD /* LYRUIParticipantsCountView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIParticipantsCountView.xib; sourceTree = "<group>"; };
 		1504137C1F21D147006F46BD /* LYRUIParticipantsCountViewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIParticipantsCountViewSpec.m; sourceTree = "<group>"; };
@@ -173,6 +184,7 @@
 		150772141F28E9AF00E903D1 /* LYRUISpecDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUISpecDispatcher.m; sourceTree = "<group>"; };
 		150772371F2B415A00E903D1 /* LYRUIConversationItemAccessoryViewProviderSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIConversationItemAccessoryViewProviderSpec.m; sourceTree = "<group>"; };
 		1525155B1F34D69C0074CE03 /* LYRUIParticipantsDefaultFilterSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIParticipantsDefaultFilterSpec.m; sourceTree = "<group>"; };
+		150772491F2B7BFA00E903D1 /* LYRUIIdentityItemAccessoryViewProviderSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIIdentityItemAccessoryViewProviderSpec.m; sourceTree = "<group>"; };
 		15654C201F260F6500255309 /* LYRUIAvatarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIAvatarView.xib; sourceTree = "<group>"; };
 		15654C231F2642F500255309 /* LYRUIAvatarViewSingleLayoutSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIAvatarViewSingleLayoutSpec.m; sourceTree = "<group>"; };
 		15654C251F2649AE00255309 /* LYRUIAvatarViewConfiguratorSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIAvatarViewConfiguratorSpec.m; sourceTree = "<group>"; };
@@ -180,7 +192,7 @@
 		158273081F0D071E00F8974C /* LYRUIConversationItemViewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIConversationItemViewSpec.m; sourceTree = "<group>"; };
 		1582730A1F0D09AA00F8974C /* LYRUIViewWithLayoutSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIViewWithLayoutSpec.m; sourceTree = "<group>"; };
 		1582730C1F0D0C2400F8974C /* LYRUIConversationItemViewConfiguratorSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIConversationItemViewConfiguratorSpec.m; sourceTree = "<group>"; };
-		15836DBD1F151C8C00FAF433 /* LYRUIConversationItemViewLayoutSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIConversationItemViewLayoutSpec.m; sourceTree = "<group>"; };
+		15836DBD1F151C8C00FAF433 /* LYRUIBaseItemViewLayoutSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIBaseItemViewLayoutSpec.m; sourceTree = "<group>"; };
 		159A26F01F1F8F4000BC416C /* LYRUIShapedViewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIShapedViewSpec.m; sourceTree = "<group>"; };
 		159A26F31F1F9AF200BC416C /* LYRUIPresenceViewConfiguratorSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIPresenceViewConfiguratorSpec.m; sourceTree = "<group>"; };
 		159A26F51F1FA9B600BC416C /* LYRUIPresenceViewDefaultThemeSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIPresenceViewDefaultThemeSpec.m; sourceTree = "<group>"; };
@@ -360,7 +372,7 @@
 			children = (
 				15654C231F2642F500255309 /* LYRUIAvatarViewSingleLayoutSpec.m */,
 				150771E71F2769E200E903D1 /* LYRUIAvatarViewMultiLayoutSpec.m */,
-				15836DBD1F151C8C00FAF433 /* LYRUIConversationItemViewLayoutSpec.m */,
+				15836DBD1F151C8C00FAF433 /* LYRUIBaseItemViewLayoutSpec.m */,
 			);
 			name = Layouts;
 			sourceTree = "<group>";
@@ -372,6 +384,9 @@
 				15654C251F2649AE00255309 /* LYRUIAvatarViewConfiguratorSpec.m */,
 				150771F41F28A3CC00E903D1 /* LYRUIImageWithLettersViewConfiguratorSpec.m */,
 				150772371F2B415A00E903D1 /* LYRUIConversationItemAccessoryViewProviderSpec.m */,
+				1582730C1F0D0C2400F8974C /* LYRUIConversationItemViewConfiguratorSpec.m */,
+				150373E31F17D9CE00FA6AAB /* LYRUIIdentityItemViewConfiguratorSpec.m */,
+				150772491F2B7BFA00E903D1 /* LYRUIIdentityItemAccessoryViewProviderSpec.m */,
 			);
 			name = Configurators;
 			sourceTree = "<group>";
@@ -381,6 +396,8 @@
 			children = (
 				15A4C4591F0E7BF500741D91 /* LYRUIMessageTimeDefaultFormatterSpec.m */,
 				15A4C4611F0E86FF00741D91 /* LYRUIConversationItemTitleFormatterSpec.m */,
+				150373E91F17E59D00FA6AAB /* LYRUIIdentityNameFormatterSpec.m */,
+				150373EF1F19017800FA6AAB /* LYRUITimeAgoFormatterSpec.m */,
 			);
 			name = Formatters;
 			sourceTree = "<group>";
@@ -528,7 +545,6 @@
 				D6F406051A8FDEEB00AE9581 /* ATLMessageInputBarTest.m */,
 				D6F406071A8FDEEB00AE9581 /* ATLParticipantTableViewControllerTest.m */,
 				D6C0454E1A9953C70028E9D0 /* ALTAddressBarControllerTest.m */,
-				1582730C1F0D0C2400F8974C /* LYRUIConversationItemViewConfiguratorSpec.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -550,6 +566,8 @@
 				158273081F0D071E00F8974C /* LYRUIConversationItemViewSpec.m */,
 				15A4C44B1F0E584700741D91 /* LYRUIConversationItemView.xib */,
 				1582730A1F0D09AA00F8974C /* LYRUIViewWithLayoutSpec.m */,
+				150373E01F17D86A00FA6AAB /* LYRUIIdentityItemViewSpec.m */,
+				150373DE1F17D52700FA6AAB /* LYRUIIdentityItemView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -827,6 +845,7 @@
 				15654C211F260F6500255309 /* LYRUIAvatarView.xib in Resources */,
 				150771EB1F2771B100E903D1 /* boatgif.gif in Resources */,
 				15A4C44C1F0E584700741D91 /* LYRUIConversationItemView.xib in Resources */,
+				150373DF1F17D52700FA6AAB /* LYRUIIdentityItemView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1140,6 +1159,8 @@
 			files = (
 				1525155C1F34D69C0074CE03 /* LYRUIParticipantsDefaultFilterSpec.m in Sources */,
 				159A26F61F1FA9B600BC416C /* LYRUIPresenceViewDefaultThemeSpec.m in Sources */,
+				150373EA1F17E59D00FA6AAB /* LYRUIIdentityNameFormatterSpec.m in Sources */,
+				150373F01F19017800FA6AAB /* LYRUITimeAgoFormatterSpec.m in Sources */,
 				D02CDCDD1A9FFC930013CBE8 /* ATLTestUtilities.m in Sources */,
 				1504137D1F21D147006F46BD /* LYRUIParticipantsCountViewSpec.m in Sources */,
 				15654C281F264F4000255309 /* LYRUIAvatarViewSpec.m in Sources */,
@@ -1150,6 +1171,7 @@
 				D0294DE81A93F39300702856 /* ATLMediaStreamTests.m in Sources */,
 				159A26F41F1F9AF200BC416C /* LYRUIPresenceViewConfiguratorSpec.m in Sources */,
 				159A26F11F1F8F4000BC416C /* LYRUIShapedViewSpec.m in Sources */,
+				1507724A1F2B7BFA00E903D1 /* LYRUIIdentityItemAccessoryViewProviderSpec.m in Sources */,
 				150771E81F2769E200E903D1 /* LYRUIAvatarViewMultiLayoutSpec.m in Sources */,
 				15654C261F2649AE00255309 /* LYRUIAvatarViewConfiguratorSpec.m in Sources */,
 				159A26F81F1FAB4F00BC416C /* LYRUIShapedViewDefaultShapeDrawerSpec.m in Sources */,
@@ -1158,9 +1180,11 @@
 				D04517141A9F9A0C00E137D9 /* ATLMediaAttachmentTests.m in Sources */,
 				1582730D1F0D0C2400F8974C /* LYRUIConversationItemViewConfiguratorSpec.m in Sources */,
 				15A4C4621F0E86FF00741D91 /* LYRUIConversationItemTitleFormatterSpec.m in Sources */,
-				15836DBE1F151C8C00FAF433 /* LYRUIConversationItemViewLayoutSpec.m in Sources */,
+				15836DBE1F151C8C00FAF433 /* LYRUIBaseItemViewLayoutSpec.m in Sources */,
 				15A4C45A1F0E7BF500741D91 /* LYRUIMessageTimeDefaultFormatterSpec.m in Sources */,
 				1582730B1F0D09AA00F8974C /* LYRUIViewWithLayoutSpec.m in Sources */,
+				150373E11F17D86A00FA6AAB /* LYRUIIdentityItemViewSpec.m in Sources */,
+				150373E41F17D9CE00FA6AAB /* LYRUIIdentityItemViewConfiguratorSpec.m in Sources */,
 				158273091F0D071E00F8974C /* LYRUIConversationItemViewSpec.m in Sources */,
 				150772381F2B415A00E903D1 /* LYRUIConversationItemAccessoryViewProviderSpec.m in Sources */,
 			);

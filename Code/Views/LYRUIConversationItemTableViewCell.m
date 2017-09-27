@@ -70,16 +70,16 @@
     self.conversationItemView.accessoryView = accessoryView;
 }
 
-- (UILabel *)conversationTitleLabel {
-    return self.conversationItemView.conversationTitleLabel;
+- (UILabel *)titleLabel {
+    return self.conversationItemView.titleLabel;
 }
 
-- (UILabel *)lastMessageLabel {
-    return self.conversationItemView.lastMessageLabel;
+- (UILabel *)messageLabel {
+    return self.conversationItemView.messageLabel;
 }
 
-- (UILabel *)dateLabel {
-    return self.conversationItemView.dateLabel;
+- (UILabel *)timeLabel {
+    return self.conversationItemView.timeLabel;
 }
 
 @end

@@ -1,8 +1,8 @@
 //
-//  LYRUIConversationItemViewLayoutMetrics.m
+//  LYRUIIdentityItemViewLayoutMetrics.m
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 11.07.2017.
+//  Created by Łukasz Przytuła on 13.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,9 +18,9 @@
 //  limitations under the License.
 //
 
-#import "LYRUIConversationItemViewLayoutMetrics.h"
+#import "LYRUIIdentityItemViewLayoutMetrics.h"
 
-@implementation LYRUIConversationItemViewLayoutMetrics
+@implementation LYRUIIdentityItemViewLayoutMetrics
 @synthesize delegate;
 
 - (LYRUIBaseItemViewLayoutSize)layoutSize {
@@ -39,8 +39,10 @@
             return 8.0;
         case LYRUIBaseItemViewLayoutSizeSmall:
         case LYRUIBaseItemViewLayoutSizeMedium:
-        case LYRUIBaseItemViewLayoutSizeLarge:
             return 12.0;
+            
+        default:
+            return 0.0;
     }
 }
 
@@ -51,8 +53,9 @@
             return 8.0;
         case LYRUIBaseItemViewLayoutSizeMedium:
             return 10.0;
-        case LYRUIBaseItemViewLayoutSizeLarge:
-            return 12.0;
+            
+        default:
+            return 0.0;
     }
 }
 
@@ -74,8 +77,9 @@
             return 32.0;
         case LYRUIBaseItemViewLayoutSizeMedium:
             return 40.0;
-        case LYRUIBaseItemViewLayoutSizeLarge:
-            return 48.0;
+            
+        default:
+            return 0.0;
     }
 }
 
@@ -87,8 +91,10 @@
         case LYRUIBaseItemViewLayoutSizeSmall:
             return 14.0;
         case LYRUIBaseItemViewLayoutSizeMedium:
-        case LYRUIBaseItemViewLayoutSizeLarge:
             return 16.0;
+            
+        default:
+            return 0.0;
     }
 }
 
@@ -98,8 +104,10 @@
         case LYRUIBaseItemViewLayoutSizeSmall:
             return 10.0;
         case LYRUIBaseItemViewLayoutSizeMedium:
-        case LYRUIBaseItemViewLayoutSizeLarge:
             return 12.0;
+            
+        default:
+            return 0.0;
     }
 }
 
@@ -110,10 +118,8 @@
         return LYRUIBaseItemViewLayoutSizeTiny;
     } else if (viewHeight < 60.0) {
         return LYRUIBaseItemViewLayoutSizeSmall;
-    } else if (viewHeight < 72.0) {
-        return LYRUIBaseItemViewLayoutSizeMedium;
     } else {
-        return LYRUIBaseItemViewLayoutSizeLarge;
+        return LYRUIBaseItemViewLayoutSizeMedium;
     }
 }
 

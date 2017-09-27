@@ -1,5 +1,5 @@
 //
-//  LYRUIConversationItemIBSetup.m
+//  LYRUIIdentityItemAccessoryViewProvider.m
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 28.07.2017.
@@ -18,25 +18,22 @@
 //  limitations under the License.
 //
 
-#import "LYRUIConversationItemIBSetup.h"
-#import "LYRUIConversationItemView.h"
+#import "LYRUIIdentityItemAccessoryViewProvider.h"
 #import "LYRUIAvatarView.h"
 #import <LayerKit/LayerKit.h>
 
-@implementation LYRUIConversationItemIBSetup
+@implementation LYRUIIdentityItemAccessoryViewProvider
 
-- (void)prepareConversationItemForInterfaceBuilder:(LYRUIConversationItemView *)conversationItem {
-    conversationItem.titleLabel.text = @"Name(s) / Title";
-    conversationItem.timeLabel.text = @"8:30am";
-    conversationItem.messageLabel.text = @"Message";
-    
+- (UIView *)accessoryViewForIdentity:(LYRIdentity *)identity {
     LYRUIAvatarView *avatarView = [[LYRUIAvatarView alloc] init];
     avatarView.translatesAutoresizingMaskIntoConstraints = NO;
-    avatarView.identities = @[[[LYRIdentity alloc] init], [[LYRIdentity alloc] init], [[LYRIdentity alloc] init]];
-    avatarView.backgroundColor = [UIColor whiteColor];
-    conversationItem.accessoryView = avatarView;
-    
-    [conversationItem setNeedsUpdateConstraints];
+    [self setupAccessoryView:avatarView forIdentity:identity];
+    return avatarView;
+}
+
+- (void)setupAccessoryView:(LYRUIAvatarView *)avatarView forIdentity:(LYRIdentity *)identity {
+    NSArray<LYRIdentity *> *identities = @[identity];
+    avatarView.identities = identities;
 }
 
 @end

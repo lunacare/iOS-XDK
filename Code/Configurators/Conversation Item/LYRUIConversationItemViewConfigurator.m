@@ -45,7 +45,7 @@
 - (instancetype)initWithAccessoryViewProvider:(id<LYRUIConversationItemAccessoryViewProviding>)accessoryViewProvider
                                titleFormatter:(id<LYRUIConversationItemTitleFormatting>)titleFormatter
                          lastMessageFormatter:(id<LYRUIConversationItemLastMessageFormatting>)lastMessageFormatter
-                         messageTimeFormatter:(id<LYRUIMessageTimeFormatting>)messageTimeFormatter {
+                         messageTimeFormatter:(id<LYRUITimeFormatting>)messageTimeFormatter {
     self = [super init];
     if (self) {
         if (accessoryViewProvider == nil) {
@@ -88,14 +88,14 @@
     }
     
     NSString *conversationTitle = [self.titleFormatter titleForConversation:conversation];
-    view.conversationTitleLabel.text = conversationTitle;
+    view.titleLabel.text = conversationTitle;
     view.accessibilityLabel = conversationTitle;
     
     LYRMessage *lastMessage = conversation.lastMessage;
     if (lastMessage) {
-        view.dateLabel.text = [self.messageTimeFormatter stringForMessageTime:lastMessage.sentAt
-                                                              withCurrentTime:[NSDate date]];
-        view.lastMessageLabel.text = [self.lastMessageFormatter stringForConversationLastMessage:lastMessage];
+        view.timeLabel.text = [self.messageTimeFormatter stringForTime:lastMessage.sentAt
+                                                       withCurrentTime:[NSDate date]];
+        view.messageLabel.text = [self.lastMessageFormatter stringForConversationLastMessage:lastMessage];
     }
     if (view.accessoryView == nil) {
         view.accessoryView = [self.accessoryViewProvider accessoryViewForConversation:conversation];
