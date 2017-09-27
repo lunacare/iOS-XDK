@@ -21,6 +21,8 @@
 #import "LYRUIConversationItemViewConfigurator.h"
 #import "LYRUIMessageTimeDefaultFormatter.h"
 #import "LYRUIConversationItemTitleFormatter.h"
+#import "LYRUIConversationItemAccessoryViewProvider.h"
+#import "LYRUIParticipantsFiltering.h"
 
 @implementation LYRUIConversationItemViewConfigurator
 
@@ -33,12 +35,10 @@
 }
 
 - (instancetype)initWithCurrentUser:(LYRIdentity *)currentUser {
-    self.currentUser = currentUser;
-    LYRUIConversationItemTitleFormatter *titleFormatter = [[LYRUIConversationItemTitleFormatter alloc] initWithCurrentUser:currentUser];
-    self = [self initWithAccessoryViewProvider:nil
-                                titleFormatter:titleFormatter
-                          lastMessageFormatter:nil
-                          messageTimeFormatter:nil];
+    self = [self init];
+    if (self) {
+        self.currentUser = currentUser;
+    }
     return self;
 }
 
@@ -49,7 +49,7 @@
     self = [super init];
     if (self) {
         if (accessoryViewProvider == nil) {
-            //TODO: set default provider
+            accessoryViewProvider = [[LYRUIConversationItemAccessoryViewProvider alloc] init];
         }
         self.accessoryViewProvider = accessoryViewProvider;
         if (titleFormatter == nil) {
@@ -72,7 +72,8 @@
 
 - (void)setCurrentUser:(LYRIdentity *)currentUser {
     _currentUser = currentUser;
-    self.titleFormatter.currentUser = currentUser;
+    self.accessoryViewProvider.participantsFilter = LYRUIParticipantsDefaultFilterWithCurrentUser(currentUser);
+    self.titleFormatter.participantsFilter = LYRUIParticipantsDefaultFilterWithCurrentUser(currentUser);
 }
 
 #pragma mark - LYRUIConversationItemView setup
@@ -96,7 +97,12 @@
                                                               withCurrentTime:[NSDate date]];
         view.lastMessageLabel.text = [self.lastMessageFormatter stringForConversationLastMessage:lastMessage];
     }
-    view.accessoryView = [self.accessoryViewProvider accessoryViewForConversation:conversation];
+    if (view.accessoryView == nil) {
+        view.accessoryView = [self.accessoryViewProvider accessoryViewForConversation:conversation];
+    } else {
+        [self.accessoryViewProvider setupAccessoryView:view.accessoryView forConversation:conversation];
+    }
+    view.accessoryView.backgroundColor = view.backgroundColor;
     [view setNeedsUpdateConstraints];
 }
 

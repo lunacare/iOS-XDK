@@ -7,6 +7,7 @@
 #import <Atlas/LYRUIConversationItemView.h>
 #import <Atlas/LYRUIMessageTimeDefaultFormatter.h>
 #import <Atlas/LYRUIConversationItemTitleFormatter.h>
+#import <Atlas/LYRUIConversationItemAccessoryViewProviding.h>
 #import <LayerKit/LayerKit.h>
 
 SpecBegin(LYRUIConversationItemViewConfigurator)
@@ -118,16 +119,19 @@ describe(@"LYRUIConversationItemViewConfigurator", ^{
     });
     
     describe(@"currentUser", ^{
+        __block LYRIdentity *currentUserMock;
+        
         context(@"setter", ^{
-            __block LYRIdentity *currentUserMock;
-            
             beforeEach(^{
                 currentUserMock = mock([LYRIdentity class]);
                 viewConfigurator.currentUser = currentUserMock;
             });
             
-            it(@"should set current user on title formatter", ^{
-                [verify(titleFormatterMock) setCurrentUser:currentUserMock];
+            it(@"should update participant filtering block on accessory view provider", ^{
+                [verify(accessoryViewProviderMock) setParticipantsFilter:anything()];
+            });
+            it(@"should update participant filtering block on title formatter", ^{
+                [verify(titleFormatterMock) setParticipantsFilter:anything()];
             });
         });
     });

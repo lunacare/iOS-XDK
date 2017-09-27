@@ -5,22 +5,31 @@
 #import <Atlas/LYRUIConversationItemTitleFormatter.h>
 #import <LayerKit/LayerKit.h>
 
+@interface LYRUIConversationItemTitleFormatter (PrivateProperties)
+
+@property (nonatomic, strong) LYRUIParticipantsFiltering participantsFilter;
+
+@end
+
 SpecBegin(LYRUIConversationItemTitleFormatter)
 
 describe(@"LYRUIConversationItemTitleFormatter", ^{
     __block LYRUIConversationItemTitleFormatter *formatter;
+    __block LYRUIParticipantsFiltering participantsFilterMock;
+    __block NSSet *participantsFilterMockReturnValue;
     __block LYRConversation *conversationMock;
-    __block LYRIdentity *currentUserMock;
     
     beforeEach(^{
-        formatter = [[LYRUIConversationItemTitleFormatter alloc] init];
+        participantsFilterMock = ^NSSet *(NSSet *identities) {
+            return participantsFilterMockReturnValue;
+        };
+        formatter = [[LYRUIConversationItemTitleFormatter alloc] initWithParticipantsFilter:participantsFilterMock];
         conversationMock = mock([LYRConversation class]);
-        currentUserMock = mock([LYRIdentity class]);
-        [given(currentUserMock.userID) willReturn:@"test identifier"];
     });
     
     afterEach(^{
         formatter = nil;
+        participantsFilterMockReturnValue = nil;
     });
     
     describe(@"titleForConversation:", ^{
@@ -36,6 +45,7 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
             context(@"with empty participants set", ^{
                 beforeEach(^{
                     [given(conversationMock.participants) willReturn:[NSSet new]];
+                    participantsFilterMockReturnValue = [NSSet new];
                     
                     returnedString = [formatter titleForConversation:conversationMock];
                 });
@@ -57,6 +67,7 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                             participantMock2,
                     ]];
                     [given(conversationMock.participants) willReturn:participants];
+                    participantsFilterMockReturnValue = participants;
                     
                     returnedString = [formatter titleForConversation:conversationMock];
                 });
@@ -84,6 +95,7 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                             participantMock4,
                     ]];
                     [given(conversationMock.participants) willReturn:participants];
+                    participantsFilterMockReturnValue = participants;
                     
                     returnedString = [formatter titleForConversation:conversationMock];
                 });
@@ -111,12 +123,11 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                 });
             });
             
-            context(@"with two participants", ^{
+            context(@"with one participant", ^{
                 __block LYRIdentity *otherParticipantMock;
                 
                 beforeEach(^{
                     LYRIdentity *participantMock1 = mock([LYRIdentity class]);
-                    [given(participantMock1.userID) willReturn:@"test identifier"];
                     [given(participantMock1.displayName) willReturn:@"Enzo Ferrari"];
                     otherParticipantMock = mock([LYRIdentity class]);
                     [given(otherParticipantMock.displayName) willReturn:@"Ferdinand Porsche Display Name"];
@@ -128,79 +139,66 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                             otherParticipantMock,
                     ]];
                     [given(conversationMock.participants) willReturn:participants];
+                    NSSet *filteredParticipants = [NSSet setWithArray:@[
+                            otherParticipantMock,
+                    ]];
+                    participantsFilterMockReturnValue = filteredParticipants;
                 });
-                    
-                context(@"with current user set", ^{
-                    beforeEach(^{
-                        formatter = [[LYRUIConversationItemTitleFormatter alloc] initWithCurrentUser:currentUserMock];
-                    });
-                    
-                    context(@"when other user has both first name and last name set", ^{
-                        beforeEach(^{
-                            returnedString = [formatter titleForConversation:conversationMock];
-                        });
-                        
-                        it(@"should return full name of the other participant", ^{
-                            expect(returnedString).to.equal(@"Ferdinand Porsche");
-                        });
-                    });
-                    
-                    context(@"when other user has only first name set", ^{
-                        beforeEach(^{
-                            [given(otherParticipantMock.lastName) willReturn:nil];
-                            returnedString = [formatter titleForConversation:conversationMock];
-                        });
-                        
-                        it(@"should return first name of the other participant", ^{
-                            expect(returnedString).to.equal(@"Ferdinand");
-                        });
-                    });
-                    
-                    context(@"when other user has only last name set", ^{
-                        beforeEach(^{
-                            [given(otherParticipantMock.firstName) willReturn:nil];
-                            returnedString = [formatter titleForConversation:conversationMock];
-                        });
-                        
-                        it(@"should return last name of the other participant", ^{
-                            expect(returnedString).to.equal(@"Porsche");
-                        });
-                    });
-                    
-                    context(@"when other user has only display name set", ^{
-                        beforeEach(^{
-                            [given(otherParticipantMock.firstName) willReturn:nil];
-                            [given(otherParticipantMock.lastName) willReturn:nil];
-                            returnedString = [formatter titleForConversation:conversationMock];
-                        });
-                        
-                        it(@"should return display name of the other participant", ^{
-                            expect(returnedString).to.equal(@"Ferdinand Porsche Display Name");
-                        });
-                    });
-                    
-                    context(@"when other has no identifying information", ^{
-                        beforeEach(^{
-                            [given(otherParticipantMock.firstName) willReturn:nil];
-                            [given(otherParticipantMock.lastName) willReturn:nil];
-                            [given(otherParticipantMock.displayName) willReturn:nil];
-                            returnedString = [formatter titleForConversation:conversationMock];
-                        });
-                        
-                        it(@"should return empty string", ^{
-                            expect(returnedString).to.equal(@"");
-                        });
-                    });
-                });
-                
-                context(@"without current user", ^{
+
+                context(@"when other user has both first name and last name set", ^{
                     beforeEach(^{
                         returnedString = [formatter titleForConversation:conversationMock];
                     });
                     
-                    it(@"should return comma separated names of participants", ^{
-                        expect(returnedString).to.contain(@"Ferdinand");
-                        expect(returnedString).to.contain(@"Enzo Ferrari");
+                    it(@"should return full name of the other participant", ^{
+                        expect(returnedString).to.equal(@"Ferdinand Porsche");
+                    });
+                });
+                
+                context(@"when other user has only first name set", ^{
+                    beforeEach(^{
+                        [given(otherParticipantMock.lastName) willReturn:nil];
+                        returnedString = [formatter titleForConversation:conversationMock];
+                    });
+                    
+                    it(@"should return first name of the other participant", ^{
+                        expect(returnedString).to.equal(@"Ferdinand");
+                    });
+                });
+                
+                context(@"when other user has only last name set", ^{
+                    beforeEach(^{
+                        [given(otherParticipantMock.firstName) willReturn:nil];
+                        returnedString = [formatter titleForConversation:conversationMock];
+                    });
+                    
+                    it(@"should return last name of the other participant", ^{
+                        expect(returnedString).to.equal(@"Porsche");
+                    });
+                });
+                
+                context(@"when other user has only display name set", ^{
+                    beforeEach(^{
+                        [given(otherParticipantMock.firstName) willReturn:nil];
+                        [given(otherParticipantMock.lastName) willReturn:nil];
+                        returnedString = [formatter titleForConversation:conversationMock];
+                    });
+                    
+                    it(@"should return display name of the other participant", ^{
+                        expect(returnedString).to.equal(@"Ferdinand Porsche Display Name");
+                    });
+                });
+                
+                context(@"when other has no identifying information", ^{
+                    beforeEach(^{
+                        [given(otherParticipantMock.firstName) willReturn:nil];
+                        [given(otherParticipantMock.lastName) willReturn:nil];
+                        [given(otherParticipantMock.displayName) willReturn:nil];
+                        returnedString = [formatter titleForConversation:conversationMock];
+                    });
+                    
+                    it(@"should return empty string", ^{
+                        expect(returnedString).to.equal(@"");
                     });
                 });
             });
@@ -208,7 +206,6 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
             context(@"with multiple participants", ^{
                 beforeEach(^{
                     LYRIdentity *participantMock1 = mock([LYRIdentity class]);
-                    [given(participantMock1.userID) willReturn:@"test identifier"];
                     [given(participantMock1.displayName) willReturn:@"Enzo Ferrari"];
                     LYRIdentity *participantMock2 = mock([LYRIdentity class]);
                     [given(participantMock2.firstName) willReturn:@"Ferdinand"];
@@ -224,35 +221,23 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                             participantMock4,
                     ]];
                     [given(conversationMock.participants) willReturn:participants];
+                    NSSet *filteredParticipants = [NSSet setWithArray:@[
+                            participantMock2,
+                            participantMock3,
+                            participantMock4,
+                    ]];
+                    participantsFilterMockReturnValue = filteredParticipants;
+                
+                    returnedString = [formatter titleForConversation:conversationMock];
                 });
                 
-                context(@"with current user set", ^{
-                    beforeEach(^{
-                        formatter = [[LYRUIConversationItemTitleFormatter alloc] initWithCurrentUser:currentUserMock];
-                        returnedString = [formatter titleForConversation:conversationMock];
-                    });
-                    
-                    it(@"should return comma separated names of other participants", ^{
-                        expect(returnedString).to.contain(@"Ferdinand");
-                        expect(returnedString).to.contain(@"Ford");
-                        expect(returnedString).to.contain(@"Walter Owen Bentley");
-                    });
-                    it(@"should return string without name of current user", ^{
-                        expect(returnedString).notTo.contain(@"Enzo Ferrari");
-                    });
+                it(@"should return comma separated names of filtered participants", ^{
+                    expect(returnedString).to.contain(@"Ferdinand");
+                    expect(returnedString).to.contain(@"Ford");
+                    expect(returnedString).to.contain(@"Walter Owen Bentley");
                 });
-                
-                context(@"without current user", ^{
-                    beforeEach(^{
-                        returnedString = [formatter titleForConversation:conversationMock];
-                    });
-                    
-                    it(@"should return comma separated names of all participants", ^{
-                        expect(returnedString).to.contain(@"Ferdinand");
-                        expect(returnedString).to.contain(@"Ford");
-                        expect(returnedString).to.contain(@"Walter Owen Bentley");
-                        expect(returnedString).to.contain(@"Enzo Ferrari");
-                    });
+                it(@"should return string without name of user removed from participants", ^{
+                    expect(returnedString).notTo.contain(@"Enzo Ferrari");
                 });
             });
         });

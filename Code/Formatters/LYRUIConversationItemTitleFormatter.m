@@ -24,12 +24,17 @@
 static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationName";
 
 @implementation LYRUIConversationItemTitleFormatter
-@synthesize currentUser = _currentUser;
+@synthesize participantsFilter = _participantsFilter;
 
-- (instancetype)initWithCurrentUser:(LYRIdentity *)currentUser {
+- (instancetype)init {
+    self = [self initWithParticipantsFilter:nil];
+    return self;
+}
+
+- (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter {
     self = [super init];
     if (self) {
-        self.currentUser = currentUser;
+        self.participantsFilter = participantsFilter;
     }
     return self;
 }
@@ -42,7 +47,10 @@ static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationNam
         return metadataTitle;
     }
     
-    NSSet *participants = [self filteredParticipants:conversation.participants];
+    NSSet<LYRIdentity *> *participants = conversation.participants;
+    if (self.participantsFilter) {
+        participants = self.participantsFilter(conversation.participants);
+    }
     if (participants.count == 1) {
         return [self participantName:participants.anyObject];
     }
@@ -89,16 +97,6 @@ static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationNam
         return participant.lastName;
     }
     return participant.displayName;
-}
-
-#pragma mark - Participants filtering and sorting
-
-- (NSSet *)filteredParticipants:(NSSet *)participants {
-    __weak __typeof(self) weakSelf = self;
-    NSPredicate *notCurrentUserPredicate = [NSPredicate predicateWithBlock:^BOOL(LYRIdentity * _Nullable identity, NSDictionary<NSString *,id> * _Nullable bindings) {
-        return ![identity.userID isEqual:weakSelf.currentUser.userID];
-    }];
-    return [participants filteredSetUsingPredicate:notCurrentUserPredicate];
 }
 
 @end

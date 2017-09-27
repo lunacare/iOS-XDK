@@ -1,8 +1,8 @@
 //
-//  LYRUIImageFactory.h
+//  LYRUIParticipantsFiltering.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 25.07.2017.
+//  Created by Łukasz Przytuła on 04.08.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,17 +18,9 @@
 //  limitations under the License.
 //
 
-#import "LYRUIImageCreating.h"
+#import "LYRUIParticipantsFiltering.h"
+@class LYRIdentity;
 
-NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIImageFactory : NSObject <LYRUIImageCreating>
+typedef NSSet<LYRIdentity *> *(^LYRUIParticipantsFiltering)(NSSet<LYRIdentity *> *);
 
-/**
- @abstract Initializes a new `LYRUIImageFactory` object with the given bundle.
- @param bundle An `NSBundle` instance which will be used for creating `UIImage` from image asset. Default is bundle with Layer UI resources.
- @return An `LYRUIImageFactory` object.
- */
-- (instancetype)initWithBundle:(nullable NSBundle *)bundle;
-
-@end
-NS_ASSUME_NONNULL_END       // }
+extern LYRUIParticipantsFiltering(^LYRUIParticipantsDefaultFilterWithCurrentUser)(LYRIdentity *);

@@ -1,8 +1,8 @@
 //
-//  LYRUIImageFactory.h
+//  LYRUIConversationItemIBSetup.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 25.07.2017.
+//  Created by Łukasz Przytuła on 28.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,17 +18,11 @@
 //  limitations under the License.
 //
 
-#import "LYRUIImageCreating.h"
+#import <Foundation/Foundation.h>
+@class LYRUIConversationItemView;
 
-NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIImageFactory : NSObject <LYRUIImageCreating>
+@interface LYRUIConversationItemIBSetup : NSObject
 
-/**
- @abstract Initializes a new `LYRUIImageFactory` object with the given bundle.
- @param bundle An `NSBundle` instance which will be used for creating `UIImage` from image asset. Default is bundle with Layer UI resources.
- @return An `LYRUIImageFactory` object.
- */
-- (instancetype)initWithBundle:(nullable NSBundle *)bundle;
+- (void)prepareConversationItemForInterfaceBuilder:(LYRUIConversationItemView *)conversationItem;
 
 @end
-NS_ASSUME_NONNULL_END       // }

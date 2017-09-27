@@ -20,7 +20,7 @@
 
 #import "LYRUIConversationItemView.h"
 #import "LYRUIConversationItemViewLayout.h"
-#import "LYRUISampleAccessoryView.h"
+#import "LYRUIConversationItemIBSetup.h"
 
 @interface LYRUIConversationItemView ()
 
@@ -92,14 +92,7 @@
 }
 
 - (void)prepareForInterfaceBuilder {
-    self.conversationTitleLabel.text = @"Name(s) / Title";
-    self.dateLabel.text = @"8:30am";
-    self.lastMessageLabel.text = @"Message";
-    
-    UIView *accessoryView = [[LYRUISampleAccessoryView alloc] init];
-    self.accessoryView = accessoryView;
-    
-    [self setNeedsUpdateConstraints];
+    [[[LYRUIConversationItemIBSetup alloc] init] prepareConversationItemForInterfaceBuilder:self];
 }
 
 #pragma mark - Properties
