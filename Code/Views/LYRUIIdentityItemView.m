@@ -22,6 +22,7 @@
 #import "LYRUIBaseItemViewLayout.h"
 #import "LYRUIIdentityItemViewLayoutMetrics.h"
 #import "LYRUISampleAccessoryView.h"
+#import "LYRUIIdentityItemIBSetup.h"
 
 @implementation LYRUIIdentityItemView
 
@@ -53,13 +54,7 @@
 }
 
 - (void)prepareForInterfaceBuilder {
-    self.titleLabel.text = @"Full name";
-    self.timeLabel.text = @"23 mins ago";
-    
-    UIView *accessoryView = [[LYRUISampleAccessoryView alloc] init];
-    self.accessoryView = accessoryView;
-    
-    [self setNeedsUpdateConstraints];
+    [[[LYRUIIdentityItemIBSetup alloc] init] prepareIdentityItemForInterfaceBuilder:self];
 }
 
 @end
