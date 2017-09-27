@@ -29,6 +29,10 @@
 
 @end
 
+@interface LYRUITestConversationItemCell : UITableViewCell <LYRUIConversationItemView>
+
+@end
+
 @interface ATLTestMessageCollectionViewCell : ATLMessageCollectionViewCell <ATLMessagePresenting>
 
 @end

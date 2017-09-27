@@ -20,10 +20,10 @@
 
 #import <UIKit/UIKit.h>
 #import <LayerKit/LayerKit.h>
-#import "ATLConversationTableViewCell.h"
 #import "ATLAvatarItem.h"
 #import "ATLParticipant.h"
 
+@protocol LYRUIConversationItemView;
 @class ATLConversationListViewController;
 
 ///---------------------------------------
@@ -75,24 +75,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ATLConversationListViewControllerDataSource <NSObject>
 
-/**
- @abstract Asks the data source for a title string to display for a given conversation.
- @param conversationListViewController The `LYRConversationListViewController` in which the string will appear.
- @param conversation The `LYRConversation` object.
- @return The string to be displayed as the title for a given conversation in the conversation list.
- */
-- (NSString *)conversationListViewController:(ATLConversationListViewController *)conversationListViewController titleForConversation:(LYRConversation *)conversation;
-
 @optional
-
-/**
- @abstract Asks the delegate for an avatar item representing a conversation.
- @param conversationListViewController The `LYRConversationListViewController` in which the item's data will appear.
- @param conversation The `LYRConversation` object.
- @return An object conforming to the `ATLAvatarItem` protocol. 
- @discussion The data provided by the object conforming to the `ATLAvatarItem` protocol will be displayed in an `ATLAvatarView`.
- */
-- (nullable id<ATLAvatarItem>)conversationListViewController:(ATLConversationListViewController *)conversationListViewController avatarItemForConversation:(LYRConversation *)conversation;
 
 /**
  @abstract Asks the data source for the table view cell reuse identifier for a conversation.
@@ -213,11 +196,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  @abstract The `UITableViewCell` subclass for customizing the display of the conversations.
- @discussion If you wish to provide your own custom class, your class must conform to the `ATLConversationPresenting` protocol.
- @default `ATLConversationTableViewCell`
+ @default `LYRUIConversationItemTableViewCell`
  @raises NSInternalInconsistencyException Raised if the value is mutated after the receiver has been presented.
  */
-@property (nonatomic) Class<ATLConversationPresenting> cellClass;
+@property (nonatomic) Class<LYRUIConversationItemView> cellClass;
 
 
 /**

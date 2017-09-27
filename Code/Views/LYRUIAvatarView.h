@@ -44,7 +44,7 @@ IB_DESIGNABLE
 /**
  @abstract The `identities` to setup the view with. If array contains one `LYRUIIdentity` object, the view will show an avatar with presence status view. Otherwise it will present multi-avatar, replaced with a badge with number of `identities` when resized under 32pt width or height.
  */
-@property (nonatomic, weak) NSArray<LYRIdentity *> *identities;
+@property (nonatomic, copy) NSArray<LYRIdentity *> *identities;
 
 /**
  @abstract An object which contains set of colors to use in `LYRUIAvatarView` dependant views. Default is nil, and subviews use their defaults.

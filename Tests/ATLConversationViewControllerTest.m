@@ -54,7 +54,7 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     self.testInterface = [ATLTestInterface testIntefaceWithLayerClient:layerClient];
     
     ATLUserMock *mockUser1 = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
-    self.conversation = [self.testInterface conversationWithParticipants:[NSSet setWithObject:mockUser1.userID] lastMessageText:nil];
+    self.conversation = [self.testInterface conversationWithParticipants:[NSSet setWithObject:mockUser1] lastMessageText:nil];
 }
 
 - (void)tearDown
@@ -442,7 +442,7 @@ extern NSString *const ATLMessageInputToolbarSendButton;
 {
     ATLUserMock *mockUser2 = [ATLUserMock userWithMockUserName:ATLMockUserNameKevin];
     LYRClientMock *layerClient = [LYRClientMock layerClientMockWithAuthenticatedUserID:mockUser2.userID];
-    self.conversation = [self.testInterface conversationWithParticipants:[NSSet setWithObject:mockUser2.userID] lastMessageText:nil];
+    self.conversation = [self.testInterface conversationWithParticipants:[NSSet setWithObject:mockUser2] lastMessageText:nil];
     
     LYRMessagePartMock *part = [LYRMessagePartMock messagePartWithText:@"Test"];
     LYRMessageMock *message = [layerClient newMessageWithParts:@[part] options:nil error:nil];
@@ -725,7 +725,7 @@ extern NSString *const ATLMessageInputToolbarSendButton;
         [invocation setReturnValue:&query];
     }] conversationViewController:[OCMArg any] willLoadWithQuery:[OCMArg any]];
 
-    self.viewController.conversation = [self.viewController.layerClient newConversationWithParticipants:[NSSet setWithObject:@"test"] options:nil error:nil];
+    self.viewController.conversation = [self.viewController.layerClient newConversationWithParticipants:[NSSet setWithObject:[ATLUserMock randomUser]] options:nil error:nil];
     [delegateMock verifyWithDelay:1];
 }
 
@@ -753,7 +753,7 @@ extern NSString *const ATLMessageInputToolbarSendButton;
         [invocation setReturnValue:&query];
     }] conversationViewController:[OCMArg any] willLoadWithQuery:[OCMArg any]];
     
-    self.viewController.conversation = [self.viewController.layerClient newConversationWithParticipants:[NSSet setWithObject:@"test"] options:nil error:nil];
+    self.viewController.conversation = [self.viewController.layerClient newConversationWithParticipants:[NSSet setWithObject:[ATLUserMock randomUser]] options:nil error:nil];
     [delegateMock verifyWithDelay:1];
     
     expect(self.viewController.conversationDataSource.queryController.query.sortDescriptors).to.contain(sortDescriptor);
@@ -781,7 +781,7 @@ extern NSString *const ATLMessageInputToolbarSendButton;
             
         }] conversationViewController:[OCMArg any] willLoadWithQuery:[OCMArg any]];
         
-        self.viewController.conversation = [self.viewController.layerClient newConversationWithParticipants:[NSSet setWithObject:@"test"] options:nil error:nil];
+        self.viewController.conversation = [self.viewController.layerClient newConversationWithParticipants:[NSSet setWithObject:[ATLUserMock randomUser]] options:nil error:nil];
         [delegateMock verifyWithDelay:1];
     }).to.raise(NSInvalidArgumentException);
 }

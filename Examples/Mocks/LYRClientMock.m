@@ -68,7 +68,7 @@ NSString *const LYRMockObjectChangeChangeTypeKey = @"mockObjectChangeChangeTypeK
 - (LYRConversationMock *)newConversationWithParticipants:(NSSet *)participants options:(NSDictionary *)options error:(NSError *__autoreleasing *)error
 {
     NSMutableSet *allParticipants = [participants mutableCopy];
-    [allParticipants addObject:self.authenticatedUserID];
+    [allParticipants addObject:[ATLUserMock mockUserForIdentifier:self.authenticatedUserID]];
     return [LYRConversationMock newConversationWithParticipants:allParticipants options:options];
 }
 

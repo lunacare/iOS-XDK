@@ -37,12 +37,24 @@
     self = [super init];
     if (self) {
         if (bundle == nil) {
-            bundle = [NSBundle bundleForClass:[self class]];
+            bundle = [self bundleWithLayerUIResources];
         }
         self.bundle = bundle;
     }
     return self;
 }
+
+- (NSBundle *)bundleWithLayerUIResources {
+    NSBundle *codeBundle = [NSBundle bundleForClass:[self class]];
+    NSString *resourcesBundlePath = [codeBundle pathForResource:@"AtlasResource" ofType:@"bundle"];
+    NSBundle *resourcesBundle = [NSBundle bundleWithPath:resourcesBundlePath];
+    if (resourcesBundle) {
+        return resourcesBundle;
+    }
+    return codeBundle;
+}
+
+#pragma mark - LYRUIImageCreating methods
 
 - (UIImage *)imageNamed:(NSString *)imageName {
     return [UIImage imageNamed:imageName inBundle:self.bundle compatibleWithTraitCollection:nil];

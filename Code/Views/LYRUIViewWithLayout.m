@@ -1,8 +1,8 @@
 //
-//  LYRUIImageFactory.h
+//  LYRUIViewWithLayout.m
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 25.07.2017.
+//  Created by Łukasz Przytuła on 04.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,17 +18,21 @@
 //  limitations under the License.
 //
 
-#import "LYRUIImageCreating.h"
+#import "LYRUIViewWithLayout.h"
 
-NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIImageFactory : NSObject <LYRUIImageCreating>
+@implementation LYRUIViewWithLayout
 
-/**
- @abstract Initializes a new `LYRUIImageFactory` object with the given bundle.
- @param bundle An `NSBundle` instance which will be used for creating `UIImage` from image asset. Default is bundle with Layer UI resources.
- @return An `LYRUIImageFactory` object.
- */
-- (instancetype)initWithBundle:(nullable NSBundle *)bundle;
+- (void)setLayout:(id<LYRUIViewLayout>)layout {
+    if (self.layout != nil) {
+        [self.layout removeConstraintsFromView:self];
+    }
+    _layout = layout;
+    [self.layout addConstraintsInView:self];
+}
+
+- (void)updateConstraints {
+    [self.layout updateConstraintsInView:self];
+    [super updateConstraints];
+}
 
 @end
-NS_ASSUME_NONNULL_END       // }

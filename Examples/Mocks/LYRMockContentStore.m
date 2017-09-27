@@ -63,7 +63,8 @@
 {
     self.authenticatedUserID = authenticatedUserID;
     ATLUserMock *user = [ATLUserMock randomUser];
-    LYRConversationMock *conversation = [LYRConversationMock newConversationWithParticipants:[NSSet setWithObjects:user.userID, self.authenticatedUserID, nil] options:nil];
+    ATLUserMock *authenticatedUser = [ATLUserMock mockUserForIdentifier:authenticatedUserID];
+    LYRConversationMock *conversation = [LYRConversationMock newConversationWithParticipants:[NSSet setWithObjects:user, authenticatedUser, nil] options:nil];
     [self hydrateMessagesForConversation:conversation];
 }
 

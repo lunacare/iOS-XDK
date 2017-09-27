@@ -1,8 +1,8 @@
 //
-//  LYRUIImageFactory.h
+//  LYRUISampleAccessoryView.m
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 25.07.2017.
+//  Created by Łukasz Przytuła on 06.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,17 +18,22 @@
 //  limitations under the License.
 //
 
-#import "LYRUIImageCreating.h"
+#import "LYRUISampleAccessoryView.h"
 
-NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIImageFactory : NSObject <LYRUIImageCreating>
+@implementation LYRUISampleAccessoryView
 
-/**
- @abstract Initializes a new `LYRUIImageFactory` object with the given bundle.
- @param bundle An `NSBundle` instance which will be used for creating `UIImage` from image asset. Default is bundle with Layer UI resources.
- @return An `LYRUIImageFactory` object.
- */
-- (instancetype)initWithBundle:(nullable NSBundle *)bundle;
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.translatesAutoresizingMaskIntoConstraints = NO;
+        self.backgroundColor = [UIColor grayColor];
+    }
+    return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.layer.cornerRadius = roundf(MIN(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)) / 2);
+}
 
 @end
-NS_ASSUME_NONNULL_END       // }

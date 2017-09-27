@@ -121,8 +121,8 @@ NSString *const LYRConversationOptionsMetadataKey = @"metadata";
         message.parts = parts;
     }
     NSMutableDictionary *recipientStatus = [NSMutableDictionary new];
-    [_participants enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-        [recipientStatus setValue:[NSNumber numberWithInteger:LYRRecipientStatusRead] forKey:obj];
+    [_participants enumerateObjectsUsingBlock:^(LYRIdentity *obj, BOOL *stop) {
+        [recipientStatus setValue:[NSNumber numberWithInteger:LYRRecipientStatusRead] forKey:obj.userID];
     }];
     
     message.recipientStatusByUserID = recipientStatus;
@@ -149,17 +149,6 @@ NSString *const LYRConversationOptionsMetadataKey = @"metadata";
     self.participants = participantsCopy;
     [[LYRMockContentStore sharedStore] broadcastChanges];
     return YES;
-}
-
-- (NSSet *)participants
-{
-    NSMutableSet *identities = [NSMutableSet new];
-    for (NSString *userID in _participants) {
-        LYRIdentityMock *identityMock = [LYRIdentityMock new];
-        identityMock.userID = userID;
-        [identities addObject:identityMock];
-    }
-    return identities;
 }
 
 #pragma mark - Metadata
