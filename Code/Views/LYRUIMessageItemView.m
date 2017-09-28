@@ -25,19 +25,14 @@
 @interface LYRUIMessageItemView ()
 
 @property (nonatomic, weak, readwrite) UIView *primaryAccessoryViewContainer;
-@property (nonatomic, weak, readwrite) UIView *contentContainer;
-@property (nonatomic, weak, readwrite) UIView *contentHeaderContainer;
 @property (nonatomic, weak, readwrite) UIView *contentViewContainer;
-@property (nonatomic, weak, readwrite) UIView *contentFooterContainer;
 @property (nonatomic, weak, readwrite) UIView *secondaryAccessoryViewContainer;
 
 @end
 
 @implementation LYRUIMessageItemView
 @synthesize primaryAccessoryView = _primaryAccessoryView,
-            contentHeader = _contentHeader,
             contentView = _contentView,
-            contentFooter = _contentFooter,
             secondaryAccessoryView = _secondaryAccessoryView;
 @dynamic layout;
 
@@ -57,15 +52,21 @@
     return self;
 }
 
+- (instancetype)initWithLayout:(id<LYRUIMessageItemViewLayout>)layout {
+    self = [self initWithFrame:CGRectZero];
+    if (self) {
+        [self lyr_commonInit];
+        self.layout = layout;
+    }
+    return self;
+}
+
 - (void)lyr_commonInit {
     self.primaryAccessoryViewContainer = [self addView];
-    self.contentContainer = [self addView];
-    self.contentContainer.layer.cornerRadius = 16.0;
-    self.contentHeaderContainer = [self addViewIn:self.contentContainer];
-    self.contentViewContainer = [self addViewIn:self.contentContainer];
-    self.contentFooterContainer = [self addViewIn:self.contentContainer];
+    self.contentViewContainer = [self addView];
+    self.contentViewContainer.layer.cornerRadius = 16.0;
+    self.contentViewContainer.backgroundColor = [UIColor colorWithWhite:242.0/255.0 alpha:1.0];
     self.secondaryAccessoryViewContainer = [self addView];
-    [self setupDefaultColors];
     self.layout = [[LYRUIMessageItemViewLayout alloc] initWithLayoutDirection:LYRUIMessageItemViewLayoutDirectionLeft];
 }
 
@@ -79,13 +80,6 @@
     view.translatesAutoresizingMaskIntoConstraints = NO;
     [superview addSubview:view];
     return view;
-}
-
-- (void)setupDefaultColors {
-    self.contentContainer.backgroundColor = [UIColor colorWithWhite:242.0/255.0 alpha:1.0];
-    self.contentHeaderContainer.backgroundColor = self.contentContainer.backgroundColor;
-    self.contentViewContainer.backgroundColor = self.contentContainer.backgroundColor;
-    self.contentFooterContainer.backgroundColor = self.contentContainer.backgroundColor;
 }
 
 - (void)prepareForInterfaceBuilder {
@@ -102,17 +96,7 @@
         [self.primaryAccessoryViewContainer addSubview:primaryAccessoryView];
     }
     _primaryAccessoryView = primaryAccessoryView;
-}
-
-- (void)setContentHeader:(UIView *)contentHeader {
-    if (self.contentHeader != nil) {
-        [self.contentHeader removeFromSuperview];
-    }
-    if (contentHeader != nil) {
-        [self.contentHeaderContainer addSubview:contentHeader];
-        contentHeader.backgroundColor = self.contentHeaderContainer.backgroundColor;
-    }
-    _contentHeader = contentHeader;
+    [self setNeedsUpdateConstraints];
 }
 
 - (void)setContentView:(UIView *)contentView {
@@ -124,17 +108,7 @@
         contentView.backgroundColor = self.contentViewContainer.backgroundColor;
     }
     _contentView = contentView;
-}
-
-- (void)setContentFooter:(UIView *)contentFooter {
-    if (self.contentFooter != nil) {
-        [self.contentFooter removeFromSuperview];
-    }
-    if (contentFooter != nil) {
-        [self.contentFooterContainer addSubview:contentFooter];
-        contentFooter.backgroundColor = self.contentFooterContainer.backgroundColor;
-    }
-    _contentFooter = contentFooter;
+    [self setNeedsUpdateConstraints];
 }
 
 - (void)setSecondaryAccessoryView:(UIView *)secondaryAccessoryView {
@@ -145,6 +119,7 @@
         [self.secondaryAccessoryViewContainer addSubview:secondaryAccessoryView];
     }
     _secondaryAccessoryView = secondaryAccessoryView;
+    [self setNeedsUpdateConstraints];
 }
 
 - (LYRUIMessageItemViewLayoutDirection)layoutDirection {

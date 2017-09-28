@@ -25,20 +25,10 @@
 @implementation LYRUIMessageItemIBSetup
 
 - (void)prepareMessageItemForInterfaceBuilder:(LYRUIMessageItemView *)messageItem {
-    [self addPrimaryAccessoryViewInMessageItem:messageItem];
-    [self addSecondaryAccessoryViewInMessageItem:messageItem];
+    messageItem.primaryAccessoryView = [self accessoryView];
+    messageItem.secondaryAccessoryView = [self accessoryView];
     [self addContentViewInMessageItem:messageItem];
     messageItem.layoutDirection = LYRUIMessageItemViewLayoutDirectionRight;
-}
-
-- (void)addPrimaryAccessoryViewInMessageItem:(LYRUIMessageItemView *)messageItem {
-    messageItem.primaryAccessoryView = [self accessoryView];
-    [self layoutViewInContainer:messageItem.primaryAccessoryView];
-}
-
-- (void)addSecondaryAccessoryViewInMessageItem:(LYRUIMessageItemView *)messageItem {
-    messageItem.secondaryAccessoryView = [self accessoryView];
-    [self layoutViewInContainer:messageItem.secondaryAccessoryView];
 }
 
 - (LYRUISampleAccessoryView *)accessoryView {
@@ -55,15 +45,6 @@
     textView.text = @"Mistakes are always forgivable, if one has the courage to admit them. I’m not in this world to live up to your expectations and you’re not in this world to live up to mine. If you spend too much time thinking about a thing, you'll never get it done.";
     textView.textContainerInset = UIEdgeInsetsMake(7.0, 12.0, 7.0, 12.0);
     messageItem.contentView = textView;
-    [self layoutViewInContainer:textView];
-}
-
-- (void)layoutViewInContainer:(UIView *)view {
-    view.translatesAutoresizingMaskIntoConstraints = NO;
-    [view.leftAnchor constraintEqualToAnchor:view.superview.leftAnchor].active = YES;
-    [view.topAnchor constraintEqualToAnchor:view.superview.topAnchor].active = YES;
-    [view.rightAnchor constraintEqualToAnchor:view.superview.rightAnchor].active = YES;
-    [view.bottomAnchor constraintEqualToAnchor:view.superview.bottomAnchor].active = YES;
 }
 
 @end
