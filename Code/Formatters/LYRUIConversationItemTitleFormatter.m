@@ -20,34 +20,41 @@
 
 #import "LYRUIConversationItemTitleFormatter.h"
 #import "LYRUIIdentityNameFormatter.h"
+#import "LYRUIParticipantsSorting.h"
 #import <LayerKit/LayerKit.h>
 
 static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationName";
 
 @interface LYRUIConversationItemTitleFormatter ()
 
-@property(nonatomic, strong, nonnull) id <LYRUIIdentityNameFormatting> participantNameFormatter;
+@property (nonatomic, strong, nonnull) id<LYRUIIdentityNameFormatting> participantNameFormatter;
 
 @end
 
 @implementation LYRUIConversationItemTitleFormatter
-@synthesize participantsFilter = _participantsFilter;
+@synthesize participantsFilter = _participantsFilter,
+            participantsSorter = _participantsSorter;
 
 - (instancetype)init {
-    self = [self initWithParticipantsFilter:nil];
+    self = [self initWithParticipantsFilter:nil participantsSorter:nil nameFormatter:nil];
     return self;
 }
 
 - (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter {
-    self = [self initWithParticipantsFilter:participantsFilter nameFormatter:nil];
+    self = [self initWithParticipantsFilter:participantsFilter participantsSorter:nil nameFormatter:nil];
     return self;
 }
 
 - (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter
-                             nameFormatter:(id <LYRUIIdentityNameFormatting>)nameFormatter {
+                        participantsSorter:(LYRUIParticipantsSorting)participantsSorter
+                             nameFormatter:(id<LYRUIIdentityNameFormatting>)nameFormatter {
     self = [super init];
     if (self) {
         self.participantsFilter = participantsFilter;
+        if (participantsSorter == nil) {
+            participantsSorter = LYRUIParticipantsDefaultSorter();
+        }
+        self.participantsSorter = participantsSorter;
         if (nameFormatter == nil) {
             nameFormatter = [[LYRUIIdentityNameFormatter alloc] init];
         }
@@ -64,6 +71,10 @@ static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationNam
         return metadataTitle;
     }
     
+    if (conversation.participants.count == 0) {
+        return @"";
+    }
+    
     NSSet<LYRIdentity *> *participants = conversation.participants;
     if (self.participantsFilter) {
         participants = self.participantsFilter(conversation.participants);
@@ -72,18 +83,19 @@ static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationNam
         return [self.participantNameFormatter nameForIdentity:participants.anyObject];
     }
     
-    // TODO: Add other participants sorting
-    
-    return [self titleWithParticipantsNames:participants];
+    NSArray *sortedParticipants = self.participantsSorter(participants);
+    return [self titleWithParticipantsNames:sortedParticipants];
 }
 
 #pragma mark - Title formatting
 
 - (nullable NSString *)metadataTitleForConversation:(nonnull LYRConversation *)conversation {
-    return conversation.metadata[LYRUIConversationItemTitleMetadataKey];
+    NSCharacterSet *charactersToTrim = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    NSString *metadataTitle = conversation.metadata[LYRUIConversationItemTitleMetadataKey];
+    return [metadataTitle stringByTrimmingCharactersInSet:charactersToTrim];
 }
 
-- (nonnull NSString *)titleWithParticipantsNames:(nonnull NSSet<LYRIdentity *> *)participants {
+- (nonnull NSString *)titleWithParticipantsNames:(nonnull NSArray<LYRIdentity *> *)participants {
     NSMutableString *title = [[NSMutableString alloc] init];
     for (LYRIdentity *participant in participants) {
         NSString *participantName = [self participantShortName:participant];

@@ -87,7 +87,9 @@
         UIImage *image;
         if (!error && location) {
             image = [weakSelf.imageFactory imageWithData:[weakSelf.dataFactory dataWithContentsOfURL:location]];
-            [weakSelf.imagesCache setObject:image forKey:URL];
+            if (image) {
+                [weakSelf.imagesCache setObject:image forKey:URL];
+            }
         }
         [weakSelf.dispatcher dispatchAsyncOnMainQueue:^{
             if (callback) {

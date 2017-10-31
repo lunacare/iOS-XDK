@@ -24,6 +24,7 @@
 
 @protocol LYRUIConversationItemView <LYRUIBaseItemView>
 @end
+
 /**
  @abstract The `LYRUIConversationItemView` class provides a lightweight, customizable view for presenting Layer conversation objects.
  */

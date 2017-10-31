@@ -1,8 +1,8 @@
 //
-//  LYRUIIdentityCollectionViewCell.m
+//  LYRUIConversationCollectionViewCell.m
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 27.07.2017.
+//  Created by Łukasz Przytuła on 31.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +18,10 @@
 //  limitations under the License.
 //
 
-#import "LYRUIIdentityCollectionViewCell.h"
-#import "LYRUIIdentityItemView.h"
+#import "LYRUIConversationCollectionViewCell.h"
+#import "LYRUIConversationItemView.h"
 
-@implementation LYRUIIdentityCollectionViewCell
+@implementation LYRUIConversationCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -40,11 +40,12 @@
 }
 
 - (void)lyr_commonInit {
-    LYRUIIdentityItemView *identityView = [[LYRUIIdentityItemView alloc] init];
-    identityView.frame = self.contentView.bounds;
-    identityView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    [self.contentView addSubview:identityView];
-    self.identityView = identityView;
+    LYRUIConversationItemView *conversationView = [[LYRUIConversationItemView alloc] init];
+    conversationView.backgroundColor = [UIColor whiteColor];
+    conversationView.frame = self.contentView.bounds;
+    conversationView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    [self.contentView addSubview:conversationView];
+    self.conversationView = conversationView;
 }
 
 @end

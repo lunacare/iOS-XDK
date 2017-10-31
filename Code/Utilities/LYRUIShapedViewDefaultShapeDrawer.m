@@ -38,16 +38,16 @@ static CGFloat const LYRUIShapedViewDefaultShapeStrokeWidth = 4.0;
  insideStrokeColor:(UIColor *)insideStrokeColor
 outsideStrokeColor:(UIColor *)outsideStrokeColor {
     UIBezierPath *path = [self bezierPathForSize:rect.size];
-    [self drawWithBezierPath:path
-               withFillColor:fillColor
-           insideStrokeColor:insideStrokeColor
-          outsideStrokeColor:outsideStrokeColor];
+    [self drawBezierPath:path
+           withFillColor:fillColor
+       insideStrokeColor:insideStrokeColor
+      outsideStrokeColor:outsideStrokeColor];
 }
 
-- (void)drawWithBezierPath:(UIBezierPath *)path
-             withFillColor:(UIColor *)fillColor
-         insideStrokeColor:(UIColor *)insideStrokeColor
-        outsideStrokeColor:(UIColor *)outsideStrokeColor {
+- (void)drawBezierPath:(UIBezierPath *)path
+         withFillColor:(UIColor *)fillColor
+     insideStrokeColor:(UIColor *)insideStrokeColor
+    outsideStrokeColor:(UIColor *)outsideStrokeColor {
     if (path.lineWidth > 0.0 && outsideStrokeColor && outsideStrokeColor != [UIColor clearColor]) {
         [outsideStrokeColor setStroke];
         [path stroke];

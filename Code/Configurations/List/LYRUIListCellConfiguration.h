@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @property (nonatomic, strong) ConfigurationType viewConfiguration;
 
 /**
- @abstract Cell setup block, called inside `setupCell:forItemAtIndexPath:`. The cell, model object, and view configurator are passed to the block, to setup the cell (or it's subview) with the data from model object, using view configuration.
+ @abstract Cell setup block, called inside `setupCell:forItemAtIndexPath:`. The cell, model object, and view configuration are passed to the block, to setup the cell (or it's subview) with the data from model object, using view configuration.
  */
 @property (nonatomic, copy) void(^cellSetupBlock)(CellType, ModelType, ConfigurationType);
 
@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
  @param modelClass Class of model handled by the configuration. Will be added to `handledItemTypes`.
  @param viewConfiguration View configuration object for updating cells with model objects data.
  @param cellHeight Height of cell returned in `cellSizeInCollectionView:forItemAtIndexPath:`.
- @param cellSetupBlock Cell setup block, called inside `setupCell:forItemAtIndexPath:`. The cell, model object, and view configurator are passed to the block, to setup the cell (or it's subview) with the data from model object, using view configuration.
+ @param cellSetupBlock Cell setup block, called inside `setupCell:forItemAtIndexPath:`. The cell, model object, and view configuration are passed to the block, to setup the cell (or it's subview) with the data from model object, using view configuration.
  @param cellRegistrationBlock Cell registration block, used to register cell class for reuse identifier in the collection view. Default is block registering provided `cellClass` for reuse identifier equal to the class name.
  @returns An instance of `LYRUIListCellConfiguration` ready for use in `LYRUIListDelagate` and `LYRUIListDataSource`.
  */

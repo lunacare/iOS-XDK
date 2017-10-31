@@ -174,24 +174,24 @@ describe(@"LYRUIBaseListView", ^{
     describe(@"participantsFilter", ^{
         context(@"setter", ^{
             __block LYRUIParticipantsFiltering participantsFilterBlock;
-            __block id configuratorMock1;
+            __block id configurationMock1;
             
             beforeEach(^{
                 participantsFilterBlock = ^ NSSet *(NSSet *participants) {
                     return participants;
                 };
                 
-                configuratorMock1 = mockProtocol(@protocol(LYRUIParticipantsFiltering));
-                id configuratorMock2 = mock([NSObject class]);
+                configurationMock1 = mockProtocol(@protocol(LYRUIParticipantsFiltering));
+                id configurationMock2 = mock([NSObject class]);
                 LYRUIListDataSource *dataSourceMock = mock([LYRUIListDataSource class]);
-                [given(dataSourceMock.allConfigurations) willReturn:@[configuratorMock1, configuratorMock2]];
+                [given(dataSourceMock.allConfigurations) willReturn:@[configurationMock1, configurationMock2]];
                 listView.dataSource = dataSourceMock;
                 
                 listView.participantsFilter = participantsFilterBlock;
             });
             
-            it(@"should update configurator's participant filtering block", ^{
-                [verify(configuratorMock1) setParticipantsFilter:participantsFilterBlock];
+            it(@"should update configuration's participant filtering block", ^{
+                [verify(configurationMock1) setParticipantsFilter:participantsFilterBlock];
             });
         });
     });

@@ -3,22 +3,23 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
-#import <Atlas/LYRUIIdentityListView.h>
+#import <Atlas/LYRUIConversationListView.h>
+#import <Atlas/LYRUIConversationItemViewConfiguration.h>
 #import <Atlas/LYRUIListLayout.h>
 #import <Atlas/LYRUIListDataSource.h>
 #import <Atlas/LYRUIListDelegate.h>
 #import <LayerKit/LayerKit.h>
 
-SpecBegin(LYRUIIdentityListView)
+SpecBegin(LYRUIConversationListView)
 
-describe(@"LYRUIIdentityListView", ^{
-    __block LYRUIIdentityListView *view;
+describe(@"LYRUIConversationListView", ^{
+    __block LYRUIConversationListView *view;
     __block UICollectionViewLayout<LYRUIListViewLayout> *layoutMock;
     __block id<LYRUIListDelegate> delegateMock;
     __block id<LYRUIListDataSource> dataSourceMock;
 
     beforeEach(^{
-        view = [[LYRUIIdentityListView alloc] init];
+        view = [[LYRUIConversationListView alloc] init];
         
         LYRUIListLayout *layout = [[LYRUIListLayout alloc] init];
         layoutMock = OCMPartialMock(layout);
@@ -29,7 +30,7 @@ describe(@"LYRUIIdentityListView", ^{
     afterEach(^{
         view = nil;
     });
-
+    
     describe(@"after initialization", ^{
         it(@"should have the collection view set", ^{
             expect(view.collectionView).notTo.beNil();
@@ -63,7 +64,7 @@ describe(@"LYRUIIdentityListView", ^{
                 view.items = arrayMock;
             });
             
-            it(@"should update data source sections array", ^{
+            it(@"should update data source sections array with mutable copy of passed array", ^{
                 [verify(dataSourceMock) setSections:arrayMock];
             });
         });
@@ -111,26 +112,54 @@ describe(@"LYRUIIdentityListView", ^{
         });
     });
     
-    describe(@"selecteditems", ^{
-        __block NSArray *returneditems;
-        __block NSArray *selecteditems;
+    describe(@"itemSelected", ^{
+        __block LYRConversation *conversationMock;
+        __block BOOL itemSelectedCalled;
+        __block LYRConversation *capturedConversation;
         
         beforeEach(^{
+            conversationMock = mock([LYRConversation class]);
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:1 inSection:2];
+            [given([dataSourceMock itemAtIndexPath:indexPath]) willReturn:conversationMock];
             view.dataSource = dataSourceMock;
-            selecteditems = @[
-                    mock([LYRIdentity class]),
-                    mock([LYRIdentity class]),
-                    mock([LYRIdentity class]),
-            ];
-            [given([dataSourceMock selectedItemsInCollectionView:view.collectionView]) willReturn:selecteditems];
             
-            returneditems = view.selectedItems;
+            itemSelectedCalled = NO;
+            view.itemSelected = ^(LYRConversation *conversation) {
+                itemSelectedCalled = YES;
+                capturedConversation = conversation;
+            };
         });
         
-        it(@"should return selected items for view's collection view, returned from data source", ^{
-            expect(returneditems).to.equal(selecteditems);
+        context(@"when delegate's index path selection callback is called", ^{
+            beforeEach(^{
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:1 inSection:2];
+                ((LYRUIListDelegate *)view.delegate).indexPathSelected(indexPath);
+            });
+            
+            it(@"should call item selected callback", ^{
+                expect(itemSelectedCalled).to.beTruthy();
+            });
+            it(@"should call item selected callback with conversation at provided index path, taken from data source", ^{
+                expect(capturedConversation).to.equal(conversationMock);
+            });
         });
     });
+    
+//    describe(@"currentUser", ^{
+//        context(@"setter", ^{
+//            __block LYRIdentity *currentUserMock;
+//            
+//            beforeEach(^{
+//                currentUserMock = mock([LYRIdentity class]);
+//            });
+//            
+//            it(@"should set data source's configuration with current user", ^{
+//                LYRUIListDataSource *dataSource = (LYRUIListDataSource *)view.dataSource;
+//                LYRUIConversationItemViewConfiguration *configuration = (LYRUIConversationItemViewConfiguration *)dataSource.configuration;
+//                expect(configuration.currentUser).to.equal(currentUserMock);
+//            });
+//        });
+//    });
 });
 
 SpecEnd

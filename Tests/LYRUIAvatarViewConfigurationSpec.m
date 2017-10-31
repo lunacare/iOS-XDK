@@ -19,7 +19,7 @@ describe(@"LYRUIAvatarViewConfiguration", ^{
     __block LYRUIImageWithLettersView *primaryAvatarViewMock;
     __block LYRUIImageWithLettersView *secondaryAvatarViewMock;
     __block LYRUIPresenceView *presenceViewMock;
-    __block LYRUIImageWithLettersViewConfiguration *avatarViewConfiguratorMock;
+    __block LYRUIImageWithLettersViewConfiguration *avatarViewConfigurationMock;
     __block LYRUIAvatarView *viewMock;
     
     beforeEach(^{
@@ -30,13 +30,13 @@ describe(@"LYRUIAvatarViewConfiguration", ^{
         [given(viewMock.secondaryAvatarView) willReturn:secondaryAvatarViewMock];
         presenceViewMock = mock([LYRUIPresenceView class]);
         [given(viewMock.presenceView) willReturn:presenceViewMock];
-        avatarViewConfiguratorMock = mock([LYRUIImageWithLettersViewConfiguration class]);
-        configuration = [[LYRUIAvatarViewConfiguration alloc] initWithAvatarViewConfiguration:avatarViewConfiguratorMock];
+        avatarViewConfigurationMock = mock([LYRUIImageWithLettersViewConfiguration class]);
+        configuration = [[LYRUIAvatarViewConfiguration alloc] initWithAvatarViewConfiguration:avatarViewConfigurationMock];
     });
     
     afterEach(^{
         configuration = nil;
-        avatarViewConfiguratorMock = nil;
+        avatarViewConfigurationMock = nil;
         viewMock = nil;
     });
     
@@ -57,7 +57,7 @@ describe(@"LYRUIAvatarViewConfiguration", ^{
             });
             
             it(@"should configure primary avatar view with the identity", ^{
-                [verify(avatarViewConfiguratorMock) setupImageWithLettersView:primaryAvatarViewMock withIdentity:identityMock1];
+                [verify(avatarViewConfigurationMock) setupImageWithLettersView:primaryAvatarViewMock withIdentity:identityMock1];
             });
             it(@"should configure presence view with the identity", ^{
                 [verify(viewMock.presenceView) setIdentities:@[identityMock1]];
@@ -76,10 +76,10 @@ describe(@"LYRUIAvatarViewConfiguration", ^{
             });
             
             it(@"should configure primary avatar view with the first identity", ^{
-                [verify(avatarViewConfiguratorMock) setupImageWithLettersView:primaryAvatarViewMock withIdentity:identityMock1];
+                [verify(avatarViewConfigurationMock) setupImageWithLettersView:primaryAvatarViewMock withIdentity:identityMock1];
             });
             it(@"should configure secondary avatar view with the first identity", ^{
-                [verify(avatarViewConfiguratorMock) setupImageWithLettersView:secondaryAvatarViewMock withIdentity:identityMock2];
+                [verify(avatarViewConfigurationMock) setupImageWithLettersView:secondaryAvatarViewMock withIdentity:identityMock2];
             });
             it(@"should configure presence view with the identities", ^{
                 [verify(viewMock.presenceView) setIdentities:@[identityMock1, identityMock2]];
@@ -98,10 +98,10 @@ describe(@"LYRUIAvatarViewConfiguration", ^{
             });
             
             it(@"should configure primary avatar view with the first identity", ^{
-                [verify(avatarViewConfiguratorMock) setupImageWithLettersView:primaryAvatarViewMock withIdentity:identityMock1];
+                [verify(avatarViewConfigurationMock) setupImageWithLettersView:primaryAvatarViewMock withIdentity:identityMock1];
             });
             it(@"should configure secondary avatar view with the multiple participants icon", ^{
-                [verify(avatarViewConfiguratorMock) setupImageWithLettersViewWithMultipleParticipantsIcon:secondaryAvatarViewMock];
+                [verify(avatarViewConfigurationMock) setupImageWithLettersViewWithMultipleParticipantsIcon:secondaryAvatarViewMock];
             });
             it(@"should configure presence view with the identities", ^{
                 [verify(viewMock.presenceView) setIdentities:@[identityMock1, identityMock2, identityMock3]];

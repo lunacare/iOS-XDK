@@ -1,8 +1,8 @@
 //
-//  LYRUIIdentityNameFormatter.h
+//  LYRUIMessageTextDefaultFormatter.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 13.07.2017.
+//  Created by Łukasz Przytuła on 09.08.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +18,10 @@
 //  limitations under the License.
 //
 
-#import "LYRUIIdentityNameFormatting.h"
+#import "LYRUIMessageTextFormatting.h"
 
 /**
- @abstract The `LYRUIIdentityNameFormatter` objects will be used for providing a formatted name of `LYRIdentity`.
+ @abstract The `LYRUIMessageTextDefaultFormatter` objects will be used for providing a string representing an message.
  */
-@interface LYRUIIdentityNameFormatter : NSObject <LYRUIIdentityNameFormatting>
+@interface LYRUIMessageTextDefaultFormatter : NSObject <LYRUIMessageTextFormatting>
 @end

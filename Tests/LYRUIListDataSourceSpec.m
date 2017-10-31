@@ -12,12 +12,12 @@ SpecBegin(LYRUIListDataSource)
 
 describe(@"LYRUIListDataSource", ^{
     __block LYRUIListDataSource *dataSource;
-    __block NSObject *configuratorMock;
+    __block NSObject *configurationMock;
 
     beforeEach(^{
         dataSource = [[LYRUIListDataSource alloc] init];
         
-        configuratorMock = mock([NSObject class]);
+        configurationMock = mock([NSObject class]);
     });
 
     afterEach(^{

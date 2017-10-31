@@ -6,6 +6,7 @@
 #import <Atlas/LYRUIConversationItemViewConfiguration.h>
 #import <Atlas/LYRUIConversationItemView.h>
 #import <Atlas/LYRUIMessageTimeDefaultFormatter.h>
+#import <Atlas/LYRUIMessageTextDefaultFormatter.h>
 #import <Atlas/LYRUIConversationItemTitleFormatter.h>
 #import <Atlas/LYRUIConversationItemAccessoryViewProviding.h>
 #import <LayerKit/LayerKit.h>
@@ -16,13 +17,13 @@ describe(@"LYRUIConversationItemViewConfiguration", ^{
     __block LYRUIConversationItemViewConfiguration *viewConfiguration;
     __block id<LYRUIConversationItemAccessoryViewProviding> accessoryViewProviderMock;
     __block id<LYRUIConversationItemTitleFormatting> titleFormatterMock;
-    __block id<LYRUIConversationItemLastMessageFormatting> lastMessageFormatterMock;
+    __block id<LYRUIMessageTextFormatting> lastMessageFormatterMock;
     __block id<LYRUITimeFormatting> messageTimeFormatterMock;
     
     beforeEach(^{
         accessoryViewProviderMock = mockProtocol(@protocol(LYRUIConversationItemAccessoryViewProviding));
         titleFormatterMock = mockProtocol(@protocol(LYRUIConversationItemTitleFormatting));
-        lastMessageFormatterMock = mockProtocol(@protocol(LYRUIConversationItemLastMessageFormatting));
+        lastMessageFormatterMock = mockProtocol(@protocol(LYRUIMessageTextFormatting));
         messageTimeFormatterMock = mockProtocol(@protocol(LYRUITimeFormatting));
         
         viewConfiguration = [[LYRUIConversationItemViewConfiguration alloc] initWithAccessoryViewProvider:accessoryViewProviderMock
@@ -92,9 +93,9 @@ describe(@"LYRUIConversationItemViewConfiguration", ^{
                 
                 [given([accessoryViewProviderMock accessoryViewForConversation:conversationMock]) willReturn:accessoryView];
                 [given([titleFormatterMock titleForConversation:conversationMock]) willReturn:@"test title"];
-                [given([lastMessageFormatterMock stringForConversationLastMessage:lastMessageMock]) willReturn:@"test last message"];
+                [given([lastMessageFormatterMock stringForMessage:lastMessageMock]) willReturn:@"test last message"];
                 [given([messageTimeFormatterMock stringForTime:lastMessageTimeMock
-                                                      withCurrentTime:anything()]) willReturn:@"test time description"];
+                                               withCurrentTime:anything()]) willReturn:@"test time description"];
                 
                 [viewConfiguration setupConversationItemView:view
                                          withConversation:conversationMock];

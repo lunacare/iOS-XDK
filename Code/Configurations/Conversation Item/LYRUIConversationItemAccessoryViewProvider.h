@@ -20,14 +20,17 @@
 
 #import "LYRUIConversationItemAccessoryViewProviding.h"
 #import "LYRUIParticipantsFiltering.h"
+#import "LYRUIParticipantsSorting.h"
 
-@interface LYRUIConversationItemAccessoryViewProvider : NSObject <LYRUIConversationItemAccessoryViewProviding>
+@interface LYRUIConversationItemAccessoryViewProvider : NSObject <LYRUIConversationItemAccessoryViewProviding, LYRUIParticipantsSorting>
 
 /**
  @abstract Initializes a new `LYRUIConversationItemAccessoryViewProvider` object with the given participants filter.
- @param participantsFilter An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the accessory view for display. When `nil` is passed, an `LYRUIParticipantsDefaultFilter` will be used. 
+ @param participantsFilter An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the conversation title.
+ @param participantsSorter An `LYRUIParticipantsSorting` block, which will sort participants to show names in the conversation title in proper order. Default is a `LYRUIParticipantsDefaultSorter`.
  @return An `LYRUIConversationItemAccessoryViewProvider` object.
  */
-- (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter;
+- (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter
+                        participantsSorter:(LYRUIParticipantsSorting)participantsSorter;
 
 @end

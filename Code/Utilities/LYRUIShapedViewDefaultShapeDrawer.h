@@ -26,10 +26,23 @@
  */
 @interface LYRUIShapedViewDefaultShapeDrawer : NSObject <LYRUIShapedViewShapeDrawing>
 
-- (void)drawWithBezierPath:(UIBezierPath *)path
-             withFillColor:(UIColor *)fillColor
-         insideStrokeColor:(UIColor *)insideStrokeColor
-        outsideStrokeColor:(UIColor *)outsideStrokeColor;
+/**
+ @abstract Draws a bezier path in current context, with given `fillColor`, `insideStrokeColor`, and `outsideStrokeColor`.
+ @param path A `UIBezierPath` to draw in current context.
+ @param fillColor The fill color of the rendered shape.
+ @param insideStrokeColor The inside stroke color of the rendered shape.
+ @param outsideStrokeColor The outside stroke color of the rendered shape.
+ */
+- (void)drawBezierPath:(UIBezierPath *)path
+         withFillColor:(UIColor *)fillColor
+     insideStrokeColor:(UIColor *)insideStrokeColor
+    outsideStrokeColor:(UIColor *)outsideStrokeColor;
+
+/**
+ @abstract Provides an `UIBezierPath` that fits in given `size`, to be drawn in `LYRUIShapedView`.
+ @param size The size to fit the bezier path in.
+ @returns An `UIBezierPath` to draw in the `LYRUIShapedView`.
+ */
 - (UIBezierPath *)bezierPathForSize:(CGSize)size;
 
 @end

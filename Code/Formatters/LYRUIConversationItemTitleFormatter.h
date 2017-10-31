@@ -21,9 +21,10 @@
 #import "LYRUIConversationItemTitleFormatting.h"
 #import "LYRUIParticipantsFiltering.h"
 #import "LYRUIIdentityNameFormatting.h"
+#import "LYRUIParticipantsSorting.h"
 
 NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIConversationItemTitleFormatter : NSObject <LYRUIConversationItemTitleFormatting>
+@interface LYRUIConversationItemTitleFormatter : NSObject <LYRUIConversationItemTitleFormatting, LYRUIParticipantsSorting>
 
 /**
  @abstract Initializes a new `LYRUIConversationItemTitleFormatter` object with the given participants filter.
@@ -34,11 +35,13 @@ NS_ASSUME_NONNULL_BEGIN     // {
 
 /**
  @abstract Initializes new `LYRUIConversationItemTitleFormatter` object with participants filter and name formatter.
- @param participantsFilter An `LYRUIParticipantsFiltering` block which will filter currently logged in user from  the conversation title.
+ @param participantsFilter An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the conversation title.
+ @param participantsSorter An `LYRUIParticipantsSorting` block, which will sort participants to show names in the conversation title in proper order. Default is a `LYRUIParticipantsDefaultSorter`.
  @param nameFormatter An object conforming to `LYRUIIdentityNameFormatting` protocol, used to format full name of participant in 1 on 1 conversations. Default value is an `LYRUIIdentityNameFormatter` instance.
  */
 - (instancetype)initWithParticipantsFilter:(nullable LYRUIParticipantsFiltering)participantsFilter
-                             nameFormatter:(nullable id <LYRUIIdentityNameFormatting>)nameFormatter;
+                        participantsSorter:(nullable LYRUIParticipantsSorting)participantsSorter
+                             nameFormatter:(nullable id<LYRUIIdentityNameFormatting>)nameFormatter;
 
 @end
 NS_ASSUME_NONNULL_END       // }

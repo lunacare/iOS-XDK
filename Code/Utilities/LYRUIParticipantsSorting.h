@@ -1,8 +1,8 @@
 //
-//  LYRUIIdentityNameFormatter.h
+//  LYRUIParticipantsSorting.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 13.07.2017.
+//  Created by Łukasz Przytuła on 09.08.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +18,20 @@
 //  limitations under the License.
 //
 
-#import "LYRUIIdentityNameFormatting.h"
+#import "LYRUIParticipantsSorting.h"
+#import <LayerKit/LayerKit.h>
+
+NS_ASSUME_NONNULL_BEGIN     // {
+typedef NSArray<LYRIdentity *> * _Nonnull (^LYRUIParticipantsSorting)(NSSet<LYRIdentity *> *);
+
+extern LYRUIParticipantsSorting(^LYRUIParticipantsDefaultSorter)();
+
+@protocol LYRUIParticipantsSorting <NSObject>
 
 /**
- @abstract The `LYRUIIdentityNameFormatter` objects will be used for providing a formatted name of `LYRIdentity`.
+ @abstract An `LYRUIParticipantsSorting` block used to sort participants set.
  */
-@interface LYRUIIdentityNameFormatter : NSObject <LYRUIIdentityNameFormatting>
+@property (nonatomic, strong, nullable) LYRUIParticipantsSorting participantsSorter;
+
 @end
+NS_ASSUME_NONNULL_END       // }

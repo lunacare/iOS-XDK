@@ -20,20 +20,27 @@
 
 #import "LYRUIConversationItemAccessoryViewProvider.h"
 #import "LYRUIAvatarView.h"
+#import "LYRUIParticipantsSorting.h"
 #import <LayerKit/LayerKit.h>
 
 @implementation LYRUIConversationItemAccessoryViewProvider
-@synthesize participantsFilter = _participantsFilter;
+@synthesize participantsFilter = _participantsFilter,
+            participantsSorter = _participantsSorter;
 
 - (instancetype)init {
-    self = [self initWithParticipantsFilter:nil];
+    self = [self initWithParticipantsFilter:nil participantsSorter:nil];
     return self;
 }
 
-- (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter {
+- (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter
+                        participantsSorter:(LYRUIParticipantsSorting)participantsSorter {
     self = [super init];
     if (self) {
         self.participantsFilter = participantsFilter;
+        if (participantsSorter == nil) {
+            participantsSorter = LYRUIParticipantsDefaultSorter();
+        }
+        self.participantsSorter = participantsSorter;
     }
     return self;
 }
@@ -52,8 +59,8 @@
     if (self.participantsFilter) {
         filteredIdentities = self.participantsFilter(conversation.participants);
     }
-    NSArray<LYRIdentity *> *identities = [filteredIdentities allObjects];
-    avatarView.identities = identities;
+    NSArray<LYRIdentity *> *sortedIdentities = self.participantsSorter(filteredIdentities);
+    avatarView.identities = sortedIdentities;
 }
 
 @end

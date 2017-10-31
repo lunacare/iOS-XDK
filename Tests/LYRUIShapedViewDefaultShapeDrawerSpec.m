@@ -122,10 +122,10 @@ describe(@"LYRUIShapedViewDefaultShapeDrawer", ^{
         
         context(@"when fill color is a non-clear color", ^{
             beforeEach(^{
-                [shapeDrawer drawWithBezierPath:bezierPathMock
-                                  withFillColor:fillColorMock
-                              insideStrokeColor:[UIColor clearColor]
-                             outsideStrokeColor:[UIColor clearColor]];
+                [shapeDrawer drawBezierPath:bezierPathMock
+                              withFillColor:fillColorMock
+                          insideStrokeColor:[UIColor clearColor]
+                         outsideStrokeColor:[UIColor clearColor]];
             });
             
             it(@"should set fill color", ^{
@@ -138,10 +138,10 @@ describe(@"LYRUIShapedViewDefaultShapeDrawer", ^{
         
         context(@"and fill color is a clear color", ^{
             beforeEach(^{
-                [shapeDrawer drawWithBezierPath:bezierPathMock
-                                  withFillColor:[UIColor clearColor]
-                              insideStrokeColor:[UIColor clearColor]
-                             outsideStrokeColor:[UIColor clearColor]];
+                [shapeDrawer drawBezierPath:bezierPathMock
+                              withFillColor:[UIColor clearColor]
+                          insideStrokeColor:[UIColor clearColor]
+                         outsideStrokeColor:[UIColor clearColor]];
             });
             
             it(@"should not fill the path", ^{
@@ -156,10 +156,10 @@ describe(@"LYRUIShapedViewDefaultShapeDrawer", ^{
             
             context(@"and outside stroke color is a non-clear color", ^{
                 beforeEach(^{
-                    [shapeDrawer drawWithBezierPath:bezierPathMock
-                                      withFillColor:[UIColor clearColor]
-                                  insideStrokeColor:[UIColor clearColor]
-                                 outsideStrokeColor:outsideStrokeColorMock];
+                    [shapeDrawer drawBezierPath:bezierPathMock
+                                  withFillColor:[UIColor clearColor]
+                              insideStrokeColor:[UIColor clearColor]
+                             outsideStrokeColor:outsideStrokeColorMock];
                 });
                 
                 it(@"should not set stroke color", ^{
@@ -172,10 +172,10 @@ describe(@"LYRUIShapedViewDefaultShapeDrawer", ^{
             
             context(@"and outside stroke color is a clear color", ^{
                 beforeEach(^{
-                    [shapeDrawer drawWithBezierPath:bezierPathMock
-                                      withFillColor:[UIColor clearColor]
-                                  insideStrokeColor:[UIColor clearColor]
-                                 outsideStrokeColor:[UIColor clearColor]];
+                    [shapeDrawer drawBezierPath:bezierPathMock
+                                  withFillColor:[UIColor clearColor]
+                              insideStrokeColor:[UIColor clearColor]
+                             outsideStrokeColor:[UIColor clearColor]];
                 });
                 
                 it(@"should not stroke the path", ^{
@@ -185,10 +185,10 @@ describe(@"LYRUIShapedViewDefaultShapeDrawer", ^{
             
             context(@"and inside stroke color is a non-clear color", ^{
                 beforeEach(^{
-                    [shapeDrawer drawWithBezierPath:bezierPathMock
-                                      withFillColor:[UIColor clearColor]
-                                  insideStrokeColor:insideStrokeColorMock
-                                 outsideStrokeColor:[UIColor clearColor]];
+                    [shapeDrawer drawBezierPath:bezierPathMock
+                                  withFillColor:[UIColor clearColor]
+                              insideStrokeColor:insideStrokeColorMock
+                             outsideStrokeColor:[UIColor clearColor]];
                 });
                 
                 it(@"should not set stroke color", ^{
@@ -201,10 +201,10 @@ describe(@"LYRUIShapedViewDefaultShapeDrawer", ^{
             
             context(@"and inside stroke color is a clear color", ^{
                 beforeEach(^{
-                    [shapeDrawer drawWithBezierPath:bezierPathMock
-                                      withFillColor:[UIColor clearColor]
-                                  insideStrokeColor:[UIColor clearColor]
-                                 outsideStrokeColor:[UIColor clearColor]];
+                    [shapeDrawer drawBezierPath:bezierPathMock
+                                  withFillColor:[UIColor clearColor]
+                              insideStrokeColor:[UIColor clearColor]
+                             outsideStrokeColor:[UIColor clearColor]];
                 });
                 
                 it(@"should not stroke the path", ^{
@@ -220,10 +220,10 @@ describe(@"LYRUIShapedViewDefaultShapeDrawer", ^{
             
             context(@"and outside stroke color is a non-clear color", ^{
                 beforeEach(^{
-                    [shapeDrawer drawWithBezierPath:bezierPathMock
-                                      withFillColor:[UIColor clearColor]
-                                  insideStrokeColor:[UIColor clearColor]
-                                 outsideStrokeColor:outsideStrokeColorMock];
+                    [shapeDrawer drawBezierPath:bezierPathMock
+                                  withFillColor:[UIColor clearColor]
+                              insideStrokeColor:[UIColor clearColor]
+                             outsideStrokeColor:outsideStrokeColorMock];
                 });
                 
                 it(@"should set stroke color", ^{
@@ -236,10 +236,10 @@ describe(@"LYRUIShapedViewDefaultShapeDrawer", ^{
             
             context(@"and outside stroke color is a clear color", ^{
                 beforeEach(^{
-                    [shapeDrawer drawWithBezierPath:bezierPathMock
-                                      withFillColor:[UIColor clearColor]
-                                  insideStrokeColor:[UIColor clearColor]
-                                 outsideStrokeColor:[UIColor clearColor]];
+                    [shapeDrawer drawBezierPath:bezierPathMock
+                                  withFillColor:[UIColor clearColor]
+                              insideStrokeColor:[UIColor clearColor]
+                             outsideStrokeColor:[UIColor clearColor]];
                 });
                 
                 it(@"should not stroke the path", ^{
@@ -249,10 +249,10 @@ describe(@"LYRUIShapedViewDefaultShapeDrawer", ^{
             
             context(@"and inside stroke color is a non-clear color", ^{
                 beforeEach(^{
-                    [shapeDrawer drawWithBezierPath:bezierPathMock
-                                      withFillColor:[UIColor clearColor]
-                                  insideStrokeColor:insideStrokeColorMock
-                                 outsideStrokeColor:[UIColor clearColor]];
+                    [shapeDrawer drawBezierPath:bezierPathMock
+                                  withFillColor:[UIColor clearColor]
+                              insideStrokeColor:insideStrokeColorMock
+                             outsideStrokeColor:[UIColor clearColor]];
                 });
                 
                 it(@"should set stroke color", ^{
@@ -265,10 +265,10 @@ describe(@"LYRUIShapedViewDefaultShapeDrawer", ^{
             
             context(@"and inside stroke color is a clear color", ^{
                 beforeEach(^{
-                    [shapeDrawer drawWithBezierPath:bezierPathMock
-                                      withFillColor:[UIColor clearColor]
-                                  insideStrokeColor:[UIColor clearColor]
-                                 outsideStrokeColor:[UIColor clearColor]];
+                    [shapeDrawer drawBezierPath:bezierPathMock
+                                  withFillColor:[UIColor clearColor]
+                              insideStrokeColor:[UIColor clearColor]
+                             outsideStrokeColor:[UIColor clearColor]];
                 });
                 
                 it(@"should not stroke the path", ^{

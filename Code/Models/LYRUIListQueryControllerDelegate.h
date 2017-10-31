@@ -1,8 +1,8 @@
 //
-//  NSCache+LYRUIImageCaching.h
+//  LYRUIListQueryControllerDelegate.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 26.07.2017.
+//  Created by Łukasz Przytuła on 02.08.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,16 +18,24 @@
 //  limitations under the License.
 //
 
-#import "LYRUIImageCaching.h"
+#import <LayerKit/LayerKit.h>
+#import "LYRUIListDataSource.h"
 
 NS_ASSUME_NONNULL_BEGIN     // {
-@interface NSCache (LYRUIImageCaching) <LYRUIImageCaching>
+/**
+ @abstract A LYRQueryControllerDelegate which reacts to changes in queried items, and updates data source together with collection view.
+ */
+@interface LYRUIListQueryControllerDelegate : NSObject <LYRQueryControllerDelegate>
 
 /**
- @abstract Creates if needed, and provides a shared instance of images cache.
- @returns An `NSCache` instance with `UIImage` objects assigned to the `NSURL` keys.
+ @abstract A `LYRUIListView` data source to update with changes in queried items.
  */
-+ (NSCache<NSURL *, UIImage *> *)sharedImagesCache;
+@property (nonatomic, weak) id<LYRUIListDataSource> listDataSource;
+
+/**
+ @abstract An `UICollectionView` to update with the changes in data.
+ */
+@property (nonatomic, weak) UICollectionView *collectionView;
 
 @end
 NS_ASSUME_NONNULL_END       // }
