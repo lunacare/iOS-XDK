@@ -100,6 +100,6 @@
     return CGSizeZero;
 }
 
-- (void)invalidateSupplementaryViewsSizes {}
+- (void)invalidateAllSupplementaryViewSizes {}
 
 @end

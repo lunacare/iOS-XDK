@@ -31,7 +31,7 @@
         sizeOfViewOfKind:(NSString *)kind
              atIndexPath:(NSIndexPath *)indexPath;
 
-- (void)invalidateSupplementaryViewsSizes;
+- (void)invalidateAllSupplementaryViewSizes;
 
 @end
 

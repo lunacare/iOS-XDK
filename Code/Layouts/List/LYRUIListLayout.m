@@ -60,8 +60,8 @@
     if (!self.delegate) {
         return;
     }
-    
-    [self.delegate invalidateSupplementaryViewsSizes];
+
+    [self.delegate invalidateAllSupplementaryViewSizes];
 }
 
 #pragma mark - Properties

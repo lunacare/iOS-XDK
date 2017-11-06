@@ -1,5 +1,5 @@
 //
-//  LYRUIConversationListView.h
+//  LYRUIBaseListView.h
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 31.07.2017.

@@ -215,7 +215,7 @@ describe(@"LYRUIListDelegate", ^{
         });
     });
     
-    describe(@"invalidateSupplementaryViewsVisibility", ^{
+    describe(@"invalidateAllSupplementaryViewSizes", ^{
         __block id<LYRUIListSupplementaryViewSizeCalculating> sizeCalculation1;
         __block id<LYRUIListSupplementaryViewSizeCalculating> sizeCalculation2;
         __block id<LYRUIListSupplementaryViewSizeCalculating> sizeCalculation3;
@@ -231,18 +231,18 @@ describe(@"LYRUIListDelegate", ^{
             [delegate registerSupplementaryViewSizeCalculation:sizeCalculation1];
             [delegate registerSupplementaryViewSizeCalculation:sizeCalculation2];
             [delegate registerSupplementaryViewSizeCalculation:sizeCalculation3];
-            
-            [delegate invalidateSupplementaryViewsSizes];
+
+            [delegate invalidateAllSupplementaryViewSizes];
         });
         
         it(@"should invalidate header size calculation", ^{
-            [verify(sizeCalculation1) invalidateSupplementaryViewsSizes];
+            [verify(sizeCalculation1) invalidateAllSupplementaryViewSizes];
         });
         it(@"should invalidate supplementary view size calculation", ^{
-            [verify(sizeCalculation2) invalidateSupplementaryViewsSizes];
+            [verify(sizeCalculation2) invalidateAllSupplementaryViewSizes];
         });
         it(@"should invalidate footer size calculation", ^{
-            [verify(sizeCalculation3) invalidateSupplementaryViewsSizes];
+            [verify(sizeCalculation3) invalidateAllSupplementaryViewSizes];
         });
     });
     

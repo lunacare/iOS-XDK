@@ -42,11 +42,13 @@
     }
         
     LYRUIListSection *section1 = [[LYRUIListSection<LYRIdentity *> alloc] init];
-    [section1 addHeaderWithTitle:@"MEMBERS"];
+    section1.header = [[LYRUIListSectionHeader alloc] init];
+    section1.header.title = @"MEMBERS";
     section1.items = [@[[LYRIdentity new], [LYRIdentity new], [LYRIdentity new]] mutableCopy];
     
     LYRUIListSection *section2 = [[LYRUIListSection<LYRIdentity *> alloc] init];
-    [section2 addHeaderWithTitle:@"NON-MEMBERS"];
+    section1.header = [[LYRUIListSectionHeader alloc] init];
+    section1.header.title = @"NON-MEMBERS";
     section2.items = [@[[LYRIdentity new], [LYRIdentity new], [LYRIdentity new], [LYRIdentity new]] mutableCopy];
     
     LYRUIListDataSource *dataSource = (LYRUIListDataSource *)identityList.dataSource;

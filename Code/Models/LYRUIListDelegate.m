@@ -99,9 +99,9 @@ referenceSizeForFooterInSection:(NSInteger)section {
     return CGSizeZero;
 }
 
-- (void)invalidateSupplementaryViewsSizes {
+- (void)invalidateAllSupplementaryViewSizes {
     for (id<LYRUIListSupplementaryViewSizeCalculating> supplementaryViewSizeCalculation in self.supplementaryViewSizeCalculations.allValues) {
-        [supplementaryViewSizeCalculation invalidateSupplementaryViewsSizes];
+        [supplementaryViewSizeCalculation invalidateAllSupplementaryViewSizes];
     }
 }
 

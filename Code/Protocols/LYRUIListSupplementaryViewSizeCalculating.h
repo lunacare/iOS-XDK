@@ -44,6 +44,6 @@
 /**
  @abstract Method called when calculated sizes cached for index paths should be invalidated.
  */
-- (void)invalidateSupplementaryViewsSizes;
+- (void)invalidateAllSupplementaryViewSizes;
 
 @end

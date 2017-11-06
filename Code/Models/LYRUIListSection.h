@@ -36,11 +36,5 @@ NS_ASSUME_NONNULL_BEGIN     // {
  */
 @property (nonatomic, strong) NSMutableArray<ModelType> *items;
 
-/**
- @abstract Updates `header` property of section with `LYRUIListSectionHeader` instance, with given `title`.
- @param title Title to present in the header view in section.
- */
-- (void)addHeaderWithTitle:(NSString *)title;
-
 @end
 NS_ASSUME_NONNULL_END       // }
