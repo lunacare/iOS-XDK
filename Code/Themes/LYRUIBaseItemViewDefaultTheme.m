@@ -23,10 +23,10 @@
 @implementation LYRUIBaseItemViewDefaultTheme
 @synthesize titleLabelFont = _titleLabelFont,
             titleLabelColor = _titleLabelColor,
-            messageLabelFont = _messageLabelFont,
-            messageLabelColor = _messageLabelColor,
-            timeLabelFont = _timeLabelFont,
-            timeLabelColor = _timeLabelColor;
+            subtitleLabelFont = _subtitleLabelFont,
+            subtitleLabelColor = _subtitleLabelColor,
+            detailLabelFont = _detailLabelFont,
+            detailLabelColor = _detailLabelColor;
 
 - (instancetype)init {
     self = [super init];
@@ -35,10 +35,10 @@
         UIColor *grayColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
         self.titleLabelFont = [UIFont systemFontOfSize:16];
         self.titleLabelColor = blackColor;
-        self.messageLabelFont = [UIFont systemFontOfSize:14];
-        self.messageLabelColor = grayColor;
-        self.timeLabelFont = [UIFont systemFontOfSize:12];
-        self.timeLabelColor = grayColor;
+        self.subtitleLabelFont = [UIFont systemFontOfSize:14];
+        self.subtitleLabelColor = grayColor;
+        self.detailLabelFont = [UIFont systemFontOfSize:12];
+        self.detailLabelColor = grayColor;
     }
     return self;
 }

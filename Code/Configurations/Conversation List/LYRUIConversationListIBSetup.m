@@ -67,8 +67,8 @@
                                                    cellHeight:height
                                                cellSetupBlock:^(LYRUIConversationCollectionViewCell *cell, LYRConversation *conversation, LYRUIConversationItemViewConfiguration *configuration) {
                                                    cell.conversationView.titleLabel.text = @"Name(s) / Title";
-                                                   cell.conversationView.timeLabel.text = @"8:30am";
-                                                   cell.conversationView.messageLabel.text = @"Message";
+                                                   cell.conversationView.detailLabel.text = @"8:30am";
+                                                   cell.conversationView.subtitleLabel.text = @"Message";
                                                    
                                                    LYRUIAvatarView *avatarView = [[LYRUIAvatarView alloc] init];
                                                    avatarView.translatesAutoresizingMaskIntoConstraints = NO;

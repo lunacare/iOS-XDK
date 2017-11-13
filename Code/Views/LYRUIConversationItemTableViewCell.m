@@ -74,12 +74,12 @@
     return self.conversationItemView.titleLabel;
 }
 
-- (UILabel *)messageLabel {
-    return self.conversationItemView.messageLabel;
+- (UILabel *)subtitleLabel {
+    return self.conversationItemView.subtitleLabel;
 }
 
-- (UILabel *)timeLabel {
-    return self.conversationItemView.timeLabel;
+- (UILabel *)detailLabel {
+    return self.conversationItemView.detailLabel;
 }
 
 - (LYRUIConversationItemViewState)state {

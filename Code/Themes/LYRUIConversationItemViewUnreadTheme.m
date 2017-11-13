@@ -23,10 +23,10 @@
 @implementation LYRUIConversationItemViewUnreadTheme
 @synthesize titleLabelFont = _titleLabelFont,
             titleLabelColor = _titleLabelColor,
-            messageLabelFont = _messageLabelFont,
-            messageLabelColor = _messageLabelColor,
-            timeLabelFont = _timeLabelFont,
-            timeLabelColor = _timeLabelColor;
+            subtitleLabelFont = _subtitleLabelFont,
+            subtitleLabelColor = _subtitleLabelColor,
+            detailLabelFont = _detailLabelFont,
+            detailLabelColor = _detailLabelColor;
 
 - (instancetype)init {
     self = [super init];
@@ -34,10 +34,10 @@
         UIColor *blackColor = [UIColor colorWithRed:27.0/255.0 green:28.0/255.0 blue:29.0/255.0 alpha:1.0];
         self.titleLabelFont = [UIFont boldSystemFontOfSize:16];
         self.titleLabelColor = blackColor;
-        self.messageLabelFont = [UIFont systemFontOfSize:14];
-        self.messageLabelColor = blackColor;
-        self.timeLabelFont = [UIFont systemFontOfSize:12];
-        self.timeLabelColor = blackColor;
+        self.subtitleLabelFont = [UIFont systemFontOfSize:14];
+        self.subtitleLabelColor = blackColor;
+        self.detailLabelFont = [UIFont systemFontOfSize:12];
+        self.detailLabelColor = blackColor;
     }
     return self;
 }

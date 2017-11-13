@@ -110,17 +110,17 @@
     if (theme.titleLabelColor) {
         self.titleLabelColor = theme.titleLabelColor;
     }
-    if (theme.messageLabelFont) {
-        self.messageLabelFont = theme.messageLabelFont;
+    if (theme.subtitleLabelFont) {
+        self.subtitleLabelFont = theme.subtitleLabelFont;
     }
-    if (theme.messageLabelColor) {
-        self.messageLabelColor = theme.messageLabelColor;
+    if (theme.subtitleLabelColor) {
+        self.subtitleLabelColor = theme.subtitleLabelColor;
     }
-    if (theme.timeLabelFont) {
-        self.timeLabelFont = theme.timeLabelFont;
+    if (theme.detailLabelFont) {
+        self.detailLabelFont = theme.detailLabelFont;
     }
-    if (theme.timeLabelColor) {
-        self.timeLabelColor = theme.timeLabelColor;
+    if (theme.detailLabelColor) {
+        self.detailLabelColor = theme.detailLabelColor;
     }
 }
 

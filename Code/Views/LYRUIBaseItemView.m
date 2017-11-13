@@ -25,8 +25,8 @@
 
 @property(nonatomic, weak, readwrite) UIView *accessoryViewContainer;
 @property(nonatomic, weak, readwrite) UILabel *titleLabel;
-@property(nonatomic, weak, readwrite) UILabel *messageLabel;
-@property(nonatomic, weak, readwrite) UILabel *timeLabel;
+@property(nonatomic, weak, readwrite) UILabel *subtitleLabel;
+@property(nonatomic, weak, readwrite) UILabel *detailLabel;
 
 @end
 
@@ -66,9 +66,9 @@
     
     self.titleLabel = [self addLabelWithFont:[UIFont systemFontOfSize:16]
                                                textColor:blackColor];
-    self.messageLabel = [self addLabelWithFont:[UIFont systemFontOfSize:14]
+    self.subtitleLabel = [self addLabelWithFont:[UIFont systemFontOfSize:14]
                                          textColor:grayColor];
-    self.timeLabel = [self addLabelWithFont:[UIFont systemFontOfSize:12]
+    self.detailLabel = [self addLabelWithFont:[UIFont systemFontOfSize:12]
                                   textColor:grayColor];
     self.theme = [[LYRUIBaseItemViewDefaultTheme alloc] init];
     
@@ -117,36 +117,36 @@
     self.titleLabel.textColor = titleLabelColor;
 }
 
-- (UIFont *)messageLabelFont {
-    return self.messageLabel.font;
+- (UIFont *)subtitleLabelFont {
+    return self.subtitleLabel.font;
 }
 
-- (void)setMessageLabelFont:(UIFont *)messageLabelFont {
-    self.messageLabel.font = messageLabelFont;
+- (void)setSubtitleLabelFont:(UIFont *)messageLabelFont {
+    self.subtitleLabel.font = messageLabelFont;
 }
 
-- (UIColor *)messageLabelColor {
-    return self.messageLabel.textColor;
+- (UIColor *)subtitleLabelColor {
+    return self.subtitleLabel.textColor;
 }
 
-- (void)setMessageLabelColor:(UIColor *)messageLabelColor {
-    self.messageLabel.textColor = messageLabelColor;
+- (void)setSubtitleLabelColor:(UIColor *)messageLabelColor {
+    self.subtitleLabel.textColor = messageLabelColor;
 }
 
-- (UIFont *)timeLabelFont {
-    return self.timeLabel.font;
+- (UIFont *)detailLabelFont {
+    return self.detailLabel.font;
 }
 
-- (void)setTimeLabelFont:(UIFont *)timeLabelFont {
-    self.timeLabel.font = timeLabelFont;
+- (void)setDetailLabelFont:(UIFont *)timeLabelFont {
+    self.detailLabel.font = timeLabelFont;
 }
 
-- (UIColor *)timeLabelColor {
-    return self.timeLabel.textColor;
+- (UIColor *)detailLabelColor {
+    return self.detailLabel.textColor;
 }
 
-- (void)setTimeLabelColor:(UIColor *)timeLabelColor {
-    self.timeLabel.textColor = timeLabelColor;
+- (void)setDetailLabelColor:(UIColor *)timeLabelColor {
+    self.detailLabel.textColor = timeLabelColor;
 }
 
 - (void)setTheme:(id<LYRUIBaseItemViewTheme>)theme {
@@ -157,17 +157,17 @@
     if (theme.titleLabelColor) {
         self.titleLabelColor = theme.titleLabelColor;
     }
-    if (theme.messageLabelFont) {
-        self.messageLabelFont = theme.messageLabelFont;
+    if (theme.subtitleLabelFont) {
+        self.subtitleLabelFont = theme.subtitleLabelFont;
     }
-    if (theme.messageLabelColor) {
-        self.messageLabelColor = theme.messageLabelColor;
+    if (theme.subtitleLabelColor) {
+        self.subtitleLabelColor = theme.subtitleLabelColor;
     }
-    if (theme.timeLabelFont) {
-        self.timeLabelFont = theme.timeLabelFont;
+    if (theme.detailLabelFont) {
+        self.detailLabelFont = theme.detailLabelFont;
     }
-    if (theme.timeLabelColor) {
-        self.timeLabelColor = theme.timeLabelColor;
+    if (theme.detailLabelColor) {
+        self.detailLabelColor = theme.detailLabelColor;
     }
 }
 

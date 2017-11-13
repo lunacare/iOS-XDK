@@ -65,7 +65,7 @@
     }
     
     view.titleLabel.text = [self.nameFormatter nameForIdentity:identity];
-    view.timeLabel.text = [self.lastSeenAtTimeFormatter stringForTime:identity.lastSeenAt
+    view.detailLabel.text = [self.lastSeenAtTimeFormatter stringForTime:identity.lastSeenAt
                                                       withCurrentTime:[NSDate date]];
     
     [view.accessoryView removeFromSuperview];

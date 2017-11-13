@@ -105,10 +105,10 @@ describe(@"LYRUIConversationItemViewConfiguration", ^{
                 expect(view.titleLabel.text).to.equal(@"test title");
             });
             it(@"should set the text of messageLabel", ^{
-                expect(view.messageLabel.text).to.equal(@"test last message");
+                expect(view.subtitleLabel.text).to.equal(@"test last message");
             });
             it(@"should set the text of timeLabel", ^{
-                expect(view.timeLabel.text).to.equal(@"test time description");
+                expect(view.detailLabel.text).to.equal(@"test time description");
             });
             it(@"should set the accessory view", ^{
                 expect(view.accessoryView).to.equal(accessoryView);

@@ -34,27 +34,27 @@ describe(@"LYRUIConversationItemView", ^{
             UIColor *blackColor = [UIColor colorWithRed:27.0/255.0 green:28.0/255.0 blue:29.0/255.0 alpha:1.0];
             expect(view.titleLabel.textColor).to.equal(blackColor);
         });
-        it(@"should have messageLabel set", ^{
-            expect(view.messageLabel).to.beAKindOf([UILabel class]);
+        it(@"should have subtitleLabel set", ^{
+            expect(view.subtitleLabel).to.beAKindOf([UILabel class]);
         });
-        it(@"should have messageLabel's default font set by the default layout", ^{
-            expect(view.messageLabel.font).to.equal([UIFont systemFontOfSize:14]);
+        it(@"should have subtitleLabel's default font set by the default layout", ^{
+            expect(view.subtitleLabel.font).to.equal([UIFont systemFontOfSize:14]);
         });
-        it(@"should have messageLabel's default text color set", ^{
+        it(@"should have subtitleLabel's default text color set", ^{
             UIColor *grayColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
-            expect(view.messageLabel.textColor).to.equal(grayColor);
+            expect(view.subtitleLabel.textColor).to.equal(grayColor);
         });
-        it(@"should have timeLabel set", ^{
-            expect(view.timeLabel).to.beAKindOf([UILabel class]);
+        it(@"should have detailLabel set", ^{
+            expect(view.detailLabel).to.beAKindOf([UILabel class]);
         });
-        it(@"should have timeLabel's default font set", ^{
+        it(@"should have detailLabel's default font set", ^{
             NSString *fontName = [UIFont systemFontOfSize:1].fontName;
             UIFont *expectedFont = [UIFont fontWithName:fontName size:10];
-            expect(view.timeLabel.font).to.equal(expectedFont);
+            expect(view.detailLabel.font).to.equal(expectedFont);
         });
-        it(@"should have timeLabel's default text color set", ^{
+        it(@"should have detailLabel's default text color set", ^{
             UIColor *grayColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
-            expect(view.timeLabel.textColor).to.equal(grayColor);
+            expect(view.detailLabel.textColor).to.equal(grayColor);
         });
         it(@"should not have accessoryView set", ^{
             expect(view.accessoryView).to.beNil();
@@ -85,8 +85,8 @@ describe(@"LYRUIConversationItemView", ^{
         it(@"should have titleLabel's default font set", ^{
             expect(view.titleLabel.font).to.equal([UIFont systemFontOfSize:16]);
         });
-        it(@"should have timeLabel's default font set", ^{
-            expect(view.timeLabel.font).to.equal([UIFont systemFontOfSize:12]);
+        it(@"should have detailLabel's default font set", ^{
+            expect(view.detailLabel.font).to.equal([UIFont systemFontOfSize:12]);
         });
     });
     
@@ -110,13 +110,13 @@ describe(@"LYRUIConversationItemView", ^{
             UIColor *redColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0];
             expect(view.titleLabel.textColor).to.equal(redColor);
         });
-        it(@"should have messageLabel's text color set to value from Interface Builder", ^{
+        it(@"should have subtitleLabel's text color set to value from Interface Builder", ^{
             UIColor *greenColor = [UIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0];
-            expect(view.messageLabel.textColor).to.equal(greenColor);
+            expect(view.subtitleLabel.textColor).to.equal(greenColor);
         });
-        it(@"should have timeLabel's text color set to value from Interface Builder", ^{
+        it(@"should have detailLabel's text color set to value from Interface Builder", ^{
             UIColor *blueColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:1.0];
-            expect(view.timeLabel.textColor).to.equal(blueColor);
+            expect(view.detailLabel.textColor).to.equal(blueColor);
         });
     });
     
@@ -170,7 +170,7 @@ describe(@"LYRUIConversationItemView", ^{
         });
     });
     
-    describe(@"messageLabelFont", ^{
+    describe(@"subtitleLabelFont", ^{
         __block UIFont *fontMock;
         
         beforeEach(^{
@@ -179,48 +179,48 @@ describe(@"LYRUIConversationItemView", ^{
         
         context(@"getter", ^{
             beforeEach(^{
-                view.messageLabel.font = fontMock;
+                view.subtitleLabel.font = fontMock;
             });
             
-            it(@"should return the font of messageLabel", ^{
-                expect(view.messageLabelFont).to.equal(fontMock);
+            it(@"should return the font of subtitleLabel", ^{
+                expect(view.subtitleLabelFont).to.equal(fontMock);
             });
         });
         
         context(@"setter", ^{
             beforeEach(^{
-                view.messageLabelFont = fontMock;
+                view.subtitleLabelFont = fontMock;
             });
             
-            it(@"should update the font of messageLabel", ^{
-                expect(view.messageLabel.font).to.equal(fontMock);
+            it(@"should update the font of subtitleLabel", ^{
+                expect(view.subtitleLabel.font).to.equal(fontMock);
             });
         });
     });
     
-    describe(@"messageLabelColor", ^{
+    describe(@"subtitleLabelColor", ^{
         context(@"getter", ^{
             beforeEach(^{
-                view.messageLabel.textColor = [UIColor redColor];
+                view.subtitleLabel.textColor = [UIColor redColor];
             });
             
-            it(@"should return the text color of messageLabel", ^{
-                expect(view.messageLabelColor).to.equal([UIColor redColor]);
+            it(@"should return the text color of subtitleLabel", ^{
+                expect(view.subtitleLabelColor).to.equal([UIColor redColor]);
             });
         });
         
         context(@"setter", ^{
             beforeEach(^{
-                view.messageLabelColor = [UIColor greenColor];
+                view.subtitleLabelColor = [UIColor greenColor];
             });
             
-            it(@"should update the text color of messageLabel", ^{
-                expect(view.messageLabel.textColor).to.equal([UIColor greenColor]);
+            it(@"should update the text color of subtitleLabel", ^{
+                expect(view.subtitleLabel.textColor).to.equal([UIColor greenColor]);
             });
         });
     });
     
-    describe(@"timeLabelFont", ^{
+    describe(@"detailLabelFont", ^{
         __block UIFont *fontMock;
         
         beforeEach(^{
@@ -229,43 +229,43 @@ describe(@"LYRUIConversationItemView", ^{
         
         context(@"getter", ^{
             beforeEach(^{
-                view.timeLabel.font = fontMock;
+                view.detailLabel.font = fontMock;
             });
             
-            it(@"should return the font of timeLabel", ^{
-                expect(view.timeLabelFont).to.equal(fontMock);
+            it(@"should return the font of detailLabel", ^{
+                expect(view.detailLabelFont).to.equal(fontMock);
             });
         });
         
         context(@"setter", ^{
             beforeEach(^{
-                view.timeLabelFont = fontMock;
+                view.detailLabelFont = fontMock;
             });
             
-            it(@"should update the font of timeLabel", ^{
-                expect(view.timeLabel.font).to.equal(fontMock);
+            it(@"should update the font of detailLabel", ^{
+                expect(view.detailLabel.font).to.equal(fontMock);
             });
         });
     });
     
-    describe(@"timeLabelColor", ^{
+    describe(@"detailLabelColor", ^{
         context(@"getter", ^{
             beforeEach(^{
-                view.timeLabel.textColor = [UIColor redColor];
+                view.detailLabel.textColor = [UIColor redColor];
             });
             
-            it(@"should return the text color of timeLabel", ^{
-                expect(view.timeLabelColor).to.equal([UIColor redColor]);
+            it(@"should return the text color of detailLabel", ^{
+                expect(view.detailLabelColor).to.equal([UIColor redColor]);
             });
         });
         
         context(@"setter", ^{
             beforeEach(^{
-                view.timeLabelColor = [UIColor greenColor];
+                view.detailLabelColor = [UIColor greenColor];
             });
             
-            it(@"should update the text color of timeLabel", ^{
-                expect(view.timeLabel.textColor).to.equal([UIColor greenColor]);
+            it(@"should update the text color of detailLabel", ^{
+                expect(view.detailLabel.textColor).to.equal([UIColor greenColor]);
             });
         });
     });
@@ -278,10 +278,10 @@ describe(@"LYRUIConversationItemView", ^{
                 themeMock = mockProtocol(@protocol(LYRUIBaseItemViewTheme));
                 [given(themeMock.titleLabelFont) willReturn:[UIFont italicSystemFontOfSize:5.0]];
                 [given(themeMock.titleLabelColor) willReturn:[UIColor redColor]];
-                [given(themeMock.messageLabelFont) willReturn:[UIFont italicSystemFontOfSize:6.0]];
-                [given(themeMock.messageLabelColor) willReturn:[UIColor greenColor]];
-                [given(themeMock.timeLabelFont) willReturn:[UIFont italicSystemFontOfSize:7.0]];
-                [given(themeMock.timeLabelColor) willReturn:[UIColor blueColor]];
+                [given(themeMock.subtitleLabelFont) willReturn:[UIFont italicSystemFontOfSize:6.0]];
+                [given(themeMock.subtitleLabelColor) willReturn:[UIColor greenColor]];
+                [given(themeMock.detailLabelFont) willReturn:[UIFont italicSystemFontOfSize:7.0]];
+                [given(themeMock.detailLabelColor) willReturn:[UIColor blueColor]];
             });
             
             context(@"when view state is read", ^{
@@ -300,16 +300,16 @@ describe(@"LYRUIConversationItemView", ^{
                     expect(view.titleLabelColor).to.equal([UIColor redColor]);
                 });
                 it(@"should change message label font", ^{
-                    expect(view.messageLabelFont).to.equal([UIFont italicSystemFontOfSize:6.0]);
+                    expect(view.subtitleLabelFont).to.equal([UIFont italicSystemFontOfSize:6.0]);
                 });
                 it(@"should change message label color", ^{
-                    expect(view.messageLabelColor).to.equal([UIColor greenColor]);
+                    expect(view.subtitleLabelColor).to.equal([UIColor greenColor]);
                 });
                 it(@"should change time label font", ^{
-                    expect(view.timeLabelFont).to.equal([UIFont italicSystemFontOfSize:7.0]);
+                    expect(view.detailLabelFont).to.equal([UIFont italicSystemFontOfSize:7.0]);
                 });
                 it(@"should change time label color", ^{
-                    expect(view.timeLabelColor).to.equal([UIColor blueColor]);
+                    expect(view.detailLabelColor).to.equal([UIColor blueColor]);
                 });
             });
             
@@ -329,16 +329,16 @@ describe(@"LYRUIConversationItemView", ^{
                     expect(view.titleLabelColor).notTo.equal([UIColor redColor]);
                 });
                 it(@"should not change message label font", ^{
-                    expect(view.messageLabelFont).notTo.equal([UIFont italicSystemFontOfSize:6.0]);
+                    expect(view.subtitleLabelFont).notTo.equal([UIFont italicSystemFontOfSize:6.0]);
                 });
                 it(@"should not change message label color", ^{
-                    expect(view.messageLabelColor).notTo.equal([UIColor greenColor]);
+                    expect(view.subtitleLabelColor).notTo.equal([UIColor greenColor]);
                 });
                 it(@"should not change time label font", ^{
-                    expect(view.timeLabelFont).notTo.equal([UIFont italicSystemFontOfSize:7.0]);
+                    expect(view.detailLabelFont).notTo.equal([UIFont italicSystemFontOfSize:7.0]);
                 });
                 it(@"should not change time label color", ^{
-                    expect(view.timeLabelColor).notTo.equal([UIColor blueColor]);
+                    expect(view.detailLabelColor).notTo.equal([UIColor blueColor]);
                 });
             });
         });
@@ -352,10 +352,10 @@ describe(@"LYRUIConversationItemView", ^{
                 themeMock = mockProtocol(@protocol(LYRUIBaseItemViewTheme));
                 [given(themeMock.titleLabelFont) willReturn:[UIFont italicSystemFontOfSize:5.0]];
                 [given(themeMock.titleLabelColor) willReturn:[UIColor redColor]];
-                [given(themeMock.messageLabelFont) willReturn:[UIFont italicSystemFontOfSize:6.0]];
-                [given(themeMock.messageLabelColor) willReturn:[UIColor greenColor]];
-                [given(themeMock.timeLabelFont) willReturn:[UIFont italicSystemFontOfSize:7.0]];
-                [given(themeMock.timeLabelColor) willReturn:[UIColor blueColor]];
+                [given(themeMock.subtitleLabelFont) willReturn:[UIFont italicSystemFontOfSize:6.0]];
+                [given(themeMock.subtitleLabelColor) willReturn:[UIColor greenColor]];
+                [given(themeMock.detailLabelFont) willReturn:[UIFont italicSystemFontOfSize:7.0]];
+                [given(themeMock.detailLabelColor) willReturn:[UIColor blueColor]];
             });
             
             context(@"when view state is unread", ^{
@@ -374,16 +374,16 @@ describe(@"LYRUIConversationItemView", ^{
                     expect(view.titleLabelColor).to.equal([UIColor redColor]);
                 });
                 it(@"should change message label font", ^{
-                    expect(view.messageLabelFont).to.equal([UIFont italicSystemFontOfSize:6.0]);
+                    expect(view.subtitleLabelFont).to.equal([UIFont italicSystemFontOfSize:6.0]);
                 });
                 it(@"should change message label color", ^{
-                    expect(view.messageLabelColor).to.equal([UIColor greenColor]);
+                    expect(view.subtitleLabelColor).to.equal([UIColor greenColor]);
                 });
                 it(@"should change time label font", ^{
-                    expect(view.timeLabelFont).to.equal([UIFont italicSystemFontOfSize:7.0]);
+                    expect(view.detailLabelFont).to.equal([UIFont italicSystemFontOfSize:7.0]);
                 });
                 it(@"should change time label color", ^{
-                    expect(view.timeLabelColor).to.equal([UIColor blueColor]);
+                    expect(view.detailLabelColor).to.equal([UIColor blueColor]);
                 });
             });
             
@@ -403,16 +403,16 @@ describe(@"LYRUIConversationItemView", ^{
                     expect(view.titleLabelColor).notTo.equal([UIColor redColor]);
                 });
                 it(@"should not change message label font", ^{
-                    expect(view.messageLabelFont).notTo.equal([UIFont italicSystemFontOfSize:6.0]);
+                    expect(view.subtitleLabelFont).notTo.equal([UIFont italicSystemFontOfSize:6.0]);
                 });
                 it(@"should not change message label color", ^{
-                    expect(view.messageLabelColor).notTo.equal([UIColor greenColor]);
+                    expect(view.subtitleLabelColor).notTo.equal([UIColor greenColor]);
                 });
                 it(@"should not change time label font", ^{
-                    expect(view.timeLabelFont).notTo.equal([UIFont italicSystemFontOfSize:7.0]);
+                    expect(view.detailLabelFont).notTo.equal([UIFont italicSystemFontOfSize:7.0]);
                 });
                 it(@"should not change time label color", ^{
-                    expect(view.timeLabelColor).notTo.equal([UIColor blueColor]);
+                    expect(view.detailLabelColor).notTo.equal([UIColor blueColor]);
                 });
             });
         });
@@ -424,19 +424,19 @@ describe(@"LYRUIConversationItemView", ^{
                 id<LYRUIBaseItemViewTheme> themeMock = mockProtocol(@protocol(LYRUIBaseItemViewTheme));
                 [given(themeMock.titleLabelFont) willReturn:[UIFont italicSystemFontOfSize:5.0]];
                 [given(themeMock.titleLabelColor) willReturn:[UIColor redColor]];
-                [given(themeMock.messageLabelFont) willReturn:[UIFont italicSystemFontOfSize:6.0]];
-                [given(themeMock.messageLabelColor) willReturn:[UIColor greenColor]];
-                [given(themeMock.timeLabelFont) willReturn:[UIFont italicSystemFontOfSize:7.0]];
-                [given(themeMock.timeLabelColor) willReturn:[UIColor blueColor]];
+                [given(themeMock.subtitleLabelFont) willReturn:[UIFont italicSystemFontOfSize:6.0]];
+                [given(themeMock.subtitleLabelColor) willReturn:[UIColor greenColor]];
+                [given(themeMock.detailLabelFont) willReturn:[UIFont italicSystemFontOfSize:7.0]];
+                [given(themeMock.detailLabelColor) willReturn:[UIColor blueColor]];
                 view.theme = themeMock;
                 
                 id<LYRUIBaseItemViewTheme> unreadThemeMock = mockProtocol(@protocol(LYRUIBaseItemViewTheme));
                 [given(unreadThemeMock.titleLabelFont) willReturn:[UIFont italicSystemFontOfSize:2.0]];
                 [given(unreadThemeMock.titleLabelColor) willReturn:[UIColor yellowColor]];
-                [given(unreadThemeMock.messageLabelFont) willReturn:[UIFont italicSystemFontOfSize:3.0]];
-                [given(unreadThemeMock.messageLabelColor) willReturn:[UIColor purpleColor]];
-                [given(unreadThemeMock.timeLabelFont) willReturn:[UIFont italicSystemFontOfSize:4.0]];
-                [given(unreadThemeMock.timeLabelColor) willReturn:[UIColor orangeColor]];
+                [given(unreadThemeMock.subtitleLabelFont) willReturn:[UIFont italicSystemFontOfSize:3.0]];
+                [given(unreadThemeMock.subtitleLabelColor) willReturn:[UIColor purpleColor]];
+                [given(unreadThemeMock.detailLabelFont) willReturn:[UIFont italicSystemFontOfSize:4.0]];
+                [given(unreadThemeMock.detailLabelColor) willReturn:[UIColor orangeColor]];
                 view.unreadTheme = unreadThemeMock;
             });
             
@@ -452,16 +452,16 @@ describe(@"LYRUIConversationItemView", ^{
                     expect(view.titleLabelColor).to.equal([UIColor redColor]);
                 });
                 it(@"should set message label font from theme", ^{
-                    expect(view.messageLabelFont).to.equal([UIFont italicSystemFontOfSize:6.0]);
+                    expect(view.subtitleLabelFont).to.equal([UIFont italicSystemFontOfSize:6.0]);
                 });
                 it(@"should set message label color from theme", ^{
-                    expect(view.messageLabelColor).to.equal([UIColor greenColor]);
+                    expect(view.subtitleLabelColor).to.equal([UIColor greenColor]);
                 });
                 it(@"should set time label font from theme", ^{
-                    expect(view.timeLabelFont).to.equal([UIFont italicSystemFontOfSize:7.0]);
+                    expect(view.detailLabelFont).to.equal([UIFont italicSystemFontOfSize:7.0]);
                 });
                 it(@"should set time label color from theme", ^{
-                    expect(view.timeLabelColor).to.equal([UIColor blueColor]);
+                    expect(view.detailLabelColor).to.equal([UIColor blueColor]);
                 });
             });
             
@@ -477,16 +477,16 @@ describe(@"LYRUIConversationItemView", ^{
                     expect(view.titleLabelColor).to.equal([UIColor yellowColor]);
                 });
                 it(@"should set message label font from unread theme", ^{
-                    expect(view.messageLabelFont).to.equal([UIFont italicSystemFontOfSize:3.0]);
+                    expect(view.subtitleLabelFont).to.equal([UIFont italicSystemFontOfSize:3.0]);
                 });
                 it(@"should set message label color from unread theme", ^{
-                    expect(view.messageLabelColor).to.equal([UIColor purpleColor]);
+                    expect(view.subtitleLabelColor).to.equal([UIColor purpleColor]);
                 });
                 it(@"should set time label font from unread theme", ^{
-                    expect(view.timeLabelFont).to.equal([UIFont italicSystemFontOfSize:4.0]);
+                    expect(view.detailLabelFont).to.equal([UIFont italicSystemFontOfSize:4.0]);
                 });
                 it(@"should set time label color from unread theme", ^{
-                    expect(view.timeLabelColor).to.equal([UIColor orangeColor]);
+                    expect(view.detailLabelColor).to.equal([UIColor orangeColor]);
                 });
             });
         });
