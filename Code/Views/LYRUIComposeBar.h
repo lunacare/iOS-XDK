@@ -21,6 +21,7 @@
 #import <UIKit/UIKit.h>
 #import "LYRUIViewWithLayout.h"
 @class LYRUIComposeBar;
+@class LYRUISendButton;
 
 NS_ASSUME_NONNULL_BEGIN     // {
 @protocol LYRUIComposeBarLayout <LYRUIViewLayout>
@@ -36,29 +37,14 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @protocol LYRUIComposeBarTheme <NSObject>
 
 /**
- @abstract The color of message bubble. Default is white.
+ @abstract The color of message input. Default is white.
  */
-@property (nonatomic, copy) UIColor *messageBubbleColor;
+@property (nonatomic, copy) UIColor *messageInputColor;
 
 /**
- @abstract The color of message bubble border. Default is gray.
+ @abstract The color of message input border. Default is gray.
  */
-@property (nonatomic, copy) UIColor *messageBubbleBorderColor;
-
-/**
- @abstract The font of the send button title. Default is 14pt system font.
- */
-@property (nonatomic, copy) UIFont *sendButtonTitleFont;
-
-/**
- @abstract The color of enabled send button. Default is blue.
- */
-@property (nonatomic, copy) UIColor *sendButtonEnabledColor;
-
-/**
- @abstract The color of disabled send button. Default is light gray.
- */
-@property (nonatomic, copy) UIColor *sendButtonDisabledColor;
+@property (nonatomic, copy) UIColor *messageInputBorderColor;
 
 /**
  @abstract The font of the message text. Default is 14pt system font.
@@ -81,12 +67,12 @@ IB_DESIGNABLE
 @interface LYRUIComposeBar : LYRUIViewWithLayout <LYRUIComposeBarTheme>
 
 /**
- @abstract Array of views added on the left side of the input message bubble.
+ @abstract Array of views added on the left side of the input message input.
  */
 @property (nonatomic, copy, nullable) IBOutletCollection(UIView) NSArray<UIView *> *leftItems;
 
 /**
- @abstract Array of views added on the right side of the input message bubble.
+ @abstract Array of views added on the right side of the input message input. Default is an array with `sendButton`.
  */
 @property (nonatomic, copy, nullable) IBOutletCollection(UIView) NSArray<UIView *> *rightItems;
 
@@ -98,12 +84,12 @@ IB_DESIGNABLE
 /**
  @abstract Message input text.
  */
-@property (nonatomic, copy, nullable) IBInspectable NSString *messageText;
+@property (nonatomic, copy, nullable) IBInspectable NSString *text;
 
 /**
  @abstract Attributed message input text.
  */
-@property (nonatomic, copy, nullable) NSAttributedString *attributedMessageText;
+@property (nonatomic, copy, nullable) NSAttributedString *attributedText;
 
 /**
  @abstract A text view for editting the message input text.
@@ -113,32 +99,31 @@ IB_DESIGNABLE
 /**
  @abstract Default send button, added as a right item to the compose bar during initialization.
  */
-@property (nonatomic, weak, readonly) UIButton *sendButton;
+@property (nonatomic, strong, readonly) LYRUISendButton *sendButton;
 
 /**
- @abstract Action block called on default send button touch up inside event. The attributed input message is passed to the block.
+ @abstract Action block called on `sendButton` touch up inside event.
+ @param attributedText The `inputTextView` attributed text.
  */
-@property (nonatomic, copy) void(^sendButtonPressedCallback)(NSAttributedString *);
+@property (nonatomic, copy) void(^sendPressedBlock)(NSAttributedString *attributedText);
 
 /**
- @abstract Corner radius of the message bubble. Default value is 8.0 pt.
+ @abstract Corner radius of the message input. Default value is 8.0 pt.
  */
-@property (nonatomic) IBInspectable CGFloat messageBubbleCornerRadius;
+@property (nonatomic) IBInspectable CGFloat messageInputCornerRadius;
 
 /**
  @abstract LYRUIComposeBarTheme properties overridden to IBInspectable.
  */
-@property (nonatomic, copy) IBInspectable UIColor *messageBubbleColor;
-@property (nonatomic, copy) IBInspectable UIColor *messageBubbleBorderColor;
-@property (nonatomic, copy) IBInspectable UIColor *sendButtonEnabledColor;
-@property (nonatomic, copy) IBInspectable UIColor *sendButtonDisabledColor;
+@property (nonatomic, copy) IBInspectable UIColor *messageInputColor;
+@property (nonatomic, copy) IBInspectable UIColor *messageInputBorderColor;
 @property (nonatomic, copy) IBInspectable UIColor *textColor;
 @property (nonatomic, copy) IBInspectable UIColor *placeholderColor;
 
 /**
  @abstract A set of fonts and colors to use in compose bar.
  */
-- (void)updateTheme:(id<LYRUIComposeBarTheme>)theme UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) id<LYRUIComposeBarTheme> theme UI_APPEARANCE_SELECTOR;
 
 /**
  @abstract Layout of the compose bar subviews.

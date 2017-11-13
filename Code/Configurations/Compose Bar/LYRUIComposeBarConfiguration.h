@@ -23,15 +23,12 @@
 
 @interface LYRUIComposeBarConfiguration : NSObject
 
-@property (nonatomic, copy) NSString *messageText;
-@property (nonatomic, copy) NSAttributedString *attributedMessageText;
+@property (nonatomic, copy) NSString *text;
+@property (nonatomic, copy) NSAttributedString *attributedText;
 
 - (instancetype)initWithNotificationCenter:(NSNotificationCenter *)notificationCenter;
 
 - (void)configureComposeBar:(LYRUIComposeBar *)composeBar;
 - (void)cleanup;
-
-- (void)placeholderUpdated;
-- (void)colorsUpdated;
 
 @end

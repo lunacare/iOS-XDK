@@ -23,26 +23,23 @@
 #import "LYRUIComposeBarConfiguration.h"
 #import "LYRUIComposeBarIBSetup.h"
 #import "LYRUIAutoresizingTextView.h"
+#import "LYRUISendButton.h"
 
 @interface LYRUIComposeBar ()
 
 @property (nonatomic, weak, readwrite) UITextView *inputTextView;
-@property (nonatomic, weak, readwrite) UIButton *sendButton;
+@property (nonatomic, strong, readwrite) LYRUISendButton *sendButton;
 
 @property (nonatomic, strong) LYRUIComposeBarConfiguration *configuration;
 
 @end
 
 @implementation LYRUIComposeBar
-@synthesize sendButtonTitleFont = _sendButtonTitleFont,
-            textFont = _textFont;
+@synthesize textFont = _textFont;
 @dynamic layout;
 
 - (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self lyr_commonInit];
-    }
+    self = [self initWithFrame:frame configuration:nil];
     return self;
 }
 
@@ -55,7 +52,12 @@
 }
 
 - (instancetype)initWithConfiguration:(LYRUIComposeBarConfiguration *)configuration {
-    self = [super init];
+    self = [self initWithFrame:CGRectZero configuration:configuration];
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame configuration:(LYRUIComposeBarConfiguration *)configuration {
+    self = [super initWithFrame:frame];
     if (self) {
         [self lyr_commonInitWithConfiguration:configuration];
     }
@@ -94,12 +96,10 @@
 }
 
 - (void)addDefaultSendButton {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    LYRUISendButton *button = [LYRUISendButton buttonWithType:UIButtonTypeCustom];
     button.translatesAutoresizingMaskIntoConstraints = NO;
-    [button setTitle:@"Send" forState:UIControlStateNormal];
     [button.widthAnchor constraintEqualToConstant:55.0].active = YES;
     [button.heightAnchor constraintEqualToConstant:32.0].active = YES;
-    button.enabled = NO;
     self.rightItems = @[button];
     self.sendButton = button;
 }
@@ -114,18 +114,14 @@
 
 - (void)setupDefaultColors {
     self.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
-    self.messageBubbleColor = [UIColor whiteColor];
-    self.messageBubbleBorderColor = [UIColor colorWithRed:219.0/255.0 green:222.0/255.0 blue:228.0/255.0 alpha:1.0];
-    self.sendButtonEnabledColor = [UIColor colorWithRed:16.0/255.0 green:148.0/255.0 blue:208.0/255.0 alpha:1.0];
-    UIColor *lightGrayColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
-    self.sendButtonDisabledColor = lightGrayColor;
-    self.placeholderColor = lightGrayColor;
+    self.messageInputColor = [UIColor whiteColor];
+    self.messageInputBorderColor = [UIColor colorWithRed:219.0/255.0 green:222.0/255.0 blue:228.0/255.0 alpha:1.0];
+    self.placeholderColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
     self.textColor = [UIColor colorWithRed:27.0/255.0 green:28.0/255.0 blue:29.0/255.0 alpha:1.0];
 }
 
 - (void)setupDefaultFonts {
     self.textFont = [UIFont systemFontOfSize:14.0];
-    self.sendButtonTitleFont = [UIFont boldSystemFontOfSize:14.0];
 }
 
 - (void)prepareForInterfaceBuilder {
@@ -154,75 +150,46 @@
     [self setNeedsLayout];
 }
 
-- (void)setPlaceholder:(NSString *)placeholder {
-    _placeholder = placeholder;
-    [self.configuration placeholderUpdated];
+- (NSString *)text {
+    return self.configuration.text;
 }
 
-- (NSString *)messageText {
-    return self.configuration.messageText;
+- (void)setText:(NSString *)text {
+    self.configuration.text = text;
 }
 
-- (void)setMessageText:(NSString *)messageText {
-    self.configuration.messageText = messageText;
+- (NSAttributedString *)attributedText {
+    return self.configuration.attributedText;
 }
 
-- (NSAttributedString *)attributedMessageText {
-    return self.configuration.attributedMessageText;
+- (void)setAttributedText:(NSAttributedString *)attributedText {
+    self.configuration.attributedText = attributedText;
 }
 
-- (void)setAttributedMessageText:(NSAttributedString *)attributedMessageText {
-    self.configuration.attributedMessageText = attributedMessageText;
-}
-
-- (CGFloat)messageBubbleCornerRadius {
+- (CGFloat)messageInputCornerRadius {
     return self.inputTextView.layer.cornerRadius;
 }
 
-- (void)setMessageBubbleCornerRadius:(CGFloat)messageBubbleCornerRadius {
-    self.inputTextView.layer.cornerRadius = messageBubbleCornerRadius;
+- (void)setMessageInputCornerRadius:(CGFloat)messageInputCornerRadius {
+    self.inputTextView.layer.cornerRadius = messageInputCornerRadius;
 }
 
 #pragma mark - Theme
 
-- (UIColor *)messageBubbleColor {
+- (UIColor *)messageInputColor {
     return self.inputTextView.backgroundColor;
 }
 
-- (void)setMessageBubbleColor:(UIColor *)messageBubbleColor {
-    self.inputTextView.backgroundColor = messageBubbleColor;
+- (void)setMessageInputColor:(UIColor *)messageInputColor {
+    self.inputTextView.backgroundColor = messageInputColor;
 }
 
-- (UIColor *)messageBubbleBorderColor {
+- (UIColor *)messageInputBorderColor {
     return [UIColor colorWithCGColor:self.inputTextView.layer.borderColor];
 }
 
-- (void)setMessageBubbleBorderColor:(UIColor *)messageBubbleBorderColor {
-    self.inputTextView.layer.borderColor = messageBubbleBorderColor.CGColor;
-}
-
-- (UIColor *)sendButtonEnabledColor {
-    return [self.sendButton titleColorForState:UIControlStateNormal];
-}
-
-- (void)setSendButtonEnabledColor:(UIColor *)sendButtonEnabledColor {
-    [self.sendButton setTitleColor:sendButtonEnabledColor forState:UIControlStateNormal];
-}
-
-- (UIColor *)sendButtonDisabledColor {
-    return [self.sendButton titleColorForState:UIControlStateDisabled];
-}
-
-- (void)setSendButtonDisabledColor:(UIColor *)sendButtonDisabledColor {
-    [self.sendButton setTitleColor:sendButtonDisabledColor forState:UIControlStateDisabled];
-}
-
-- (UIFont *)sendButtonTitleFont {
-    return self.sendButton.titleLabel.font;
-}
-
-- (void)setSendButtonTitleFont:(UIFont *)sendButtonTitleFont {
-    self.sendButton.titleLabel.font = sendButtonTitleFont;
+- (void)setMessageInputBorderColor:(UIColor *)messageInputBorderColor {
+    self.inputTextView.layer.borderColor = messageInputBorderColor.CGColor;
 }
 
 - (UIFont *)textFont {
@@ -233,22 +200,10 @@
     self.inputTextView.font = textFont;
 }
 
-- (void)setTextColor:(UIColor *)textColor {
-    _textColor = textColor;
-    [self.configuration colorsUpdated];
-}
-
-- (void)setPlaceholderColor:(UIColor *)placeholderColor {
-    _placeholderColor = placeholderColor;
-    [self.configuration colorsUpdated];
-}
-
-- (void)updateTheme:(id<LYRUIComposeBarTheme>)theme {
-    self.messageBubbleColor = theme.messageBubbleColor;
-    self.messageBubbleBorderColor = theme.messageBubbleBorderColor;
-    self.sendButtonTitleFont = theme.sendButtonTitleFont;
-    self.sendButtonEnabledColor = theme.sendButtonEnabledColor;
-    self.sendButtonDisabledColor = theme.sendButtonDisabledColor;
+- (void)setTheme:(id<LYRUIComposeBarTheme>)theme {
+    _theme = theme;
+    self.messageInputColor = theme.messageInputColor;
+    self.messageInputBorderColor = theme.messageInputBorderColor;
     self.textFont = theme.textFont;
     self.textColor = theme.textColor;
     self.placeholderColor = theme.placeholderColor;

@@ -5,6 +5,7 @@
 #import <OCHamcrest/OCHamcrest.h>
 #import <Atlas/LYRUIComposeBar.h>
 #import <Atlas/LYRUIComposeBarConfiguration.h>
+#import <Atlas/LYRUISendButton.h>
 
 @interface LYRUIComposeBar ()
 
@@ -41,27 +42,19 @@ describe(@"LYRUIComposeBar", ^{
             UIColor *expectedColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
             expect(composeBar.backgroundColor).to.equal(expectedColor);
         });
-        it(@"should have message bubble corner radius set to 8.0", ^{
-            expect(composeBar.messageBubbleCornerRadius).to.equal(8.0);
+        it(@"should have message input corner radius set to 8.0", ^{
+            expect(composeBar.messageInputCornerRadius).to.equal(8.0);
         });
-        it(@"should have message bubble color set to white color", ^{
-            expect(composeBar.messageBubbleColor).to.equal([UIColor whiteColor]);
+        it(@"should have message input color set to white color", ^{
+            expect(composeBar.messageInputColor).to.equal([UIColor whiteColor]);
         });
-        it(@"should have message bubble border color set to gray color", ^{
+        it(@"should have message input border color set to gray color", ^{
             UIColor *expectedColor = [UIColor colorWithRed:219.0/255.0 green:222.0/255.0 blue:228.0/255.0 alpha:1.0];
-            expect(composeBar.messageBubbleBorderColor).to.equal(expectedColor);
+            expect(composeBar.messageInputBorderColor).to.equal(expectedColor);
         });
         it(@"should have send button title font set to bold system font of size 14.0", ^{
             UIFont *expectedFont = [UIFont boldSystemFontOfSize:14.0];
             expect(composeBar.sendButton.titleLabel.font).to.equal(expectedFont);
-        });
-        it(@"should have send button enabled color set to blue color", ^{
-            UIColor *expectedColor = [UIColor colorWithRed:16.0/255.0 green:148.0/255.0 blue:208.0/255.0 alpha:1.0];
-            expect(composeBar.sendButtonEnabledColor).to.equal(expectedColor);
-        });
-        it(@"should have send button disabled color set to light gray color", ^{
-            UIColor *expectedColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
-            expect(composeBar.sendButtonDisabledColor).to.equal(expectedColor);
         });
         it(@"should have text font set to system font of size 14.0", ^{
             UIFont *expectedFont = [UIFont systemFontOfSize:14.0];
@@ -92,30 +85,22 @@ describe(@"LYRUIComposeBar", ^{
         it(@"should have layout set to object connected via IB outlet", ^{
             expect(composeBar.layout).to.equal(xibObjects[1]);
         });
-        it(@"should have message bubble corner radius set to value from Interface Builder", ^{
-            expect(composeBar.messageBubbleCornerRadius).to.equal(16.0);
+        it(@"should have message input corner radius set to value from Interface Builder", ^{
+            expect(composeBar.messageInputCornerRadius).to.equal(16.0);
         });
         it(@"should have message text set to value from Interface Builder", ^{
-            expect(composeBar.messageText).to.equal(@"message text");
+            expect(composeBar.text).to.equal(@"message text");
         });
         it(@"should have placeholder set to value from Interface Builder", ^{
             expect(composeBar.placeholder).to.equal(@"placeholder");
         });
-        it(@"should have message bubble color set to value from Interface Builder", ^{
+        it(@"should have message input color set to value from Interface Builder", ^{
             UIColor *expectedColor = [UIColor colorWithRed:1.0 green:0.0 blue:1.0 alpha:1.0];
-            expect(composeBar.messageBubbleColor).to.equal(expectedColor);
+            expect(composeBar.messageInputColor).to.equal(expectedColor);
         });
-        it(@"should have message bubble border color set to value from Interface Builder", ^{
+        it(@"should have message input border color set to value from Interface Builder", ^{
             UIColor *expectedColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:1.0];
-            expect(composeBar.messageBubbleBorderColor).to.equal(expectedColor);
-        });
-        it(@"should have send button enabled color set to value from Interface Builder", ^{
-            UIColor *expectedColor = [UIColor colorWithRed:1.0 green:.0 blue:0.0 alpha:1.0];
-            expect(composeBar.sendButtonEnabledColor).to.equal(expectedColor);
-        });
-        it(@"should have send button disabled color set to value from Interface Builder", ^{
-            UIColor *expectedColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.0 alpha:1.0];
-            expect(composeBar.sendButtonDisabledColor).to.equal(expectedColor);
+            expect(composeBar.messageInputBorderColor).to.equal(expectedColor);
         });
         it(@"should have text color set to value from Interface Builder", ^{
             UIColor *expectedColor = [UIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0];
@@ -266,80 +251,68 @@ describe(@"LYRUIComposeBar", ^{
         });
     });
     
-    describe(@"placeholder", ^{
-        context(@"setter", ^{
-            beforeEach(^{
-                composeBar.placeholder = @"test placeholder";
-            });
-            
-            it(@"should inform configuration about placeholder update", ^{
-                [verify(configurationMock) placeholderUpdated];
-            });
-        });
-    });
-    
-    describe(@"messageText", ^{
+    describe(@"text", ^{
         context(@"getter", ^{
             beforeEach(^{
-                [given(configurationMock.messageText) willReturn:@"test message text"];
+                [given(configurationMock.text) willReturn:@"test message text"];
             });
             
             it(@"should return value from configuration", ^{
-                expect(composeBar.messageText).to.equal(@"test message text");
+                expect(composeBar.text).to.equal(@"test message text");
             });
         });
         
         context(@"setter", ^{
             beforeEach(^{
-                composeBar.messageText = @"test message text";
+                composeBar.text = @"test message text";
             });
             
             it(@"should pass the value to configuration", ^{
-                [verify(configurationMock) setMessageText:@"test message text"];
+                [verify(configurationMock) setText:@"test message text"];
             });
         });
     });
     
-    describe(@"attributedMessageText", ^{
+    describe(@"attributedText", ^{
         context(@"getter", ^{
             beforeEach(^{
                 NSAttributedString *messageText = [[NSAttributedString alloc] initWithString:@"test message text"];
-                [given(configurationMock.attributedMessageText) willReturn:messageText];
+                [given(configurationMock.attributedText) willReturn:messageText];
             });
             
             it(@"should return value from configuration", ^{
                 NSAttributedString *messageText = [[NSAttributedString alloc] initWithString:@"test message text"];
-                expect(composeBar.attributedMessageText).to.equal(messageText);
+                expect(composeBar.attributedText).to.equal(messageText);
             });
         });
         
         context(@"setter", ^{
             beforeEach(^{
                 NSAttributedString *messageText = [[NSAttributedString alloc] initWithString:@"test message text"];
-                composeBar.attributedMessageText = messageText;
+                composeBar.attributedText = messageText;
             });
             
             it(@"should pass the value to configuration", ^{
                 NSAttributedString *messageText = [[NSAttributedString alloc] initWithString:@"test message text"];
-                [verify(configurationMock) setAttributedMessageText:messageText];
+                [verify(configurationMock) setAttributedText:messageText];
             });
         });
     });
     
-    describe(@"messageBubbleCornerRadius", ^{
+    describe(@"messageInputCornerRadius", ^{
         context(@"getter", ^{
             beforeEach(^{
                 composeBar.inputTextView.layer.cornerRadius = 10.0;
             });
             
             it(@"should return input text view's corner radius", ^{
-                expect(composeBar.messageBubbleCornerRadius).to.equal(10.0);
+                expect(composeBar.messageInputCornerRadius).to.equal(10.0);
             });
         });
         
         context(@"setter", ^{
             beforeEach(^{
-                composeBar.messageBubbleCornerRadius = 15.0;
+                composeBar.messageInputCornerRadius = 15.0;
             });
             
             it(@"should update input text view's corner radius", ^{
@@ -348,20 +321,20 @@ describe(@"LYRUIComposeBar", ^{
         });
     });
     
-    describe(@"messageBubbleColor", ^{
+    describe(@"messageInputColor", ^{
         context(@"getter", ^{
             beforeEach(^{
                 composeBar.inputTextView.backgroundColor = [UIColor greenColor];
             });
             
             it(@"should return input text view's background color", ^{
-                expect(composeBar.messageBubbleColor).to.equal([UIColor greenColor]);
+                expect(composeBar.messageInputColor).to.equal([UIColor greenColor]);
             });
         });
         
         context(@"setter", ^{
             beforeEach(^{
-                composeBar.messageBubbleColor = [UIColor redColor];
+                composeBar.messageInputColor = [UIColor redColor];
             });
             
             it(@"should update input text view's background color", ^{
@@ -370,90 +343,24 @@ describe(@"LYRUIComposeBar", ^{
         });
     });
     
-    describe(@"messageBubbleBorderColor", ^{
+    describe(@"messageInputBorderColor", ^{
         context(@"getter", ^{
             beforeEach(^{
                 composeBar.inputTextView.layer.borderColor = [UIColor greenColor].CGColor;
             });
             
             it(@"should return input text view's border color", ^{
-                expect(composeBar.messageBubbleBorderColor).to.equal([UIColor greenColor]);
+                expect(composeBar.messageInputBorderColor).to.equal([UIColor greenColor]);
             });
         });
         
         context(@"setter", ^{
             beforeEach(^{
-                composeBar.messageBubbleBorderColor = [UIColor redColor];
+                composeBar.messageInputBorderColor = [UIColor redColor];
             });
             
             it(@"should update input text view's border color", ^{
                 expect(composeBar.inputTextView.layer.borderColor).to.equal([UIColor redColor].CGColor);
-            });
-        });
-    });
-    
-    describe(@"sendButtonEnabledColor", ^{
-        context(@"getter", ^{
-            beforeEach(^{
-                [composeBar.sendButton setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
-            });
-            
-            it(@"should return send button's title color for normal state", ^{
-                expect(composeBar.sendButtonEnabledColor).to.equal([UIColor greenColor]);
-            });
-        });
-        
-        context(@"setter", ^{
-            beforeEach(^{
-                composeBar.sendButtonEnabledColor = [UIColor redColor];
-            });
-            
-            it(@"should update send button's title color for normal state", ^{
-                expect([composeBar.sendButton titleColorForState:UIControlStateNormal]).to.equal([UIColor redColor]);
-            });
-        });
-    });
-    
-    describe(@"sendButtonDisabledColor", ^{
-        context(@"getter", ^{
-            beforeEach(^{
-                [composeBar.sendButton setTitleColor:[UIColor greenColor] forState:UIControlStateDisabled];
-            });
-            
-            it(@"should return send button's title color for disabled state", ^{
-                expect(composeBar.sendButtonDisabledColor).to.equal([UIColor greenColor]);
-            });
-        });
-        
-        context(@"setter", ^{
-            beforeEach(^{
-                composeBar.sendButtonDisabledColor = [UIColor redColor];
-            });
-            
-            it(@"should update send button's title color for disabled state", ^{
-                expect([composeBar.sendButton titleColorForState:UIControlStateDisabled]).to.equal([UIColor redColor]);
-            });
-        });
-    });
-    
-    describe(@"sendButtonTitleFont", ^{
-        context(@"getter", ^{
-            beforeEach(^{
-                composeBar.sendButton.titleLabel.font = [UIFont systemFontOfSize:20.0];
-            });
-            
-            it(@"should return send button's title font", ^{
-                expect(composeBar.sendButtonTitleFont).to.equal([UIFont systemFontOfSize:20.0]);
-            });
-        });
-        
-        context(@"setter", ^{
-            beforeEach(^{
-                composeBar.sendButtonTitleFont = [UIFont systemFontOfSize:30.0];
-            });
-            
-            it(@"should update send button's title font", ^{
-                expect(composeBar.sendButton.titleLabel.font).to.equal([UIFont systemFontOfSize:30.0]);
             });
         });
     });
@@ -480,60 +387,22 @@ describe(@"LYRUIComposeBar", ^{
         });
     });
     
-    describe(@"textColor", ^{
-        context(@"setter", ^{
-            beforeEach(^{
-                [verifyCount(configurationMock, times(2)) colorsUpdated];
-                composeBar.textColor = [UIColor redColor];
-            });
-            
-            it(@"should inform configuration about updated colors", ^{
-                [verify(configurationMock) colorsUpdated];
-            });
-        });
-    });
-    
-    describe(@"placeholderColor", ^{
-        context(@"setter", ^{
-            beforeEach(^{
-                [verifyCount(configurationMock, times(2)) colorsUpdated];
-                composeBar.placeholderColor = [UIColor redColor];
-            });
-            
-            it(@"should inform configuration about updated colors", ^{
-                [verify(configurationMock) colorsUpdated];
-            });
-        });
-    });
-    
     describe(@"updateTheme:", ^{
         beforeEach(^{
             id<LYRUIComposeBarTheme> themeMock = mockProtocol(@protocol(LYRUIComposeBarTheme));
-            [given(themeMock.messageBubbleColor) willReturn:[UIColor redColor]];
-            [given(themeMock.messageBubbleBorderColor) willReturn:[UIColor greenColor]];
-            [given(themeMock.sendButtonTitleFont) willReturn:[UIFont systemFontOfSize:20.0]];
-            [given(themeMock.sendButtonEnabledColor) willReturn:[UIColor yellowColor]];
-            [given(themeMock.sendButtonDisabledColor) willReturn:[UIColor orangeColor]];
+            [given(themeMock.messageInputColor) willReturn:[UIColor redColor]];
+            [given(themeMock.messageInputBorderColor) willReturn:[UIColor greenColor]];
             [given(themeMock.textFont) willReturn:[UIFont systemFontOfSize:30.0]];
             [given(themeMock.textColor) willReturn:[UIColor magentaColor]];
             [given(themeMock.placeholderColor) willReturn:[UIColor brownColor]];
-            [composeBar updateTheme:themeMock];
+            composeBar.theme = themeMock;
         });
         
-        it(@"should update compose bar's message bubble color", ^{
-            expect(composeBar.messageBubbleColor).to.equal([UIColor redColor]);
+        it(@"should update compose bar's message input color", ^{
+            expect(composeBar.messageInputColor).to.equal([UIColor redColor]);
         });
-        it(@"should update compose bar's message bubble border color", ^{
-            expect(composeBar.messageBubbleBorderColor).to.equal([UIColor greenColor]);
-        });
-        it(@"should update compose bar's send button title font", ^{
-            expect(composeBar.sendButtonTitleFont).to.equal([UIFont systemFontOfSize:20.0]);
-        });
-        it(@"should update compose bar's send button enabled color", ^{
-            expect(composeBar.sendButtonEnabledColor).to.equal([UIColor yellowColor]);
-        });
-        it(@"should update compose bar's send button disabled color", ^{
-            expect(composeBar.sendButtonDisabledColor).to.equal([UIColor orangeColor]);
+        it(@"should update compose bar's message input border color", ^{
+            expect(composeBar.messageInputBorderColor).to.equal([UIColor greenColor]);
         });
         it(@"should update compose bar's text font", ^{
             expect(composeBar.textFont).to.equal([UIFont systemFontOfSize:30.0]);

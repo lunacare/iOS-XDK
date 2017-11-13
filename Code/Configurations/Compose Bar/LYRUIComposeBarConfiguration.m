@@ -20,6 +20,7 @@
 
 #import "LYRUIComposeBarConfiguration.h"
 #import "LYRUIComposeBar.h"
+#import "LYRUISendButton.h"
 
 @interface LYRUIComposeBarConfiguration ()
 
@@ -60,13 +61,21 @@
 - (void)configureComposeBar:(LYRUIComposeBar *)composeBar {
     self.composeBar = composeBar;
     
+    self.placeholderVisible = YES;
+    composeBar.sendButton.enabled = NO;
+    
     [composeBar.sendButton addTarget:self
-                              action:@selector(sendButtonPressed:)
+                              action:@selector(buttonPressed:)
                     forControlEvents:UIControlEventTouchUpInside];
     
+    [self setupTextViewNotifications:composeBar.inputTextView];
+    [self setupComposeBarKVO:composeBar];
+}
+
+- (void)setupTextViewNotifications:(UITextView *)textView {
     __weak __typeof(self) weakSelf = self;
     id beginEditingObserver =  [self.notificationCenter addObserverForName:UITextViewTextDidBeginEditingNotification
-                                                                    object:composeBar.inputTextView
+                                                                    object:textView
                                                                      queue:nil
                                                                 usingBlock:^(NSNotification * _Nonnull notification) {
                                                                     [weakSelf didBeginEditing];
@@ -74,7 +83,7 @@
     self.textViewDidBeginEditingObserver = beginEditingObserver;
     
     id textChangedObserver =  [self.notificationCenter addObserverForName:UITextViewTextDidChangeNotification
-                                                                   object:composeBar.inputTextView
+                                                                   object:textView
                                                                     queue:nil
                                                                usingBlock:^(NSNotification * _Nonnull notification) {
                                                                    [weakSelf textChanged];
@@ -82,7 +91,7 @@
     self.textViewTextChangedObserver = textChangedObserver;
     
     id endEditingObserver =  [self.notificationCenter addObserverForName:UITextViewTextDidEndEditingNotification
-                                                                  object:composeBar.inputTextView
+                                                                  object:textView
                                                                    queue:nil
                                                               usingBlock:^(NSNotification * _Nonnull notification) {
                                                                   [weakSelf didEndEditing];
@@ -90,13 +99,42 @@
     self.textViewDidEndEditingObserver = endEditingObserver;
 }
 
+- (void)setupComposeBarKVO:(LYRUIComposeBar *)composeBar {
+    [composeBar addObserver:self forKeyPath:@"placeholder" options:NSKeyValueObservingOptionNew context:NULL];
+    [composeBar addObserver:self forKeyPath:@"textColor" options:NSKeyValueObservingOptionNew context:NULL];
+    [composeBar addObserver:self forKeyPath:@"placeholderColor" options:NSKeyValueObservingOptionNew context:NULL];
+}
+
 - (void)cleanup {
-    [self.composeBar.sendButton removeTarget:self
-                                      action:@selector(sendButtonPressed:)
-                            forControlEvents:UIControlEventTouchUpInside];
+    [self removeTextViewNotifications];
+    [self removeComposeBarKVO:self.composeBar];
+}
+
+- (void)removeTextViewNotifications {
     [self.notificationCenter removeObserver:self.textViewDidBeginEditingObserver];
     [self.notificationCenter removeObserver:self.textViewTextChangedObserver];
     [self.notificationCenter removeObserver:self.textViewDidEndEditingObserver];
+}
+
+- (void)removeComposeBarKVO:(LYRUIComposeBar *)composeBar {
+    [composeBar removeObserver:self forKeyPath:@"placeholder"];
+    [composeBar removeObserver:self forKeyPath:@"textColor"];
+    [composeBar removeObserver:self forKeyPath:@"placeholderColor"];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
+                       context:(void *)context {
+    if (![object isEqual:self.composeBar]) {
+        return;
+    }
+    
+    if ([keyPath isEqualToString:@"placeholder"]) {
+        [self placeholderUpdated];
+    } else if ([keyPath isEqualToString:@"textColor"] || [keyPath isEqualToString:@"placeholderColor"]) {
+        [self colorsUpdated];
+    }
 }
 
 #pragma mark - LYRUIComposeBar logic
@@ -123,15 +161,6 @@
     }
 }
 
-- (void)sendButtonPressed:(UIButton *)sendButton {
-    if (!self.placeholderVisible) {
-        if (self.composeBar.sendButtonPressedCallback) {
-            self.composeBar.sendButtonPressedCallback(self.textView.attributedText);
-        }
-        self.textView.text = nil;
-    }
-}
-
 - (void)placeholderUpdated {
     if (self.placeholderVisible) {
         [self showPlaceholder];
@@ -152,43 +181,54 @@
     self.textView.text = self.composeBar.placeholder;
 }
 
+#pragma mark - Button Press Handling
+
+- (void)buttonPressed:(LYRUISendButton *)sendButton {
+    if (self.composeBar.text != nil) {
+        if (self.composeBar.sendPressedBlock) {
+            self.composeBar.sendPressedBlock(self.composeBar.attributedText);
+        }
+        self.composeBar.text = nil;
+    }
+}
+
 #pragma mark - Properties
 
 - (UITextView *)textView {
     return self.composeBar.inputTextView;
 }
 
-- (NSString *)messageText {
+- (NSString *)text {
     if (self.placeholderVisible) {
         return nil;
     }
     return self.textView.text;
 }
 
-- (void)setMessageText:(NSString *)messageText {
-    if (messageText == nil || messageText.length == 0) {
+- (void)setText:(NSString *)text {
+    if (text == nil || text.length == 0) {
         [self showPlaceholder];
     } else {
         self.placeholderVisible = NO;
         self.textView.textColor = self.composeBar.textColor;
-        self.textView.text = messageText;
+        self.textView.text = text;
     }
 }
 
-- (NSAttributedString *)attributedMessageText {
+- (NSAttributedString *)attributedText {
     if (self.placeholderVisible) {
         return nil;
     }
     return self.textView.attributedText;
 }
 
-- (void)setAttributedMessageText:(NSAttributedString *)attributedMessageText {
-    if (attributedMessageText == nil || attributedMessageText.length == 0) {
+- (void)setAttributedText:(NSAttributedString *)attributedText {
+    if (attributedText == nil || attributedText.length == 0) {
         [self showPlaceholder];
     } else {
         self.placeholderVisible = NO;
         self.textView.textColor = self.composeBar.textColor;
-        self.textView.attributedText = attributedMessageText;
+        self.textView.attributedText = attributedText;
     }
 }
 

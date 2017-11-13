@@ -9,7 +9,6 @@
 @interface LYRUIComposeBarConfiguration (PrivateProperties)
 
 @property (nonatomic) BOOL placeholderVisible;
-- (void)sendButtonPressed:(UIButton *)sendButton;
 
 @end
 
@@ -46,11 +45,6 @@ describe(@"LYRUIComposeBarConfiguration", ^{
             [configuration configureComposeBar:composeBarMock];
         });
         
-        it(@"should add target/action to the send buttong", ^{
-            [verify(sendButtonMock) addTarget:configuration
-                                       action:@selector(sendButtonPressed:)
-                             forControlEvents:UIControlEventTouchUpInside];
-        });
         it(@"should add observer for UITextViewTextDidBeginEditingNotification of text view", ^{
             [verify(notificationCenterMock) addObserverForName:UITextViewTextDidBeginEditingNotification
                                                         object:textViewMock
@@ -68,6 +62,15 @@ describe(@"LYRUIComposeBarConfiguration", ^{
                                                         object:textViewMock
                                                          queue:nil
                                                     usingBlock:anything()];
+        });
+        it(@"should add observer for keypath `placeholder`", ^{
+            [verify(composeBarMock) addObserver:configuration forKeyPath:@"placeholder" options:NSKeyValueObservingOptionNew context:NULL];
+        });
+        it(@"should add observer for keypath `textColor`", ^{
+            [verify(composeBarMock) addObserver:configuration forKeyPath:@"textColor" options:NSKeyValueObservingOptionNew context:NULL];
+        });
+        it(@"should add observer for keypath `placeholderColor`", ^{
+            [verify(composeBarMock) addObserver:configuration forKeyPath:@"placeholderColor" options:NSKeyValueObservingOptionNew context:NULL];
         });
     });
     
@@ -99,11 +102,6 @@ describe(@"LYRUIComposeBarConfiguration", ^{
             [configuration cleanup];
         });
         
-        it(@"should remove target/action from send button", ^{
-            [verify(sendButtonMock) removeTarget:configuration
-                                          action:@selector(sendButtonPressed:)
-                                forControlEvents:UIControlEventTouchUpInside];
-        });
         it(@"should remove observer for UITextViewTextDidBeginEditingNotification", ^{
             [verify(notificationCenterMock) removeObserver:observer1];
         });
@@ -112,6 +110,15 @@ describe(@"LYRUIComposeBarConfiguration", ^{
         });
         it(@"should remove observer for UITextViewTextDidEndEditingNotification", ^{
             [verify(notificationCenterMock) removeObserver:observer3];
+        });
+        it(@"should remove observer for keypath `placeholder`", ^{
+            [verify(composeBarMock) removeObserver:configuration forKeyPath:@"placeholder"];
+        });
+        it(@"should remove observer for keypath `textColor`", ^{
+            [verify(composeBarMock) removeObserver:configuration forKeyPath:@"textColor"];
+        });
+        it(@"should remove observer for keypath `placeholderColor`", ^{
+            [verify(composeBarMock) removeObserver:configuration forKeyPath:@"placeholderColor"];
         });
     });
     
@@ -176,6 +183,7 @@ describe(@"LYRUIComposeBarConfiguration", ^{
                                                          queue:nil
                                                     usingBlock:(id)blockArgument];
             block = blockArgument.value;
+            [verify(sendButtonMock) setEnabled:NO];
         });
         
         context(@"when placeholder is visible", ^{
@@ -298,55 +306,6 @@ describe(@"LYRUIComposeBarConfiguration", ^{
         });
     });
     
-    describe(@"sendButtonPressed:", ^{
-        __block BOOL callbackCalled;
-        __block NSAttributedString *capturedString;
-        
-        beforeEach(^{
-            callbackCalled = NO;
-            [given(composeBarMock.sendButtonPressedCallback) willReturn:^(NSAttributedString *string) {
-                callbackCalled = YES;
-                capturedString = string;
-            }];
-            NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"test text"];
-            [given(textViewMock.attributedText) willReturn:attributedString];
-            [configuration configureComposeBar:composeBarMock];
-        });
-        
-        afterEach(^{
-            capturedString = nil;
-        });
-        
-        context(@"when placeholder is visible", ^{
-            beforeEach(^{
-                configuration.placeholderVisible = YES;
-                [configuration sendButtonPressed:sendButtonMock];
-            });
-            
-            it(@"should not call the callback", ^{
-                expect(callbackCalled).to.beFalsy();
-            });
-        });
-        
-        context(@"when placeholder is not visible", ^{
-            beforeEach(^{
-                configuration.placeholderVisible = NO;
-                [configuration sendButtonPressed:sendButtonMock];
-            });
-            
-            it(@"should call the callback", ^{
-                expect(callbackCalled).to.beTruthy();
-            });
-            it(@"should call the callback with attributed text of text view", ^{
-                NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"test text"];
-                expect(capturedString).to.equal(attributedString);
-            });
-            it(@"should set text view's text to nil", ^{
-                [verify(textViewMock) setText:nil];
-            });
-        });
-    });
-    
     describe(@"placeholderUpdated", ^{
         beforeEach(^{
             [given(composeBarMock.placeholder) willReturn:@"test placeholder"];
@@ -356,7 +315,7 @@ describe(@"LYRUIComposeBarConfiguration", ^{
         context(@"when placeholder is visible", ^{
             beforeEach(^{
                 configuration.placeholderVisible = YES;
-                [configuration placeholderUpdated];
+                [configuration observeValueForKeyPath:@"placeholder" ofObject:composeBarMock change:nil context:NULL];
             });
             
             it(@"should not change value of placeholder visible property", ^{
@@ -370,7 +329,7 @@ describe(@"LYRUIComposeBarConfiguration", ^{
         context(@"when placeholder is not visible", ^{
             beforeEach(^{
                 configuration.placeholderVisible = NO;
-                [configuration placeholderUpdated];
+                [configuration observeValueForKeyPath:@"placeholder" ofObject:composeBarMock change:nil context:NULL];
             });
             
             it(@"should not change value of placeholder visible property", ^{
@@ -392,7 +351,7 @@ describe(@"LYRUIComposeBarConfiguration", ^{
         context(@"when placeholder is visible", ^{
             beforeEach(^{
                 configuration.placeholderVisible = YES;
-                [configuration colorsUpdated];
+                [configuration observeValueForKeyPath:@"textColor" ofObject:composeBarMock change:nil context:NULL];
             });
             
             it(@"should update text view's text color with compose bar's placeholder color", ^{
@@ -403,7 +362,7 @@ describe(@"LYRUIComposeBarConfiguration", ^{
         context(@"when placeholder is not visible", ^{
             beforeEach(^{
                 configuration.placeholderVisible = NO;
-                [configuration colorsUpdated];
+                [configuration observeValueForKeyPath:@"placeholderColor" ofObject:composeBarMock change:nil context:NULL];
             });
             
             it(@"should update text view's text color with compose bar's text color", ^{
@@ -412,7 +371,7 @@ describe(@"LYRUIComposeBarConfiguration", ^{
         });
     });
     
-    describe(@"messageText", ^{
+    describe(@"text", ^{
         beforeEach(^{
             [given(textViewMock.text) willReturn:@"test text"];
             [configuration configureComposeBar:composeBarMock];
@@ -425,7 +384,7 @@ describe(@"LYRUIComposeBarConfiguration", ^{
                 });
                 
                 it(@"should return nil", ^{
-                    expect(configuration.messageText).to.beNil();
+                    expect(configuration.text).to.beNil();
                 });
             });
             
@@ -435,7 +394,7 @@ describe(@"LYRUIComposeBarConfiguration", ^{
                 });
                 
                 it(@"should return text view's text", ^{
-                    expect(configuration.messageText).to.equal(@"test text");
+                    expect(configuration.text).to.equal(@"test text");
                 });
             });
         });
@@ -450,7 +409,7 @@ describe(@"LYRUIComposeBarConfiguration", ^{
             context(@"when message text is nil", ^{
                 beforeEach(^{
                     configuration.placeholderVisible = NO;
-                    configuration.messageText = nil;
+                    configuration.text = nil;
                 });
                 
                 it(@"should update placeholder visible property to YES", ^{
@@ -467,7 +426,7 @@ describe(@"LYRUIComposeBarConfiguration", ^{
             context(@"when message text is empty string", ^{
                 beforeEach(^{
                     configuration.placeholderVisible = NO;
-                    configuration.messageText = @"";
+                    configuration.text = @"";
                 });
                 
                 it(@"should update placeholder visible property to YES", ^{
@@ -484,7 +443,7 @@ describe(@"LYRUIComposeBarConfiguration", ^{
             context(@"when message text is non empty string", ^{
                 beforeEach(^{
                     configuration.placeholderVisible = YES;
-                    configuration.messageText = @"1";
+                    configuration.text = @"1";
                 });
                 
                 it(@"should update placeholder visible property to NO", ^{
@@ -500,7 +459,7 @@ describe(@"LYRUIComposeBarConfiguration", ^{
         });
     });
     
-    describe(@"attributedMessageText", ^{
+    describe(@"attributedText", ^{
         beforeEach(^{
             NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"test text"];
             [given(textViewMock.attributedText) willReturn:attributedString];
@@ -514,7 +473,7 @@ describe(@"LYRUIComposeBarConfiguration", ^{
                 });
                 
                 it(@"should return nil", ^{
-                    expect(configuration.attributedMessageText).to.beNil();
+                    expect(configuration.attributedText).to.beNil();
                 });
             });
             
@@ -525,7 +484,7 @@ describe(@"LYRUIComposeBarConfiguration", ^{
                 
                 it(@"should return text view's attributed text", ^{
                     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"test text"];
-                    expect(configuration.attributedMessageText).to.equal(attributedString);
+                    expect(configuration.attributedText).to.equal(attributedString);
                 });
             });
         });
@@ -540,7 +499,7 @@ describe(@"LYRUIComposeBarConfiguration", ^{
             context(@"when message text is nil", ^{
                 beforeEach(^{
                     configuration.placeholderVisible = NO;
-                    configuration.attributedMessageText = nil;
+                    configuration.attributedText = nil;
                 });
                 
                 it(@"should update placeholder visible property to YES", ^{
@@ -558,7 +517,7 @@ describe(@"LYRUIComposeBarConfiguration", ^{
                 beforeEach(^{
                     configuration.placeholderVisible = NO;
                     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@""];
-                    configuration.attributedMessageText = attributedString;
+                    configuration.attributedText = attributedString;
                 });
                 
                 it(@"should update placeholder visible property to YES", ^{
@@ -576,7 +535,7 @@ describe(@"LYRUIComposeBarConfiguration", ^{
                 beforeEach(^{
                     configuration.placeholderVisible = YES;
                     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"1"];
-                    configuration.attributedMessageText = attributedString;
+                    configuration.attributedText = attributedString;
                 });
                 
                 it(@"should update placeholder visible property to NO", ^{
