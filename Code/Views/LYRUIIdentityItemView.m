@@ -26,11 +26,6 @@
 
 @implementation LYRUIIdentityItemView
 
-+ (void)load {
-    [super load];
-    [LYRUIIdentityItemView appearance].theme = [[LYRUIBaseItemViewDefaultTheme alloc] init];
-}
-
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
