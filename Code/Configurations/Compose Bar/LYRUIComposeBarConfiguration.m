@@ -1,5 +1,5 @@
 //
-//  LYRUIComposeBarConfigurator.m
+//  LYRUIComposeBarConfiguration.m
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 16.08.2017.
@@ -18,10 +18,10 @@
 //  limitations under the License.
 //
 
-#import "LYRUIComposeBarConfigurator.h"
+#import "LYRUIComposeBarConfiguration.h"
 #import "LYRUIComposeBar.h"
 
-@interface LYRUIComposeBarConfigurator ()
+@interface LYRUIComposeBarConfiguration ()
 
 @property (nonatomic, strong) NSNotificationCenter *notificationCenter;
 
@@ -36,7 +36,7 @@
 
 @end
 
-@implementation LYRUIComposeBarConfigurator
+@implementation LYRUIComposeBarConfiguration
 
 - (instancetype)init {
     self = [self initWithNotificationCenter:nil];

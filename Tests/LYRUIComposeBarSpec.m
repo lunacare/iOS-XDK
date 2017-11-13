@@ -4,11 +4,11 @@
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
 #import <Atlas/LYRUIComposeBar.h>
-#import <Atlas/LYRUIComposeBarConfigurator.h>
+#import <Atlas/LYRUIComposeBarConfiguration.h>
 
 @interface LYRUIComposeBar ()
 
-- (instancetype)initWithConfigurator:(LYRUIComposeBarConfigurator *)configurator;
+- (instancetype)initWithConfiguration:(LYRUIComposeBarConfiguration *)configuration;
 
 @end
 
@@ -16,11 +16,11 @@ SpecBegin(LYRUIComposeBar)
 
 describe(@"LYRUIComposeBar", ^{
     __block LYRUIComposeBar *composeBar;
-    __block LYRUIComposeBarConfigurator *configuratorMock;
+    __block LYRUIComposeBarConfiguration *configurationMock;
 
     beforeEach(^{
-        configuratorMock = mock([LYRUIComposeBarConfigurator class]);
-        composeBar = [[LYRUIComposeBar alloc] initWithConfigurator:configuratorMock];
+        configurationMock = mock([LYRUIComposeBarConfiguration class]);
+        composeBar = [[LYRUIComposeBar alloc] initWithConfiguration:configurationMock];
     });
 
     afterEach(^{
@@ -75,8 +75,8 @@ describe(@"LYRUIComposeBar", ^{
             UIColor *expectedColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
             expect(composeBar.placeholderColor).to.equal(expectedColor);
         });
-        it(@"should configure itself using configurator", ^{
-            [verify(configuratorMock) configureComposeBar:composeBar];
+        it(@"should configure itself using configuration", ^{
+            [verify(configurationMock) configureComposeBar:composeBar];
         });
     });
     
@@ -272,8 +272,8 @@ describe(@"LYRUIComposeBar", ^{
                 composeBar.placeholder = @"test placeholder";
             });
             
-            it(@"should inform configurator about placeholder update", ^{
-                [verify(configuratorMock) placeholderUpdated];
+            it(@"should inform configuration about placeholder update", ^{
+                [verify(configurationMock) placeholderUpdated];
             });
         });
     });
@@ -281,10 +281,10 @@ describe(@"LYRUIComposeBar", ^{
     describe(@"messageText", ^{
         context(@"getter", ^{
             beforeEach(^{
-                [given(configuratorMock.messageText) willReturn:@"test message text"];
+                [given(configurationMock.messageText) willReturn:@"test message text"];
             });
             
-            it(@"should return value from configurator", ^{
+            it(@"should return value from configuration", ^{
                 expect(composeBar.messageText).to.equal(@"test message text");
             });
         });
@@ -294,8 +294,8 @@ describe(@"LYRUIComposeBar", ^{
                 composeBar.messageText = @"test message text";
             });
             
-            it(@"should pass the value to configurator", ^{
-                [verify(configuratorMock) setMessageText:@"test message text"];
+            it(@"should pass the value to configuration", ^{
+                [verify(configurationMock) setMessageText:@"test message text"];
             });
         });
     });
@@ -304,10 +304,10 @@ describe(@"LYRUIComposeBar", ^{
         context(@"getter", ^{
             beforeEach(^{
                 NSAttributedString *messageText = [[NSAttributedString alloc] initWithString:@"test message text"];
-                [given(configuratorMock.attributedMessageText) willReturn:messageText];
+                [given(configurationMock.attributedMessageText) willReturn:messageText];
             });
             
-            it(@"should return value from configurator", ^{
+            it(@"should return value from configuration", ^{
                 NSAttributedString *messageText = [[NSAttributedString alloc] initWithString:@"test message text"];
                 expect(composeBar.attributedMessageText).to.equal(messageText);
             });
@@ -319,9 +319,9 @@ describe(@"LYRUIComposeBar", ^{
                 composeBar.attributedMessageText = messageText;
             });
             
-            it(@"should pass the value to configurator", ^{
+            it(@"should pass the value to configuration", ^{
                 NSAttributedString *messageText = [[NSAttributedString alloc] initWithString:@"test message text"];
-                [verify(configuratorMock) setAttributedMessageText:messageText];
+                [verify(configurationMock) setAttributedMessageText:messageText];
             });
         });
     });
@@ -483,12 +483,12 @@ describe(@"LYRUIComposeBar", ^{
     describe(@"textColor", ^{
         context(@"setter", ^{
             beforeEach(^{
-                [verifyCount(configuratorMock, times(2)) colorsUpdated];
+                [verifyCount(configurationMock, times(2)) colorsUpdated];
                 composeBar.textColor = [UIColor redColor];
             });
             
-            it(@"should inform configurator about updated colors", ^{
-                [verify(configuratorMock) colorsUpdated];
+            it(@"should inform configuration about updated colors", ^{
+                [verify(configurationMock) colorsUpdated];
             });
         });
     });
@@ -496,12 +496,12 @@ describe(@"LYRUIComposeBar", ^{
     describe(@"placeholderColor", ^{
         context(@"setter", ^{
             beforeEach(^{
-                [verifyCount(configuratorMock, times(2)) colorsUpdated];
+                [verifyCount(configurationMock, times(2)) colorsUpdated];
                 composeBar.placeholderColor = [UIColor redColor];
             });
             
-            it(@"should inform configurator about updated colors", ^{
-                [verify(configuratorMock) colorsUpdated];
+            it(@"should inform configuration about updated colors", ^{
+                [verify(configurationMock) colorsUpdated];
             });
         });
     });

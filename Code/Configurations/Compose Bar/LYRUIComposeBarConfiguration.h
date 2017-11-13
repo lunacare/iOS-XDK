@@ -1,5 +1,5 @@
 //
-//  LYRUIComposeBarConfigurator.h
+//  LYRUIComposeBarConfiguration.h
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 16.08.2017.
@@ -21,7 +21,7 @@
 #import <Foundation/Foundation.h>
 @class LYRUIComposeBar;
 
-@interface LYRUIComposeBarConfigurator : NSObject
+@interface LYRUIComposeBarConfiguration : NSObject
 
 @property (nonatomic, copy) NSString *messageText;
 @property (nonatomic, copy) NSAttributedString *attributedMessageText;

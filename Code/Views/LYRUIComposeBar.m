@@ -20,7 +20,7 @@
 
 #import "LYRUIComposeBar.h"
 #import "LYRUIComposeBarLayout.h"
-#import "LYRUIComposeBarConfigurator.h"
+#import "LYRUIComposeBarConfiguration.h"
 #import "LYRUIComposeBarIBSetup.h"
 #import "LYRUIAutoresizingTextView.h"
 
@@ -29,7 +29,7 @@
 @property (nonatomic, weak, readwrite) UITextView *inputTextView;
 @property (nonatomic, weak, readwrite) UIButton *sendButton;
 
-@property (nonatomic, strong) LYRUIComposeBarConfigurator *configurator;
+@property (nonatomic, strong) LYRUIComposeBarConfiguration *configuration;
 
 @end
 
@@ -54,22 +54,22 @@
     return self;
 }
 
-- (instancetype)initWithConfigurator:(LYRUIComposeBarConfigurator *)configurator {
+- (instancetype)initWithConfiguration:(LYRUIComposeBarConfiguration *)configuration {
     self = [super init];
     if (self) {
-        [self lyr_commonInitWithConfigurator:configurator];
+        [self lyr_commonInitWithConfiguration:configuration];
     }
     return self;
 }
 
 - (void)lyr_commonInit {
-    [self lyr_commonInitWithConfigurator:nil];
+    [self lyr_commonInitWithConfiguration:nil];
 }
 
-- (void)lyr_commonInitWithConfigurator:(LYRUIComposeBarConfigurator *)configurator {
+- (void)lyr_commonInitWithConfiguration:(LYRUIComposeBarConfiguration *)configuration {
     [self addInputTextView];
     [self addDefaultSendButton];
-    [self setupConfigurator:configurator];
+    [self setupConfiguration:configuration];
     [self setupDefaultFonts];
     [self setupDefaultColors];
     self.layout = [[LYRUIComposeBarLayout alloc] init];
@@ -104,12 +104,12 @@
     self.sendButton = button;
 }
 
-- (void)setupConfigurator:(LYRUIComposeBarConfigurator *)configurator {
-    if (configurator == nil) {
-        configurator = [[LYRUIComposeBarConfigurator alloc] init];
+- (void)setupConfiguration:(LYRUIComposeBarConfiguration *)configuration {
+    if (configuration == nil) {
+        configuration = [[LYRUIComposeBarConfiguration alloc] init];
     }
-    self.configurator = configurator;
-    [configurator configureComposeBar:self];
+    self.configuration = configuration;
+    [configuration configureComposeBar:self];
 }
 
 - (void)setupDefaultColors {
@@ -133,7 +133,7 @@
 }
 
 - (void)dealloc {
-    [self.configurator cleanup];
+    [self.configuration cleanup];
 }
 
 #pragma mark - Properties
@@ -156,23 +156,23 @@
 
 - (void)setPlaceholder:(NSString *)placeholder {
     _placeholder = placeholder;
-    [self.configurator placeholderUpdated];
+    [self.configuration placeholderUpdated];
 }
 
 - (NSString *)messageText {
-    return self.configurator.messageText;
+    return self.configuration.messageText;
 }
 
 - (void)setMessageText:(NSString *)messageText {
-    self.configurator.messageText = messageText;
+    self.configuration.messageText = messageText;
 }
 
 - (NSAttributedString *)attributedMessageText {
-    return self.configurator.attributedMessageText;
+    return self.configuration.attributedMessageText;
 }
 
 - (void)setAttributedMessageText:(NSAttributedString *)attributedMessageText {
-    self.configurator.attributedMessageText = attributedMessageText;
+    self.configuration.attributedMessageText = attributedMessageText;
 }
 
 - (CGFloat)messageBubbleCornerRadius {
@@ -235,12 +235,12 @@
 
 - (void)setTextColor:(UIColor *)textColor {
     _textColor = textColor;
-    [self.configurator colorsUpdated];
+    [self.configuration colorsUpdated];
 }
 
 - (void)setPlaceholderColor:(UIColor *)placeholderColor {
     _placeholderColor = placeholderColor;
-    [self.configurator colorsUpdated];
+    [self.configuration colorsUpdated];
 }
 
 - (void)updateTheme:(id<LYRUIComposeBarTheme>)theme {

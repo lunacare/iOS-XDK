@@ -3,20 +3,20 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
-#import <Atlas/LYRUIComposeBarConfigurator.h>
+#import <Atlas/LYRUIComposeBarConfiguration.h>
 #import <Atlas/LYRUIComposeBar.h>
 
-@interface LYRUIComposeBarConfigurator (PrivateProperties)
+@interface LYRUIComposeBarConfiguration (PrivateProperties)
 
 @property (nonatomic) BOOL placeholderVisible;
 - (void)sendButtonPressed:(UIButton *)sendButton;
 
 @end
 
-SpecBegin(LYRUIComposeBarConfigurator)
+SpecBegin(LYRUIComposeBarConfiguration)
 
-describe(@"LYRUIComposeBarConfigurator", ^{
-    __block LYRUIComposeBarConfigurator *configurator;
+describe(@"LYRUIComposeBarConfiguration", ^{
+    __block LYRUIComposeBarConfiguration *configuration;
     __block NSNotificationCenter *notificationCenterMock;
     __block LYRUIComposeBar *composeBarMock;
     __block UITextView *textViewMock;
@@ -24,7 +24,7 @@ describe(@"LYRUIComposeBarConfigurator", ^{
 
     beforeEach(^{
         notificationCenterMock = mock([NSNotificationCenter class]);
-        configurator = [[LYRUIComposeBarConfigurator alloc] initWithNotificationCenter:notificationCenterMock];
+        configuration = [[LYRUIComposeBarConfiguration alloc] initWithNotificationCenter:notificationCenterMock];
         
         composeBarMock = mock([LYRUIComposeBar class]);
         textViewMock = mock([UITextView class]);
@@ -34,7 +34,7 @@ describe(@"LYRUIComposeBarConfigurator", ^{
     });
 
     afterEach(^{
-        configurator = nil;
+        configuration = nil;
         notificationCenterMock = nil;
         composeBarMock = nil;
         sendButtonMock = nil;
@@ -43,11 +43,11 @@ describe(@"LYRUIComposeBarConfigurator", ^{
 
     describe(@"configure", ^{
         beforeEach(^{
-            [configurator configureComposeBar:composeBarMock];
+            [configuration configureComposeBar:composeBarMock];
         });
         
         it(@"should add target/action to the send buttong", ^{
-            [verify(sendButtonMock) addTarget:configurator
+            [verify(sendButtonMock) addTarget:configuration
                                        action:@selector(sendButtonPressed:)
                              forControlEvents:UIControlEventTouchUpInside];
         });
@@ -94,13 +94,13 @@ describe(@"LYRUIComposeBarConfigurator", ^{
                                                         queue:nil
                                                    usingBlock:anything()]) willReturn:observer3];
             
-            [configurator configureComposeBar:composeBarMock];
+            [configuration configureComposeBar:composeBarMock];
             
-            [configurator cleanup];
+            [configuration cleanup];
         });
         
         it(@"should remove target/action from send button", ^{
-            [verify(sendButtonMock) removeTarget:configurator
+            [verify(sendButtonMock) removeTarget:configuration
                                           action:@selector(sendButtonPressed:)
                                 forControlEvents:UIControlEventTouchUpInside];
         });
@@ -119,7 +119,7 @@ describe(@"LYRUIComposeBarConfigurator", ^{
         __block void(^block)(NSNotification *);
         
         beforeEach(^{
-            [configurator configureComposeBar:composeBarMock];
+            [configuration configureComposeBar:composeBarMock];
             HCArgumentCaptor *blockArgument = [HCArgumentCaptor new];
             [verify(notificationCenterMock) addObserverForName:UITextViewTextDidBeginEditingNotification
                                                         object:textViewMock
@@ -132,12 +132,12 @@ describe(@"LYRUIComposeBarConfigurator", ^{
         
         context(@"when placeholder is visible", ^{
             beforeEach(^{
-                configurator.placeholderVisible = YES;
+                configuration.placeholderVisible = YES;
                 block(mock([NSNotification class]));
             });
             
             it(@"should update placeholder visible property to NO", ^{
-                expect(configurator.placeholderVisible).to.beFalsy();
+                expect(configuration.placeholderVisible).to.beFalsy();
             });
             it(@"should set text view's text color to compose bar text color", ^{
                 [verify(textViewMock) setTextColor:[UIColor magentaColor]];
@@ -149,12 +149,12 @@ describe(@"LYRUIComposeBarConfigurator", ^{
         
         context(@"when placeholder is not visible", ^{
             beforeEach(^{
-                configurator.placeholderVisible = NO;
+                configuration.placeholderVisible = NO;
                 block(mock([NSNotification class]));
             });
             
             it(@"should not change placeholder visible property value", ^{
-                expect(configurator.placeholderVisible).to.beFalsy();
+                expect(configuration.placeholderVisible).to.beFalsy();
             });
             it(@"should not set text view's text color", ^{
                 [verifyCount(textViewMock, never()) setTextColor:anything()];
@@ -169,7 +169,7 @@ describe(@"LYRUIComposeBarConfigurator", ^{
         __block void(^block)(NSNotification *);
         
         beforeEach(^{
-            [configurator configureComposeBar:composeBarMock];
+            [configuration configureComposeBar:composeBarMock];
             HCArgumentCaptor *blockArgument = [HCArgumentCaptor new];
             [verify(notificationCenterMock) addObserverForName:UITextViewTextDidChangeNotification
                                                         object:textViewMock
@@ -180,7 +180,7 @@ describe(@"LYRUIComposeBarConfigurator", ^{
         
         context(@"when placeholder is visible", ^{
             beforeEach(^{
-                configurator.placeholderVisible = YES;
+                configuration.placeholderVisible = YES;
                 block(mock([NSNotification class]));
             });
             
@@ -191,7 +191,7 @@ describe(@"LYRUIComposeBarConfigurator", ^{
         
         context(@"when placeholder is not visible", ^{
             beforeEach(^{
-                configurator.placeholderVisible = NO;
+                configuration.placeholderVisible = NO;
             });
             
             context(@"when text view text is nil", ^{
@@ -233,7 +233,7 @@ describe(@"LYRUIComposeBarConfigurator", ^{
         __block void(^block)(NSNotification *);
         
         beforeEach(^{
-            [configurator configureComposeBar:composeBarMock];
+            [configuration configureComposeBar:composeBarMock];
             HCArgumentCaptor *blockArgument = [HCArgumentCaptor new];
             [verify(notificationCenterMock) addObserverForName:UITextViewTextDidEndEditingNotification
                                                         object:textViewMock
@@ -241,7 +241,7 @@ describe(@"LYRUIComposeBarConfigurator", ^{
                                                     usingBlock:(id)blockArgument];
             block = blockArgument.value;
             
-            configurator.placeholderVisible = NO;
+            configuration.placeholderVisible = NO;
             [given(composeBarMock.placeholderColor) willReturn:[UIColor purpleColor]];
             [given(composeBarMock.placeholder) willReturn:@"test placeholder"];
         });
@@ -253,7 +253,7 @@ describe(@"LYRUIComposeBarConfigurator", ^{
             });
             
             it(@"should update placeholder visible property to YES", ^{
-                expect(configurator.placeholderVisible).to.beTruthy();
+                expect(configuration.placeholderVisible).to.beTruthy();
             });
             it(@"should set text view's text color to compose bar placeholder color", ^{
                 [verify(textViewMock) setTextColor:[UIColor purpleColor]];
@@ -270,7 +270,7 @@ describe(@"LYRUIComposeBarConfigurator", ^{
             });
             
             it(@"should update placeholder visible property to YES", ^{
-                expect(configurator.placeholderVisible).to.beTruthy();
+                expect(configuration.placeholderVisible).to.beTruthy();
             });
             it(@"should set text view's text color to compose bar placeholder color", ^{
                 [verify(textViewMock) setTextColor:[UIColor purpleColor]];
@@ -287,7 +287,7 @@ describe(@"LYRUIComposeBarConfigurator", ^{
             });
             
             it(@"should not change placeholder visible property value", ^{
-                expect(configurator.placeholderVisible).to.beFalsy();
+                expect(configuration.placeholderVisible).to.beFalsy();
             });
             it(@"should not set text view's text color", ^{
                 [verifyCount(textViewMock, never()) setTextColor:anything()];
@@ -310,7 +310,7 @@ describe(@"LYRUIComposeBarConfigurator", ^{
             }];
             NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"test text"];
             [given(textViewMock.attributedText) willReturn:attributedString];
-            [configurator configureComposeBar:composeBarMock];
+            [configuration configureComposeBar:composeBarMock];
         });
         
         afterEach(^{
@@ -319,8 +319,8 @@ describe(@"LYRUIComposeBarConfigurator", ^{
         
         context(@"when placeholder is visible", ^{
             beforeEach(^{
-                configurator.placeholderVisible = YES;
-                [configurator sendButtonPressed:sendButtonMock];
+                configuration.placeholderVisible = YES;
+                [configuration sendButtonPressed:sendButtonMock];
             });
             
             it(@"should not call the callback", ^{
@@ -330,8 +330,8 @@ describe(@"LYRUIComposeBarConfigurator", ^{
         
         context(@"when placeholder is not visible", ^{
             beforeEach(^{
-                configurator.placeholderVisible = NO;
-                [configurator sendButtonPressed:sendButtonMock];
+                configuration.placeholderVisible = NO;
+                [configuration sendButtonPressed:sendButtonMock];
             });
             
             it(@"should call the callback", ^{
@@ -350,17 +350,17 @@ describe(@"LYRUIComposeBarConfigurator", ^{
     describe(@"placeholderUpdated", ^{
         beforeEach(^{
             [given(composeBarMock.placeholder) willReturn:@"test placeholder"];
-            [configurator configureComposeBar:composeBarMock];
+            [configuration configureComposeBar:composeBarMock];
         });
         
         context(@"when placeholder is visible", ^{
             beforeEach(^{
-                configurator.placeholderVisible = YES;
-                [configurator placeholderUpdated];
+                configuration.placeholderVisible = YES;
+                [configuration placeholderUpdated];
             });
             
             it(@"should not change value of placeholder visible property", ^{
-                expect(configurator.placeholderVisible).to.beTruthy();
+                expect(configuration.placeholderVisible).to.beTruthy();
             });
             it(@"should update text view's text with placeholder", ^{
                 [verify(textViewMock) setText:@"test placeholder"];
@@ -369,12 +369,12 @@ describe(@"LYRUIComposeBarConfigurator", ^{
         
         context(@"when placeholder is not visible", ^{
             beforeEach(^{
-                configurator.placeholderVisible = NO;
-                [configurator placeholderUpdated];
+                configuration.placeholderVisible = NO;
+                [configuration placeholderUpdated];
             });
             
             it(@"should not change value of placeholder visible property", ^{
-                expect(configurator.placeholderVisible).to.beFalsy();
+                expect(configuration.placeholderVisible).to.beFalsy();
             });
             it(@"should not update text view's text with placeholder", ^{
                 [verifyCount(textViewMock, never()) setText:anything()];
@@ -386,13 +386,13 @@ describe(@"LYRUIComposeBarConfigurator", ^{
         beforeEach(^{
             [given(composeBarMock.placeholderColor) willReturn:[UIColor magentaColor]];
             [given(composeBarMock.textColor) willReturn:[UIColor purpleColor]];
-            [configurator configureComposeBar:composeBarMock];
+            [configuration configureComposeBar:composeBarMock];
         });
         
         context(@"when placeholder is visible", ^{
             beforeEach(^{
-                configurator.placeholderVisible = YES;
-                [configurator colorsUpdated];
+                configuration.placeholderVisible = YES;
+                [configuration colorsUpdated];
             });
             
             it(@"should update text view's text color with compose bar's placeholder color", ^{
@@ -402,8 +402,8 @@ describe(@"LYRUIComposeBarConfigurator", ^{
         
         context(@"when placeholder is not visible", ^{
             beforeEach(^{
-                configurator.placeholderVisible = NO;
-                [configurator colorsUpdated];
+                configuration.placeholderVisible = NO;
+                [configuration colorsUpdated];
             });
             
             it(@"should update text view's text color with compose bar's text color", ^{
@@ -415,27 +415,27 @@ describe(@"LYRUIComposeBarConfigurator", ^{
     describe(@"messageText", ^{
         beforeEach(^{
             [given(textViewMock.text) willReturn:@"test text"];
-            [configurator configureComposeBar:composeBarMock];
+            [configuration configureComposeBar:composeBarMock];
         });
         
         context(@"getter", ^{
             context(@"when placeholder is visible", ^{
                 beforeEach(^{
-                    configurator.placeholderVisible = YES;
+                    configuration.placeholderVisible = YES;
                 });
                 
                 it(@"should return nil", ^{
-                    expect(configurator.messageText).to.beNil();
+                    expect(configuration.messageText).to.beNil();
                 });
             });
             
             context(@"when placeholder is not visible", ^{
                 beforeEach(^{
-                    configurator.placeholderVisible = NO;
+                    configuration.placeholderVisible = NO;
                 });
                 
                 it(@"should return text view's text", ^{
-                    expect(configurator.messageText).to.equal(@"test text");
+                    expect(configuration.messageText).to.equal(@"test text");
                 });
             });
         });
@@ -449,12 +449,12 @@ describe(@"LYRUIComposeBarConfigurator", ^{
             
             context(@"when message text is nil", ^{
                 beforeEach(^{
-                    configurator.placeholderVisible = NO;
-                    configurator.messageText = nil;
+                    configuration.placeholderVisible = NO;
+                    configuration.messageText = nil;
                 });
                 
                 it(@"should update placeholder visible property to YES", ^{
-                    expect(configurator.placeholderVisible).to.beTruthy();
+                    expect(configuration.placeholderVisible).to.beTruthy();
                 });
                 it(@"should set text view's text color to compose bar placeholder color", ^{
                     [verify(textViewMock) setTextColor:[UIColor magentaColor]];
@@ -466,12 +466,12 @@ describe(@"LYRUIComposeBarConfigurator", ^{
             
             context(@"when message text is empty string", ^{
                 beforeEach(^{
-                    configurator.placeholderVisible = NO;
-                    configurator.messageText = @"";
+                    configuration.placeholderVisible = NO;
+                    configuration.messageText = @"";
                 });
                 
                 it(@"should update placeholder visible property to YES", ^{
-                    expect(configurator.placeholderVisible).to.beTruthy();
+                    expect(configuration.placeholderVisible).to.beTruthy();
                 });
                 it(@"should set text view's text color to compose bar placeholder color", ^{
                     [verify(textViewMock) setTextColor:[UIColor magentaColor]];
@@ -483,12 +483,12 @@ describe(@"LYRUIComposeBarConfigurator", ^{
             
             context(@"when message text is non empty string", ^{
                 beforeEach(^{
-                    configurator.placeholderVisible = YES;
-                    configurator.messageText = @"1";
+                    configuration.placeholderVisible = YES;
+                    configuration.messageText = @"1";
                 });
                 
                 it(@"should update placeholder visible property to NO", ^{
-                    expect(configurator.placeholderVisible).to.beFalsy();
+                    expect(configuration.placeholderVisible).to.beFalsy();
                 });
                 it(@"should set text view's text color to compose bar text color", ^{
                     [verify(textViewMock) setTextColor:[UIColor purpleColor]];
@@ -504,28 +504,28 @@ describe(@"LYRUIComposeBarConfigurator", ^{
         beforeEach(^{
             NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"test text"];
             [given(textViewMock.attributedText) willReturn:attributedString];
-            [configurator configureComposeBar:composeBarMock];
+            [configuration configureComposeBar:composeBarMock];
         });
         
         context(@"getter", ^{
             context(@"when placeholder is visible", ^{
                 beforeEach(^{
-                    configurator.placeholderVisible = YES;
+                    configuration.placeholderVisible = YES;
                 });
                 
                 it(@"should return nil", ^{
-                    expect(configurator.attributedMessageText).to.beNil();
+                    expect(configuration.attributedMessageText).to.beNil();
                 });
             });
             
             context(@"when placeholder is not visible", ^{
                 beforeEach(^{
-                    configurator.placeholderVisible = NO;
+                    configuration.placeholderVisible = NO;
                 });
                 
                 it(@"should return text view's attributed text", ^{
                     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"test text"];
-                    expect(configurator.attributedMessageText).to.equal(attributedString);
+                    expect(configuration.attributedMessageText).to.equal(attributedString);
                 });
             });
         });
@@ -539,12 +539,12 @@ describe(@"LYRUIComposeBarConfigurator", ^{
             
             context(@"when message text is nil", ^{
                 beforeEach(^{
-                    configurator.placeholderVisible = NO;
-                    configurator.attributedMessageText = nil;
+                    configuration.placeholderVisible = NO;
+                    configuration.attributedMessageText = nil;
                 });
                 
                 it(@"should update placeholder visible property to YES", ^{
-                    expect(configurator.placeholderVisible).to.beTruthy();
+                    expect(configuration.placeholderVisible).to.beTruthy();
                 });
                 it(@"should set text view's text color to compose bar placeholder color", ^{
                     [verify(textViewMock) setTextColor:[UIColor magentaColor]];
@@ -556,13 +556,13 @@ describe(@"LYRUIComposeBarConfigurator", ^{
             
             context(@"when message text is empty attributed string", ^{
                 beforeEach(^{
-                    configurator.placeholderVisible = NO;
+                    configuration.placeholderVisible = NO;
                     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@""];
-                    configurator.attributedMessageText = attributedString;
+                    configuration.attributedMessageText = attributedString;
                 });
                 
                 it(@"should update placeholder visible property to YES", ^{
-                    expect(configurator.placeholderVisible).to.beTruthy();
+                    expect(configuration.placeholderVisible).to.beTruthy();
                 });
                 it(@"should set text view's text color to compose bar placeholder color", ^{
                     [verify(textViewMock) setTextColor:[UIColor magentaColor]];
@@ -574,13 +574,13 @@ describe(@"LYRUIComposeBarConfigurator", ^{
             
             context(@"when message text is non empty attributed string", ^{
                 beforeEach(^{
-                    configurator.placeholderVisible = YES;
+                    configuration.placeholderVisible = YES;
                     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"1"];
-                    configurator.attributedMessageText = attributedString;
+                    configuration.attributedMessageText = attributedString;
                 });
                 
                 it(@"should update placeholder visible property to NO", ^{
-                    expect(configurator.placeholderVisible).to.beFalsy();
+                    expect(configuration.placeholderVisible).to.beFalsy();
                 });
                 it(@"should set text view's text color to compose bar text color", ^{
                     [verify(textViewMock) setTextColor:[UIColor purpleColor]];
