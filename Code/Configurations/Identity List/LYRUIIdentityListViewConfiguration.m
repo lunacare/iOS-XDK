@@ -32,7 +32,7 @@
 
 @implementation LYRUIIdentityListViewConfiguration
 
-- (void)setupIdentityListView:(LYRUIIdentityListView *)identityListView {
++ (void)setupIdentityListView:(LYRUIIdentityListView *)identityListView {
     [identityListView.collectionView registerClass:[LYRUIListHeaderView class]
                         forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                                withReuseIdentifier:NSStringFromClass([LYRUIListSection class])];
@@ -54,26 +54,16 @@
     [headerConfiguration registerSupplementaryViewInCollectionView:identityListView.collectionView];
     
     identityListView.layout = [[LYRUIListLayout alloc] init];
-    identityListView.dataSource = [self dataSourceWithCellConfiguration:identityCellConfiguration
-                                   headerConfiguration:headerConfiguration];
-    identityListView.delegate = [self delegateWithCellConfiguration:identityCellConfiguration
-                                                headerConfiguration:headerConfiguration];
-}
-
-- (LYRUIListDataSource *)dataSourceWithCellConfiguration:(LYRUIListCellConfiguration *)cellConfiguration
-                                     headerConfiguration:(LYRUIListSupplementaryViewConfiguration *)headerConfiguration {
+    
     LYRUIListDataSource *dataSource = [[LYRUIListDataSource alloc] init];
-    [dataSource registerCellConfiguration:cellConfiguration];
+    [dataSource registerCellConfiguration:identityCellConfiguration];
     [dataSource registerSupplementaryViewConfiguration:headerConfiguration];
-    return dataSource;
-}
-
-- (LYRUIListDelegate *)delegateWithCellConfiguration:(LYRUIListCellConfiguration *)cellConfiguration
-                                 headerConfiguration:(LYRUIListSupplementaryViewConfiguration *)headerConfiguration {
+    identityListView.dataSource = dataSource;
+    
     LYRUIListDelegate *delegate = [[LYRUIListDelegate alloc] init];
-    [delegate registerCellSizeCalculation:cellConfiguration];
+    [delegate registerCellSizeCalculation:identityCellConfiguration];
     [delegate registerSupplementaryViewSizeCalculation:headerConfiguration];
-    return delegate;
+    identityListView.delegate = delegate;
 }
 
 @end

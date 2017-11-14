@@ -25,7 +25,7 @@
 
 @implementation LYRUIIdentityItemIBSetup
 
-- (void)prepareIdentityItemForInterfaceBuilder:(LYRUIIdentityItemView *)identityItem {
++ (void)prepareIdentityItemForInterfaceBuilder:(LYRUIIdentityItemView *)identityItem {
     identityItem.titleLabel.text = @"Full name";
     identityItem.timeLabel.text = @"23 mins ago";
     

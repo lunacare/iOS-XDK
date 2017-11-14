@@ -63,7 +63,7 @@
 }
 
 - (void)prepareForInterfaceBuilder {
-    [[[LYRUIConversationItemIBSetup alloc] init] prepareConversationItemForInterfaceBuilder:self];
+    [LYRUIConversationItemIBSetup prepareConversationItemForInterfaceBuilder:self];
 }
 
 @end

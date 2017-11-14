@@ -25,7 +25,7 @@
 
 @implementation LYRUIConversationItemIBSetup
 
-- (void)prepareConversationItemForInterfaceBuilder:(LYRUIConversationItemView *)conversationItem {
++ (void)prepareConversationItemForInterfaceBuilder:(LYRUIConversationItemView *)conversationItem {
     conversationItem.titleLabel.text = @"Name(s) / Title";
     conversationItem.timeLabel.text = @"8:30am";
     conversationItem.messageLabel.text = @"Message";

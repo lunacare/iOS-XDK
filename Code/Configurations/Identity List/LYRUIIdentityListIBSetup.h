@@ -23,6 +23,6 @@
 
 @interface LYRUIIdentityListIBSetup : NSObject
 
-- (void)prepareIdentityListForInterfaceBuilder:(LYRUIIdentityListView *)identityList;
++ (void)prepareIdentityListForInterfaceBuilder:(LYRUIIdentityListView *)identityList;
 
 @end

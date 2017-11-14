@@ -54,7 +54,7 @@
 }
 
 - (void)prepareForInterfaceBuilder {
-    [[[LYRUIIdentityItemIBSetup alloc] init] prepareIdentityItemForInterfaceBuilder:self];
+    [LYRUIIdentityItemIBSetup prepareIdentityItemForInterfaceBuilder:self];
 }
 
 @end

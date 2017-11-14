@@ -19,23 +19,13 @@
 SpecBegin(LYRUIIdentityListViewConfiguration)
 
 describe(@"LYRUIIdentityListViewConfiguration", ^{
-    __block LYRUIIdentityListViewConfiguration *configuration;
-
-    beforeEach(^{
-        configuration = [[LYRUIIdentityListViewConfiguration alloc] init];
-    });
-
-    afterEach(^{
-        configuration = nil;
-    });
-
     describe(@"setupIdentityListView:", ^{
         __block LYRUIIdentityListView *viewMock;
         
         beforeEach(^{
             viewMock = mock([LYRUIIdentityListView class]);
             
-            [configuration setupIdentityListView:viewMock];
+            [LYRUIIdentityListViewConfiguration setupIdentityListView:viewMock];
         });
         
         it(@"should set view layout to LYRUIListLayout", ^{

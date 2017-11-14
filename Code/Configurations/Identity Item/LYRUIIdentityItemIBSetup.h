@@ -23,6 +23,6 @@
 
 @interface LYRUIIdentityItemIBSetup : NSObject
 
-- (void)prepareIdentityItemForInterfaceBuilder:(LYRUIIdentityItemView *)conversationItem;
++ (void)prepareIdentityItemForInterfaceBuilder:(LYRUIIdentityItemView *)conversationItem;
 
 @end

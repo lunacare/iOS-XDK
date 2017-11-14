@@ -35,7 +35,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [[[LYRUIIdentityListViewConfiguration alloc] init] setupIdentityListView:self];
+        [LYRUIIdentityListViewConfiguration setupIdentityListView:self];
     }
     return self;
 }
@@ -43,13 +43,13 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [[[LYRUIIdentityListViewConfiguration alloc] init] setupIdentityListView:self];
+        [LYRUIIdentityListViewConfiguration setupIdentityListView:self];
     }
     return self;
 }
 
 - (void)prepareForInterfaceBuilder {
-    [[[LYRUIIdentityListIBSetup alloc] init] prepareIdentityListForInterfaceBuilder:self];
+    [LYRUIIdentityListIBSetup prepareIdentityListForInterfaceBuilder:self];
 }
 
 @end

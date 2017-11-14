@@ -31,6 +31,6 @@
  @abstract Configures provided `LYRUIIdentityListView` for presenting `LYRIdentity` items.
  @param identityListView An `LYRUIIdentityListView` instance to be configured. The `layout`, `dataSource`, and `delegate` properties of the list view will be set properly to present `LYRIdentity` items.
  */
-- (void)setupIdentityListView:(LYRUIIdentityListView *)identityListView;
++ (void)setupIdentityListView:(LYRUIIdentityListView *)identityListView;
 
 @end

@@ -31,7 +31,7 @@
 
 @implementation LYRUIIdentityListIBSetup
 
-- (void)prepareIdentityListForInterfaceBuilder:(LYRUIIdentityListView *)identityList {
++ (void)prepareIdentityListForInterfaceBuilder:(LYRUIIdentityListView *)identityList {
     LYRUIListDelegate *delegate = (LYRUIListDelegate *)identityList.delegate;
     CGFloat width = CGRectGetWidth(identityList.bounds);
     CGFloat height = 60;
