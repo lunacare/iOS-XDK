@@ -1,8 +1,8 @@
 //
-//  LYRUIParticipantsFiltering.h
+//  LYRUIIdentityListView.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 04.08.2017.
+//  Created by Łukasz Przytuła on 27.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,20 +18,12 @@
 //  limitations under the License.
 //
 
-#import "LYRUIParticipantsFiltering.h"
+#import "LYRUIBaseListView.h"
 @class LYRIdentity;
 
-NS_ASSUME_NONNULL_BEGIN     // {
-typedef NSSet<LYRIdentity *> *_Nonnull (^LYRUIParticipantsFiltering)(NSSet<LYRIdentity *> *);
-
-extern LYRUIParticipantsFiltering(^LYRUIParticipantsDefaultFilterWithCurrentUser)(LYRIdentity *);
-
-@protocol LYRUIParticipantsFiltering <NSObject>
-
+IB_DESIGNABLE
 /**
- @abstract An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the participants set.
+ @abstract A typed `LYRUIBaseListView`, for presenting `LYRConversation` items.
  */
-@property (nonatomic, strong, nullable) LYRUIParticipantsFiltering participantsFilter;
-
+@interface LYRUIIdentityListView : LYRUIBaseListView<LYRIdentity *>
 @end
-NS_ASSUME_NONNULL_END       // }

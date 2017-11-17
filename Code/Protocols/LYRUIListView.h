@@ -1,8 +1,8 @@
 //
-//  LYRUIParticipantsFiltering.h
+//  LYRUIListView.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 04.08.2017.
+//  Created by Łukasz Przytuła on 31.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,20 +18,23 @@
 //  limitations under the License.
 //
 
-#import "LYRUIParticipantsFiltering.h"
-@class LYRIdentity;
+#import <UIKit/UIKit.h>
+#import "LYRUIViewLayout.h"
+@protocol LYRUIListView;
 
 NS_ASSUME_NONNULL_BEGIN     // {
-typedef NSSet<LYRIdentity *> *_Nonnull (^LYRUIParticipantsFiltering)(NSSet<LYRIdentity *> *);
+@protocol LYRUIListViewLayout <LYRUIViewLayout>
 
-extern LYRUIParticipantsFiltering(^LYRUIParticipantsDefaultFilterWithCurrentUser)(LYRIdentity *);
+- (void)addConstraintsInView:(UIView<LYRUIListView> *)view;
+- (void)removeConstraintsFromView:(UIView<LYRUIListView> *)view;
+- (void)updateConstraintsInView:(UIView<LYRUIListView> *)view;
 
-@protocol LYRUIParticipantsFiltering <NSObject>
+@end
 
-/**
- @abstract An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the participants set.
- */
-@property (nonatomic, strong, nullable) LYRUIParticipantsFiltering participantsFilter;
+@protocol LYRUIListView <NSObject>
+
+@property (nonatomic, weak, readonly) UICollectionView *collectionView;
+@property (nonatomic, copy) id<LYRUIListViewLayout> layout;
 
 @end
 NS_ASSUME_NONNULL_END       // }

@@ -59,7 +59,8 @@ describe(@"LYRUIParticipantsDefaultFilterWithCurrentUser", ^{
                     participantMock3,
                     participantMock4,
                     ];
-            participantsFilter = LYRUIParticipantsDefaultFilterWithCurrentUser(nil);
+            LYRIdentity *nilIdentity = nil;
+            participantsFilter = LYRUIParticipantsDefaultFilterWithCurrentUser(nilIdentity);
             returnedParticipants = participantsFilter([NSSet setWithArray:participantsArray]);
         });
         

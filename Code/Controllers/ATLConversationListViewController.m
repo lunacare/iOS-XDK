@@ -21,7 +21,7 @@
 #import <objc/runtime.h>
 #import "ATLConversationListViewController.h"
 #import "ATLMessagingUtilities.h"
-#import "LYRUIConversationItemViewConfigurator.h"
+#import "LYRUIConversationItemViewConfiguration.h"
 #import "LYRUIConversationItemTableViewCell.h"
 
 static NSString *const ATLConversationCellReuseIdentifier = @"ATLConversationCellReuseIdentifier";
@@ -53,7 +53,7 @@ static UIView *ATLMakeLoadingMoreConversationsIndicatorView()
 @property (nonatomic) NSMutableArray *insertedRowIndexPaths;
 @property (nonatomic) NSMutableArray *deletedRowIndexPaths;
 @property (nonatomic) NSMutableArray *updatedRowIndexPaths;
-@property (nonatomic, strong) LYRUIConversationItemViewConfigurator *conversationItemViewConfigurator;
+@property (nonatomic, strong) LYRUIConversationItemViewConfiguration *conversationItemViewConfiguration;
 
 @end
 
@@ -101,7 +101,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     _shouldDisplaySearchController = YES;
     _hasAppeared = NO;
     LYRIdentity *currentUser = _layerClient.authenticatedUser;
-    _conversationItemViewConfigurator = [[LYRUIConversationItemViewConfigurator alloc] initWithCurrentUser:currentUser];
+    _conversationItemViewConfiguration = [[LYRUIConversationItemViewConfiguration alloc] initWithCurrentUser:currentUser];
 }
 
 - (id)init
@@ -354,7 +354,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     }
     
     // TODO: update cell theme if needed
-    [self.conversationItemViewConfigurator setupConversationItemView:conversationCell withConversation:conversation];
+    [self.conversationItemViewConfiguration setupConversationItemView:conversationCell withConversation:conversation];
 }
 
 #pragma mark - Reloading Conversations

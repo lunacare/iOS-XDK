@@ -1,8 +1,8 @@
 //
-//  LYRUIParticipantsFiltering.h
+//  LYRUIListSection.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 04.08.2017.
+//  Created by Łukasz Przytuła on 27.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,20 +18,23 @@
 //  limitations under the License.
 //
 
-#import "LYRUIParticipantsFiltering.h"
-@class LYRIdentity;
+#import "LYRUIListSectionHeader.h"
 
 NS_ASSUME_NONNULL_BEGIN     // {
-typedef NSSet<LYRIdentity *> *_Nonnull (^LYRUIParticipantsFiltering)(NSSet<LYRIdentity *> *);
-
-extern LYRUIParticipantsFiltering(^LYRUIParticipantsDefaultFilterWithCurrentUser)(LYRIdentity *);
-
-@protocol LYRUIParticipantsFiltering <NSObject>
+/**
+ @abstract A set of items for single section to be used in list.
+ */
+@interface LYRUIListSection<ModelType> : NSObject
 
 /**
- @abstract An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the participants set.
+ @abstract Additional data for section header view.
  */
-@property (nonatomic, strong, nullable) LYRUIParticipantsFiltering participantsFilter;
+@property (nonatomic, strong) id<LYRUIListSectionHeader> header;
+
+/**
+ @abstract Array of items in section.
+ */
+@property (nonatomic, strong) NSMutableArray<ModelType> *items;
 
 @end
 NS_ASSUME_NONNULL_END       // }
