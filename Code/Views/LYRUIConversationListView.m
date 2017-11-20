@@ -27,7 +27,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [[[LYRUIConversationListViewConfiguration alloc] init] setupConversationListView:self];
+        [LYRUIConversationListViewConfiguration setupConversationListView:self];
     }
     return self;
 }
@@ -35,13 +35,13 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [[[LYRUIConversationListViewConfiguration alloc] init] setupConversationListView:self];
+        [LYRUIConversationListViewConfiguration setupConversationListView:self];
     }
     return self;
 }
 
 - (void)prepareForInterfaceBuilder {
-    [[[LYRUIConversationListIBSetup alloc] init] prepareConversationListForInterfaceBuilder:self];
+    [LYRUIConversationListIBSetup prepareConversationListForInterfaceBuilder:self];
 }
 
 @end

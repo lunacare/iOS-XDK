@@ -32,7 +32,7 @@
 
 @implementation LYRUIConversationListViewConfiguration
 
-- (void)setupConversationListView:(LYRUIConversationListView *)conversationListView {
++ (void)setupConversationListView:(LYRUIConversationListView *)conversationListView {
     LYRUIConversationItemViewConfiguration *configuration = [[LYRUIConversationItemViewConfiguration alloc] init];
     
     LYRUIListCellConfiguration<LYRUIConversationCollectionViewCell *, LYRUIConversationItemViewConfiguration *, LYRConversation *> *conversationCellConfiguration =
@@ -50,26 +50,16 @@
     [headerConfiguration registerSupplementaryViewInCollectionView:conversationListView.collectionView];
     
     conversationListView.layout = [[LYRUIListLayout alloc] init];
-    conversationListView.dataSource = [self dataSourceWithCellConfiguration:conversationCellConfiguration
-                                                        headerConfiguration:headerConfiguration];
-    conversationListView.delegate = [self delegateWithCellConfiguration:conversationCellConfiguration
-                                                  headerConfiguration:headerConfiguration];
-}
-
-- (LYRUIListDataSource *)dataSourceWithCellConfiguration:(LYRUIListCellConfiguration *)cellConfiguration
-                                     headerConfiguration:(LYRUIListSupplementaryViewConfiguration *)headerConfiguration {
+    
     LYRUIListDataSource *dataSource = [[LYRUIListDataSource alloc] init];
-    [dataSource registerCellConfiguration:cellConfiguration];
+    [dataSource registerCellConfiguration:conversationCellConfiguration];
     [dataSource registerSupplementaryViewConfiguration:headerConfiguration];
-    return dataSource;
-}
-
-- (LYRUIListDelegate *)delegateWithCellConfiguration:(LYRUIListCellConfiguration *)cellConfiguration
-                                 headerConfiguration:(LYRUIListSupplementaryViewConfiguration *)headerConfiguration {
+    conversationListView.dataSource = dataSource;
+    
     LYRUIListDelegate *delegate = [[LYRUIListDelegate alloc] init];
-    [delegate registerCellSizeCalculation:cellConfiguration];
+    [delegate registerCellSizeCalculation:conversationCellConfiguration];
     [delegate registerSupplementaryViewSizeCalculation:headerConfiguration];
-    return delegate;
+    conversationListView.delegate = delegate;
 }
 
 @end

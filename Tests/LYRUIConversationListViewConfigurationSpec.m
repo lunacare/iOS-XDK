@@ -17,16 +17,6 @@
 SpecBegin(LYRUIConversationListViewConfiguration)
 
 describe(@"LYRUIConversationListViewConfiguration", ^{
-    __block LYRUIConversationListViewConfiguration *configuration;
-
-    beforeEach(^{
-        configuration = [[LYRUIConversationListViewConfiguration alloc] init];
-    });
-
-    afterEach(^{
-        configuration = nil;
-    });
-    
     describe(@"setupConversationListView:", ^{
         __block LYRUIConversationListView *viewMock;
         __block LYRIdentity *currentUserMock;
@@ -36,7 +26,7 @@ describe(@"LYRUIConversationListViewConfiguration", ^{
             
             currentUserMock = mock([LYRIdentity class]);
             
-            [configuration setupConversationListView:viewMock];
+            [LYRUIConversationListViewConfiguration setupConversationListView:viewMock];
         });
         
         it(@"should set view layout to LYRUIConversationListLayout", ^{

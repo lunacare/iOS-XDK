@@ -31,7 +31,7 @@
 
 @implementation LYRUIConversationListIBSetup
 
-- (void)prepareConversationListForInterfaceBuilder:(LYRUIConversationListView *)conversationList {
++ (void)prepareConversationListForInterfaceBuilder:(LYRUIConversationListView *)conversationList {
     [conversationList.collectionView registerClass:[LYRUIConversationCollectionViewCell class]
                     forCellWithReuseIdentifier:NSStringFromClass([NSObject class])];
     
@@ -47,11 +47,13 @@
     }
     
     LYRUIListSection *section1 = [[LYRUIListSection<LYRConversation *> alloc] init];
-    [section1 addHeaderWithTitle:@"GENERAL"];
+    section1.header = [[LYRUIListSectionHeader alloc] init];
+    section1.header.title = @"GENERAL";
     section1.items = [@[[NSObject new], [NSObject new], [NSObject new]] mutableCopy];
     
     LYRUIListSection *section2 = [[LYRUIListSection<LYRConversation *> alloc] init];
-    [section2 addHeaderWithTitle:@"DIRECT MESSAGES"];
+    section2.header = [[LYRUIListSectionHeader alloc] init];
+    section2.header.title = @"DIRECT MESSAGES";
     section2.items = [@[[NSObject new], [NSObject new], [NSObject new], [NSObject new]] mutableCopy];
     
     LYRUIListDataSource *dataSource = (LYRUIListDataSource *)conversationList.dataSource;

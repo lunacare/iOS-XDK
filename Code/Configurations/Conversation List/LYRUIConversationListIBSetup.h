@@ -23,6 +23,6 @@
 
 @interface LYRUIConversationListIBSetup : NSObject
 
-- (void)prepareConversationListForInterfaceBuilder:(LYRUIConversationListView *)identityList;
++ (void)prepareConversationListForInterfaceBuilder:(LYRUIConversationListView *)identityList;
 
 @end

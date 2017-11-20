@@ -31,6 +31,6 @@
  @abstract Configures provided `LYRUIConversationListView` for presenting `LYRConversation` items.
  @param conversationListView An `LYRUIConversationListView` instance to be configured. The `layout`, `dataSource`, and `delegate` properties of the list view will be set properly to present `LYRConversation` items.
  */
-- (void)setupConversationListView:(LYRUIConversationListView *)conversationListView;
++ (void)setupConversationListView:(LYRUIConversationListView *)conversationListView;
 
 @end
