@@ -35,7 +35,7 @@
 
 @implementation LYRUIConversationItemView
 @dynamic accessoryViewContainer;
-@synthesize theme = _theme,
+@synthesize theme = _readTheme,
             state = _state;
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -78,49 +78,25 @@
     _state = state;
     switch (state) {
         case LYRUIConversationItemViewStateRead:
-            [self updateWithTheme:self.theme];
+            super.theme = self.theme;
             break;
         case LYRUIConversationItemViewStateUnread:
-            [self updateWithTheme:self.unreadTheme];
+            super.theme = self.unreadTheme;
             break;
     }
 }
 
 - (void)setTheme:(id<LYRUIBaseItemViewTheme>)theme {
-    _theme = theme;
+    _readTheme = theme;
     if (self.state == LYRUIConversationItemViewStateRead) {
-        [self updateWithTheme:theme];
+        super.theme = theme;
     }
 }
 
 - (void)setUnreadTheme:(id<LYRUIBaseItemViewTheme>)unreadTheme {
     _unreadTheme = unreadTheme;
     if (self.state == LYRUIConversationItemViewStateUnread) {
-        [self updateWithTheme:unreadTheme];
-    }
-}
-
-- (void)updateWithTheme:(id<LYRUIBaseItemViewTheme>)theme {
-    if (theme == nil) {
-        return;
-    }
-    if (theme.titleLabelFont) {
-        self.titleLabelFont = theme.titleLabelFont;
-    }
-    if (theme.titleLabelColor) {
-        self.titleLabelColor = theme.titleLabelColor;
-    }
-    if (theme.subtitleLabelFont) {
-        self.subtitleLabelFont = theme.subtitleLabelFont;
-    }
-    if (theme.subtitleLabelColor) {
-        self.subtitleLabelColor = theme.subtitleLabelColor;
-    }
-    if (theme.detailLabelFont) {
-        self.detailLabelFont = theme.detailLabelFont;
-    }
-    if (theme.detailLabelColor) {
-        self.detailLabelColor = theme.detailLabelColor;
+        super.theme = unreadTheme;
     }
 }
 
