@@ -1,8 +1,8 @@
 //
-//  LYRUIIdentityCollectionViewCell.m
+//  LYRUIConversationListView.m
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 27.07.2017.
+//  Created by Łukasz Przytuła on 14.08.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,15 +18,16 @@
 //  limitations under the License.
 //
 
-#import "LYRUIIdentityCollectionViewCell.h"
-#import "LYRUIIdentityItemView.h"
+#import "LYRUIConversationListView.h"
+#import "LYRUIConversationListIBSetup.h"
+#import "LYRUIConversationListViewConfiguration.h"
 
-@implementation LYRUIIdentityCollectionViewCell
+@implementation LYRUIConversationListView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self lyr_commonInit];
+        [LYRUIConversationListViewConfiguration setupConversationListView:self];
     }
     return self;
 }
@@ -34,17 +35,13 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self lyr_commonInit];
+        [LYRUIConversationListViewConfiguration setupConversationListView:self];
     }
     return self;
 }
 
-- (void)lyr_commonInit {
-    LYRUIIdentityItemView *identityView = [[LYRUIIdentityItemView alloc] init];
-    identityView.frame = self.contentView.bounds;
-    identityView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    [self.contentView addSubview:identityView];
-    self.identityView = identityView;
+- (void)prepareForInterfaceBuilder {
+    [LYRUIConversationListIBSetup prepareConversationListForInterfaceBuilder:self];
 }
 
 @end

@@ -23,6 +23,7 @@
 @class LYRConversation;
 @class LYRIdentity;
 
+NS_ASSUME_NONNULL_BEGIN     // {
 @protocol LYRUIConversationItemTitleFormatting <NSObject>
 
 /**
@@ -35,6 +36,7 @@
  @param conversation The `LYRConversation` object.
  @return The string to be displayed as the title for a given conversation in the conversation list.
  */
-- (nonnull NSString *)titleForConversation:(nonnull LYRConversation *)conversation;
+- (NSString *)titleForConversation:(LYRConversation *)conversation;
 
 @end
+NS_ASSUME_NONNULL_END       // }

@@ -4,7 +4,6 @@
 #import <OCMockito/OCMockito.h>
 #import <Atlas/LYRUIBaseItemViewLayout.h>
 #import <Atlas/LYRUIBaseItemView.h>
-#import <Atlas/LYRUISampleAccessoryView.h>
 #import <Atlas/LYRUIConversationItemViewLayoutMetrics.h>
 #import <Atlas/LYRUIIdentityItemViewLayoutMetrics.h>
 
@@ -182,7 +181,7 @@ describe(@"LYRUIBaseItemViewLayout", ^{
             
             context(@"with accessory view", ^{
                 beforeEach(^{
-                    UIView *accessoryView = [[LYRUISampleAccessoryView alloc] init];
+                    UIView *accessoryView = [[UIView alloc] init];
                     baseItemView.accessoryView = accessoryView;
                 });
                 
@@ -487,7 +486,7 @@ describe(@"LYRUIBaseItemViewLayout", ^{
             
             context(@"with accessory view", ^{
                 beforeEach(^{
-                    UIView *accessoryView = [[LYRUISampleAccessoryView alloc] init];
+                    UIView *accessoryView = [[UIView alloc] init];
                     baseItemView.accessoryView = accessoryView;
                 });
                 

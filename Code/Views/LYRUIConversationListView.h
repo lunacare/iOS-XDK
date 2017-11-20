@@ -1,8 +1,8 @@
 //
-//  LYRUISampleAccessoryView.h
+//  LYRUIConversationListView.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 06.07.2017.
+//  Created by Łukasz Przytuła on 14.08.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,12 @@
 //  limitations under the License.
 //
 
-#import <UIKit/UIKit.h>
+#import "LYRUIBaseListView.h"
+@class LYRConversation;
 
-@interface LYRUISampleAccessoryView : UIView
+IB_DESIGNABLE
+/**
+ @abstract A typed `LYRUIBaseListView`, for presenting `LYRConversation` items.
+ */
+@interface LYRUIConversationListView : LYRUIBaseListView<LYRConversation *>
 @end

@@ -19,7 +19,6 @@
 //
 
 #import "LYRUIBaseItemView.h"
-#import "LYRUISampleAccessoryView.h"
 
 @interface LYRUIBaseItemView ()
 

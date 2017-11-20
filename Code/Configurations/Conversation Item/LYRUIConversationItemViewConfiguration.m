@@ -22,6 +22,7 @@
 #import "LYRUIMessageTimeDefaultFormatter.h"
 #import "LYRUIConversationItemTitleFormatter.h"
 #import "LYRUIConversationItemAccessoryViewProvider.h"
+#import "LYRUIMessageTextDefaultFormatter.h"
 #import "LYRUIParticipantsFiltering.h"
 
 @implementation LYRUIConversationItemViewConfiguration
@@ -44,7 +45,7 @@
 
 - (instancetype)initWithAccessoryViewProvider:(id<LYRUIConversationItemAccessoryViewProviding>)accessoryViewProvider
                                titleFormatter:(id<LYRUIConversationItemTitleFormatting>)titleFormatter
-                         lastMessageFormatter:(id<LYRUIConversationItemLastMessageFormatting>)lastMessageFormatter
+                         lastMessageFormatter:(id<LYRUIMessageTextFormatting>)lastMessageFormatter
                          messageTimeFormatter:(id<LYRUITimeFormatting>)messageTimeFormatter {
     self = [super init];
     if (self) {
@@ -57,7 +58,7 @@
         }
         self.titleFormatter = titleFormatter;
         if (lastMessageFormatter == nil) {
-            //TODO: set default formatter;
+            lastMessageFormatter = [[LYRUIMessageTextDefaultFormatter alloc] init];
         }
         self.lastMessageFormatter = lastMessageFormatter;
         if (messageTimeFormatter == nil) {
@@ -95,7 +96,7 @@
     if (lastMessage) {
         view.timeLabel.text = [self.messageTimeFormatter stringForTime:lastMessage.sentAt
                                                        withCurrentTime:[NSDate date]];
-        view.messageLabel.text = [self.lastMessageFormatter stringForConversationLastMessage:lastMessage];
+        view.messageLabel.text = [self.lastMessageFormatter stringForMessage:lastMessage];
     }
     if (view.accessoryView == nil) {
         view.accessoryView = [self.accessoryViewProvider accessoryViewForConversation:conversation];

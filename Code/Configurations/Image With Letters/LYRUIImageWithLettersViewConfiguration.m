@@ -23,10 +23,12 @@
 #import "LYRUIImageFetcher.h"
 #import "LYRUIImageFactory.h"
 #import "LYRUIInitialsFormatter.h"
+#import "NSCache+LYRUIImageCaching.h"
 
 @interface LYRUIImageWithLettersViewConfiguration ()
 
 @property (nonatomic, strong) id<LYRUIImageFetching> imageFetcher;
+@property (nonatomic, strong) id<LYRUIImageCaching> imagesCache;
 @property (nonatomic, strong) id<LYRUIImageCreating> imageFactory;
 @property (nonatomic, strong) id<LYRUIInitialsFormatting> initialsFormatter;
 
@@ -35,11 +37,12 @@
 @implementation LYRUIImageWithLettersViewConfiguration
 
 - (instancetype)init {
-    self = [self initWithImageFetcher:nil imageFactory:nil initialsFormatter:nil];
+    self = [self initWithImageFetcher:nil imagesCache:nil imageFactory:nil initialsFormatter:nil];
     return self;
 }
 
 - (instancetype)initWithImageFetcher:(id<LYRUIImageFetching>)imageFetcher
+                         imagesCache:(id<LYRUIImageCaching>)imagesCache
                         imageFactory:(id<LYRUIImageCreating>)imageFactory
                    initialsFormatter:(id<LYRUIInitialsFormatting>)initialsFormatter {
     self = [super init];
@@ -48,6 +51,10 @@
             imageFetcher = [[LYRUIImageFetcher alloc] init];
         }
         self.imageFetcher = imageFetcher;
+        if (imagesCache == nil) {
+            imagesCache = [NSCache sharedImagesCache];
+        }
+        self.imagesCache = imagesCache;
         if (imageFactory == nil) {
             imageFactory = [[LYRUIImageFactory alloc] init];
         }
@@ -63,23 +70,28 @@
 #pragma mark - LYRUIImageWithLettersView configuration
 
 - (void)setupImageWithLettersView:(LYRUIImageWithLettersView *)view withIdentity:(LYRIdentity *)identity {
-    NSString *initials = [self.initialsFormatter initialsForIdentity:identity];
-    
-    if (identity.avatarImageURL) {
-        __weak __typeof(self) weakSelf = self;
-        __weak __typeof(view) weakView = view;
-        [view.imageFetchTask cancel];
-        view.imageFetchTask = [self.imageFetcher fetchImageWithURL:identity.avatarImageURL andCallback:^(UIImage * _Nullable image) {
-            if (image) {
-                weakView.image = image;
-                weakView.letters = nil;
-            } else {
-                [weakSelf setInitials:initials orPlaceholderInView:weakView];
-            }
-        }];
-    } else {
-        [self setInitials:initials orPlaceholderInView:view];
+    UIImage *cachedImage = [self.imagesCache objectForKey:identity.avatarImageURL];
+    if (cachedImage) {
+        view.image = cachedImage;
+        view.letters = nil;
+        return;
     }
+    
+    NSString *initials = [self.initialsFormatter initialsForIdentity:identity];
+    [self setInitials:initials orPlaceholderInView:view];
+    
+    if (identity.avatarImageURL == nil) {
+        return;
+    }
+    
+    __weak __typeof(view) weakView = view;
+    [view.imageFetchTask cancel];
+    view.imageFetchTask = [self.imageFetcher fetchImageWithURL:identity.avatarImageURL andCallback:^(UIImage * _Nullable image) {
+        if (image) {
+            weakView.image = image;
+            weakView.letters = nil;
+        }
+    }];
 }
 
 - (void)setupImageWithLettersViewWithMultipleParticipantsIcon:(LYRUIImageWithLettersView *)view {

@@ -1,8 +1,8 @@
 //
-//  LYRUIIdentityNameFormatter.h
+//  LYRUISortDescriptor.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 13.07.2017.
+//  Created by Łukasz Przytuła on 09.08.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +18,10 @@
 //  limitations under the License.
 //
 
-#import "LYRUIIdentityNameFormatting.h"
+#import <Foundation/Foundation.h>
 
 /**
- @abstract The `LYRUIIdentityNameFormatter` objects will be used for providing a formatted name of `LYRIdentity`.
+ @abstract A sort descriptor which puts nil's at the end, instead of beginning, for the `ascending` order.
  */
-@interface LYRUIIdentityNameFormatter : NSObject <LYRUIIdentityNameFormatting>
+@interface LYRUISortDescriptor : NSSortDescriptor
 @end

@@ -1,8 +1,8 @@
 //
-//  LYRUIIdentityNameFormatter.h
+//  LYRUIConversationCollectionViewCell.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 13.07.2017.
+//  Created by Łukasz Przytuła on 31.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +18,17 @@
 //  limitations under the License.
 //
 
-#import "LYRUIIdentityNameFormatting.h"
+#import <UIKit/UIKit.h>
+@class LYRUIConversationItemView;
 
 /**
- @abstract The `LYRUIIdentityNameFormatter` objects will be used for providing a formatted name of `LYRIdentity`.
+ @abstract A collection view cell to present `LYRConversation` item inside the `LYRUIConversationListView`.
  */
-@interface LYRUIIdentityNameFormatter : NSObject <LYRUIIdentityNameFormatting>
+@interface LYRUIConversationCollectionViewCell : UICollectionViewCell
+
+/**
+ @abstract Contained `LYRUIConversationItemView` which will be filled with data from `LYRConversation` instance.
+ */
+@property (nonatomic, weak) LYRUIConversationItemView *conversationView;
+
 @end

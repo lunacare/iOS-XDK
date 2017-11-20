@@ -74,7 +74,7 @@ describe(@"LYRUIIdentityListViewConfiguration", ^{
                 describe(@"cell setup block", ^{
                     __block LYRUIIdentityItemView *itemViewMock;
                     __block LYRIdentity *identityMock;
-                    __block LYRUIIdentityItemViewConfiguration *configuratorMock;
+                    __block LYRUIIdentityItemViewConfiguration *configurationMock;
                     
                     beforeEach(^{
                         LYRUIIdentityCollectionViewCell *cellMock = mock([LYRUIIdentityCollectionViewCell class]);
@@ -83,13 +83,13 @@ describe(@"LYRUIIdentityListViewConfiguration", ^{
                         
                         identityMock = mock([LYRIdentity class]);
                         
-                        configuratorMock = mock([LYRUIIdentityItemViewConfiguration class]);
+                        configurationMock = mock([LYRUIIdentityItemViewConfiguration class]);
                         
-                        cellConfiguration.cellSetupBlock(cellMock, identityMock, configuratorMock);
+                        cellConfiguration.cellSetupBlock(cellMock, identityMock, configurationMock);
                     });
                     
                     it(@"should use the configuration to setup identity item view with identity", ^{
-                        [verify(configuratorMock) setupIdentityItemView:itemViewMock withIdentity:identityMock];
+                        [verify(configurationMock) setupIdentityItemView:itemViewMock withIdentity:identityMock];
                     });
                 });
                 

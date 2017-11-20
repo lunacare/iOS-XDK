@@ -473,6 +473,30 @@ describe(@"LYRUIListDelegate", ^{
             });
         });
     });
+    
+    describe(@"collectionView:didSelectItemAtIndexPath:", ^{
+        __block BOOL indexPathSelectedCalled;
+        __block NSIndexPath *capturedIndexPath;
+        
+        beforeEach(^{
+            indexPathSelectedCalled = NO;
+            delegate.indexPathSelected = ^(NSIndexPath *indexPath) {
+                indexPathSelectedCalled = YES;
+                capturedIndexPath = indexPath;
+            };
+            
+            UICollectionView *collectionViewMock = mock([UICollectionView class]);
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:1 inSection:2];
+            [delegate collectionView:collectionViewMock didSelectItemAtIndexPath:indexPath];
+        });
+        
+        it(@"should call the block", ^{
+            expect(indexPathSelectedCalled).to.beTruthy();
+        });
+        it(@"should call the block with proper index path", ^{
+            expect(capturedIndexPath).to.equal([NSIndexPath indexPathForItem:1 inSection:2]);
+        });
+    });
 });
 
 SpecEnd

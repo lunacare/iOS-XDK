@@ -3,6 +3,8 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <Atlas/LYRUIConversationItemTitleFormatter.h>
+#import <Atlas/LYRUIParticipantsFiltering.h>
+#import <Atlas/LYRUIParticipantsSorting.h>
 #import <LayerKit/LayerKit.h>
 
 @interface LYRUIConversationItemTitleFormatter (PrivateProperties)
@@ -17,13 +19,20 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
     __block LYRUIConversationItemTitleFormatter *formatter;
     __block LYRUIParticipantsFiltering participantsFilterMock;
     __block NSSet *participantsFilterMockReturnValue;
+    __block LYRUIParticipantsSorting participantsSorterMock;
+    __block NSArray *participantsSorterMockReturnValue;
     __block LYRConversation *conversationMock;
     
     beforeEach(^{
         participantsFilterMock = ^NSSet *(NSSet *identities) {
             return participantsFilterMockReturnValue;
         };
-        formatter = [[LYRUIConversationItemTitleFormatter alloc] initWithParticipantsFilter:participantsFilterMock];
+        participantsSorterMock = ^NSArray *(NSSet *identities) {
+            return participantsSorterMockReturnValue;
+        };
+        formatter = [[LYRUIConversationItemTitleFormatter alloc] initWithParticipantsFilter:participantsFilterMock
+                                                                         participantsSorter:participantsSorterMock
+                                                                              nameFormatter:nil];
         conversationMock = mock([LYRConversation class]);
     });
     
@@ -62,12 +71,14 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                     LYRIdentity *participantMock2 = mock([LYRIdentity class]);
                     [given(participantMock2.displayName) willReturn:@"Ferdinand Porsche"];
                     
-                    NSSet *participants = [NSSet setWithArray:@[
+                    NSArray *participantsArray = @[
                             participantMock1,
                             participantMock2,
-                    ]];
-                    [given(conversationMock.participants) willReturn:participants];
-                    participantsFilterMockReturnValue = participants;
+                    ];
+                    NSSet *participantsSet = [NSSet setWithArray:participantsArray];
+                    [given(conversationMock.participants) willReturn:participantsSet];
+                    participantsFilterMockReturnValue = participantsSet;
+                    participantsSorterMockReturnValue = participantsArray;
                     
                     returnedString = [formatter titleForConversation:conversationMock];
                 });
@@ -88,14 +99,16 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                     LYRIdentity *participantMock4 = mock([LYRIdentity class]);
                     [given(participantMock4.displayName) willReturn:@"Walter Owen Bentley"];
                     
-                    NSSet *participants = [NSSet setWithArray:@[
+                    NSArray *participantsArray = @[
                             participantMock1,
                             participantMock2,
                             participantMock3,
                             participantMock4,
-                    ]];
-                    [given(conversationMock.participants) willReturn:participants];
-                    participantsFilterMockReturnValue = participants;
+                    ];
+                    NSSet *participantsSet = [NSSet setWithArray:participantsArray];
+                    [given(conversationMock.participants) willReturn:participantsSet];
+                    participantsFilterMockReturnValue = participantsSet;
+                    participantsSorterMockReturnValue = participantsArray;
                     
                     returnedString = [formatter titleForConversation:conversationMock];
                 });
@@ -103,6 +116,60 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                 it(@"should return the title from metadata", ^{
                     expect(returnedString).to.equal(@"test conversation title");
                 });
+            });
+        });
+        
+        context(@"for conversation with empty string in metadata", ^{
+            __block LYRIdentity *otherParticipantMock;
+            beforeEach(^{
+                [given(conversationMock.metadata) willReturn:@{
+                        @"conversationName" : @""
+                }];
+
+                otherParticipantMock = mock([LYRIdentity class]);
+                [given(otherParticipantMock.displayName) willReturn:@"Ferdinand Porsche"];
+                
+                NSSet *participants = [NSSet setWithArray:@[
+                        otherParticipantMock,
+                ]];
+                [given(conversationMock.participants) willReturn:participants];
+                NSSet *filteredParticipants = [NSSet setWithArray:@[
+                        otherParticipantMock,
+                ]];
+                participantsFilterMockReturnValue = filteredParticipants;
+                
+                returnedString = [formatter titleForConversation:conversationMock];
+            });
+
+            it(@"should not use metadata title and return name of the other participant", ^{
+                expect(returnedString).to.equal(@"Ferdinand Porsche");
+            });
+        });
+        
+        context(@"for conversation with string containing only whitechars in metadata", ^{
+            __block LYRIdentity *otherParticipantMock;
+            beforeEach(^{
+                [given(conversationMock.metadata) willReturn:@{
+                        @"conversationName" : @"\t\n "
+                }];
+                
+                otherParticipantMock = mock([LYRIdentity class]);
+                [given(otherParticipantMock.displayName) willReturn:@"Ferdinand Porsche"];
+                
+                NSSet *participants = [NSSet setWithArray:@[
+                        otherParticipantMock,
+                ]];
+                [given(conversationMock.participants) willReturn:participants];
+                NSSet *filteredParticipants = [NSSet setWithArray:@[
+                        otherParticipantMock,
+                ]];
+                participantsFilterMockReturnValue = filteredParticipants;
+                
+                returnedString = [formatter titleForConversation:conversationMock];
+            });
+            
+            it(@"should not use metadata title and return name of the other participant", ^{
+                expect(returnedString).to.equal(@"Ferdinand Porsche");
             });
         });
         
@@ -134,17 +201,15 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                     [given(otherParticipantMock.firstName) willReturn:@"Ferdinand"];
                     [given(otherParticipantMock.lastName) willReturn:@"Porsche"];
                     
-                    NSSet *participants = [NSSet setWithArray:@[
-                            participantMock1,
+                    NSArray *participantsArray = @[
                             otherParticipantMock,
-                    ]];
-                    [given(conversationMock.participants) willReturn:participants];
-                    NSSet *filteredParticipants = [NSSet setWithArray:@[
-                            otherParticipantMock,
-                    ]];
-                    participantsFilterMockReturnValue = filteredParticipants;
+                    ];
+                    NSSet *participantsSet = [NSSet setWithArray:participantsArray];
+                    [given(conversationMock.participants) willReturn:participantsSet];
+                    participantsFilterMockReturnValue = participantsSet;
+                    participantsSorterMockReturnValue = participantsArray;
                 });
-
+                
                 context(@"when other user has both first name and last name set", ^{
                     beforeEach(^{
                         returnedString = [formatter titleForConversation:conversationMock];
@@ -221,13 +286,15 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                             participantMock4,
                     ]];
                     [given(conversationMock.participants) willReturn:participants];
-                    NSSet *filteredParticipants = [NSSet setWithArray:@[
+                    NSArray *participantsArray = @[
                             participantMock2,
                             participantMock3,
                             participantMock4,
-                    ]];
-                    participantsFilterMockReturnValue = filteredParticipants;
-                
+                    ];
+                    NSSet *participantsSet = [NSSet setWithArray:participantsArray];
+                    participantsFilterMockReturnValue = participantsSet;
+                    participantsSorterMockReturnValue = participantsArray;
+                    
                     returnedString = [formatter titleForConversation:conversationMock];
                 });
                 

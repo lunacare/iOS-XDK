@@ -5,6 +5,8 @@
 #import <OCHamcrest/OCHamcrest.h>
 #import <Atlas/LYRUIConversationItemAccessoryViewProvider.h>
 #import <Atlas/LYRUIAvatarView.h>
+#import <Atlas/LYRUIParticipantsFiltering.h>
+#import <Atlas/LYRUIParticipantsSorting.h>
 #import <LayerKit/LayerKit.h>
 
 @interface LYRUIConversationItemAccessoryViewProvider (PrivateProperties)
@@ -18,6 +20,7 @@ SpecBegin(LYRUIConversationItemAccessoryViewProvider)
 describe(@"LYRUIConversationItemAccessoryViewProvider", ^{
     __block LYRUIConversationItemAccessoryViewProvider *provider;
     __block LYRUIParticipantsFiltering participantsFilterMock;
+    __block LYRUIParticipantsSorting participantsSorterMock;
     __block LYRConversation *conversationMock;
     __block NSArray<LYRIdentity *> *participants;
     
@@ -31,7 +34,11 @@ describe(@"LYRUIConversationItemAccessoryViewProvider", ^{
         participantsFilterMock = ^NSSet *(NSSet *identities) {
             return participantsSet;
         };
-        provider = [[LYRUIConversationItemAccessoryViewProvider alloc] initWithParticipantsFilter:participantsFilterMock];
+        participantsSorterMock = ^NSArray *(NSSet *identities) {
+            return participants;
+        };
+        provider = [[LYRUIConversationItemAccessoryViewProvider alloc] initWithParticipantsFilter:participantsFilterMock
+                                                                               participantsSorter:participantsSorterMock];
         conversationMock = mock([LYRConversation class]);
         [given(conversationMock.participants) willReturn:participantsSet];
     });
@@ -56,7 +63,7 @@ describe(@"LYRUIConversationItemAccessoryViewProvider", ^{
             expect(returnedView.translatesAutoresizingMaskIntoConstraints).to.beFalsy();
         });
         it(@"should setup view with identities", ^{
-            assertThat(returnedView.identities, containsInAnyOrderIn(participants));
+            expect(returnedView.identities).to.equal(participants);
         });
     });
     
@@ -69,7 +76,7 @@ describe(@"LYRUIConversationItemAccessoryViewProvider", ^{
         });
         
         it(@"should setup view with identities", ^{
-            assertThat(view.identities, containsInAnyOrderIn(participants));
+            expect(view.identities).to.equal(participants);
         });
     });
 });

@@ -1,8 +1,8 @@
 //
-//  LYRUIIdentityNameFormatter.h
+//  LYRUISortDescriptor.m
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 13.07.2017.
+//  Created by Łukasz Przytuła on 09.08.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +18,19 @@
 //  limitations under the License.
 //
 
-#import "LYRUIIdentityNameFormatting.h"
+#import "LYRUISortDescriptor.h"
 
-/**
- @abstract The `LYRUIIdentityNameFormatter` objects will be used for providing a formatted name of `LYRIdentity`.
- */
-@interface LYRUIIdentityNameFormatter : NSObject <LYRUIIdentityNameFormatting>
+@implementation LYRUISortDescriptor
+
+- (NSComparisonResult)compareObject:(id)object1 toObject:(id)object2 {
+    if ([object1 valueForKeyPath:self.key] == nil && [object2 valueForKeyPath:self.key] == nil) {
+        return NSOrderedSame;
+    } else if ([object2 valueForKeyPath:self.key] == nil) {
+        return NSOrderedAscending;
+    } else if ([object1 valueForKeyPath:self.key] == nil) {
+        return NSOrderedDescending;
+    }
+    return [super compareObject:object1 toObject:object2];
+}
+
 @end

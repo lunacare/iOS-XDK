@@ -1,8 +1,8 @@
 //
-//  LYRUIIdentityNameFormatter.h
+//  LYRUIConversationListIBSetup.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 13.07.2017.
+//  Created by Łukasz Przytuła on 31.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +18,11 @@
 //  limitations under the License.
 //
 
-#import "LYRUIIdentityNameFormatting.h"
+#import <Foundation/Foundation.h>
+@class LYRUIConversationListView;
 
-/**
- @abstract The `LYRUIIdentityNameFormatter` objects will be used for providing a formatted name of `LYRIdentity`.
- */
-@interface LYRUIIdentityNameFormatter : NSObject <LYRUIIdentityNameFormatting>
+@interface LYRUIConversationListIBSetup : NSObject
+
++ (void)prepareConversationListForInterfaceBuilder:(LYRUIConversationListView *)identityList;
+
 @end
