@@ -21,8 +21,8 @@ describe(@"LYRUIBaseItemViewLayout", ^{
             baseItemView = [[LYRUIBaseItemView alloc] initWithLayout:layout];
             baseItemView.translatesAutoresizingMaskIntoConstraints = NO;
             baseItemView.titleLabel.text = @"this is a long test conversation title";
-            baseItemView.timeLabel.text = @"8:30am";
-            baseItemView.messageLabel.text = @"test last message";
+            baseItemView.detailLabel.text = @"8:30am";
+            baseItemView.subtitleLabel.text = @"test last message";
             
             baseItemViewSizeSetup = ^(CGSize size) {
                 [[baseItemView.widthAnchor constraintEqualToConstant:size.width] setActive:YES];
@@ -62,10 +62,10 @@ describe(@"LYRUIBaseItemViewLayout", ^{
                         expect(baseItemView.titleLabel.font).to.equal(expectedFont);
                     });
                     it(@"should hide date message label", ^{
-                        expect(baseItemView.timeLabel.hidden).to.beTruthy();
+                        expect(baseItemView.detailLabel.hidden).to.beTruthy();
                     });
                     it(@"should hide last message label", ^{
-                        expect(baseItemView.messageLabel.hidden).to.beTruthy();
+                        expect(baseItemView.subtitleLabel.hidden).to.beTruthy();
                     });
                 });
                 
@@ -88,19 +88,19 @@ describe(@"LYRUIBaseItemViewLayout", ^{
                         expect(baseItemView.titleLabel.font).to.equal(expectedFont);
                     });
                     it(@"should show date message label", ^{
-                        expect(baseItemView.timeLabel.hidden).to.beFalsy();
+                        expect(baseItemView.detailLabel.hidden).to.beFalsy();
                     });
                     it(@"should set proper date label frame", ^{
                         CGRect expectedFrame = CGRectMake(271.5, 18.0, 36.5, 12.0);
-                        expect(baseItemView.timeLabel.frame).to.equal(expectedFrame);
+                        expect(baseItemView.detailLabel.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper date label's font", ^{
                         NSString *fontName = [UIFont systemFontOfSize:1].fontName;
                         UIFont *expectedFont = [UIFont fontWithName:fontName size:10];
-                        expect(baseItemView.timeLabel.font).to.equal(expectedFont);
+                        expect(baseItemView.detailLabel.font).to.equal(expectedFont);
                     });
                     it(@"should hide last message label", ^{
-                        expect(baseItemView.messageLabel.hidden).to.beTruthy();
+                        expect(baseItemView.subtitleLabel.hidden).to.beTruthy();
                     });
                 });
                 
@@ -123,19 +123,19 @@ describe(@"LYRUIBaseItemViewLayout", ^{
                         expect(baseItemView.titleLabel.font).to.equal(expectedFont);
                     });
                     it(@"should show date message label", ^{
-                        expect(baseItemView.timeLabel.hidden).to.beFalsy();
+                        expect(baseItemView.detailLabel.hidden).to.beFalsy();
                     });
                     it(@"should set proper date label frame", ^{
                         CGRect expectedFrame = CGRectMake(264.5, 23.0, 43.5, 14.5);
-                        expect(baseItemView.timeLabel.frame).to.equal(expectedFrame);
+                        expect(baseItemView.detailLabel.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper date label's font", ^{
                         NSString *fontName = [UIFont systemFontOfSize:1].fontName;
                         UIFont *expectedFont = [UIFont fontWithName:fontName size:12];
-                        expect(baseItemView.timeLabel.font).to.equal(expectedFont);
+                        expect(baseItemView.detailLabel.font).to.equal(expectedFont);
                     });
                     it(@"should hide last message label", ^{
-                        expect(baseItemView.messageLabel.hidden).to.beTruthy();
+                        expect(baseItemView.subtitleLabel.hidden).to.beTruthy();
                     });
                 });
                 
@@ -158,23 +158,23 @@ describe(@"LYRUIBaseItemViewLayout", ^{
                         expect(baseItemView.titleLabel.font).to.equal(expectedFont);
                     });
                     it(@"should show date message label", ^{
-                        expect(baseItemView.timeLabel.hidden).to.beFalsy();
+                        expect(baseItemView.detailLabel.hidden).to.beFalsy();
                     });
                     it(@"should set proper date label frame", ^{
                         CGRect expectedFrame = CGRectMake(264.5, 14.0, 43.5, 14.5);
-                        expect(baseItemView.timeLabel.frame).to.equal(expectedFrame);
+                        expect(baseItemView.detailLabel.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper date label's font", ^{
                         NSString *fontName = [UIFont systemFontOfSize:1].fontName;
                         UIFont *expectedFont = [UIFont fontWithName:fontName size:12];
-                        expect(baseItemView.timeLabel.font).to.equal(expectedFont);
+                        expect(baseItemView.detailLabel.font).to.equal(expectedFont);
                     });
                     it(@"should show last message label", ^{
-                        expect(baseItemView.messageLabel.hidden).to.beFalsy();
+                        expect(baseItemView.subtitleLabel.hidden).to.beFalsy();
                     });
                     it(@"should set proper last message label frame", ^{
                         CGRect expectedFrame = CGRectMake(12.0, 37.5, 296.0, 17.0);
-                        expect(baseItemView.messageLabel.frame).to.equal(expectedFrame);
+                        expect(baseItemView.subtitleLabel.frame).to.equal(expectedFrame);
                     });
                 });
             });
@@ -204,10 +204,10 @@ describe(@"LYRUIBaseItemViewLayout", ^{
                         expect(baseItemView.titleLabel.font).to.equal(expectedFont);
                     });
                     it(@"should hide date message label", ^{
-                        expect(baseItemView.timeLabel.hidden).to.beTruthy();
+                        expect(baseItemView.detailLabel.hidden).to.beTruthy();
                     });
                     it(@"should hide last message label", ^{
-                        expect(baseItemView.messageLabel.hidden).to.beTruthy();
+                        expect(baseItemView.subtitleLabel.hidden).to.beTruthy();
                     });
                 });
                 
@@ -230,19 +230,19 @@ describe(@"LYRUIBaseItemViewLayout", ^{
                         expect(baseItemView.titleLabel.font).to.equal(expectedFont);
                     });
                     it(@"should show date message label", ^{
-                        expect(baseItemView.timeLabel.hidden).to.beFalsy();
+                        expect(baseItemView.detailLabel.hidden).to.beFalsy();
                     });
                     it(@"should set proper date label frame", ^{
                         CGRect expectedFrame = CGRectMake(271.5, 18.0, 36.5, 12.0);
-                        expect(baseItemView.timeLabel.frame).to.equal(expectedFrame);
+                        expect(baseItemView.detailLabel.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper date label's font", ^{
                         NSString *fontName = [UIFont systemFontOfSize:1].fontName;
                         UIFont *expectedFont = [UIFont fontWithName:fontName size:10];
-                        expect(baseItemView.timeLabel.font).to.equal(expectedFont);
+                        expect(baseItemView.detailLabel.font).to.equal(expectedFont);
                     });
                     it(@"should hide last message label", ^{
-                        expect(baseItemView.messageLabel.hidden).to.beTruthy();
+                        expect(baseItemView.subtitleLabel.hidden).to.beTruthy();
                     });
                 });
                 
@@ -265,19 +265,19 @@ describe(@"LYRUIBaseItemViewLayout", ^{
                         expect(baseItemView.titleLabel.font).to.equal(expectedFont);
                     });
                     it(@"should show date message label", ^{
-                        expect(baseItemView.timeLabel.hidden).to.beFalsy();
+                        expect(baseItemView.detailLabel.hidden).to.beFalsy();
                     });
                     it(@"should set proper date label frame", ^{
                         CGRect expectedFrame = CGRectMake(264.5, 23.0, 43.5, 14.5);
-                        expect(baseItemView.timeLabel.frame).to.equal(expectedFrame);
+                        expect(baseItemView.detailLabel.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper date label's font", ^{
                         NSString *fontName = [UIFont systemFontOfSize:1].fontName;
                         UIFont *expectedFont = [UIFont fontWithName:fontName size:12];
-                        expect(baseItemView.timeLabel.font).to.equal(expectedFont);
+                        expect(baseItemView.detailLabel.font).to.equal(expectedFont);
                     });
                     it(@"should hide last message label", ^{
-                        expect(baseItemView.messageLabel.hidden).to.beTruthy();
+                        expect(baseItemView.subtitleLabel.hidden).to.beTruthy();
                     });
                 });
                 
@@ -300,23 +300,23 @@ describe(@"LYRUIBaseItemViewLayout", ^{
                         expect(baseItemView.titleLabel.font).to.equal(expectedFont);
                     });
                     it(@"should show date message label", ^{
-                        expect(baseItemView.timeLabel.hidden).to.beFalsy();
+                        expect(baseItemView.detailLabel.hidden).to.beFalsy();
                     });
                     it(@"should set proper date label frame", ^{
                         CGRect expectedFrame = CGRectMake(264.5, 14.0, 43.5, 14.5);
-                        expect(baseItemView.timeLabel.frame).to.equal(expectedFrame);
+                        expect(baseItemView.detailLabel.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper date label's font", ^{
                         NSString *fontName = [UIFont systemFontOfSize:1].fontName;
                         UIFont *expectedFont = [UIFont fontWithName:fontName size:12];
-                        expect(baseItemView.timeLabel.font).to.equal(expectedFont);
+                        expect(baseItemView.detailLabel.font).to.equal(expectedFont);
                     });
                     it(@"should show last message label", ^{
-                        expect(baseItemView.messageLabel.hidden).to.beFalsy();
+                        expect(baseItemView.subtitleLabel.hidden).to.beFalsy();
                     });
                     it(@"should set proper last message label frame", ^{
                         CGRect expectedFrame = CGRectMake(72.0, 37.5, 236.0, 17.0);
-                        expect(baseItemView.messageLabel.frame).to.equal(expectedFrame);
+                        expect(baseItemView.subtitleLabel.frame).to.equal(expectedFrame);
                     });
                 });
             });
@@ -330,8 +330,8 @@ describe(@"LYRUIBaseItemViewLayout", ^{
             baseItemView = [[LYRUIBaseItemView alloc] initWithLayout:layout];
             baseItemView.translatesAutoresizingMaskIntoConstraints = NO;
             baseItemView.titleLabel.text = @"this is a long test conversation title";
-            baseItemView.timeLabel.text = @"8:30am";
-            baseItemView.messageLabel.text = @"test last message";
+            baseItemView.detailLabel.text = @"8:30am";
+            baseItemView.subtitleLabel.text = @"test last message";
             
             baseItemViewSizeSetup = ^(CGSize size) {
                 [[baseItemView.widthAnchor constraintEqualToConstant:size.width] setActive:YES];
@@ -371,10 +371,10 @@ describe(@"LYRUIBaseItemViewLayout", ^{
                         expect(baseItemView.titleLabel.font).to.equal(expectedFont);
                     });
                     it(@"should hide date message label", ^{
-                        expect(baseItemView.timeLabel.hidden).to.beTruthy();
+                        expect(baseItemView.detailLabel.hidden).to.beTruthy();
                     });
                     it(@"should hide last message label", ^{
-                        expect(baseItemView.messageLabel.hidden).to.beTruthy();
+                        expect(baseItemView.subtitleLabel.hidden).to.beTruthy();
                     });
                 });
                 
@@ -397,19 +397,19 @@ describe(@"LYRUIBaseItemViewLayout", ^{
                         expect(baseItemView.titleLabel.font).to.equal(expectedFont);
                     });
                     it(@"should show date message label", ^{
-                        expect(baseItemView.timeLabel.hidden).to.beFalsy();
+                        expect(baseItemView.detailLabel.hidden).to.beFalsy();
                     });
                     it(@"should set proper date label frame", ^{
                         CGRect expectedFrame = CGRectMake(271.5, 18.0, 36.5, 12.0);
-                        expect(baseItemView.timeLabel.frame).to.equal(expectedFrame);
+                        expect(baseItemView.detailLabel.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper date label's font", ^{
                         NSString *fontName = [UIFont systemFontOfSize:1].fontName;
                         UIFont *expectedFont = [UIFont fontWithName:fontName size:10];
-                        expect(baseItemView.timeLabel.font).to.equal(expectedFont);
+                        expect(baseItemView.detailLabel.font).to.equal(expectedFont);
                     });
                     it(@"should hide last message label", ^{
-                        expect(baseItemView.messageLabel.hidden).to.beTruthy();
+                        expect(baseItemView.subtitleLabel.hidden).to.beTruthy();
                     });
                 });
                 
@@ -432,19 +432,19 @@ describe(@"LYRUIBaseItemViewLayout", ^{
                         expect(baseItemView.titleLabel.font).to.equal(expectedFont);
                     });
                     it(@"should show date message label", ^{
-                        expect(baseItemView.timeLabel.hidden).to.beFalsy();
+                        expect(baseItemView.detailLabel.hidden).to.beFalsy();
                     });
                     it(@"should set proper date label frame", ^{
                         CGRect expectedFrame = CGRectMake(264.5, 23.0, 43.5, 14.5);
-                        expect(baseItemView.timeLabel.frame).to.equal(expectedFrame);
+                        expect(baseItemView.detailLabel.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper date label's font", ^{
                         NSString *fontName = [UIFont systemFontOfSize:1].fontName;
                         UIFont *expectedFont = [UIFont fontWithName:fontName size:12];
-                        expect(baseItemView.timeLabel.font).to.equal(expectedFont);
+                        expect(baseItemView.detailLabel.font).to.equal(expectedFont);
                     });
                     it(@"should hide last message label", ^{
-                        expect(baseItemView.messageLabel.hidden).to.beTruthy();
+                        expect(baseItemView.subtitleLabel.hidden).to.beTruthy();
                     });
                 });
                 
@@ -467,19 +467,19 @@ describe(@"LYRUIBaseItemViewLayout", ^{
                         expect(baseItemView.titleLabel.font).to.equal(expectedFont);
                     });
                     it(@"should show date message label", ^{
-                        expect(baseItemView.timeLabel.hidden).to.beFalsy();
+                        expect(baseItemView.detailLabel.hidden).to.beFalsy();
                     });
                     it(@"should set proper date label frame", ^{
                         CGRect expectedFrame = CGRectMake(264.5, 29.0, 43.5, 14.5);
-                        expect(baseItemView.timeLabel.frame).to.equal(expectedFrame);
+                        expect(baseItemView.detailLabel.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper date label's font", ^{
                         NSString *fontName = [UIFont systemFontOfSize:1].fontName;
                         UIFont *expectedFont = [UIFont fontWithName:fontName size:12];
-                        expect(baseItemView.timeLabel.font).to.equal(expectedFont);
+                        expect(baseItemView.detailLabel.font).to.equal(expectedFont);
                     });
                     it(@"should hide last message label", ^{
-                        expect(baseItemView.messageLabel.hidden).to.beTruthy();
+                        expect(baseItemView.subtitleLabel.hidden).to.beTruthy();
                     });
                 });
             });
@@ -509,10 +509,10 @@ describe(@"LYRUIBaseItemViewLayout", ^{
                         expect(baseItemView.titleLabel.font).to.equal(expectedFont);
                     });
                     it(@"should hide date message label", ^{
-                        expect(baseItemView.timeLabel.hidden).to.beTruthy();
+                        expect(baseItemView.detailLabel.hidden).to.beTruthy();
                     });
                     it(@"should hide last message label", ^{
-                        expect(baseItemView.messageLabel.hidden).to.beTruthy();
+                        expect(baseItemView.subtitleLabel.hidden).to.beTruthy();
                     });
                 });
                 
@@ -535,19 +535,19 @@ describe(@"LYRUIBaseItemViewLayout", ^{
                         expect(baseItemView.titleLabel.font).to.equal(expectedFont);
                     });
                     it(@"should show date message label", ^{
-                        expect(baseItemView.timeLabel.hidden).to.beFalsy();
+                        expect(baseItemView.detailLabel.hidden).to.beFalsy();
                     });
                     it(@"should set proper date label frame", ^{
                         CGRect expectedFrame = CGRectMake(271.5, 18.0, 36.5, 12.0);
-                        expect(baseItemView.timeLabel.frame).to.equal(expectedFrame);
+                        expect(baseItemView.detailLabel.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper date label's font", ^{
                         NSString *fontName = [UIFont systemFontOfSize:1].fontName;
                         UIFont *expectedFont = [UIFont fontWithName:fontName size:10];
-                        expect(baseItemView.timeLabel.font).to.equal(expectedFont);
+                        expect(baseItemView.detailLabel.font).to.equal(expectedFont);
                     });
                     it(@"should hide last message label", ^{
-                        expect(baseItemView.messageLabel.hidden).to.beTruthy();
+                        expect(baseItemView.subtitleLabel.hidden).to.beTruthy();
                     });
                 });
                 
@@ -570,19 +570,19 @@ describe(@"LYRUIBaseItemViewLayout", ^{
                         expect(baseItemView.titleLabel.font).to.equal(expectedFont);
                     });
                     it(@"should show date message label", ^{
-                        expect(baseItemView.timeLabel.hidden).to.beFalsy();
+                        expect(baseItemView.detailLabel.hidden).to.beFalsy();
                     });
                     it(@"should set proper date label frame", ^{
                         CGRect expectedFrame = CGRectMake(264.5, 23.0, 43.5, 14.5);
-                        expect(baseItemView.timeLabel.frame).to.equal(expectedFrame);
+                        expect(baseItemView.detailLabel.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper date label's font", ^{
                         NSString *fontName = [UIFont systemFontOfSize:1].fontName;
                         UIFont *expectedFont = [UIFont fontWithName:fontName size:12];
-                        expect(baseItemView.timeLabel.font).to.equal(expectedFont);
+                        expect(baseItemView.detailLabel.font).to.equal(expectedFont);
                     });
                     it(@"should hide last message label", ^{
-                        expect(baseItemView.messageLabel.hidden).to.beTruthy();
+                        expect(baseItemView.subtitleLabel.hidden).to.beTruthy();
                     });
                 });
                 
@@ -605,19 +605,19 @@ describe(@"LYRUIBaseItemViewLayout", ^{
                         expect(baseItemView.titleLabel.font).to.equal(expectedFont);
                     });
                     it(@"should show date message label", ^{
-                        expect(baseItemView.timeLabel.hidden).to.beFalsy();
+                        expect(baseItemView.detailLabel.hidden).to.beFalsy();
                     });
                     it(@"should set proper date label frame", ^{
                         CGRect expectedFrame = CGRectMake(264.5, 29.0, 43.5, 14.5);
-                        expect(baseItemView.timeLabel.frame).to.equal(expectedFrame);
+                        expect(baseItemView.detailLabel.frame).to.equal(expectedFrame);
                     });
                     it(@"should set proper date label's font", ^{
                         NSString *fontName = [UIFont systemFontOfSize:1].fontName;
                         UIFont *expectedFont = [UIFont fontWithName:fontName size:12];
-                        expect(baseItemView.timeLabel.font).to.equal(expectedFont);
+                        expect(baseItemView.detailLabel.font).to.equal(expectedFont);
                     });
                     it(@"should hide last message label", ^{
-                        expect(baseItemView.messageLabel.hidden).to.beTruthy();
+                        expect(baseItemView.subtitleLabel.hidden).to.beTruthy();
                     });
                 });
             });

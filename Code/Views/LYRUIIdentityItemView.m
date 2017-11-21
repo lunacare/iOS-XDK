@@ -22,6 +22,7 @@
 #import "LYRUIBaseItemViewLayout.h"
 #import "LYRUIIdentityItemViewLayoutMetrics.h"
 #import "LYRUIIdentityItemIBSetup.h"
+#import "LYRUIBaseItemViewDefaultTheme.h"
 
 @implementation LYRUIIdentityItemView
 

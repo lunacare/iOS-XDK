@@ -123,7 +123,7 @@
 - (void)layoutTitleLabelHorizontallyInView:(LYRUIBaseItemView *)view {
     UIView *accessoryContainer = view.accessoryViewContainer;
     UIView *titleLabel = view.titleLabel;
-    UIView *timeLabel = view.timeLabel;
+    UIView *timeLabel = view.detailLabel;
     CGFloat margin = self.metrics.horizontalMarginSize;
     CGFloat variableMargin = self.metrics.horizontalVariableMarginSize;
     
@@ -156,7 +156,7 @@
 
 - (void)layoutMessageLabelHorizontallyInView:(LYRUIBaseItemView *)view {
     UIView *accessoryContainer = view.accessoryViewContainer;
-    UIView *messageLabel = view.messageLabel;
+    UIView *messageLabel = view.subtitleLabel;
     CGFloat margin = self.metrics.horizontalMarginSize;
     
     NSMutableArray *constraints = [NSMutableArray new];
@@ -172,7 +172,7 @@
 }
 
 - (void)setupContentCompressionResistanceInView:(LYRUIBaseItemView *)view {
-    [view.timeLabel setContentCompressionResistancePriority:UILayoutPriorityRequired
+    [view.detailLabel setContentCompressionResistancePriority:UILayoutPriorityRequired
                                                     forAxis:UILayoutConstraintAxisHorizontal];
 }
 
@@ -202,8 +202,8 @@
 - (void)layoutVerticallyInView:(LYRUIBaseItemView *)view {
     UIView *accessoryContainer = view.accessoryViewContainer;
     UIView *titleLabel = view.titleLabel;
-    UIView *timeLabel = view.timeLabel;
-    UIView *messageLabel = view.messageLabel;
+    UIView *timeLabel = view.detailLabel;
+    UIView *messageLabel = view.subtitleLabel;
     CGFloat topGuideShift = self.metrics.topGuideShift;
     CGFloat margin = self.metrics.labelsVerticalMargin;
     
@@ -291,8 +291,8 @@
 #pragma mark - Visibility updates
 
 - (void)setupViewsVisibilityInView:(LYRUIBaseItemView *)view {
-    view.messageLabel.hidden = (self.layoutSize != LYRUIBaseItemViewLayoutSizeLarge);
-    view.timeLabel.hidden = (self.layoutSize == LYRUIBaseItemViewLayoutSizeTiny);
+    view.subtitleLabel.hidden = (self.layoutSize != LYRUIBaseItemViewLayoutSizeLarge);
+    view.detailLabel.hidden = (self.layoutSize == LYRUIBaseItemViewLayoutSizeTiny);
 }
 
 #pragma mark - Font sizes updates
@@ -302,9 +302,9 @@
     UIFont *newConversationTitleFont = [UIFont fontWithName:conversationTitleFontName
                                                        size:self.metrics.conversationTitleFontSize];
     view.titleLabel.font = newConversationTitleFont;
-    NSString *dateFontName = view.timeLabel.font.fontName;
+    NSString *dateFontName = view.detailLabel.font.fontName;
     UIFont *newDateFont = [UIFont fontWithName:dateFontName size:self.metrics.dateFontSize];
-    view.timeLabel.font = newDateFont;
+    view.detailLabel.font = newDateFont;
 }
 
 #pragma mark - Helpers

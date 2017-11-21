@@ -19,13 +19,14 @@
 //
 
 #import "LYRUIBaseItemView.h"
+#import "LYRUIBaseItemViewDefaultTheme.h"
 
 @interface LYRUIBaseItemView ()
 
 @property(nonatomic, weak, readwrite) UIView *accessoryViewContainer;
 @property(nonatomic, weak, readwrite) UILabel *titleLabel;
-@property(nonatomic, weak, readwrite) UILabel *messageLabel;
-@property(nonatomic, weak, readwrite) UILabel *timeLabel;
+@property(nonatomic, weak, readwrite) UILabel *subtitleLabel;
+@property(nonatomic, weak, readwrite) UILabel *detailLabel;
 
 @end
 
@@ -36,7 +37,7 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self commonInitialization];
+        [self lyr_commonInit];
     }
     return self;
 }
@@ -44,7 +45,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self commonInitialization];
+        [self lyr_commonInit];
     }
     return self;
 }
@@ -52,23 +53,24 @@
 - (instancetype)initWithLayout:(id<LYRUIBaseItemViewLayout>)layout {
     self = [self initWithFrame:CGRectZero];
     if (self) {
-        [self commonInitialization];
+        [self lyr_commonInit];
         self.layout = layout;
     }
     return self;
 }
 
-- (void)commonInitialization {
+- (void)lyr_commonInit {
     // TODO: update with colors from color palette
     UIColor *blackColor = [UIColor colorWithRed:27.0/255.0 green:28.0/255.0 blue:29.0/255.0 alpha:1.0];
     UIColor *grayColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
     
     self.titleLabel = [self addLabelWithFont:[UIFont systemFontOfSize:16]
                                                textColor:blackColor];
-    self.messageLabel = [self addLabelWithFont:[UIFont systemFontOfSize:14]
+    self.subtitleLabel = [self addLabelWithFont:[UIFont systemFontOfSize:14]
                                          textColor:grayColor];
-    self.timeLabel = [self addLabelWithFont:[UIFont systemFontOfSize:12]
+    self.detailLabel = [self addLabelWithFont:[UIFont systemFontOfSize:12]
                                   textColor:grayColor];
+    self.theme = [[LYRUIBaseItemViewDefaultTheme alloc] init];
     
     UIView *accessoryViewContainer = [[UIView alloc] init];
     accessoryViewContainer.translatesAutoresizingMaskIntoConstraints = NO;
@@ -97,7 +99,7 @@
     _accessoryView = accessoryView;
 }
 
-#pragma mark - IBInspectable properties
+#pragma mark - LYRUIBaseItemViewTheme properties
 
 - (UIFont *)titleLabelFont {
     return self.titleLabel.font;
@@ -115,36 +117,58 @@
     self.titleLabel.textColor = titleLabelColor;
 }
 
-- (UIFont *)messageLabelFont {
-    return self.messageLabel.font;
+- (UIFont *)subtitleLabelFont {
+    return self.subtitleLabel.font;
 }
 
-- (void)setMessageLabelFont:(UIFont *)messageLabelFont {
-    self.messageLabel.font = messageLabelFont;
+- (void)setSubtitleLabelFont:(UIFont *)messageLabelFont {
+    self.subtitleLabel.font = messageLabelFont;
 }
 
-- (UIColor *)messageLabelColor {
-    return self.messageLabel.textColor;
+- (UIColor *)subtitleLabelColor {
+    return self.subtitleLabel.textColor;
 }
 
-- (void)setMessageLabelColor:(UIColor *)messageLabelColor {
-    self.messageLabel.textColor = messageLabelColor;
+- (void)setSubtitleLabelColor:(UIColor *)messageLabelColor {
+    self.subtitleLabel.textColor = messageLabelColor;
 }
 
-- (UIFont *)timeLabelFont {
-    return self.timeLabel.font;
+- (UIFont *)detailLabelFont {
+    return self.detailLabel.font;
 }
 
-- (void)setTimeLabelFont:(UIFont *)timeLabelFont {
-    self.timeLabel.font = timeLabelFont;
+- (void)setDetailLabelFont:(UIFont *)timeLabelFont {
+    self.detailLabel.font = timeLabelFont;
 }
 
-- (UIColor *)timeLabelColor {
-    return self.timeLabel.textColor;
+- (UIColor *)detailLabelColor {
+    return self.detailLabel.textColor;
 }
 
-- (void)setTimeLabelColor:(UIColor *)timeLabelColor {
-    self.timeLabel.textColor = timeLabelColor;
+- (void)setDetailLabelColor:(UIColor *)timeLabelColor {
+    self.detailLabel.textColor = timeLabelColor;
+}
+
+- (void)setTheme:(id<LYRUIBaseItemViewTheme>)theme {
+    _theme = theme;
+    if (theme.titleLabelFont) {
+        self.titleLabelFont = theme.titleLabelFont;
+    }
+    if (theme.titleLabelColor) {
+        self.titleLabelColor = theme.titleLabelColor;
+    }
+    if (theme.subtitleLabelFont) {
+        self.subtitleLabelFont = theme.subtitleLabelFont;
+    }
+    if (theme.subtitleLabelColor) {
+        self.subtitleLabelColor = theme.subtitleLabelColor;
+    }
+    if (theme.detailLabelFont) {
+        self.detailLabelFont = theme.detailLabelFont;
+    }
+    if (theme.detailLabelColor) {
+        self.detailLabelColor = theme.detailLabelColor;
+    }
 }
 
 @end

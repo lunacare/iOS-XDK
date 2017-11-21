@@ -27,7 +27,7 @@
 
 + (void)prepareIdentityItemForInterfaceBuilder:(LYRUIIdentityItemView *)identityItem {
     identityItem.titleLabel.text = @"Full name";
-    identityItem.timeLabel.text = @"23 mins ago";
+    identityItem.detailLabel.text = @"23 mins ago";
     
     LYRUIAvatarView *avatarView = [[LYRUIAvatarView alloc] init];
     avatarView.translatesAutoresizingMaskIntoConstraints = NO;

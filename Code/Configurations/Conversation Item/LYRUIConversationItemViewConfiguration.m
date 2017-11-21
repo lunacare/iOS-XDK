@@ -94,15 +94,16 @@
     
     LYRMessage *lastMessage = conversation.lastMessage;
     if (lastMessage) {
-        view.timeLabel.text = [self.messageTimeFormatter stringForTime:lastMessage.sentAt
+        view.detailLabel.text = [self.messageTimeFormatter stringForTime:lastMessage.sentAt
                                                        withCurrentTime:[NSDate date]];
-        view.messageLabel.text = [self.lastMessageFormatter stringForMessage:lastMessage];
+        view.subtitleLabel.text = [self.lastMessageFormatter stringForMessage:lastMessage];
     }
     if (view.accessoryView == nil) {
         view.accessoryView = [self.accessoryViewProvider accessoryViewForConversation:conversation];
     } else {
         [self.accessoryViewProvider setupAccessoryView:view.accessoryView forConversation:conversation];
     }
+    view.state = conversation.hasUnreadMessages ? LYRUIConversationItemViewStateUnread : LYRUIConversationItemViewStateRead;
     view.accessoryView.backgroundColor = view.backgroundColor;
     [view setNeedsUpdateConstraints];
 }

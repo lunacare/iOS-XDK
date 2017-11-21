@@ -33,17 +33,51 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol LYRUIBaseItemView <NSObject>
 
 @property(nonatomic, weak, readonly) UILabel *titleLabel;
-@property(nonatomic, weak, readonly) UILabel *messageLabel;
-@property(nonatomic, weak, readonly) UILabel *timeLabel;
+@property(nonatomic, weak, readonly) UILabel *subtitleLabel;
+@property(nonatomic, weak, readonly) UILabel *detailLabel;
 @property(nonatomic, weak, nullable) UIView *accessoryView;
 
 @end
 
+@protocol LYRUIBaseItemViewTheme <NSObject>
+
 /**
- @abstract The `LYRUIBaseItemView` class provides a lightweight, customizable view for presenting item with title, time, and message.
+ @abstract The font for the title label displayed in the cell. Default is 16pt system font.
+ */
+@property (nonatomic, strong) UIFont *titleLabelFont;
+
+/**
+ @abstract The text color for the title label displayed in the cell. Default is black.
+ */
+@property (nonatomic, strong) IBInspectable UIColor *titleLabelColor;
+
+/**
+ @abstract The font for the subtitle label displayed in the cell. Default is 14pt system font.
+ */
+@property (nonatomic, strong) UIFont *subtitleLabelFont;
+
+/**
+ @abstract The text color for the subtitle label displayed in the cell. Default is gray.
+ */
+@property (nonatomic, strong) IBInspectable UIColor *subtitleLabelColor;
+
+/**
+ @abstract The font for the detail label displayed in the cell. Default is 12pt system font.
+ */
+@property (nonatomic, strong) UIFont *detailLabelFont;
+
+/**
+ @abstract The text color for the detail label displayed in the cell. Default is gray.
+ */
+@property (nonatomic, strong) IBInspectable UIColor *detailLabelColor;
+
+@end
+
+/**
+ @abstract The `LYRUIBaseListView` class provides a lightweight, customizable view for presenting item with title, time, and message.
  */
 IB_DESIGNABLE
-@interface LYRUIBaseItemView : LYRUIViewWithLayout <LYRUIBaseItemView>
+@interface LYRUIBaseItemView : LYRUIViewWithLayout <LYRUIBaseItemView, LYRUIBaseItemViewTheme>
 
 /**
  @abstract The view in which the accessory view will be contained;
@@ -51,39 +85,16 @@ IB_DESIGNABLE
 @property(nonatomic, weak, readonly) UIView *accessoryViewContainer;
 
 /**
- @abstract An accessory view for the item, i.e. an avatar view;
+ @abstract LYRUIBaseItemViewTheme properties overridden to IBInspectable.
  */
-@property(nonatomic, weak, nullable) IBOutlet UIView *accessoryView;
+@property (nonatomic, strong) IBInspectable UIColor *titleLabelColor;
+@property (nonatomic, strong) IBInspectable UIColor *subtitleLabelColor;
+@property (nonatomic, strong) IBInspectable UIColor *detailLabelColor;
 
 /**
- @abstract The font for the title label displayed in the cell. Default is 16pt system font.
+ @abstract A set of fonts and colors to use in item view. Default is LYRUIBaseItemViewDefaultTheme.
  */
-@property (nonatomic, copy) UIFont *titleLabelFont;
-
-/**
- @abstract The text color for the title label displayed in the cell. Default is black.
- */
-@property (nonatomic, copy) IBInspectable UIColor *titleLabelColor;
-
-/**
- @abstract The font for the message label displayed in the cell. Default is 14pt system font.
- */
-@property (nonatomic, copy) UIFont *messageLabelFont;
-
-/**
- @abstract The text color for the message label displayed in the cell. Default is gray.
- */
-@property (nonatomic, copy) IBInspectable UIColor *messageLabelColor;
-
-/**
- @abstract The font for the time label displayed in the cell. Default is 12pt system font.
- */
-@property (nonatomic, copy) UIFont *timeLabelFont;
-
-/**
- @abstract The text color for the time label displayed in the cell. Default is gray.
- */
-@property (nonatomic, copy) IBInspectable UIColor *timeLabelColor;
+@property (nonatomic, strong) id<LYRUIBaseItemViewTheme> theme UI_APPEARANCE_SELECTOR;
 
 /**
  @abstract Layout of the conversation item subviews.
