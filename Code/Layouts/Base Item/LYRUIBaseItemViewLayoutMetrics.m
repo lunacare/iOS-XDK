@@ -1,5 +1,5 @@
 //
-//  LYRUIConversationItemViewLayoutMetrics.m
+//  LYRUIBaseItemViewLayoutMetrics.m
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 11.07.2017.
@@ -18,9 +18,9 @@
 //  limitations under the License.
 //
 
-#import "LYRUIConversationItemViewLayoutMetrics.h"
+#import "LYRUIBaseItemViewLayoutMetrics.h"
 
-@implementation LYRUIConversationItemViewLayoutMetrics
+@implementation LYRUIBaseItemViewLayoutMetrics
 @synthesize delegate;
 
 - (LYRUIBaseItemViewLayoutSize)layoutSize {
