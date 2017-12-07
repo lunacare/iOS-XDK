@@ -30,6 +30,11 @@
     [self.layout addConstraintsInView:self];
 }
 
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    [self setNeedsUpdateConstraints];
+}
+
 - (void)updateConstraints {
     [self.layout updateConstraintsInView:self];
     [super updateConstraints];
