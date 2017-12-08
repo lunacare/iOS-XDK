@@ -28,7 +28,6 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @property(nonatomic, strong, nullable) UIView *primaryAccessoryView;
 @property(nonatomic, strong, nullable) UIView *contentView;
 @property(nonatomic, strong, nullable) UIView *secondaryAccessoryView;
-@property (nonatomic, copy) UIColor *contentViewColor;
 
 @end
 
@@ -39,6 +38,10 @@ typedef NS_ENUM(NSUInteger, LYRUIMessageItemViewLayoutDirection) {
 
 @protocol LYRUIMessageItemViewLayout <LYRUIViewLayout>
 
+/**
+ @abstract Direction of conversation item subviews alignment.
+ @warning Changing the layout direction requires `setNeedsUpdateConstraints` to be called on the view.
+ */
 @property (nonatomic) LYRUIMessageItemViewLayoutDirection layoutDirection;
 
 - (void)addConstraintsInView:(LYRUIMessageItemView *)view;
@@ -84,11 +87,6 @@ IB_DESIGNABLE
  @abstract Layout of the message item subviews.
  */
 @property (nonatomic, copy) id<LYRUIMessageItemViewLayout> layout;
-
-/**
- @abstract Direction of conversation item subviews alignment.
- */
-@property (nonatomic) LYRUIMessageItemViewLayoutDirection layoutDirection;
 
 /**
  @abstract Initialize with a layout.

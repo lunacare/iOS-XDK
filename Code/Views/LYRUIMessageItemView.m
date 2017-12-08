@@ -33,8 +33,7 @@
 @implementation LYRUIMessageItemView
 @synthesize primaryAccessoryView = _primaryAccessoryView,
             contentView = _contentView,
-            secondaryAccessoryView = _secondaryAccessoryView,
-            contentViewColor = _contentViewColor;
+            secondaryAccessoryView = _secondaryAccessoryView;
 @dynamic layout;
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -123,19 +122,8 @@
     [self setNeedsUpdateConstraints];
 }
 
-- (void)setContentViewColor:(UIColor *)contentViewColor {
-    _contentViewColor = contentViewColor;
-    self.contentViewContainer.backgroundColor = contentViewColor;
-    self.contentView.backgroundColor = contentViewColor;
-}
-
 - (LYRUIMessageItemViewLayoutDirection)layoutDirection {
     return self.layout.layoutDirection;
-}
-
-- (void)setLayoutDirection:(LYRUIMessageItemViewLayoutDirection)layoutDirection {
-    self.layout.layoutDirection = layoutDirection;
-    [self setNeedsUpdateConstraints];
 }
 
 @end

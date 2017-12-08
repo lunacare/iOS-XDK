@@ -32,11 +32,6 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @property (nonatomic, strong) id<LYRUIMessageItemAccessoryViewProviding> primaryAccessoryViewProvider;
 
 /**
- @abstract A currently logged in user to be filtered out of the message item accessory views.
- */
-@property (nonatomic, strong, nullable) LYRIdentity *currentUser;
-
-/**
  @abstract Initializes a new `LYRUIMessageItemViewConfiguration` object with the given accessory view provider.
  @param primaryAccessoryViewProvider The object conforming to `LYRUIMessageItemAccessoryViewProviding` protocol from which to retrieve the primary accessory view for display.
  @return An `LYRUIMessageItemViewConfiguration` object.

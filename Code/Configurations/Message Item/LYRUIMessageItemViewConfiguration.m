@@ -70,14 +70,8 @@
     NSString *messageText = [self.messageFormatter stringForMessage:message];
     textView.text = messageText;
     
-    BOOL outgoingMessage = [message.sender.userID isEqualToString:self.currentUser.userID];
-    if (outgoingMessage) {
-        messageItemView.contentViewColor = [UIColor colorWithRed:16.0/255.0 green:148.0/255.0 blue:208.0/255.0 alpha:1.0];
-        textView.textColor = [UIColor whiteColor];
-    } else {
-        messageItemView.contentViewColor = [UIColor colorWithWhite:242.0/255.0 alpha:1.0];
-        textView.textColor = [UIColor blackColor];
-    }
+    messageItemView.contentView.backgroundColor = [UIColor colorWithWhite:242.0/255.0 alpha:1.0];
+    textView.textColor = [UIColor blackColor];
     
     if (messageItemView.primaryAccessoryView == nil) {
         messageItemView.primaryAccessoryView = [self.primaryAccessoryViewProvider accessoryViewForMessage:message];

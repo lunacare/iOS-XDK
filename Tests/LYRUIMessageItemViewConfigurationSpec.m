@@ -73,72 +73,34 @@ describe(@"LYRUIMessageItemViewConfiguration", ^{
         });
         
         context(@"with both arguments passed", ^{
-            __block LYRIdentity *currentUserMock;
-            
             beforeEach(^{
                 accessoryView = [[UIView alloc] init];
                 [given([accessoryViewProviderMock accessoryViewForMessage:messageMock]) willReturn:accessoryView];
                 
-                currentUserMock = mock([LYRIdentity class]);
-                viewConfiguration.currentUser = currentUserMock;
+                [viewConfiguration setupMessageItemView:view
+                                            withMessage:messageMock];
             });
             
-            context(@"always", ^{
-                beforeEach(^{
-                    [viewConfiguration setupMessageItemView:view
-                                                withMessage:messageMock];
-                });
-                
-                it(@"should set the content view", ^{
-                    expect(view.contentView).to.beAKindOf([UITextView class]);
-                });
-                it(@"should add the content view as a subview of container", ^{
-                    expect(view.contentView.superview).to.equal(view.contentViewContainer);
-                });
-                it(@"should set the primary accessory view", ^{
-                    expect(view.primaryAccessoryView).to.equal(accessoryView);
-                });
-                it(@"should add the primary accessory view as a subview of container", ^{
-                    expect(accessoryView.superview).to.equal(view.primaryAccessoryViewContainer);
-                });
+            it(@"should set the content view", ^{
+                expect(view.contentView).to.beAKindOf([UITextView class]);
             });
-            
-            context(@"when message is incoming", ^{
-                beforeEach(^{
-                    [given(currentUserMock.userID) willReturn:@"other id"];
-                    
-                    [viewConfiguration setupMessageItemView:view
-                                                withMessage:messageMock];
-                });
-                
-                it(@"should set message content view color to gray", ^{
-                    UIColor *expectedColor = [UIColor colorWithWhite:242.0/255.0 alpha:1.0];
-                    expect(view.contentViewColor).to.equal(expectedColor);
-                });
-                it(@"should set text color to black", ^{
-                    UIColor *expectedColor = UIColor.blackColor;
-                    UITextView *textView = (UITextView *)view.contentView;
-                    expect(textView.textColor).to.equal(expectedColor);
-                });
+            it(@"should add the content view as a subview of container", ^{
+                expect(view.contentView.superview).to.equal(view.contentViewContainer);
             });
-            
-            context(@"when message is outgoing", ^{
-                beforeEach(^{
-                    [given(currentUserMock.userID) willReturn:@"test user id"];
-                    
-                    [viewConfiguration setupMessageItemView:view
-                                                withMessage:messageMock];
-                });
-                
-                it(@"should set message content view color to blue", ^{
-                    UIColor *expectedColor = [UIColor colorWithRed:16.0/255.0 green:148.0/255.0 blue:208.0/255.0 alpha:1.0];
-                    expect(view.contentViewColor).to.equal(expectedColor);
-                });
-                it(@"should set text color to white", ^{
-                    UIColor *expectedColor = UIColor.whiteColor;
-                    UITextView *textView = (UITextView *)view.contentView;
-                    expect(textView.textColor).to.equal(expectedColor);
-                });
+            it(@"should set the primary accessory view", ^{
+                expect(view.primaryAccessoryView).to.equal(accessoryView);
+            });
+            it(@"should add the primary accessory view as a subview of container", ^{
+                expect(accessoryView.superview).to.equal(view.primaryAccessoryViewContainer);
+            });
+            it(@"should set message content view color to gray", ^{
+                UIColor *expectedColor = [UIColor colorWithWhite:242.0/255.0 alpha:1.0];
+                expect(view.contentView.backgroundColor).to.equal(expectedColor);
+            });
+            it(@"should set text color to black", ^{
+                UIColor *expectedColor = UIColor.blackColor;
+                UITextView *textView = (UITextView *)view.contentView;
+                expect(textView.textColor).to.equal(expectedColor);
             });
         });
     });
