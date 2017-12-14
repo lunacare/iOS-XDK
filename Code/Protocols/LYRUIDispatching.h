@@ -28,6 +28,6 @@
  @abstract Dispatches the task asynchronously on main queue.
  @param block The block of code with the task to perform on main queue.
  */
-- (void)dispatchAsyncOnMainQueue:(void(^)())block;
+- (void)dispatchAsyncOnMainQueue:(void(^)(void))block;
 
 @end

@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
 /**
  @abstract A block called when list is scrolled near the end of current page and `canLoadMoreItems` is set to `YES`.
  */
-@property (nonatomic, copy) void(^loadMoreItems)();
+@property (nonatomic, copy) void(^loadMoreItems)(void);
 
 @end
 

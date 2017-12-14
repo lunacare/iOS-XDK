@@ -2,7 +2,7 @@
 
 @implementation LYRUISpecDispatcher
 
-- (void)dispatchAsyncOnMainQueue:(void(^)())block {
+- (void)dispatchAsyncOnMainQueue:(void(^)(void))block {
     if (block) {
         block();
     }

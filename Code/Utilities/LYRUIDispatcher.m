@@ -22,7 +22,7 @@
 
 @implementation LYRUIDispatcher
 
-- (void)dispatchAsyncOnMainQueue:(void(^)())block {
+- (void)dispatchAsyncOnMainQueue:(void(^)(void))block {
     dispatch_async(dispatch_get_main_queue(), block);
 }
 

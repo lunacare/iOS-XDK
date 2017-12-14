@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
 /**
  @abstract Initializes supplementary view configuration with all necessary properties.
  @param kind Kind of supplementary view handled by the configuration. Will be added to `handledItemTypes`.
- @param viewConfiguration View configuration object for updating cells with model objects data.
+ @param reuseIdentifier Reuse identifier of supplementary view used by the configuration to present model data.
  @param supplementaryViewHeight Height of supplementary view returned in `supplementaryViewSizeInCollectionView:forItemAtIndexPath:`.
  @param supplementaryViewVisibilityBlock Supplementary view visibility block, used in `supplementaryViewSizeInCollectionView:forItemAtIndexPath:` to determine if supplementary view of handled kind should be presented for provided index path.
  @param supplementaryViewSetupBlock Supplementary view setup block, called inside `setupSupplementaryView:forItemAtIndexPath:`. The view, list data source, and index path are passed to the block, to setup the reusable view (or it's subview) with the data from model object, using view configuration.

@@ -22,7 +22,7 @@
 #import "LYRUISortDescriptor.h"
 #import <LayerKit/LayerKit.h>
 
-LYRUIParticipantsSorting(^LYRUIParticipantsDefaultSorter)() = ^LYRUIParticipantsSorting() {
+LYRUIParticipantsSorting(^LYRUIParticipantsDefaultSorter)(void) = ^LYRUIParticipantsSorting(void) {
     NSSortDescriptor *avatarURLNonNilSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"avatarImageURL" ascending:NO comparator:^NSComparisonResult(NSURL * _Nonnull obj1, NSURL * _Nonnull obj2) {
         return NSOrderedSame;
     }];
