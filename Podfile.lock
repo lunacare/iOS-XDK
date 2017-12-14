@@ -33,11 +33,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   LYRCountDownLatch:
-    :commit: 02119f855ad14e7fc0dae32bbbf17c735a281cfe
+    :commit: '02119f855ad14e7fc0dae32bbbf17c735a281cfe'
     :git: https://github.com/layerhq/LYRCountDownLatch.git
 
 SPEC CHECKSUMS:
-  Atlas: 16076505d7182862a0400da5520a48a807fc5b43
+  Atlas: 4fb72c20327a3f869e30a68b685f8854d4a48c7d
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   KIF: f2a6025bb3f11692df675054a134d43a9ec2d7db
   KIFViewControllerActions: 923795dc4bd4ca5657841ce7455ce67447693861
@@ -48,6 +48,6 @@ SPEC CHECKSUMS:
   OCMockito: bceefcd365252bcdf8b59c1b2bd23890805fc0d8
   Specta: f506f3a8361de16bc0dcf3b17b75e269072ba465
 
-PODFILE CHECKSUM: 94db25b6f56cfb34247af2494d7fea1b1fbf02bc
+PODFILE CHECKSUM: deed5c883e47e543ac2b0d2d24b5143a6653a53e
 
 COCOAPODS: 1.2.1
