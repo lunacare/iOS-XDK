@@ -10,7 +10,7 @@
 
 SharedExamplesBegin(LYRUIPresenceView)
 
-sharedExamplesFor(@"setting identities using view configuration", ^(NSDictionary *data) {
+sharedExamplesFor(@"setting presence view identities using view configuration", ^(NSDictionary *data) {
     __block NSObject<LYRUIPresenceViewTheme> *themeMock;
     __block LYRUIPresenceViewConfiguration *viewConfigurationMock;
     __block LYRUIPresenceView *presenceView;
@@ -75,7 +75,7 @@ describe(@"LYRUIPresenceView", ^{
             it(@"should have proper theme set", ^{
                 expect(presenceView.theme).to.equal(themeMock);
             });
-            itShouldBehaveLike(@"setting identities using view configuration", sharedContext);
+            itShouldBehaveLike(@"setting presence view identities using view configuration", sharedContext);
         });
     });
     
@@ -90,7 +90,7 @@ describe(@"LYRUIPresenceView", ^{
             it(@"should have proper theme set", ^{
                 expect(presenceView.theme).to.equal(themeMock);
             });
-            itShouldBehaveLike(@"setting identities using view configuration", sharedContext);
+            itShouldBehaveLike(@"setting presence view identities using view configuration", sharedContext);
         });
     });
 });

@@ -20,6 +20,7 @@
 
 #import <UIKit/UIKit.h>
 #import <LayerKit/LayerKit.h>
+@class LYRUIConfiguration;
 @class LYRUIAvatarView;
 @protocol LYRUIPresenceIndicatorTheme;
 @protocol LYRUIParticipantsCountViewTheme;
@@ -47,14 +48,27 @@ IB_DESIGNABLE
 @property (nonatomic, copy) NSArray<LYRIdentity *> *identities;
 
 /**
+ @abstract The `configuration` od UI components. Used to retrieve setup and themes.
+ @discussion If using storyboards, the property must be set explicitly.
+ */
+@property (nonatomic, weak) LYRUIConfiguration *layerConfiguration;
+
+/**
  @abstract An object which contains set of colors to use in `LYRUIAvatarView` dependant views. Default is nil, and subviews use their defaults.
  */
-@property (nonatomic, copy, nullable) id<LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme, LYRUIAvatarViewTheme> theme UI_APPEARANCE_SELECTOR;
+@property (nonatomic, copy, nullable) id<LYRUIAvatarViewTheme> theme UI_APPEARANCE_SELECTOR;
 
 /**
  @abstract Layout of the `LYRUIAvatarView` subviews. Default is nil, and is updated to `LYRUIAvatarViewSingleLayout`, or `LYRUIAvatarViewMultiLayout` depending on count of `identities` set.
  */
 @property (nonatomic, copy) IBOutlet id<LYRUIAvatarViewLayout> layout;
+
+/**
+ @abstract Initializes a new `LYRUIPresenceView` with the configuration.
+ @param configuration An `LYRUIConfiguration` instance, used to retrieve themes, and setup.
+ @return An `LYRUIPresenceView` object.
+ */
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration;
 
 @end
 NS_ASSUME_NONNULL_END       // }

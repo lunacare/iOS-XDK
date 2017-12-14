@@ -22,6 +22,9 @@
 #import "LYRUIPresenceView.h"
 #import "LYRUIPresenceViewDefaultTheme.h"
 #import "LYRUIPresenceViewConfiguration.h"
+#import "LYRUIAvatarView.h"
+#import "LYRUIAvatarViewDefaultTheme.h"
+#import "LYRUIAvatarViewConfiguration.h"
 
 @implementation LYRUIConfiguration (DependencyInjection)
 
@@ -29,6 +32,9 @@
     return @{
              NSStringFromClass([LYRUIPresenceView class]): ^id (id<LYRUIDependencyInjection> injector) {
                  return [[LYRUIPresenceViewDefaultTheme alloc] init];
+             }, //
+             NSStringFromClass([LYRUIAvatarView class]): ^id (id<LYRUIDependencyInjection> injector) {
+                 return [[LYRUIAvatarViewDefaultTheme alloc] init];
              },
     };
 }
@@ -37,6 +43,9 @@
     return @{
              NSStringFromClass([LYRUIPresenceView class]): ^id (id<LYRUIDependencyInjection> injector) {
                  return [[LYRUIPresenceViewConfiguration alloc] init];
+             },
+             NSStringFromClass([LYRUIAvatarView class]): ^id (id<LYRUIDependencyInjection> injector) {
+                 return [[LYRUIAvatarViewConfiguration alloc] init];
              },
     };
 }

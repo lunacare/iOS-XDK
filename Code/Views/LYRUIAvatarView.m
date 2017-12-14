@@ -23,6 +23,8 @@
 #import "LYRUIPresenceView.h"
 #import "LYRUIAvatarViewConfiguration.h"
 #import "LYRUIPresenceViewDefaultTheme.h"
+#import "LYRUIAvatarViewTheme.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 
 @interface LYRUIAvatarView ()
 
@@ -37,6 +39,15 @@
 @end
 
 @implementation LYRUIAvatarView
+
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
+    self = [super initWithFrame:CGRectZero];
+    if (self) {
+        [self lyr_commonInit];
+        self.layerConfiguration = configuration;
+    }
+    return self;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -58,8 +69,6 @@
     self.secondaryAvatarView = [self addAvatarView];
     self.primaryAvatarView = [self addAvatarView];
     [self addPresenceView];
-    
-    self.configuration = [[LYRUIAvatarViewConfiguration alloc] init];
 }
 
 - (LYRUIImageWithLettersView *)addAvatarView {
@@ -71,9 +80,6 @@
 
 - (void)addPresenceView {
     LYRUIPresenceView *presenceView = [[LYRUIPresenceView alloc] init];
-    LYRUIPresenceViewDefaultTheme *presenceViewTheme = [[LYRUIPresenceViewDefaultTheme alloc] init];
-    presenceViewTheme.presenceIndicatorBackgroundColor = [UIColor whiteColor];
-    presenceView.theme = presenceViewTheme;
     presenceView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:presenceView];
     self.presenceView = presenceView;
@@ -107,7 +113,7 @@
     [self.configuration setupAvatarView:self withIdentities:identities];
 }
 
-- (void)setTheme:(id<LYRUIParticipantsCountViewTheme,LYRUIPresenceIndicatorTheme,LYRUIAvatarViewTheme>)theme {
+- (void)setTheme:(id<LYRUIAvatarViewTheme>)theme {
     _theme = theme;
     self.presenceView.theme = theme;
 }
@@ -124,6 +130,13 @@
     [super setBackgroundColor:backgroundColor];
     self.primaryAvatarView.borderColor = backgroundColor;
     [self setNeedsUpdateConstraints];
+}
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.presenceView.layerConfiguration = layerConfiguration;
+    self.theme = [layerConfiguration themeForViewClass:[self class]];
+    self.configuration = [layerConfiguration configurationForViewClass:[self class]];
 }
 
 @end

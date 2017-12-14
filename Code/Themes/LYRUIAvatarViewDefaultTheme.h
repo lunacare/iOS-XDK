@@ -1,8 +1,8 @@
 //
-//  LYRUIAvatarViewTheme.h
+//  LYRUIAvatarViewDefaultTheme.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 21.07.2017.
+//  Created by Łukasz Przytuła on 14.12.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,17 +18,8 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-#import "LYRUIPresenceView.h"
+#import "LYRUIAvatarViewTheme.h"
+#import "LYRUIPresenceViewDefaultTheme.h"
 
-/**
- @abstract Objects conforming to the `LYRUIAvatarViewTheme` protocol will be used to provide colors for the avatar view.
- */
-@protocol LYRUIAvatarViewTheme <LYRUIPresenceViewTheme>
-
-/**
- @abstract The color of avatar circle view background.
- */
-@property (nonatomic, readonly) UIColor *initialsBackgroundColor;
-
+@interface LYRUIAvatarViewDefaultTheme : LYRUIPresenceViewDefaultTheme <LYRUIAvatarViewTheme>
 @end
