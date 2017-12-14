@@ -19,7 +19,26 @@
 //
 
 #import "LYRUIConfiguration+DependencyInjection.h"
+#import "LYRUIPresenceView.h"
+#import "LYRUIPresenceViewDefaultTheme.h"
+#import "LYRUIPresenceViewConfiguration.h"
 
 @implementation LYRUIConfiguration (DependencyInjection)
+
+- (NSDictionary *)defaultThemes {
+    return @{
+             NSStringFromClass([LYRUIPresenceView class]): ^id (id<LYRUIDependencyInjection> injector) {
+                 return [[LYRUIPresenceViewDefaultTheme alloc] init];
+             },
+    };
+}
+
+- (NSDictionary *)defaultConfigurations {
+    return @{
+             NSStringFromClass([LYRUIPresenceView class]): ^id (id<LYRUIDependencyInjection> injector) {
+                 return [[LYRUIPresenceViewConfiguration alloc] init];
+             },
+    };
+}
 
 @end

@@ -19,7 +19,13 @@
 //
 
 #import "LYRUIConfiguration.h"
+#import "LYRUIDependencyInjection.h"
 
-@interface LYRUIConfiguration (DependencyInjection)
+NS_ASSUME_NONNULL_BEGIN     // {
+@interface LYRUIConfiguration (DependencyInjection) <LYRUIDependencyInjection>
+
+@property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultThemes;
+@property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultConfigurations;
 
 @end
+NS_ASSUME_NONNULL_END       // }

@@ -19,11 +19,15 @@
 //
 
 #import <UIKit/UIKit.h>
+@class LYRUIConfiguration;
 @class LYRIdentity;
 @protocol LYRUIPresenceIndicatorTheme;
 @protocol LYRUIParticipantsCountViewTheme;
 
 NS_ASSUME_NONNULL_BEGIN     // {
+@protocol LYRUIPresenceViewTheme <LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme>
+@end
+
 IB_DESIGNABLE
 /**
  @abstract The `LYRUIPresenceView` displays a badge with number of `identities`, or a colored shape representation of the status of `LYRIdentity` presence, when `identities` contain only one `LYRIdentity` object.
@@ -36,9 +40,22 @@ IB_DESIGNABLE
 @property (nonatomic, weak) NSArray<LYRIdentity *> *identities;
 
 /**
+ @abstract The `configuration` od UI components. Used to retrieve setup and themes.
+ @discussion If using storyboards, the property must be set explicitly.
+ */
+@property (nonatomic, weak) LYRUIConfiguration *layerConfiguration;
+
+/**
  @abstract An object which contains set of colors to use in `LYRUIPresenceView` dependant views. Default is an `LYRUIPresenceViewDefaultTheme` instance.
  */
-@property (nonatomic, copy) id<LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme> theme UI_APPEARANCE_SELECTOR;
+@property (nonatomic, copy) id<LYRUIPresenceViewTheme> theme UI_APPEARANCE_SELECTOR;
+
+/**
+ @abstract Initializes a new `LYRUIPresenceView` with the configuration.
+ @param configuration An `LYRUIConfiguration` instance, used to retrieve themes, and setup.
+ @return An `LYRUIPresenceView` object.
+ */
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration;
 
 @end
 NS_ASSUME_NONNULL_END       // }

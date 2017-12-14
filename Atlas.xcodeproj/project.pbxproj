@@ -14,6 +14,7 @@
 		150373F21F1CD7E500FA6AAB /* LYRUIShapedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 150373F11F1CD7E500FA6AAB /* LYRUIShapedView.xib */; };
 		1504137B1F21CC4A006F46BD /* LYRUIParticipantsCountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1504137A1F21CC4A006F46BD /* LYRUIParticipantsCountView.xib */; };
 		1504137D1F21D147006F46BD /* LYRUIParticipantsCountViewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 1504137C1F21D147006F46BD /* LYRUIParticipantsCountViewSpec.m */; };
+		15062C4E1FE2AC6700943614 /* LYRUIPresenceViewSpecSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 15062C4D1FE2AC6700943614 /* LYRUIPresenceViewSpecSpec.m */; };
 		150771E81F2769E200E903D1 /* LYRUIAvatarViewMultiLayoutSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 150771E71F2769E200E903D1 /* LYRUIAvatarViewMultiLayoutSpec.m */; };
 		150771EA1F276E1F00E903D1 /* LYRUIImageWithLettersViewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 150771E91F276E1F00E903D1 /* LYRUIImageWithLettersViewSpec.m */; };
 		150771EB1F2771B100E903D1 /* boatgif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5AEFC5CA1B79834300ADE4EC /* boatgif.gif */; };
@@ -204,6 +205,7 @@
 		150373F11F1CD7E500FA6AAB /* LYRUIShapedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIShapedView.xib; sourceTree = "<group>"; };
 		1504137A1F21CC4A006F46BD /* LYRUIParticipantsCountView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIParticipantsCountView.xib; sourceTree = "<group>"; };
 		1504137C1F21D147006F46BD /* LYRUIParticipantsCountViewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIParticipantsCountViewSpec.m; sourceTree = "<group>"; };
+		15062C4D1FE2AC6700943614 /* LYRUIPresenceViewSpecSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUIPresenceViewSpecSpec.m; sourceTree = "<group>"; };
 		150771E71F2769E200E903D1 /* LYRUIAvatarViewMultiLayoutSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIAvatarViewMultiLayoutSpec.m; sourceTree = "<group>"; };
 		150771E91F276E1F00E903D1 /* LYRUIImageWithLettersViewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIImageWithLettersViewSpec.m; sourceTree = "<group>"; };
 		150771F41F28A3CC00E903D1 /* LYRUIImageWithLettersViewConfigurationSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIImageWithLettersViewConfigurationSpec.m; sourceTree = "<group>"; };
@@ -676,6 +678,7 @@
 				152475181F3DE38700777BA3 /* LYRUIMessageItemView.xib */,
 				154DB68E1F3C99210080A0D2 /* LYRUIComposeBar.xib */,
 				15C19FCA1F46F72D002AA604 /* LYRUIMessageListView.xib */,
+				15062C4D1FE2AC6700943614 /* LYRUIPresenceViewSpecSpec.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1368,6 +1371,7 @@
 				157F36731F7C3163004D12C6 /* LYRUIParticipantsDefaultFilterSpec.m in Sources */,
 				156B41E41FDAC43F0005A78D /* LYRUIComposeBarConfigurationSpec.m in Sources */,
 				154D726F1F3B4DE30031504C /* LYRUIMessageTextDefaultFormatterSpec.m in Sources */,
+				15062C4E1FE2AC6700943614 /* LYRUIPresenceViewSpecSpec.m in Sources */,
 				150772151F28E9AF00E903D1 /* LYRUISpecDispatcher.m in Sources */,
 				151684411F99332200EBA969 /* LYRUIBaseListViewSpec.m in Sources */,
 				152515171F3084580074CE03 /* LYRUIListDataSourceSpec.m in Sources */,

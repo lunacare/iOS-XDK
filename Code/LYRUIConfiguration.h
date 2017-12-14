@@ -25,11 +25,27 @@
 NS_ASSUME_NONNULL_BEGIN     // {
 @interface LYRUIConfiguration : NSObject
 
-@property (nonatomic, strong, nullable) LYRSession *session;
+/**
+ @abstract The `LYRClient` object used to fetch objects for display.
+ */
+@property (nonatomic, strong, nullable) LYRClient *client;
+
+/**
+ @abstract An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the participants set.
+ */
 @property (nonatomic, strong, nullable) LYRUIParticipantsFiltering participantsFilter;
+
+/**
+ @abstract An `LYRUIParticipantsSorting` block used to sort participants set.
+ */
 @property (nonatomic, strong, nullable) LYRUIParticipantsSorting participantsSorter;
 
-- (instancetype)initWithLayerSession:(LYRSession *)session;
+/**
+ @abstract Initializes a new `LYRUIConfiguration` object with the given `LYRClient` object.
+ @param client The `LYRClient` object from which objects will be fetched for display.
+ @return An `LYRUIConfiguration` object initialized with the given `LYRClient` object.
+ */
+- (instancetype)initWithLayerClient:(LYRClient *)client;
 
 @end
 NS_ASSUME_NONNULL_END       // }
