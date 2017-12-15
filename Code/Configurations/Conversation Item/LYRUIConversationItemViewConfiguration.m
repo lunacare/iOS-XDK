@@ -45,13 +45,6 @@
     self.titleFormatter = [layerConfiguration protocolImplementation:@protocol(LYRUIConversationItemTitleFormatting) forClass:[self class]];
     self.lastMessageFormatter = [layerConfiguration protocolImplementation:@protocol(LYRUIMessageTextFormatting) forClass:[self class]];
     self.messageTimeFormatter = [layerConfiguration protocolImplementation:@protocol(LYRUITimeFormatting) forClass:[self class]];
-    self.currentUser = layerConfiguration.client.authenticatedUser;
-}
-
-- (void)setCurrentUser:(LYRIdentity *)currentUser {
-    _currentUser = currentUser;
-    self.accessoryViewProvider.participantsFilter = LYRUIParticipantsDefaultFilterWithCurrentUser(currentUser);
-    self.titleFormatter.participantsFilter = LYRUIParticipantsDefaultFilterWithCurrentUser(currentUser);
 }
 
 #pragma mark - LYRUIConversationItemView setup

@@ -113,7 +113,7 @@
                             return [[LYRUIConversationItemAccessoryViewProvider alloc] initWithConfiguration:configuration];
                         },
                         NSStringFromProtocol(@protocol(LYRUIConversationItemTitleFormatting)): ^id (LYRUIConfiguration *configuration) {
-                            return [[LYRUIConversationItemTitleFormatter alloc] init];
+                            return [[LYRUIConversationItemTitleFormatter alloc] initWithConfiguration:configuration];
                         },
                         NSStringFromProtocol(@protocol(LYRUIMessageTextFormatting)): ^id (LYRUIConfiguration *configuration) {
                             return [[LYRUIMessageTextDefaultFormatter alloc] init];

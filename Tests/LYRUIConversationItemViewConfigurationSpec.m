@@ -124,24 +124,6 @@ describe(@"LYRUIConversationItemViewConfiguration", ^{
             });
         });
     });
-    
-    describe(@"currentUser", ^{
-        __block LYRIdentity *currentUserMock;
-        
-        context(@"setter", ^{
-            beforeEach(^{
-                currentUserMock = mock([LYRIdentity class]);
-                viewConfiguration.currentUser = currentUserMock;
-            });
-            
-            it(@"should update participant filtering block on accessory view provider", ^{
-                [verify(accessoryViewProviderMock) setParticipantsFilter:notNilValue()];
-            });
-            it(@"should update participant filtering block on title formatter", ^{
-                [verify(titleFormatterMock) setParticipantsFilter:notNilValue()];
-            });
-        });
-    });
 });
 
 SpecEnd

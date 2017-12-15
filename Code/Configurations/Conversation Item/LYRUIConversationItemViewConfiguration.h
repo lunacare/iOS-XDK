@@ -52,11 +52,6 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @property(nonatomic, strong) id<LYRUITimeFormatting> messageTimeFormatter;
 
 /**
- @abstract A currently logged in user to be filtered out of the conversation item title and accessory view.
- */
-@property(nonatomic, strong, nullable) LYRIdentity *currentUser;
-
-/**
  @abstract Updates the view conforming to `LYRUIConversationItemView` protocol with data from given Conversation.
  @param view The UIView conforming to `LYRUIConversationItemView` protocol to be set up.
  @param conversation The `LYRConversation` object to be presented on conversations list.
