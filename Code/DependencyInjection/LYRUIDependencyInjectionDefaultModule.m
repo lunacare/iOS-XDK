@@ -19,6 +19,7 @@
 //
 
 #import "LYRUIDependencyInjectionDefaultModule.h"
+#import <LYRUIConfiguration+DependencyInjection.h>
 #import "LYRUIPresenceView.h"
 #import "LYRUIPresenceViewDefaultTheme.h"
 #import "LYRUIPresenceViewConfiguration.h"
@@ -41,7 +42,8 @@
             defaultAlternativeThemes = _defaultAlternativeThemes,
             defaultConfigurations = _defaultConfigurations,
             defaultLayouts = _defaultLayouts,
-            defaultProtocolImplementations = _defaultProtocolImplementations;
+            defaultProtocolImplementations = _defaultProtocolImplementations,
+            defaultObjects = _defaultObjects;
 
 - (NSDictionary *)defaultThemes {
     static dispatch_once_t onceToken;
@@ -125,6 +127,30 @@
         };
     });
     return _defaultProtocolImplementations;
+}
+
+- (NSDictionary *)defaultObjects {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _defaultObjects = @{
+                NSStringFromClass([NSCalendar class]): ^id (LYRUIConfiguration *configuration) {
+                    return [NSCalendar currentCalendar];
+                },
+                NSStringFromClass([NSDateFormatter class]): ^id (LYRUIConfiguration *configuration) {
+                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                    dateFormatter.locale = [configuration objectOfType:[NSLocale class]];
+                    dateFormatter.timeZone = [configuration objectOfType:[NSTimeZone class]];
+                    return dateFormatter;
+                },
+                NSStringFromClass([NSLocale class]): ^id (LYRUIConfiguration *configuration) {
+                    return [NSLocale currentLocale];
+                },
+                NSStringFromClass([NSTimeZone class]): ^id (LYRUIConfiguration *configuration) {
+                    return [NSTimeZone systemTimeZone];
+                },
+        };
+    });
+    return _defaultObjects;
 }
 
 @end

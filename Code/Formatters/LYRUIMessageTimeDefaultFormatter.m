@@ -19,6 +19,7 @@
 //
 
 #import "LYRUIMessageTimeDefaultFormatter.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 
 @interface LYRUIMessageTimeDefaultFormatter ()
 
@@ -28,29 +29,22 @@
 @end
 
 @implementation LYRUIMessageTimeDefaultFormatter
+@synthesize layerConfiguration = _layerConfiguration;
 
-- (instancetype)init {
-    self = [self initWithCalendar:nil
-                    dateFormatter:nil];
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
+    self = [self init];
+    if (self) {
+        self.layerConfiguration = configuration;
+    }
     return self;
 }
 
-- (instancetype)initWithCalendar:(NSCalendar *)calendar
-                   dateFormatter:(NSDateFormatter *)dateFormatter {
-    self = [super init];
-    if (self) {
-        if (calendar == nil) {
-            calendar = [NSCalendar currentCalendar];
-        }
-        self.calendar = calendar;
-        if (dateFormatter == nil) {
-            dateFormatter = [[NSDateFormatter alloc] init];
-            dateFormatter.locale = [NSLocale currentLocale];
-            dateFormatter.timeZone = [NSTimeZone systemTimeZone];
-        }
-        self.dateFormatter = dateFormatter;
-    }
-    return self;
+#pragma mark - Properties
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.calendar = [layerConfiguration objectOfType:[NSCalendar class]];
+    self.dateFormatter = [layerConfiguration objectOfType:[NSDateFormatter class]];
 }
 
 #pragma mark - LYRUIMessageTimeFormatting method

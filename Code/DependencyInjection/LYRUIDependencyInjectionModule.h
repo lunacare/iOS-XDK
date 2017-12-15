@@ -28,5 +28,6 @@
 @property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultConfigurations;
 @property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultLayouts;
 @property (nonatomic, readonly) NSDictionary<NSString *, NSDictionary<NSString *, LYRUIDependencyProviding> *> *defaultProtocolImplementations;
+@property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultObjects;
 
 @end

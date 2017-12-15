@@ -56,11 +56,18 @@ typedef id(^LYRUIDependencyProviding)(LYRUIConfiguration *);
 - (id)layoutForViewClass:(Class)viewClass;
 
 /**
- @abstract Returns an object conforming to `protocol` for given `class`.
+ @abstract Returns an object conforming to `protocol` for use in given `class`.
  @param protocol A protocol for which an implementation should be returned.
  @param class Class of object in which the implementation object will be used.
  @return An object conforming to `protocol` for use in given `class`.
  */
 - (id)protocolImplementation:(Protocol *)protocol forClass:(Class)class;
+
+/**
+ @abstract Returns an instance object of provided `type`.
+ @param type Class of returned object.
+ @return An instance of provided `type`.
+ */
+- (id)objectOfType:(Class)type;
 
 @end

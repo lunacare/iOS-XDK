@@ -2,26 +2,31 @@
 #import <Expecta/Expecta.h>
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
+#import <Atlas/LYRUIConfiguration+DependencyInjection.h>
 #import <Atlas/LYRUIMessageTimeDefaultFormatter.h>
 
 SpecBegin(LYRUIMessageTimeDefaultFormatter)
 
 describe(@"LYRUIMessageTimeDefaultFormatter", ^{
+    __block LYRUIConfiguration *configurationMock;
     __block LYRUIMessageTimeDefaultFormatter *formatter;
     
     beforeEach(^{
+        configurationMock = mock([LYRUIConfiguration class]);
+        
         NSLocale *locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];
         
         NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
         calendar.locale = locale;
         calendar.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+        [given([configurationMock objectOfType:[NSCalendar class]]) willReturn:calendar];
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.locale = locale;
         dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+        [given([configurationMock objectOfType:[NSDateFormatter class]]) willReturn:dateFormatter];
         
-        formatter = [[LYRUIMessageTimeDefaultFormatter alloc] initWithCalendar:calendar
-                                                                 dateFormatter:dateFormatter];
+        formatter = [[LYRUIMessageTimeDefaultFormatter alloc] initWithConfiguration:configurationMock];
     });
     
     afterEach(^{

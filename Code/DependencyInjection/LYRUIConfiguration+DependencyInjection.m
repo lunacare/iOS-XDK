@@ -20,6 +20,7 @@
 
 #import "LYRUIConfiguration+DependencyInjection.h"
 #import <objc/runtime.h>
+#import "LYRUIConfigurable.h"
 
 static void *LYRUIConfigurationModuleKey = &LYRUIConfigurationModuleKey;
 
@@ -53,6 +54,17 @@ static void *LYRUIConfigurationModuleKey = &LYRUIConfigurationModuleKey;
         provider = self.module.defaultProtocolImplementations[@"defaults"][NSStringFromProtocol(protocol)];
     }
     return provider(self);
+}
+
+- (id)objectOfType:(Class)type {
+    LYRUIDependencyProviding provider = self.module.defaultObjects[NSStringFromClass(type)];
+    if (provider) {
+        return provider(self);
+    }
+    if ([type conformsToProtocol:@protocol(LYRUIConfigurable)]) {
+        return [[type alloc] initWithConfiguration:self];
+    }
+    return [[type alloc] init];
 }
 
 #pragma mark - Properties
