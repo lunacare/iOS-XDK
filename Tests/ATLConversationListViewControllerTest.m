@@ -204,7 +204,7 @@ extern NSString *const ATLAvatarViewAccessibilityLabel;
 -(void)testToVerifyCustomCellClassFunctionality
 {
     self.viewController = [ATLSampleConversationListViewController conversationListViewControllerWithLayerClient:(LYRClient *)self.testInterface.layerClient];
-    [self.viewController setCellClass:[LYRUITestConversationItemCell class]];
+    [self.viewController setCellClass:[ATLTestConversationCell class]];
     [self setRootViewController:self.viewController];
     
     ATLUserMock *mockUser1 = [ATLUserMock userWithMockUserName:ATLMockUserNameKlemen];
@@ -212,8 +212,8 @@ extern NSString *const ATLAvatarViewAccessibilityLabel;
     
     NSString *conversationLabel = [self.testInterface conversationLabelForConversation:conversation1];
     LYRUITestConversationItemCell *cell = (LYRUITestConversationItemCell *)[tester waitForViewWithAccessibilityLabel:conversationLabel];
-    expect([cell class]).to.equal([LYRUITestConversationItemCell class]);
-    expect([cell class]).toNot.equal([LYRUIConversationItemTableViewCell class]);
+    expect([cell class]).to.equal([ATLTestConversationCell class]);
+    expect([cell class]).toNot.equal([ATLConversationTableViewCell class]);
 }
 
 //Verify search bar does show up on screen for default `shouldDisplaySearchController` value `YES`.
