@@ -27,11 +27,12 @@ NS_ASSUME_NONNULL_BEGIN     // {
 
 /**
  @abstract The `LYRClient` object used to fetch objects for display.
+ @discussion When `client` is set, and `participantsFilter` is nil, a `LYRUIParticipantsDefaultFilterWithCurrentUser` with client's `authenticatedUser` will be used.
  */
 @property (nonatomic, strong, nullable) LYRClient *client;
 
 /**
- @abstract An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the participants set.
+ @abstract An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the participants set. Default value is `LYRUIParticipantsDefaultFilterWithCurrentUser` with client's `authenticatedUser`, or nil when `client` is not authenticated, or not set.
  */
 @property (nonatomic, strong, nullable) LYRUIParticipantsFiltering participantsFilter;
 

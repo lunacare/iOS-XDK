@@ -44,15 +44,6 @@
     return self;
 }
 
-- (instancetype)initWithLayout:(id<LYRUIBaseItemViewLayout>)layout {
-    if (layout == nil) {
-        LYRUIBaseItemViewLayoutMetrics *metrics = [[LYRUIBaseItemViewLayoutMetrics alloc] init];
-        layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
-    }
-    self = [super initWithLayout:layout];
-    return self;
-}
-
 - (void)prepareForInterfaceBuilder {
     [LYRUIIdentityItemIBSetup prepareIdentityItemForInterfaceBuilder:self];
 }

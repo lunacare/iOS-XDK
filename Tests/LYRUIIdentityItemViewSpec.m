@@ -62,8 +62,8 @@ describe(@"LYRUIIdentityItemView", ^{
         it(@"should have layout set to `LYRUIBaseItemViewLayout`", ^{
             expect(view.layout).to.beAKindOf([LYRUIBaseItemViewLayout class]);
         });
-        it(@"should have theme set to `LYRUIBaseItemViewDefaultTheme`", ^{
-            expect(view.theme).to.beAKindOf([LYRUIBaseItemViewDefaultTheme class]);
+        it(@"should not have theme set", ^{
+            expect(view.theme).to.beNil();
         });
     });
     
@@ -74,17 +74,12 @@ describe(@"LYRUIIdentityItemView", ^{
             layoutMock = mockProtocol(@protocol(LYRUIBaseItemViewLayout));
             [[given([layoutMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:layoutMock];
             
-            view = [[LYRUIIdentityItemView alloc] initWithLayout:layoutMock];
+            view = [[LYRUIIdentityItemView alloc] init];
+            view.layout = layoutMock;
         });
         
         it(@"should have layout set to the one passed to initializator", ^{
             expect(view.layout).to.equal(layoutMock);
-        });
-        it(@"should have titleLabel's default font set", ^{
-            expect(view.titleLabel.font).to.equal([UIFont systemFontOfSize:16]);
-        });
-        it(@"should have detailLabel's default font set", ^{
-            expect(view.detailLabel.font).to.equal([UIFont systemFontOfSize:12]);
         });
     });
     

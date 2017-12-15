@@ -88,6 +88,11 @@
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot setup Conversation Item View with nil `conversation` argument." userInfo:nil];
     }
     
+    if ([view conformsToProtocol:@protocol(LYRUIConfigurable)]) {
+        id<LYRUIConfigurable> configurableView = (id<LYRUIConfigurable>)view;
+        configurableView.layerConfiguration = self.layerConfiguration;
+    }
+    
     NSString *conversationTitle = [self.titleFormatter titleForConversation:conversation];
     view.titleLabel.text = conversationTitle;
     view.accessibilityLabel = conversationTitle;

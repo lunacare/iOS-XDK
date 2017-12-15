@@ -19,35 +19,42 @@
 //
 
 #import "LYRUIConfiguration+DependencyInjection.h"
-#import "LYRUIPresenceView.h"
-#import "LYRUIPresenceViewDefaultTheme.h"
-#import "LYRUIPresenceViewConfiguration.h"
-#import "LYRUIAvatarView.h"
-#import "LYRUIAvatarViewDefaultTheme.h"
-#import "LYRUIAvatarViewConfiguration.h"
+#import <objc/runtime.h>
+
+static void *LYRUIConfigurationModuleKey = &LYRUIConfigurationModuleKey;
 
 @implementation LYRUIConfiguration (DependencyInjection)
 
-- (NSDictionary *)defaultThemes {
-    return @{
-             NSStringFromClass([LYRUIPresenceView class]): ^id (id<LYRUIDependencyInjection> injector) {
-                 return [[LYRUIPresenceViewDefaultTheme alloc] init];
-             }, //
-             NSStringFromClass([LYRUIAvatarView class]): ^id (id<LYRUIDependencyInjection> injector) {
-                 return [[LYRUIAvatarViewDefaultTheme alloc] init];
-             },
-    };
+#pragma mark - LYRUIDependencyInjection
+
+- (id)themeForViewClass:(Class)viewClass {
+    LYRUIDependencyProviding provider = self.module.defaultThemes[NSStringFromClass(viewClass)];
+    return provider(self);
 }
 
-- (NSDictionary *)defaultConfigurations {
-    return @{
-             NSStringFromClass([LYRUIPresenceView class]): ^id (id<LYRUIDependencyInjection> injector) {
-                 return [[LYRUIPresenceViewConfiguration alloc] init];
-             },
-             NSStringFromClass([LYRUIAvatarView class]): ^id (id<LYRUIDependencyInjection> injector) {
-                 return [[LYRUIAvatarViewConfiguration alloc] init];
-             },
-    };
+- (id)alternativeThemeForViewClass:(Class)viewClass {
+    LYRUIDependencyProviding provider = self.module.defaultAlternativeThemes[NSStringFromClass(viewClass)];
+    return provider(self);
+}
+
+- (id)configurationForViewClass:(Class)viewClass {
+    LYRUIDependencyProviding provider = self.module.defaultConfigurations[NSStringFromClass(viewClass)];
+    return provider(self);
+}
+
+- (id)layoutForViewClass:(Class)viewClass {
+    LYRUIDependencyProviding provider = self.module.defaultLayouts[NSStringFromClass(viewClass)];
+    return provider(self);
+}
+
+#pragma mark - Properties
+
+- (id<LYRUIDependencyInjectionModule>)module {
+    return objc_getAssociatedObject(self, LYRUIConfigurationModuleKey);
+}
+
+- (void)setModule:(id<LYRUIDependencyInjectionModule>)module {
+    objc_setAssociatedObject(self, LYRUIConfigurationModuleKey, module, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end

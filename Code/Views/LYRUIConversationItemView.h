@@ -45,6 +45,6 @@ typedef NS_ENUM(NSUInteger, LYRUIConversationItemViewState) {
 /**
  @abstract A set of fonts and colors to use in Conversation Item view for unread state.
  */
-@property (nonatomic, strong) id<LYRUIBaseItemViewTheme> unreadTheme UI_APPEARANCE_SELECTOR;
+@property (nonatomic, copy) id<LYRUIBaseItemViewTheme> unreadTheme UI_APPEARANCE_SELECTOR;
 
 @end

@@ -20,6 +20,7 @@
 
 #import <Foundation/Foundation.h>
 @protocol LYRUIDependencyInjection;
+@protocol LYRUIBaseItemViewTheme;
 
 typedef id(^LYRUIDependencyProviding)(id<LYRUIDependencyInjection>);
 
@@ -28,15 +29,29 @@ typedef id(^LYRUIDependencyProviding)(id<LYRUIDependencyInjection>);
 /**
  @abstract Returns a theme object for given view class.
  @param viewClass Class of the view for which the theme should be returned.
- @return An theme for the given view class.
+ @return An theme for given view class.
  */
 - (id)themeForViewClass:(Class)viewClass;
 
 /**
+ @abstract Returns a theme object for given view class alternative state.
+ @param viewClass Class of the view for which the alternative theme should be returned.
+ @return An alternative theme for given view class.
+ */
+- (id)alternativeThemeForViewClass:(Class)viewClass;
+
+/**
  @abstract Returns a configuration object for given view class.
  @param viewClass Class of the view for which the configuration should be returned.
- @return An configuration for the given view class.
+ @return An configuration for given view class.
  */
 - (id)configurationForViewClass:(Class)viewClass;
+
+/**
+ @abstract Returns a layout object for given view class.
+ @param viewClass Class of the view for which the layout should be returned.
+ @return An layout for given view class.
+ */
+- (id)layoutForViewClass:(Class)viewClass;
 
 @end

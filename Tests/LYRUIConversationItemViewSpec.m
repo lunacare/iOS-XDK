@@ -3,6 +3,7 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
+#import <Atlas/LYRUIConfiguration+DependencyInjection.h>
 #import <Atlas/LYRUIConversationItemView.h>
 #import <Atlas/LYRUIBaseItemViewLayout.h>
 #import <Atlas/LYRUIBaseItemViewDefaultTheme.h>
@@ -14,7 +15,6 @@ describe(@"LYRUIConversationItemView", ^{
     __block LYRUIConversationItemView *view;
     
     beforeEach(^{
-        
         view = [[LYRUIConversationItemView alloc] init];
     });
     
@@ -27,8 +27,7 @@ describe(@"LYRUIConversationItemView", ^{
             expect(view.titleLabel).to.beAKindOf([UILabel class]);
         });
         it(@"should have titleLabel's font set by the default layout", ^{
-            NSString *fontName = [UIFont systemFontOfSize:1].fontName;
-            UIFont *expectedFont = [UIFont fontWithName:fontName size:14];
+            UIFont *expectedFont = [UIFont systemFontOfSize:16];
             expect(view.titleLabel.font).to.equal(expectedFont);
         });
         it(@"should have titleLabel's default text color set", ^{
@@ -49,8 +48,7 @@ describe(@"LYRUIConversationItemView", ^{
             expect(view.detailLabel).to.beAKindOf([UILabel class]);
         });
         it(@"should have detailLabel's default font set", ^{
-            NSString *fontName = [UIFont systemFontOfSize:1].fontName;
-            UIFont *expectedFont = [UIFont fontWithName:fontName size:10];
+            UIFont *expectedFont = [UIFont systemFontOfSize:12];
             expect(view.detailLabel.font).to.equal(expectedFont);
         });
         it(@"should have detailLabel's default text color set", ^{
@@ -60,35 +58,49 @@ describe(@"LYRUIConversationItemView", ^{
         it(@"should not have accessoryView set", ^{
             expect(view.accessoryView).to.beNil();
         });
-        it(@"should have layout set to `LYRUIBaseItemViewLayout`", ^{
-            expect(view.layout).to.beAKindOf([LYRUIBaseItemViewLayout class]);
+        it(@"should not have layout set", ^{
+            expect(view.layout).to.beNil();
         });
-        it(@"should have theme set to `LYRUIBaseItemViewDefaultTheme`", ^{
-            expect(view.theme).to.beAKindOf([LYRUIBaseItemViewDefaultTheme class]);
+        it(@"should not have theme set", ^{
+            expect(view.theme).to.beNil();
         });
-        it(@"should have unread theme set to `LYRUIConversationItemViewUnreadTheme`", ^{
-            expect(view.unreadTheme).to.beAKindOf([LYRUIConversationItemViewUnreadTheme class]);
+        it(@"should not have unread theme set", ^{
+            expect(view.unreadTheme).to.beNil();
         });
     });
     
-    describe(@"after initialization with layout", ^{
-        __block id<LYRUIBaseItemViewLayout> layoutMock;
+    describe(@"after initialization with configuration", ^{
+        __block LYRUIConfiguration *configurationMock;
+        __block NSObject<LYRUIBaseItemViewTheme> *themeMock;
+        __block NSObject<LYRUIBaseItemViewTheme> *unreadThemeMock;
+        __block NSObject<LYRUIBaseItemViewLayout> *layoutMock;
         
         beforeEach(^{
-            layoutMock = mockProtocol(@protocol(LYRUIBaseItemViewLayout));
-            [[given([layoutMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:layoutMock];
+            configurationMock = mock([LYRUIConfiguration class]);
             
-            view = [[LYRUIConversationItemView alloc] initWithLayout:layoutMock];
+            themeMock = mockObjectAndProtocol([NSObject class], @protocol(LYRUIBaseItemViewTheme));
+            [[given([(id<NSCopying>)themeMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:themeMock];
+            [given([configurationMock themeForViewClass:[LYRUIConversationItemView class]]) willReturn:themeMock];
+            
+            unreadThemeMock = mockObjectAndProtocol([NSObject class], @protocol(LYRUIBaseItemViewTheme));
+            [[given([(id<NSCopying>)unreadThemeMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:unreadThemeMock];
+            [given([configurationMock alternativeThemeForViewClass:[LYRUIConversationItemView class]]) willReturn:unreadThemeMock];
+            
+            layoutMock = mockObjectAndProtocol([NSObject class], @protocol(LYRUIBaseItemViewLayout));
+            [[given([(id<NSCopying>)layoutMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:layoutMock];
+            [given([configurationMock layoutForViewClass:[LYRUIConversationItemView class]]) willReturn:layoutMock];
+            
+            view = [[LYRUIConversationItemView alloc] initWithConfiguration:configurationMock];
         });
         
-        it(@"should have layout set to the one passed to initializator", ^{
+        it(@"should have layout set to the one from configuration", ^{
             expect(view.layout).to.equal(layoutMock);
         });
-        it(@"should have titleLabel's default font set", ^{
-            expect(view.titleLabel.font).to.equal([UIFont systemFontOfSize:16]);
+        it(@"should have theme set to the one from configuration", ^{
+            expect(view.theme).to.equal(themeMock);
         });
-        it(@"should have detailLabel's default font set", ^{
-            expect(view.detailLabel.font).to.equal([UIFont systemFontOfSize:12]);
+        it(@"should have unread theme set to the one from configuration", ^{
+            expect(view.unreadTheme).to.equal(unreadThemeMock);
         });
     });
     
@@ -119,6 +131,43 @@ describe(@"LYRUIConversationItemView", ^{
         it(@"should have detailLabel's text color set to value from Interface Builder", ^{
             UIColor *blueColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:1.0];
             expect(view.detailLabel.textColor).to.equal(blueColor);
+        });
+    });
+    
+    describe(@"layerConfiguration", ^{
+        context(@"setter", ^{
+            __block LYRUIConfiguration *configurationMock;
+            __block NSObject<LYRUIBaseItemViewTheme> *themeMock;
+            __block NSObject<LYRUIBaseItemViewTheme> *unreadThemeMock;
+            __block NSObject<LYRUIBaseItemViewLayout> *layoutMock;
+            
+            beforeEach(^{
+                configurationMock = mock([LYRUIConfiguration class]);
+                
+                themeMock = mockObjectAndProtocol([NSObject class], @protocol(LYRUIBaseItemViewTheme));
+                [[given([(id<NSCopying>)themeMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:themeMock];
+                [given([configurationMock themeForViewClass:[LYRUIConversationItemView class]]) willReturn:themeMock];
+                
+                unreadThemeMock = mockObjectAndProtocol([NSObject class], @protocol(LYRUIBaseItemViewTheme));
+                [[given([(id<NSCopying>)unreadThemeMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:unreadThemeMock];
+                [given([configurationMock alternativeThemeForViewClass:[LYRUIConversationItemView class]]) willReturn:unreadThemeMock];
+                
+                layoutMock = mockObjectAndProtocol([NSObject class], @protocol(LYRUIBaseItemViewLayout));
+                [[given([(id<NSCopying>)layoutMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:layoutMock];
+                [given([configurationMock layoutForViewClass:[LYRUIConversationItemView class]]) willReturn:layoutMock];
+                
+                view.layerConfiguration = configurationMock;
+            });
+            
+            it(@"should update layout to the one from configuration", ^{
+                expect(view.layout).to.equal(layoutMock);
+            });
+            it(@"should update theme to the one from configuration", ^{
+                expect(view.theme).to.equal(themeMock);
+            });
+            it(@"should update unread theme to the one from configuration", ^{
+                expect(view.unreadTheme).to.equal(unreadThemeMock);
+            });
         });
     });
     

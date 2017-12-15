@@ -101,9 +101,12 @@ describe(@"LYRUIConversationItemViewConfiguration", ^{
                                                withCurrentTime:anything()]) willReturn:@"test time description"];
                 
                 [viewConfiguration setupConversationItemView:view
-                                         withConversation:conversationMock];
+                                            withConversation:conversationMock];
             });
             
+            it(@"should setup view with configuration", ^{
+                expect(view.layerConfiguration).to.equal(configurationMock);
+            });
             it(@"should set the text of titleLabel", ^{
                 expect(view.titleLabel.text).to.equal(@"test title");
             });

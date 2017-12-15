@@ -20,28 +20,24 @@
 
 #import "LYRUIConfiguration.h"
 #import "LYRUIConfiguration+DependencyInjection.h"
-
-@interface LYRUIConfiguration ()
-
-@property (nonatomic, strong) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *themes;
-@property (nonatomic, strong) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *configurations;
-
-@end
+#import "LYRUIDependencyInjectionDefaultModule.h"
 
 @implementation LYRUIConfiguration
 
 - (instancetype)init {
-    self = [self init];
+    self = [super init];
+    if (self) {
+        self.participantsSorter = LYRUIParticipantsDefaultSorter();
+        id<LYRUIDependencyInjectionModule> module = [[LYRUIDependencyInjectionDefaultModule alloc] init];
+        self.module = module;
+    }
     return self;
 }
 
 - (instancetype)initWithLayerClient:(LYRClient *)client {
-    self = [super init];
+    self = [self init];
     if (self) {
         self.client = client;
-        self.participantsSorter = LYRUIParticipantsDefaultSorter();
-        self.themes = [[NSMutableDictionary alloc] init];
-        self.configurations = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -51,18 +47,6 @@
     if (self.participantsFilter == nil && client.authenticatedUser != nil) {
         self.participantsFilter = LYRUIParticipantsDefaultFilterWithCurrentUser(client.authenticatedUser);
     }
-}
-
-#pragma mark - LYRUIDependencyInjection
-
-- (id)themeForViewClass:(Class)viewClass {
-    LYRUIDependencyProviding provider = self.themes[NSStringFromClass(viewClass)];
-    return provider(self);
-}
-
-- (id)configurationForViewClass:(Class)viewClass {
-    LYRUIDependencyProviding provider = self.configurations[NSStringFromClass(viewClass)];
-    return provider(self);
 }
 
 @end

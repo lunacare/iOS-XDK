@@ -20,6 +20,7 @@
 
 #import "LYRUIBaseItemView.h"
 #import "LYRUIBaseItemViewDefaultTheme.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 
 @interface LYRUIBaseItemView ()
 
@@ -31,8 +32,9 @@
 @end
 
 @implementation LYRUIBaseItemView
-@synthesize accessoryView = _accessoryView;
 @dynamic layout;
+@synthesize layerConfiguration = _layerConfiguration,
+            accessoryView = _accessoryView;
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
@@ -50,11 +52,11 @@
     return self;
 }
 
-- (instancetype)initWithLayout:(id<LYRUIBaseItemViewLayout>)layout {
-    self = [self initWithFrame:CGRectZero];
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
+    self = [super initWithFrame:CGRectZero];
     if (self) {
         [self lyr_commonInit];
-        self.layout = layout;
+        self.layerConfiguration = configuration;
     }
     return self;
 }
@@ -70,7 +72,6 @@
                                          textColor:grayColor];
     self.detailLabel = [self addLabelWithFont:[UIFont systemFontOfSize:12]
                                   textColor:grayColor];
-    self.theme = [[LYRUIBaseItemViewDefaultTheme alloc] init];
     
     UIView *accessoryViewContainer = [[UIView alloc] init];
     accessoryViewContainer.translatesAutoresizingMaskIntoConstraints = NO;
@@ -97,6 +98,15 @@
         [self.accessoryViewContainer addSubview:accessoryView];
     }
     _accessoryView = accessoryView;
+}
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    if ([layerConfiguration isEqual:self.layerConfiguration]) {
+        return;
+    }
+    _layerConfiguration = layerConfiguration;
+    self.theme = [layerConfiguration themeForViewClass:[self class]];
+    self.layout = [layerConfiguration layoutForViewClass:[self class]];
 }
 
 #pragma mark - LYRUIBaseItemViewTheme properties

@@ -1,8 +1,8 @@
 //
-//  LYRUIConfiguration+DependencyInjection.h
+//  LYRUIDependencyInjectionModule.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 14.12.2017.
+//  Created by Łukasz Przytuła on 15.12.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,14 +18,14 @@
 //  limitations under the License.
 //
 
-#import "LYRUIConfiguration.h"
+#import <Foundation/Foundation.h>
 #import "LYRUIDependencyInjection.h"
-#import "LYRUIDependencyInjectionModule.h"
 
-NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIConfiguration (DependencyInjection) <LYRUIDependencyInjection>
+@protocol LYRUIDependencyInjectionModule <NSObject>
 
-@property (nonatomic, strong, nullable) id<LYRUIDependencyInjectionModule> module;
+@property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultThemes;
+@property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultAlternativeThemes;
+@property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultConfigurations;
+@property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultLayouts;
 
 @end
-NS_ASSUME_NONNULL_END       // }
