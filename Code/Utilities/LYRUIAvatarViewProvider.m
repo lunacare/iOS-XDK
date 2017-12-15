@@ -25,23 +25,12 @@
 #import <LayerKit/LayerKit.h>
 
 @implementation LYRUIAvatarViewProvider
-@synthesize participantsFilter = _participantsFilter,
-            participantsSorter = _participantsSorter;
+@synthesize layerConfiguration = _layerConfiguration;
 
-- (instancetype)init {
-    self = [self initWithParticipantsFilter:nil participantsSorter:nil];
-    return self;
-}
-
-- (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter
-                        participantsSorter:(LYRUIParticipantsSorting)participantsSorter {
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
     self = [super init];
     if (self) {
-        self.participantsFilter = participantsFilter;
-        if (participantsSorter == nil) {
-            participantsSorter = LYRUIParticipantsDefaultSorter();
-        }
-        self.participantsSorter = participantsSorter;
+        self.layerConfiguration = configuration;
     }
     return self;
 }
@@ -59,10 +48,10 @@
 
 - (void)setupAvatarView:(LYRUIAvatarView *)avatarView forIdentities:(NSSet<LYRIdentity *> *)identities {
     NSSet<LYRIdentity *> *filteredIdentities = identities;
-    if (self.participantsFilter) {
-        filteredIdentities = self.participantsFilter(identities);
+    if (self.layerConfiguration.participantsFilter) {
+        filteredIdentities = self.layerConfiguration.participantsFilter(identities);
     }
-    NSArray<LYRIdentity *> *sortedIdentities = self.participantsSorter(filteredIdentities);
+    NSArray<LYRIdentity *> *sortedIdentities = self.layerConfiguration.participantsSorter(filteredIdentities);
     avatarView.identities = sortedIdentities;
 }
 

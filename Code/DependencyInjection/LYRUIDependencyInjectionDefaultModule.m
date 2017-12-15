@@ -46,15 +46,15 @@
 - (NSDictionary *)defaultThemes {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        LYRUIDependencyProviding baseItemThemeProvider = ^id (id<LYRUIDependencyInjection> injector) {
+        LYRUIDependencyProviding baseItemThemeProvider = ^id (LYRUIConfiguration *configuration) {
             return [[LYRUIBaseItemViewDefaultTheme alloc] init];
         };
         
         _defaultThemes = @{
-                NSStringFromClass([LYRUIPresenceView class]): ^id (id<LYRUIDependencyInjection> injector) {
+                NSStringFromClass([LYRUIPresenceView class]): ^id (LYRUIConfiguration *configuration) {
                     return [[LYRUIPresenceViewDefaultTheme alloc] init];
                 },
-                NSStringFromClass([LYRUIAvatarView class]): ^id (id<LYRUIDependencyInjection> injector) {
+                NSStringFromClass([LYRUIAvatarView class]): ^id (LYRUIConfiguration *configuration) {
                     return [[LYRUIAvatarViewDefaultTheme alloc] init];
                 },
                 NSStringFromClass([LYRUIBaseItemView class]): baseItemThemeProvider,
@@ -68,7 +68,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _defaultThemes = @{
-                NSStringFromClass([LYRUIConversationItemView class]): ^id (id<LYRUIDependencyInjection> injector) {
+                NSStringFromClass([LYRUIConversationItemView class]): ^id (LYRUIConfiguration *configuration) {
                     return [[LYRUIConversationItemViewUnreadTheme alloc] init];
                 },
         };
@@ -80,10 +80,10 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _defaultConfigurations = @{
-                NSStringFromClass([LYRUIPresenceView class]): ^id (id<LYRUIDependencyInjection> injector) {
+                NSStringFromClass([LYRUIPresenceView class]): ^id (LYRUIConfiguration *configuration) {
                     return [[LYRUIPresenceViewConfiguration alloc] init];
                 },
-                NSStringFromClass([LYRUIAvatarView class]): ^id (id<LYRUIDependencyInjection> injector) {
+                NSStringFromClass([LYRUIAvatarView class]): ^id (LYRUIConfiguration *configuration) {
                     return [[LYRUIAvatarViewConfiguration alloc] init];
                 },
         };
@@ -95,7 +95,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _defaultLayouts = @{
-                NSStringFromClass([LYRUIBaseItemView class]): ^id (id<LYRUIDependencyInjection> injector) {
+                NSStringFromClass([LYRUIBaseItemView class]): ^id (LYRUIConfiguration *configuration) {
                     LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
                     return [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
                 },
@@ -109,16 +109,16 @@
     dispatch_once(&onceToken, ^{
         _defaultProtocolImplementations = @{
                 @"defaults": @{
-                        NSStringFromProtocol(@protocol(LYRUIConversationItemAccessoryViewProviding)): ^id (id<LYRUIDependencyInjection> injector) {
-                            return [[LYRUIConversationItemAccessoryViewProvider alloc] init];
+                        NSStringFromProtocol(@protocol(LYRUIConversationItemAccessoryViewProviding)): ^id (LYRUIConfiguration *configuration) {
+                            return [[LYRUIConversationItemAccessoryViewProvider alloc] initWithConfiguration:configuration];
                         },
-                        NSStringFromProtocol(@protocol(LYRUIConversationItemTitleFormatting)): ^id (id<LYRUIDependencyInjection> injector) {
+                        NSStringFromProtocol(@protocol(LYRUIConversationItemTitleFormatting)): ^id (LYRUIConfiguration *configuration) {
                             return [[LYRUIConversationItemTitleFormatter alloc] init];
                         },
-                        NSStringFromProtocol(@protocol(LYRUIMessageTextFormatting)): ^id (id<LYRUIDependencyInjection> injector) {
+                        NSStringFromProtocol(@protocol(LYRUIMessageTextFormatting)): ^id (LYRUIConfiguration *configuration) {
                             return [[LYRUIMessageTextDefaultFormatter alloc] init];
                         },
-                        NSStringFromProtocol(@protocol(LYRUITimeFormatting)): ^id (id<LYRUIDependencyInjection> injector) {
+                        NSStringFromProtocol(@protocol(LYRUITimeFormatting)): ^id (LYRUIConfiguration *configuration) {
                             return [[LYRUIMessageTimeDefaultFormatter alloc] init];
                         },
                 },

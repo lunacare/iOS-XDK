@@ -19,10 +19,11 @@
 //
 
 #import <Foundation/Foundation.h>
+@class LYRUIConfiguration;
 @protocol LYRUIDependencyInjection;
 @protocol LYRUIBaseItemViewTheme;
 
-typedef id(^LYRUIDependencyProviding)(id<LYRUIDependencyInjection>);
+typedef id(^LYRUIDependencyProviding)(LYRUIConfiguration *);
 
 @protocol LYRUIDependencyInjection <NSObject>
 
