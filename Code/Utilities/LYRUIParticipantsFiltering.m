@@ -22,6 +22,9 @@
 #import <LayerKit/LayerKit.h>
 
 LYRUIParticipantsFiltering(^LYRUIParticipantsDefaultFilterWithCurrentUser)(LYRIdentity *) = ^LYRUIParticipantsFiltering(LYRIdentity *currentUser) {
+    if (currentUser == nil) {
+        return nil;
+    }
     return ^NSSet<LYRIdentity *> *(NSSet<LYRIdentity *> *participants) {
         if (currentUser == nil) {
             return participants;

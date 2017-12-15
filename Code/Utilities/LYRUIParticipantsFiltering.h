@@ -24,7 +24,7 @@
 NS_ASSUME_NONNULL_BEGIN     // {
 typedef NSSet<LYRIdentity *> *_Nonnull (^LYRUIParticipantsFiltering)(NSSet<LYRIdentity *> *);
 
-extern LYRUIParticipantsFiltering(^LYRUIParticipantsDefaultFilterWithCurrentUser)(LYRIdentity *);
+extern LYRUIParticipantsFiltering _Nullable (^LYRUIParticipantsDefaultFilterWithCurrentUser)(LYRIdentity *);
 
 @protocol LYRUIParticipantsFiltering <NSObject>
 

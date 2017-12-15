@@ -31,12 +31,17 @@
 #import "LYRUIConversationItemView.h"
 #import "LYRUIConversationItemViewUnreadTheme.h"
 #import "LYRUIConversationItemViewLayoutMetrics.h"
+#import "LYRUIConversationItemAccessoryViewProvider.h"
+#import "LYRUIConversationItemTitleFormatter.h"
+#import "LYRUIMessageTextDefaultFormatter.h"
+#import "LYRUIMessageTimeDefaultFormatter.h"
 
 @implementation LYRUIDependencyInjectionDefaultModule
 @synthesize defaultThemes = _defaultThemes,
             defaultAlternativeThemes = _defaultAlternativeThemes,
             defaultConfigurations = _defaultConfigurations,
-            defaultLayouts = _defaultLayouts;
+            defaultLayouts = _defaultLayouts,
+            defaultProtocolImplementations = _defaultProtocolImplementations;
 
 - (NSDictionary *)defaultThemes {
     static dispatch_once_t onceToken;
@@ -97,6 +102,29 @@
         };
     });
     return _defaultLayouts;
+}
+
+- (NSDictionary *)defaultProtocolImplementations {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _defaultProtocolImplementations = @{
+                @"defaults": @{
+                        NSStringFromProtocol(@protocol(LYRUIConversationItemAccessoryViewProviding)): ^id (id<LYRUIDependencyInjection> injector) {
+                            return [[LYRUIConversationItemAccessoryViewProvider alloc] init];
+                        },
+                        NSStringFromProtocol(@protocol(LYRUIConversationItemTitleFormatting)): ^id (id<LYRUIDependencyInjection> injector) {
+                            return [[LYRUIConversationItemTitleFormatter alloc] init];
+                        },
+                        NSStringFromProtocol(@protocol(LYRUIMessageTextFormatting)): ^id (id<LYRUIDependencyInjection> injector) {
+                            return [[LYRUIMessageTextDefaultFormatter alloc] init];
+                        },
+                        NSStringFromProtocol(@protocol(LYRUITimeFormatting)): ^id (id<LYRUIDependencyInjection> injector) {
+                            return [[LYRUIMessageTimeDefaultFormatter alloc] init];
+                        },
+                },
+        };
+    });
+    return _defaultProtocolImplementations;
 }
 
 @end

@@ -47,6 +47,14 @@ static void *LYRUIConfigurationModuleKey = &LYRUIConfigurationModuleKey;
     return provider(self);
 }
 
+- (id)protocolImplementation:(Protocol *)protocol forClass:(Class)class {
+    LYRUIDependencyProviding provider = self.module.defaultProtocolImplementations[NSStringFromClass(class)][NSStringFromProtocol(protocol)];
+    if (provider == nil) {
+        provider = self.module.defaultProtocolImplementations[@"defaults"][NSStringFromProtocol(protocol)];
+    }
+    return provider(self);
+}
+
 #pragma mark - Properties
 
 - (id<LYRUIDependencyInjectionModule>)module {

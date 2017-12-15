@@ -27,5 +27,6 @@
 @property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultAlternativeThemes;
 @property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultConfigurations;
 @property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultLayouts;
+@property (nonatomic, readonly) NSDictionary<NSString *, NSDictionary<NSString *, LYRUIDependencyProviding> *> *defaultProtocolImplementations;
 
 @end

@@ -3,53 +3,53 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
+#import <Atlas/LYRUIConfiguration+DependencyInjection.h>
 #import <Atlas/LYRUIConversationItemViewConfiguration.h>
 #import <Atlas/LYRUIConversationItemView.h>
-#import <Atlas/LYRUIMessageTimeDefaultFormatter.h>
-#import <Atlas/LYRUIMessageTextDefaultFormatter.h>
-#import <Atlas/LYRUIConversationItemTitleFormatter.h>
-#import <Atlas/LYRUIAvatarViewProvider.h>
+#import <Atlas/LYRUITimeFormatting.h>
+#import <Atlas/LYRUIMessageTextFormatting.h>
+#import <Atlas/LYRUIConversationItemTitleFormatting.h>
+#import <Atlas/LYRUIConversationItemAccessoryViewProviding.h>
 #import <LayerKit/LayerKit.h>
 
 SpecBegin(LYRUIConversationItemViewConfiguration)
 
 describe(@"LYRUIConversationItemViewConfiguration", ^{
     __block LYRUIConversationItemViewConfiguration *viewConfiguration;
+    __block LYRUIConfiguration *configurationMock;
     __block id<LYRUIConversationItemAccessoryViewProviding> accessoryViewProviderMock;
     __block id<LYRUIConversationItemTitleFormatting> titleFormatterMock;
     __block id<LYRUIMessageTextFormatting> lastMessageFormatterMock;
     __block id<LYRUITimeFormatting> messageTimeFormatterMock;
     
     beforeEach(^{
-        accessoryViewProviderMock = mockProtocol(@protocol(LYRUIConversationItemAccessoryViewProviding));
-        titleFormatterMock = mockProtocol(@protocol(LYRUIConversationItemTitleFormatting));
-        lastMessageFormatterMock = mockProtocol(@protocol(LYRUIMessageTextFormatting));
-        messageTimeFormatterMock = mockProtocol(@protocol(LYRUITimeFormatting));
+        configurationMock = mock([LYRUIConfiguration class]);
         
-        viewConfiguration = [[LYRUIConversationItemViewConfiguration alloc] initWithAccessoryViewProvider:accessoryViewProviderMock
-                                                                                     titleFormatter:titleFormatterMock
-                                                                               lastMessageFormatter:lastMessageFormatterMock
-                                                                                      messageTimeFormatter:messageTimeFormatterMock];
+        accessoryViewProviderMock = mockProtocol(@protocol(LYRUIConversationItemAccessoryViewProviding));
+        [given([configurationMock protocolImplementation:@protocol(LYRUIConversationItemAccessoryViewProviding)
+                                                forClass:[LYRUIConversationItemViewConfiguration class]])
+         willReturn:accessoryViewProviderMock];
+        
+        titleFormatterMock = mockProtocol(@protocol(LYRUIConversationItemTitleFormatting));
+        [given([configurationMock protocolImplementation:@protocol(LYRUIConversationItemTitleFormatting)
+                                                forClass:[LYRUIConversationItemViewConfiguration class]])
+         willReturn:titleFormatterMock];
+        
+        lastMessageFormatterMock = mockProtocol(@protocol(LYRUIMessageTextFormatting));
+        [given([configurationMock protocolImplementation:@protocol(LYRUIMessageTextFormatting)
+                                                forClass:[LYRUIConversationItemViewConfiguration class]])
+         willReturn:lastMessageFormatterMock];
+        
+        messageTimeFormatterMock = mockProtocol(@protocol(LYRUITimeFormatting));
+        [given([configurationMock protocolImplementation:@protocol(LYRUITimeFormatting)
+                                                forClass:[LYRUIConversationItemViewConfiguration class]])
+         willReturn:messageTimeFormatterMock];
+        
+        viewConfiguration = [[LYRUIConversationItemViewConfiguration alloc] initWithConfiguration:configurationMock];
     });
     
     afterEach(^{
         viewConfiguration = nil;
-    });
-    
-    describe(@"after initialization with convenience initializer", ^{
-        beforeEach(^{
-            viewConfiguration = [[LYRUIConversationItemViewConfiguration alloc] init];
-        });
-        
-        it(@"should have default accessory view provider set", ^{
-            expect(viewConfiguration.accessoryViewProvider).to.beAKindOf([LYRUIAvatarViewProvider class]);
-        });
-        it(@"should have default title formatter set", ^{
-            expect(viewConfiguration.titleFormatter).to.beAKindOf([LYRUIConversationItemTitleFormatter class]);
-        });
-        it(@"should have default message time formatter set", ^{
-            expect(viewConfiguration.messageTimeFormatter).to.beAKindOf([LYRUIMessageTimeDefaultFormatter class]);
-        });
     });
     
     describe(@"setupConversationItemView:withConversation:", ^{
@@ -135,10 +135,10 @@ describe(@"LYRUIConversationItemViewConfiguration", ^{
             });
             
             it(@"should update participant filtering block on accessory view provider", ^{
-                [verify(accessoryViewProviderMock) setParticipantsFilter:anything()];
+                [verify(accessoryViewProviderMock) setParticipantsFilter:notNilValue()];
             });
             it(@"should update participant filtering block on title formatter", ^{
-                [verify(titleFormatterMock) setParticipantsFilter:anything()];
+                [verify(titleFormatterMock) setParticipantsFilter:notNilValue()];
             });
         });
     });
