@@ -32,22 +32,6 @@
 @dynamic layout;
 @synthesize collectionView = _collectionView;
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        [LYRUIIdentityListViewConfiguration setupIdentityListView:self];
-    }
-    return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [LYRUIIdentityListViewConfiguration setupIdentityListView:self];
-    }
-    return self;
-}
-
 - (void)prepareForInterfaceBuilder {
     [LYRUIIdentityListIBSetup prepareIdentityListForInterfaceBuilder:self];
 }

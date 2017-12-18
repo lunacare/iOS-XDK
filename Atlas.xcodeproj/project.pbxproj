@@ -1369,6 +1369,7 @@
 				150771FF1F28BEF700E903D1 /* LYRUIImageFetcherSpec.m in Sources */,
 				1574522D1FAB576700A5F857 /* LYRUIIdentityItemViewConfigurationSpec.m in Sources */,
 				15C4A5791F7D49C300643F8F /* LYRUIMessageListDelegateSpec.m in Sources */,
+				1575B4131FE80C7700269488 /* LYRUIIdentityListViewConfigurationSpec.m in Sources */,
 				157F36731F7C3163004D12C6 /* LYRUIParticipantsDefaultFilterSpec.m in Sources */,
 				156B41E41FDAC43F0005A78D /* LYRUIComposeBarConfigurationSpec.m in Sources */,
 				154D726F1F3B4DE30031504C /* LYRUIMessageTextDefaultFormatterSpec.m in Sources */,
