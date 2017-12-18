@@ -19,41 +19,29 @@
 //
 
 #import "LYRUIIdentityItemViewConfiguration.h"
-#import "LYRUITimeAgoFormatter.h"
-#import "LYRUIIdentityNameFormatter.h"
-#import "LYRUIAvatarViewProvider.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
+#import "LYRUITimeFormatting.h"
+#import "LYRUIIdentityNameFormatting.h"
+#import "LYRUIIdentityItemAccessoryViewProviding.h"
 
 @implementation LYRUIIdentityItemViewConfiguration
+@synthesize layerConfiguration = _layerConfiguration;
 
-- (instancetype)init {
-    self = [self initWithAccessoryViewProvider:nil
-                                 nameFormatter:nil
-                             metadataFormatter:nil
-                       lastSeenAtTimeFormatter:nil];
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
+    self = [super init];
+    if (self) {
+        self.layerConfiguration = configuration;
+    }
     return self;
 }
 
-- (instancetype)initWithAccessoryViewProvider:(nullable id<LYRUIIdentityItemAccessoryViewProviding>)accessoryViewProvider
-                                nameFormatter:(nullable id<LYRUIIdentityNameFormatting>)nameFormatter
-                            metadataFormatter:(nullable LYRUIIdentityMetadataFormatting)metadataFormatter
-                      lastSeenAtTimeFormatter:(nullable id<LYRUITimeFormatting>)lastSeenAtTimeFormatter {
-    self = [super init];
-    if (self) {
-        if (accessoryViewProvider == nil) {
-            accessoryViewProvider = [[LYRUIAvatarViewProvider alloc] init];
-        }
-        self.accessoryViewProvider = accessoryViewProvider;
-        if (nameFormatter == nil) {
-            nameFormatter = [[LYRUIIdentityNameFormatter alloc] init];
-        }
-        self.nameFormatter = nameFormatter;
-        if (lastSeenAtTimeFormatter == nil) {
-            lastSeenAtTimeFormatter = [[LYRUITimeAgoFormatter alloc] init];
-        }
-        self.metadataFormatter = metadataFormatter;
-        self.lastSeenAtTimeFormatter = lastSeenAtTimeFormatter;
-    }
-    return self;
+#pragma mark - Properties
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.accessoryViewProvider = [layerConfiguration protocolImplementation:@protocol(LYRUIIdentityItemAccessoryViewProviding) forClass:[self class]];
+    self.nameFormatter = [layerConfiguration protocolImplementation:@protocol(LYRUIIdentityNameFormatting) forClass:[self class]];
+    self.lastSeenAtTimeFormatter = [layerConfiguration protocolImplementation:@protocol(LYRUITimeFormatting) forClass:[self class]];
 }
 
 #pragma mark - LYRUIConversationItemView setup
@@ -65,6 +53,11 @@
     }
     if (identity == nil) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot setup Identity Item View with nil `identity` argument." userInfo:nil];
+    }
+    
+    if ([view conformsToProtocol:@protocol(LYRUIConfigurable)]) {
+        id<LYRUIConfigurable> configurableView = (id<LYRUIConfigurable>)view;
+        configurableView.layerConfiguration = self.layerConfiguration;
     }
     
     view.titleLabel.text = [self.nameFormatter nameForIdentity:identity];

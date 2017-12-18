@@ -46,6 +46,9 @@
 #import "LYRUIIdentityItemView.h"
 #import "LYRUIIdentityItemViewLayoutMetrics.h"
 #import "LYRUIIdentityItemViewConfiguration.h"
+#import "LYRUIIdentityItemAccessoryViewProvider.h"
+#import "LYRUIIdentityNameFormatter.h"
+#import "LYRUITimeAgoFormatter.h"
 
 @implementation LYRUIDependencyInjectionDefaultModule
 @synthesize defaultThemes = _defaultThemes,
@@ -111,7 +114,7 @@
                     return [[LYRUIConversationListViewConfiguration alloc] initWithConfiguration:configuration];
                 },
                 NSStringFromClass([LYRUIIdentityItemView class]): ^id (LYRUIConfiguration *configuration) {
-                    return [[LYRUIIdentityItemViewConfiguration alloc] init];
+                    return [[LYRUIIdentityItemViewConfiguration alloc] initWithConfiguration:configuration];
                 },
         };
     });
@@ -158,6 +161,17 @@
                         },
                         NSStringFromProtocol(@protocol(LYRUITimeFormatting)): ^id (LYRUIConfiguration *configuration) {
                             return [[LYRUIMessageTimeDefaultFormatter alloc] init];
+                        },
+                        NSStringFromProtocol(@protocol(LYRUIIdentityItemAccessoryViewProviding)): ^id (LYRUIConfiguration *configuration) {
+                            return [[LYRUIIdentityItemAccessoryViewProvider alloc] init];
+                        },
+                        NSStringFromProtocol(@protocol(LYRUIIdentityNameFormatting)): ^id (LYRUIConfiguration *configuration) {
+                            return [[LYRUIIdentityNameFormatter alloc] init];
+                        },
+                },
+                NSStringFromClass([LYRUIIdentityItemViewConfiguration class]): @{
+                        NSStringFromProtocol(@protocol(LYRUITimeFormatting)): ^id (LYRUIConfiguration *configuration) {
+                            return [[LYRUITimeAgoFormatter alloc] init];
                         },
                 },
         };
