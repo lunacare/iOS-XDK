@@ -171,7 +171,7 @@
                 },
                 NSStringFromClass([LYRUIIdentityItemViewConfiguration class]): @{
                         NSStringFromProtocol(@protocol(LYRUITimeFormatting)): ^id (LYRUIConfiguration *configuration) {
-                            return [[LYRUITimeAgoFormatter alloc] init];
+                            return [[LYRUITimeAgoFormatter alloc] initWithConfiguration:configuration];
                         },
                 },
         };

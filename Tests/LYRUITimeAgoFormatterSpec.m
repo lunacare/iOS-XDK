@@ -2,21 +2,26 @@
 #import <Expecta/Expecta.h>
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
+#import <Atlas/LYRUIConfiguration+DependencyInjection.h>
 #import <Atlas/LYRUITimeAgoFormatter.h>
 
 SpecBegin(LYRUITimeAgoFormatter)
 
 describe(@"LYRUITimeAgoFormatter", ^{
+    __block LYRUIConfiguration *configurationMock;
     __block LYRUITimeAgoFormatter *formatter;
     
     beforeEach(^{
+        configurationMock = mock([LYRUIConfiguration class]);
+        
         NSLocale *locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];
         
         NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
         calendar.locale = locale;
         calendar.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+        [given([configurationMock objectOfType:[NSCalendar class]]) willReturn:calendar];
         
-        formatter = [[LYRUITimeAgoFormatter alloc] initWithCalendar:calendar];
+        formatter = [[LYRUITimeAgoFormatter alloc] initWithConfiguration:configurationMock];
     });
     
     afterEach(^{
