@@ -43,6 +43,9 @@
 #import "LYRUIListHeaderView.h"
 #import "LYRUIListSupplementaryViewConfiguration.h"
 #import "LYRUIListLayout.h"
+#import "LYRUIIdentityItemView.h"
+#import "LYRUIIdentityItemViewLayoutMetrics.h"
+#import "LYRUIIdentityItemViewConfiguration.h"
 
 @implementation LYRUIDependencyInjectionDefaultModule
 @synthesize defaultThemes = _defaultThemes,
@@ -67,6 +70,7 @@
                     return [[LYRUIAvatarViewDefaultTheme alloc] init];
                 },
                 NSStringFromClass([LYRUIConversationItemView class]): baseItemThemeProvider,
+                NSStringFromClass([LYRUIIdentityItemView class]): baseItemThemeProvider,
         };
     });
     return _defaultThemes;
@@ -106,6 +110,9 @@
                 NSStringFromClass([LYRUIConversationListView class]): ^id (LYRUIConfiguration *configuration) {
                     return [[LYRUIConversationListViewConfiguration alloc] initWithConfiguration:configuration];
                 },
+                NSStringFromClass([LYRUIIdentityItemView class]): ^id (LYRUIConfiguration *configuration) {
+                    return [[LYRUIIdentityItemViewConfiguration alloc] init];
+                },
         };
     });
     return _defaultConfigurations;
@@ -121,6 +128,14 @@
                 },
                 NSStringFromClass([LYRUIConversationListView class]): ^id (LYRUIConfiguration *configuration) {
                     return [[LYRUIListLayout alloc] init];
+                },
+                NSStringFromClass([LYRUIConversationItemView class]): ^id (LYRUIConfiguration *configuration) {
+                    LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
+                    return [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
+                },
+                NSStringFromClass([LYRUIIdentityItemView class]): ^id (LYRUIConfiguration *configuration) {
+                    LYRUIIdentityItemViewLayoutMetrics *metrics = [[LYRUIIdentityItemViewLayoutMetrics alloc] init];
+                    return [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
                 },
         };
     });
