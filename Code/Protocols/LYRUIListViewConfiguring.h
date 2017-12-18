@@ -1,8 +1,8 @@
 //
-//  LYRUIConversationListViewConfiguration.h
+//  LYRUIListViewConfiguring.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 31.07.2017.
+//  Created by Łukasz Przytuła on 18.12.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,14 +18,18 @@
 //  limitations under the License.
 //
 
-#import "LYRUIConversationListView.h"
-#import "LYRUIListViewConfiguring.h"
-#import "LYRUIConfigurable.h"
-@class LYRUIListSection<ModelType>;
-@class LYRConversation;
+#import <Foundation/Foundation.h>
+#import "LYRUIListView.h"
+#import "LYRUIConfiguration.h"
+
+NS_ASSUME_NONNULL_BEGIN     // {
+@protocol LYRUIListViewConfiguring <NSObject>
 
 /**
- @abstract The `LYRUIConversationListViewConfiguration` will be used for configuring a `LYRUIConversationListView` with proper layout, data source, and delegate for presenting list of `LYRConversation` items.
+ @abstract Configures provided `LYRUIListView`.
+ @param listView A view conforimng to `LYRUIListView` protocol to setup. The `layout`, `dataSource`, and `delegate` properties of the list view will be set properly to present items.
  */
-@interface LYRUIConversationListViewConfiguration : NSObject <LYRUIListViewConfiguring, LYRUIConfigurable>
+- (void)setupListView:(id<LYRUIListView>)listView;
+
 @end
+NS_ASSUME_NONNULL_END       // }

@@ -19,7 +19,7 @@
 //
 
 #import "LYRUIDependencyInjectionDefaultModule.h"
-#import <LYRUIConfiguration+DependencyInjection.h>
+#import "LYRUIConfiguration+DependencyInjection.h"
 #import "LYRUIPresenceView.h"
 #import "LYRUIPresenceViewDefaultTheme.h"
 #import "LYRUIPresenceViewConfiguration.h"
@@ -32,10 +32,17 @@
 #import "LYRUIConversationItemView.h"
 #import "LYRUIConversationItemViewUnreadTheme.h"
 #import "LYRUIConversationItemViewLayoutMetrics.h"
+#import "LYRUIConversationItemViewConfiguration.h"
 #import "LYRUIConversationItemAccessoryViewProvider.h"
 #import "LYRUIConversationItemTitleFormatter.h"
 #import "LYRUIMessageTextDefaultFormatter.h"
 #import "LYRUIMessageTimeDefaultFormatter.h"
+#import "LYRUIConversationListView.h"
+#import "LYRUIConversationListViewConfiguration.h"
+#import "LYRUIListCellConfiguration.h"
+#import "LYRUIListHeaderView.h"
+#import "LYRUIListSupplementaryViewConfiguration.h"
+#import "LYRUIListLayout.h"
 
 @implementation LYRUIDependencyInjectionDefaultModule
 @synthesize defaultThemes = _defaultThemes,
@@ -59,7 +66,6 @@
                 NSStringFromClass([LYRUIAvatarView class]): ^id (LYRUIConfiguration *configuration) {
                     return [[LYRUIAvatarViewDefaultTheme alloc] init];
                 },
-                NSStringFromClass([LYRUIBaseItemView class]): baseItemThemeProvider,
                 NSStringFromClass([LYRUIConversationItemView class]): baseItemThemeProvider,
         };
     });
@@ -88,6 +94,18 @@
                 NSStringFromClass([LYRUIAvatarView class]): ^id (LYRUIConfiguration *configuration) {
                     return [[LYRUIAvatarViewConfiguration alloc] init];
                 },
+                NSStringFromClass([LYRUIConversationItemView class]): ^id (LYRUIConfiguration *configuration) {
+                    return [[LYRUIConversationItemViewConfiguration alloc] initWithConfiguration:configuration];
+                },
+                NSStringFromClass([UICollectionViewCell class]): ^id (LYRUIConfiguration *configuration) {
+                    return [[LYRUIListCellConfiguration alloc] init];
+                },
+                NSStringFromClass([LYRUIListHeaderView class]): ^id (LYRUIConfiguration *configuration) {
+                    return [LYRUIListSupplementaryViewConfiguration headerConfiguration];
+                },
+                NSStringFromClass([LYRUIConversationListView class]): ^id (LYRUIConfiguration *configuration) {
+                    return [[LYRUIConversationListViewConfiguration alloc] initWithConfiguration:configuration];
+                },
         };
     });
     return _defaultConfigurations;
@@ -97,9 +115,12 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _defaultLayouts = @{
-                NSStringFromClass([LYRUIBaseItemView class]): ^id (LYRUIConfiguration *configuration) {
+                NSStringFromClass([LYRUIConversationItemView class]): ^id (LYRUIConfiguration *configuration) {
                     LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
                     return [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
+                },
+                NSStringFromClass([LYRUIConversationListView class]): ^id (LYRUIConfiguration *configuration) {
+                    return [[LYRUIListLayout alloc] init];
                 },
         };
     });

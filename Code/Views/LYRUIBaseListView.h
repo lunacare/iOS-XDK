@@ -19,6 +19,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LYRUIConfigurable.h"
 #import "LYRUIListView.h"
 #import "LYRUIViewWithLayout.h"
 #import "LYRUIParticipantsFiltering.h"
@@ -32,7 +33,7 @@ IB_DESIGNABLE
 /**
  @abstract A generic list view for presenting model objects of given `ModelType` in a `UICollectionView`.
  */
-@interface LYRUIBaseListView<ModelType> : LYRUIViewWithLayout <LYRUIListView, LYRUIParticipantsFiltering>
+@interface LYRUIBaseListView<ModelType> : LYRUIViewWithLayout <LYRUIListView, LYRUIConfigurable>
 
 /**
  @abstract An `LYRQueryController` instance managing data displayed in the list.

@@ -3,6 +3,8 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
+#import <Atlas/LYRUIConfiguration+DependencyInjection.h>
+#import <Atlas/LYRUIListViewConfiguring.h>
 #import <Atlas/LYRUIBaseListView.h>
 #import <Atlas/LYRUIListLayout.h>
 #import <Atlas/LYRUIListDataSource.h>
@@ -12,13 +14,20 @@
 SpecBegin(LYRUIBaseListView)
 
 describe(@"LYRUIBaseListView", ^{
+    __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIListViewConfiguring> listViewConfigurationMock;
     __block LYRUIBaseListView *listView;
     __block UICollectionViewLayout<LYRUIListViewLayout> *layoutMock;
     __block id<LYRUIListDelegate> delegateMock;
     __block id<LYRUIListDataSource> dataSourceMock;
     
     beforeEach(^{
-        listView = [[LYRUIBaseListView alloc] init];
+        configurationMock = mock([LYRUIConfiguration class]);
+        
+        listViewConfigurationMock = mockProtocol(@protocol(LYRUIListViewConfiguring));
+        [given([configurationMock configurationForViewClass:[LYRUIBaseListView class]]) willReturn:listViewConfigurationMock];
+        
+        listView = [[LYRUIBaseListView alloc] initWithConfiguration:configurationMock];
         
         LYRUIListLayout *layout = [[LYRUIListLayout alloc] init];
         layoutMock = OCMPartialMock(layout);
@@ -37,6 +46,9 @@ describe(@"LYRUIBaseListView", ^{
         });
         it(@"should have the collection view added as subview", ^{
             expect(listView.collectionView.superview).to.equal(listView);
+        });
+        it(@"should setup view with configuration", ^{
+            [verify(listViewConfigurationMock) setupListView:listView];
         });
     });
     
@@ -168,31 +180,6 @@ describe(@"LYRUIBaseListView", ^{
         
         it(@"should return selected items for view's collection view, returned from data source", ^{
             expect(returnedItems).to.equal(selectedItems);
-        });
-    });
-    
-    describe(@"participantsFilter", ^{
-        context(@"setter", ^{
-            __block LYRUIParticipantsFiltering participantsFilterBlock;
-            __block id configurationMock1;
-            
-            beforeEach(^{
-                participantsFilterBlock = ^ NSSet *(NSSet *participants) {
-                    return participants;
-                };
-                
-                configurationMock1 = mockProtocol(@protocol(LYRUIParticipantsFiltering));
-                id configurationMock2 = mock([NSObject class]);
-                LYRUIListDataSource *dataSourceMock = mock([LYRUIListDataSource class]);
-                [given(dataSourceMock.allConfigurations) willReturn:@[configurationMock1, configurationMock2]];
-                listView.dataSource = dataSourceMock;
-                
-                listView.participantsFilter = participantsFilterBlock;
-            });
-            
-            it(@"should update configuration's participant filtering block", ^{
-                [verify(configurationMock1) setParticipantsFilter:participantsFilterBlock];
-            });
         });
     });
 });
