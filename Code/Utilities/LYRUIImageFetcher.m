@@ -19,59 +19,36 @@
 //
 
 #import "LYRUIImageFetcher.h"
+#import"LYRUIConfiguration+DependencyInjection.h"
 #import "NSCache+LYRUIImageCaching.h"
 #import "LYRUIImageFactory.h"
 #import "LYRUIDataFactory.h"
 #import "NSCache+LYRUIImageCaching.h"
 #import "LYRUIDispatcher.h"
 
-@interface LYRUIImageFetcher ()
-
-@property (nonatomic, strong) id<LYRUIImageCaching> imagesCache;
-@property (nonatomic, strong) id<LYRUIImageCreating> imageFactory;
-@property (nonatomic, strong) id<LYRUIDataCreating> dataFactory;
-@property (nonatomic, strong) id<LYRUIDispatching> dispatcher;
-@property (nonatomic, strong) NSURLSession *session;
-
-@end
-
 @implementation LYRUIImageFetcher
+@synthesize layerConfiguration = _layerConfiguration;
 
-- (instancetype)init {
-    self = [self initWithImagesCache:nil imageFactory:nil dataFactory:nil dispatcher:nil andSession:nil];
-    return self;
-}
-
-- (instancetype)initWithImagesCache:(id<LYRUIImageCaching>)imagesCache
-                       imageFactory:(id<LYRUIImageCreating>)imageFactory
-                        dataFactory:(id<LYRUIDataCreating>)dataFactory
-                         dispatcher:(id<LYRUIDispatching>)dispatcher
-                         andSession:(NSURLSession *)session {
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
     self = [super init];
     if (self) {
-        if (imagesCache == nil) {
-            imagesCache = [NSCache sharedImagesCache];
-        }
-        self.imagesCache = imagesCache;
-        if (imageFactory == nil) {
-            imageFactory = [[LYRUIImageFactory alloc] init];
-        }
-        self.imageFactory = imageFactory;
-        if (dataFactory == nil) {
-            dataFactory = [[LYRUIDataFactory alloc] init];
-        }
-        self.dataFactory = dataFactory;
-        if (dispatcher == nil) {
-            dispatcher = [[LYRUIDispatcher alloc] init];
-        }
-        self.dispatcher = dispatcher;
-        if (session == nil) {
-            session = [NSURLSession sharedSession];
-        }
-        self.session = session;
+        self.layerConfiguration = configuration;
     }
     return self;
 }
+
+#pragma mark - Properties
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.imagesCache = layerConfiguration.imagesCache;
+    self.imageFactory = [layerConfiguration protocolImplementation:@protocol(LYRUIImageCreating) forClass:[self class]];
+    self.dataFactory = [layerConfiguration protocolImplementation:@protocol(LYRUIDataCreating) forClass:[self class]];
+    self.dispatcher = [layerConfiguration protocolImplementation:@protocol(LYRUIDispatching) forClass:[self class]];
+    self.session = [layerConfiguration objectOfType:[NSURLSession class]];
+}
+
+#pragma mark - LYRUIImageFetching
 
 - (NSURLSessionDownloadTask *)fetchImageWithURL:(NSURL *)URL andCallback:(void(^)(UIImage *))callback {
     UIImage *cachedImage = [self.imagesCache objectForKey:URL];

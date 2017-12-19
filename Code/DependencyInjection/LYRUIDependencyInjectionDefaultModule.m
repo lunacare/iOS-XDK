@@ -54,6 +54,9 @@
 #import "LYRUIImageFetcher.h"
 #import "LYRUIImageFactory.h"
 #import "LYRUIInitialsFormatter.h"
+#import "LYRUIDataFactory.h"
+#import "LYRUIDispatcher.h"
+#import "NSBundle+LYRUIAssets.h"
 
 @implementation LYRUIDependencyInjectionDefaultModule
 @synthesize defaultThemes = _defaultThemes,
@@ -177,13 +180,19 @@
                             return [[LYRUIIdentityNameFormatter alloc] init];
                         },
                         NSStringFromProtocol(@protocol(LYRUIImageFetching)): ^id (LYRUIConfiguration *configuration) {
-                            return [[LYRUIImageFetcher alloc] init];
+                            return [[LYRUIImageFetcher alloc] initWithConfiguration:configuration];
                         },
                         NSStringFromProtocol(@protocol(LYRUIImageCreating)): ^id (LYRUIConfiguration *configuration) {
-                            return [[LYRUIImageFactory alloc] init];
+                            return [[LYRUIImageFactory alloc] initWithConfiguration:configuration];
                         },
                         NSStringFromProtocol(@protocol(LYRUIInitialsFormatting)): ^id (LYRUIConfiguration *configuration) {
                             return [[LYRUIInitialsFormatter alloc] init];
+                        },
+                        NSStringFromProtocol(@protocol(LYRUIDataCreating)): ^id (LYRUIConfiguration *configuration) {
+                            return [[LYRUIDataFactory alloc] init];
+                        },
+                        NSStringFromProtocol(@protocol(LYRUIDispatching)): ^id (LYRUIConfiguration *configuration) {
+                            return [[LYRUIDispatcher alloc] init];
                         },
                 },
                 NSStringFromClass([LYRUIIdentityItemViewConfiguration class]): @{
@@ -214,6 +223,12 @@
                 },
                 NSStringFromClass([NSTimeZone class]): ^id (LYRUIConfiguration *configuration) {
                     return [NSTimeZone systemTimeZone];
+                },
+                NSStringFromClass([NSURLSession class]): ^id (LYRUIConfiguration *configuration) {
+                    return [NSURLSession sharedSession];
+                },
+                NSStringFromClass([NSTimeZone class]): ^id (LYRUIConfiguration *configuration) {
+                    return [NSBundle bundleWithLayerAssets];
                 },
         };
     });

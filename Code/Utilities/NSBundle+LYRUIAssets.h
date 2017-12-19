@@ -1,8 +1,8 @@
 //
-//  LYRUIImageFactory.h
+//  NSBundle+LYRUIAssets.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 25.07.2017.
+//  Created by Łukasz Przytuła on 19.12.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,16 +18,10 @@
 //  limitations under the License.
 //
 
-#import "LYRUIImageCreating.h"
-#import "LYRUIConfigurable.h"
+#import <Foundation/Foundation.h>
 
-NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIImageFactory : NSObject <LYRUIImageCreating, LYRUIConfigurable>
+@interface NSBundle (LYRUIAssets)
 
-/**
- @abstract An `NSBundle` instance which will be used for creating `UIImage` from image asset. Default is bundle with Layer UI resources.
- */
-@property (nonatomic, strong) NSBundle *bundle;
+@property (nonatomic, class, readonly) NSBundle *bundleWithLayerAssets;
 
 @end
-NS_ASSUME_NONNULL_END       // }
