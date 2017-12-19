@@ -19,10 +19,11 @@
 //
 
 #import "LYRUIImageWithLettersViewConfiguration.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 #import "LYRUIImageWithLettersView.h"
-#import "LYRUIImageFetcher.h"
-#import "LYRUIImageFactory.h"
-#import "LYRUIInitialsFormatter.h"
+#import "LYRUIImageFetching.h"
+#import "LYRUIImageCreating.h"
+#import "LYRUIInitialsFormatting.h"
 #import "NSCache+LYRUIImageCaching.h"
 
 @interface LYRUIImageWithLettersViewConfiguration ()
@@ -35,36 +36,24 @@
 @end
 
 @implementation LYRUIImageWithLettersViewConfiguration
+@synthesize layerConfiguration = _layerConfiguration;
 
-- (instancetype)init {
-    self = [self initWithImageFetcher:nil imagesCache:nil imageFactory:nil initialsFormatter:nil];
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
+    self = [super init];
+    if (self) {
+        self.layerConfiguration = configuration;
+    }
     return self;
 }
 
-- (instancetype)initWithImageFetcher:(id<LYRUIImageFetching>)imageFetcher
-                         imagesCache:(id<LYRUIImageCaching>)imagesCache
-                        imageFactory:(id<LYRUIImageCreating>)imageFactory
-                   initialsFormatter:(id<LYRUIInitialsFormatting>)initialsFormatter {
-    self = [super init];
-    if (self) {
-        if (imageFetcher == nil) {
-            imageFetcher = [[LYRUIImageFetcher alloc] init];
-        }
-        self.imageFetcher = imageFetcher;
-        if (imagesCache == nil) {
-            imagesCache = [NSCache sharedImagesCache];
-        }
-        self.imagesCache = imagesCache;
-        if (imageFactory == nil) {
-            imageFactory = [[LYRUIImageFactory alloc] init];
-        }
-        self.imageFactory = imageFactory;
-        if (initialsFormatter == nil) {
-            initialsFormatter = [[LYRUIInitialsFormatter alloc] init];
-        }
-        self.initialsFormatter = initialsFormatter;
-    }
-    return self;
+#pragma mark - Properties
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.imageFetcher = [layerConfiguration protocolImplementation:@protocol(LYRUIImageFetching) forClass:[self class]];
+    self.imageFactory = [layerConfiguration protocolImplementation:@protocol(LYRUIImageCreating) forClass:[self class]];
+    self.initialsFormatter = [layerConfiguration protocolImplementation:@protocol(LYRUIInitialsFormatting) forClass:[self class]];
+    self.imagesCache = layerConfiguration.imagesCache;
 }
 
 #pragma mark - LYRUIImageWithLettersView configuration

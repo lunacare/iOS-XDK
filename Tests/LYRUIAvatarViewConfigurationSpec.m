@@ -3,6 +3,7 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
+#import <Atlas/LYRUIConfiguration+DependencyInjection.h>
 #import <Atlas/LYRUIAvatarViewConfiguration.h>
 #import <Atlas/LYRUIAvatarView+PrivateProperties.h>
 #import <Atlas/LYRUIAvatarViewSingleLayout.h>
@@ -15,6 +16,7 @@
 SpecBegin(LYRUIAvatarViewConfiguration)
 
 describe(@"LYRUIAvatarViewConfiguration", ^{
+    __block LYRUIConfiguration *configurationMock;
     __block LYRUIAvatarViewConfiguration *configuration;
     __block LYRUIImageWithLettersView *primaryAvatarViewMock;
     __block LYRUIImageWithLettersView *secondaryAvatarViewMock;
@@ -23,6 +25,8 @@ describe(@"LYRUIAvatarViewConfiguration", ^{
     __block LYRUIAvatarView *viewMock;
     
     beforeEach(^{
+        configurationMock = mock([LYRUIConfiguration class]);
+        
         viewMock = mock([LYRUIAvatarView class]);
         primaryAvatarViewMock = mock([LYRUIImageWithLettersView class]);
         [given(viewMock.primaryAvatarView) willReturn:primaryAvatarViewMock];
@@ -30,8 +34,11 @@ describe(@"LYRUIAvatarViewConfiguration", ^{
         [given(viewMock.secondaryAvatarView) willReturn:secondaryAvatarViewMock];
         presenceViewMock = mock([LYRUIPresenceView class]);
         [given(viewMock.presenceView) willReturn:presenceViewMock];
+        
         avatarViewConfigurationMock = mock([LYRUIImageWithLettersViewConfiguration class]);
-        configuration = [[LYRUIAvatarViewConfiguration alloc] initWithAvatarViewConfiguration:avatarViewConfigurationMock];
+        [given([configurationMock configurationForViewClass:[LYRUIImageWithLettersView class]]) willReturn:avatarViewConfigurationMock];
+        
+        configuration = [[LYRUIAvatarViewConfiguration alloc] initWithConfiguration:configurationMock];
     });
     
     afterEach(^{

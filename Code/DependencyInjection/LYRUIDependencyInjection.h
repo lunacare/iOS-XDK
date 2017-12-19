@@ -22,10 +22,13 @@
 @class LYRUIConfiguration;
 @protocol LYRUIDependencyInjection;
 @protocol LYRUIBaseItemViewTheme;
+@protocol LYRUIImageCaching;
 
 typedef id(^LYRUIDependencyProviding)(LYRUIConfiguration *);
 
 @protocol LYRUIDependencyInjection <NSObject>
+
+@property (nonatomic, strong, readonly) id<LYRUIImageCaching> imagesCache;
 
 /**
  @abstract Returns a theme object for given view class.

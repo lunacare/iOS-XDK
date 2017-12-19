@@ -26,6 +26,8 @@
 #import "LYRUIAvatarView.h"
 #import "LYRUIAvatarViewDefaultTheme.h"
 #import "LYRUIAvatarViewConfiguration.h"
+#import "LYRUIImageWithLettersView.h"
+#import "LYRUIImageWithLettersViewConfiguration.h"
 #import "LYRUIBaseItemView.h"
 #import "LYRUIBaseItemViewDefaultTheme.h"
 #import "LYRUIBaseItemViewLayout.h"
@@ -49,6 +51,9 @@
 #import "LYRUIIdentityItemAccessoryViewProvider.h"
 #import "LYRUIIdentityNameFormatter.h"
 #import "LYRUITimeAgoFormatter.h"
+#import "LYRUIImageFetcher.h"
+#import "LYRUIImageFactory.h"
+#import "LYRUIInitialsFormatter.h"
 
 @implementation LYRUIDependencyInjectionDefaultModule
 @synthesize defaultThemes = _defaultThemes,
@@ -99,7 +104,10 @@
                     return [[LYRUIPresenceViewConfiguration alloc] init];
                 },
                 NSStringFromClass([LYRUIAvatarView class]): ^id (LYRUIConfiguration *configuration) {
-                    return [[LYRUIAvatarViewConfiguration alloc] init];
+                    return [[LYRUIAvatarViewConfiguration alloc] initWithConfiguration:configuration];
+                },
+                NSStringFromClass([LYRUIImageWithLettersView class]): ^id (LYRUIConfiguration *configuration) {
+                    return [[LYRUIImageWithLettersViewConfiguration alloc] init];
                 },
                 NSStringFromClass([LYRUIConversationItemView class]): ^id (LYRUIConfiguration *configuration) {
                     return [[LYRUIConversationItemViewConfiguration alloc] initWithConfiguration:configuration];
@@ -167,6 +175,15 @@
                         },
                         NSStringFromProtocol(@protocol(LYRUIIdentityNameFormatting)): ^id (LYRUIConfiguration *configuration) {
                             return [[LYRUIIdentityNameFormatter alloc] init];
+                        },
+                        NSStringFromProtocol(@protocol(LYRUIImageFetching)): ^id (LYRUIConfiguration *configuration) {
+                            return [[LYRUIImageFetcher alloc] init];
+                        },
+                        NSStringFromProtocol(@protocol(LYRUIImageCreating)): ^id (LYRUIConfiguration *configuration) {
+                            return [[LYRUIImageFactory alloc] init];
+                        },
+                        NSStringFromProtocol(@protocol(LYRUIInitialsFormatting)): ^id (LYRUIConfiguration *configuration) {
+                            return [[LYRUIInitialsFormatter alloc] init];
                         },
                 },
                 NSStringFromClass([LYRUIIdentityItemViewConfiguration class]): @{

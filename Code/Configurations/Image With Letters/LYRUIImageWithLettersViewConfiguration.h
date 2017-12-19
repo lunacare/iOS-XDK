@@ -19,31 +19,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LYRUIConfigurable.h"
 #import <LayerKit/LayerKit.h>
 @class LYRUIImageWithLettersView;
-@protocol LYRUIImageFetching;
-@protocol LYRUIImageCaching;
-@protocol LYRUIImageCreating;
-@protocol LYRUIInitialsFormatting;
 
 NS_ASSUME_NONNULL_BEGIN     // {
 /**
  @abstract The `LYRUIImageWithLettersViewConfiguration` sets the `LYRUIImageWithLettersView` with the data from provided `identity`.
  */
-@interface LYRUIImageWithLettersViewConfiguration : NSObject
-
-/**
- @abstract Initializes a new `LYRUIImageWithLettersViewConfiguration` object with the given image fetcher, image factory, and initials formatter.
- @param imageFetcher The object conforming to `LYRUIImageFetching` protocol which will be used to fetch remote images.
- @param imagesCache The object conforming to `LYRUIImageCaching` protocol which will be used for storing and reusing previously fetched images.
- @param imageFactory The object conforming to `LYRUIImageCreating` protocol which will be used to provide image assets.
- @param initialsFormatter The object conforming to `LYRUIInitialsFormatting` protocol from which to retrieve the identity's initials for display.
- @return An `LYRUIImageWithLettersViewConfiguration` object.
- */
-- (instancetype)initWithImageFetcher:(nullable id<LYRUIImageFetching>)imageFetcher
-                         imagesCache:(nullable id<LYRUIImageCaching>)imagesCache
-                        imageFactory:(nullable id<LYRUIImageCreating>)imageFactory
-                   initialsFormatter:(nullable id<LYRUIInitialsFormatting>)initialsFormatter;
+@interface LYRUIImageWithLettersViewConfiguration : NSObject <LYRUIConfigurable>
 
 /**
  @abstract Updates the `LYRUIImageWithLettersView` instance with the data from provided `identity`.

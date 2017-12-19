@@ -21,8 +21,10 @@
 #import "LYRUIConfiguration+DependencyInjection.h"
 #import <objc/runtime.h>
 #import "LYRUIConfigurable.h"
+#import "NSCache+LYRUIImageCaching.h"
 
 static void *LYRUIConfigurationModuleKey = &LYRUIConfigurationModuleKey;
+static void *LYRUIConfigurationImagesCacheKey = &LYRUIConfigurationImagesCacheKey;
 
 @implementation LYRUIConfiguration (DependencyInjection)
 
@@ -75,6 +77,15 @@ static void *LYRUIConfigurationModuleKey = &LYRUIConfigurationModuleKey;
 
 - (void)setModule:(id<LYRUIDependencyInjectionModule>)module {
     objc_setAssociatedObject(self, LYRUIConfigurationModuleKey, module, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (id<LYRUIImageCaching>)imagesCache {
+    id<LYRUIImageCaching> imagesCache = objc_getAssociatedObject(self, LYRUIConfigurationImagesCacheKey);
+    if (imagesCache == nil) {
+        imagesCache = [[NSCache<NSURL *, UIImage *> alloc] init];
+        objc_setAssociatedObject(self, LYRUIConfigurationImagesCacheKey, imagesCache, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return imagesCache;
 }
 
 @end
