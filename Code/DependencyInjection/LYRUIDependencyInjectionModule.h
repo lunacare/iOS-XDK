@@ -21,6 +21,8 @@
 #import <Foundation/Foundation.h>
 #import "LYRUIDependencyInjection.h"
 
+typedef NSObject LYRUIDIAnyClass;
+
 @protocol LYRUIDependencyInjectionModule <NSObject>
 
 @property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultThemes;

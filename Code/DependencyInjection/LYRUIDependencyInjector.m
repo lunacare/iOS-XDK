@@ -56,9 +56,11 @@
 }
 
 - (id)protocolImplementation:(Protocol *)protocol forClass:(Class)class {
-    LYRUIDependencyProviding provider = self.module.defaultProtocolImplementations[NSStringFromClass(class)][NSStringFromProtocol(protocol)];
+    NSString *protocolKey = NSStringFromProtocol(protocol);
+    LYRUIDependencyProviding provider = self.module.defaultProtocolImplementations[NSStringFromClass(class)][protocolKey];
     if (provider == nil) {
-        provider = self.module.defaultProtocolImplementations[@"defaults"][NSStringFromProtocol(protocol)];
+        NSString *anyClassKey = NSStringFromClass([LYRUIDIAnyClass class]);
+        provider = self.module.defaultProtocolImplementations[anyClassKey][protocolKey];
     }
     return provider(self.layerConfiguration);
 }

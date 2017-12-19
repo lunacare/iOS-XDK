@@ -61,197 +61,196 @@
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
+@property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultThemes;
+@property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultAlternativeThemes;
+@property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultConfigurations;
+@property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultLayouts;
+@property (nonatomic, readwrite) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, LYRUIDependencyProviding> *> *defaultProtocolImplementations;
+@property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultObjects;
+
 @property (nonatomic, strong) id<LYRUIImageCaching> imagesCache;
 
 @end
 
 @implementation LYRUIDependencyInjectionDefaultModule
-@synthesize defaultThemes = _defaultThemes,
-            defaultAlternativeThemes = _defaultAlternativeThemes,
-            defaultConfigurations = _defaultConfigurations,
-            defaultLayouts = _defaultLayouts,
-            defaultProtocolImplementations = _defaultProtocolImplementations,
-            defaultObjects = _defaultObjects;
 
 - (instancetype)init {
     self = [super init];
     if (self) {
         self.imagesCache = [[NSCache<NSURL *, UIImage *> alloc] init];
+        
+        [self setupThemes];
+        [self setupAlternativeThemes];
+        [self setupConfigurations];
+        [self setupLayouts];
+        [self setupProtocolImplementations];
+        [self setupThemes];
     }
     return self;
 }
 
-- (NSDictionary *)defaultThemes {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        LYRUIDependencyProviding baseItemThemeProvider = ^id (LYRUIConfiguration *configuration) {
-            return [[LYRUIBaseItemViewDefaultTheme alloc] init];
-        };
-        
-        _defaultThemes = @{
-                NSStringFromClass([LYRUIPresenceView class]): ^id (LYRUIConfiguration *configuration) {
-                    return [[LYRUIPresenceViewDefaultTheme alloc] init];
-                },
-                NSStringFromClass([LYRUIAvatarView class]): ^id (LYRUIConfiguration *configuration) {
-                    return [[LYRUIAvatarViewDefaultTheme alloc] init];
-                },
-                NSStringFromClass([LYRUIConversationItemView class]): baseItemThemeProvider,
-                NSStringFromClass([LYRUIIdentityItemView class]): baseItemThemeProvider,
-        };
-    });
-    return _defaultThemes;
+#pragma mark - Setup
+
+- (void)setupThemes {
+    self.defaultThemes = [[NSMutableDictionary alloc] init];
+    
+    [self setThemeClass:[LYRUIPresenceViewDefaultTheme class] forViewClass:[LYRUIPresenceView class]];
+    [self setThemeClass:[LYRUIAvatarViewDefaultTheme class] forViewClass:[LYRUIAvatarView class]];
+    [self setThemeClass:[LYRUIBaseItemViewDefaultTheme class] forViewClass:[LYRUIConversationItemView class]];
+    [self setThemeClass:[LYRUIBaseItemViewDefaultTheme class] forViewClass:[LYRUIIdentityItemView class]];
 }
 
-- (NSDictionary<NSString *,LYRUIDependencyProviding> *)defaultAlternativeThemes {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _defaultThemes = @{
-                NSStringFromClass([LYRUIConversationItemView class]): ^id (LYRUIConfiguration *configuration) {
-                    return [[LYRUIConversationItemViewUnreadTheme alloc] init];
-                },
-        };
-    });
-    return _defaultAlternativeThemes;
+- (void)setupAlternativeThemes {
+    self.defaultAlternativeThemes = [[NSMutableDictionary alloc] init];
+    
+    [self setAlternativeThemeClass:[LYRUIConversationItemViewUnreadTheme class] forViewClass:[LYRUIConversationItemView class]];
 }
 
-- (NSDictionary *)defaultConfigurations {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _defaultConfigurations = @{
-                NSStringFromClass([LYRUIPresenceView class]): ^id (LYRUIConfiguration *configuration) {
-                    return [[LYRUIPresenceViewConfiguration alloc] init];
-                },
-                NSStringFromClass([LYRUIAvatarView class]): ^id (LYRUIConfiguration *configuration) {
-                    return [[LYRUIAvatarViewConfiguration alloc] initWithConfiguration:configuration];
-                },
-                NSStringFromClass([LYRUIImageWithLettersView class]): ^id (LYRUIConfiguration *configuration) {
-                    return [[LYRUIImageWithLettersViewConfiguration alloc] init];
-                },
-                NSStringFromClass([LYRUIConversationItemView class]): ^id (LYRUIConfiguration *configuration) {
-                    return [[LYRUIConversationItemViewConfiguration alloc] initWithConfiguration:configuration];
-                },
-                NSStringFromClass([UICollectionViewCell class]): ^id (LYRUIConfiguration *configuration) {
-                    return [[LYRUIListCellConfiguration alloc] init];
-                },
-                NSStringFromClass([LYRUIListHeaderView class]): ^id (LYRUIConfiguration *configuration) {
-                    return [LYRUIListSupplementaryViewConfiguration headerConfiguration];
-                },
-                NSStringFromClass([LYRUIConversationListView class]): ^id (LYRUIConfiguration *configuration) {
-                    return [[LYRUIConversationListViewConfiguration alloc] initWithConfiguration:configuration];
-                },
-                NSStringFromClass([LYRUIIdentityItemView class]): ^id (LYRUIConfiguration *configuration) {
-                    return [[LYRUIIdentityItemViewConfiguration alloc] initWithConfiguration:configuration];
-                },
-        };
-    });
-    return _defaultConfigurations;
+- (void)setupConfigurations {
+    self.defaultConfigurations = [[NSMutableDictionary alloc] init];
+    
+    [self setConfigurationClass:[LYRUIPresenceViewConfiguration class] forViewClass:[LYRUIPresenceView class]];
+    [self setConfigurationClass:[LYRUIAvatarViewConfiguration class] forViewClass:[LYRUIAvatarView class]];
+    [self setConfigurationClass:[LYRUIImageWithLettersViewConfiguration class] forViewClass:[LYRUIImageWithLettersView class]];
+    [self setConfigurationClass:[LYRUIConversationItemViewConfiguration class] forViewClass:[LYRUIConversationItemView class]];
+    [self setConfigurationClass:[LYRUIListCellConfiguration class] forViewClass:[UICollectionViewCell class]];
+    [self setConfigurationClass:[LYRUIListSupplementaryViewConfiguration class] forViewClass:[LYRUIListHeaderView class]];
+    [self setConfigurationClass:[LYRUIConversationListViewConfiguration class] forViewClass:[LYRUIConversationListView class]];
+    [self setConfigurationClass:[LYRUIIdentityItemViewConfiguration class] forViewClass:[LYRUIIdentityItemView class]];
 }
 
-- (NSDictionary *)defaultLayouts {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _defaultLayouts = @{
-                NSStringFromClass([LYRUIConversationItemView class]): ^id (LYRUIConfiguration *configuration) {
-                    LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
-                    return [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
-                },
-                NSStringFromClass([LYRUIConversationListView class]): ^id (LYRUIConfiguration *configuration) {
-                    return [[LYRUIListLayout alloc] init];
-                },
-                NSStringFromClass([LYRUIConversationItemView class]): ^id (LYRUIConfiguration *configuration) {
-                    LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
-                    return [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
-                },
-                NSStringFromClass([LYRUIIdentityItemView class]): ^id (LYRUIConfiguration *configuration) {
-                    LYRUIIdentityItemViewLayoutMetrics *metrics = [[LYRUIIdentityItemViewLayoutMetrics alloc] init];
-                    return [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
-                },
-        };
-    });
-    return _defaultLayouts;
+- (void)setupLayouts {
+    self.defaultLayouts = [[NSMutableDictionary alloc] init];
+    
+    self.defaultLayouts[NSStringFromClass([LYRUIConversationItemView class])] = ^id (LYRUIConfiguration *configuration) {
+        LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
+        return [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
+    };
+    [self setLayoutClass:[LYRUIListLayout class] forViewClass:[LYRUIConversationListView class]];
+    self.defaultLayouts[NSStringFromClass([LYRUIConversationItemView class])] = ^id (LYRUIConfiguration *configuration) {
+        LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
+        return [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
+    };
+    self.defaultLayouts[NSStringFromClass([LYRUIIdentityItemView class])] = ^id (LYRUIConfiguration *configuration) {
+        LYRUIIdentityItemViewLayoutMetrics *metrics = [[LYRUIIdentityItemViewLayoutMetrics alloc] init];
+        return [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
+    };
 }
 
-- (NSDictionary *)defaultProtocolImplementations {
+- (void)setupProtocolImplementations {
+    self.defaultProtocolImplementations = [[NSMutableDictionary alloc] init];
+    
+    [self setImplementationClass:[LYRUIConversationItemAccessoryViewProvider class]
+                     forProtocol:@protocol(LYRUIConversationItemAccessoryViewProviding)];
+    [self setImplementationClass:[LYRUIConversationItemTitleFormatter class]
+                     forProtocol:@protocol(LYRUIConversationItemTitleFormatting)];
+    [self setImplementationClass:[LYRUIMessageTextDefaultFormatter class]
+                     forProtocol:@protocol(LYRUIMessageTextFormatting)];
+    [self setImplementationClass:[LYRUIMessageTimeDefaultFormatter class]
+                     forProtocol:@protocol(LYRUITimeFormatting)];
+    [self setImplementationClass:[LYRUIIdentityItemAccessoryViewProvider class]
+                     forProtocol:@protocol(LYRUIIdentityItemAccessoryViewProviding)];
+    [self setImplementationClass:[LYRUIIdentityNameFormatter class]
+                     forProtocol:@protocol(LYRUIIdentityNameFormatting)];
+    [self setImplementationClass:[LYRUIImageFetcher class]
+                     forProtocol:@protocol(LYRUIImageFetching)];
+    [self setImplementationClass:[LYRUIImageFactory class]
+                     forProtocol:@protocol(LYRUIImageCreating)];
+    [self setImplementationClass:[LYRUIInitialsFormatter class]
+                     forProtocol:@protocol(LYRUIInitialsFormatting)];
+    [self setImplementationClass:[LYRUIDataFactory class]
+                     forProtocol:@protocol(LYRUIDataCreating)];
+    [self setImplementationClass:[LYRUIDispatcher class]
+                     forProtocol:@protocol(LYRUIDispatching)];
+    [self setupImagesCache];
+    
+    [self setImplementationClass:[LYRUITimeAgoFormatter class]
+                     forProtocol:@protocol(LYRUITimeFormatting)
+                     usedInClass:[LYRUIIdentityItemViewConfiguration class]];
+}
+
+- (void)setupImagesCache {
+    NSString *anyClassKey = NSStringFromClass([LYRUIDIAnyClass class]);
+    NSString *imagesCachingKey = NSStringFromProtocol(@protocol(LYRUIImageCaching));
     __weak __typeof(self) weakSelf = self;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _defaultProtocolImplementations = @{
-                @"defaults": @{
-                        NSStringFromProtocol(@protocol(LYRUIConversationItemAccessoryViewProviding)): ^id (LYRUIConfiguration *configuration) {
-                            return [[LYRUIConversationItemAccessoryViewProvider alloc] initWithConfiguration:configuration];
-                        },
-                        NSStringFromProtocol(@protocol(LYRUIConversationItemTitleFormatting)): ^id (LYRUIConfiguration *configuration) {
-                            return [[LYRUIConversationItemTitleFormatter alloc] initWithConfiguration:configuration];
-                        },
-                        NSStringFromProtocol(@protocol(LYRUIMessageTextFormatting)): ^id (LYRUIConfiguration *configuration) {
-                            return [[LYRUIMessageTextDefaultFormatter alloc] init];
-                        },
-                        NSStringFromProtocol(@protocol(LYRUITimeFormatting)): ^id (LYRUIConfiguration *configuration) {
-                            return [[LYRUIMessageTimeDefaultFormatter alloc] init];
-                        },
-                        NSStringFromProtocol(@protocol(LYRUIIdentityItemAccessoryViewProviding)): ^id (LYRUIConfiguration *configuration) {
-                            return [[LYRUIIdentityItemAccessoryViewProvider alloc] init];
-                        },
-                        NSStringFromProtocol(@protocol(LYRUIIdentityNameFormatting)): ^id (LYRUIConfiguration *configuration) {
-                            return [[LYRUIIdentityNameFormatter alloc] init];
-                        },
-                        NSStringFromProtocol(@protocol(LYRUIImageFetching)): ^id (LYRUIConfiguration *configuration) {
-                            return [[LYRUIImageFetcher alloc] initWithConfiguration:configuration];
-                        },
-                        NSStringFromProtocol(@protocol(LYRUIImageCreating)): ^id (LYRUIConfiguration *configuration) {
-                            return [[LYRUIImageFactory alloc] initWithConfiguration:configuration];
-                        },
-                        NSStringFromProtocol(@protocol(LYRUIInitialsFormatting)): ^id (LYRUIConfiguration *configuration) {
-                            return [[LYRUIInitialsFormatter alloc] init];
-                        },
-                        NSStringFromProtocol(@protocol(LYRUIDataCreating)): ^id (LYRUIConfiguration *configuration) {
-                            return [[LYRUIDataFactory alloc] init];
-                        },
-                        NSStringFromProtocol(@protocol(LYRUIDispatching)): ^id (LYRUIConfiguration *configuration) {
-                            return [[LYRUIDispatcher alloc] init];
-                        },
-                        NSStringFromProtocol(@protocol(LYRUIImageCaching)): ^id (LYRUIConfiguration *configuration) {
-                            return weakSelf.imagesCache;
-                        },
-                },
-                NSStringFromClass([LYRUIIdentityItemViewConfiguration class]): @{
-                        NSStringFromProtocol(@protocol(LYRUITimeFormatting)): ^id (LYRUIConfiguration *configuration) {
-                            return [[LYRUITimeAgoFormatter alloc] initWithConfiguration:configuration];
-                        },
-                },
-        };
-    });
-    return _defaultProtocolImplementations;
+    self.defaultProtocolImplementations[anyClassKey][imagesCachingKey] = ^id (LYRUIConfiguration *configuration) {
+        return weakSelf.imagesCache;
+    };
 }
 
-- (NSDictionary *)defaultObjects {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _defaultObjects = @{
-                NSStringFromClass([NSCalendar class]): ^id (LYRUIConfiguration *configuration) {
-                    return [NSCalendar currentCalendar];
-                },
-                NSStringFromClass([NSDateFormatter class]): ^id (LYRUIConfiguration *configuration) {
-                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                    dateFormatter.locale = [configuration.injector objectOfType:[NSLocale class]];
-                    dateFormatter.timeZone = [configuration.injector objectOfType:[NSTimeZone class]];
-                    return dateFormatter;
-                },
-                NSStringFromClass([NSLocale class]): ^id (LYRUIConfiguration *configuration) {
-                    return [NSLocale currentLocale];
-                },
-                NSStringFromClass([NSTimeZone class]): ^id (LYRUIConfiguration *configuration) {
-                    return [NSTimeZone systemTimeZone];
-                },
-                NSStringFromClass([NSURLSession class]): ^id (LYRUIConfiguration *configuration) {
-                    return [NSURLSession sharedSession];
-                },
-                NSStringFromClass([NSTimeZone class]): ^id (LYRUIConfiguration *configuration) {
-                    return [NSBundle bundleWithLayerAssets];
-                },
-        };
-    });
-    return _defaultObjects;
+- (void)setupObjects {
+    self.defaultThemes = [[NSMutableDictionary alloc] init];
+    
+    [self setProvider:^id (LYRUIConfiguration *configuration) {
+        return [NSCalendar currentCalendar];
+    } forObjectType:[NSCalendar class]];
+    
+    [self setProvider:^id (LYRUIConfiguration *configuration) {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.locale = [configuration.injector objectOfType:[NSLocale class]];
+        dateFormatter.timeZone = [configuration.injector objectOfType:[NSTimeZone class]];
+        return dateFormatter;
+    } forObjectType:[NSDateFormatter class]];
+    
+    [self setProvider:^id (LYRUIConfiguration *configuration) {
+        return [NSLocale currentLocale];
+    } forObjectType:[NSLocale class]];
+    
+    [self setProvider:^id (LYRUIConfiguration *configuration) {
+        return [NSTimeZone systemTimeZone];
+    } forObjectType:[NSTimeZone class]];
+    
+    [self setProvider:^id (LYRUIConfiguration *configuration) {
+        return [NSURLSession sharedSession];
+    } forObjectType:[NSURLSession class]];
+    
+    [self setProvider:^id (LYRUIConfiguration *configuration) {
+        return [NSBundle bundleWithLayerAssets];
+    } forObjectType:[NSBundle class]];
+}
+
+#pragma mark - Helpers
+
+- (LYRUIDependencyProviding)providerWithClass:(Class)objectClass {
+    return ^id (LYRUIConfiguration *configuration) {
+        if ([objectClass conformsToProtocol:@protocol(LYRUIConfigurable)]) {
+            return [[objectClass alloc] initWithConfiguration:configuration];
+        }
+        return [[objectClass alloc] init];
+    };
+}
+
+- (void)setThemeClass:(Class)themeClass forViewClass:(Class)viewClass {
+    self.defaultThemes[NSStringFromClass(viewClass)] = [self providerWithClass:themeClass];
+}
+
+- (void)setAlternativeThemeClass:(Class)themeClass forViewClass:(Class)viewClass {
+    self.defaultAlternativeThemes[NSStringFromClass(viewClass)] = [self providerWithClass:themeClass];
+}
+
+- (void)setConfigurationClass:(Class)configurationClass forViewClass:(Class)viewClass {
+    self.defaultConfigurations[NSStringFromClass(viewClass)] = [self providerWithClass:configurationClass];
+}
+
+- (void)setLayoutClass:(Class)configurationClass forViewClass:(Class)viewClass {
+    self.defaultLayouts[NSStringFromClass(viewClass)] = [self providerWithClass:configurationClass];
+}
+
+- (void)setImplementationClass:(Class)implementationClass forProtocol:(Protocol *)protocol {
+    [self setImplementationClass:implementationClass forProtocol:protocol usedInClass:[LYRUIDIAnyClass class]];
+}
+
+- (void)setImplementationClass:(Class)implementationClass forProtocol:(Protocol *)protocol usedInClass:(Class)usageClass {
+    NSString *usageClassKey = NSStringFromClass(usageClass);
+    NSString *protocolKey = NSStringFromProtocol(protocol);
+    if (self.defaultProtocolImplementations[usageClassKey] == nil) {
+        self.defaultProtocolImplementations[usageClassKey] = [[NSMutableDictionary alloc] init];
+    }
+    self.defaultProtocolImplementations[usageClassKey][protocolKey] = [self providerWithClass:implementationClass];
+}
+
+- (void)setProvider:(LYRUIDependencyProviding)provider forObjectType:(Class)objectType {
+    self.defaultObjects[NSStringFromClass(objectType)] = provider;
 }
 
 @end
