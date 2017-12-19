@@ -23,6 +23,7 @@
 #import "LYRUIDependencyInjectionDefaultModule.h"
 
 @implementation LYRUIDependencyInjector
+@synthesize layerConfiguration = _layerConfiguration;
 
 - (instancetype)init {
     self = [super init];

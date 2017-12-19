@@ -1,5 +1,5 @@
 //
-//  NSBundle+LYRUIAssets.m
+//  LYRUIBundleProvider.m
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 19.12.2017.
@@ -18,11 +18,11 @@
 //  limitations under the License.
 //
 
-#import "NSBundle+LYRUIAssets.h"
+#import "LYRUIBundleProvider.h"
 
-@implementation NSBundle (LYRUIAssets)
+@implementation LYRUIBundleProvider
 
-+ (NSBundle *)bundleWithLayerAssets {
+- (NSBundle *)bundleWithLayerAssets {
     NSBundle *codeBundle = [NSBundle bundleForClass:[self class]];
     NSString *resourcesBundlePath = [codeBundle pathForResource:@"AtlasResource" ofType:@"bundle"];
     NSBundle *resourcesBundle = [NSBundle bundleWithPath:resourcesBundlePath];

@@ -1,5 +1,5 @@
 //
-//  NSBundle+LYRUIAssets.h
+//  LYRUIBundleProvider.h
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 19.12.2017.
@@ -20,8 +20,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSBundle (LYRUIAssets)
+@interface LYRUIBundleProvider : NSObject
 
-@property (nonatomic, class, readonly) NSBundle *bundleWithLayerAssets;
+@property (nonatomic, readonly) NSBundle *bundleWithLayerAssets;
 
 @end

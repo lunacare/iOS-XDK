@@ -51,13 +51,15 @@
 #import "LYRUIIdentityItemAccessoryViewProvider.h"
 #import "LYRUIIdentityNameFormatter.h"
 #import "LYRUITimeAgoFormatter.h"
+#import "LYRUIIdentityListView.h"
+#import "LYRUIIdentityListViewConfiguration.h"
 #import "LYRUIImageFetcher.h"
 #import "LYRUIImageFactory.h"
 #import "LYRUIInitialsFormatter.h"
 #import "LYRUIDataFactory.h"
 #import "LYRUIDispatcher.h"
-#import "NSBundle+LYRUIAssets.h"
 #import "NSCache+LYRUIImageCaching.h"
+#import "LYRUIBundleProvider.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -69,6 +71,7 @@
 @property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultObjects;
 
 @property (nonatomic, strong) id<LYRUIImageCaching> imagesCache;
+@property (nonatomic, strong) LYRUIBundleProvider *bundleProvider;
 
 @end
 
@@ -78,13 +81,14 @@
     self = [super init];
     if (self) {
         self.imagesCache = [[NSCache<NSURL *, UIImage *> alloc] init];
+        self.bundleProvider = [[LYRUIBundleProvider alloc] init];
         
         [self setupThemes];
         [self setupAlternativeThemes];
         [self setupConfigurations];
         [self setupLayouts];
         [self setupProtocolImplementations];
-        [self setupThemes];
+        [self setupObjects];
     }
     return self;
 }
@@ -117,6 +121,7 @@
     [self setConfigurationClass:[LYRUIListSupplementaryViewConfiguration class] forViewClass:[LYRUIListHeaderView class]];
     [self setConfigurationClass:[LYRUIConversationListViewConfiguration class] forViewClass:[LYRUIConversationListView class]];
     [self setConfigurationClass:[LYRUIIdentityItemViewConfiguration class] forViewClass:[LYRUIIdentityItemView class]];
+    [self setConfigurationClass:[LYRUIIdentityListViewConfiguration class] forViewClass:[LYRUIIdentityListView class]];
 }
 
 - (void)setupLayouts {
@@ -131,6 +136,7 @@
         LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
         return [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
     };
+    [self setLayoutClass:[LYRUIListLayout class] forViewClass:[LYRUIIdentityListView class]];
     self.defaultLayouts[NSStringFromClass([LYRUIIdentityItemView class])] = ^id (LYRUIConfiguration *configuration) {
         LYRUIIdentityItemViewLayoutMetrics *metrics = [[LYRUIIdentityItemViewLayoutMetrics alloc] init];
         return [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
@@ -179,7 +185,7 @@
 }
 
 - (void)setupObjects {
-    self.defaultThemes = [[NSMutableDictionary alloc] init];
+    self.defaultObjects = [[NSMutableDictionary alloc] init];
     
     [self setProvider:^id (LYRUIConfiguration *configuration) {
         return [NSCalendar currentCalendar];
@@ -204,8 +210,9 @@
         return [NSURLSession sharedSession];
     } forObjectType:[NSURLSession class]];
     
+    __weak __typeof(self) weakSelf = self;
     [self setProvider:^id (LYRUIConfiguration *configuration) {
-        return [NSBundle bundleWithLayerAssets];
+        return [weakSelf.bundleProvider bundleWithLayerAssets];
     } forObjectType:[NSBundle class]];
 }
 

@@ -19,10 +19,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LYRUIPresenceIndicatorTheme.h"
+#import "LYRUIParticipantsCountViewTheme.h"
 @class LYRUIConfiguration;
 @class LYRIdentity;
-@protocol LYRUIPresenceIndicatorTheme;
-@protocol LYRUIParticipantsCountViewTheme;
 
 NS_ASSUME_NONNULL_BEGIN     // {
 @protocol LYRUIPresenceViewTheme <LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme>
