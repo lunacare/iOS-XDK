@@ -20,12 +20,11 @@
 
 #import "LYRUIConfiguration.h"
 #import "LYRUIDependencyInjection.h"
-#import "LYRUIDependencyInjectionModule.h"
 
 NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIConfiguration (DependencyInjection) <LYRUIDependencyInjection>
+@interface LYRUIConfiguration (DependencyInjection)
 
-@property (nonatomic, strong, nullable) id<LYRUIDependencyInjectionModule> module;
+@property (nonatomic, strong, nullable) id<LYRUIDependencyInjection> injector;
 
 @end
 NS_ASSUME_NONNULL_END       // }

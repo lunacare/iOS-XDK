@@ -17,6 +17,7 @@ SpecBegin(LYRUIAvatarViewConfiguration)
 
 describe(@"LYRUIAvatarViewConfiguration", ^{
     __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
     __block LYRUIAvatarViewConfiguration *configuration;
     __block LYRUIImageWithLettersView *primaryAvatarViewMock;
     __block LYRUIImageWithLettersView *secondaryAvatarViewMock;
@@ -26,6 +27,8 @@ describe(@"LYRUIAvatarViewConfiguration", ^{
     
     beforeEach(^{
         configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
         
         viewMock = mock([LYRUIAvatarView class]);
         primaryAvatarViewMock = mock([LYRUIImageWithLettersView class]);
@@ -36,7 +39,7 @@ describe(@"LYRUIAvatarViewConfiguration", ^{
         [given(viewMock.presenceView) willReturn:presenceViewMock];
         
         avatarViewConfigurationMock = mock([LYRUIImageWithLettersViewConfiguration class]);
-        [given([configurationMock configurationForViewClass:[LYRUIImageWithLettersView class]]) willReturn:avatarViewConfigurationMock];
+        [given([injectorMock configurationForViewClass:[LYRUIImageWithLettersView class]]) willReturn:avatarViewConfigurationMock];
         
         configuration = [[LYRUIAvatarViewConfiguration alloc] initWithConfiguration:configurationMock];
     });

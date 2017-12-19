@@ -22,6 +22,7 @@ SpecBegin(LYRUIConversationListViewConfiguration)
 describe(@"LYRUIConversationListViewConfiguration", ^{
     describe(@"setupConversationListView:", ^{
         __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
         __block LYRUIConversationItemViewConfiguration *itemViewConfigurationMock;
         __block LYRUIListCellConfiguration *cellConfigurationMock;
         __block LYRUIListSupplementaryViewConfiguration *supplementaryViewConfigurationMock;
@@ -34,24 +35,26 @@ describe(@"LYRUIConversationListViewConfiguration", ^{
         
         beforeEach(^{
             configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
             
             itemViewConfigurationMock = mock([LYRUIConversationItemViewConfiguration class]);
-            [given([configurationMock configurationForViewClass:[LYRUIConversationItemView class]]) willReturn:itemViewConfigurationMock];
+            [given([injectorMock configurationForViewClass:[LYRUIConversationItemView class]]) willReturn:itemViewConfigurationMock];
             
             cellConfigurationMock = mock([LYRUIListCellConfiguration class]);
-            [given([configurationMock configurationForViewClass:[UICollectionViewCell class]]) willReturn:cellConfigurationMock];
+            [given([injectorMock configurationForViewClass:[UICollectionViewCell class]]) willReturn:cellConfigurationMock];
             
             supplementaryViewConfigurationMock = mock([LYRUIListSupplementaryViewConfiguration class]);
-            [given([configurationMock configurationForViewClass:[LYRUIListHeaderView class]]) willReturn:supplementaryViewConfigurationMock];
+            [given([injectorMock configurationForViewClass:[LYRUIListHeaderView class]]) willReturn:supplementaryViewConfigurationMock];
             
             layoutMock = mock([LYRUIListLayout class]);
-            [given([configurationMock layoutForViewClass:[LYRUIConversationListView class]]) willReturn:layoutMock];
+            [given([injectorMock layoutForViewClass:[LYRUIConversationListView class]]) willReturn:layoutMock];
             
             delegateMock = mock([LYRUIListDelegate class]);
-            [given([configurationMock objectOfType:[LYRUIListDelegate class]]) willReturn:delegateMock];
+            [given([injectorMock objectOfType:[LYRUIListDelegate class]]) willReturn:delegateMock];
             
             dataSourceMock = mock([LYRUIListDataSource class]);
-            [given([configurationMock objectOfType:[LYRUIListDataSource class]]) willReturn:dataSourceMock];
+            [given([injectorMock objectOfType:[LYRUIListDataSource class]]) willReturn:dataSourceMock];
             
             viewMock = mock([LYRUIConversationListView class]);
             

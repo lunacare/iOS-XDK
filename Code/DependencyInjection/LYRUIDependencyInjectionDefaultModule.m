@@ -57,6 +57,13 @@
 #import "LYRUIDataFactory.h"
 #import "LYRUIDispatcher.h"
 #import "NSBundle+LYRUIAssets.h"
+#import "NSCache+LYRUIImageCaching.h"
+
+@interface LYRUIDependencyInjectionDefaultModule ()
+
+@property (nonatomic, strong) id<LYRUIImageCaching> imagesCache;
+
+@end
 
 @implementation LYRUIDependencyInjectionDefaultModule
 @synthesize defaultThemes = _defaultThemes,
@@ -65,6 +72,14 @@
             defaultLayouts = _defaultLayouts,
             defaultProtocolImplementations = _defaultProtocolImplementations,
             defaultObjects = _defaultObjects;
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.imagesCache = [[NSCache<NSURL *, UIImage *> alloc] init];
+    }
+    return self;
+}
 
 - (NSDictionary *)defaultThemes {
     static dispatch_once_t onceToken;
@@ -157,6 +172,7 @@
 }
 
 - (NSDictionary *)defaultProtocolImplementations {
+    __weak __typeof(self) weakSelf = self;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _defaultProtocolImplementations = @{
@@ -194,6 +210,9 @@
                         NSStringFromProtocol(@protocol(LYRUIDispatching)): ^id (LYRUIConfiguration *configuration) {
                             return [[LYRUIDispatcher alloc] init];
                         },
+                        NSStringFromProtocol(@protocol(LYRUIImageCaching)): ^id (LYRUIConfiguration *configuration) {
+                            return weakSelf.imagesCache;
+                        },
                 },
                 NSStringFromClass([LYRUIIdentityItemViewConfiguration class]): @{
                         NSStringFromProtocol(@protocol(LYRUITimeFormatting)): ^id (LYRUIConfiguration *configuration) {
@@ -214,8 +233,8 @@
                 },
                 NSStringFromClass([NSDateFormatter class]): ^id (LYRUIConfiguration *configuration) {
                     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                    dateFormatter.locale = [configuration objectOfType:[NSLocale class]];
-                    dateFormatter.timeZone = [configuration objectOfType:[NSTimeZone class]];
+                    dateFormatter.locale = [configuration.injector objectOfType:[NSLocale class]];
+                    dateFormatter.timeZone = [configuration.injector objectOfType:[NSTimeZone class]];
                     return dateFormatter;
                 },
                 NSStringFromClass([NSLocale class]): ^id (LYRUIConfiguration *configuration) {

@@ -38,6 +38,7 @@ SpecBegin(LYRUIPresenceView)
 
 describe(@"LYRUIPresenceView", ^{
     __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
     __block NSObject<LYRUIPresenceViewTheme> *themeMock;
     __block LYRUIPresenceViewConfiguration *viewConfigurationMock;
     __block LYRUIPresenceView *presenceView;
@@ -45,13 +46,15 @@ describe(@"LYRUIPresenceView", ^{
 
     beforeEach(^{
         configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
         
         themeMock = mockObjectAndProtocol([NSObject class], @protocol(LYRUIPresenceViewTheme));
         [[given([(id<NSCopying>)themeMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:themeMock];
-        [given([configurationMock themeForViewClass:[LYRUIPresenceView class]]) willReturn:themeMock];
+        [given([injectorMock themeForViewClass:[LYRUIPresenceView class]]) willReturn:themeMock];
         
         viewConfigurationMock = mock([LYRUIPresenceViewConfiguration class]);
-        [given([configurationMock configurationForViewClass:[LYRUIPresenceView class]]) willReturn:viewConfigurationMock];
+        [given([injectorMock configurationForViewClass:[LYRUIPresenceView class]]) willReturn:viewConfigurationMock];
         
         sharedContext[@"theme"] = themeMock;
         sharedContext[@"viewConfiguration"] = viewConfigurationMock;

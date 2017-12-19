@@ -1,8 +1,8 @@
 //
-//  LYRUIParticipantsSorting.h
+//  LYRUIDependencyInjector.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 09.08.2017.
+//  Created by Łukasz Przytuła on 19.12.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,11 +18,11 @@
 //  limitations under the License.
 //
 
-#import "LYRUIParticipantsSorting.h"
-#import <LayerKit/LayerKit.h>
+#import "LYRUIDependencyInjection.h"
+#import "LYRUIDependencyInjectionModule.h"
 
-NS_ASSUME_NONNULL_BEGIN     // {
-typedef NSArray<LYRIdentity *> * _Nonnull (^LYRUIParticipantsSorting)(NSSet<LYRIdentity *> *);
+@interface LYRUIDependencyInjector : NSObject <LYRUIDependencyInjection>
 
-extern LYRUIParticipantsSorting(^LYRUIParticipantsDefaultSorter)(void);
-NS_ASSUME_NONNULL_END       // }
+@property (nonatomic, strong, nullable) id<LYRUIDependencyInjectionModule> module;
+
+@end

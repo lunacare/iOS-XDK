@@ -28,7 +28,7 @@ typedef id(^LYRUIDependencyProviding)(LYRUIConfiguration *);
 
 @protocol LYRUIDependencyInjection <NSObject>
 
-@property (nonatomic, strong, readonly) id<LYRUIImageCaching> imagesCache;
+@property (nonatomic, weak) LYRUIConfiguration *layerConfiguration;
 
 /**
  @abstract Returns a theme object for given view class.

@@ -41,10 +41,10 @@
 
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     _layerConfiguration = layerConfiguration;
-    self.accessoryViewProvider = [layerConfiguration protocolImplementation:@protocol(LYRUIConversationItemAccessoryViewProviding) forClass:[self class]];
-    self.titleFormatter = [layerConfiguration protocolImplementation:@protocol(LYRUIConversationItemTitleFormatting) forClass:[self class]];
-    self.lastMessageFormatter = [layerConfiguration protocolImplementation:@protocol(LYRUIMessageTextFormatting) forClass:[self class]];
-    self.messageTimeFormatter = [layerConfiguration protocolImplementation:@protocol(LYRUITimeFormatting) forClass:[self class]];
+    self.accessoryViewProvider = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIConversationItemAccessoryViewProviding) forClass:[self class]];
+    self.titleFormatter = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIConversationItemTitleFormatting) forClass:[self class]];
+    self.lastMessageFormatter = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIMessageTextFormatting) forClass:[self class]];
+    self.messageTimeFormatter = [layerConfiguration.injector protocolImplementation:@protocol(LYRUITimeFormatting) forClass:[self class]];
 }
 
 #pragma mark - LYRUIConversationItemView setup

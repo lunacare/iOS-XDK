@@ -43,8 +43,8 @@
 
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     _layerConfiguration = layerConfiguration;
-    self.calendar = [layerConfiguration objectOfType:[NSCalendar class]];
-    self.dateFormatter = [layerConfiguration objectOfType:[NSDateFormatter class]];
+    self.calendar = [layerConfiguration.injector objectOfType:[NSCalendar class]];
+    self.dateFormatter = [layerConfiguration.injector objectOfType:[NSDateFormatter class]];
 }
 
 #pragma mark - LYRUIMessageTimeFormatting method

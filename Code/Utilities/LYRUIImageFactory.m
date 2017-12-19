@@ -36,7 +36,7 @@
 
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     _layerConfiguration = layerConfiguration;
-    self.bundle = [layerConfiguration objectOfType:[NSBundle class]];
+    self.bundle = [layerConfiguration.injector objectOfType:[NSBundle class]];
 }
 
 #pragma mark - LYRUIImageCreating methods

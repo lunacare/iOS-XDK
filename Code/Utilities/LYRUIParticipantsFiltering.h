@@ -25,13 +25,4 @@ NS_ASSUME_NONNULL_BEGIN     // {
 typedef NSSet<LYRIdentity *> *_Nonnull (^LYRUIParticipantsFiltering)(NSSet<LYRIdentity *> *);
 
 extern LYRUIParticipantsFiltering _Nullable (^LYRUIParticipantsDefaultFilterWithCurrentUser)(LYRIdentity *);
-
-@protocol LYRUIParticipantsFiltering <NSObject>
-
-/**
- @abstract An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the participants set.
- */
-@property (nonatomic, strong, nullable) LYRUIParticipantsFiltering participantsFilter;
-
-@end
 NS_ASSUME_NONNULL_END       // }

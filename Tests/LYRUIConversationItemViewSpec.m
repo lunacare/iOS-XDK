@@ -71,24 +71,27 @@ describe(@"LYRUIConversationItemView", ^{
     
     describe(@"after initialization with configuration", ^{
         __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
         __block NSObject<LYRUIBaseItemViewTheme> *themeMock;
         __block NSObject<LYRUIBaseItemViewTheme> *unreadThemeMock;
         __block NSObject<LYRUIBaseItemViewLayout> *layoutMock;
         
         beforeEach(^{
             configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
             
             themeMock = mockObjectAndProtocol([NSObject class], @protocol(LYRUIBaseItemViewTheme));
             [[given([(id<NSCopying>)themeMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:themeMock];
-            [given([configurationMock themeForViewClass:[LYRUIConversationItemView class]]) willReturn:themeMock];
+            [given([injectorMock themeForViewClass:[LYRUIConversationItemView class]]) willReturn:themeMock];
             
             unreadThemeMock = mockObjectAndProtocol([NSObject class], @protocol(LYRUIBaseItemViewTheme));
             [[given([(id<NSCopying>)unreadThemeMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:unreadThemeMock];
-            [given([configurationMock alternativeThemeForViewClass:[LYRUIConversationItemView class]]) willReturn:unreadThemeMock];
+            [given([injectorMock alternativeThemeForViewClass:[LYRUIConversationItemView class]]) willReturn:unreadThemeMock];
             
             layoutMock = mockObjectAndProtocol([NSObject class], @protocol(LYRUIBaseItemViewLayout));
             [[given([(id<NSCopying>)layoutMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:layoutMock];
-            [given([configurationMock layoutForViewClass:[LYRUIConversationItemView class]]) willReturn:layoutMock];
+            [given([injectorMock layoutForViewClass:[LYRUIConversationItemView class]]) willReturn:layoutMock];
             
             view = [[LYRUIConversationItemView alloc] initWithConfiguration:configurationMock];
         });
@@ -137,24 +140,27 @@ describe(@"LYRUIConversationItemView", ^{
     describe(@"layerConfiguration", ^{
         context(@"setter", ^{
             __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
             __block NSObject<LYRUIBaseItemViewTheme> *themeMock;
             __block NSObject<LYRUIBaseItemViewTheme> *unreadThemeMock;
             __block NSObject<LYRUIBaseItemViewLayout> *layoutMock;
             
             beforeEach(^{
                 configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
                 
                 themeMock = mockObjectAndProtocol([NSObject class], @protocol(LYRUIBaseItemViewTheme));
                 [[given([(id<NSCopying>)themeMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:themeMock];
-                [given([configurationMock themeForViewClass:[LYRUIConversationItemView class]]) willReturn:themeMock];
+                [given([injectorMock themeForViewClass:[LYRUIConversationItemView class]]) willReturn:themeMock];
                 
                 unreadThemeMock = mockObjectAndProtocol([NSObject class], @protocol(LYRUIBaseItemViewTheme));
                 [[given([(id<NSCopying>)unreadThemeMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:unreadThemeMock];
-                [given([configurationMock alternativeThemeForViewClass:[LYRUIConversationItemView class]]) willReturn:unreadThemeMock];
+                [given([injectorMock alternativeThemeForViewClass:[LYRUIConversationItemView class]]) willReturn:unreadThemeMock];
                 
                 layoutMock = mockObjectAndProtocol([NSObject class], @protocol(LYRUIBaseItemViewLayout));
                 [[given([(id<NSCopying>)layoutMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:layoutMock];
-                [given([configurationMock layoutForViewClass:[LYRUIConversationItemView class]]) willReturn:layoutMock];
+                [given([injectorMock layoutForViewClass:[LYRUIConversationItemView class]]) willReturn:layoutMock];
                 
                 view.layerConfiguration = configurationMock;
             });

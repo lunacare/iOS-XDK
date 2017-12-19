@@ -20,72 +20,19 @@
 
 #import "LYRUIConfiguration+DependencyInjection.h"
 #import <objc/runtime.h>
-#import "LYRUIConfigurable.h"
-#import "NSCache+LYRUIImageCaching.h"
 
-static void *LYRUIConfigurationModuleKey = &LYRUIConfigurationModuleKey;
-static void *LYRUIConfigurationImagesCacheKey = &LYRUIConfigurationImagesCacheKey;
+static void *LYRUIConfigurationInjectorKey = &LYRUIConfigurationInjectorKey;
 
 @implementation LYRUIConfiguration (DependencyInjection)
 
-#pragma mark - LYRUIDependencyInjection
-
-- (id)themeForViewClass:(Class)viewClass {
-    LYRUIDependencyProviding provider = self.module.defaultThemes[NSStringFromClass(viewClass)];
-    return provider(self);
-}
-
-- (id)alternativeThemeForViewClass:(Class)viewClass {
-    LYRUIDependencyProviding provider = self.module.defaultAlternativeThemes[NSStringFromClass(viewClass)];
-    return provider(self);
-}
-
-- (id)configurationForViewClass:(Class)viewClass {
-    LYRUIDependencyProviding provider = self.module.defaultConfigurations[NSStringFromClass(viewClass)];
-    return provider(self);
-}
-
-- (id)layoutForViewClass:(Class)viewClass {
-    LYRUIDependencyProviding provider = self.module.defaultLayouts[NSStringFromClass(viewClass)];
-    return provider(self);
-}
-
-- (id)protocolImplementation:(Protocol *)protocol forClass:(Class)class {
-    LYRUIDependencyProviding provider = self.module.defaultProtocolImplementations[NSStringFromClass(class)][NSStringFromProtocol(protocol)];
-    if (provider == nil) {
-        provider = self.module.defaultProtocolImplementations[@"defaults"][NSStringFromProtocol(protocol)];
-    }
-    return provider(self);
-}
-
-- (id)objectOfType:(Class)type {
-    LYRUIDependencyProviding provider = self.module.defaultObjects[NSStringFromClass(type)];
-    if (provider) {
-        return provider(self);
-    }
-    if ([type conformsToProtocol:@protocol(LYRUIConfigurable)]) {
-        return [[type alloc] initWithConfiguration:self];
-    }
-    return [[type alloc] init];
-}
-
 #pragma mark - Properties
 
-- (id<LYRUIDependencyInjectionModule>)module {
-    return objc_getAssociatedObject(self, LYRUIConfigurationModuleKey);
+- (id<LYRUIDependencyInjection>)injector {
+    return objc_getAssociatedObject(self, LYRUIConfigurationInjectorKey);
 }
 
-- (void)setModule:(id<LYRUIDependencyInjectionModule>)module {
-    objc_setAssociatedObject(self, LYRUIConfigurationModuleKey, module, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (id<LYRUIImageCaching>)imagesCache {
-    id<LYRUIImageCaching> imagesCache = objc_getAssociatedObject(self, LYRUIConfigurationImagesCacheKey);
-    if (imagesCache == nil) {
-        imagesCache = [[NSCache<NSURL *, UIImage *> alloc] init];
-        objc_setAssociatedObject(self, LYRUIConfigurationImagesCacheKey, imagesCache, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    return imagesCache;
+- (void)setInjector:(id<LYRUIDependencyInjection>)injector {
+    objc_setAssociatedObject(self, LYRUIConfigurationInjectorKey, injector, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end

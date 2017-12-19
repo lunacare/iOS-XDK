@@ -76,7 +76,7 @@
 
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     _layerConfiguration = layerConfiguration;
-    id<LYRUIListViewConfiguring> configuration = [layerConfiguration configurationForViewClass:[self class]];
+    id<LYRUIListViewConfiguring> configuration = [layerConfiguration.injector configurationForViewClass:[self class]];
     [configuration setupListView:self];
 }
 

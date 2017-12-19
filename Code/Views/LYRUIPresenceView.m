@@ -102,8 +102,8 @@
 
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     _layerConfiguration = layerConfiguration;
-    self.theme = [layerConfiguration themeForViewClass:[self class]];
-    self.configuration = [layerConfiguration configurationForViewClass:[self class]];
+    self.theme = [layerConfiguration.injector themeForViewClass:[self class]];
+    self.configuration = [layerConfiguration.injector configurationForViewClass:[self class]];
 }
 
 @end

@@ -38,6 +38,7 @@ SpecBegin(LYRUIAvatarView)
 
 describe(@"LYRUIAvatarView", ^{
     __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
     __block NSObject<LYRUIAvatarViewTheme> *themeMock;
     __block LYRUIAvatarViewConfiguration *viewConfigurationMock;
     __block LYRUIAvatarView *view;
@@ -45,13 +46,15 @@ describe(@"LYRUIAvatarView", ^{
     
     beforeEach(^{
         configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
         
         themeMock = mockObjectAndProtocol([NSObject class], @protocol(LYRUIAvatarViewTheme));
         [[given([(id<NSCopying>)themeMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:themeMock];
-        [given([configurationMock themeForViewClass:[LYRUIAvatarView class]]) willReturn:themeMock];
+        [given([injectorMock themeForViewClass:[LYRUIAvatarView class]]) willReturn:themeMock];
         
         viewConfigurationMock = mock([LYRUIAvatarViewConfiguration class]);
-        [given([configurationMock configurationForViewClass:[LYRUIAvatarView class]]) willReturn:viewConfigurationMock];
+        [given([injectorMock configurationForViewClass:[LYRUIAvatarView class]]) willReturn:viewConfigurationMock];
         
         view = [[LYRUIAvatarView alloc] initWithConfiguration:configurationMock];
         

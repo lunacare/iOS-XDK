@@ -9,22 +9,25 @@ SpecBegin(LYRUIMessageTimeDefaultFormatter)
 
 describe(@"LYRUIMessageTimeDefaultFormatter", ^{
     __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
     __block LYRUIMessageTimeDefaultFormatter *formatter;
     
     beforeEach(^{
         configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
         
         NSLocale *locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];
         
         NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
         calendar.locale = locale;
         calendar.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-        [given([configurationMock objectOfType:[NSCalendar class]]) willReturn:calendar];
+        [given([injectorMock objectOfType:[NSCalendar class]]) willReturn:calendar];
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.locale = locale;
         dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-        [given([configurationMock objectOfType:[NSDateFormatter class]]) willReturn:dateFormatter];
+        [given([injectorMock objectOfType:[NSDateFormatter class]]) willReturn:dateFormatter];
         
         formatter = [[LYRUIMessageTimeDefaultFormatter alloc] initWithConfiguration:configurationMock];
     });

@@ -43,10 +43,10 @@
 }
 
 - (void)setupListView:(LYRUIConversationListView *)conversationListView {
-    LYRUIConversationItemViewConfiguration *itemViewConfiguration = [self.layerConfiguration configurationForViewClass:[LYRUIConversationItemView class]];
+    LYRUIConversationItemViewConfiguration *itemViewConfiguration = [self.layerConfiguration.injector configurationForViewClass:[LYRUIConversationItemView class]];
     
     LYRUIListCellConfiguration<LYRUIConversationCollectionViewCell *, LYRUIConversationItemViewConfiguration *, LYRConversation *> *conversationCellConfiguration;
-    conversationCellConfiguration = [self.layerConfiguration configurationForViewClass:[UICollectionViewCell class]];
+    conversationCellConfiguration = [self.layerConfiguration.injector configurationForViewClass:[UICollectionViewCell class]];
     [conversationCellConfiguration setupWithCellClass:[LYRUIConversationCollectionViewCell class]
                                            modelClass:[LYRConversation class]
                                     viewConfiguration:itemViewConfiguration
@@ -57,17 +57,17 @@
                                 cellRegistrationBlock:nil];
     [conversationCellConfiguration registerCellInCollectionView:conversationListView.collectionView];
     
-    LYRUIListSupplementaryViewConfiguration<LYRUIListHeaderView *> *headerConfiguration = [self.layerConfiguration configurationForViewClass:[LYRUIListHeaderView class]];
+    LYRUIListSupplementaryViewConfiguration<LYRUIListHeaderView *> *headerConfiguration = [self.layerConfiguration.injector configurationForViewClass:[LYRUIListHeaderView class]];
     [headerConfiguration registerSupplementaryViewInCollectionView:conversationListView.collectionView];
     
-    conversationListView.layout = [self.layerConfiguration layoutForViewClass:[LYRUIConversationListView class]];
+    conversationListView.layout = [self.layerConfiguration.injector layoutForViewClass:[LYRUIConversationListView class]];
     
-    LYRUIListDataSource *dataSource = [self.layerConfiguration objectOfType:[LYRUIListDataSource class]];
+    LYRUIListDataSource *dataSource = [self.layerConfiguration.injector objectOfType:[LYRUIListDataSource class]];
     [dataSource registerCellConfiguration:conversationCellConfiguration];
     [dataSource registerSupplementaryViewConfiguration:headerConfiguration];
     conversationListView.dataSource = dataSource;
     
-    LYRUIListDelegate *delegate = [self.layerConfiguration objectOfType:[LYRUIListDelegate class]];
+    LYRUIListDelegate *delegate = [self.layerConfiguration.injector objectOfType:[LYRUIListDelegate class]];
     [delegate registerCellSizeCalculation:conversationCellConfiguration];
     [delegate registerSupplementaryViewSizeCalculation:headerConfiguration];
     conversationListView.delegate = delegate;

@@ -17,6 +17,7 @@ SpecBegin(LYRUIConversationItemViewConfiguration)
 describe(@"LYRUIConversationItemViewConfiguration", ^{
     __block LYRUIConversationItemViewConfiguration *viewConfiguration;
     __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
     __block id<LYRUIConversationItemAccessoryViewProviding> accessoryViewProviderMock;
     __block id<LYRUIConversationItemTitleFormatting> titleFormatterMock;
     __block id<LYRUIMessageTextFormatting> lastMessageFormatterMock;
@@ -24,24 +25,26 @@ describe(@"LYRUIConversationItemViewConfiguration", ^{
     
     beforeEach(^{
         configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
         
         accessoryViewProviderMock = mockProtocol(@protocol(LYRUIConversationItemAccessoryViewProviding));
-        [given([configurationMock protocolImplementation:@protocol(LYRUIConversationItemAccessoryViewProviding)
+        [given([injectorMock protocolImplementation:@protocol(LYRUIConversationItemAccessoryViewProviding)
                                                 forClass:[LYRUIConversationItemViewConfiguration class]])
          willReturn:accessoryViewProviderMock];
         
         titleFormatterMock = mockProtocol(@protocol(LYRUIConversationItemTitleFormatting));
-        [given([configurationMock protocolImplementation:@protocol(LYRUIConversationItemTitleFormatting)
+        [given([injectorMock protocolImplementation:@protocol(LYRUIConversationItemTitleFormatting)
                                                 forClass:[LYRUIConversationItemViewConfiguration class]])
          willReturn:titleFormatterMock];
         
         lastMessageFormatterMock = mockProtocol(@protocol(LYRUIMessageTextFormatting));
-        [given([configurationMock protocolImplementation:@protocol(LYRUIMessageTextFormatting)
+        [given([injectorMock protocolImplementation:@protocol(LYRUIMessageTextFormatting)
                                                 forClass:[LYRUIConversationItemViewConfiguration class]])
          willReturn:lastMessageFormatterMock];
         
         messageTimeFormatterMock = mockProtocol(@protocol(LYRUITimeFormatting));
-        [given([configurationMock protocolImplementation:@protocol(LYRUITimeFormatting)
+        [given([injectorMock protocolImplementation:@protocol(LYRUITimeFormatting)
                                                 forClass:[LYRUIConversationItemViewConfiguration class]])
          willReturn:messageTimeFormatterMock];
         

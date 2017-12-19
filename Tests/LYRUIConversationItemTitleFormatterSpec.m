@@ -12,6 +12,7 @@ SpecBegin(LYRUIConversationItemTitleFormatter)
 
 describe(@"LYRUIConversationItemTitleFormatter", ^{
     __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
     __block LYRUIConversationItemTitleFormatter *formatter;
     __block LYRUIParticipantsFiltering participantsFilterMock;
     __block NSSet *participantsFilterMockReturnValue;
@@ -22,6 +23,8 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
     
     beforeEach(^{
         configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
         
         participantsFilterMock = ^NSSet *(NSSet *identities) {
             return participantsFilterMockReturnValue;
@@ -34,7 +37,7 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
         [given(configurationMock.participantsSorter) willReturn:participantsSorterMock];
         
         nameFormatterMock = mockProtocol(@protocol(LYRUIIdentityNameFormatting));
-        [given([configurationMock protocolImplementation:@protocol(LYRUIIdentityNameFormatting)
+        [given([injectorMock protocolImplementation:@protocol(LYRUIIdentityNameFormatting)
                                                 forClass:[LYRUIConversationItemTitleFormatter class]])
          willReturn:nameFormatterMock];
         

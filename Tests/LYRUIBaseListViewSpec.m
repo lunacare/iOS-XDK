@@ -15,6 +15,7 @@ SpecBegin(LYRUIBaseListView)
 
 describe(@"LYRUIBaseListView", ^{
     __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
     __block id<LYRUIListViewConfiguring> listViewConfigurationMock;
     __block LYRUIBaseListView *listView;
     __block UICollectionViewLayout<LYRUIListViewLayout> *layoutMock;
@@ -23,9 +24,11 @@ describe(@"LYRUIBaseListView", ^{
     
     beforeEach(^{
         configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
         
         listViewConfigurationMock = mockProtocol(@protocol(LYRUIListViewConfiguring));
-        [given([configurationMock configurationForViewClass:[LYRUIBaseListView class]]) willReturn:listViewConfigurationMock];
+        [given([injectorMock configurationForViewClass:[LYRUIBaseListView class]]) willReturn:listViewConfigurationMock];
         
         listView = [[LYRUIBaseListView alloc] initWithConfiguration:configurationMock];
         

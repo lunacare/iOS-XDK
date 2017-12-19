@@ -42,7 +42,7 @@
 
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     _layerConfiguration = layerConfiguration;
-    self.calendar = [layerConfiguration objectOfType:[NSCalendar class]];
+    self.calendar = [layerConfiguration.injector objectOfType:[NSCalendar class]];
 }
 
 #pragma mark - LYRUITimeAgoDateFormatting method

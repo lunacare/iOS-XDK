@@ -16,6 +16,7 @@ SpecBegin(LYRUIImageWithLettersViewConfiguration)
 
 describe(@"LYRUIImageWithLettersViewConfiguration", ^{
     __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
     __block LYRUIImageWithLettersViewConfiguration *configuration;
     __block LYRUIImageWithLettersView *viewMock;
     __block id<LYRUIImageFetching> imageFetcherMock;
@@ -26,22 +27,26 @@ describe(@"LYRUIImageWithLettersViewConfiguration", ^{
     
     beforeEach(^{
         configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
         
         imageFetcherMock = mockProtocol(@protocol(LYRUIImageFetching));
-        [given([configurationMock protocolImplementation:@protocol(LYRUIImageFetching)
+        [given([injectorMock protocolImplementation:@protocol(LYRUIImageFetching)
                                                 forClass:[LYRUIImageWithLettersViewConfiguration class]])
          willReturn:imageFetcherMock];
         
         imagesCacheMock = mockProtocol(@protocol(LYRUIImageCaching));
-        [given(configurationMock.imagesCache) willReturn:imagesCacheMock];
+        [given([injectorMock protocolImplementation:@protocol(LYRUIImageCaching)
+                                                forClass:[LYRUIImageWithLettersViewConfiguration class]])
+         willReturn:imagesCacheMock];
         
         imageFactoryMock = mockProtocol(@protocol(LYRUIImageCreating));
-        [given([configurationMock protocolImplementation:@protocol(LYRUIImageCreating)
+        [given([injectorMock protocolImplementation:@protocol(LYRUIImageCreating)
                                                 forClass:[LYRUIImageWithLettersViewConfiguration class]])
          willReturn:imageFactoryMock];
         
         initialsFormatterMock = mockProtocol(@protocol(LYRUIInitialsFormatting));
-        [given([configurationMock protocolImplementation:@protocol(LYRUIInitialsFormatting)
+        [given([injectorMock protocolImplementation:@protocol(LYRUIInitialsFormatting)
                                                 forClass:[LYRUIImageWithLettersViewConfiguration class]])
          willReturn:initialsFormatterMock];
         

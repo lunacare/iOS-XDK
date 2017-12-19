@@ -105,8 +105,8 @@
         return;
     }
     _layerConfiguration = layerConfiguration;
-    self.theme = [layerConfiguration themeForViewClass:[self class]];
-    self.layout = [layerConfiguration layoutForViewClass:[self class]];
+    self.theme = [layerConfiguration.injector themeForViewClass:[self class]];
+    self.layout = [layerConfiguration.injector layoutForViewClass:[self class]];
 }
 
 #pragma mark - LYRUIBaseItemViewTheme properties

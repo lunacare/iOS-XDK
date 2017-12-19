@@ -20,7 +20,7 @@
 
 #import "LYRUIConfiguration.h"
 #import "LYRUIConfiguration+DependencyInjection.h"
-#import "LYRUIDependencyInjectionDefaultModule.h"
+#import "LYRUIDependencyInjector.h"
 
 @implementation LYRUIConfiguration
 
@@ -28,8 +28,7 @@
     self = [super init];
     if (self) {
         self.participantsSorter = LYRUIParticipantsDefaultSorter();
-        id<LYRUIDependencyInjectionModule> module = [[LYRUIDependencyInjectionDefaultModule alloc] init];
-        self.module = module;
+        self.injector = [[LYRUIDependencyInjector alloc] init];
     }
     return self;
 }

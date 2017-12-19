@@ -33,10 +33,14 @@ static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationNam
     self = [super init];
     if (self) {
         self.layerConfiguration = configuration;
-        self.participantNameFormatter = [configuration protocolImplementation:@protocol(LYRUIIdentityNameFormatting)
-                                                                     forClass:[self class]];
     }
     return self;
+}
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.participantNameFormatter = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIIdentityNameFormatting)
+                                                                               forClass:[self class]];
 }
 
 #pragma mark - LYRUIConversationItemTitleFormatting method

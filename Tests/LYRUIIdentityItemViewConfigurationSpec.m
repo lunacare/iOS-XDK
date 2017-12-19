@@ -16,6 +16,7 @@ SpecBegin(LYRUIIdentityItemViewConfiguration)
 describe(@"LYRUIIdentityItemViewConfiguration", ^{
     __block LYRUIIdentityItemViewConfiguration *viewConfiguration;
     __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
     __block id<LYRUIIdentityItemAccessoryViewProviding> accessoryViewProviderMock;
     __block id<LYRUIIdentityNameFormatting> nameFormatterMock;
     __block id<LYRUITimeFormatting> lastSeenAtTimeFormatter;
@@ -23,19 +24,21 @@ describe(@"LYRUIIdentityItemViewConfiguration", ^{
     
     beforeEach(^{
         configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
         
         accessoryViewProviderMock = mockProtocol(@protocol(LYRUIIdentityItemAccessoryViewProviding));
-        [given([configurationMock protocolImplementation:@protocol(LYRUIIdentityItemAccessoryViewProviding)
+        [given([injectorMock protocolImplementation:@protocol(LYRUIIdentityItemAccessoryViewProviding)
                                                 forClass:[LYRUIIdentityItemViewConfiguration class]])
          willReturn:accessoryViewProviderMock];
         
         nameFormatterMock = mockProtocol(@protocol(LYRUIIdentityNameFormatting));
-        [given([configurationMock protocolImplementation:@protocol(LYRUIIdentityNameFormatting)
+        [given([injectorMock protocolImplementation:@protocol(LYRUIIdentityNameFormatting)
                                                 forClass:[LYRUIIdentityItemViewConfiguration class]])
          willReturn:nameFormatterMock];
           
         lastSeenAtTimeFormatter = mockProtocol(@protocol(LYRUITimeFormatting));
-        [given([configurationMock protocolImplementation:@protocol(LYRUITimeFormatting)
+        [given([injectorMock protocolImplementation:@protocol(LYRUITimeFormatting)
                                                 forClass:[LYRUIIdentityItemViewConfiguration class]])
          willReturn:lastSeenAtTimeFormatter];
            

@@ -41,11 +41,11 @@
 
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     _layerConfiguration = layerConfiguration;
-    self.imagesCache = layerConfiguration.imagesCache;
-    self.imageFactory = [layerConfiguration protocolImplementation:@protocol(LYRUIImageCreating) forClass:[self class]];
-    self.dataFactory = [layerConfiguration protocolImplementation:@protocol(LYRUIDataCreating) forClass:[self class]];
-    self.dispatcher = [layerConfiguration protocolImplementation:@protocol(LYRUIDispatching) forClass:[self class]];
-    self.session = [layerConfiguration objectOfType:[NSURLSession class]];
+    self.imagesCache = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIImageCaching) forClass:[self class]];
+    self.imageFactory = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIImageCreating) forClass:[self class]];
+    self.dataFactory = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIDataCreating) forClass:[self class]];
+    self.dispatcher = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIDispatching) forClass:[self class]];
+    self.session = [layerConfiguration.injector objectOfType:[NSURLSession class]];
 }
 
 #pragma mark - LYRUIImageFetching

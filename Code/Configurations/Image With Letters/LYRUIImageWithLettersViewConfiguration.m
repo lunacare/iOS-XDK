@@ -50,10 +50,10 @@
 
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     _layerConfiguration = layerConfiguration;
-    self.imageFetcher = [layerConfiguration protocolImplementation:@protocol(LYRUIImageFetching) forClass:[self class]];
-    self.imageFactory = [layerConfiguration protocolImplementation:@protocol(LYRUIImageCreating) forClass:[self class]];
-    self.initialsFormatter = [layerConfiguration protocolImplementation:@protocol(LYRUIInitialsFormatting) forClass:[self class]];
-    self.imagesCache = layerConfiguration.imagesCache;
+    self.imageFetcher = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIImageFetching) forClass:[self class]];
+    self.imageFactory = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIImageCreating) forClass:[self class]];
+    self.initialsFormatter = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIInitialsFormatting) forClass:[self class]];
+    self.imagesCache = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIImageCaching) forClass:[self class]];
 }
 
 #pragma mark - LYRUIImageWithLettersView configuration

@@ -53,7 +53,7 @@
 
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     _layerConfiguration = layerConfiguration;
-    self.avatarViewConfiguration = [layerConfiguration configurationForViewClass:[LYRUIImageWithLettersView class]];
+    self.avatarViewConfiguration = [layerConfiguration.injector configurationForViewClass:[LYRUIImageWithLettersView class]];
 }
 
 #pragma mark - LYRUIAvatarView configuration

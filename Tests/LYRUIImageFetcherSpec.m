@@ -14,6 +14,7 @@ SpecBegin(LYRUIImageFetcher)
 
 describe(@"LYRUIImageFetcher", ^{
     __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
     __block LYRUIImageFetcher *fetcher;
     __block id<LYRUIImageCaching> imagesCacheMock;
     __block id<LYRUIImageCreating> imagesFactoryMock;
@@ -23,27 +24,31 @@ describe(@"LYRUIImageFetcher", ^{
     
     beforeEach(^{
         configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
         
         imagesCacheMock = mockProtocol(@protocol(LYRUIImageCaching));
-        [given(configurationMock.imagesCache) willReturn:imagesCacheMock];
+        [given([injectorMock protocolImplementation:@protocol(LYRUIImageCaching)
+                                                forClass:[LYRUIImageFetcher class]])
+         willReturn:imagesCacheMock];
         
         imagesFactoryMock = mockProtocol(@protocol(LYRUIImageCreating));
-        [given([configurationMock protocolImplementation:@protocol(LYRUIImageCreating)
+        [given([injectorMock protocolImplementation:@protocol(LYRUIImageCreating)
                                                 forClass:[LYRUIImageFetcher class]])
          willReturn:imagesFactoryMock];
         
         dataFactoryMock = mockProtocol(@protocol(LYRUIDataCreating));
-        [given([configurationMock protocolImplementation:@protocol(LYRUIDataCreating)
+        [given([injectorMock protocolImplementation:@protocol(LYRUIDataCreating)
                                                 forClass:[LYRUIImageFetcher class]])
          willReturn:dataFactoryMock];
         
         dispatcher = [[LYRUISpecDispatcher alloc] init];
-        [given([configurationMock protocolImplementation:@protocol(LYRUIDispatching)
+        [given([injectorMock protocolImplementation:@protocol(LYRUIDispatching)
                                                 forClass:[LYRUIImageFetcher class]])
          willReturn:dispatcher];
         
         sessionMock = mock([NSURLSession class]);
-        [given([configurationMock objectOfType:[NSURLSession class]]) willReturn:sessionMock];
+        [given([injectorMock objectOfType:[NSURLSession class]]) willReturn:sessionMock];
         
         fetcher = [[LYRUIImageFetcher alloc] initWithConfiguration:configurationMock];
     });
