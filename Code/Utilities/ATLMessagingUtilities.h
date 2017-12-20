@@ -54,7 +54,7 @@ extern NSString *const ATLUserNotificationDefaultActionsCategoryIdentifier;
 // @name Push Support
 //-------------------
 
-UIMutableUserNotificationCategory *ATLDefaultUserNotificationCategory();
+UIMutableUserNotificationCategory *ATLDefaultUserNotificationCategory(void);
 
 //---------------------------------
 // @name Internationalization Macro
@@ -66,9 +66,9 @@ UIMutableUserNotificationCategory *ATLDefaultUserNotificationCategory();
 // @name Max Cell Dimensions
 //--------------------------
 
-CGFloat ATLMaxCellWidth();
+CGFloat ATLMaxCellWidth(void);
 
-CGFloat ATLMaxCellHeight();
+CGFloat ATLMaxCellHeight(void);
 
 //----------------------
 // @name Image Utilities

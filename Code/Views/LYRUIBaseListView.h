@@ -84,7 +84,7 @@ IB_DESIGNABLE
  @abstract A block called when list is scrolled near the end of current page and `canLoadMoreItems` is set to `YES`.
  @warning When items are maintained manually (and not by the `LYRQueryController`), it is required to manually set the `loadMoreItems` block handle loading inside of it.
  */
-@property (nonatomic, copy) void(^loadMoreItems)();
+@property (nonatomic, copy) void(^loadMoreItems)(void);
 
 @end
 NS_ASSUME_NONNULL_END       // }
