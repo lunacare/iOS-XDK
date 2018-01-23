@@ -20,5 +20,8 @@
 
 #import "LYRUIComposeBar.h"
 
+/**
+ @abstract A layout of the `LYRUIComposeBar` subviews.
+ */
 @interface LYRUIComposeBarLayout : NSObject <LYRUIComposeBarLayout>
 @end

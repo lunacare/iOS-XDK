@@ -21,14 +21,37 @@
 #import <Foundation/Foundation.h>
 @class LYRUIComposeBar;
 
+/**
+ @abstract The `LYRUIComposeBarConfiguration` will be used for configuring a `LYRUIComposeBar`, and handling placeholder, and send button state.
+ */
 @interface LYRUIComposeBarConfiguration : NSObject
 
+/**
+ @abstract Compose bar's message input text.
+ */
 @property (nonatomic, copy) NSString *text;
+
+/**
+ @abstract Compose bar's attributed message input text.
+ */
 @property (nonatomic, copy) NSAttributedString *attributedText;
 
+/**
+ @abstract Initializes a new `LYRUIComposeBarConfiguration` object with the given notification center.
+ @param notificationCenter An `NSNotificationCenter` object used for observing `UITextView` related notifications.
+ @return An `LYRUIComposeBarConfiguration` object.
+ */
 - (instancetype)initWithNotificationCenter:(NSNotificationCenter *)notificationCenter;
 
+/**
+ @abstract Configures the `LYRUIComposeBar` for proper handling of input text with placeholder, and managing send button state.
+ @param composeBar An `LYRUIComposeBar` to be set up.
+ */
 - (void)configureComposeBar:(LYRUIComposeBar *)composeBar;
+
+/**
+ @abstract Cleans all observers from the `LYRUIComposeBar` configured using `configureComposeBar:` method.
+ */
 - (void)cleanup;
 
 @end

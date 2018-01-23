@@ -64,6 +64,9 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @end
 
 IB_DESIGNABLE
+/**
+ @abstract A view used for getting user inputs in conversation view.
+ */
 @interface LYRUIComposeBar : LYRUIViewWithLayout <LYRUIComposeBarTheme>
 
 /**
