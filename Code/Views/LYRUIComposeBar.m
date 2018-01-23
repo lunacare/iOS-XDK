@@ -1,0 +1,226 @@
+//
+//  LYRUIComposeBar.m
+//  Layer-UI-iOS
+//
+//  Created by Łukasz Przytuła on 10.08.2017.
+//  Copyright (c) 2017 Layer. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
+
+#import "LYRUIComposeBar.h"
+#import "LYRUIComposeBarLayout.h"
+#import "LYRUIComposeBarConfiguration.h"
+#import "LYRUIComposeBarIBSetup.h"
+#import "LYRUIAutoresizingTextView.h"
+#import "LYRUISendButton.h"
+
+@interface LYRUIComposeBar ()
+
+@property (nonatomic, weak, readwrite) UITextView *inputTextView;
+@property (nonatomic, strong, readwrite) LYRUISendButton *sendButton;
+
+@property (nonatomic, strong) LYRUIComposeBarConfiguration *configuration;
+
+@end
+
+@implementation LYRUIComposeBar
+@synthesize textFont = _textFont;
+@dynamic layout;
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [self initWithFrame:frame configuration:nil];
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self lyr_commonInit];
+    }
+    return self;
+}
+
+- (instancetype)initWithConfiguration:(LYRUIComposeBarConfiguration *)configuration {
+    self = [self initWithFrame:CGRectZero configuration:configuration];
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame configuration:(LYRUIComposeBarConfiguration *)configuration {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self lyr_commonInitWithConfiguration:configuration];
+    }
+    return self;
+}
+
+- (void)lyr_commonInit {
+    [self lyr_commonInitWithConfiguration:nil];
+}
+
+- (void)lyr_commonInitWithConfiguration:(LYRUIComposeBarConfiguration *)configuration {
+    [self addInputTextView];
+    [self addDefaultSendButton];
+    [self setupConfiguration:configuration];
+    [self setupDefaultFonts];
+    [self setupDefaultColors];
+    self.layout = [[LYRUIComposeBarLayout alloc] init];
+}
+
+- (void)addInputTextView {
+    UITextView *textView = [[LYRUIAutoresizingTextView alloc] init];
+    textView.layer.cornerRadius = 8.0;
+    textView.layer.borderWidth = 1.0;
+    textView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    NSMutableDictionary *attributes = [textView.typingAttributes mutableCopy];
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+    [style setLineHeightMultiple:1.13];
+    attributes[NSParagraphStyleAttributeName] = style;
+    textView.typingAttributes = attributes;
+    
+    textView.textContainerInset = UIEdgeInsetsMake(6.0, 4.0, 6.0, 4.0);
+    [self addSubview:textView];
+    
+    self.inputTextView = textView;
+}
+
+- (void)addDefaultSendButton {
+    LYRUISendButton *button = [LYRUISendButton buttonWithType:UIButtonTypeCustom];
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    [button.widthAnchor constraintEqualToConstant:55.0].active = YES;
+    [button.heightAnchor constraintEqualToConstant:32.0].active = YES;
+    self.rightItems = @[button];
+    self.sendButton = button;
+}
+
+- (void)setupConfiguration:(LYRUIComposeBarConfiguration *)configuration {
+    if (configuration == nil) {
+        configuration = [[LYRUIComposeBarConfiguration alloc] init];
+    }
+    self.configuration = configuration;
+    [configuration configureComposeBar:self];
+}
+
+- (void)setupDefaultColors {
+    self.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
+    self.messageInputColor = [UIColor whiteColor];
+    self.messageInputBorderColor = [UIColor colorWithRed:219.0/255.0 green:222.0/255.0 blue:228.0/255.0 alpha:1.0];
+    self.placeholderColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
+    self.textColor = [UIColor colorWithRed:27.0/255.0 green:28.0/255.0 blue:29.0/255.0 alpha:1.0];
+}
+
+- (void)setupDefaultFonts {
+    self.textFont = [UIFont systemFontOfSize:14.0];
+}
+
+- (void)prepareForInterfaceBuilder {
+    [[[LYRUIComposeBarIBSetup alloc] init] prepareComposeBarForInterfaceBuilder:self];
+}
+
+- (void)dealloc {
+    [self.configuration cleanup];
+}
+
+#pragma mark - Properties
+
+- (void)setLeftItems:(NSArray<UIView *> *)leftItems {
+    [self removeSubviews:self.leftItems];
+    _leftItems = leftItems;
+    [self addSubviews:leftItems];
+    [self setNeedsUpdateConstraints];
+    [self setNeedsLayout];
+}
+
+- (void)setRightItems:(NSArray<UIView *> *)rightItems {
+    [self removeSubviews:self.rightItems];
+    _rightItems = rightItems;
+    [self addSubviews:rightItems];
+    [self setNeedsUpdateConstraints];
+    [self setNeedsLayout];
+}
+
+- (NSString *)text {
+    return self.configuration.text;
+}
+
+- (void)setText:(NSString *)text {
+    self.configuration.text = text;
+}
+
+- (NSAttributedString *)attributedText {
+    return self.configuration.attributedText;
+}
+
+- (void)setAttributedText:(NSAttributedString *)attributedText {
+    self.configuration.attributedText = attributedText;
+}
+
+- (CGFloat)messageInputCornerRadius {
+    return self.inputTextView.layer.cornerRadius;
+}
+
+- (void)setMessageInputCornerRadius:(CGFloat)messageInputCornerRadius {
+    self.inputTextView.layer.cornerRadius = messageInputCornerRadius;
+}
+
+#pragma mark - Theme
+
+- (UIColor *)messageInputColor {
+    return self.inputTextView.backgroundColor;
+}
+
+- (void)setMessageInputColor:(UIColor *)messageInputColor {
+    self.inputTextView.backgroundColor = messageInputColor;
+}
+
+- (UIColor *)messageInputBorderColor {
+    return [UIColor colorWithCGColor:self.inputTextView.layer.borderColor];
+}
+
+- (void)setMessageInputBorderColor:(UIColor *)messageInputBorderColor {
+    self.inputTextView.layer.borderColor = messageInputBorderColor.CGColor;
+}
+
+- (UIFont *)textFont {
+    return self.inputTextView.font;
+}
+
+- (void)setTextFont:(UIFont *)textFont {
+    self.inputTextView.font = textFont;
+}
+
+- (void)setTheme:(id<LYRUIComposeBarTheme>)theme {
+    _theme = theme;
+    self.messageInputColor = theme.messageInputColor;
+    self.messageInputBorderColor = theme.messageInputBorderColor;
+    self.textFont = theme.textFont;
+    self.textColor = theme.textColor;
+    self.placeholderColor = theme.placeholderColor;
+}
+
+#pragma mark - Helpers
+
+- (void)removeSubviews:(NSArray<UIView *> *)subviews {
+    for (UIView *view in subviews) {
+        [view removeFromSuperview];
+    }
+}
+
+- (void)addSubviews:(NSArray<UIView *> *)subviews {
+    for (UIView *view in subviews) {
+        [self addSubview:view];
+    }
+}
+
+@end
