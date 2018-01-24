@@ -24,6 +24,9 @@
 @implementation LYRUIComposeBarIBSetup
 
 - (void)prepareComposeBarForInterfaceBuilder:(LYRUIComposeBar *)composeBar {
+    LYRUIConfiguration *layerConfiguration = [[LYRUIConfiguration alloc] init];
+    composeBar.layerConfiguration = layerConfiguration;
+    
     UIView *leftItem = [[UIView alloc] init];
     leftItem.backgroundColor = UIColor.grayColor;
     leftItem.clipsToBounds = YES;

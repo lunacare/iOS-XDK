@@ -3,25 +3,28 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
+#import <Atlas/LYRUIConfiguration+DependencyInjection.h>
 #import <Atlas/LYRUIComposeBar.h>
 #import <Atlas/LYRUIComposeBarConfiguration.h>
 #import <Atlas/LYRUISendButton.h>
 #import "LYRUIComposeBarTestLayout.h"
 
-@interface LYRUIComposeBar ()
-
-- (instancetype)initWithConfiguration:(LYRUIComposeBarConfiguration *)configuration;
-
-@end
-
 SpecBegin(LYRUIComposeBar)
 
 describe(@"LYRUIComposeBar", ^{
+    __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
     __block LYRUIComposeBar *composeBar;
-    __block LYRUIComposeBarConfiguration *configurationMock;
+    __block LYRUIComposeBarConfiguration *viewConfigurationMock;
 
     beforeEach(^{
-        configurationMock = mock([LYRUIComposeBarConfiguration class]);
+        configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
+        
+        viewConfigurationMock = mock([LYRUIComposeBarConfiguration class]);
+        [given([injectorMock configurationForViewClass:[LYRUIComposeBar class]]) willReturn:viewConfigurationMock];
+        
         composeBar = [[LYRUIComposeBar alloc] initWithConfiguration:configurationMock];
     });
 
@@ -70,7 +73,7 @@ describe(@"LYRUIComposeBar", ^{
             expect(composeBar.placeholderColor).to.equal(expectedColor);
         });
         it(@"should configure itself using configuration", ^{
-            [verify(configurationMock) configureComposeBar:composeBar];
+            [verify(viewConfigurationMock) configureComposeBar:composeBar];
         });
     });
     
@@ -81,6 +84,7 @@ describe(@"LYRUIComposeBar", ^{
             NSBundle *bundle = [NSBundle bundleForClass:[self class]];
             xibObjects = [bundle loadNibNamed:@"LYRUIComposeBar" owner:self options:nil];
             composeBar = (LYRUIComposeBar *)xibObjects.firstObject;
+            composeBar.layerConfiguration = configurationMock;
         });
         
         it(@"should have layout set to object connected via IB outlet", ^{
@@ -89,8 +93,8 @@ describe(@"LYRUIComposeBar", ^{
         it(@"should have message input corner radius set to value from Interface Builder", ^{
             expect(composeBar.messageInputCornerRadius).to.equal(16.0);
         });
-        it(@"should have message text set to value from Interface Builder", ^{
-            expect(composeBar.text).to.equal(@"message text");
+        it(@"should set input text view text to value from Interface Builder", ^{
+            expect(composeBar.inputTextView.text).to.equal(@"message text");
         });
         it(@"should have placeholder set to value from Interface Builder", ^{
             expect(composeBar.placeholder).to.equal(@"placeholder");
@@ -255,7 +259,7 @@ describe(@"LYRUIComposeBar", ^{
     describe(@"text", ^{
         context(@"getter", ^{
             beforeEach(^{
-                [given(configurationMock.text) willReturn:@"test message text"];
+                [given(viewConfigurationMock.text) willReturn:@"test message text"];
             });
             
             it(@"should return value from configuration", ^{
@@ -269,7 +273,7 @@ describe(@"LYRUIComposeBar", ^{
             });
             
             it(@"should pass the value to configuration", ^{
-                [verify(configurationMock) setText:@"test message text"];
+                [verify(viewConfigurationMock) setText:@"test message text"];
             });
         });
     });
@@ -278,7 +282,7 @@ describe(@"LYRUIComposeBar", ^{
         context(@"getter", ^{
             beforeEach(^{
                 NSAttributedString *messageText = [[NSAttributedString alloc] initWithString:@"test message text"];
-                [given(configurationMock.attributedText) willReturn:messageText];
+                [given(viewConfigurationMock.attributedText) willReturn:messageText];
             });
             
             it(@"should return value from configuration", ^{
@@ -295,7 +299,7 @@ describe(@"LYRUIComposeBar", ^{
             
             it(@"should pass the value to configuration", ^{
                 NSAttributedString *messageText = [[NSAttributedString alloc] initWithString:@"test message text"];
-                [verify(configurationMock) setAttributedText:messageText];
+                [verify(viewConfigurationMock) setAttributedText:messageText];
             });
         });
     });

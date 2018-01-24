@@ -690,6 +690,7 @@
 				154DB68E1F3C99210080A0D2 /* LYRUIComposeBar.xib */,
 				15C19FCA1F46F72D002AA604 /* LYRUIMessageListView.xib */,
 				15062C4D1FE2AC6700943614 /* LYRUIPresenceViewSpecSpec.m */,
+				15CE1B0F1FB9DD1D00B410ED /* LYRUISendButtonSpec.m */,
 				15062C4D1FE2AC6700943614 /* LYRUIPresenceViewSpec.m */,
 			);
 			name = Views;
@@ -1371,7 +1372,6 @@
 				D02CDCDD1A9FFC930013CBE8 /* ATLTestUtilities.m in Sources */,
 				1525151D1F3094680074CE03 /* LYRUIListHeaderViewSpec.m in Sources */,
 				152515271F30A8520074CE03 /* LYRUIConversationCollectionViewCellSpec.m in Sources */,
-				1575B46E1FE945AE00269488 /* LYRUIListLayoutSpec.m in Sources */,
 				152515251F30A79F0074CE03 /* LYRUIConversationListViewSpec.m in Sources */,
 				1504137D1F21D147006F46BD /* LYRUIParticipantsCountViewSpec.m in Sources */,
 				15654C281F264F4000255309 /* LYRUIAvatarViewSpec.m in Sources */,
@@ -1390,7 +1390,6 @@
 				15062C4E1FE2AC6700943614 /* LYRUIPresenceViewSpec.m in Sources */,
 				150772151F28E9AF00E903D1 /* LYRUISpecDispatcher.m in Sources */,
 				151684411F99332200EBA969 /* LYRUIBaseListViewSpec.m in Sources */,
-				1575B46D1FE9453200269488 /* LYRUIAvatarViewConfigurationSpec.m in Sources */,
 				152515171F3084580074CE03 /* LYRUIListDataSourceSpec.m in Sources */,
 				D0294DE81A93F39300702856 /* ATLMediaStreamTests.m in Sources */,
 				159A26F11F1F8F4000BC416C /* LYRUIShapedViewSpec.m in Sources */,

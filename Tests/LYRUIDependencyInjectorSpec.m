@@ -44,6 +44,8 @@
 #import <Atlas/LYRUIDataFactory.h>
 #import <Atlas/LYRUIDispatcher.h>
 #import <Atlas/NSCache+LYRUIImageCaching.h>
+#import <Atlas/LYRUIComposeBar.h>
+#import <Atlas/LYRUIComposeBarConfiguration.h>
 
 SpecBegin(LYRUIDependencyInjector)
 
@@ -233,6 +235,18 @@ describe(@"LYRUIDependencyInjector", ^{
                 expect(returnedObject).to.beAKindOf([LYRUIIdentityListViewConfiguration class]);
             });
         });
+        
+        context(@"for LYRUIComposeBar", ^{
+            __block id returnedObject;
+            
+            beforeEach(^{
+                returnedObject = [injector configurationForViewClass:[LYRUIComposeBar class]];
+            });
+            
+            it(@"should return configuration of `LYRUIComposeBarConfiguration` type", ^{
+                expect(returnedObject).to.beAKindOf([LYRUIComposeBarConfiguration class]);
+            });
+        });
     });
     
     describe(@"layoutForViewClass:", ^{
@@ -243,7 +257,7 @@ describe(@"LYRUIDependencyInjector", ^{
                 returnedObject = [injector layoutForViewClass:[LYRUIConversationItemView class]];
             });
             
-            it(@"should return layout conforming to `LYRUIBaseItemViewTheme` protocol", ^{
+            it(@"should return layout conforming to `LYRUIBaseItemViewLayout` protocol", ^{
                 expect(returnedObject).to.conformTo(@protocol(LYRUIBaseItemViewLayout));
             });
         });
@@ -267,7 +281,7 @@ describe(@"LYRUIDependencyInjector", ^{
                 returnedObject = [injector layoutForViewClass:[LYRUIConversationItemView class]];
             });
             
-            it(@"should return layout conforming to `LYRUIBaseItemViewTheme` protocol", ^{
+            it(@"should return layout conforming to `LYRUIBaseItemViewLayout` protocol", ^{
                 expect(returnedObject).to.conformTo(@protocol(LYRUIBaseItemViewLayout));
             });
         });
@@ -291,8 +305,20 @@ describe(@"LYRUIDependencyInjector", ^{
                 returnedObject = [injector layoutForViewClass:[LYRUIIdentityItemView class]];
             });
             
-            it(@"should return layout conforming to `LYRUIBaseItemViewTheme` protocol", ^{
+            it(@"should return layout conforming to `LYRUIBaseItemViewLayout` protocol", ^{
                 expect(returnedObject).to.conformTo(@protocol(LYRUIBaseItemViewLayout));
+            });
+        });
+        
+        context(@"for LYRUIComposeBar", ^{
+            __block id returnedObject;
+            
+            beforeEach(^{
+                returnedObject = [injector layoutForViewClass:[LYRUIComposeBar class]];
+            });
+            
+            it(@"should return layout conforming to `LYRUIComposeBarLayout` protocol", ^{
+                expect(returnedObject).to.conformTo(@protocol(LYRUIComposeBarLayout));
             });
         });
     });
@@ -562,6 +588,18 @@ describe(@"LYRUIDependencyInjector", ^{
             });
             it(@"should return bundle with Layer UI Resources", ^{
                 expect(returnedObject.bundleIdentifier).to.equal(@"org.cocoapods.AtlasResource");
+            });
+        });
+        
+        context(@"for NSNotificationCenter", ^{
+            __block NSBundle *returnedObject;
+            
+            beforeEach(^{
+                returnedObject = [injector objectOfType:[NSNotificationCenter class]];
+            });
+            
+            it(@"should return default notification center", ^{
+                expect(returnedObject).to.equal([NSNotificationCenter defaultCenter]);
             });
         });
     });

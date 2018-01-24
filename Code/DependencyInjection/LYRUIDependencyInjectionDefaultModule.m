@@ -60,6 +60,9 @@
 #import "LYRUIDispatcher.h"
 #import "NSCache+LYRUIImageCaching.h"
 #import "LYRUIBundleProvider.h"
+#import "LYRUIComposeBar.h"
+#import "LYRUIComposeBarLayout.h"
+#import "LYRUIComposeBarConfiguration.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -122,6 +125,7 @@
     [self setConfigurationClass:[LYRUIConversationListViewConfiguration class] forViewClass:[LYRUIConversationListView class]];
     [self setConfigurationClass:[LYRUIIdentityItemViewConfiguration class] forViewClass:[LYRUIIdentityItemView class]];
     [self setConfigurationClass:[LYRUIIdentityListViewConfiguration class] forViewClass:[LYRUIIdentityListView class]];
+    [self setConfigurationClass:[LYRUIComposeBarConfiguration class] forViewClass:[LYRUIComposeBar class]];
 }
 
 - (void)setupLayouts {
@@ -141,6 +145,7 @@
         LYRUIIdentityItemViewLayoutMetrics *metrics = [[LYRUIIdentityItemViewLayoutMetrics alloc] init];
         return [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
     };
+    [self setLayoutClass:[LYRUIComposeBarLayout class] forViewClass:[LYRUIComposeBar class]];
 }
 
 - (void)setupProtocolImplementations {
@@ -214,6 +219,10 @@
     [self setProvider:^id (LYRUIConfiguration *configuration) {
         return [weakSelf.bundleProvider bundleWithLayerAssets];
     } forObjectType:[NSBundle class]];
+    
+    [self setProvider:^id (LYRUIConfiguration *configuration) {
+        return [NSNotificationCenter defaultCenter];
+    } forObjectType:[NSNotificationCenter class]];
 }
 
 #pragma mark - Helpers

@@ -20,6 +20,7 @@
 
 #import <UIKit/UIKit.h>
 #import "LYRUIViewWithLayout.h"
+#import "LYRUIConfigurable.h"
 @class LYRUIComposeBar;
 @class LYRUISendButton;
 
@@ -67,7 +68,7 @@ IB_DESIGNABLE
 /**
  @abstract A view used for getting user inputs in conversation view.
  */
-@interface LYRUIComposeBar : LYRUIViewWithLayout <LYRUIComposeBarTheme>
+@interface LYRUIComposeBar : LYRUIViewWithLayout <LYRUIComposeBarTheme, LYRUIConfigurable>
 
 /**
  @abstract Array of views added on the left side of the input message input.

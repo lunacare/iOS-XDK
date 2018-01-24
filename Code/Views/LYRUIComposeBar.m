@@ -19,11 +19,11 @@
 //
 
 #import "LYRUIComposeBar.h"
-#import "LYRUIComposeBarLayout.h"
 #import "LYRUIComposeBarConfiguration.h"
 #import "LYRUIComposeBarIBSetup.h"
 #import "LYRUIAutoresizingTextView.h"
 #import "LYRUISendButton.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 
 @interface LYRUIComposeBar ()
 
@@ -35,11 +35,15 @@
 @end
 
 @implementation LYRUIComposeBar
-@synthesize textFont = _textFont;
+@synthesize layerConfiguration = _layerConfiguration,
+            textFont = _textFont;
 @dynamic layout;
 
 - (instancetype)initWithFrame:(CGRect)frame {
-    self = [self initWithFrame:frame configuration:nil];
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self lyr_commonInit];
+    }
     return self;
 }
 
@@ -51,30 +55,19 @@
     return self;
 }
 
-- (instancetype)initWithConfiguration:(LYRUIComposeBarConfiguration *)configuration {
-    self = [self initWithFrame:CGRectZero configuration:configuration];
-    return self;
-}
-
-- (instancetype)initWithFrame:(CGRect)frame configuration:(LYRUIComposeBarConfiguration *)configuration {
-    self = [super initWithFrame:frame];
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
+    self = [self init];
     if (self) {
-        [self lyr_commonInitWithConfiguration:configuration];
+        self.layerConfiguration = configuration;
     }
     return self;
 }
 
 - (void)lyr_commonInit {
-    [self lyr_commonInitWithConfiguration:nil];
-}
-
-- (void)lyr_commonInitWithConfiguration:(LYRUIComposeBarConfiguration *)configuration {
     [self addInputTextView];
     [self addDefaultSendButton];
-    [self setupConfiguration:configuration];
     [self setupDefaultFonts];
     [self setupDefaultColors];
-    self.layout = [[LYRUIComposeBarLayout alloc] init];
 }
 
 - (void)addInputTextView {
@@ -104,14 +97,6 @@
     self.sendButton = button;
 }
 
-- (void)setupConfiguration:(LYRUIComposeBarConfiguration *)configuration {
-    if (configuration == nil) {
-        configuration = [[LYRUIComposeBarConfiguration alloc] init];
-    }
-    self.configuration = configuration;
-    [configuration configureComposeBar:self];
-}
-
 - (void)setupDefaultColors {
     self.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
     self.messageInputColor = [UIColor whiteColor];
@@ -134,6 +119,15 @@
 
 #pragma mark - Properties
 
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    if (self.layout == nil) {
+        self.layout = [layerConfiguration.injector layoutForViewClass:[self class]];
+    }
+    self.configuration = [layerConfiguration.injector configurationForViewClass:[self class]];
+    [self.configuration configureComposeBar:self];
+}
+
 - (void)setLeftItems:(NSArray<UIView *> *)leftItems {
     [self removeSubviews:self.leftItems];
     _leftItems = leftItems;
@@ -151,11 +145,18 @@
 }
 
 - (NSString *)text {
-    return self.configuration.text;
+    if (self.configuration) {
+        return self.configuration.text;
+    }
+    return self.inputTextView.text;
 }
 
 - (void)setText:(NSString *)text {
-    self.configuration.text = text;
+    if (self.configuration) {
+        self.configuration.text = text;
+    } else {
+        self.inputTextView.text = text;
+    }
 }
 
 - (NSAttributedString *)attributedText {
