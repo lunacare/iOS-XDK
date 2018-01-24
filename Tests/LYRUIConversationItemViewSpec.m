@@ -26,7 +26,7 @@ describe(@"LYRUIConversationItemView", ^{
         it(@"should have titleLabel set", ^{
             expect(view.titleLabel).to.beAKindOf([UILabel class]);
         });
-        it(@"should have titleLabel's font set by the default layout", ^{
+        it(@"should have titleLabel's default font set", ^{
             UIFont *expectedFont = [UIFont systemFontOfSize:16];
             expect(view.titleLabel.font).to.equal(expectedFont);
         });
@@ -37,7 +37,7 @@ describe(@"LYRUIConversationItemView", ^{
         it(@"should have subtitleLabel set", ^{
             expect(view.subtitleLabel).to.beAKindOf([UILabel class]);
         });
-        it(@"should have subtitleLabel's default font set by the default layout", ^{
+        it(@"should have subtitleLabel's default font set", ^{
             expect(view.subtitleLabel.font).to.equal([UIFont systemFontOfSize:14]);
         });
         it(@"should have subtitleLabel's default text color set", ^{
@@ -71,7 +71,7 @@ describe(@"LYRUIConversationItemView", ^{
     
     describe(@"after initialization with configuration", ^{
         __block LYRUIConfiguration *configurationMock;
-    __block id<LYRUIDependencyInjection> injectorMock;
+        __block id<LYRUIDependencyInjection> injectorMock;
         __block NSObject<LYRUIBaseItemViewTheme> *themeMock;
         __block NSObject<LYRUIBaseItemViewTheme> *unreadThemeMock;
         __block NSObject<LYRUIBaseItemViewLayout> *layoutMock;

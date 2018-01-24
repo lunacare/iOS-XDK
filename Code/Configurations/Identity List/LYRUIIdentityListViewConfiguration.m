@@ -60,7 +60,9 @@
     LYRUIListSupplementaryViewConfiguration<LYRUIListHeaderView *> *headerConfiguration = [self.layerConfiguration.injector configurationForViewClass:[LYRUIListHeaderView class]];
     [headerConfiguration registerSupplementaryViewInCollectionView:identityListView.collectionView];
     
-    identityListView.layout = [self.layerConfiguration.injector layoutForViewClass:[LYRUIIdentityListView class]];
+    if (identityListView.layout == nil) {
+        identityListView.layout = [self.layerConfiguration.injector layoutForViewClass:[LYRUIIdentityListView class]];
+    }
     
     LYRUIListDataSource *dataSource = [self.layerConfiguration.injector objectOfType:[LYRUIListDataSource class]];
     [dataSource registerCellConfiguration:identityCellConfiguration];

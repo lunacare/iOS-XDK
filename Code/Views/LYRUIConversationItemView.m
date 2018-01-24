@@ -44,7 +44,9 @@
 
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     [super setLayerConfiguration:layerConfiguration];
-    self.unreadTheme = [layerConfiguration.injector alternativeThemeForViewClass:[self class]];
+    if (self.unreadTheme == nil) {
+        self.unreadTheme = [layerConfiguration.injector alternativeThemeForViewClass:[self class]];
+    }
 }
 
 #pragma mark - LYRUIConversationItemViewState and LYRUIBaseItemViewTheme changes

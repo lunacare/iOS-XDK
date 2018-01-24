@@ -135,7 +135,9 @@
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     _layerConfiguration = layerConfiguration;
     self.presenceView.layerConfiguration = layerConfiguration;
-    self.theme = [layerConfiguration.injector themeForViewClass:[self class]];
+    if (self.theme == nil) {
+        self.theme = [layerConfiguration.injector themeForViewClass:[self class]];
+    }
     self.configuration = [layerConfiguration.injector configurationForViewClass:[self class]];
 }
 

@@ -105,8 +105,12 @@
         return;
     }
     _layerConfiguration = layerConfiguration;
-    self.theme = [layerConfiguration.injector themeForViewClass:[self class]];
-    self.layout = [layerConfiguration.injector layoutForViewClass:[self class]];
+    if (self.theme == nil) {
+        self.theme = [layerConfiguration.injector themeForViewClass:[self class]];
+    }
+    if (self.layout == nil) {
+        self.layout = [layerConfiguration.injector layoutForViewClass:[self class]];
+    }
 }
 
 #pragma mark - LYRUIBaseItemViewTheme properties

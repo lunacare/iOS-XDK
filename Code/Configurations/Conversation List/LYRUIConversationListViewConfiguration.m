@@ -60,7 +60,9 @@
     LYRUIListSupplementaryViewConfiguration<LYRUIListHeaderView *> *headerConfiguration = [self.layerConfiguration.injector configurationForViewClass:[LYRUIListHeaderView class]];
     [headerConfiguration registerSupplementaryViewInCollectionView:conversationListView.collectionView];
     
-    conversationListView.layout = [self.layerConfiguration.injector layoutForViewClass:[LYRUIConversationListView class]];
+    if (conversationListView.layout == nil) {
+        conversationListView.layout = [self.layerConfiguration.injector layoutForViewClass:[LYRUIConversationListView class]];
+    }
     
     LYRUIListDataSource *dataSource = [self.layerConfiguration.injector objectOfType:[LYRUIListDataSource class]];
     [dataSource registerCellConfiguration:conversationCellConfiguration];
