@@ -24,6 +24,13 @@ static CGFloat const LYRUIMessageItemViewVerticalMargin = 2.0;
 static CGFloat const LYRUIMessageItemViewHorizontalMargin = 12.0;
 static CGFloat const LYRUIMessageItemViewSmallHorizontalMargin = 8.0;
 
+static CGFloat const LYRUIMessageItemViewSmallWidth = 460.0;
+static CGFloat const LYRUIMessageItemViewWideWidth = 600.0;
+
+static CGFloat const LYRUIMessageItemContentViewSmallMaxWidthRatio = 0.6;
+static CGFloat const LYRUIMessageItemContentViewMediumMaxWidthRatio = 0.75;
+static CGFloat const LYRUIMessageItemContentViewWideMaxWidthRatio = 0.9;
+
 @interface LYRUIMessageItemViewLayout ()
 
 @property (nonatomic) LYRUIMessageItemViewLayoutDirection currentLayoutDirection;
@@ -133,12 +140,12 @@ static CGFloat const LYRUIMessageItemViewSmallHorizontalMargin = 8.0;
     }
     CGFloat viewWidth = CGRectGetWidth(view.bounds);
     CGFloat multiplier;
-    if (viewWidth < 460.0) {
-        multiplier = 0.9;
-    } else if (viewWidth > 600.0) {
-        multiplier = 0.6;
+    if (viewWidth < LYRUIMessageItemViewSmallWidth) {
+        multiplier = LYRUIMessageItemContentViewWideMaxWidthRatio;
+    } else if (viewWidth > LYRUIMessageItemViewWideWidth) {
+        multiplier = LYRUIMessageItemContentViewSmallMaxWidthRatio;
     } else {
-        multiplier = 0.75;
+        multiplier = LYRUIMessageItemContentViewMediumMaxWidthRatio;
     }
     NSLayoutConstraint *contentWidthConstraint = [content.widthAnchor constraintLessThanOrEqualToAnchor:view.widthAnchor
                                                                                              multiplier:multiplier];
