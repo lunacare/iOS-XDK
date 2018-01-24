@@ -19,11 +19,11 @@
 //
 
 #import "LYRUIBaseItemViewLayout.h"
-#import "LYRUIConversationItemViewLayoutMetrics.h"
+#import "LYRUIBaseItemViewLayoutMetrics.h"
 
 @interface LYRUIBaseItemViewLayout ()
 
-@property(nonatomic, strong) LYRUIConversationItemViewLayoutMetrics *metrics;
+@property(nonatomic, strong) LYRUIBaseItemViewLayoutMetrics *metrics;
 
 @property(nonatomic) LYRUIBaseItemViewLayoutSize layoutSize;
 @property(nonatomic) BOOL layoutWithAccessoryView;

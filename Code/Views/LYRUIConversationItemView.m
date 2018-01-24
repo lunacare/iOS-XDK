@@ -20,7 +20,7 @@
 
 #import "LYRUIConversationItemView.h"
 #import "LYRUIBaseItemViewLayout.h"
-#import "LYRUIConversationItemViewLayoutMetrics.h"
+#import "LYRUIBaseItemViewLayoutMetrics.h"
 #import "LYRUIConversationItemIBSetup.h"
 #import "LYRUIConversationItemViewUnreadTheme.h"
 
@@ -41,7 +41,7 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
+        LYRUIBaseItemViewLayoutMetrics *metrics = [[LYRUIBaseItemViewLayoutMetrics alloc] init];
         self.layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
         self.unreadTheme = [[LYRUIConversationItemViewUnreadTheme alloc] init];
     }
@@ -51,7 +51,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
+        LYRUIBaseItemViewLayoutMetrics *metrics = [[LYRUIBaseItemViewLayoutMetrics alloc] init];
         self.layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
         self.unreadTheme = [[LYRUIConversationItemViewUnreadTheme alloc] init];
     }
@@ -60,7 +60,7 @@
 
 - (instancetype)initWithLayout:(id<LYRUIBaseItemViewLayout>)layout {
     if (layout == nil) {
-        LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
+        LYRUIBaseItemViewLayoutMetrics *metrics = [[LYRUIBaseItemViewLayoutMetrics alloc] init];
         layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
         self.unreadTheme = [[LYRUIConversationItemViewUnreadTheme alloc] init];
     }

@@ -20,7 +20,7 @@
 
 #import "LYRUIIdentityItemView.h"
 #import "LYRUIBaseItemViewLayout.h"
-#import "LYRUIIdentityItemViewLayoutMetrics.h"
+#import "LYRUIBaseItemViewLayoutMetrics.h"
 #import "LYRUIIdentityItemIBSetup.h"
 #import "LYRUIBaseItemViewDefaultTheme.h"
 
@@ -29,7 +29,7 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        LYRUIIdentityItemViewLayoutMetrics *metrics = [[LYRUIIdentityItemViewLayoutMetrics alloc] init];
+        LYRUIBaseItemViewLayoutMetrics *metrics = [[LYRUIBaseItemViewLayoutMetrics alloc] init];
         self.layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
     }
     return self;
@@ -38,7 +38,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        LYRUIIdentityItemViewLayoutMetrics *metrics = [[LYRUIIdentityItemViewLayoutMetrics alloc] init];
+        LYRUIBaseItemViewLayoutMetrics *metrics = [[LYRUIBaseItemViewLayoutMetrics alloc] init];
         self.layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
     }
     return self;
@@ -46,7 +46,7 @@
 
 - (instancetype)initWithLayout:(id<LYRUIBaseItemViewLayout>)layout {
     if (layout == nil) {
-        LYRUIIdentityItemViewLayoutMetrics *metrics = [[LYRUIIdentityItemViewLayoutMetrics alloc] init];
+        LYRUIBaseItemViewLayoutMetrics *metrics = [[LYRUIBaseItemViewLayoutMetrics alloc] init];
         layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
     }
     self = [super initWithLayout:layout];

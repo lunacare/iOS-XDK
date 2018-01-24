@@ -28,12 +28,14 @@
 - (instancetype)init {
     self = [self initWithAccessoryViewProvider:nil
                                  nameFormatter:nil
+                             metadataFormatter:nil
                        lastSeenAtTimeFormatter:nil];
     return self;
 }
 
 - (instancetype)initWithAccessoryViewProvider:(nullable id<LYRUIIdentityItemAccessoryViewProviding>)accessoryViewProvider
                                 nameFormatter:(nullable id<LYRUIIdentityNameFormatting>)nameFormatter
+                            metadataFormatter:(nullable LYRUIIdentityMetadataFormatting)metadataFormatter
                       lastSeenAtTimeFormatter:(nullable id<LYRUITimeFormatting>)lastSeenAtTimeFormatter {
     self = [super init];
     if (self) {
@@ -48,6 +50,7 @@
         if (lastSeenAtTimeFormatter == nil) {
             lastSeenAtTimeFormatter = [[LYRUITimeAgoFormatter alloc] init];
         }
+        self.metadataFormatter = metadataFormatter;
         self.lastSeenAtTimeFormatter = lastSeenAtTimeFormatter;
     }
     return self;
@@ -67,6 +70,9 @@
     view.titleLabel.text = [self.nameFormatter nameForIdentity:identity];
     view.detailLabel.text = [self.lastSeenAtTimeFormatter stringForTime:identity.lastSeenAt
                                                       withCurrentTime:[NSDate date]];
+    if (self.metadataFormatter) {
+        view.subtitleLabel.text = self.metadataFormatter(identity.metadata);
+    }
     
     [view.accessoryView removeFromSuperview];
     UIView *accessoryView = [self.accessoryViewProvider accessoryViewForIdentity:identity];

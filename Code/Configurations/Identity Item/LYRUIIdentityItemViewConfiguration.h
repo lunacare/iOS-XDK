@@ -26,6 +26,8 @@
 @protocol LYRUIIdentityItemAccessoryViewProviding;
 
 NS_ASSUME_NONNULL_BEGIN
+typedef NSString *_Nonnull (^LYRUIIdentityMetadataFormatting)(NSDictionary *);
+
 @interface LYRUIIdentityItemViewConfiguration : NSObject
 
 /**
@@ -44,14 +46,21 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) id<LYRUITimeFormatting> lastSeenAtTimeFormatter;
 
 /**
+ @abstract An `LYRUIIdentityMetadataFormatting` block which will be used for formatting participants metadata to a string.
+ */
+@property(nonatomic, strong, nullable) LYRUIIdentityMetadataFormatting metadataFormatter;
+
+/**
  @abstract Initializes a new `LYRUIIdentityItemViewConfiguration` object with the given accessory view provider and formatters.
  @param accessoryViewProvider The object conforming to `LYRUIIdentityItemAccessoryViewProviding` protocol from which to retrieve the accessory view for display.
  @param nameFormatter The object conforming to `LYRUIIdentityNameFormatting` protocol from which to retrieve the identity name for display.
+ @param metadataFormatter An `LYRUIIdentityMetadataFormatting` block which will be used for formatting participants metadata to a string.
  @param lastSeenAtTimeFormatter The object conforming to `LYRUITimeAgoDateFormatting` protocol from which to retrieve the time passed since identity last seen at.
  @return An `LYRUIIdentityItemViewConfiguration` object.
  */
 - (instancetype)initWithAccessoryViewProvider:(nullable id<LYRUIIdentityItemAccessoryViewProviding>)accessoryViewProvider
                                 nameFormatter:(nullable id<LYRUIIdentityNameFormatting>)nameFormatter
+                            metadataFormatter:(nullable LYRUIIdentityMetadataFormatting)metadataFormatter
                       lastSeenAtTimeFormatter:(nullable id<LYRUITimeFormatting>)lastSeenAtTimeFormatter NS_DESIGNATED_INITIALIZER;
 
 /**

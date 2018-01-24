@@ -63,6 +63,7 @@
                                                cellSetupBlock:^(LYRUIIdentityCollectionViewCell *cell, LYRIdentity *identity, LYRUIIdentityItemViewConfiguration *configuration) {
                                                    cell.identityView.titleLabel.text = @"Full name";
                                                    cell.identityView.detailLabel.text = @"23 mins ago";
+                                                   cell.identityView.subtitleLabel.text = @"<metadata>";
                                                    LYRUIAvatarView *avatarView = [[LYRUIAvatarView alloc] init];
                                                    avatarView.translatesAutoresizingMaskIntoConstraints = NO;
                                                    avatarView.identities = @[identity];

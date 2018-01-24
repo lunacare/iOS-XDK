@@ -17,14 +17,19 @@ describe(@"LYRUIIdentityItemViewConfiguration", ^{
     __block id<LYRUIIdentityItemAccessoryViewProviding> accessoryViewProviderMock;
     __block id<LYRUIIdentityNameFormatting> nameFormatterMock;
     __block id<LYRUITimeFormatting> lastSeenAtTimeFormatter;
+    __block LYRUIIdentityMetadataFormatting metadataFormatter;
     
     beforeEach(^{
         accessoryViewProviderMock = mockProtocol(@protocol(LYRUIIdentityItemAccessoryViewProviding));
         nameFormatterMock = mockProtocol(@protocol(LYRUIIdentityNameFormatting));
         lastSeenAtTimeFormatter = mockProtocol(@protocol(LYRUITimeFormatting));
+        metadataFormatter = ^ NSString *(NSDictionary *metadata) {
+            return metadata[@"test key"];
+        };
         viewConfiguration = [[LYRUIIdentityItemViewConfiguration alloc] initWithAccessoryViewProvider:accessoryViewProviderMock
-                                                                                    nameFormatter:nameFormatterMock
-                                                                          lastSeenAtTimeFormatter:lastSeenAtTimeFormatter];
+                                                                                        nameFormatter:nameFormatterMock
+                                                                                    metadataFormatter:metadataFormatter
+                                                                              lastSeenAtTimeFormatter:lastSeenAtTimeFormatter];
     });
     
     afterEach(^{
@@ -62,7 +67,7 @@ describe(@"LYRUIIdentityItemViewConfiguration", ^{
                 void(^callWithNil)() = ^{
                     view = nil;
                     [viewConfiguration setupIdentityItemView:view
-                                               withIdentity:identityMock];
+                                                withIdentity:identityMock];
                 };
                 NSString *exceptionReason = @"Cannot setup Identity Item View with nil `view` argument.";
                 expect(callWithNil).to.raiseWithReason(NSInvalidArgumentException, exceptionReason);
@@ -74,7 +79,7 @@ describe(@"LYRUIIdentityItemViewConfiguration", ^{
                 void(^callWithNil)() = ^{
                     identityMock = nil;
                     [viewConfiguration setupIdentityItemView:view
-                                               withIdentity:identityMock];
+                                                withIdentity:identityMock];
                 };
                 NSString *exceptionReason = @"Cannot setup Identity Item View with nil `identity` argument.";
                 expect(callWithNil).to.raiseWithReason(NSInvalidArgumentException, exceptionReason);
@@ -90,6 +95,7 @@ describe(@"LYRUIIdentityItemViewConfiguration", ^{
                 [given([accessoryViewProviderMock accessoryViewForIdentity:identityMock]) willReturn:accessoryView];
                 [given([nameFormatterMock nameForIdentity:identityMock]) willReturn:@"test title"];
                 [given([lastSeenAtTimeFormatter stringForTime:lastSeenAtMock withCurrentTime:anything()]) willReturn:@"test time description"];
+                [given(identityMock.metadata) willReturn:@{ @"test key": @"test metadata value" }];
                 
                 [viewConfiguration setupIdentityItemView:view
                                            withIdentity:identityMock];
@@ -98,10 +104,10 @@ describe(@"LYRUIIdentityItemViewConfiguration", ^{
             it(@"should set the text of titleLabel", ^{
                 expect(view.titleLabel.text).to.equal(@"test title");
             });
-            it(@"should not set the text of messageLabel", ^{
-                expect(view.subtitleLabel.text).to.beNil();
+            it(@"should set the text of subtitleLabel", ^{
+                expect(view.subtitleLabel.text).to.equal(@"test metadata value");
             });
-            it(@"should set the text of timeLabel", ^{
+            it(@"should set the text of detailLabel", ^{
                 expect(view.detailLabel.text).to.equal(@"test time description");
             });
             it(@"should set the accessory view", ^{
