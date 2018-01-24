@@ -8,7 +8,7 @@
 #import <Atlas/LYRUIMessageTimeDefaultFormatter.h>
 #import <Atlas/LYRUIMessageTextDefaultFormatter.h>
 #import <Atlas/LYRUIConversationItemTitleFormatter.h>
-#import <Atlas/LYRUIConversationItemAccessoryViewProviding.h>
+#import <Atlas/LYRUIAvatarViewProvider.h>
 #import <LayerKit/LayerKit.h>
 
 SpecBegin(LYRUIConversationItemViewConfiguration)
@@ -41,6 +41,9 @@ describe(@"LYRUIConversationItemViewConfiguration", ^{
             viewConfiguration = [[LYRUIConversationItemViewConfiguration alloc] init];
         });
         
+        it(@"should have default accessory view provider set", ^{
+            expect(viewConfiguration.accessoryViewProvider).to.beAKindOf([LYRUIAvatarViewProvider class]);
+        });
         it(@"should have default title formatter set", ^{
             expect(viewConfiguration.titleFormatter).to.beAKindOf([LYRUIConversationItemTitleFormatter class]);
         });

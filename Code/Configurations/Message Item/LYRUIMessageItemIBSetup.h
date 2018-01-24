@@ -1,8 +1,8 @@
 //
-//  LYRUIIdentityItemAccessoryViewProvider.h
+//  LYRUIMessageItemIBSetup.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 28.07.2017.
+//  Created by Łukasz Przytuła on 16.08.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,11 @@
 //  limitations under the License.
 //
 
-#import "LYRUIIdentityItemAccessoryViewProviding.h"
+#import <Foundation/Foundation.h>
+@class LYRUIMessageItemView;
 
-@interface LYRUIIdentityItemAccessoryViewProvider : NSObject <LYRUIIdentityItemAccessoryViewProviding>
+@interface LYRUIMessageItemIBSetup : NSObject
+
+- (void)prepareMessageItemForInterfaceBuilder:(LYRUIMessageItemView *)messageItem;
+
 @end

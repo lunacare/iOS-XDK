@@ -1,8 +1,8 @@
 //
-//  LYRUIConversationItemAccessoryViewProviding.h
+//  LYRUIMessageItemAccessoryViewProviding.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 28.07.2017.
+//  Created by Łukasz Przytuła on 02.11.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,10 +20,10 @@
 
 #import <Foundation/Foundation.h>
 #import "LYRUIParticipantsFiltering.h"
-@class LYRConversation;
+@class LYRMessage;
 
 NS_ASSUME_NONNULL_BEGIN     // {
-@protocol LYRUIConversationItemAccessoryViewProviding <NSObject>
+@protocol LYRUIMessageItemAccessoryViewProviding <NSObject>
 
 /**
  @abstract An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the accessory view.
@@ -31,20 +31,20 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @property (nonatomic, strong, nullable) LYRUIParticipantsFiltering participantsFilter;
 
 /**
- @abstract Provides an accessory view representing a conversation.
- @param conversation The `LYRConversation` object.
- @return An `UIView` visually representing the conversation.
- @discussion The view will be added to the `LYRUIConversationItemView` as an accessory view.
+ @abstract Provides an accessory view representing a message.
+ @param message The `LYRMessage` object.
+ @return An `UIView` visually representing the message.
+ @discussion The view will be added to the `LYRUIMessageItemView` as an accessory view.
  */
-- (UIView *)accessoryViewForConversation:(LYRConversation *)conversation;
+- (UIView *)accessoryViewForMessage:(LYRMessage *)message;
 
 /**
- @abstract Configures an existing accessory view representing a conversation.
+ @abstract Configures an existing accessory view representing a message.
  @param accessoryView The view to update with provided data.
- @param conversation The `LYRConversation` object.
+ @param message The `LYRMessage` object.
  @discussion This method should be use to update appearance of existing, reused accessory view.
  */
-- (void)setupAccessoryView:(UIView *)accessoryView forConversation:(LYRConversation *)conversation;
+- (void)setupAccessoryView:(UIView *)accessoryView forMessage:(LYRMessage *)message;
 
 @end
 NS_ASSUME_NONNULL_END       // }
