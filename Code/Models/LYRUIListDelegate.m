@@ -153,4 +153,11 @@ referenceSizeForFooterInSection:(NSInteger)section {
     supplementaryViewSizeCalculation.listDelegate = self;
 }
 
+#pragma mark - Properties
+
+- (void)setCanLoadMoreItems:(BOOL)canLoadMoreItems {
+    _canLoadMoreItems = canLoadMoreItems;
+    self.loadingDelegate.canLoadMoreItems = canLoadMoreItems;
+}
+
 @end

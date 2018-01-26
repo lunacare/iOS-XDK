@@ -23,21 +23,35 @@
 @implementation LYRUIViewWithLayout
 
 - (void)setLayout:(id<LYRUIViewLayout>)layout {
+    if ([self.layout isEqual:layout]) {
+        return;
+    }
     if (self.layout != nil) {
         [self.layout removeConstraintsFromView:self];
     }
-    _layout = layout;
+    _layout = [layout copyWithZone:nil];
     [self.layout addConstraintsInView:self];
-}
-
-- (void)setFrame:(CGRect)frame {
-    [super setFrame:frame];
-    [self setNeedsUpdateConstraints];
 }
 
 - (void)updateConstraints {
     [self.layout updateConstraintsInView:self];
     [super updateConstraints];
+}
+
+- (void)setFrame:(CGRect)frame {
+    if ((self.updateConstraintsOnWidthChange && CGRectGetWidth(self.frame) != CGRectGetWidth(frame)) ||
+        (self.updateConstraintsOnHeightChange && CGRectGetHeight(self.frame) != CGRectGetHeight(frame))) {
+        [self setNeedsUpdateConstraints];
+    }
+    [super setFrame:frame];
+}
+
+- (void)setBounds:(CGRect)bounds {
+    if ((self.updateConstraintsOnWidthChange && CGRectGetWidth(self.bounds) != CGRectGetWidth(bounds)) ||
+        (self.updateConstraintsOnHeightChange && CGRectGetHeight(self.bounds) != CGRectGetHeight(bounds))) {
+        [self setNeedsUpdateConstraints];
+    }
+    [super setBounds:bounds];
 }
 
 @end

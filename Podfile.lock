@@ -27,13 +27,13 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Atlas:
-    :path: "."
+    :path: .
   LYRCountDownLatch:
     :git: https://github.com/layerhq/LYRCountDownLatch.git
 
 CHECKOUT OPTIONS:
   LYRCountDownLatch:
-    :commit: '02119f855ad14e7fc0dae32bbbf17c735a281cfe'
+    :commit: 02119f855ad14e7fc0dae32bbbf17c735a281cfe
     :git: https://github.com/layerhq/LYRCountDownLatch.git
 
 SPEC CHECKSUMS:
@@ -50,4 +50,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: deed5c883e47e543ac2b0d2d24b5143a6653a53e
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.1

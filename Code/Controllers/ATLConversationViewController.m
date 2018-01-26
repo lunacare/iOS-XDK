@@ -1215,20 +1215,6 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 
 #pragma mark - LYRQueryControllerDelegate
 
-- (void)queryController:(LYRQueryController *)controller
-        didChangeObject:(id)object
-            atIndexPath:(NSIndexPath *)indexPath
-          forChangeType:(LYRQueryControllerChangeType)type
-           newIndexPath:(NSIndexPath *)newIndexPath
-{
-    if (self.collectionView.window == nil) return;
-    if (self.expandingPaginationWindow) return;
-    
-    NSInteger currentIndex = indexPath ? [self.conversationDataSource collectionViewSectionForQueryControllerRow:indexPath.row] : NSNotFound;
-    NSInteger newIndex = newIndexPath ? [self.conversationDataSource collectionViewSectionForQueryControllerRow:newIndexPath.row] : NSNotFound;
-    [self.objectChanges addObject:[ATLDataSourceChange changeObjectWithType:type newIndex:newIndex currentIndex:currentIndex]];
-}
-
 - (void)queryControllerWillChangeContent:(LYRQueryController *)queryController
 {
     // Implemented by subclass

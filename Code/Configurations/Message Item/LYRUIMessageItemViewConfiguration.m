@@ -26,6 +26,7 @@
 
 @interface LYRUIMessageItemViewConfiguration ()
 
+@property (nonatomic, strong) UITextView *sizingTextView;
 @property (nonatomic, strong) id<LYRUIMessageTextFormatting> messageFormatter;
 
 @end
@@ -45,6 +46,7 @@
             primaryAccessoryViewProvider = [[LYRUIAvatarViewProvider alloc] init];
         }
         self.primaryAccessoryViewProvider = primaryAccessoryViewProvider;
+        self.sizingTextView = [self createContentTextView];
     }
     return self;
 }
@@ -58,13 +60,7 @@
     }
     
     if (messageItemView.contentView == nil) {
-        // TODO: extract to provider
-        UITextView *textView = [[UITextView alloc] init];
-        textView.editable = NO;
-        textView.scrollEnabled = NO;
-        textView.font = [UIFont systemFontOfSize:14.0];
-        textView.textContainerInset = UIEdgeInsetsMake(9.0, 10.0, 9.0, 10.0);
-        messageItemView.contentView = textView;
+        messageItemView.contentView = [self createContentTextView];
     }
     UITextView *textView = (UITextView *)messageItemView.contentView;
     NSString *messageText = [self.messageFormatter stringForMessage:message];
@@ -78,6 +74,29 @@
     } else {
         [self.primaryAccessoryViewProvider setupAccessoryView:messageItemView.primaryAccessoryView forMessage:message];
     }
+}
+
+- (UITextView *)createContentTextView {
+    // TODO: extract to provider
+    UITextView *textView = [[UITextView alloc] init];
+    textView.editable = NO;
+    textView.scrollEnabled = NO;
+    textView.font = [UIFont systemFontOfSize:14.0];
+    textView.textContainerInset = UIEdgeInsetsMake(7.0, 7.0, 7.0, 7.0);
+    return textView;
+}
+
+- (CGFloat)messageViewHeightForMessage:(LYRMessage *)message maxWidth:(CGFloat)maxWidth {
+    // TODO: extract to provider
+    CGFloat textWidth = maxWidth - 28.0;
+    NSString *messageText = [self.messageFormatter stringForMessage:message];
+    self.sizingTextView.text = messageText;
+    CGRect stringRect = [self.sizingTextView.text boundingRectWithSize:CGSizeMake(textWidth, CGFLOAT_MAX)
+                                                               options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                                            attributes:self.sizingTextView.typingAttributes
+                                                               context:nil];
+    CGFloat textViewHeight = ceil(stringRect.size.height);
+    return textViewHeight + 14.0;
 }
 
 @end

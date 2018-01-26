@@ -6,6 +6,7 @@
 #import <Atlas/LYRUIComposeBar.h>
 #import <Atlas/LYRUIComposeBarConfiguration.h>
 #import <Atlas/LYRUISendButton.h>
+#import "LYRUIComposeBarTestLayout.h"
 
 @interface LYRUIComposeBar ()
 
@@ -83,7 +84,7 @@ describe(@"LYRUIComposeBar", ^{
         });
         
         it(@"should have layout set to object connected via IB outlet", ^{
-            expect(composeBar.layout).to.equal(xibObjects[1]);
+            expect(composeBar.layout).to.beAKindOf([LYRUIComposeBarTestLayout class]);
         });
         it(@"should have message input corner radius set to value from Interface Builder", ^{
             expect(composeBar.messageInputCornerRadius).to.equal(16.0);

@@ -43,5 +43,6 @@ NS_ASSUME_NONNULL_BEGIN
  @param view The view to update constraints in.
  */
 - (void)updateConstraintsInView:(__kindof UIView *)view;
+
 @end
 NS_ASSUME_NONNULL_END

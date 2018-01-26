@@ -20,7 +20,6 @@
 
 #import "LYRUIMessageItemViewLayout.h"
 
-static CGFloat const LYRUIMessageItemViewVerticalMargin = 2.0;
 static CGFloat const LYRUIMessageItemViewHorizontalMargin = 12.0;
 static CGFloat const LYRUIMessageItemViewSmallHorizontalMargin = 8.0;
 
@@ -30,6 +29,8 @@ static CGFloat const LYRUIMessageItemViewWideWidth = 600.0;
 static CGFloat const LYRUIMessageItemContentViewSmallMaxWidthRatio = 0.6;
 static CGFloat const LYRUIMessageItemContentViewMediumMaxWidthRatio = 0.75;
 static CGFloat const LYRUIMessageItemContentViewWideMaxWidthRatio = 0.9;
+
+static CGSize const LYRUIMessageItemPrimaryAccessoryViewSize = { 32.0, 32.0 };
 
 @interface LYRUIMessageItemViewLayout ()
 
@@ -115,7 +116,6 @@ static CGFloat const LYRUIMessageItemContentViewWideMaxWidthRatio = 0.9;
 
 - (void)addContentViewContainerConstraintsInView:(LYRUIMessageItemView *)view {
     UIView *content = view.contentViewContainer;
-    CGFloat verticalMargin = LYRUIMessageItemViewVerticalMargin;
     CGFloat horizontalMargin = LYRUIMessageItemViewHorizontalMargin;
     
     NSMutableArray *constraints = [NSMutableArray new];
@@ -124,10 +124,8 @@ static CGFloat const LYRUIMessageItemContentViewWideMaxWidthRatio = 0.9;
                                                                            constant:horizontalMargin]];
     [constraints addObject:[content.rightAnchor constraintLessThanOrEqualToAnchor:view.rightAnchor
                                                                          constant:-horizontalMargin]];
-    [constraints addObject:[content.topAnchor constraintEqualToAnchor:view.topAnchor
-                                                             constant:verticalMargin]];
-    [constraints addObject:[content.bottomAnchor constraintEqualToAnchor:view.bottomAnchor
-                                                                constant:-verticalMargin]];
+    [constraints addObject:[content.topAnchor constraintEqualToAnchor:view.topAnchor]];
+    [constraints addObject:[content.bottomAnchor constraintEqualToAnchor:view.bottomAnchor]];
     
     [self.contentViewContainerConstraints addObjectsFromArray:constraints];
     [view addConstraints:constraints];
@@ -267,8 +265,18 @@ static CGFloat const LYRUIMessageItemContentViewWideMaxWidthRatio = 0.9;
 
 - (void)addPrimaryAccessoryViewLayoutInView:(LYRUIMessageItemView *)view {
     UIView *accessoryView = view.primaryAccessoryView;
+    if (accessoryView == nil) {
+        return;
+    }
+    CGSize size = LYRUIMessageItemPrimaryAccessoryViewSize;
     NSArray *constraints = [self layoutViewInSuperview:accessoryView];
     [self.primaryAccessoryViewConstraints addObjectsFromArray:constraints];
+    
+    NSMutableArray *sizeConstraint = [[NSMutableArray alloc] init];
+    [sizeConstraint addObject:[accessoryView.widthAnchor constraintEqualToConstant:size.width]];
+    [sizeConstraint addObject:[accessoryView.heightAnchor constraintEqualToConstant:size.height]];
+    [NSLayoutConstraint activateConstraints:sizeConstraint];
+    [self.primaryAccessoryViewConstraints addObjectsFromArray:sizeConstraint];
 }
 
 - (void)updatePrimaryAccessoryViewConstraintsInView:(LYRUIMessageItemView *)view {

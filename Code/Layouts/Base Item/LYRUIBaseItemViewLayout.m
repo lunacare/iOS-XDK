@@ -61,7 +61,13 @@
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-    return [[[self class] allocWithZone:zone] init];
+    id<LYRUIBaseItemViewLayoutMetricsProviding> metrics = [[[self.metrics class] alloc] init];
+    return [[[self class] allocWithZone:zone] initWithMetrics:metrics];
+}
+
+- (BOOL)isEqual:(id)object {
+    return [object isKindOfClass:[self class]] &&
+        [((LYRUIBaseItemViewLayout *)object).metrics isKindOfClass:[self.metrics class]];
 }
 
 #pragma mark - LYRUIViewLayout methods

@@ -54,6 +54,7 @@ describe(@"LYRUIMessageItemView", ^{
         
         beforeEach(^{
             layoutMock = mockProtocol(@protocol(LYRUIMessageItemViewLayout));
+            [[given([layoutMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:layoutMock];
             
             view = [[LYRUIMessageItemView alloc] initWithLayout:layoutMock];
         });

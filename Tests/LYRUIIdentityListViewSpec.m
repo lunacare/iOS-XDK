@@ -22,6 +22,7 @@ describe(@"LYRUIIdentityListView", ^{
         
         LYRUIListLayout *layout = [[LYRUIListLayout alloc] init];
         layoutMock = OCMPartialMock(layout);
+        [[OCMStub([layoutMock copyWithZone:NSDefaultMallocZone()]) andReturn:layoutMock] ignoringNonObjectArgs];
         delegateMock = mockProtocol(@protocol(LYRUIListDelegate));
         dataSourceMock = mockProtocol(@protocol(LYRUIListDataSource));
     });
