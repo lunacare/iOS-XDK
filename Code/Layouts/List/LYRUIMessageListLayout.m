@@ -61,32 +61,7 @@ NSString *const LYRUIMessageListMessageStatusViewKind = @"LYRUIMessageStatus";
     return statusViewSize;
 }
 
-#pragma mark - Supplementary views position fix
-
-- (UICollectionViewLayoutInvalidationContext *)invalidationContextForPreferredLayoutAttributes:(UICollectionViewLayoutAttributes *)preferredAttributes
-                                                                        withOriginalAttributes:(UICollectionViewLayoutAttributes *)originalAttributes {
-    UICollectionViewLayoutInvalidationContext *context;
-    context = [super invalidationContextForPreferredLayoutAttributes:preferredAttributes
-                                              withOriginalAttributes:originalAttributes];
-    if (!self.delegate) {
-        return context;
-    }
-    
-    NSIndexPath *indexPath = originalAttributes.indexPath;
-    CGSize timeViewSize = [self timeSupplementaryViewSizeAtIndexPath:indexPath];
-    if (!CGSizeEqualToSize(timeViewSize, CGSizeZero)) {
-        [context invalidateSupplementaryElementsOfKind:LYRUIMessageListMessageTimeViewKind
-                                          atIndexPaths:@[originalAttributes.indexPath]];
-    }
-    
-    CGSize statusViewSize = [self statusSupplementaryViewSizeAtIndexPath:indexPath];
-    if (!CGSizeEqualToSize(statusViewSize, CGSizeZero)) {
-        [context invalidateSupplementaryElementsOfKind:LYRUIMessageListMessageStatusViewKind
-                                          atIndexPaths:@[originalAttributes.indexPath]];
-    }
-    
-    return context;
-}
+#pragma mark - Layout invalidation
 
 - (UICollectionViewLayoutInvalidationContext *)invalidationContextForBoundsChange:(CGRect)newBounds {
     UICollectionViewFlowLayoutInvalidationContext *context = (UICollectionViewFlowLayoutInvalidationContext *)[super invalidationContextForBoundsChange:newBounds];
