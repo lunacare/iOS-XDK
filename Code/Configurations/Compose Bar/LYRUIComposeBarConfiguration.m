@@ -22,6 +22,7 @@
 #import "LYRUIComposeBar.h"
 #import "LYRUISendButton.h"
 #import "LYRUIConfiguration+DependencyInjection.h"
+#import <LayerKit/LayerKit.h>
 
 @interface LYRUIComposeBarConfiguration ()
 
@@ -145,6 +146,8 @@
 
 - (void)textChanged {
     [self updateSendButtonState];
+    LYRTypingIndicatorAction action = self.textView.text.length > 0 ? LYRTypingIndicatorActionBegin : LYRTypingIndicatorActionFinish;
+    [self.composeBar.conversation sendTypingIndicator:action];
 }
 
 - (void)didEndEditing {
@@ -152,6 +155,7 @@
         [self showPlaceholder];
         self.composeBar.sendButton.enabled = NO;
     }
+    [self.composeBar.conversation sendTypingIndicator:LYRTypingIndicatorActionFinish];
 }
 
 - (void)placeholderUpdated {

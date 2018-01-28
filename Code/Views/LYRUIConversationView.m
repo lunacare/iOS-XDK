@@ -101,6 +101,7 @@
 - (void)setConversation:(LYRConversation *)conversation {
     self.messageSender.conversation = conversation;
     self.messageListView.conversation = conversation;
+    self.composeBar.conversation = conversation;
 }
 
 - (LYRQueryController *)queryController {
@@ -110,6 +111,7 @@
 - (void)setQueryController:(LYRQueryController *)queryController {
     self.messageListView.queryController = queryController;
     self.messageSender.conversation = self.messageListView.conversation;
+    self.composeBar.conversation = self.messageListView.conversation;
     [queryController execute:nil];
 }
 
