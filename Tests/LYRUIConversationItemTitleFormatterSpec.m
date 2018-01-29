@@ -2,37 +2,46 @@
 #import <Expecta/Expecta.h>
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
+#import <Atlas/LYRUIConfiguration+DependencyInjection.h>
 #import <Atlas/LYRUIConversationItemTitleFormatter.h>
 #import <Atlas/LYRUIParticipantsFiltering.h>
 #import <Atlas/LYRUIParticipantsSorting.h>
 #import <LayerKit/LayerKit.h>
 
-@interface LYRUIConversationItemTitleFormatter (PrivateProperties)
-
-@property (nonatomic, strong) LYRUIParticipantsFiltering participantsFilter;
-
-@end
-
 SpecBegin(LYRUIConversationItemTitleFormatter)
 
 describe(@"LYRUIConversationItemTitleFormatter", ^{
+    __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
     __block LYRUIConversationItemTitleFormatter *formatter;
     __block LYRUIParticipantsFiltering participantsFilterMock;
     __block NSSet *participantsFilterMockReturnValue;
     __block LYRUIParticipantsSorting participantsSorterMock;
     __block NSArray *participantsSorterMockReturnValue;
+    __block id<LYRUIIdentityNameFormatting> nameFormatterMock;
     __block LYRConversation *conversationMock;
     
     beforeEach(^{
+        configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
+        
         participantsFilterMock = ^NSSet *(NSSet *identities) {
             return participantsFilterMockReturnValue;
         };
+        [given(configurationMock.participantsFilter) willReturn:participantsFilterMock];
+        
         participantsSorterMock = ^NSArray *(NSSet *identities) {
             return participantsSorterMockReturnValue;
         };
-        formatter = [[LYRUIConversationItemTitleFormatter alloc] initWithParticipantsFilter:participantsFilterMock
-                                                                         participantsSorter:participantsSorterMock
-                                                                              nameFormatter:nil];
+        [given(configurationMock.participantsSorter) willReturn:participantsSorterMock];
+        
+        nameFormatterMock = mockProtocol(@protocol(LYRUIIdentityNameFormatting));
+        [given([injectorMock protocolImplementation:@protocol(LYRUIIdentityNameFormatting)
+                                                forClass:[LYRUIConversationItemTitleFormatter class]])
+         willReturn:nameFormatterMock];
+        
+        formatter = [[LYRUIConversationItemTitleFormatter alloc] initWithConfiguration:configurationMock];
         conversationMock = mock([LYRConversation class]);
     });
     
@@ -127,7 +136,7 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                 }];
 
                 otherParticipantMock = mock([LYRIdentity class]);
-                [given(otherParticipantMock.displayName) willReturn:@"Ferdinand Porsche"];
+                [given([nameFormatterMock nameForIdentity:otherParticipantMock]) willReturn:@"Ferdinand Porsche"];
                 
                 NSSet *participants = [NSSet setWithArray:@[
                         otherParticipantMock,
@@ -154,7 +163,7 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                 }];
                 
                 otherParticipantMock = mock([LYRIdentity class]);
-                [given(otherParticipantMock.displayName) willReturn:@"Ferdinand Porsche"];
+                [given([nameFormatterMock nameForIdentity:otherParticipantMock]) willReturn:@"Ferdinand Porsche"];
                 
                 NSSet *participants = [NSSet setWithArray:@[
                         otherParticipantMock,
@@ -197,9 +206,7 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                     LYRIdentity *participantMock1 = mock([LYRIdentity class]);
                     [given(participantMock1.displayName) willReturn:@"Enzo Ferrari"];
                     otherParticipantMock = mock([LYRIdentity class]);
-                    [given(otherParticipantMock.displayName) willReturn:@"Ferdinand Porsche Display Name"];
-                    [given(otherParticipantMock.firstName) willReturn:@"Ferdinand"];
-                    [given(otherParticipantMock.lastName) willReturn:@"Porsche"];
+                    [given([nameFormatterMock nameForIdentity:otherParticipantMock]) willReturn:@"Ferdinand Porsche"];
                     
                     NSArray *participantsArray = @[
                             otherParticipantMock,
@@ -208,63 +215,12 @@ describe(@"LYRUIConversationItemTitleFormatter", ^{
                     [given(conversationMock.participants) willReturn:participantsSet];
                     participantsFilterMockReturnValue = participantsSet;
                     participantsSorterMockReturnValue = participantsArray;
+                    
+                    returnedString = [formatter titleForConversation:conversationMock];
                 });
                 
-                context(@"when other user has both first name and last name set", ^{
-                    beforeEach(^{
-                        returnedString = [formatter titleForConversation:conversationMock];
-                    });
-                    
-                    it(@"should return full name of the other participant", ^{
-                        expect(returnedString).to.equal(@"Ferdinand Porsche");
-                    });
-                });
-                
-                context(@"when other user has only first name set", ^{
-                    beforeEach(^{
-                        [given(otherParticipantMock.lastName) willReturn:nil];
-                        returnedString = [formatter titleForConversation:conversationMock];
-                    });
-                    
-                    it(@"should return first name of the other participant", ^{
-                        expect(returnedString).to.equal(@"Ferdinand");
-                    });
-                });
-                
-                context(@"when other user has only last name set", ^{
-                    beforeEach(^{
-                        [given(otherParticipantMock.firstName) willReturn:nil];
-                        returnedString = [formatter titleForConversation:conversationMock];
-                    });
-                    
-                    it(@"should return last name of the other participant", ^{
-                        expect(returnedString).to.equal(@"Porsche");
-                    });
-                });
-                
-                context(@"when other user has only display name set", ^{
-                    beforeEach(^{
-                        [given(otherParticipantMock.firstName) willReturn:nil];
-                        [given(otherParticipantMock.lastName) willReturn:nil];
-                        returnedString = [formatter titleForConversation:conversationMock];
-                    });
-                    
-                    it(@"should return display name of the other participant", ^{
-                        expect(returnedString).to.equal(@"Ferdinand Porsche Display Name");
-                    });
-                });
-                
-                context(@"when other has no identifying information", ^{
-                    beforeEach(^{
-                        [given(otherParticipantMock.firstName) willReturn:nil];
-                        [given(otherParticipantMock.lastName) willReturn:nil];
-                        [given(otherParticipantMock.displayName) willReturn:nil];
-                        returnedString = [formatter titleForConversation:conversationMock];
-                    });
-                    
-                    it(@"should return empty string", ^{
-                        expect(returnedString).to.equal(@"");
-                    });
+                it(@"should return full name of the other participant", ^{
+                    expect(returnedString).to.equal(@"Ferdinand Porsche");
                 });
             });
             

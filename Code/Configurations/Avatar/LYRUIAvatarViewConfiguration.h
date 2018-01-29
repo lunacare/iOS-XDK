@@ -19,6 +19,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LYRUIConfigurable.h"
 #import <LayerKit/LayerKit.h>
 @class LYRUIAvatarView;
 @class LYRUIImageWithLettersViewConfiguration;
@@ -26,14 +27,7 @@
 /**
  @abstract The `LYRUIAvatarViewConfiguration` sets the `LYRUIAvatarView` with the data from provided `identities` array.
  */
-@interface LYRUIAvatarViewConfiguration : NSObject
-
-/**
- @abstract Initializes a new `LYRUIAvatarViewConfiguration` object with the given `LYRUIImageWithLettersViewConfiguration` instance.
- @param avatarViewConfiguration An `LYRUIImageWithLettersViewConfiguration` instance which will be used to setup contained `LYRUIImageWithLettersView` subviews.
- @return An `LYRUIAvatarViewConfiguration` object.
- */
-- (instancetype)initWithAvatarViewConfiguration:(LYRUIImageWithLettersViewConfiguration *)avatarViewConfiguration;
+@interface LYRUIAvatarViewConfiguration : NSObject <LYRUIConfigurable>
 
 /**
  @abstract Updates the `LYRUIAvatarView` instance with the data from provided `identities` array.

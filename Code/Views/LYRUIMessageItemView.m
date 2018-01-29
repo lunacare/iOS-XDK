@@ -19,6 +19,7 @@
 //
 
 #import "LYRUIMessageItemView.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 #import "LYRUIMessageItemViewLayout.h"
 #import "LYRUIMessageItemIBSetup.h"
 
@@ -35,7 +36,8 @@ static CGFloat const LYRUIMessageItemViewContentDefaultCornerRadius = 16.0;
 @implementation LYRUIMessageItemView
 @synthesize primaryAccessoryView = _primaryAccessoryView,
             contentView = _contentView,
-            secondaryAccessoryView = _secondaryAccessoryView;
+            secondaryAccessoryView = _secondaryAccessoryView,
+            layerConfiguration = _layerConfiguration;
 @dynamic layout;
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -54,13 +56,20 @@ static CGFloat const LYRUIMessageItemViewContentDefaultCornerRadius = 16.0;
     return self;
 }
 
-- (instancetype)initWithLayout:(id<LYRUIMessageItemViewLayout>)layout {
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
     self = [self initWithFrame:CGRectZero];
     if (self) {
         [self lyr_commonInit];
-        self.layout = layout;
+        self.layerConfiguration = configuration;
     }
     return self;
+}
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    if (self.layout == nil) {
+        self.layout = [layerConfiguration.injector layoutForViewClass:[self class]];
+    }
 }
 
 - (void)lyr_commonInit {
@@ -70,7 +79,6 @@ static CGFloat const LYRUIMessageItemViewContentDefaultCornerRadius = 16.0;
     self.contentViewContainer.layer.cornerRadius = LYRUIMessageItemViewContentDefaultCornerRadius;
     self.contentViewContainer.backgroundColor = [UIColor colorWithWhite:242.0/255.0 alpha:1.0];
     self.secondaryAccessoryViewContainer = [self addView];
-    self.layout = [[LYRUIMessageItemViewLayout alloc] initWithLayoutDirection:LYRUIMessageItemViewLayoutDirectionLeft];
 }
 
 - (UIView *)addView {

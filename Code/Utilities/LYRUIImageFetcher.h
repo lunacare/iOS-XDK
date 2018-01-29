@@ -19,6 +19,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LYRUIConfigurable.h"
 #import "LYRUIImageFetching.h"
 @protocol LYRUIImageCaching;
 @protocol LYRUIImageCreating;
@@ -26,21 +27,32 @@
 @protocol LYRUIDispatching;
 
 NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIImageFetcher : NSObject <LYRUIImageFetching>
+@interface LYRUIImageFetcher : NSObject <LYRUIImageFetching, LYRUIConfigurable>
 
 /**
- @abstract Initializes a new `LYRUIImageFetcher` object with the given image fetcher, image factory, and initials formatter.
- @param imagesCache The object conforming to `LYRUIImageCaching` protocol which will be used for storing and reusing previously fetched images.
- @param imageFactory The object conforming to `LYRUIImageCreating` protocol which will be used to create images from binary data.
- @param dataFactory The object conforming to `LYRUIDataCreating` protocol which will be used to retrieve binary data from the download tasks.
- @param dispatcher The object conforming to `LYRUIDispatching` protocol which will be used to dispatch the callback on main queue.
- @return An `LYRUIImageFetcher` object.
+ @abstract The object conforming to `LYRUIImageCaching` protocol which will be used for storing and reusing previously fetched images.
  */
-- (instancetype)initWithImagesCache:(nullable id<LYRUIImageCaching>)imagesCache
-                       imageFactory:(nullable id<LYRUIImageCreating>)imageFactory
-                        dataFactory:(nullable id<LYRUIDataCreating>)dataFactory
-                         dispatcher:(nullable id<LYRUIDispatching>)dispatcher
-                         andSession:(nullable NSURLSession *)session;
+@property (nonatomic, strong) id<LYRUIImageCaching> imagesCache;
+
+/**
+ @abstract The object conforming to `LYRUIImageCreating` protocol which will be used to create images from binary data.
+ */
+@property (nonatomic, strong) id<LYRUIImageCreating> imageFactory;
+
+/**
+ @abstract The object conforming to `LYRUIDataCreating` protocol which will be used to retrieve binary data from the download tasks.
+ */
+@property (nonatomic, strong) id<LYRUIDataCreating> dataFactory;
+
+/**
+ @abstract The object conforming to `LYRUIDispatching` protocol which will be used to dispatch the callback on main queue.
+ */
+@property (nonatomic, strong) id<LYRUIDispatching> dispatcher;
+
+/**
+ @abstract NSURLSession instance, used to fetch image with provided URL.
+ */
+@property (nonatomic, strong) NSURLSession *session;
 
 @end
 NS_ASSUME_NONNULL_END       // }

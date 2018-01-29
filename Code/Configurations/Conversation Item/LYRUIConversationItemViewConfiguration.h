@@ -19,6 +19,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LYRUIConfigurable.h"
 #import "LYRUIConversationItemView.h"
 #import <LayerKit/LayerKit.h>
 @protocol LYRUIConversationItemTitleFormatting;
@@ -28,7 +29,7 @@
 
 NS_ASSUME_NONNULL_BEGIN     // {
 
-@interface LYRUIConversationItemViewConfiguration : NSObject
+@interface LYRUIConversationItemViewConfiguration : NSObject <LYRUIConfigurable>
 
 /**
  @abstract The object provides an accessory view for conversation item.
@@ -49,31 +50,6 @@ NS_ASSUME_NONNULL_BEGIN     // {
  @abstract The object provides formatted date of last message for the conversation item.
  */
 @property(nonatomic, strong) id<LYRUITimeFormatting> messageTimeFormatter;
-
-/**
- @abstract A currently logged in user to be filtered out of the conversation item title and accessory view.
- */
-@property(nonatomic, strong, nullable) LYRIdentity *currentUser;
-
-/**
- @abstract Initializes a new `LYRUIConversationItemViewConfiguration` object with currently logged in user.
- @param currentUser An `LYRIdentity` object used to create the title formatter.
- @return An `LYRUIConversationItemViewConfiguration` object.
- */
-- (instancetype)initWithCurrentUser:(LYRIdentity *)currentUser;
-
-/**
- @abstract Initializes a new `LYRUIConversationItemViewConfiguration` object with the given accessory view provider and formatters.
- @param accessoryViewProvider The object conforming to `LYRUIConversationItemAccessoryViewProviding` protocol from which to retrieve the accessory view for display.
- @param titleFormatter The object conforming to `LYRUIConversationItemTitleFormatting` protocol from which to retrieve the conversation title for display.
- @param lastMessageFormatter The object conforming to `LYRUIMessageTextFormatting` protocol from which to retrieve the conversation's last message summary for display.
- @param messageTimeFormatter The object conforming to `LYRUIMessageTimeFormatting` protocol from which to retrieve the conversation's last message time for display.
- @return An `LYRUIConversationItemViewConfiguration` object.
- */
-- (instancetype)initWithAccessoryViewProvider:(nullable id<LYRUIConversationItemAccessoryViewProviding>)accessoryViewProvider
-                               titleFormatter:(nullable id<LYRUIConversationItemTitleFormatting>)titleFormatter
-                         lastMessageFormatter:(nullable id<LYRUIMessageTextFormatting>)lastMessageFormatter
-                         messageTimeFormatter:(nullable id<LYRUITimeFormatting>)messageTimeFormatter NS_DESIGNATED_INITIALIZER;
 
 /**
  @abstract Updates the view conforming to `LYRUIConversationItemView` protocol with data from given Conversation.

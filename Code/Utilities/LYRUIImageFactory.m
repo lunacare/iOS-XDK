@@ -19,39 +19,24 @@
 //
 
 #import "LYRUIImageFactory.h"
-
-@interface LYRUIImageFactory ()
-
-@property (nonatomic, strong) NSBundle *bundle;
-
-@end
+#import "LYRUIConfiguration+DependencyInjection.h"
 
 @implementation LYRUIImageFactory
+@synthesize layerConfiguration = _layerConfiguration;
 
-- (instancetype)init {
-    self = [self initWithBundle:nil];
-    return self;
-}
-
-- (instancetype)initWithBundle:(NSBundle *)bundle {
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
     self = [super init];
     if (self) {
-        if (bundle == nil) {
-            bundle = [self bundleWithLayerUIResources];
-        }
-        self.bundle = bundle;
+        self.layerConfiguration = configuration;
     }
     return self;
 }
 
-- (NSBundle *)bundleWithLayerUIResources {
-    NSBundle *codeBundle = [NSBundle bundleForClass:[self class]];
-    NSString *resourcesBundlePath = [codeBundle pathForResource:@"AtlasResource" ofType:@"bundle"];
-    NSBundle *resourcesBundle = [NSBundle bundleWithPath:resourcesBundlePath];
-    if (resourcesBundle) {
-        return resourcesBundle;
-    }
-    return codeBundle;
+#pragma mark - Properties
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.bundle = [layerConfiguration.injector objectOfType:[NSBundle class]];
 }
 
 #pragma mark - LYRUIImageCreating methods

@@ -19,10 +19,11 @@
 //
 
 #import "LYRUIMessageItemViewConfiguration.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 #import "LYRUIMessageItemView.h"
 #import <LayerKit/LayerKit.h>
-#import "LYRUIMessageTextDefaultFormatter.h"
-#import "LYRUIAvatarViewProvider.h"
+#import "LYRUIMessageTextFormatting.h"
+#import "LYRUIMessageItemAccessoryViewProviding.h"
 
 @interface LYRUIMessageItemViewConfiguration ()
 
@@ -32,23 +33,30 @@
 @end
 
 @implementation LYRUIMessageItemViewConfiguration
+@synthesize layerConfiguration = _layerConfiguration;
 
 - (instancetype)init {
-    self = [self initWithPrimaryAccessoryViewProvider:nil];
-    return self;
-}
-
-- (instancetype)initWithPrimaryAccessoryViewProvider:(id<LYRUIMessageItemAccessoryViewProviding>)primaryAccessoryViewProvider {
     self = [super init];
     if (self) {
-        self.messageFormatter = [[LYRUIMessageTextDefaultFormatter alloc] init];
-        if (primaryAccessoryViewProvider == nil) {
-            primaryAccessoryViewProvider = [[LYRUIAvatarViewProvider alloc] init];
-        }
-        self.primaryAccessoryViewProvider = primaryAccessoryViewProvider;
         self.sizingTextView = [self createContentTextView];
     }
     return self;
+}
+
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
+    self = [self init];
+    if (self) {
+        self.layerConfiguration = configuration;
+    }
+    return self;
+}
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.messageFormatter = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIMessageTextFormatting)
+                                                                       forClass:[self class]];
+    self.primaryAccessoryViewProvider = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIMessageItemAccessoryViewProviding)
+                                                                                   forClass:[self class]];
 }
 
 - (void)setupMessageItemView:(UIView<LYRUIMessageItemView> *)messageItemView withMessage:(LYRMessage *)message {

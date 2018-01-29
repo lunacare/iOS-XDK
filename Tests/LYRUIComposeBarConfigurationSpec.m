@@ -3,6 +3,7 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
+#import <Atlas/LYRUIConfiguration+DependencyInjection.h>
 #import <Atlas/LYRUIComposeBarConfiguration.h>
 #import <Atlas/LYRUIComposeBar.h>
 
@@ -15,6 +16,8 @@
 SpecBegin(LYRUIComposeBarConfiguration)
 
 describe(@"LYRUIComposeBarConfiguration", ^{
+    __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
     __block LYRUIComposeBarConfiguration *configuration;
     __block NSNotificationCenter *notificationCenterMock;
     __block LYRUIComposeBar *composeBarMock;
@@ -22,11 +25,18 @@ describe(@"LYRUIComposeBarConfiguration", ^{
     __block UIButton *sendButtonMock;
 
     beforeEach(^{
+        configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
+        
         notificationCenterMock = mock([NSNotificationCenter class]);
-        configuration = [[LYRUIComposeBarConfiguration alloc] initWithNotificationCenter:notificationCenterMock];
+        [given([injectorMock objectOfType:[NSNotificationCenter class]]) willReturn:notificationCenterMock];
+        
+        configuration = [[LYRUIComposeBarConfiguration alloc] initWithConfiguration:configurationMock];
         
         composeBarMock = mock([LYRUIComposeBar class]);
         textViewMock = mock([UITextView class]);
+        [given(textViewMock.text) willReturn:@"test message text"];
         [given(composeBarMock.inputTextView) willReturn:textViewMock];
         sendButtonMock = mock([UIButton class]);
         [given(composeBarMock.sendButton) willReturn:sendButtonMock];
@@ -41,36 +51,74 @@ describe(@"LYRUIComposeBarConfiguration", ^{
     });
 
     describe(@"configure", ^{
-        beforeEach(^{
-            [configuration configureComposeBar:composeBarMock];
+        context(@"always", ^{
+            beforeEach(^{
+                [configuration configureComposeBar:composeBarMock];
+            });
+            
+            it(@"should add observer for UITextViewTextDidBeginEditingNotification of text view", ^{
+                [verify(notificationCenterMock) addObserverForName:UITextViewTextDidBeginEditingNotification
+                                                            object:textViewMock
+                                                             queue:nil
+                                                        usingBlock:anything()];
+            });
+            it(@"should add observer for UITextViewTextDidChangeNotification of text view", ^{
+                [verify(notificationCenterMock) addObserverForName:UITextViewTextDidChangeNotification
+                                                            object:textViewMock
+                                                             queue:nil
+                                                        usingBlock:anything()];
+            });
+            it(@"should add observer for UITextViewTextDidEndEditingNotification of text view", ^{
+                [verify(notificationCenterMock) addObserverForName:UITextViewTextDidEndEditingNotification
+                                                            object:textViewMock
+                                                             queue:nil
+                                                        usingBlock:anything()];
+            });
+            it(@"should add observer for keypath `placeholder`", ^{
+                [verify(composeBarMock) addObserver:configuration forKeyPath:@"placeholder" options:NSKeyValueObservingOptionNew context:NULL];
+            });
+            it(@"should add observer for keypath `textColor`", ^{
+                [verify(composeBarMock) addObserver:configuration forKeyPath:@"textColor" options:NSKeyValueObservingOptionNew context:NULL];
+            });
+            it(@"should add observer for keypath `placeholderColor`", ^{
+                [verify(composeBarMock) addObserver:configuration forKeyPath:@"placeholderColor" options:NSKeyValueObservingOptionNew context:NULL];
+            });
         });
         
-        it(@"should add observer for UITextViewTextDidBeginEditingNotification of text view", ^{
-            [verify(notificationCenterMock) addObserverForName:UITextViewTextDidBeginEditingNotification
-                                                        object:textViewMock
-                                                         queue:nil
-                                                    usingBlock:anything()];
+        context(@"when input text view contains text", ^{
+            beforeEach(^{
+                [given(textViewMock.text) willReturn:@"test message text"];
+                [configuration configureComposeBar:composeBarMock];
+            });
+            
+            it(@"should not set text view text color", ^{
+                [verifyCount(textViewMock, never()) setTextColor:anything()];
+            });
+            it(@"should not update text view text", ^{
+                [verifyCount(textViewMock, never()) setText:anything()];
+            });
+            it(@"should not disable send button", ^{
+                [verifyCount(sendButtonMock, never()) setEnabled:NO];
+            });
         });
-        it(@"should add observer for UITextViewTextDidChangeNotification of text view", ^{
-            [verify(notificationCenterMock) addObserverForName:UITextViewTextDidChangeNotification
-                                                        object:textViewMock
-                                                         queue:nil
-                                                    usingBlock:anything()];
-        });
-        it(@"should add observer for UITextViewTextDidEndEditingNotification of text view", ^{
-            [verify(notificationCenterMock) addObserverForName:UITextViewTextDidEndEditingNotification
-                                                        object:textViewMock
-                                                         queue:nil
-                                                    usingBlock:anything()];
-        });
-        it(@"should add observer for keypath `placeholder`", ^{
-            [verify(composeBarMock) addObserver:configuration forKeyPath:@"placeholder" options:NSKeyValueObservingOptionNew context:NULL];
-        });
-        it(@"should add observer for keypath `textColor`", ^{
-            [verify(composeBarMock) addObserver:configuration forKeyPath:@"textColor" options:NSKeyValueObservingOptionNew context:NULL];
-        });
-        it(@"should add observer for keypath `placeholderColor`", ^{
-            [verify(composeBarMock) addObserver:configuration forKeyPath:@"placeholderColor" options:NSKeyValueObservingOptionNew context:NULL];
+        
+        context(@"when input text view text is nil", ^{
+            beforeEach(^{
+                [given(textViewMock.text) willReturn:nil];
+                [given(composeBarMock.placeholder) willReturn:@"test placeholder"];
+                [given(composeBarMock.placeholderColor) willReturn:[UIColor purpleColor]];
+                [configuration configureComposeBar:composeBarMock];
+            });
+            
+            it(@"should set text view text color to compose bar placeholder color", ^{
+                [verify(textViewMock) setTextColor:[UIColor purpleColor]];
+            });
+            it(@"should update text view text to compose bar placeholder", ^{
+                [verify(textViewMock) setText:@"test placeholder"];
+            });
+            it(@"should disable send button", ^{
+                [verify(sendButtonMock) setEnabled:NO];
+            });
         });
     });
     
@@ -183,7 +231,6 @@ describe(@"LYRUIComposeBarConfiguration", ^{
                                                          queue:nil
                                                     usingBlock:(id)blockArgument];
             block = blockArgument.value;
-            [verify(sendButtonMock) setEnabled:NO];
         });
         
         context(@"when placeholder is visible", ^{

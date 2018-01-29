@@ -32,6 +32,7 @@
 @end
 
 @implementation LYRUIListDataSource
+@synthesize sections = _sections;
 
 - (instancetype)init {
     self = [super init];
@@ -137,13 +138,6 @@
     NSString *key = supplementaryViewConfiguration.viewKind;
     self.supplementaryViewConfigurations[key] = supplementaryViewConfiguration;
     supplementaryViewConfiguration.listDataSource = self;
-}
-
-- (NSArray *)allConfigurations {
-    NSMutableArray *allConfigurations = [[NSMutableArray alloc] init];
-    [allConfigurations addObjectsFromArray:self.cellConfigurations.allValues];
-    [allConfigurations addObjectsFromArray:self.supplementaryViewConfigurations.allValues];
-    return allConfigurations;
 }
 
 @end

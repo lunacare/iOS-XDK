@@ -19,6 +19,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LYRUIConfigurable.h"
 #import "LYRUIViewLayout.h"
 #import "LYRUIViewWithLayout.h"
 @class LYRUIBaseItemView;
@@ -39,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@protocol LYRUIBaseItemViewTheme <NSObject>
+@protocol LYRUIBaseItemViewTheme <NSObject, NSCopying>
 
 /**
  @abstract The font for the title label displayed in the cell. Default is 16pt system font.
@@ -77,7 +78,7 @@ NS_ASSUME_NONNULL_BEGIN
  @abstract The `LYRUIBaseListView` class provides a lightweight, customizable view for presenting item with title, time, and message.
  */
 IB_DESIGNABLE
-@interface LYRUIBaseItemView : LYRUIViewWithLayout <LYRUIBaseItemView, LYRUIBaseItemViewTheme>
+@interface LYRUIBaseItemView : LYRUIViewWithLayout <LYRUIBaseItemView, LYRUIBaseItemViewTheme, LYRUIConfigurable>
 
 /**
  @abstract The view in which the accessory view will be contained;
@@ -94,17 +95,12 @@ IB_DESIGNABLE
 /**
  @abstract A set of fonts and colors to use in item view. Default is LYRUIBaseItemViewDefaultTheme.
  */
-@property (nonatomic, strong) id<LYRUIBaseItemViewTheme> theme UI_APPEARANCE_SELECTOR;
+@property (nonatomic, copy) id<LYRUIBaseItemViewTheme> theme UI_APPEARANCE_SELECTOR;
 
 /**
  @abstract Layout of the conversation item subviews.
  */
 @property (nonatomic, copy, nullable) IBOutlet id<LYRUIBaseItemViewLayout> layout;
-
-/**
- @abstract Initialize with a layout.
- */
-- (instancetype)initWithLayout:(id<LYRUIBaseItemViewLayout>)layout;
 
 @end
 NS_ASSUME_NONNULL_END

@@ -19,39 +19,9 @@
 //
 
 #import "LYRUIIdentityItemView.h"
-#import "LYRUIBaseItemViewLayout.h"
-#import "LYRUIBaseItemViewLayoutMetrics.h"
 #import "LYRUIIdentityItemIBSetup.h"
-#import "LYRUIBaseItemViewDefaultTheme.h"
 
 @implementation LYRUIIdentityItemView
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        LYRUIBaseItemViewLayoutMetrics *metrics = [[LYRUIBaseItemViewLayoutMetrics alloc] init];
-        self.layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
-    }
-    return self;
-}
-
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        LYRUIBaseItemViewLayoutMetrics *metrics = [[LYRUIBaseItemViewLayoutMetrics alloc] init];
-        self.layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
-    }
-    return self;
-}
-
-- (instancetype)initWithLayout:(id<LYRUIBaseItemViewLayout>)layout {
-    if (layout == nil) {
-        LYRUIBaseItemViewLayoutMetrics *metrics = [[LYRUIBaseItemViewLayoutMetrics alloc] init];
-        layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
-    }
-    self = [super initWithLayout:layout];
-    return self;
-}
 
 - (void)prepareForInterfaceBuilder {
     [LYRUIIdentityItemIBSetup prepareIdentityItemForInterfaceBuilder:self];

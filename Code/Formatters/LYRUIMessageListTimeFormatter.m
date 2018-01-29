@@ -19,45 +19,30 @@
 //
 
 #import "LYRUIMessageListTimeFormatter.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 
 @interface LYRUIMessageListTimeFormatter ()
 
-@property (nonatomic, strong) NSLocale *locale;
 @property (nonatomic, strong) NSCalendar *calendar;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
 @end
 
 @implementation LYRUIMessageListTimeFormatter
+@synthesize layerConfiguration = _layerConfiguration;
 
-- (instancetype)init {
-    self = [self initWithLocale:nil
-                       calendar:nil
-                  dateFormatter:nil];
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
+    self = [super init];
+    if (self) {
+        self.layerConfiguration = configuration;
+    }
     return self;
 }
 
-- (instancetype)initWithLocale:(NSLocale *)locale
-                      calendar:(NSCalendar *)calendar
-                 dateFormatter:(NSDateFormatter *)dateFormatter {
-    self = [super init];
-    if (self) {
-        if (locale == nil) {
-            locale = [NSLocale currentLocale];
-        }
-        self.locale = locale;
-        if (calendar == nil) {
-            calendar = [NSCalendar currentCalendar];
-        }
-        self.calendar = calendar;
-        if (dateFormatter == nil) {
-            dateFormatter = [[NSDateFormatter alloc] init];
-            dateFormatter.locale = self.locale;
-            dateFormatter.timeZone = [NSTimeZone systemTimeZone];
-        }
-        self.dateFormatter = dateFormatter;
-    }
-    return self;
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.calendar = [layerConfiguration.injector objectOfType:[NSCalendar class]];
+    self.dateFormatter = [layerConfiguration.injector objectOfType:[NSDateFormatter class]];
 }
 
 #pragma mark - LYRUIMessageTimeFormatting method

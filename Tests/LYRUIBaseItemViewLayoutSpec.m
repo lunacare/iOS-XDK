@@ -17,7 +17,8 @@ describe(@"LYRUIBaseItemViewLayout", ^{
         beforeEach(^{
             id<LYRUIBaseItemViewLayoutMetricsProviding> metrics = [[LYRUIBaseItemViewLayoutMetrics alloc] init];
             layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
-            baseItemView = [[LYRUIBaseItemView alloc] initWithLayout:layout];
+            baseItemView = [[LYRUIBaseItemView alloc] init];
+            baseItemView.layout = layout;
             baseItemView.translatesAutoresizingMaskIntoConstraints = NO;
             baseItemView.titleLabel.text = @"this is a long test conversation title";
             baseItemView.detailLabel.text = @"8:30am";

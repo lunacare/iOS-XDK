@@ -19,18 +19,14 @@
 //
 
 #import "LYRUIIdentityListView.h"
+#import "LYRUIListViewConfiguring.h"
+#import "LYRUIConfigurable.h"
 @class LYRUIListSection<ModelType>;
 @class LYRIdentity;
 
 /**
  @abstract The `LYRUIIdentityListViewConfiguration` objects will be used for configuring a `LYRUIIdentityListView` with proper layout, data source, and delegate for presenting list of `LYRIdentity` items.
  */
-@interface LYRUIIdentityListViewConfiguration : NSObject
-
-/**
- @abstract Configures provided `LYRUIIdentityListView` for presenting `LYRIdentity` items.
- @param identityListView An `LYRUIIdentityListView` instance to be configured. The `layout`, `dataSource`, and `delegate` properties of the list view will be set properly to present `LYRIdentity` items.
- */
-+ (void)setupIdentityListView:(LYRUIIdentityListView *)identityListView;
+@interface LYRUIIdentityListViewConfiguration : NSObject <LYRUIListViewConfiguring, LYRUIConfigurable>
 
 @end

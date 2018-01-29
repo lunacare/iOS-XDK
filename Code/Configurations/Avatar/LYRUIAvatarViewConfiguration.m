@@ -19,6 +19,7 @@
 //
 
 #import "LYRUIAvatarViewConfiguration.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 #import "LYRUIAvatarView+PrivateProperties.h"
 #import "LYRUIImageWithLettersView.h"
 #import "LYRUIImageWithLettersViewConfiguration.h"
@@ -36,23 +37,23 @@
 @end
 
 @implementation LYRUIAvatarViewConfiguration
+@synthesize layerConfiguration = _layerConfiguration;
 
-- (instancetype)init {
-    self = [self initWithAvatarViewConfiguration:nil];
-    return self;
-}
-
-- (instancetype)initWithAvatarViewConfiguration:(LYRUIImageWithLettersViewConfiguration *)avatarViewConfiguration {
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
     self = [super init];
     if (self) {
-        if (avatarViewConfiguration == nil) {
-            avatarViewConfiguration = [[LYRUIImageWithLettersViewConfiguration alloc] init];
-        }
-        self.avatarViewConfiguration = avatarViewConfiguration;
+        self.layerConfiguration = configuration;
         self.singleLayout = [[LYRUIAvatarViewSingleLayout alloc] init];
         self.multiLayout = [[LYRUIAvatarViewMultiLayout alloc] init];
     }
     return self;
+}
+
+#pragma mark - Properties
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.avatarViewConfiguration = [layerConfiguration.injector configurationForViewClass:[LYRUIImageWithLettersView class]];
 }
 
 #pragma mark - LYRUIAvatarView configuration

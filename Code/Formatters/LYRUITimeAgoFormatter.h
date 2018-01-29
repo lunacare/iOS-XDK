@@ -19,16 +19,11 @@
 //
 
 #import "LYRUITimeFormatting.h"
+#import "LYRUIConfigurable.h"
 
 /**
  @abstract The `LYRUITimeAgoFormatter` objects will be used for providing a string describing the time passed between two dates.
  */
-@interface LYRUITimeAgoFormatter : NSObject <LYRUITimeFormatting>
-
-/**
- @abstract Initialize with a calendar and date formatter.
- @param calendar A calendar used to determine the time passed between two dates. Default is `currentCalendar`.
- */
-- (nonnull instancetype)initWithCalendar:(nullable NSCalendar *)calendar NS_DESIGNATED_INITIALIZER;
+@interface LYRUITimeAgoFormatter : NSObject <LYRUITimeFormatting, LYRUIConfigurable>
 
 @end

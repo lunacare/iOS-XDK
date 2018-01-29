@@ -53,19 +53,12 @@ describe(@"LYRUIParticipantsDefaultFilterWithCurrentUser", ^{
     
     context(@"when current user is not passed", ^{
         beforeEach(^{
-            NSArray *participantsArray = @[
-                    participantMock1,
-                    participantMock2,
-                    participantMock3,
-                    participantMock4,
-                    ];
             LYRIdentity *nilIdentity = nil;
             participantsFilter = LYRUIParticipantsDefaultFilterWithCurrentUser(nilIdentity);
-            returnedParticipants = participantsFilter([NSSet setWithArray:participantsArray]);
         });
         
-        it(@"should return set with all 4 participants", ^{
-            expect(returnedParticipants.count).to.equal(4);
+        it(@"should be nil", ^{
+            expect(participantsFilter).to.beNil();
         });
     });
 });

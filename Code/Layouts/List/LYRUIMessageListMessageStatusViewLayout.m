@@ -1,8 +1,8 @@
 //
-//  LYRUIMessageListHeaderViewLayout.m
+//  LYRUIMessageListMessageStatusViewLayout.m
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 23.08.2017.
+//  Created by Łukasz Przytuła on 24.08.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,15 +18,15 @@
 //  limitations under the License.
 //
 
-#import "LYRUIMessageListHeaderViewLayout.h"
+#import "LYRUIMessageListMessageStatusViewLayout.h"
 
-@interface LYRUIMessageListHeaderViewLayout ()
+@interface LYRUIMessageListMessageStatusViewLayout ()
 
 @property (nonatomic, strong) NSMutableArray *labelConstraints;
 
 @end
 
-@implementation LYRUIMessageListHeaderViewLayout
+@implementation LYRUIMessageListMessageStatusViewLayout
 
 - (instancetype)init {
     self = [super init];
@@ -46,12 +46,12 @@
 
 - (void)addConstraintsInView:(UIView<LYRUIListHeaderView> *)view {
     NSMutableArray *constraints = self.labelConstraints;
-    [constraints addObject:[view.label.topAnchor constraintEqualToAnchor:view.topAnchor constant:12.0]];
+    [constraints addObject:[view.label.topAnchor constraintEqualToAnchor:view.topAnchor constant:2.0]];
     [constraints addObject:[view.label.leftAnchor constraintEqualToAnchor:view.leftAnchor]];
-    [constraints addObject:[view.label.bottomAnchor constraintEqualToAnchor:view.bottomAnchor constant:-12.0]];
-    [constraints addObject:[view.label.rightAnchor constraintEqualToAnchor:view.rightAnchor]];
+    [constraints addObject:[view.label.bottomAnchor constraintEqualToAnchor:view.bottomAnchor constant:-2.0]];
+    [constraints addObject:[view.label.rightAnchor constraintEqualToAnchor:view.rightAnchor constant:-60.0]];
     [constraints addObject:[view.label.heightAnchor constraintEqualToConstant:13.0]];
-    view.label.textAlignment = NSTextAlignmentCenter;
+    view.label.textAlignment = NSTextAlignmentRight;
     view.label.font = [UIFont systemFontOfSize:11.0];
     [NSLayoutConstraint activateConstraints:constraints];
 }

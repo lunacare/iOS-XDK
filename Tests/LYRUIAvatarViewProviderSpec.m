@@ -3,6 +3,7 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
+#import <Atlas/LYRUIConfiguration+DependencyInjection.h>
 #import <Atlas/LYRUIAvatarViewProvider.h>
 #import <Atlas/LYRUIAvatarView.h>
 #import <LayerKit/LayerKit.h>
@@ -19,9 +20,19 @@ SpecBegin(LYRUIIdentityItemAccessoryViewProvider)
 
 describe(@"LYRUIAvatarViewProvider", ^{
     __block LYRUIAvatarViewProvider *provider;
+    __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
+    __block LYRUIAvatarView *avatarViewMock;
     
     beforeEach(^{
-        provider = [[LYRUIAvatarViewProvider alloc] init];
+        configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
+        
+        avatarViewMock = mock([LYRUIAvatarView class]);
+        [given([injectorMock objectOfType:[LYRUIAvatarView class]]) willReturn:avatarViewMock];
+        
+        provider = [[LYRUIAvatarViewProvider alloc] initWithConfiguration:configurationMock];
     });
     
     afterEach(^{
@@ -44,11 +55,12 @@ describe(@"LYRUIAvatarViewProvider", ^{
             participantsFilterMock = ^NSSet *(NSSet *identities) {
                 return participantsSet;
             };
+            [given(configurationMock.participantsFilter) willReturn:participantsFilterMock];
             participantsSorterMock = ^NSArray *(NSSet *identities) {
                 return participants;
             };
-            provider = [[LYRUIAvatarViewProvider alloc] initWithParticipantsFilter:participantsFilterMock
-                                                                participantsSorter:participantsSorterMock];
+            [given(configurationMock.participantsSorter) willReturn:participantsSorterMock];
+            
             conversationMock = mock([LYRConversation class]);
             [given(conversationMock.participants) willReturn:participantsSet];
         });
@@ -66,27 +78,21 @@ describe(@"LYRUIAvatarViewProvider", ^{
                 returnedView = (LYRUIAvatarView *)[provider accessoryViewForConversation:conversationMock];
             });
             
-            it(@"should return an `LYRUIAvatarView`", ^{
-                expect(returnedView).to.beAKindOf([LYRUIAvatarView class]);
-            });
-            it(@"should disable translating autoresizing mask into constraints", ^{
-                expect(returnedView.translatesAutoresizingMaskIntoConstraints).to.beFalsy();
+            it(@"should return an `LYRUIAvatarView` from injector", ^{
+                expect(returnedView).to.equal(avatarViewMock);
             });
             it(@"should setup view with identities", ^{
-                expect(returnedView.identities).to.equal(participants);
+                [verify(avatarViewMock) setIdentities:participants];
             });
         });
         
         describe(@"setupAccessoryView:forConversation:", ^{
-            __block LYRUIAvatarView *view;
-            
             beforeEach(^{
-                view = [[LYRUIAvatarView alloc] init];
-                [provider setupAccessoryView:view forConversation:conversationMock];
+                [provider setupAccessoryView:avatarViewMock forConversation:conversationMock];
             });
             
             it(@"should setup view with identities", ^{
-                expect(view.identities).to.equal(participants);
+                [verify(avatarViewMock) setIdentities:participants];
             });
         });
     });
@@ -109,27 +115,21 @@ describe(@"LYRUIAvatarViewProvider", ^{
                 returnedView = (LYRUIAvatarView *)[provider accessoryViewForIdentity:identityMock];
             });
             
-            it(@"should return an `LYRUIAvatarView`", ^{
-                expect(returnedView).to.beAKindOf([LYRUIAvatarView class]);
+            it(@"should return an `LYRUIAvatarView` from injector", ^{
+                expect(returnedView).to.equal(avatarViewMock);
             });
-            it(@"should disable translating autoresizing mask into constraints", ^{
-                expect(returnedView.translatesAutoresizingMaskIntoConstraints).to.beFalsy();
-            });
-            it(@"should setup view with identity", ^{
-                expect(returnedView.identities).to.equal(@[identityMock]);
+            it(@"should setup view with identities", ^{
+                [verify(avatarViewMock) setIdentities:@[identityMock]];
             });
         });
         
         describe(@"setupAccessoryView:forIdentity:", ^{
-            __block LYRUIAvatarView *view;
-            
             beforeEach(^{
-                view = [[LYRUIAvatarView alloc] init];
-                [provider setupAccessoryView:view forIdentity:identityMock];
+                [provider setupAccessoryView:avatarViewMock forIdentity:identityMock];
             });
             
-            it(@"should setup view with identity", ^{
-                expect(view.identities).to.equal(@[identityMock]);
+            it(@"should setup view with identities", ^{
+                [verify(avatarViewMock) setIdentities:@[identityMock]];
             });
         });
     });
@@ -155,27 +155,21 @@ describe(@"LYRUIAvatarViewProvider", ^{
                 returnedView = (LYRUIAvatarView *)[provider accessoryViewForMessage:messageMock];
             });
             
-            it(@"should return an `LYRUIAvatarView`", ^{
-                expect(returnedView).to.beAKindOf([LYRUIAvatarView class]);
+            it(@"should return an `LYRUIAvatarView` from injector", ^{
+                expect(returnedView).to.equal(avatarViewMock);
             });
-            it(@"should disable translating autoresizing mask into constraints", ^{
-                expect(returnedView.translatesAutoresizingMaskIntoConstraints).to.beFalsy();
-            });
-            it(@"should setup view with identity", ^{
-                expect(returnedView.identities).to.equal(@[identityMock]);
+            it(@"should setup view with identities", ^{
+                [verify(avatarViewMock) setIdentities:@[identityMock]];
             });
         });
         
         describe(@"setupAccessoryView:forMessage:", ^{
-            __block LYRUIAvatarView *view;
-            
             beforeEach(^{
-                view = [[LYRUIAvatarView alloc] init];
-                [provider setupAccessoryView:view forMessage:messageMock];
+                [provider setupAccessoryView:avatarViewMock forMessage:messageMock];
             });
             
-            it(@"should setup view with identity", ^{
-                expect(view.identities).to.equal(@[identityMock]);
+            it(@"should setup view with identities", ^{
+                [verify(avatarViewMock) setIdentities:@[identityMock]];
             });
         });
     });

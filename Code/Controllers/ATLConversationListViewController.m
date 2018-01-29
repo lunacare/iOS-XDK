@@ -21,8 +21,6 @@
 #import <objc/runtime.h>
 #import "ATLConversationListViewController.h"
 #import "ATLMessagingUtilities.h"
-#import "LYRUIConversationItemViewConfiguration.h"
-#import "LYRUIConversationItemTableViewCell.h"
 
 static NSString *const ATLConversationCellReuseIdentifier = @"ATLConversationCellReuseIdentifier";
 static NSString *const ATLImageMIMETypePlaceholderText = @"Attachment: Image";
@@ -53,7 +51,6 @@ static UIView *ATLMakeLoadingMoreConversationsIndicatorView()
 @property (nonatomic) NSMutableArray *insertedRowIndexPaths;
 @property (nonatomic) NSMutableArray *deletedRowIndexPaths;
 @property (nonatomic) NSMutableArray *updatedRowIndexPaths;
-@property (nonatomic, strong) LYRUIConversationItemViewConfiguration *conversationItemViewConfiguration;
 
 @end
 
@@ -93,15 +90,13 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 
 - (void)lyr_commonInit
 {
-    _cellClass = [LYRUIConversationItemTableViewCell class];
+    _cellClass = [ATLConversationTableViewCell class];
     _deletionModes = @[@(LYRDeletionModeMyDevices), @(LYRDeletionModeAllParticipants)];
     _displaysAvatarItem = NO;
     _allowsEditing = YES;
-    _rowHeight = 60.0f;
+    _rowHeight = 76.0f;
     _shouldDisplaySearchController = YES;
     _hasAppeared = NO;
-    LYRIdentity *currentUser = _layerClient.authenticatedUser;
-    _conversationItemViewConfiguration = [[LYRUIConversationItemViewConfiguration alloc] initWithCurrentUser:currentUser];
 }
 
 - (id)init
@@ -138,7 +133,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
         self.searchController.searchResultsUpdater = self;
         self.searchController.dimsBackgroundDuringPresentation = NO;
-
+        
         // UISearchBar
         self.searchController.searchBar.delegate = self;
         self.searchController.searchBar.translucent = NO;
@@ -214,13 +209,13 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 
 #pragma mark - Public Setters
 
-- (void)setCellClass:(Class<LYRUIConversationItemView>)cellClass
+- (void)setCellClass:(Class<ATLConversationPresenting>)cellClass
 {
     if (self.hasAppeared) {
         @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Cannot change cell class after the view has been presented" userInfo:nil];
     }
-    if (!class_conformsToProtocol(cellClass, @protocol(LYRUIConversationItemView))) {
-        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Cell class must conform to LYRUIConversationItemView" userInfo:nil];
+    if (!class_conformsToProtocol(cellClass, @protocol(ATLConversationPresenting))) {
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Cell class must conform to ATLConversationPresenting" userInfo:nil];
     }
     _cellClass = cellClass;
 }
@@ -334,7 +329,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 {
     NSString *reuseIdentifier = [self reuseIdentifierForConversation:nil atIndexPath:indexPath];
     
-    UITableViewCell<LYRUIConversationItemView> *conversationCell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
+    UITableViewCell<ATLConversationPresenting> *conversationCell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
     [self configureCell:conversationCell atIndexPath:indexPath];
     return conversationCell;
 }
@@ -346,15 +341,39 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 
 #pragma mark - Cell Configuration
 
-- (void)configureCell:(UITableViewCell<LYRUIConversationItemView> *)conversationCell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(UITableViewCell<ATLConversationPresenting> *)conversationCell atIndexPath:(NSIndexPath *)indexPath
 {
     LYRConversation *conversation = [self.queryController numberOfObjectsInSection:indexPath.section] ? [self.queryController objectAtIndexPath:indexPath] : nil;
     if (conversation == nil) {
         return;     // NOTE the early return if the conversation isn't found!
     }
     
-    // TODO: update cell theme if needed
-    [self.conversationItemViewConfiguration setupConversationItemView:conversationCell withConversation:conversation];
+    [conversationCell presentConversation:conversation];
+    
+    if (self.displaysAvatarItem) {
+        if ([self.dataSource respondsToSelector:@selector(conversationListViewController:avatarItemForConversation:)]) {
+            id<ATLAvatarItem> avatarItem = [self.dataSource conversationListViewController:self avatarItemForConversation:conversation];
+            [conversationCell updateWithAvatarItem:avatarItem];
+        } else {
+            @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Conversation View Delegate must return an object conforming to the `ATLAvatarItem` protocol." userInfo:nil];
+        }
+    }
+    
+    if ([self.dataSource respondsToSelector:@selector(conversationListViewController:titleForConversation:)]) {
+        NSString *conversationTitle = [self.dataSource conversationListViewController:self titleForConversation:conversation];
+        [conversationCell updateWithConversationTitle:conversationTitle];
+    } else {
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Conversation View Delegate must return a conversation label" userInfo:nil];
+    }
+    
+    NSString *lastMessageText;
+    if ([self.dataSource respondsToSelector:@selector(conversationListViewController:lastMessageTextForConversation:)]) {
+        lastMessageText = [self.dataSource conversationListViewController:self lastMessageTextForConversation:conversation];
+    }
+    if (!lastMessageText) {
+        lastMessageText = [self defaultLastMessageTextForConversation:conversation];
+    }
+    [conversationCell updateWithLastMessageText:lastMessageText];
 }
 
 #pragma mark - Reloading Conversations
@@ -521,7 +540,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     self.updatedRowIndexPaths = nil;
     
     [self configureLoadingMoreConversationsIndicatorView];
-
+    
     if (self.conversationSelectedBeforeContentChange) {
         NSIndexPath *indexPath = [self.queryController indexPathForObject:self.conversationSelectedBeforeContentChange];
         if (indexPath) {
@@ -592,7 +611,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         return;
     }
     self.showingMoreConversationsIndicator = moreConversationsAvailable;
-
+    
     // The indicator view is installed as the table's footer view. When no indicator is needed, install an empty view. This is required in order to suppress the dummy separator lines that UITableView draws to simulate empty rows.
     self.tableView.tableFooterView = self.showingMoreConversationsIndicator ? ATLMakeLoadingMoreConversationsIndicatorView() : [[UIView alloc] init];
 }
@@ -610,9 +629,9 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
         [self.delegate conversationListViewController:self didSearchForText:searchString completion:^(NSSet *filteredParticipants) {
             if (![searchString isEqualToString:self.searchController.searchBar.text]) return;
             NSSet *participantIdentifiers = [filteredParticipants valueForKey:@"userID"];
-
+            
             LYRPredicate *predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsIn value:participantIdentifiers];
-
+            
             [self updateQueryControllerWithPredicate: predicate];
         }];
     }
@@ -674,3 +693,4 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
 }
 
 @end
+

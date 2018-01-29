@@ -3,6 +3,7 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
+#import <Atlas/LYRUIConfiguration+DependencyInjection.h>
 #import <Atlas/LYRUIMessageItemViewConfiguration.h>
 #import <Atlas/LYRUIMessageItemAccessoryViewProviding.h>
 #import <Atlas/LYRUIMessageItemView.h>
@@ -13,11 +14,21 @@ SpecBegin(LYRUIMessageItemViewConfiguration)
 
 describe(@"LYRUIMessageItemViewConfiguration", ^{
     __block LYRUIMessageItemViewConfiguration *viewConfiguration;
+    __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
     __block id<LYRUIMessageItemAccessoryViewProviding> accessoryViewProviderMock;
 
     beforeEach(^{
+        configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
+        
         accessoryViewProviderMock = mockProtocol(@protocol(LYRUIMessageItemAccessoryViewProviding));
-        viewConfiguration = [[LYRUIMessageItemViewConfiguration alloc] initWithPrimaryAccessoryViewProvider:accessoryViewProviderMock];
+        [given([injectorMock protocolImplementation:@protocol(LYRUIMessageItemAccessoryViewProviding)
+                                           forClass:[LYRUIMessageItemViewConfiguration class]])
+         willReturn:accessoryViewProviderMock];
+        
+        viewConfiguration = [[LYRUIMessageItemViewConfiguration alloc] initWithConfiguration:configurationMock];
     });
 
     afterEach(^{
@@ -25,13 +36,9 @@ describe(@"LYRUIMessageItemViewConfiguration", ^{
         accessoryViewProviderMock = nil;
     });
     
-    describe(@"after initialization with convenience initializer", ^{
-        beforeEach(^{
-            viewConfiguration = [[LYRUIMessageItemViewConfiguration alloc] init];
-        });
-        
+    describe(@"after initialization", ^{
         it(@"should have default primary accessory view provider set", ^{
-            expect(viewConfiguration.primaryAccessoryViewProvider).to.beAKindOf([LYRUIAvatarViewProvider class]);
+            expect(viewConfiguration.primaryAccessoryViewProvider).to.equal(accessoryViewProviderMock);
         });
     });
     

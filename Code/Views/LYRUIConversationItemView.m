@@ -19,10 +19,8 @@
 //
 
 #import "LYRUIConversationItemView.h"
-#import "LYRUIBaseItemViewLayout.h"
-#import "LYRUIBaseItemViewLayoutMetrics.h"
 #import "LYRUIConversationItemIBSetup.h"
-#import "LYRUIConversationItemViewUnreadTheme.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 
 @interface LYRUIConversationItemView ()
 
@@ -38,38 +36,17 @@
 @synthesize theme = _readTheme,
             state = _state;
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        LYRUIBaseItemViewLayoutMetrics *metrics = [[LYRUIBaseItemViewLayoutMetrics alloc] init];
-        self.layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
-        self.unreadTheme = [[LYRUIConversationItemViewUnreadTheme alloc] init];
-    }
-    return self;
-}
-
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        LYRUIBaseItemViewLayoutMetrics *metrics = [[LYRUIBaseItemViewLayoutMetrics alloc] init];
-        self.layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
-        self.unreadTheme = [[LYRUIConversationItemViewUnreadTheme alloc] init];
-    }
-    return self;
-}
-
-- (instancetype)initWithLayout:(id<LYRUIBaseItemViewLayout>)layout {
-    if (layout == nil) {
-        LYRUIBaseItemViewLayoutMetrics *metrics = [[LYRUIBaseItemViewLayoutMetrics alloc] init];
-        layout = [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
-        self.unreadTheme = [[LYRUIConversationItemViewUnreadTheme alloc] init];
-    }
-    self = [super initWithLayout:layout];
-    return self;
-}
-
 - (void)prepareForInterfaceBuilder {
     [LYRUIConversationItemIBSetup prepareConversationItemForInterfaceBuilder:self];
+}
+
+#pragma mark - Properties
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    [super setLayerConfiguration:layerConfiguration];
+    if (self.unreadTheme == nil) {
+        self.unreadTheme = [layerConfiguration.injector alternativeThemeForViewClass:[self class]];
+    }
 }
 
 #pragma mark - LYRUIConversationItemViewState and LYRUIBaseItemViewTheme changes

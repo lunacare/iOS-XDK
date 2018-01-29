@@ -3,6 +3,7 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
+#import <Atlas/LYRUIConfiguration+DependencyInjection.h>
 #import <Atlas/LYRUIImageFetcher.h>
 #import <Atlas/LYRUIImageCaching.h>
 #import <Atlas/LYRUIImageCreating.h>
@@ -12,6 +13,8 @@
 SpecBegin(LYRUIImageFetcher)
 
 describe(@"LYRUIImageFetcher", ^{
+    __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
     __block LYRUIImageFetcher *fetcher;
     __block id<LYRUIImageCaching> imagesCacheMock;
     __block id<LYRUIImageCreating> imagesFactoryMock;
@@ -20,16 +23,34 @@ describe(@"LYRUIImageFetcher", ^{
     __block NSURLSession *sessionMock;
     
     beforeEach(^{
+        configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
+        
         imagesCacheMock = mockProtocol(@protocol(LYRUIImageCaching));
+        [given([injectorMock protocolImplementation:@protocol(LYRUIImageCaching)
+                                                forClass:[LYRUIImageFetcher class]])
+         willReturn:imagesCacheMock];
+        
         imagesFactoryMock = mockProtocol(@protocol(LYRUIImageCreating));
+        [given([injectorMock protocolImplementation:@protocol(LYRUIImageCreating)
+                                                forClass:[LYRUIImageFetcher class]])
+         willReturn:imagesFactoryMock];
+        
         dataFactoryMock = mockProtocol(@protocol(LYRUIDataCreating));
+        [given([injectorMock protocolImplementation:@protocol(LYRUIDataCreating)
+                                                forClass:[LYRUIImageFetcher class]])
+         willReturn:dataFactoryMock];
+        
         dispatcher = [[LYRUISpecDispatcher alloc] init];
+        [given([injectorMock protocolImplementation:@protocol(LYRUIDispatching)
+                                                forClass:[LYRUIImageFetcher class]])
+         willReturn:dispatcher];
+        
         sessionMock = mock([NSURLSession class]);
-        fetcher = [[LYRUIImageFetcher alloc] initWithImagesCache:imagesCacheMock
-                                                    imageFactory:imagesFactoryMock
-                                                     dataFactory:dataFactoryMock
-                                                      dispatcher:dispatcher
-                                                      andSession:sessionMock];
+        [given([injectorMock objectOfType:[NSURLSession class]]) willReturn:sessionMock];
+        
+        fetcher = [[LYRUIImageFetcher alloc] initWithConfiguration:configurationMock];
     });
     
     afterEach(^{

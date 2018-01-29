@@ -42,4 +42,15 @@
     return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    __typeof(self) copy = [[[self class] allocWithZone:zone] init];
+    copy.titleLabelFont = self.titleLabelFont;
+    copy.titleLabelColor = self.titleLabelColor;
+    copy.subtitleLabelFont = self.subtitleLabelFont;
+    copy.subtitleLabelColor = self.subtitleLabelColor;
+    copy.detailLabelFont = self.detailLabelFont;
+    copy.detailLabelColor = self.detailLabelColor;
+    return copy;
+}
+
 @end

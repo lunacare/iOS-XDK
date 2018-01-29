@@ -19,10 +19,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "LYRUIPresenceIndicatorTheme.h"
-#import "LYRUIParticipantsCountViewTheme.h"
+#import "LYRUIPresenceView.h"
 
-@interface LYRUIPresenceViewDefaultTheme : NSObject <LYRUIParticipantsCountViewTheme, LYRUIPresenceIndicatorTheme>
+@interface LYRUIPresenceViewDefaultTheme : NSObject <LYRUIPresenceViewTheme>
 
 @property (nonatomic, copy) UIColor *presenceIndicatorBackgroundColor;
 

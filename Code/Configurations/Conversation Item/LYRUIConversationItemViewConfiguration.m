@@ -19,62 +19,32 @@
 //
 
 #import "LYRUIConversationItemViewConfiguration.h"
-#import "LYRUIMessageTimeDefaultFormatter.h"
-#import "LYRUIConversationItemTitleFormatter.h"
-#import "LYRUIAvatarViewProvider.h"
-#import "LYRUIMessageTextDefaultFormatter.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
+#import "LYRUITimeFormatting.h"
+#import "LYRUIConversationItemTitleFormatting.h"
+#import "LYRUIConversationItemAccessoryViewProviding.h"
+#import "LYRUIMessageTextFormatting.h"
 #import "LYRUIParticipantsFiltering.h"
 
 @implementation LYRUIConversationItemViewConfiguration
+@synthesize layerConfiguration = _layerConfiguration;
 
-- (instancetype)init {
-    self = [self initWithAccessoryViewProvider:nil
-                                titleFormatter:nil
-                          lastMessageFormatter:nil
-                          messageTimeFormatter:nil];
-    return self;
-}
-
-- (instancetype)initWithCurrentUser:(LYRIdentity *)currentUser {
-    self = [self init];
-    if (self) {
-        self.currentUser = currentUser;
-    }
-    return self;
-}
-
-- (instancetype)initWithAccessoryViewProvider:(id<LYRUIConversationItemAccessoryViewProviding>)accessoryViewProvider
-                               titleFormatter:(id<LYRUIConversationItemTitleFormatting>)titleFormatter
-                         lastMessageFormatter:(id<LYRUIMessageTextFormatting>)lastMessageFormatter
-                         messageTimeFormatter:(id<LYRUITimeFormatting>)messageTimeFormatter {
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
     self = [super init];
     if (self) {
-        if (accessoryViewProvider == nil) {
-            accessoryViewProvider = [[LYRUIAvatarViewProvider alloc] init];
-        }
-        self.accessoryViewProvider = accessoryViewProvider;
-        if (titleFormatter == nil) {
-            titleFormatter = [[LYRUIConversationItemTitleFormatter alloc] init];
-        }
-        self.titleFormatter = titleFormatter;
-        if (lastMessageFormatter == nil) {
-            lastMessageFormatter = [[LYRUIMessageTextDefaultFormatter alloc] init];
-        }
-        self.lastMessageFormatter = lastMessageFormatter;
-        if (messageTimeFormatter == nil) {
-            messageTimeFormatter = [[LYRUIMessageTimeDefaultFormatter alloc] init];
-        }
-        self.messageTimeFormatter = messageTimeFormatter;
+        self.layerConfiguration = configuration;
     }
     return self;
 }
 
 #pragma mark - Properties
 
-- (void)setCurrentUser:(LYRIdentity *)currentUser {
-    _currentUser = currentUser;
-    self.accessoryViewProvider.participantsFilter = LYRUIParticipantsDefaultFilterWithCurrentUser(currentUser);
-    self.titleFormatter.participantsFilter = LYRUIParticipantsDefaultFilterWithCurrentUser(currentUser);
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.accessoryViewProvider = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIConversationItemAccessoryViewProviding) forClass:[self class]];
+    self.titleFormatter = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIConversationItemTitleFormatting) forClass:[self class]];
+    self.lastMessageFormatter = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIMessageTextFormatting) forClass:[self class]];
+    self.messageTimeFormatter = [layerConfiguration.injector protocolImplementation:@protocol(LYRUITimeFormatting) forClass:[self class]];
 }
 
 #pragma mark - LYRUIConversationItemView setup
@@ -86,6 +56,11 @@
     }
     if (conversation == nil) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot setup Conversation Item View with nil `conversation` argument." userInfo:nil];
+    }
+    
+    if ([view conformsToProtocol:@protocol(LYRUIConfigurable)]) {
+        id<LYRUIConfigurable> configurableView = (id<LYRUIConfigurable>)view;
+        configurableView.layerConfiguration = self.layerConfiguration;
     }
     
     NSString *conversationTitle = [self.titleFormatter titleForConversation:conversation];

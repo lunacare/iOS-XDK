@@ -25,13 +25,4 @@ NS_ASSUME_NONNULL_BEGIN     // {
 typedef NSArray<LYRIdentity *> * _Nonnull (^LYRUIParticipantsSorting)(NSSet<LYRIdentity *> *);
 
 extern LYRUIParticipantsSorting(^LYRUIParticipantsDefaultSorter)(void);
-
-@protocol LYRUIParticipantsSorting <NSObject>
-
-/**
- @abstract An `LYRUIParticipantsSorting` block used to sort participants set.
- */
-@property (nonatomic, strong, nullable) LYRUIParticipantsSorting participantsSorter;
-
-@end
 NS_ASSUME_NONNULL_END       // }

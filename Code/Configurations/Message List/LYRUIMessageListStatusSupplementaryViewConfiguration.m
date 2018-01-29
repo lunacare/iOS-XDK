@@ -19,7 +19,9 @@
 //
 
 #import "LYRUIMessageListStatusSupplementaryViewConfiguration.h"
-#import "LYRUIMessageListMessageStatusLayout.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
+#import "LYRUIMessageListMessageStatusViewLayout.h"
+#import "LYRUIMessageListMessageStatusView.h"
 #import "LYRUIListHeaderView.h"
 #import "LYRUIMessageRecipientStatusFormatter.h"
 #import "LYRUIMessageListLayout.h"
@@ -33,7 +35,7 @@ static CGFloat const LYRUIMessageListStatusSupplementaryViewDefaultHeight = 17.0
 
 @interface LYRUIMessageListStatusSupplementaryViewConfiguration ()
 
-@property (nonatomic, strong) LYRUIMessageListMessageStatusLayout *messageStatusLayout;
+@property (nonatomic, strong) LYRUIMessageListMessageStatusViewLayout *messageStatusLayout;
 @property (nonatomic, strong) LYRUIMessageRecipientStatusFormatter *statusFormatter;
 
 @property (nonatomic, strong) NSIndexPath *firstMessageStatusIndexPath;
@@ -43,27 +45,38 @@ static CGFloat const LYRUIMessageListStatusSupplementaryViewDefaultHeight = 17.0
 
 @implementation LYRUIMessageListStatusSupplementaryViewConfiguration
 @synthesize listDataSource = _listDataSource,
-            listDelegate = _listDelegate;
+            listDelegate = _listDelegate,
+            layerConfiguration = _layerConfiguration;
 
 - (instancetype)init {
     self = [super init];
     if (self) {
         self.messageStatusHeight = LYRUIMessageListStatusSupplementaryViewDefaultHeight;
-        
-        self.messageStatusLayout = [[LYRUIMessageListMessageStatusLayout alloc] init];
-        self.statusFormatter = [[LYRUIMessageRecipientStatusFormatter alloc] init];
-        
         self.showStatusForIndexPath = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
 
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
+    self = [self init];
+    if (self) {
+        self.layerConfiguration = configuration;
+    }
+    return self;
+}
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.messageStatusLayout = [layerConfiguration.injector layoutForViewClass:[LYRUIMessageListMessageStatusView class]];
+    self.statusFormatter = [layerConfiguration.injector objectOfType:[LYRUIMessageRecipientStatusFormatter class]];
+}
+
 - (NSString *)viewKind {
-    return LYRUIMessageListMessageStatusView;
+    return LYRUIMessageListMessageStatusViewKind;
 }
 
 - (NSString *)viewReuseIdentifier {
-    return @"LYRUIMessageListMessageStatusView";
+    return NSStringFromClass([LYRUIMessageListMessageStatusView class]);
 }
 
 #pragma mark - LYRUIListSupplementaryViewConfiguring
@@ -145,7 +158,7 @@ static CGFloat const LYRUIMessageListStatusSupplementaryViewDefaultHeight = 17.0
 #pragma mark - Helpers
 
 - (BOOL)isOutgoingMessage:(LYRMessage *)message {
-    NSString *currentUserId = self.currentUser.userID;
+    NSString *currentUserId = self.layerConfiguration.client.authenticatedUser.userID;
     return [message.sender.userID isEqualToString:currentUserId];
 }
 
@@ -157,13 +170,6 @@ static CGFloat const LYRUIMessageListStatusSupplementaryViewDefaultHeight = 17.0
             ((indexPath.section == self.firstMessageStatusIndexPath.section &&
               indexPath.item >= self.firstMessageStatusIndexPath.item) ||
              indexPath.section > self.firstMessageStatusIndexPath.section));
-}
-
-#pragma mark - LYRUICurrentUserFiltering
-
-- (void)setCurrentUser:(LYRIdentity *)currentUser {
-    _currentUser = currentUser;
-    self.statusFormatter.currentUser = currentUser;
 }
 
 @end

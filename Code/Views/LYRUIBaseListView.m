@@ -19,6 +19,8 @@
 //
 
 #import "LYRUIBaseListView.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
+#import "LYRUIListViewConfiguring.h"
 #import "LYRUIListDataSource.h"
 #import "LYRUIListQueryControllerDelegate.h"
 #import "LYRUIListSection.h"
@@ -33,8 +35,17 @@
 
 @implementation LYRUIBaseListView
 @dynamic layout;
-@synthesize collectionView = _collectionView,
-            participantsFilter = _participantsFilter;
+@synthesize layerConfiguration = _layerConfiguration,
+            collectionView = _collectionView;
+
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
+    self = [super initWithFrame:CGRectZero];
+    if (self) {
+        [self lyr_commonInit];
+        self.layerConfiguration = configuration;
+    }
+    return self;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -63,20 +74,10 @@
 
 #pragma mark - Properties
 
-- (void)setParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter {
-    _participantsFilter = participantsFilter;
-
-    if (![self.dataSource isKindOfClass:[LYRUIListDataSource class]]) {
-        return;
-    }
-    LYRUIListDataSource *dataSource = (LYRUIListDataSource *)self.dataSource;
-    
-    for (id configuration in dataSource.allConfigurations) {
-        if ([configuration conformsToProtocol:@protocol(LYRUIParticipantsFiltering)]) {
-            id<LYRUIParticipantsFiltering> participantsFilteringConfiguration = (id<LYRUIParticipantsFiltering>)configuration;
-            participantsFilteringConfiguration.participantsFilter = participantsFilter;
-        }
-    }
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    id<LYRUIListViewConfiguring> configuration = [layerConfiguration.injector configurationForViewClass:[self class]];
+    [configuration setupListView:self];
 }
 
 - (void)setQueryController:(LYRQueryController *)queryController {

@@ -21,19 +21,7 @@
 #import "LYRUIIdentityItemAccessoryViewProviding.h"
 #import "LYRUIConversationItemAccessoryViewProviding.h"
 #import "LYRUIMessageItemAccessoryViewProviding.h"
-#import "LYRUIParticipantsFiltering.h"
-#import "LYRUIParticipantsSorting.h"
+#import "LYRUIConfigurable.h"
 
-@interface LYRUIAvatarViewProvider : NSObject <LYRUIIdentityItemAccessoryViewProviding, LYRUIConversationItemAccessoryViewProviding,
-                                               LYRUIMessageItemAccessoryViewProviding, LYRUIParticipantsSorting>
-
-/**
- @abstract Initializes a new `LYRUIAvatarViewProvider` object with the given participants filter and sorter blocks.
- @param participantsFilter An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the conversation title.
- @param participantsSorter An `LYRUIParticipantsSorting` block, which will sort participants to show names in the conversation title in proper order. Default is a `LYRUIParticipantsDefaultSorter`.
- @return An `LYRUIAvatarViewProvider` object.
- */
-- (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter
-                        participantsSorter:(LYRUIParticipantsSorting)participantsSorter;
-
+@interface LYRUIAvatarViewProvider : NSObject <LYRUIIdentityItemAccessoryViewProviding, LYRUIConversationItemAccessoryViewProviding, LYRUIMessageItemAccessoryViewProviding, LYRUIConfigurable>
 @end

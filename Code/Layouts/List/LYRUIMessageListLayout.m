@@ -22,8 +22,8 @@
 #import "LYRUIListDataSource.h"
 #import "LYRUIListSection.h"
 
-NSString *const LYRUIMessageListMessageTimeView = @"LYRUIMessageTime";
-NSString *const LYRUIMessageListMessageStatusView = @"LYRUIMessageStatus";
+NSString *const LYRUIMessageListMessageTimeViewKind = @"LYRUIMessageTime";
+NSString *const LYRUIMessageListMessageStatusViewKind = @"LYRUIMessageStatus";
 
 @interface LYRUIMessageListLayout ()
 
@@ -48,7 +48,7 @@ NSString *const LYRUIMessageListMessageStatusView = @"LYRUIMessageStatus";
 - (CGSize)timeSupplementaryViewSizeAtIndexPath:(NSIndexPath *)indexPath {
     CGSize timeViewSize = [self.delegate collectionView:self.collectionView
                                                  layout:self
-                                       sizeOfViewOfKind:LYRUIMessageListMessageTimeView
+                                       sizeOfViewOfKind:LYRUIMessageListMessageTimeViewKind
                                             atIndexPath:indexPath];
     return timeViewSize;
 }
@@ -56,7 +56,7 @@ NSString *const LYRUIMessageListMessageStatusView = @"LYRUIMessageStatus";
 - (CGSize)statusSupplementaryViewSizeAtIndexPath:(NSIndexPath *)indexPath {
     CGSize statusViewSize = [self.delegate collectionView:self.collectionView
                                                    layout:self
-                                         sizeOfViewOfKind:LYRUIMessageListMessageStatusView
+                                         sizeOfViewOfKind:LYRUIMessageListMessageStatusViewKind
                                               atIndexPath:indexPath];
     return statusViewSize;
 }
@@ -75,13 +75,13 @@ NSString *const LYRUIMessageListMessageStatusView = @"LYRUIMessageStatus";
     NSIndexPath *indexPath = originalAttributes.indexPath;
     CGSize timeViewSize = [self timeSupplementaryViewSizeAtIndexPath:indexPath];
     if (!CGSizeEqualToSize(timeViewSize, CGSizeZero)) {
-        [context invalidateSupplementaryElementsOfKind:LYRUIMessageListMessageTimeView
+        [context invalidateSupplementaryElementsOfKind:LYRUIMessageListMessageTimeViewKind
                                           atIndexPaths:@[originalAttributes.indexPath]];
     }
     
     CGSize statusViewSize = [self statusSupplementaryViewSizeAtIndexPath:indexPath];
     if (!CGSizeEqualToSize(statusViewSize, CGSizeZero)) {
-        [context invalidateSupplementaryElementsOfKind:LYRUIMessageListMessageStatusView
+        [context invalidateSupplementaryElementsOfKind:LYRUIMessageListMessageStatusViewKind
                                           atIndexPaths:@[originalAttributes.indexPath]];
     }
     
@@ -173,13 +173,13 @@ NSString *const LYRUIMessageListMessageStatusView = @"LYRUIMessageStatus";
         
         CGSize timeViewSize = [self timeSupplementaryViewSizeAtIndexPath:attributes.indexPath];
         if (!CGSizeEqualToSize(timeViewSize, CGSizeZero)) {
-            [additionalAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:LYRUIMessageListMessageTimeView
+            [additionalAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:LYRUIMessageListMessageTimeViewKind
                                                                                  atIndexPath:attributes.indexPath]];
         }
         
         CGSize statusViewSize = [self statusSupplementaryViewSizeAtIndexPath:attributes.indexPath];
         if (!CGSizeEqualToSize(statusViewSize, CGSizeZero)) {
-            [additionalAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:LYRUIMessageListMessageStatusView
+            [additionalAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:LYRUIMessageListMessageStatusViewKind
                                                                                  atIndexPath:attributes.indexPath]];
         }
     }
@@ -202,9 +202,9 @@ NSString *const LYRUIMessageListMessageStatusView = @"LYRUIMessageStatus";
 - (CGSize)sizeForSupplementaryViewOfKind:(NSString *)kind
                              atIndexPath:(NSIndexPath *)indexPath{
     CGSize size = CGSizeZero;
-    if ([kind isEqualToString:LYRUIMessageListMessageTimeView]) {
+    if ([kind isEqualToString:LYRUIMessageListMessageTimeViewKind]) {
         size = [self timeSupplementaryViewSizeAtIndexPath:indexPath];
-    } else if ([kind isEqualToString:LYRUIMessageListMessageStatusView]) {
+    } else if ([kind isEqualToString:LYRUIMessageListMessageStatusViewKind]) {
         size = [self statusSupplementaryViewSizeAtIndexPath:indexPath];
     }
     return size;
@@ -218,10 +218,10 @@ NSString *const LYRUIMessageListMessageStatusView = @"LYRUIMessageStatus";
     
     UICollectionViewLayoutAttributes *cellAttributes = [self layoutAttributesForItemAtIndexPath:indexPath];
     CGRect frame = cellAttributes.frame;
-    if ([kind isEqualToString:LYRUIMessageListMessageTimeView]) {
+    if ([kind isEqualToString:LYRUIMessageListMessageTimeViewKind]) {
         frame.size = size;
         frame.origin.y -= size.height;
-    } else if ([kind isEqualToString:LYRUIMessageListMessageStatusView]) {
+    } else if ([kind isEqualToString:LYRUIMessageListMessageStatusViewKind]) {
         frame.origin.y += frame.size.height;
         frame.size = size;
     }

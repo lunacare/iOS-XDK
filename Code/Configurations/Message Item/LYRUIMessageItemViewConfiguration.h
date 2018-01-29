@@ -19,24 +19,18 @@
 //
 
 #import "LYRUIMessageItemView.h"
+#import "LYRUIConfigurable.h"
 @protocol LYRUIMessageItemAccessoryViewProviding;
 @class LYRIdentity;
 @class LYRMessage;
 
 NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIMessageItemViewConfiguration : NSObject
+@interface LYRUIMessageItemViewConfiguration : NSObject <LYRUIConfigurable>
 
 /**
  @abstract The object provides an primary accessory view for message item.
  */
 @property (nonatomic, strong) id<LYRUIMessageItemAccessoryViewProviding> primaryAccessoryViewProvider;
-
-/**
- @abstract Initializes a new `LYRUIMessageItemViewConfiguration` object with the given accessory view provider.
- @param primaryAccessoryViewProvider The object conforming to `LYRUIMessageItemAccessoryViewProviding` protocol from which to retrieve the primary accessory view for display.
- @return An `LYRUIMessageItemViewConfiguration` object.
- */
-- (instancetype)initWithPrimaryAccessoryViewProvider:(nullable id<LYRUIMessageItemAccessoryViewProviding>)primaryAccessoryViewProvider NS_DESIGNATED_INITIALIZER;
 
 /**
  @abstract Updates the view conforming to `LYRUIMessageItemView` protocol with data from given `LYRMessage`.

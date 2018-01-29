@@ -21,6 +21,7 @@
 #import "LYRUIComposeBarConfiguration.h"
 #import "LYRUIComposeBar.h"
 #import "LYRUISendButton.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 
 @interface LYRUIComposeBarConfiguration ()
 
@@ -38,20 +39,12 @@
 @end
 
 @implementation LYRUIComposeBarConfiguration
+@synthesize layerConfiguration = _layerConfiguration;
 
-- (instancetype)init {
-    self = [self initWithNotificationCenter:nil];
-    return self;
-}
-
-- (instancetype)initWithNotificationCenter:(NSNotificationCenter *)notificationCenter {
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
     self = [super init];
     if (self) {
-        self.placeholderVisible = YES;
-        if (notificationCenter == nil) {
-            notificationCenter = [NSNotificationCenter defaultCenter];
-        }
-        self.notificationCenter = notificationCenter;
+        self.layerConfiguration = configuration;
     }
     return self;
 }
@@ -61,8 +54,11 @@
 - (void)configureComposeBar:(LYRUIComposeBar *)composeBar {
     self.composeBar = composeBar;
     
-    self.placeholderVisible = YES;
-    composeBar.sendButton.enabled = NO;
+    NSString *inputText = composeBar.inputTextView.text;
+    if (inputText == nil || inputText.length == 0) {
+        [self showPlaceholder];
+        composeBar.sendButton.enabled = NO;
+    }
     
     [composeBar.sendButton addTarget:self
                               action:@selector(buttonPressed:)
@@ -193,6 +189,11 @@
 }
 
 #pragma mark - Properties
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.notificationCenter = [layerConfiguration.injector objectOfType:[NSNotificationCenter class]];
+}
 
 - (UITextView *)textView {
     return self.composeBar.inputTextView;

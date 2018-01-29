@@ -26,11 +26,6 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @protocol LYRUIConversationItemAccessoryViewProviding <NSObject>
 
 /**
- @abstract An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the accessory view.
- */
-@property (nonatomic, strong, nullable) LYRUIParticipantsFiltering participantsFilter;
-
-/**
  @abstract Provides an accessory view representing a conversation.
  @param conversation The `LYRConversation` object.
  @return An `UIView` visually representing the conversation.

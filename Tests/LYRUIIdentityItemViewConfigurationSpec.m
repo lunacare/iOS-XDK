@@ -3,53 +3,55 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
+#import <Atlas/LYRUIConfiguration+DependencyInjection.h>
 #import <Atlas/LYRUIIdentityItemViewConfiguration.h>
 #import <Atlas/LYRUIIdentityItemView.h>
 #import <Atlas/LYRUITimeAgoFormatter.h>
 #import <Atlas/LYRUIIdentityNameFormatter.h>
-#import <Atlas/LYRUIAvatarViewProvider.h>
+#import <Atlas/LYRUIIdentityItemAccessoryViewProviding.h>
 #import <LayerKit/LayerKit.h>
 
 SpecBegin(LYRUIIdentityItemViewConfiguration)
 
 describe(@"LYRUIIdentityItemViewConfiguration", ^{
     __block LYRUIIdentityItemViewConfiguration *viewConfiguration;
+    __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
     __block id<LYRUIIdentityItemAccessoryViewProviding> accessoryViewProviderMock;
     __block id<LYRUIIdentityNameFormatting> nameFormatterMock;
     __block id<LYRUITimeFormatting> lastSeenAtTimeFormatter;
     __block LYRUIIdentityMetadataFormatting metadataFormatter;
     
     beforeEach(^{
+        configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
+        
         accessoryViewProviderMock = mockProtocol(@protocol(LYRUIIdentityItemAccessoryViewProviding));
+        [given([injectorMock protocolImplementation:@protocol(LYRUIIdentityItemAccessoryViewProviding)
+                                                forClass:[LYRUIIdentityItemViewConfiguration class]])
+         willReturn:accessoryViewProviderMock];
+        
         nameFormatterMock = mockProtocol(@protocol(LYRUIIdentityNameFormatting));
+        [given([injectorMock protocolImplementation:@protocol(LYRUIIdentityNameFormatting)
+                                                forClass:[LYRUIIdentityItemViewConfiguration class]])
+         willReturn:nameFormatterMock];
+          
         lastSeenAtTimeFormatter = mockProtocol(@protocol(LYRUITimeFormatting));
+        [given([injectorMock protocolImplementation:@protocol(LYRUITimeFormatting)
+                                                forClass:[LYRUIIdentityItemViewConfiguration class]])
+         willReturn:lastSeenAtTimeFormatter];
+           
+        viewConfiguration = [[LYRUIIdentityItemViewConfiguration alloc] initWithConfiguration:configurationMock];
+        
         metadataFormatter = ^ NSString *(NSDictionary *metadata) {
             return metadata[@"test key"];
         };
-        viewConfiguration = [[LYRUIIdentityItemViewConfiguration alloc] initWithAccessoryViewProvider:accessoryViewProviderMock
-                                                                                        nameFormatter:nameFormatterMock
-                                                                                    metadataFormatter:metadataFormatter
-                                                                              lastSeenAtTimeFormatter:lastSeenAtTimeFormatter];
+        viewConfiguration.metadataFormatter = metadataFormatter;
     });
     
     afterEach(^{
         viewConfiguration = nil;
-    });
-    
-    describe(@"after initialization with convenience initializer", ^{
-        beforeEach(^{
-            viewConfiguration = [[LYRUIIdentityItemViewConfiguration alloc] init];
-        });
-        
-        it(@"should have default accessory view provider set", ^{
-            expect(viewConfiguration.accessoryViewProvider).to.beAKindOf([LYRUIAvatarViewProvider class]);
-        });
-        it(@"should have default name formatter set", ^{
-            expect(viewConfiguration.nameFormatter).to.beAKindOf([LYRUIIdentityNameFormatter class]);
-        });
-        it(@"should have default last seen at time formatter set", ^{
-            expect(viewConfiguration.lastSeenAtTimeFormatter).to.beAKindOf([LYRUITimeAgoFormatter class]);
-        });
     });
     
     describe(@"setupIdentityItemView:withIdentity:", ^{
@@ -101,6 +103,9 @@ describe(@"LYRUIIdentityItemViewConfiguration", ^{
                                            withIdentity:identityMock];
             });
             
+            it(@"should setup view with configuration", ^{
+                expect(view.layerConfiguration).to.equal(configurationMock);
+            });
             it(@"should set the text of titleLabel", ^{
                 expect(view.titleLabel.text).to.equal(@"test title");
             });

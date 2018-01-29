@@ -19,16 +19,15 @@
 //
 
 #import "LYRUIImageCreating.h"
+#import "LYRUIConfigurable.h"
 
 NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIImageFactory : NSObject <LYRUIImageCreating>
+@interface LYRUIImageFactory : NSObject <LYRUIImageCreating, LYRUIConfigurable>
 
 /**
- @abstract Initializes a new `LYRUIImageFactory` object with the given bundle.
- @param bundle An `NSBundle` instance which will be used for creating `UIImage` from image asset. Default is bundle with Layer UI resources.
- @return An `LYRUIImageFactory` object.
+ @abstract An `NSBundle` instance which will be used for creating `UIImage` from image asset. Default is bundle with Layer UI resources.
  */
-- (instancetype)initWithBundle:(nullable NSBundle *)bundle;
+@property (nonatomic, strong) NSBundle *bundle;
 
 @end
 NS_ASSUME_NONNULL_END       // }

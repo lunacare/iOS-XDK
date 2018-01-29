@@ -24,22 +24,6 @@
 
 @implementation LYRUIConversationListView
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        [LYRUIConversationListViewConfiguration setupConversationListView:self];
-    }
-    return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [LYRUIConversationListViewConfiguration setupConversationListView:self];
-    }
-    return self;
-}
-
 - (void)prepareForInterfaceBuilder {
     [LYRUIConversationListIBSetup prepareConversationListForInterfaceBuilder:self];
 }

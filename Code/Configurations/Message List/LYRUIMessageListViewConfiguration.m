@@ -19,6 +19,7 @@
 //
 
 #import "LYRUIMessageListViewConfiguration.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 #import "LYRUIListSection.h"
 #import "LYRUIListDataSource.h"
 #import "LYRUIMessageListDelegate.h"
@@ -32,30 +33,45 @@
 #import "LYRUIListCellConfiguring.h"
 #import "LYRUIListSupplementaryViewConfiguring.h"
 #import "LYRUIMessageListTimeSupplementaryViewConfiguration.h"
+#import "LYRUIMessageListMessageTimeView.h"
 #import "LYRUIMessageListStatusSupplementaryViewConfiguration.h"
+#import "LYRUIMessageListMessageStatusView.h"
 #import "LYRUIListLoadingIndicatorConfiguration.h"
+#import "LYRUIListLoadingIndicatorView.h"
+#import "LYRUIMessageCollectionViewCell.h"
 
 static NSTimeInterval const LYRUIMessageListViewDefaultGroupintTimeInterval = 60.0 * 30.0;
 static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
 
 @implementation LYRUIMessageListViewConfiguration
+@synthesize layerConfiguration = _layerConfiguration;
 
-- (void)setupMessageListView:(LYRUIMessageListView *)messageListView {
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
+    self = [super init];
+    if (self) {
+        self.layerConfiguration = configuration;
+    }
+    return self;
+}
+
+- (void)setupListView:(LYRUIMessageListView *)messageListView {
+    id<LYRUIDependencyInjection> injector = self.layerConfiguration.injector;
+    
     messageListView.messageGroupingTimeInterval = LYRUIMessageListViewDefaultGroupintTimeInterval;
     messageListView.pageSize = LYRUIMessageListViewDefaultPageSize;
     
-    LYRUIMessageListLayout *layout = [[LYRUIMessageListLayout alloc] init];
-    LYRUIMessageCellConfiguration *cellConfiguration = [[LYRUIMessageCellConfiguration alloc] init];
+    LYRUIMessageListLayout *layout = [injector layoutForViewClass:[LYRUIMessageListView class]];
+    LYRUIMessageCellConfiguration *cellConfiguration = [injector configurationForViewClass:[LYRUIMessageCollectionViewCell class]];
     
     LYRUIMessageListTimeSupplementaryViewConfiguration *messageTimeViewConfiguration =
-        [[LYRUIMessageListTimeSupplementaryViewConfiguration alloc] init];
+        [injector configurationForViewClass:[LYRUIMessageListMessageTimeView class]];
     messageTimeViewConfiguration.messageListView = messageListView;
     
     LYRUIMessageListStatusSupplementaryViewConfiguration *messageStatusViewConfiguration =
-        [[LYRUIMessageListStatusSupplementaryViewConfiguration alloc] init];
+        [injector configurationForViewClass:[LYRUIMessageListMessageStatusView class]];
     
     LYRUIListLoadingIndicatorConfiguration *loadingIndicatorConfiguration =
-        [LYRUIListLoadingIndicatorConfiguration loadingOldItemsIndicatorConfiguration];
+        [injector configurationForViewClass:[LYRUIListLoadingIndicatorView class]];
     
     [self registerCellsWithConfigurations:@[cellConfiguration]
                          inCollectionView:messageListView.collectionView];

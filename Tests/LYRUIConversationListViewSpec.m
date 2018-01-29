@@ -98,6 +98,64 @@ describe(@"LYRUIConversationListView", ^{
             it(@"should setup delegates `indexPathSelected` block", ^{
                 [verify(delegateMock) setIndexPathSelected:anything()];
             });
+            it(@"should setup delgate `loadMoreItems` block", ^{
+                [verify(delegateMock) setLoadMoreItems:anything()];
+            });
+            
+            context(@"`indexPathSelected` block", ^{
+                __block void(^indexPathSelectedBlock)(NSIndexPath *);
+                __block LYRConversation *conversationMock;
+                __block BOOL itemSelectedCalled;
+                __block LYRConversation *capturedConversation;
+                
+                beforeEach(^{
+                    conversationMock = mock([LYRConversation class]);
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:1 inSection:2];
+                    [given([dataSourceMock itemAtIndexPath:indexPath]) willReturn:conversationMock];
+                    view.dataSource = dataSourceMock;
+                    
+                    itemSelectedCalled = NO;
+                    view.itemSelected = ^(LYRConversation *conversation) {
+                        itemSelectedCalled = YES;
+                        capturedConversation = conversation;
+                    };
+                    
+                    HCArgumentCaptor *blockArgument = [HCArgumentCaptor new];
+                    [verify(delegateMock) setIndexPathSelected:(id)blockArgument];
+                    indexPathSelectedBlock = blockArgument.value;
+                    
+                    indexPathSelectedBlock(indexPath);
+                });
+                
+                it(@"should call item selected callback", ^{
+                    expect(itemSelectedCalled).to.beTruthy();
+                });
+                it(@"should call item selected callback with conversation at provided index path, taken from data source", ^{
+                    expect(capturedConversation).to.equal(conversationMock);
+                });
+            });
+            
+            context(@"`loadMoreItems` block", ^{
+                __block void(^loadMoreItemsBlock)();
+                __block BOOL loadMoreItemsCalled;
+                
+                beforeEach(^{
+                    loadMoreItemsCalled = NO;
+                    view.loadMoreItems = ^() {
+                        loadMoreItemsCalled = YES;
+                    };
+                    
+                    HCArgumentCaptor *blockArgument = [HCArgumentCaptor new];
+                    [verify(delegateMock) setLoadMoreItems:(id)blockArgument];
+                    loadMoreItemsBlock = blockArgument.value;
+                    
+                    loadMoreItemsBlock();
+                });
+                
+                it(@"should call delegates load more items block", ^{
+                    expect(loadMoreItemsCalled).to.beTruthy();
+                });
+            });
         });
     });
     
@@ -112,55 +170,6 @@ describe(@"LYRUIConversationListView", ^{
             });
         });
     });
-    
-    describe(@"itemSelected", ^{
-        __block LYRConversation *conversationMock;
-        __block BOOL itemSelectedCalled;
-        __block LYRConversation *capturedConversation;
-        
-        beforeEach(^{
-            conversationMock = mock([LYRConversation class]);
-            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:1 inSection:2];
-            [given([dataSourceMock itemAtIndexPath:indexPath]) willReturn:conversationMock];
-            view.dataSource = dataSourceMock;
-            
-            itemSelectedCalled = NO;
-            view.itemSelected = ^(LYRConversation *conversation) {
-                itemSelectedCalled = YES;
-                capturedConversation = conversation;
-            };
-        });
-        
-        context(@"when delegate's index path selection callback is called", ^{
-            beforeEach(^{
-                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:1 inSection:2];
-                ((LYRUIListDelegate *)view.delegate).indexPathSelected(indexPath);
-            });
-            
-            it(@"should call item selected callback", ^{
-                expect(itemSelectedCalled).to.beTruthy();
-            });
-            it(@"should call item selected callback with conversation at provided index path, taken from data source", ^{
-                expect(capturedConversation).to.equal(conversationMock);
-            });
-        });
-    });
-    
-//    describe(@"currentUser", ^{
-//        context(@"setter", ^{
-//            __block LYRIdentity *currentUserMock;
-//            
-//            beforeEach(^{
-//                currentUserMock = mock([LYRIdentity class]);
-//            });
-//            
-//            it(@"should set data source's configuration with current user", ^{
-//                LYRUIListDataSource *dataSource = (LYRUIListDataSource *)view.dataSource;
-//                LYRUIConversationItemViewConfiguration *configuration = (LYRUIConversationItemViewConfiguration *)dataSource.configuration;
-//                expect(configuration.currentUser).to.equal(currentUserMock);
-//            });
-//        });
-//    });
 });
 
 SpecEnd

@@ -27,11 +27,6 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @protocol LYRUIConversationItemTitleFormatting <NSObject>
 
 /**
- @abstract An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the conversation title.
- */
-@property (nonatomic, strong, nullable) LYRUIParticipantsFiltering participantsFilter;
-
-/**
  @abstract Provides a title string to display for a given conversation.
  @param conversation The `LYRConversation` object.
  @return The string to be displayed as the title for a given conversation in the conversation list.

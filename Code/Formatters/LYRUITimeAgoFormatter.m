@@ -19,6 +19,7 @@
 //
 
 #import "LYRUITimeAgoFormatter.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 
 @interface LYRUITimeAgoFormatter ()
 
@@ -27,21 +28,21 @@
 @end
 
 @implementation LYRUITimeAgoFormatter
+@synthesize layerConfiguration = _layerConfiguration;
 
-- (instancetype)init {
-    self = [self initWithCalendar:nil];
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
+    self = [self init];
+    if (self) {
+        self.layerConfiguration = configuration;
+    }
     return self;
 }
 
-- (instancetype)initWithCalendar:(NSCalendar *)calendar {
-    self = [super init];
-    if (self) {
-        if (calendar == nil) {
-            calendar = [NSCalendar currentCalendar];
-        }
-        self.calendar = calendar;
-    }
-    return self;
+#pragma mark - Properties
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.calendar = [layerConfiguration.injector objectOfType:[NSCalendar class]];
 }
 
 #pragma mark - LYRUITimeAgoDateFormatting method

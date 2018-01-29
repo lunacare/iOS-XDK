@@ -19,6 +19,7 @@
 //
 
 #import "LYRUIMessageListView.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 #import "LYRUIMessageListViewConfiguration.h"
 #import "LYRUIMessageListIBSetup.h"
 #import "LYRUIMessageListQueryControllerDelegate.h"
@@ -41,41 +42,8 @@
 @synthesize queryController = _queryController;
 @dynamic queryControllerDelegate, delegate;
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.configuration = [[LYRUIMessageListViewConfiguration alloc] init];
-        [self.configuration setupMessageListView:self];
-    }
-    return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        self.configuration = [[LYRUIMessageListViewConfiguration alloc] init];
-        [self.configuration setupMessageListView:self];
-    }
-    return self;
-}
-
 - (void)prepareForInterfaceBuilder {
     [[[LYRUIMessageListIBSetup alloc] init] prepareMessageListForInterfaceBuilder:self];
-}
-
-- (void)setCurrentUser:(LYRIdentity *)currentUser {
-    _currentUser = currentUser;
-    
-    if (![self.dataSource isKindOfClass:[LYRUIListDataSource class]]) {
-        return;
-    }
-    LYRUIListDataSource *dataSource = (LYRUIListDataSource *)self.dataSource;
-    
-    for (id configuration in dataSource.allConfigurations) {
-        if ([configuration respondsToSelector:@selector(setCurrentUser:)]) {
-            [configuration setCurrentUser:currentUser];
-        }
-    }
 }
 
 - (void)setPageSize:(NSUInteger)pageSize {
@@ -86,13 +54,14 @@
     }
 }
 
-- (void)setupWithConversation:(LYRConversation *)conversation client:(LYRClient *)layerClient {
+- (void)setupWithConversation:(LYRConversation *)conversation {
     LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRMessage class]];
     query.predicate = [LYRPredicate predicateWithProperty:@"conversation"
                                         predicateOperator:LYRPredicateOperatorIsEqualTo
                                                     value:conversation];
     query.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"position" ascending:YES]];
     
+    LYRClient *layerClient = self.layerConfiguration.client;
     NSUInteger numberOfMessagesAvailable = MAX(1, [layerClient countForQuery:query error:nil]);
     NSUInteger numberOfMessagesToDisplay = MIN(numberOfMessagesAvailable, self.pageSize);
     
@@ -113,13 +82,15 @@
 }
 
 - (void)setQueryController:(LYRQueryController *)queryController {
+    id<LYRUIDependencyInjection> injector = self.layerConfiguration.injector;
+    
     _queryController = queryController;
-    self.queryControllerDelegate = [[LYRUIMessageListQueryControllerDelegate alloc] init];
+    self.queryControllerDelegate = [injector objectOfType:[LYRUIMessageListQueryControllerDelegate class]];
     self.queryControllerDelegate.listDataSource = self.dataSource;
     self.queryControllerDelegate.collectionView = self.collectionView;
     self.queryController.delegate = self.queryControllerDelegate;
     
-    self.paginationController = [[LYRUIMessageListPaginationController alloc] init];
+    self.paginationController = [injector objectOfType:[LYRUIMessageListPaginationController class]];
     self.paginationController.pageSize = -(NSInteger)self.pageSize;
     self.paginationController.queryController = queryController;
     self.delegate.canLoadMoreItems = self.paginationController.moreItemsAvailable;

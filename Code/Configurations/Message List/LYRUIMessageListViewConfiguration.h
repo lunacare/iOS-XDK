@@ -19,18 +19,12 @@
 //
 
 #import <Foundation/Foundation.h>
-@class LYRUIMessageListView;
-@protocol LYRUIMessageTimeFormatting;
+#import "LYRUIConfigurable.h"
+#import "LYRUIListViewConfiguring.h"
 
 /**
  @abstract The `LYRUIMessageListViewConfiguration` objects will be used for configuring a `LYRUIMessageListView` with proper layout, data source, and delegate for presenting list of `LYRIdentity` items.
  */
-@interface LYRUIMessageListViewConfiguration : NSObject
-
-/**
- @abstract Configures provided `LYRUIMessageListView` for presenting `LYRMessage` items.
- @param messageListView An `LYRUIMessageListView` instance to be configured. The `layout`, `dataSource`, and `delegate` properties of the list view will be set properly to present `LYRMessage` items.
- */
-- (void)setupMessageListView:(LYRUIMessageListView *)messageListView;
+@interface LYRUIMessageListViewConfiguration : NSObject <LYRUIListViewConfiguring, LYRUIConfigurable>
 
 @end

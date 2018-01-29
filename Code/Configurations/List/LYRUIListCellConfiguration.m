@@ -32,20 +32,34 @@
             cellRegistrationBlock:(nullable void(^)(UICollectionView *))cellRegistrationBlock {
     self = [super init];
     if (self) {
-        self.handledItemTypes = [NSSet setWithObject:modelClass];
-        NSString *reuseIdentifier = NSStringFromClass(cellClass);
-        self.cellReuseIdentifier = reuseIdentifier;
-        self.viewConfiguration = viewConfiguration;
-        self.cellHeight = cellHeight;
-        self.cellSetupBlock = cellSetupBlock;
-        if (cellRegistrationBlock == nil) {
-            cellRegistrationBlock = ^(UICollectionView *collectionView) {
-                [collectionView registerClass:cellClass forCellWithReuseIdentifier:reuseIdentifier];
-            };
-        }
-        self.cellRegistrationBlock = cellRegistrationBlock;
+        [self setupWithCellClass:cellClass
+                      modelClass:modelClass
+               viewConfiguration:viewConfiguration
+                      cellHeight:cellHeight
+                  cellSetupBlock:cellSetupBlock
+           cellRegistrationBlock:cellRegistrationBlock];
     }
     return self;
+}
+
+- (void)setupWithCellClass:(Class)cellClass
+                modelClass:(Class)modelClass
+         viewConfiguration:(id)viewConfiguration
+                cellHeight:(CGFloat)cellHeight
+            cellSetupBlock:(void(^)(id, id, id))cellSetupBlock
+     cellRegistrationBlock:(nullable void(^)(UICollectionView *))cellRegistrationBlock {
+    self.handledItemTypes = [NSSet setWithObject:modelClass];
+    NSString *reuseIdentifier = NSStringFromClass(cellClass);
+    self.cellReuseIdentifier = reuseIdentifier;
+    self.viewConfiguration = viewConfiguration;
+    self.cellHeight = cellHeight;
+    self.cellSetupBlock = cellSetupBlock;
+    if (cellRegistrationBlock == nil) {
+        cellRegistrationBlock = ^(UICollectionView *collectionView) {
+            [collectionView registerClass:cellClass forCellWithReuseIdentifier:reuseIdentifier];
+        };
+    }
+    self.cellRegistrationBlock = cellRegistrationBlock;
 }
 
 - (void)setupCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {

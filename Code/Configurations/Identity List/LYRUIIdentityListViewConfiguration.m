@@ -19,6 +19,7 @@
 //
 
 #import "LYRUIIdentityListViewConfiguration.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 #import "LYRUIListSection.h"
 #import "LYRUIListDataSource.h"
 #import "LYRUIListDelegate.h"
@@ -31,36 +32,44 @@
 #import "LYRUIListSupplementaryViewConfiguration.h"
 
 @implementation LYRUIIdentityListViewConfiguration
+@synthesize layerConfiguration = _layerConfiguration;
 
-+ (void)setupIdentityListView:(LYRUIIdentityListView *)identityListView {
-    [identityListView.collectionView registerClass:[LYRUIListHeaderView class]
-                        forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                               withReuseIdentifier:NSStringFromClass([LYRUIListSection class])];
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
+    self = [super init];
+    if (self) {
+        self.layerConfiguration = configuration;
+    }
+    return self;
+}
+
+- (void)setupListView:(LYRUIIdentityListView *)identityListView {
+    LYRUIIdentityItemViewConfiguration *configuration = [self.layerConfiguration.injector configurationForViewClass:[LYRUIIdentityItemView class]];
     
-    LYRUIIdentityItemViewConfiguration *configuration = [[LYRUIIdentityItemViewConfiguration alloc] init];
-    
-    LYRUIListCellConfiguration<LYRUIIdentityCollectionViewCell *, LYRUIIdentityItemViewConfiguration *, LYRIdentity *> *identityCellConfiguration =
-    [[LYRUIListCellConfiguration alloc] initWithCellClass:[LYRUIIdentityCollectionViewCell class]
-                                               modelClass:[LYRIdentity class]
-                                        viewConfiguration:configuration
-                                               cellHeight:48.0
-                                           cellSetupBlock:^(LYRUIIdentityCollectionViewCell *cell, LYRIdentity *identity, LYRUIIdentityItemViewConfiguration *configuration) {
-                                               [configuration setupIdentityItemView:cell.identityView withIdentity:identity];
-                                           }
-                                    cellRegistrationBlock:nil];
+    LYRUIListCellConfiguration<LYRUIIdentityCollectionViewCell *, LYRUIIdentityItemViewConfiguration *, LYRIdentity *> *identityCellConfiguration;
+    identityCellConfiguration = [self.layerConfiguration.injector configurationForViewClass:[UICollectionViewCell class]];
+    [identityCellConfiguration setupWithCellClass:[LYRUIIdentityCollectionViewCell class]
+                                       modelClass:[LYRIdentity class]
+                                viewConfiguration:configuration
+                                       cellHeight:48.0
+                                   cellSetupBlock:^(LYRUIIdentityCollectionViewCell *cell, LYRIdentity *identity, LYRUIIdentityItemViewConfiguration *configuration) {
+                                       [configuration setupIdentityItemView:cell.identityView withIdentity:identity];
+                                   }
+                            cellRegistrationBlock:nil];
     [identityCellConfiguration registerCellInCollectionView:identityListView.collectionView];
     
-    LYRUIListSupplementaryViewConfiguration<LYRUIListHeaderView *> *headerConfiguration = [LYRUIListSupplementaryViewConfiguration headerConfiguration];
+    LYRUIListSupplementaryViewConfiguration<LYRUIListHeaderView *> *headerConfiguration = [self.layerConfiguration.injector configurationForViewClass:[LYRUIListHeaderView class]];
     [headerConfiguration registerSupplementaryViewInCollectionView:identityListView.collectionView];
     
-    identityListView.layout = [[LYRUIListLayout alloc] init];
+    if (identityListView.layout == nil) {
+        identityListView.layout = [self.layerConfiguration.injector layoutForViewClass:[LYRUIIdentityListView class]];
+    }
     
-    LYRUIListDataSource *dataSource = [[LYRUIListDataSource alloc] init];
+    LYRUIListDataSource *dataSource = [self.layerConfiguration.injector objectOfType:[LYRUIListDataSource class]];
     [dataSource registerCellConfiguration:identityCellConfiguration];
     [dataSource registerSupplementaryViewConfiguration:headerConfiguration];
     identityListView.dataSource = dataSource;
     
-    LYRUIListDelegate *delegate = [[LYRUIListDelegate alloc] init];
+    LYRUIListDelegate *delegate = [self.layerConfiguration.injector objectOfType:[LYRUIListDelegate class]];
     [delegate registerCellSizeCalculation:identityCellConfiguration];
     [delegate registerSupplementaryViewSizeCalculation:headerConfiguration];
     identityListView.delegate = delegate;

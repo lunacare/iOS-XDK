@@ -19,13 +19,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LYRUIConfigurable.h"
 #import "LYRUIListSupplementaryViewConfiguring.h"
 #import "LYRUIListSupplementaryViewSizeCalculating.h"
 #import "LYRUIMessageListStatusSupplementaryViewConfiguration.h"
 @class LYRUIMessageListView;
 
 @interface LYRUIMessageListTimeSupplementaryViewConfiguration : NSObject <LYRUIListSupplementaryViewConfiguring,
-                                                                          LYRUIListSupplementaryViewSizeCalculating>
+                                                                          LYRUIListSupplementaryViewSizeCalculating,
+                                                                          LYRUIConfigurable>
 
 /**
  @abstract Reference to the `LYRUIMessageListView` that uses the configuration, to retrieve the `messageGroupingTimeInterval`.

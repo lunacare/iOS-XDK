@@ -23,6 +23,7 @@
 #import "LYRUINumberBadgeView.h"
 #import "LYRUIPresenceViewConfiguration.h"
 #import "LYRUIPresenceViewDefaultTheme.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 
 @interface LYRUIPresenceView ()
 
@@ -34,6 +35,15 @@
 @end
 
 @implementation LYRUIPresenceView
+
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
+    self = [super initWithFrame:CGRectZero];
+    if (self) {
+        [self lyr_commonInit];
+        self.layerConfiguration = configuration;
+    }
+    return self;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -52,11 +62,9 @@
 }
 
 - (void)lyr_commonInit {
-    self.theme = [[LYRUIPresenceViewDefaultTheme alloc] init];
-    self.configuration = [[LYRUIPresenceViewConfiguration alloc] init];
     [self addPresenceIndicator];
     [self addParticipantsCountView];
-    [self installConstraints];
+    [self installConstraints];  
 }
 
 - (void)addPresenceIndicator {
@@ -90,6 +98,14 @@
 - (void)setIdentities:(NSArray<LYRIdentity *> *)identities {
     _identities = identities;
     [self.configuration setupPresenceView:self withIdentities:identities usingTheme:self.theme];
+}
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    if (self.theme == nil) {
+        self.theme = [layerConfiguration.injector themeForViewClass:[self class]];
+    }
+    self.configuration = [layerConfiguration.injector configurationForViewClass:[self class]];
 }
 
 @end

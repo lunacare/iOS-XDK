@@ -19,11 +19,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LYRUIPresenceView.h"
 
 /**
  @abstract Objects conforming to the `LYRUIAvatarViewTheme` protocol will be used to provide colors for the avatar view.
  */
-@protocol LYRUIAvatarViewTheme <NSObject>
+@protocol LYRUIAvatarViewTheme <LYRUIPresenceViewTheme>
 
 /**
  @abstract The color of avatar circle view background.

@@ -19,48 +19,28 @@
 //
 
 #import "LYRUIConversationItemTitleFormatter.h"
-#import "LYRUIIdentityNameFormatter.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
+#import "LYRUIIdentityNameFormatting.h"
 #import "LYRUIParticipantsSorting.h"
 #import <LayerKit/LayerKit.h>
 
 static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationName";
 
-@interface LYRUIConversationItemTitleFormatter ()
-
-@property (nonatomic, strong, nonnull) id<LYRUIIdentityNameFormatting> participantNameFormatter;
-
-@end
-
 @implementation LYRUIConversationItemTitleFormatter
-@synthesize participantsFilter = _participantsFilter,
-            participantsSorter = _participantsSorter;
+@synthesize layerConfiguration = _layerConfiguration;
 
-- (instancetype)init {
-    self = [self initWithParticipantsFilter:nil participantsSorter:nil nameFormatter:nil];
-    return self;
-}
-
-- (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter {
-    self = [self initWithParticipantsFilter:participantsFilter participantsSorter:nil nameFormatter:nil];
-    return self;
-}
-
-- (instancetype)initWithParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter
-                        participantsSorter:(LYRUIParticipantsSorting)participantsSorter
-                             nameFormatter:(id<LYRUIIdentityNameFormatting>)nameFormatter {
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
     self = [super init];
     if (self) {
-        self.participantsFilter = participantsFilter;
-        if (participantsSorter == nil) {
-            participantsSorter = LYRUIParticipantsDefaultSorter();
-        }
-        self.participantsSorter = participantsSorter;
-        if (nameFormatter == nil) {
-            nameFormatter = [[LYRUIIdentityNameFormatter alloc] init];
-        }
-        self.participantNameFormatter = nameFormatter;
+        self.layerConfiguration = configuration;
     }
     return self;
+}
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.participantNameFormatter = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIIdentityNameFormatting)
+                                                                               forClass:[self class]];
 }
 
 #pragma mark - LYRUIConversationItemTitleFormatting method
@@ -76,14 +56,14 @@ static NSString *const LYRUIConversationItemTitleMetadataKey = @"conversationNam
     }
     
     NSSet<LYRIdentity *> *participants = conversation.participants;
-    if (self.participantsFilter) {
-        participants = self.participantsFilter(conversation.participants);
+    if (self.layerConfiguration.participantsFilter) {
+        participants = self.layerConfiguration.participantsFilter(conversation.participants);
     }
     if (participants.count == 1) {
         return [self.participantNameFormatter nameForIdentity:participants.anyObject];
     }
     
-    NSArray *sortedParticipants = self.participantsSorter(participants);
+    NSArray *sortedParticipants = self.layerConfiguration.participantsSorter(participants);
     return [self titleWithParticipantsNames:sortedParticipants];
 }
 

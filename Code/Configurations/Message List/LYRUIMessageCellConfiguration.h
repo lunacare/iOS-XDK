@@ -19,18 +19,9 @@
 //
 
 #import "LYRUIParticipantsFiltering.h"
-#import "LYRUIMessageListDelegate.h"
+#import "LYRUIConfigurable.h"
 #import "LYRUIListCellSizeCalculating.h"
 #import "LYRUIListCellConfiguring.h"
-@class LYRUIMessageItemView;
-@class LYRMessage;
-@protocol LYRUIListDataSource;
 
-@interface LYRUIMessageCellConfiguration : NSObject <LYRUIParticipantsFiltering, LYRUIListCellSizeCalculating, LYRUIListCellConfiguring>
-
-/**
- @abstract A currently logged in user, used to determine the message direction (incoming or outgoing).
- */
-@property (nonatomic, strong) LYRIdentity *currentUser;
-
+@interface LYRUIMessageCellConfiguration : NSObject <LYRUIListCellSizeCalculating, LYRUIListCellConfiguring, LYRUIConfigurable>
 @end

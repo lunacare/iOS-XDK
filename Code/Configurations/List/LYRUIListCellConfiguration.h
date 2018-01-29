@@ -72,5 +72,21 @@ NS_ASSUME_NONNULL_BEGIN     // {
                    cellSetupBlock:(void(^)(CellType, ModelType, ConfigurationType))cellSetupBlock
             cellRegistrationBlock:(nullable void(^)(UICollectionView *))cellRegistrationBlock;
 
+/**
+ @abstract Setup cell configuration with all necessary properties.
+ @param cellClass Class of table view cell which will be used by the configuration.
+ @param modelClass Class of model handled by the configuration. Will be added to `handledItemTypes`.
+ @param viewConfiguration View configuration object for updating cells with model objects data.
+ @param cellHeight Height of cell returned in `cellSizeInCollectionView:forItemAtIndexPath:`.
+ @param cellSetupBlock Cell setup block, called inside `setupCell:forItemAtIndexPath:`. The cell, model object, and view configuration are passed to the block, to setup the cell (or it's subview) with the data from model object, using view configuration.
+ @param cellRegistrationBlock Cell registration block, used to register cell class for reuse identifier in the collection view. Default is block registering provided `cellClass` for reuse identifier equal to the class name.
+ */
+- (void)setupWithCellClass:(Class)cellClass
+                modelClass:(Class)modelClass
+         viewConfiguration:(ConfigurationType)viewConfiguration
+                cellHeight:(CGFloat)cellHeight
+            cellSetupBlock:(void(^)(CellType, ModelType, ConfigurationType))cellSetupBlock
+     cellRegistrationBlock:(nullable void(^)(UICollectionView *))cellRegistrationBlock;
+
 @end
 NS_ASSUME_NONNULL_END       // }
