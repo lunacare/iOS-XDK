@@ -40,7 +40,8 @@
 @implementation LYRUIBaseItemViewLayout
 
 - (instancetype)init {
-    self = [self initWithMetrics:nil];
+    id<LYRUIBaseItemViewLayoutMetricsProviding> metrics = [[LYRUIBaseItemViewLayoutMetrics alloc] init];
+    self = [self initWithMetrics:metrics];
     return self;
 }
 

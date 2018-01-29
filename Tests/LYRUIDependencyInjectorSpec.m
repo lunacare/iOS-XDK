@@ -18,9 +18,7 @@
 #import <Atlas/LYRUIBaseItemViewLayout.h>
 #import <Atlas/LYRUIConversationItemView.h>
 #import <Atlas/LYRUIConversationItemViewUnreadTheme.h>
-#import <Atlas/LYRUIConversationItemViewLayoutMetrics.h>
 #import <Atlas/LYRUIConversationItemViewConfiguration.h>
-#import <Atlas/LYRUIConversationItemAccessoryViewProvider.h>
 #import <Atlas/LYRUIConversationItemTitleFormatter.h>
 #import <Atlas/LYRUIMessageTextDefaultFormatter.h>
 #import <Atlas/LYRUIMessageTimeDefaultFormatter.h>
@@ -31,9 +29,7 @@
 #import <Atlas/LYRUIListSupplementaryViewConfiguration.h>
 #import <Atlas/LYRUIListLayout.h>
 #import <Atlas/LYRUIIdentityItemView.h>
-#import <Atlas/LYRUIIdentityItemViewLayoutMetrics.h>
 #import <Atlas/LYRUIIdentityItemViewConfiguration.h>
-#import <Atlas/LYRUIIdentityItemAccessoryViewProvider.h>
 #import <Atlas/LYRUIIdentityNameFormatter.h>
 #import <Atlas/LYRUITimeAgoFormatter.h>
 #import <Atlas/LYRUIIdentityListView.h>
@@ -46,6 +42,7 @@
 #import <Atlas/NSCache+LYRUIImageCaching.h>
 #import <Atlas/LYRUIComposeBar.h>
 #import <Atlas/LYRUIComposeBarConfiguration.h>
+#import <Atlas/LYRUIAvatarViewProvider.h>
 
 SpecBegin(LYRUIDependencyInjector)
 
@@ -332,8 +329,8 @@ describe(@"LYRUIDependencyInjector", ^{
                                                          forClass:[NSObject class]];
             });
             
-            it(@"should return object of `LYRUIConversationItemAccessoryViewProvider` type", ^{
-                expect(returnedObject).to.beAKindOf([LYRUIConversationItemAccessoryViewProvider class]);
+            it(@"should return object of `LYRUIAvatarViewProvider` type", ^{
+                expect(returnedObject).to.beAKindOf([LYRUIAvatarViewProvider class]);
             });
         });
         
@@ -399,8 +396,8 @@ describe(@"LYRUIDependencyInjector", ^{
                                                          forClass:[NSObject class]];
             });
             
-            it(@"should return object of `LYRUIIdentityItemAccessoryViewProvider` type", ^{
-                expect(returnedObject).to.beAKindOf([LYRUIIdentityItemAccessoryViewProvider class]);
+            it(@"should return object of `LYRUIAvatarViewProvider` type", ^{
+                expect(returnedObject).to.beAKindOf([LYRUIAvatarViewProvider class]);
             });
         });
         
@@ -592,7 +589,7 @@ describe(@"LYRUIDependencyInjector", ^{
         });
         
         context(@"for NSNotificationCenter", ^{
-            __block NSBundle *returnedObject;
+            __block NSNotificationCenter *returnedObject;
             
             beforeEach(^{
                 returnedObject = [injector objectOfType:[NSNotificationCenter class]];

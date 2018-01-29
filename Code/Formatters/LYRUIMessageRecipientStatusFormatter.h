@@ -19,18 +19,14 @@
 //
 
 #import <LayerKit/LayerKit.h>
+#import "LYRUIConfigurable.h"
 @class LYRIdentity;
 
 NS_ASSUME_NONNULL_BEGIN     // {
 /**
  @abstract The `LYRUIMessageRecipientStatusFormatter` objects will be used for providing a string describing the status of recipients of a message.
  */
-@interface LYRUIMessageRecipientStatusFormatter : NSObject
-
-/**
- @abstract A currently logged in user, used to filter out from message recipients.
- */
-@property (nonatomic, strong, nullable) LYRIdentity *currentUser;
+@interface LYRUIMessageRecipientStatusFormatter : NSObject <LYRUIConfigurable>
 
 /**
  @abstract Provides a formatted string to display as the message recipients status.

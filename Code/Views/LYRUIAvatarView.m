@@ -39,6 +39,7 @@
 @end
 
 @implementation LYRUIAvatarView
+@synthesize layerConfiguration = _layerConfiguration;
 
 - (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
     self = [super initWithFrame:CGRectZero];

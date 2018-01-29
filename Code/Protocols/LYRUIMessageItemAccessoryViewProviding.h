@@ -26,11 +26,6 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @protocol LYRUIMessageItemAccessoryViewProviding <NSObject>
 
 /**
- @abstract An `LYRUIParticipantsFiltering` block which will filter currently logged in user from the accessory view.
- */
-@property (nonatomic, strong, nullable) LYRUIParticipantsFiltering participantsFilter;
-
-/**
  @abstract Provides an accessory view representing a message.
  @param message The `LYRMessage` object.
  @return An `UIView` visually representing the message.

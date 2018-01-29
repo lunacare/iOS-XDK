@@ -19,20 +19,11 @@
 //
 
 #import "LYRUITimeFormatting.h"
+#import "LYRUIConfigurable.h"
 
 /**
  @abstract The `LYRUIMessageListTimeFormatter` objects will be used for providing a string describing the time of sending a message.
  */
-@interface LYRUIMessageListTimeFormatter : NSObject <LYRUITimeFormatting>
-
-/**
- @abstract Initialize with a locale, calendar and date formatter.
- @param locale A locale used to create date format. Default is `currentLocale`.
- @param calendar A calendar used to determine if the message time is in the same day as current time. Default is `currentCalendar`.
- @param dateFormatter A date formatter used to format the message time. Default is a calendar with the passed `locale` and `systemTimeZone`.
- */
-- (instancetype)initWithLocale:(NSLocale *)locale
-                      calendar:(NSCalendar *)calendar
-                 dateFormatter:(NSDateFormatter *)dateFormatter NS_DESIGNATED_INITIALIZER;
+@interface LYRUIMessageListTimeFormatter : NSObject <LYRUITimeFormatting, LYRUIConfigurable>
 
 @end

@@ -29,6 +29,7 @@
     if (self) {
         self.participantsSorter = LYRUIParticipantsDefaultSorter();
         self.injector = [[LYRUIDependencyInjector alloc] init];
+        self.injector.layerConfiguration = self;
     }
     return self;
 }

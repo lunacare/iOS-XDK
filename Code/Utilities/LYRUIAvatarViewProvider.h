@@ -23,5 +23,5 @@
 #import "LYRUIMessageItemAccessoryViewProviding.h"
 #import "LYRUIConfigurable.h"
 
-@interface LYRUIConversationItemAccessoryViewProvider : NSObject <LYRUIIdentityItemAccessoryViewProviding, LYRUIConversationItemAccessoryViewProviding, LYRUIMessageItemAccessoryViewProviding, LYRUIConfigurable>
+@interface LYRUIAvatarViewProvider : NSObject <LYRUIIdentityItemAccessoryViewProviding, LYRUIConversationItemAccessoryViewProviding, LYRUIMessageItemAccessoryViewProviding, LYRUIConfigurable>
 @end

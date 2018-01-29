@@ -1,8 +1,8 @@
 //
-//  LYRUIMessageListMessageStatusLayout.m
+//  LYRUIMessageListMessageTimeViewLayout.m
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 24.08.2017.
+//  Created by Łukasz Przytuła on 23.08.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,15 +18,15 @@
 //  limitations under the License.
 //
 
-#import "LYRUIMessageListMessageStatusLayout.h"
+#import "LYRUIMessageListMessageTimeViewLayout.h"
 
-@interface LYRUIMessageListMessageStatusLayout ()
+@interface LYRUIMessageListMessageTimeViewLayout ()
 
 @property (nonatomic, strong) NSMutableArray *labelConstraints;
 
 @end
 
-@implementation LYRUIMessageListMessageStatusLayout
+@implementation LYRUIMessageListMessageTimeViewLayout
 
 - (instancetype)init {
     self = [super init];
@@ -46,12 +46,12 @@
 
 - (void)addConstraintsInView:(UIView<LYRUIListHeaderView> *)view {
     NSMutableArray *constraints = self.labelConstraints;
-    [constraints addObject:[view.label.topAnchor constraintEqualToAnchor:view.topAnchor constant:2.0]];
+    [constraints addObject:[view.label.topAnchor constraintEqualToAnchor:view.topAnchor constant:12.0]];
     [constraints addObject:[view.label.leftAnchor constraintEqualToAnchor:view.leftAnchor]];
-    [constraints addObject:[view.label.bottomAnchor constraintEqualToAnchor:view.bottomAnchor constant:-2.0]];
-    [constraints addObject:[view.label.rightAnchor constraintEqualToAnchor:view.rightAnchor constant:-60.0]];
+    [constraints addObject:[view.label.bottomAnchor constraintEqualToAnchor:view.bottomAnchor constant:-12.0]];
+    [constraints addObject:[view.label.rightAnchor constraintEqualToAnchor:view.rightAnchor]];
     [constraints addObject:[view.label.heightAnchor constraintEqualToConstant:13.0]];
-    view.label.textAlignment = NSTextAlignmentRight;
+    view.label.textAlignment = NSTextAlignmentCenter;
     view.label.font = [UIFont systemFontOfSize:11.0];
     [NSLayoutConstraint activateConstraints:constraints];
 }

@@ -8,7 +8,7 @@
 #import <Atlas/LYRUIIdentityItemView.h>
 #import <Atlas/LYRUITimeAgoFormatter.h>
 #import <Atlas/LYRUIIdentityNameFormatter.h>
-#import <Atlas/LYRUIIdentityItemAccessoryViewProvider.h>
+#import <Atlas/LYRUIIdentityItemAccessoryViewProviding.h>
 #import <LayerKit/LayerKit.h>
 
 SpecBegin(LYRUIIdentityItemViewConfiguration)

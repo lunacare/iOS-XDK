@@ -19,6 +19,7 @@
 //
 
 #import "LYRUIAvatarViewProvider.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 #import "LYRUIAvatarView.h"
 #import "LYRUIParticipantsFiltering.h"
 #import "LYRUIParticipantsSorting.h"
@@ -36,7 +37,7 @@
 }
 
 - (LYRUIAvatarView *)avatarView {
-    LYRUIAvatarView *avatarView = [[LYRUIAvatarView alloc] init];
+    LYRUIAvatarView *avatarView = [self.layerConfiguration.injector objectOfType:[LYRUIAvatarView class]];
     avatarView.translatesAutoresizingMaskIntoConstraints = NO;
     return avatarView;
 }

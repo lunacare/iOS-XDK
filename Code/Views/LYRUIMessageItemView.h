@@ -19,6 +19,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LYRUIConfigurable.h"
 #import "LYRUIViewWithLayout.h"
 @class LYRUIMessageItemView;
 
@@ -58,7 +59,7 @@ IB_DESIGNABLE
 /**
  @abstract The `LYRUIMessageItemView` class provides a lightweight, customizable view for presenting Layer message objects.
  */
-@interface LYRUIMessageItemView : LYRUIViewWithLayout <LYRUIMessageItemView>
+@interface LYRUIMessageItemView : LYRUIViewWithLayout <LYRUIMessageItemView, LYRUIConfigurable>
 
 /**
  @abstract An primary accessory view for the item, i.e. an avatar view;
@@ -89,11 +90,6 @@ IB_DESIGNABLE
  @abstract Layout of the message item subviews.
  */
 @property (nonatomic, copy) id<LYRUIMessageItemViewLayout> layout;
-
-/**
- @abstract Initialize with a layout.
- */
-- (instancetype)initWithLayout:(id<LYRUIMessageItemViewLayout>)layout;
 
 @end
 NS_ASSUME_NONNULL_END       // }

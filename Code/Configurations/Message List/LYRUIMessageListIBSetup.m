@@ -80,10 +80,10 @@
     [messageList.collectionView registerClass:[LYRUIMessageCollectionViewCell class]
                    forCellWithReuseIdentifier:NSStringFromClass([LYRUIMessage class])];
     [messageList.collectionView registerClass:[LYRUIListHeaderView class]
-                       forSupplementaryViewOfKind:LYRUIMessageListMessageStatusView
+                       forSupplementaryViewOfKind:LYRUIMessageListMessageStatusViewKind
                               withReuseIdentifier:NSStringFromClass([LYRUIMessage class])];
     [messageList.collectionView registerClass:[LYRUIListHeaderView class]
-                       forSupplementaryViewOfKind:LYRUIMessageListMessageTimeView
+                       forSupplementaryViewOfKind:LYRUIMessageListMessageTimeViewKind
                               withReuseIdentifier:NSStringFromClass([LYRUIMessage class])];
     
     NSArray<NSString *> *texts = @[
@@ -104,7 +104,6 @@
     
     LYRUIIdentity *currentUser = [LYRUIIdentity new];
     currentUser.userID = @"user id";
-    messageList.participantsFilter = LYRUIParticipantsDefaultFilterWithCurrentUser((LYRIdentity *)currentUser);
     
     LYRUIIdentity *otherUser = [LYRUIIdentity new];
     otherUser.userID = @"other user id";

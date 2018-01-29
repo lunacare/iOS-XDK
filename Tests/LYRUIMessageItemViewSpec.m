@@ -3,6 +3,7 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
+#import <Atlas/LYRUIConfiguration+DependencyInjection.h>
 #import <Atlas/LYRUIMessageItemView.h>
 #import <Atlas/LYRUIMessageItemViewLayout.h>
 
@@ -10,8 +11,14 @@ SpecBegin(LYRUIMessageItemView)
 
 describe(@"LYRUIMessageItemView", ^{
     __block LYRUIMessageItemView *view;
+    __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
 
     beforeEach(^{
+        configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
+        
         view = [[LYRUIMessageItemView alloc] init];
     });
 
@@ -44,19 +51,20 @@ describe(@"LYRUIMessageItemView", ^{
         it(@"should have the secondary accessory view container added as a subview", ^{
             expect(view.secondaryAccessoryViewContainer.superview).to.equal(view);
         });
-        it(@"should have layout set to `LYRUIMessageItemViewLayout`", ^{
-            expect(view.layout).to.beAKindOf([LYRUIMessageItemViewLayout class]);
+        it(@"should have nil layout set", ^{
+            expect(view.layout).to.beNil();
         });
     });
     
-    describe(@"after initialization with layout", ^{
+    describe(@"after initialization with configuration", ^{
         __block id<LYRUIMessageItemViewLayout> layoutMock;
         
         beforeEach(^{
             layoutMock = mockProtocol(@protocol(LYRUIMessageItemViewLayout));
             [[given([layoutMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:layoutMock];
+            [given([injectorMock layoutForViewClass:[LYRUIMessageItemView class]]) willReturn:layoutMock];
             
-            view = [[LYRUIMessageItemView alloc] initWithLayout:layoutMock];
+            view = [[LYRUIMessageItemView alloc] initWithConfiguration:configurationMock];
         });
         
         it(@"should have layout set to the one passed to initializator", ^{

@@ -1,8 +1,8 @@
 //
-//  LYRUIMessageCellConfiguration.h
+//  LYRUIMessageListMessageTimeViewLayout.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 28.08.2017.
+//  Created by Łukasz Przytuła on 23.08.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +18,7 @@
 //  limitations under the License.
 //
 
-#import "LYRUIParticipantsFiltering.h"
-#import "LYRUIConfigurable.h"
-#import "LYRUIListCellSizeCalculating.h"
-#import "LYRUIListCellConfiguring.h"
+#import "LYRUIListHeaderView.h"
 
-@interface LYRUIMessageCellConfiguration : NSObject <LYRUIListCellSizeCalculating, LYRUIListCellConfiguring, LYRUIConfigurable>
+@interface LYRUIMessageListMessageTimeViewLayout : NSObject <LYRUIListHeaderViewLayout>
 @end

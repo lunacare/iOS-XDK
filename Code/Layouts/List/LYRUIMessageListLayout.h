@@ -20,8 +20,8 @@
 
 #import "LYRUIListLayout.h"
 
-extern NSString *const LYRUIMessageListMessageTimeView;
-extern NSString *const LYRUIMessageListMessageStatusView;
+extern NSString *const LYRUIMessageListMessageTimeViewKind;
+extern NSString *const LYRUIMessageListMessageStatusViewKind;
 
 @interface LYRUIMessageListLayout : LYRUIListLayout
 @end

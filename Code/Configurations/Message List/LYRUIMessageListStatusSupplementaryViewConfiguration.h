@@ -19,18 +19,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LYRUIConfigurable.h"
 #import "LYRUIListSupplementaryViewConfiguring.h"
 #import "LYRUIListSupplementaryViewSizeCalculating.h"
-@class LYRUIMessageListView;
-@class LYRIdentity;
 
 @interface LYRUIMessageListStatusSupplementaryViewConfiguration : NSObject <LYRUIListSupplementaryViewConfiguring,
-                                                                            LYRUIListSupplementaryViewSizeCalculating>
-
-/**
- @abstract A currently logged in user, used to determine if the message that should be supplemented is incoming or outgoing.
- */
-@property (nonatomic, strong) LYRIdentity *currentUser;
+                                                                            LYRUIListSupplementaryViewSizeCalculating,
+                                                                            LYRUIConfigurable>
 
 /**
  @abstract Height of the message status supplementary view.

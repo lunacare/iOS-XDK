@@ -33,9 +33,8 @@
 #import "LYRUIBaseItemViewLayout.h"
 #import "LYRUIConversationItemView.h"
 #import "LYRUIConversationItemViewUnreadTheme.h"
-#import "LYRUIConversationItemViewLayoutMetrics.h"
 #import "LYRUIConversationItemViewConfiguration.h"
-#import "LYRUIConversationItemAccessoryViewProvider.h"
+#import "LYRUIConversationItemAccessoryViewProviding.h"
 #import "LYRUIConversationItemTitleFormatter.h"
 #import "LYRUIMessageTextDefaultFormatter.h"
 #import "LYRUIMessageTimeDefaultFormatter.h"
@@ -46,9 +45,8 @@
 #import "LYRUIListSupplementaryViewConfiguration.h"
 #import "LYRUIListLayout.h"
 #import "LYRUIIdentityItemView.h"
-#import "LYRUIIdentityItemViewLayoutMetrics.h"
 #import "LYRUIIdentityItemViewConfiguration.h"
-#import "LYRUIIdentityItemAccessoryViewProvider.h"
+#import "LYRUIIdentityItemAccessoryViewProviding.h"
 #import "LYRUIIdentityNameFormatter.h"
 #import "LYRUITimeAgoFormatter.h"
 #import "LYRUIIdentityListView.h"
@@ -63,6 +61,25 @@
 #import "LYRUIComposeBar.h"
 #import "LYRUIComposeBarLayout.h"
 #import "LYRUIComposeBarConfiguration.h"
+#import "LYRUIAvatarViewProvider.h"
+#import "LYRUIMessageItemView.h"
+#import "LYRUIMessageItemViewLayout.h"
+#import "LYRUIMessageItemViewConfiguration.h"
+#import "LYRUIMessageItemAccessoryViewProviding.h"
+#import "LYRUIMessageCollectionViewCell.h"
+#import "LYRUIMessageCellConfiguration.h"
+#import "LYRUIMessageListMessageTimeView.h"
+#import "LYRUIMessageListMessageTimeViewLayout.h"
+#import "LYRUIMessageListTimeSupplementaryViewConfiguration.h"
+#import "LYRUIMessageListMessageStatusView.h"
+#import "LYRUIMessageListMessageStatusViewLayout.h"
+#import "LYRUIMessageListStatusSupplementaryViewConfiguration.h"
+#import "LYRUIListLoadingIndicatorView.h"
+#import "LYRUIListLoadingIndicatorConfiguration.h"
+#import "LYRUIMessageListView.h"
+#import "LYRUIMessageListLayout.h"
+#import "LYRUIMessageListViewConfiguration.h"
+#import "LYRUIMessageListTimeFormatter.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -121,37 +138,42 @@
     [self setConfigurationClass:[LYRUIImageWithLettersViewConfiguration class] forViewClass:[LYRUIImageWithLettersView class]];
     [self setConfigurationClass:[LYRUIConversationItemViewConfiguration class] forViewClass:[LYRUIConversationItemView class]];
     [self setConfigurationClass:[LYRUIListCellConfiguration class] forViewClass:[UICollectionViewCell class]];
-    [self setConfigurationClass:[LYRUIListSupplementaryViewConfiguration class] forViewClass:[LYRUIListHeaderView class]];
+    self.defaultConfigurations[NSStringFromClass([LYRUIListHeaderView class])] = ^id (LYRUIConfiguration *configuration) {
+        return [LYRUIListSupplementaryViewConfiguration headerConfiguration];
+    };
     [self setConfigurationClass:[LYRUIConversationListViewConfiguration class] forViewClass:[LYRUIConversationListView class]];
     [self setConfigurationClass:[LYRUIIdentityItemViewConfiguration class] forViewClass:[LYRUIIdentityItemView class]];
     [self setConfigurationClass:[LYRUIIdentityListViewConfiguration class] forViewClass:[LYRUIIdentityListView class]];
     [self setConfigurationClass:[LYRUIComposeBarConfiguration class] forViewClass:[LYRUIComposeBar class]];
+    [self setConfigurationClass:[LYRUIMessageItemViewConfiguration class] forViewClass:[LYRUIMessageItemView class]];
+    [self setConfigurationClass:[LYRUIMessageCellConfiguration class] forViewClass:[LYRUIMessageCollectionViewCell class]];
+    [self setConfigurationClass:[LYRUIMessageListTimeSupplementaryViewConfiguration class] forViewClass:[LYRUIMessageListMessageTimeView class]];
+    [self setConfigurationClass:[LYRUIMessageListStatusSupplementaryViewConfiguration class] forViewClass:[LYRUIMessageListMessageStatusView class]];
+    self.defaultConfigurations[NSStringFromClass([LYRUIListLoadingIndicatorView class])] = ^id (LYRUIConfiguration *configuration) {
+        return [LYRUIListLoadingIndicatorConfiguration loadingOldItemsIndicatorConfiguration];
+    };
+
+    [self setConfigurationClass:[LYRUIMessageListViewConfiguration class] forViewClass:[LYRUIMessageListView class]];
 }
 
 - (void)setupLayouts {
     self.defaultLayouts = [[NSMutableDictionary alloc] init];
-    
-    self.defaultLayouts[NSStringFromClass([LYRUIConversationItemView class])] = ^id (LYRUIConfiguration *configuration) {
-        LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
-        return [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
-    };
+
     [self setLayoutClass:[LYRUIListLayout class] forViewClass:[LYRUIConversationListView class]];
-    self.defaultLayouts[NSStringFromClass([LYRUIConversationItemView class])] = ^id (LYRUIConfiguration *configuration) {
-        LYRUIConversationItemViewLayoutMetrics *metrics = [[LYRUIConversationItemViewLayoutMetrics alloc] init];
-        return [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
-    };
+    [self setLayoutClass:[LYRUIBaseItemViewLayout class] forViewClass:[LYRUIConversationItemView class]];
     [self setLayoutClass:[LYRUIListLayout class] forViewClass:[LYRUIIdentityListView class]];
-    self.defaultLayouts[NSStringFromClass([LYRUIIdentityItemView class])] = ^id (LYRUIConfiguration *configuration) {
-        LYRUIIdentityItemViewLayoutMetrics *metrics = [[LYRUIIdentityItemViewLayoutMetrics alloc] init];
-        return [[LYRUIBaseItemViewLayout alloc] initWithMetrics:metrics];
-    };
+    [self setLayoutClass:[LYRUIBaseItemViewLayout class] forViewClass:[LYRUIIdentityItemView class]];
     [self setLayoutClass:[LYRUIComposeBarLayout class] forViewClass:[LYRUIComposeBar class]];
+    [self setLayoutClass:[LYRUIMessageItemViewLayout class] forViewClass:[LYRUIMessageItemView class]];
+    [self setLayoutClass:[LYRUIMessageListMessageTimeViewLayout class] forViewClass:[LYRUIMessageListMessageTimeView class]];
+    [self setLayoutClass:[LYRUIMessageListMessageStatusViewLayout class] forViewClass:[LYRUIMessageListMessageStatusView class]];
+    [self setLayoutClass:[LYRUIMessageListLayout class] forViewClass:[LYRUIMessageListView class]];
 }
 
 - (void)setupProtocolImplementations {
     self.defaultProtocolImplementations = [[NSMutableDictionary alloc] init];
     
-    [self setImplementationClass:[LYRUIConversationItemAccessoryViewProvider class]
+    [self setImplementationClass:[LYRUIAvatarViewProvider class]
                      forProtocol:@protocol(LYRUIConversationItemAccessoryViewProviding)];
     [self setImplementationClass:[LYRUIConversationItemTitleFormatter class]
                      forProtocol:@protocol(LYRUIConversationItemTitleFormatting)];
@@ -159,7 +181,7 @@
                      forProtocol:@protocol(LYRUIMessageTextFormatting)];
     [self setImplementationClass:[LYRUIMessageTimeDefaultFormatter class]
                      forProtocol:@protocol(LYRUITimeFormatting)];
-    [self setImplementationClass:[LYRUIIdentityItemAccessoryViewProvider class]
+    [self setImplementationClass:[LYRUIAvatarViewProvider class]
                      forProtocol:@protocol(LYRUIIdentityItemAccessoryViewProviding)];
     [self setImplementationClass:[LYRUIIdentityNameFormatter class]
                      forProtocol:@protocol(LYRUIIdentityNameFormatting)];
@@ -174,10 +196,15 @@
     [self setImplementationClass:[LYRUIDispatcher class]
                      forProtocol:@protocol(LYRUIDispatching)];
     [self setupImagesCache];
+    [self setImplementationClass:[LYRUIAvatarViewProvider class]
+                     forProtocol:@protocol(LYRUIMessageItemAccessoryViewProviding)];
     
     [self setImplementationClass:[LYRUITimeAgoFormatter class]
                      forProtocol:@protocol(LYRUITimeFormatting)
                      usedInClass:[LYRUIIdentityItemViewConfiguration class]];
+    [self setImplementationClass:[LYRUIMessageListTimeFormatter class]
+                     forProtocol:@protocol(LYRUITimeFormatting)
+                     usedInClass:[LYRUIMessageListTimeSupplementaryViewConfiguration class]];
 }
 
 - (void)setupImagesCache {

@@ -19,6 +19,7 @@
 //
 
 #import "LYRUIMessageCellConfiguration.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 #import "LYRUIMessageItemViewConfiguration.h"
 #import "LYRUIMessageItemAccessoryViewProviding.h"
 #import "LYRUIParticipantsFiltering.h"
@@ -44,21 +45,19 @@ static CGFloat const LYRUIMessageCellConfigurationViewsWithMarginsWidth = 64.0;
 
 @implementation LYRUIMessageCellConfiguration
 @synthesize listDataSource = _listDataSource,
-            participantsFilter = _participantsFilter;
+            layerConfiguration = _layerConfiguration;
 
-- (instancetype)init {
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
     self = [super init];
     if (self) {
-        self.messageItemConfiguration = [[LYRUIMessageItemViewConfiguration alloc] init];
+        self.layerConfiguration = configuration;
     }
     return self;
 }
 
-#pragma mark - LYRUICurerntUserFiltering
-
-- (void)setParticipantsFilter:(LYRUIParticipantsFiltering)participantsFilter {
-    _participantsFilter = participantsFilter;
-    self.messageItemConfiguration.primaryAccessoryViewProvider.participantsFilter = participantsFilter;
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.messageItemConfiguration = [layerConfiguration.injector configurationForViewClass:[LYRUIMessageItemView class]];
 }
 
 #pragma mark - LYRUIListCellSizeCalculating
@@ -77,7 +76,7 @@ static CGFloat const LYRUIMessageCellConfigurationViewsWithMarginsWidth = 64.0;
 #pragma mark - LYRUIListCellConfiguring
 
 - (NSString *)cellReuseIdentifier {
-    return @"LYRUIMessageItemView";
+    return NSStringFromClass([LYRUIMessageItemView class]);
 }
 
 - (void)registerCellInCollectionView:(UICollectionView *)collectionView {
@@ -91,6 +90,7 @@ static CGFloat const LYRUIMessageCellConfigurationViewsWithMarginsWidth = 64.0;
 }
 
 - (void)setupMessageItemView:(LYRUIMessageItemView *)messageItemView withMessage:(LYRMessage *)message {
+    messageItemView.layerConfiguration = self.layerConfiguration;
     [self setupAccessoryViewVisibility:messageItemView.primaryAccessoryViewContainer
                           forMessage:message];
     
@@ -102,7 +102,8 @@ static CGFloat const LYRUIMessageCellConfigurationViewsWithMarginsWidth = 64.0;
 
 - (void)setupMessageViewLayout:(LYRUIMessageItemView *)messageView
                     forMessage:(LYRMessage *)message {
-    BOOL outgoingMessage = [message.sender.userID isEqualToString:self.currentUser.userID];
+    LYRIdentity *currentUser = self.layerConfiguration.client.authenticatedUser;
+    BOOL outgoingMessage = [message.sender.userID isEqualToString:currentUser.userID];
     LYRUIMessageItemViewLayoutDirection layoutDirection =
         outgoingMessage ? LYRUIMessageItemViewLayoutDirectionRight : LYRUIMessageItemViewLayoutDirectionLeft;
     messageView.layout.layoutDirection = layoutDirection;

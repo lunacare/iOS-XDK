@@ -19,9 +19,10 @@
 //
 
 #import "LYRUIMessageListTimeSupplementaryViewConfiguration.h"
-#import "LYRUIMessageListHeaderViewLayout.h"
-#import "LYRUIListHeaderView.h"
-#import "LYRUIMessageListTimeFormatter.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
+#import "LYRUIMessageListMessageTimeViewLayout.h"
+#import "LYRUIMessageListMessageTimeView.h"
+#import "LYRUITimeFormatting.h"
 #import "LYRUIMessageListLayout.h"
 #import "LYRUIMessageListView.h"
 #import "LYRUIListDataSource.h"
@@ -33,48 +34,59 @@ static CGFloat const LYRUIMessageListTimeSupplementaryViewDefaultHeight = 37.0;
 
 @interface LYRUIMessageListTimeSupplementaryViewConfiguration ()
 
-@property (nonatomic, strong) LYRUIMessageListTimeFormatter *timeFormatter;
-@property (nonatomic, strong) LYRUIMessageListHeaderViewLayout *headerLayout;
+@property (nonatomic, strong) id<LYRUITimeFormatting> timeFormatter;
+@property (nonatomic, strong) LYRUIMessageListMessageTimeViewLayout *messageTimeLayout;
 @property (nonatomic, strong) NSMutableDictionary<NSIndexPath *, NSNumber *> *showTimeForIndexPath;
 
 @end
 
 @implementation LYRUIMessageListTimeSupplementaryViewConfiguration
 @synthesize listDataSource = _listDataSource,
-            listDelegate = _listDelegate;
+            listDelegate = _listDelegate,
+            layerConfiguration = _layerConfiguration;
 
 - (instancetype)init {
     self = [super init];
     if (self) {
         self.messageTimeHeight = LYRUIMessageListTimeSupplementaryViewDefaultHeight;
-        self.timeFormatter = [[LYRUIMessageListTimeFormatter alloc] init];
-        self.headerLayout = [[LYRUIMessageListHeaderViewLayout alloc] init];
         self.showTimeForIndexPath = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
 
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
+    self = [self init];
+    if (self) {
+        self.layerConfiguration = configuration;
+    }
+    return self;
+}
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.timeFormatter = [layerConfiguration.injector protocolImplementation:@protocol(LYRUITimeFormatting)
+                                                                    forClass:[self class]];
+    self.messageTimeLayout = [layerConfiguration.injector layoutForViewClass:[LYRUIMessageListMessageTimeView class]];
+}
+
 - (NSString *)viewKind {
-    return LYRUIMessageListMessageTimeView;
+    return LYRUIMessageListMessageTimeViewKind;
 }
 
 - (NSString *)viewReuseIdentifier {
-    return @"LYRUIMessageListTimeView";
+    return NSStringFromClass([LYRUIMessageListMessageTimeView class]);
 }
 
 #pragma mark - LYRUIListSupplementaryViewConfiguring
 
-- (void)setupSupplementaryView:(LYRUIListHeaderView *)view forItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)setupSupplementaryView:(LYRUIMessageListMessageTimeView *)view forItemAtIndexPath:(NSIndexPath *)indexPath {
     LYRMessage *message = (LYRMessage *)[self.listDataSource itemAtIndexPath:indexPath];
     [self setupMessageTimeView:view withMessage:message];
 }
 
-- (void)setupMessageTimeView:(LYRUIListHeaderView *)timeView
+- (void)setupMessageTimeView:(LYRUIMessageListMessageTimeView *)timeView
                  withMessage:(LYRMessage *)message {
-    if ([timeView isKindOfClass:[LYRUIListHeaderView class]]) {
-        LYRUIListHeaderView *listHeaderView = (LYRUIListHeaderView *)timeView;
-        listHeaderView.layout = self.headerLayout;
-    }
+    timeView.layout = self.messageTimeLayout;
     NSString *timestamp = [self.timeFormatter stringForTime:message.sentAt withCurrentTime:[NSDate date]];
     NSIndexPath *firstItemIndexPath = [NSIndexPath indexPathForItem:0 inSection:0];
     if (!self.listDelegate.canLoadMoreItems &&

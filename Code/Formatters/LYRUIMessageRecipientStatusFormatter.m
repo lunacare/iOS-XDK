@@ -21,6 +21,15 @@
 #import "LYRUIMessageRecipientStatusFormatter.h"
 
 @implementation LYRUIMessageRecipientStatusFormatter
+@synthesize layerConfiguration = _layerConfiguration;
+
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
+    self = [super init];
+    if (self) {
+        self.layerConfiguration = configuration;
+    }
+    return self;
+}
 
 - (NSString *)stringForMessageRecipientStatus:(LYRMessage *)message {
     LYRRecipientStatus status = [self statusForMessage:message];
@@ -68,11 +77,12 @@
 #pragma mark - Helpers
 
 - (NSDictionary *)recipientStatusWithoutCurrentUser:(NSDictionary *)recipientStatusByUserID {
-    if (!self.currentUser) {
+    LYRIdentity *currentUser = self.layerConfiguration.client.authenticatedUser;
+    if (!currentUser) {
         return recipientStatusByUserID;
     }
     NSMutableDictionary *filteredStatus = [recipientStatusByUserID mutableCopy];
-    [filteredStatus removeObjectForKey:self.currentUser.userID];
+    [filteredStatus removeObjectForKey:currentUser.userID];
     return filteredStatus;
 }
 

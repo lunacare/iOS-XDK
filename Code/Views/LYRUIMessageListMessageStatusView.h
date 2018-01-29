@@ -1,8 +1,8 @@
 //
-//  LYRUIMessageListMessageStatusLayout.h
+//  LYRUIMessageListMessageStatusView.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 24.08.2017.
+//  Created by Łukasz Przytuła on 29.01.2018.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,5 +20,5 @@
 
 #import "LYRUIListHeaderView.h"
 
-@interface LYRUIMessageListMessageStatusLayout : NSObject <LYRUIListHeaderViewLayout>
+@interface LYRUIMessageListMessageStatusView : LYRUIListHeaderView
 @end

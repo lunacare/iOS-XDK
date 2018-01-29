@@ -20,7 +20,6 @@
 
 #import "LYRUIBaseListView.h"
 @class LYRConversation;
-@class LYRClient;
 @class LYRMessage;
 @class LYRIdentity;
 
@@ -37,11 +36,6 @@ IB_DESIGNABLE
 @property (nonatomic, weak, readonly) LYRConversation *conversation;
 
 /**
- @abstract A currently logged in user, used to determine the message direction (incoming or outgoing).
- */
-@property (nonatomic, strong) LYRIdentity *currentUser;
-
-/**
  @abstract Minimal time interval between two messages to show message time in the list.
  */
 @property (nonatomic) NSTimeInterval messageGroupingTimeInterval;
@@ -53,12 +47,11 @@ IB_DESIGNABLE
 @property (nonatomic) NSUInteger pageSize;
 
 /**
- @abstract Method used to configure messages list with a `LYRConversation` and `LYRClient`.
+ @abstract Method used to configure messages list with a `LYRConversation`.
  @discussion This methods creates a `LYRQueryController` for `LYRMessage` objects assigned to provided conversation, sorted by `position` property, and using `pageSize` property.
  @param conversation A `LYRConversation` to present messages from.
- @param layerClient A `LYRClient` instance used to create `LYRQueryController`.
  */
-- (void)setupWithConversation:(LYRConversation *)conversation client:(LYRClient *)layerClient;
+- (void)setupWithConversation:(LYRConversation *)conversation;
 
 /**
  @abstract Scroll the messages list to last message.

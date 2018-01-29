@@ -19,6 +19,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LYRUIConfigurable.h"
 #import <LayerKit/LayerKit.h>
 @class LYRUIConfiguration;
 @class LYRUIAvatarView;
@@ -40,18 +41,12 @@ IB_DESIGNABLE
  @abstract The `LYRUIAvatarView` displays avatars, or a badge with number of `identities`, when set up with multiple `LYRIdentity` objects. When single `identity` object is passed, the view presents avatar with the presence view, representing presence status of `LYRIdentity`.
  @warning When view is resized to under 32pt width or height, it hides avatars and shows only the presence view, or badge with number of `identities`.
  */
-@interface LYRUIAvatarView : UIView
+@interface LYRUIAvatarView : UIView <LYRUIConfigurable>
 
 /**
  @abstract The `identities` to setup the view with. If array contains one `LYRUIIdentity` object, the view will show an avatar with presence status view. Otherwise it will present multi-avatar, replaced with a badge with number of `identities` when resized under 32pt width or height.
  */
 @property (nonatomic, copy) NSArray<LYRIdentity *> *identities;
-
-/**
- @abstract The `configuration` od UI components. Used to retrieve setup and themes.
- @discussion If using storyboards, the property must be set explicitly.
- */
-@property (nonatomic, weak) LYRUIConfiguration *layerConfiguration;
 
 /**
  @abstract An object which contains set of colors to use in `LYRUIAvatarView` dependant views. Default is nil, and subviews use their defaults.
@@ -62,13 +57,6 @@ IB_DESIGNABLE
  @abstract Layout of the `LYRUIAvatarView` subviews. Default is nil, and is updated to `LYRUIAvatarViewSingleLayout`, or `LYRUIAvatarViewMultiLayout` depending on count of `identities` set.
  */
 @property (nonatomic, copy) IBOutlet id<LYRUIAvatarViewLayout> layout;
-
-/**
- @abstract Initializes a new `LYRUIPresenceView` with the configuration.
- @param configuration An `LYRUIConfiguration` instance, used to retrieve themes, and setup.
- @return An `LYRUIPresenceView` object.
- */
-- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration;
 
 @end
 NS_ASSUME_NONNULL_END       // }
