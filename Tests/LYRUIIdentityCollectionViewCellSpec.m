@@ -26,9 +26,6 @@ describe(@"LYRUIIdentityCollectionViewCell", ^{
         it(@"should have the identity view added as subview of content view", ^{
             expect(cell.identityView.superview).to.equal(cell.contentView);
         });
-        it(@"should have the autoresizing mask of identity view set to resizable width and height", ^{
-            expect(cell.identityView.autoresizingMask).to.equal(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-        });
     });
 });
 

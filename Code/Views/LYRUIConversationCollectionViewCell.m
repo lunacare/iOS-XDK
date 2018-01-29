@@ -20,6 +20,9 @@
 
 #import "LYRUIConversationCollectionViewCell.h"
 #import "LYRUIConversationItemView.h"
+#import "UIView+LYRUISafeArea.h"
+#import "UIView+LYRUILayoutGuide.h"
+#import "UILayoutGuide+LYRUILayoutGuide.h"
 
 @implementation LYRUIConversationCollectionViewCell
 
@@ -43,8 +46,13 @@
     LYRUIConversationItemView *conversationView = [[LYRUIConversationItemView alloc] init];
     conversationView.backgroundColor = [UIColor whiteColor];
     conversationView.frame = self.contentView.bounds;
-    conversationView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     [self.contentView addSubview:conversationView];
+    conversationView.translatesAutoresizingMaskIntoConstraints = NO;
+    id<LYRUILayoutGuide> layoutGuide = self.contentView.lyr_safeAreaLayoutGuide ?: self.contentView;
+    [layoutGuide.leftAnchor constraintEqualToAnchor:conversationView.leftAnchor].active = YES;
+    [layoutGuide.topAnchor constraintEqualToAnchor:conversationView.topAnchor].active = YES;
+    [layoutGuide.rightAnchor constraintEqualToAnchor:conversationView.rightAnchor].active = YES;
+    [layoutGuide.bottomAnchor constraintEqualToAnchor:conversationView.bottomAnchor].active = YES;
     self.conversationView = conversationView;
 }
 
