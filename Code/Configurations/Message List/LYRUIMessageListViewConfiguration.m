@@ -39,6 +39,11 @@
 #import "LYRUIListLoadingIndicatorConfiguration.h"
 #import "LYRUIListLoadingIndicatorView.h"
 #import "LYRUIMessageCollectionViewCell.h"
+#import "LYRUIMessageListTypingIndicatorsController.h"
+#import "LYRUIPanelTypingIndicatorView.h"
+#import "LYRUITypingIndicatorFooterConfiguration.h"
+#import "LYRUIBubbleTypingIndicatorCollectionViewCell.h"
+#import "LYRUITypingIndicatorCellConfiguration.h"
 
 static NSTimeInterval const LYRUIMessageListViewDefaultGroupintTimeInterval = 60.0 * 30.0;
 static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
@@ -61,6 +66,7 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     messageListView.pageSize = LYRUIMessageListViewDefaultPageSize;
     
     LYRUIMessageListLayout *layout = [injector layoutForViewClass:[LYRUIMessageListView class]];
+    
     LYRUIMessageCellConfiguration *cellConfiguration = [injector configurationForViewClass:[LYRUIMessageCollectionViewCell class]];
     
     LYRUIMessageListTimeSupplementaryViewConfiguration *messageTimeViewConfiguration =
@@ -73,22 +79,47 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     LYRUIListLoadingIndicatorConfiguration *loadingIndicatorConfiguration =
         [injector configurationForViewClass:[LYRUIListLoadingIndicatorView class]];
     
-    [self registerCellsWithConfigurations:@[cellConfiguration]
+    LYRUIMessageListTypingIndicatorsController *typingIndicatorConfigurator =
+        [injector objectOfType:[LYRUIMessageListTypingIndicatorsController class]];
+    typingIndicatorConfigurator.collectionView = messageListView.collectionView;
+    messageListView.typingIndicatorsController = typingIndicatorConfigurator;
+    
+    LYRUITypingIndicatorCellConfiguration *typingIndicatorCellConfiguration =
+        [injector configurationForViewClass:[LYRUIBubbleTypingIndicatorCollectionViewCell class]];
+    
+    LYRUITypingIndicatorFooterConfiguration *typingIndicatorFooterConfiguration =
+        [injector configurationForViewClass:[LYRUIPanelTypingIndicatorView class]];
+    
+    [self registerCellsWithConfigurations:@[cellConfiguration,
+                                            typingIndicatorCellConfiguration]
                          inCollectionView:messageListView.collectionView];
     [self registerSupplementaryViewsWithConfigurations:@[messageTimeViewConfiguration,
                                                          messageStatusViewConfiguration,
-                                                         loadingIndicatorConfiguration]
+                                                         loadingIndicatorConfiguration,
+                                                         typingIndicatorFooterConfiguration]
                                       inCollectionView:messageListView.collectionView];
     
     messageListView.layout = layout;
-    messageListView.dataSource = [self createDataSourceWithCellConfiguration:cellConfiguration
-                                              messageStatusViewConfiguration:messageStatusViewConfiguration
-                                                messageTimeViewConfiguration:messageTimeViewConfiguration
-                                              loadingIndicatorConfiguration:loadingIndicatorConfiguration];
-    messageListView.delegate = [self createDelegateWithCellConfiguration:cellConfiguration
-                                          messageStatusViewConfiguration:messageStatusViewConfiguration
-                                            messageTimeViewConfiguration:messageTimeViewConfiguration
-                                          loadingIndicatorConfiguration:loadingIndicatorConfiguration];
+    
+    LYRUIListDataSource *dataSource = [[LYRUIListDataSource alloc] init];
+    cellConfiguration.listDataSource = dataSource;
+    [dataSource registerCellConfiguration:cellConfiguration];
+    [dataSource registerCellConfiguration:typingIndicatorCellConfiguration];
+    [dataSource registerSupplementaryViewConfiguration:messageTimeViewConfiguration];
+    [dataSource registerSupplementaryViewConfiguration:messageStatusViewConfiguration];
+    [dataSource registerSupplementaryViewConfiguration:loadingIndicatorConfiguration];
+    [dataSource registerSupplementaryViewConfiguration:typingIndicatorFooterConfiguration];
+    messageListView.dataSource = dataSource;
+    
+    LYRUIMessageListDelegate *delegate = [[LYRUIMessageListDelegate alloc] init];
+    [delegate registerCellSizeCalculation:cellConfiguration];
+    [delegate registerCellSizeCalculation:typingIndicatorCellConfiguration];
+    [delegate registerSupplementaryViewSizeCalculation:messageTimeViewConfiguration];
+    [delegate registerSupplementaryViewSizeCalculation:messageStatusViewConfiguration];
+    [delegate registerSupplementaryViewSizeCalculation:loadingIndicatorConfiguration];
+    [delegate registerSupplementaryViewSizeCalculation:typingIndicatorFooterConfiguration];
+    delegate.loadingDelegate = loadingIndicatorConfiguration;
+    messageListView.delegate = delegate;
 }
 
 #pragma mark - Cells and Supplementary Views setup
@@ -105,36 +136,6 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     for (id<LYRUIListSupplementaryViewConfiguring> configuration in supplementaryViewConfigurations) {
         [configuration registerSupplementaryViewInCollectionView:collectionView];
     }
-}
-
-#pragma mark - Data Source setup
-
-- (LYRUIListDataSource *)createDataSourceWithCellConfiguration:(LYRUIMessageCellConfiguration *)cellConfiguration
-                                messageStatusViewConfiguration:(LYRUIMessageListStatusSupplementaryViewConfiguration *)messageStatusViewConfiguration
-                                  messageTimeViewConfiguration:(LYRUIMessageListTimeSupplementaryViewConfiguration *)messageTimeViewConfiguration
-                                loadingIndicatorConfiguration:(LYRUIListLoadingIndicatorConfiguration *)loadingIndicatorConfiguration {
-    LYRUIListDataSource *dataSource = [[LYRUIListDataSource alloc] init];
-    cellConfiguration.listDataSource = dataSource;
-    [dataSource registerCellConfiguration:cellConfiguration];
-    [dataSource registerSupplementaryViewConfiguration:messageTimeViewConfiguration];
-    [dataSource registerSupplementaryViewConfiguration:messageStatusViewConfiguration];
-    [dataSource registerSupplementaryViewConfiguration:loadingIndicatorConfiguration];
-    return dataSource;
-}
-
-#pragma mark - Delegate setup
-
-- (LYRUIMessageListDelegate *)createDelegateWithCellConfiguration:(LYRUIMessageCellConfiguration *)cellConfiguration
-                                   messageStatusViewConfiguration:(LYRUIMessageListStatusSupplementaryViewConfiguration *)messageStatusViewConfiguration
-                                     messageTimeViewConfiguration:(LYRUIMessageListTimeSupplementaryViewConfiguration *)messageTimeViewConfiguration
-                                   loadingIndicatorConfiguration:(LYRUIListLoadingIndicatorConfiguration *)loadingIndicatorConfiguration {
-    LYRUIMessageListDelegate *delegate = [[LYRUIMessageListDelegate alloc] init];
-    [delegate registerCellSizeCalculation:cellConfiguration];
-    [delegate registerSupplementaryViewSizeCalculation:messageTimeViewConfiguration];
-    [delegate registerSupplementaryViewSizeCalculation:messageStatusViewConfiguration];
-    [delegate registerSupplementaryViewSizeCalculation:loadingIndicatorConfiguration];
-    delegate.loadingDelegate = loadingIndicatorConfiguration;
-    return delegate;
 }
 
 @end

@@ -39,6 +39,10 @@
 @synthesize queryController = _queryController;
 @dynamic queryControllerDelegate, delegate;
 
+- (void)dealloc {
+    [self.typingIndicatorsController removeNotificationsObserver];
+}
+
 - (void)prepareForInterfaceBuilder {
     [[[LYRUIMessageListIBSetup alloc] init] prepareMessageListForInterfaceBuilder:self];
 }
@@ -102,6 +106,7 @@
     }
     
     _conversation = self.paginationController.conversation;
+    [self.typingIndicatorsController registerForNotificationsInConversation:self.conversation];
     
     LYRUIListSection *section = [[LYRUIListSection alloc] init];
     section.items = [queryController.paginatedObjects.array mutableCopy];

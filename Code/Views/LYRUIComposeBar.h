@@ -23,6 +23,7 @@
 #import "LYRUIConfigurable.h"
 @class LYRUIComposeBar;
 @class LYRUISendButton;
+@class LYRConversation;
 
 NS_ASSUME_NONNULL_BEGIN     // {
 @protocol LYRUIComposeBarLayout <LYRUIViewLayout>
@@ -79,6 +80,11 @@ IB_DESIGNABLE
  @abstract Array of views added on the right side of the input message input. Default is an array with `sendButton`.
  */
 @property (nonatomic, copy, nullable) IBOutletCollection(UIView) NSArray<UIView *> *rightItems;
+
+/**
+ @abstract Conversation in which the compose bar is used, and will send typing indicator updates.
+ */
+@property (nonatomic, strong) LYRConversation *conversation;
 
 /**
  @abstract Placeholder text to present when input message is empty.

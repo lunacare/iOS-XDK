@@ -82,6 +82,11 @@
 #import "LYRUIMessageListTimeFormatter.h"
 #import "LYRUIConversationView.h"
 #import "LYRUIConversationViewLayout.h"
+#import "LYRUIPanelTypingIndicatorView.h"
+#import "LYRUIPanelTypingIndicatorViewLayout.h"
+#import "LYRUITypingIndicatorFooterConfiguration.h"
+#import "LYRUIBubbleTypingIndicatorCollectionViewCell.h"
+#import "LYRUITypingIndicatorCellConfiguration.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -154,8 +159,9 @@
     self.defaultConfigurations[NSStringFromClass([LYRUIListLoadingIndicatorView class])] = ^id (LYRUIConfiguration *configuration) {
         return [LYRUIListLoadingIndicatorConfiguration loadingOldItemsIndicatorConfiguration];
     };
-
     [self setConfigurationClass:[LYRUIMessageListViewConfiguration class] forViewClass:[LYRUIMessageListView class]];
+    [self setConfigurationClass:[LYRUITypingIndicatorFooterConfiguration class] forViewClass:[LYRUIPanelTypingIndicatorView class]];
+    [self setConfigurationClass:[LYRUITypingIndicatorCellConfiguration class] forViewClass:[LYRUIBubbleTypingIndicatorCollectionViewCell class]];
 }
 
 - (void)setupLayouts {
@@ -171,6 +177,7 @@
     [self setLayoutClass:[LYRUIMessageListMessageStatusViewLayout class] forViewClass:[LYRUIMessageListMessageStatusView class]];
     [self setLayoutClass:[LYRUIMessageListLayout class] forViewClass:[LYRUIMessageListView class]];
     [self setLayoutClass:[LYRUIConversationViewLayout class] forViewClass:[LYRUIConversationView class]];
+    [self setLayoutClass:[LYRUIPanelTypingIndicatorViewLayout class] forViewClass:[LYRUIPanelTypingIndicatorView class]];
 }
 
 - (void)setupProtocolImplementations {

@@ -77,6 +77,9 @@ describe(@"LYRUIConversationView", ^{
         it(@"should set up the message list view with provided conversation", ^{
             expect(conversationView.messageListView.conversation).to.equal(conversationMock);
         });
+        it(@"should set up the compose bar view with provided conversation", ^{
+            expect(conversationView.composeBar.conversation).to.equal(conversationMock);
+        });
         it(@"should set up the message list view's query controller", ^{
             expect(conversationView.messageListView.queryController).to.equal(queryControllerMock);
         });
@@ -127,6 +130,9 @@ describe(@"LYRUIConversationView", ^{
         });
         it(@"should extract conversation from query controller's query predicate, and set in message list", ^{
             expect(conversationView.messageListView.conversation).to.equal(conversationMock);
+        });
+        it(@"should extract conversation from query controller's query predicate, and set in compose bar", ^{
+            expect(conversationView.composeBar.conversation).to.equal(conversationMock);
         });
         it(@"should extract conversation from query controller's query predicate, and set in message list", ^{
             [verify(messageSenderMock) setConversation:conversationMock];
