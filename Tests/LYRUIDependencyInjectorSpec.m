@@ -7,33 +7,33 @@
 #import <Atlas/LYRUIConfiguration+DependencyInjection.h>
 #import <Atlas/LYRUIPresenceView.h>
 #import <Atlas/LYRUIPresenceViewDefaultTheme.h>
-#import <Atlas/LYRUIPresenceViewConfiguration.h>
+#import <Atlas/LYRUIPresenceViewPresenter.h>
 #import <Atlas/LYRUIAvatarView.h>
 #import <Atlas/LYRUIAvatarViewDefaultTheme.h>
-#import <Atlas/LYRUIAvatarViewConfiguration.h>
+#import <Atlas/LYRUIAvatarViewPresenter.h>
 #import <Atlas/LYRUIImageWithLettersView.h>
-#import <Atlas/LYRUIImageWithLettersViewConfiguration.h>
+#import <Atlas/LYRUIImageWithLettersViewPresenter.h>
 #import <Atlas/LYRUIBaseItemView.h>
 #import <Atlas/LYRUIBaseItemViewDefaultTheme.h>
 #import <Atlas/LYRUIBaseItemViewLayout.h>
 #import <Atlas/LYRUIConversationItemView.h>
 #import <Atlas/LYRUIConversationItemViewUnreadTheme.h>
-#import <Atlas/LYRUIConversationItemViewConfiguration.h>
+#import <Atlas/LYRUIConversationItemViewPresenter.h>
 #import <Atlas/LYRUIConversationItemTitleFormatter.h>
 #import <Atlas/LYRUIMessageTextDefaultFormatter.h>
 #import <Atlas/LYRUIMessageTimeDefaultFormatter.h>
 #import <Atlas/LYRUIConversationListView.h>
-#import <Atlas/LYRUIConversationListViewConfiguration.h>
-#import <Atlas/LYRUIListCellConfiguration.h>
+#import <Atlas/LYRUIConversationListViewPresenter.h>
+#import <Atlas/LYRUIListCellPresenter.h>
 #import <Atlas/LYRUIListHeaderView.h>
-#import <Atlas/LYRUIListSupplementaryViewConfiguration.h>
+#import <Atlas/LYRUIListSupplementaryViewPresenter.h>
 #import <Atlas/LYRUIListLayout.h>
 #import <Atlas/LYRUIIdentityItemView.h>
-#import <Atlas/LYRUIIdentityItemViewConfiguration.h>
+#import <Atlas/LYRUIIdentityItemViewPresenter.h>
 #import <Atlas/LYRUIIdentityNameFormatter.h>
 #import <Atlas/LYRUITimeAgoFormatter.h>
 #import <Atlas/LYRUIIdentityListView.h>
-#import <Atlas/LYRUIIdentityListViewConfiguration.h>
+#import <Atlas/LYRUIIdentityListViewPresenter.h>
 #import <Atlas/LYRUIImageFetcher.h>
 #import <Atlas/LYRUIImageFactory.h>
 #import <Atlas/LYRUIInitialsFormatter.h>
@@ -41,7 +41,7 @@
 #import <Atlas/LYRUIDispatcher.h>
 #import <Atlas/NSCache+LYRUIImageCaching.h>
 #import <Atlas/LYRUIComposeBar.h>
-#import <Atlas/LYRUIComposeBarConfiguration.h>
+#import <Atlas/LYRUIComposeBarPresenter.h>
 #import <Atlas/LYRUIAvatarViewProvider.h>
 
 SpecBegin(LYRUIDependencyInjector)
@@ -124,16 +124,16 @@ describe(@"LYRUIDependencyInjector", ^{
         });
     });
     
-    describe(@"configurationForViewClass:", ^{
+    describe(@"presenterForViewClass:", ^{
         context(@"for LYRUIPresenceView", ^{
             __block id returnedObject;
             
             beforeEach(^{
-                returnedObject = [injector configurationForViewClass:[LYRUIPresenceView class]];
+                returnedObject = [injector presenterForViewClass:[LYRUIPresenceView class]];
             });
             
-            it(@"should return configuration of `LYRUIPresenceViewConfiguration` type", ^{
-                expect(returnedObject).to.beAKindOf([LYRUIPresenceViewConfiguration class]);
+            it(@"should return presenter of `LYRUIPresenceViewPresenter` type", ^{
+                expect(returnedObject).to.beAKindOf([LYRUIPresenceViewPresenter class]);
             });
         });
         
@@ -141,11 +141,11 @@ describe(@"LYRUIDependencyInjector", ^{
             __block id returnedObject;
             
             beforeEach(^{
-                returnedObject = [injector configurationForViewClass:[LYRUIAvatarView class]];
+                returnedObject = [injector presenterForViewClass:[LYRUIAvatarView class]];
             });
             
-            it(@"should return configuration of `LYRUIAvatarViewConfiguration` type", ^{
-                expect(returnedObject).to.beAKindOf([LYRUIAvatarViewConfiguration class]);
+            it(@"should return presenter of `LYRUIAvatarViewPresenter` type", ^{
+                expect(returnedObject).to.beAKindOf([LYRUIAvatarViewPresenter class]);
             });
         });
         
@@ -153,11 +153,11 @@ describe(@"LYRUIDependencyInjector", ^{
             __block id returnedObject;
             
             beforeEach(^{
-                returnedObject = [injector configurationForViewClass:[LYRUIImageWithLettersView class]];
+                returnedObject = [injector presenterForViewClass:[LYRUIImageWithLettersView class]];
             });
             
-            it(@"should return configuration of `LYRUIImageWithLettersViewConfiguration` type", ^{
-                expect(returnedObject).to.beAKindOf([LYRUIImageWithLettersViewConfiguration class]);
+            it(@"should return presenter of `LYRUIImageWithLettersViewPresenter` type", ^{
+                expect(returnedObject).to.beAKindOf([LYRUIImageWithLettersViewPresenter class]);
             });
         });
         
@@ -165,11 +165,11 @@ describe(@"LYRUIDependencyInjector", ^{
             __block id returnedObject;
             
             beforeEach(^{
-                returnedObject = [injector configurationForViewClass:[LYRUIConversationItemView class]];
+                returnedObject = [injector presenterForViewClass:[LYRUIConversationItemView class]];
             });
             
-            it(@"should return configuration of `LYRUIConversationItemViewConfiguration` type", ^{
-                expect(returnedObject).to.beAKindOf([LYRUIConversationItemViewConfiguration class]);
+            it(@"should return presenter of `LYRUIConversationItemViewPresenter` type", ^{
+                expect(returnedObject).to.beAKindOf([LYRUIConversationItemViewPresenter class]);
             });
         });
         
@@ -177,11 +177,11 @@ describe(@"LYRUIDependencyInjector", ^{
             __block id returnedObject;
             
             beforeEach(^{
-                returnedObject = [injector configurationForViewClass:[UICollectionViewCell class]];
+                returnedObject = [injector presenterForViewClass:[UICollectionViewCell class]];
             });
             
-            it(@"should return configuration of `LYRUIListCellConfiguration` type", ^{
-                expect(returnedObject).to.beAKindOf([LYRUIListCellConfiguration class]);
+            it(@"should return presenter of `LYRUIListCellPresenter` type", ^{
+                expect(returnedObject).to.beAKindOf([LYRUIListCellPresenter class]);
             });
         });
         
@@ -189,11 +189,11 @@ describe(@"LYRUIDependencyInjector", ^{
             __block id returnedObject;
             
             beforeEach(^{
-                returnedObject = [injector configurationForViewClass:[LYRUIListHeaderView class]];
+                returnedObject = [injector presenterForViewClass:[LYRUIListHeaderView class]];
             });
             
-            it(@"should return configuration of `LYRUIListSupplementaryViewConfiguration` type", ^{
-                expect(returnedObject).to.beAKindOf([LYRUIListSupplementaryViewConfiguration class]);
+            it(@"should return presenter of `LYRUIListSupplementaryViewPresenter` type", ^{
+                expect(returnedObject).to.beAKindOf([LYRUIListSupplementaryViewPresenter class]);
             });
         });
         
@@ -201,11 +201,11 @@ describe(@"LYRUIDependencyInjector", ^{
             __block id returnedObject;
             
             beforeEach(^{
-                returnedObject = [injector configurationForViewClass:[LYRUIConversationListView class]];
+                returnedObject = [injector presenterForViewClass:[LYRUIConversationListView class]];
             });
             
-            it(@"should return configuration of `LYRUIConversationListViewConfiguration` type", ^{
-                expect(returnedObject).to.beAKindOf([LYRUIConversationListViewConfiguration class]);
+            it(@"should return presenter of `LYRUIConversationListViewPresenter` type", ^{
+                expect(returnedObject).to.beAKindOf([LYRUIConversationListViewPresenter class]);
             });
         });
         
@@ -213,11 +213,11 @@ describe(@"LYRUIDependencyInjector", ^{
             __block id returnedObject;
             
             beforeEach(^{
-                returnedObject = [injector configurationForViewClass:[LYRUIIdentityItemView class]];
+                returnedObject = [injector presenterForViewClass:[LYRUIIdentityItemView class]];
             });
             
-            it(@"should return configuration of `LYRUIIdentityItemViewConfiguration` type", ^{
-                expect(returnedObject).to.beAKindOf([LYRUIIdentityItemViewConfiguration class]);
+            it(@"should return presenter of `LYRUIIdentityItemViewPresenter` type", ^{
+                expect(returnedObject).to.beAKindOf([LYRUIIdentityItemViewPresenter class]);
             });
         });
         
@@ -225,11 +225,11 @@ describe(@"LYRUIDependencyInjector", ^{
             __block id returnedObject;
             
             beforeEach(^{
-                returnedObject = [injector configurationForViewClass:[LYRUIIdentityListView class]];
+                returnedObject = [injector presenterForViewClass:[LYRUIIdentityListView class]];
             });
             
-            it(@"should return configuration of `LYRUIIdentityListViewConfiguration` type", ^{
-                expect(returnedObject).to.beAKindOf([LYRUIIdentityListViewConfiguration class]);
+            it(@"should return presenter of `LYRUIIdentityListViewPresenter` type", ^{
+                expect(returnedObject).to.beAKindOf([LYRUIIdentityListViewPresenter class]);
             });
         });
         
@@ -237,11 +237,11 @@ describe(@"LYRUIDependencyInjector", ^{
             __block id returnedObject;
             
             beforeEach(^{
-                returnedObject = [injector configurationForViewClass:[LYRUIComposeBar class]];
+                returnedObject = [injector presenterForViewClass:[LYRUIComposeBar class]];
             });
             
-            it(@"should return configuration of `LYRUIComposeBarConfiguration` type", ^{
-                expect(returnedObject).to.beAKindOf([LYRUIComposeBarConfiguration class]);
+            it(@"should return presenter of `LYRUIComposeBarPresenter` type", ^{
+                expect(returnedObject).to.beAKindOf([LYRUIComposeBarPresenter class]);
             });
         });
     });
@@ -374,12 +374,12 @@ describe(@"LYRUIDependencyInjector", ^{
                 });
             });
             
-            context(@"for `LYRUIIdentityItemViewConfiguration` class", ^{
+            context(@"for `LYRUIIdentityItemViewPresenter` class", ^{
                 __block id returnedObject;
                 
                 beforeEach(^{
                     returnedObject = [injector protocolImplementation:@protocol(LYRUITimeFormatting)
-                                                             forClass:[LYRUIIdentityItemViewConfiguration class]];
+                                                             forClass:[LYRUIIdentityItemViewPresenter class]];
                 });
                 
                 it(@"should return object of `LYRUITimeAgoFormatter` type", ^{

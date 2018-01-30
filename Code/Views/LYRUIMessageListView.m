@@ -20,7 +20,7 @@
 
 #import "LYRUIMessageListView.h"
 #import "LYRUIConfiguration+DependencyInjection.h"
-#import "LYRUIMessageListViewConfiguration.h"
+#import "LYRUIMessageListViewPresenter.h"
 #import "LYRUIMessageListIBSetup.h"
 #import "LYRUIMessageListQueryControllerDelegate.h"
 #import "LYRUIMessageListDelegate.h"

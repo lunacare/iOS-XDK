@@ -79,7 +79,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param conversationViewController The `ATLConversationViewController` where the message cell will appear.
  @param cell The `UICollectionViewCell` object that confirms to the `ATLMessagePresenting` protocol that will be displayed in the controller.
  @param message The `LYRMessage` object that will be displayed in the cell.
- @discussion Applications should implement this method if they want add further configuration that is not set up during cell initialization, such as gesture recognizers.
+ @discussion Applications should implement this method if they want add further presenter that is not set up during cell initialization, such as gesture recognizers.
  It is up to the application to typecast the cell to access custom cell properties.
  */
 - (void)conversationViewController:(ATLConversationViewController *)conversationViewController configureCell:(UICollectionViewCell<ATLMessagePresenting> *)cell forMessage:(LYRMessage *)message;
@@ -166,11 +166,11 @@ NS_ASSUME_NONNULL_BEGIN
      query.predicate = [LYRPredicate predicateWithProperty:@"conversation" predicateOperator:LYRPredicateOperatorIsEqualTo value:self.conversation];
      query.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"position" ascending:YES]];
  
- Applications that require advanced query configuration can do so by implementing this data source method.
+ Applications that require advanced query presenter can do so by implementing this data source method.
  
- @param viewController The `ATLConversationViewController` requesting the configuration.
- @param defaultQuery An `LYRQuery` object with the default configuration for the controller.
- @return An `LYRQuery` object with any additional configuration.
+ @param viewController The `ATLConversationViewController` requesting the presenter.
+ @param defaultQuery An `LYRQuery` object with the default presenter for the controller.
+ @return An `LYRQuery` object with any additional presenter.
  @raises `NSInvalidArgumentException` if an `LYRQuery` object is not returned.
  */
 - (LYRQuery *)conversationViewController:(ATLConversationViewController *)viewController willLoadWithQuery:(LYRQuery *)defaultQuery;

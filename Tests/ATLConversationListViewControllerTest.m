@@ -497,7 +497,7 @@ extern NSString *const ATLAvatarViewAccessibilityLabel;
     [delegateMock verify];
 }
 
-- (void)testToVerifyDefaultQueryConfigurationDataSourceMethod
+- (void)testToVerifyDefaultQueryPresenterDataSourceMethod
 {
     self.viewController = [ATLConversationListViewController conversationListViewControllerWithLayerClient:(LYRClient *)self.testInterface.layerClient];
     self.viewController.allowsEditing = YES;
@@ -523,7 +523,7 @@ extern NSString *const ATLAvatarViewAccessibilityLabel;
     [delegateMock verifyWithDelay:1];
 }
 
-- (void)testToVerifyQueryConfigurationTakesEffect
+- (void)testToVerifyQueryPresenterTakesEffect
 {
     self.viewController = [ATLConversationListViewController conversationListViewControllerWithLayerClient:(LYRClient *)self.testInterface.layerClient];
     self.viewController.allowsEditing = YES;

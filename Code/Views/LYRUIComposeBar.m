@@ -19,7 +19,7 @@
 //
 
 #import "LYRUIComposeBar.h"
-#import "LYRUIComposeBarConfiguration.h"
+#import "LYRUIComposeBarPresenter.h"
 #import "LYRUIComposeBarIBSetup.h"
 #import "LYRUIAutoresizingTextView.h"
 #import "LYRUISendButton.h"
@@ -30,7 +30,7 @@
 @property (nonatomic, weak, readwrite) UITextView *inputTextView;
 @property (nonatomic, strong, readwrite) LYRUISendButton *sendButton;
 
-@property (nonatomic, strong) LYRUIComposeBarConfiguration *configuration;
+@property (nonatomic, strong) LYRUIComposeBarPresenter *presenter;
 
 @end
 
@@ -114,7 +114,7 @@
 }
 
 - (void)dealloc {
-    [self.configuration cleanup];
+    [self.presenter cleanup];
 }
 
 #pragma mark - Properties
@@ -124,8 +124,8 @@
     if (self.layout == nil) {
         self.layout = [layerConfiguration.injector layoutForViewClass:[self class]];
     }
-    self.configuration = [layerConfiguration.injector configurationForViewClass:[self class]];
-    [self.configuration configureComposeBar:self];
+    self.presenter = [layerConfiguration.injector presenterForViewClass:[self class]];
+    [self.presenter configureComposeBar:self];
 }
 
 - (void)setLeftItems:(NSArray<UIView *> *)leftItems {
@@ -149,26 +149,26 @@
 }
 
 - (NSString *)text {
-    if (self.configuration) {
-        return self.configuration.text;
+    if (self.presenter) {
+        return self.presenter.text;
     }
     return self.inputTextView.text;
 }
 
 - (void)setText:(NSString *)text {
-    if (self.configuration) {
-        self.configuration.text = text;
+    if (self.presenter) {
+        self.presenter.text = text;
     } else {
         self.inputTextView.text = text;
     }
 }
 
 - (NSAttributedString *)attributedText {
-    return self.configuration.attributedText;
+    return self.presenter.attributedText;
 }
 
 - (void)setAttributedText:(NSAttributedString *)attributedText {
-    self.configuration.attributedText = attributedText;
+    self.presenter.attributedText = attributedText;
 }
 
 - (CGFloat)messageInputCornerRadius {

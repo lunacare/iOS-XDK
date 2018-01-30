@@ -4,7 +4,7 @@
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
 #import <Atlas/LYRUIConversationListView.h>
-#import <Atlas/LYRUIConversationItemViewConfiguration.h>
+#import <Atlas/LYRUIConversationItemViewPresenter.h>
 #import <Atlas/LYRUIListLayout.h>
 #import <Atlas/LYRUIListDataSource.h>
 #import <Atlas/LYRUIListDelegate.h>

@@ -46,8 +46,8 @@
     return provider(self.layerConfiguration);
 }
 
-- (id)configurationForViewClass:(Class)viewClass {
-    LYRUIDependencyProviding provider = self.module.defaultConfigurations[NSStringFromClass(viewClass)];
+- (id)presenterForViewClass:(Class)viewClass {
+    LYRUIDependencyProviding provider = self.module.defaultPresenters[NSStringFromClass(viewClass)];
     return provider(self.layerConfiguration);
 }
 

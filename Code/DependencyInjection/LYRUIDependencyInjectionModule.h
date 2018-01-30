@@ -27,7 +27,7 @@ typedef NSObject LYRUIDIAnyClass;
 
 @property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultThemes;
 @property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultAlternativeThemes;
-@property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultConfigurations;
+@property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultPresenters;
 @property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultLayouts;
 @property (nonatomic, readonly) NSDictionary<NSString *, NSDictionary<NSString *, LYRUIDependencyProviding> *> *defaultProtocolImplementations;
 @property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultObjects;

@@ -40,7 +40,7 @@ IB_DESIGNABLE
 @property (nonatomic, weak) NSArray<LYRIdentity *> *identities;
 
 /**
- @abstract The `configuration` od UI components. Used to retrieve setup and themes.
+ @abstract The `presenter` od UI components. Used to retrieve setup and themes.
  @discussion If using storyboards, the property must be set explicitly.
  */
 @property (nonatomic, weak) LYRUIConfiguration *layerConfiguration;
@@ -51,8 +51,8 @@ IB_DESIGNABLE
 @property (nonatomic, copy) id<LYRUIPresenceViewTheme> theme UI_APPEARANCE_SELECTOR;
 
 /**
- @abstract Initializes a new `LYRUIPresenceView` with the configuration.
- @param configuration An `LYRUIConfiguration` instance, used to retrieve themes, and setup.
+ @abstract Initializes a new `LYRUIPresenceView` with the presenter.
+ @param presenter An `LYRUIConfiguration` instance, used to retrieve themes, and setup.
  @return An `LYRUIPresenceView` object.
  */
 - (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration;

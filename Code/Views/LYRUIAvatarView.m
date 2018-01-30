@@ -21,7 +21,7 @@
 #import "LYRUIAvatarView+PrivateProperties.h"
 #import "LYRUIImageWithLettersView.h"
 #import "LYRUIPresenceView.h"
-#import "LYRUIAvatarViewConfiguration.h"
+#import "LYRUIAvatarViewPresenter.h"
 #import "LYRUIPresenceViewDefaultTheme.h"
 #import "LYRUIAvatarViewTheme.h"
 #import "LYRUIConfiguration+DependencyInjection.h"
@@ -32,7 +32,7 @@
 @property (nonatomic, weak, readwrite) LYRUIImageWithLettersView *secondaryAvatarView;
 @property (nonatomic, weak, readwrite) LYRUIPresenceView *presenceView;
 
-@property (nonatomic, strong) LYRUIAvatarViewConfiguration *configuration;
+@property (nonatomic, strong) LYRUIAvatarViewPresenter *presenter;
 
 @property (nonatomic) BOOL renderMultiAvatar;
 
@@ -97,7 +97,7 @@
     if (self.renderMultiAvatar) {
         [identities addObject:[[LYRIdentity alloc] init]];
     }
-    [self.configuration setupAvatarView:self withIdentities:identities];
+    [self.presenter setupAvatarView:self withIdentities:identities];
 }
 
 - (void)setBounds:(CGRect)bounds {
@@ -111,7 +111,7 @@
 
 - (void)setIdentities:(NSArray<LYRIdentity *> *)identities {
     _identities = identities;
-    [self.configuration setupAvatarView:self withIdentities:identities];
+    [self.presenter setupAvatarView:self withIdentities:identities];
 }
 
 - (void)setTheme:(id<LYRUIAvatarViewTheme>)theme {
@@ -139,7 +139,7 @@
     if (self.theme == nil) {
         self.theme = [layerConfiguration.injector themeForViewClass:[self class]];
     }
-    self.configuration = [layerConfiguration.injector configurationForViewClass:[self class]];
+    self.presenter = [layerConfiguration.injector presenterForViewClass:[self class]];
 }
 
 @end

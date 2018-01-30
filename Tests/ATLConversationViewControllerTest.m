@@ -703,7 +703,7 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     [delegateMock verify];
 }
 
-- (void)testToVerifyDefaultQueryConfigurationDataSourceMethod
+- (void)testToVerifyDefaultQueryPresenterDataSourceMethod
 {
     [self setupConversationViewController];
     [self setRootViewController:self.viewController];
@@ -729,7 +729,7 @@ extern NSString *const ATLMessageInputToolbarSendButton;
     [delegateMock verifyWithDelay:1];
 }
 
-- (void)testToVerifyQueryConfigurationTakesEffect
+- (void)testToVerifyQueryPresenterTakesEffect
 {
     [self setupConversationViewController];
     [self setRootViewController:self.viewController];

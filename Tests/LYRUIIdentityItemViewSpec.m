@@ -63,7 +63,7 @@ describe(@"LYRUIIdentityItemView", ^{
         });
     });
     
-    describe(@"after initialization with  with configuration", ^{
+    describe(@"after initialization with  with presenter", ^{
         __block LYRUIConfiguration *configurationMock;
         __block id<LYRUIDependencyInjection> injectorMock;
         __block NSObject<LYRUIBaseItemViewTheme> *themeMock;
@@ -90,10 +90,10 @@ describe(@"LYRUIIdentityItemView", ^{
             view = [[LYRUIIdentityItemView alloc] initWithConfiguration:configurationMock];
         });
         
-        it(@"should have layout set to the one from configuration", ^{
+        it(@"should have layout set to the one from presenter", ^{
             expect(view.layout).to.equal(layoutMock);
         });
-        it(@"should have theme set to the one from configuration", ^{
+        it(@"should have theme set to the one from presenter", ^{
             expect(view.theme).to.equal(themeMock);
         });
     });

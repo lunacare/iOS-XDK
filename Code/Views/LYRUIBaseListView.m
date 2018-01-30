@@ -20,7 +20,7 @@
 
 #import "LYRUIBaseListView.h"
 #import "LYRUIConfiguration+DependencyInjection.h"
-#import "LYRUIListViewConfiguring.h"
+#import "LYRUIListViewPresenting.h"
 #import "LYRUIListDataSource.h"
 #import "LYRUIListQueryControllerDelegate.h"
 #import "LYRUIListSection.h"
@@ -76,8 +76,8 @@
 
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     _layerConfiguration = layerConfiguration;
-    id<LYRUIListViewConfiguring> configuration = [layerConfiguration.injector configurationForViewClass:[self class]];
-    [configuration setupListView:self];
+    id<LYRUIListViewPresenting> presenter = [layerConfiguration.injector presenterForViewClass:[self class]];
+    [presenter setupListView:self];
 }
 
 - (void)setQueryController:(LYRQueryController *)queryController {

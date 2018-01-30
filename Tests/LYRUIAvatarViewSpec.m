@@ -7,18 +7,18 @@
 #import <Atlas/LYRUIAvatarViewSingleLayout.h>
 #import <Atlas/LYRUIAvatarViewMultiLayout.h>
 #import <Atlas/LYRUIConfiguration+DependencyInjection.h>
-#import <Atlas/LYRUIAvatarViewConfiguration.h>
+#import <Atlas/LYRUIAvatarViewPresenter.h>
 #import <Atlas/LYRUIAvatarViewTheme.h>
 
 SharedExamplesBegin(LYRUIAvatarView)
 
-sharedExamplesFor(@"setting avatar view identities using view configuration", ^(NSDictionary *data) {
-    __block LYRUIAvatarViewConfiguration *viewConfigurationMock;
+sharedExamplesFor(@"setting avatar view identities using view presenter", ^(NSDictionary *data) {
+    __block LYRUIAvatarViewPresenter *viewPresenterMock;
     __block LYRUIAvatarView *avatarView;
     __block NSArray *identities;
 
     beforeEach(^{
-        viewConfigurationMock = data[@"viewConfiguration"];
+        viewPresenterMock = data[@"viewPresenter"];
         avatarView = data[@"avatarView"];
 
         LYRIdentity *identityMock1 = mock([LYRIdentity class]);
@@ -27,8 +27,8 @@ sharedExamplesFor(@"setting avatar view identities using view configuration", ^(
         avatarView.identities = identities;
     });
 
-    it(@"should setup view using configuration", ^{
-        [verify(viewConfigurationMock) setupAvatarView:avatarView withIdentities:identities];
+    it(@"should setup view using presenter", ^{
+        [verify(viewPresenterMock) setupAvatarView:avatarView withIdentities:identities];
     });
 });
 
@@ -40,7 +40,7 @@ describe(@"LYRUIAvatarView", ^{
     __block LYRUIConfiguration *configurationMock;
     __block id<LYRUIDependencyInjection> injectorMock;
     __block NSObject<LYRUIAvatarViewTheme> *themeMock;
-    __block LYRUIAvatarViewConfiguration *viewConfigurationMock;
+    __block LYRUIAvatarViewPresenter *viewPresenterMock;
     __block LYRUIAvatarView *view;
     __block NSMutableDictionary *sharedContext = [NSMutableDictionary new];
     
@@ -53,19 +53,19 @@ describe(@"LYRUIAvatarView", ^{
         [[given([(id<NSCopying>)themeMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:themeMock];
         [given([injectorMock themeForViewClass:[LYRUIAvatarView class]]) willReturn:themeMock];
         
-        viewConfigurationMock = mock([LYRUIAvatarViewConfiguration class]);
-        [given([injectorMock configurationForViewClass:[LYRUIAvatarView class]]) willReturn:viewConfigurationMock];
+        viewPresenterMock = mock([LYRUIAvatarViewPresenter class]);
+        [given([injectorMock presenterForViewClass:[LYRUIAvatarView class]]) willReturn:viewPresenterMock];
         
         view = [[LYRUIAvatarView alloc] initWithConfiguration:configurationMock];
         
-        sharedContext[@"viewConfiguration"] = viewConfigurationMock;
+        sharedContext[@"viewPresenter"] = viewPresenterMock;
         sharedContext[@"avatarView"] = view;
     });
     
     afterEach(^{
         [sharedContext removeAllObjects];
         view = nil;
-        viewConfigurationMock = nil;
+        viewPresenterMock = nil;
         themeMock = nil;
         configurationMock = nil;
     });
@@ -77,7 +77,7 @@ describe(@"LYRUIAvatarView", ^{
         it(@"should have proper theme set", ^{
             expect(view.theme).to.equal(themeMock);
         });
-        itShouldBehaveLike(@"setting avatar view identities using view configuration", sharedContext);
+        itShouldBehaveLike(@"setting avatar view identities using view presenter", sharedContext);
     });
     
     describe(@"after initialization from xib", ^{
@@ -105,7 +105,7 @@ describe(@"LYRUIAvatarView", ^{
             });
         });
         
-        context(@"when layer configuration was set after initialization from xib", ^{
+        context(@"when layer presenter was set after initialization from xib", ^{
             beforeEach(^{
                 NSBundle *bundle = [NSBundle bundleForClass:[self class]];
                 NSArray<LYRUIAvatarView *> *xibViews = [bundle loadNibNamed:@"LYRUIAvatarView" owner:self options:nil];
@@ -116,7 +116,7 @@ describe(@"LYRUIAvatarView", ^{
             it(@"should have proper theme set", ^{
                 expect(view.theme).to.equal(themeMock);
             });
-            itShouldBehaveLike(@"setting avatar view identities using view configuration", sharedContext);
+            itShouldBehaveLike(@"setting avatar view identities using view presenter", sharedContext);
         });
     });
 });

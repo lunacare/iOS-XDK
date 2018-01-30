@@ -36,7 +36,7 @@
 #import "ATLMessageInputToolbar.h"
 #import "ATLParticipantTableViewController.h"
 #import "ATLTypingIndicatorViewController.h"
-#import "LYRUIConversationItemViewConfiguration.h"
+#import "LYRUIConversationItemViewPresenter.h"
 
 ///-------------
 /// @name Models

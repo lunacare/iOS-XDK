@@ -141,7 +141,7 @@ NSString *const ATLParticipantTableViewControllerTitle = @"Participants";
     self.hasAppeared = YES;
 }
 
-#pragma mark - Public Configuration
+#pragma mark - Public Presenter
 
 - (void)setParticipants:(NSSet *)participants
 {
@@ -233,7 +233,7 @@ NSString *const ATLParticipantTableViewControllerTitle = @"Participants";
     return participantCell;
 }
 
-#pragma mark - Cell Configuration
+#pragma mark - Cell Presenter
 
 - (void)configureCell:(UITableViewCell<ATLParticipantPresenting> *)cell atIndexPath:(NSIndexPath *)indexPath forTableView:(UITableView *)tableView
 {

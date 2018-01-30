@@ -45,11 +45,11 @@ typedef id(^LYRUIDependencyProviding)(LYRUIConfiguration *);
 - (id)alternativeThemeForViewClass:(Class)viewClass;
 
 /**
- @abstract Returns a configuration object for given view class.
- @param viewClass Class of the view for which the configuration should be returned.
- @return An configuration for given view class.
+ @abstract Returns a presenter object for given view class.
+ @param viewClass Class of the view for which the presenter should be returned.
+ @return An presenter for given view class.
  */
-- (id)configurationForViewClass:(Class)viewClass;
+- (id)presenterForViewClass:(Class)viewClass;
 
 /**
  @abstract Returns a layout object for given view class.

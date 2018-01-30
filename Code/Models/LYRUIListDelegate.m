@@ -145,7 +145,7 @@ referenceSizeForFooterInSection:(NSInteger)section {
     }
 }
 
-#pragma mark - LYRUIListSupplementaryViewConfiguring registration
+#pragma mark - LYRUIListSupplementaryViewPresenting registration
 
 - (void)registerSupplementaryViewSizeCalculation:(id<LYRUIListSupplementaryViewSizeCalculating>)supplementaryViewSizeCalculation {
     NSString *key = supplementaryViewSizeCalculation.viewKind;
