@@ -129,7 +129,9 @@
 }
 
 - (void)setLeftItems:(NSArray<UIView *> *)leftItems {
-    [self removeSubviews:self.leftItems];
+    NSMutableArray *subviewsToRemove = [NSMutableArray arrayWithArray:self.leftItems];
+    [subviewsToRemove removeObjectsInArray:leftItems];
+    [self removeSubviews:subviewsToRemove];
     _leftItems = leftItems;
     [self addSubviews:leftItems];
     [self setNeedsUpdateConstraints];
@@ -137,7 +139,9 @@
 }
 
 - (void)setRightItems:(NSArray<UIView *> *)rightItems {
-    [self removeSubviews:self.rightItems];
+    NSMutableArray *subviewsToRemove = [NSMutableArray arrayWithArray:self.rightItems];
+    [subviewsToRemove removeObjectsInArray:rightItems];
+    [self removeSubviews:subviewsToRemove];
     _rightItems = rightItems;
     [self addSubviews:rightItems];
     [self setNeedsUpdateConstraints];

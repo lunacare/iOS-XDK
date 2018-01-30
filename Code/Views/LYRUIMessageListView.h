@@ -25,15 +25,16 @@
 
 IB_DESIGNABLE
 /**
- @abstract A typed `LYRUIBaseListView`, for presenting `LYRConversation` items.
+ @abstract A typed `LYRUIBaseListView`, for presenting `LYRMessage` items.
  */
 @interface LYRUIMessageListView : LYRUIBaseListView<LYRMessage *>
 
 /**
  @abstract A `LYRConversation` from which the messages are presented in the list.
- @discussion This property is set when list is set up using `setupWithConversation:client:` or `setQueryController:`.
+ @discussion When this property is set, a `LYRQueryController` for `LYRMessage` objects assigned to provided conversation, sorted by `position` property, and using `pageSize` property.
+ @warning Setting this property also updates `queryController` property.
  */
-@property (nonatomic, weak, readonly) LYRConversation *conversation;
+@property (nonatomic, strong) LYRConversation *conversation;
 
 /**
  @abstract Minimal time interval between two messages to show message time in the list.
@@ -45,13 +46,6 @@ IB_DESIGNABLE
  @discussion This property is used only when list is set up using `setupWithConversation:client:` or `setQueryController:`.
  */
 @property (nonatomic) NSUInteger pageSize;
-
-/**
- @abstract Method used to configure messages list with a `LYRConversation`.
- @discussion This methods creates a `LYRQueryController` for `LYRMessage` objects assigned to provided conversation, sorted by `position` property, and using `pageSize` property.
- @param conversation A `LYRConversation` to present messages from.
- */
-- (void)setupWithConversation:(LYRConversation *)conversation;
 
 /**
  @abstract Scroll the messages list to last message.

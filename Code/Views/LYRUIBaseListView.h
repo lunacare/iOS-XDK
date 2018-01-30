@@ -51,7 +51,7 @@ IB_DESIGNABLE
 /**
  @abstract Layout of the list view and contained `UICollectionView`.
  */
-@property (nonatomic, copy) UICollectionViewLayout<LYRUIListViewLayout> *layout;
+@property (nonatomic, copy) IBOutlet UICollectionViewLayout<LYRUIListViewLayout> *layout;
 
 /**
  @abstract A delegate of the contained `UICollectionView`.

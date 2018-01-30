@@ -117,6 +117,7 @@
                 [constraints addObject:[item.centerYAnchor constraintEqualToAnchor:view.rightItems.firstObject.centerYAnchor]];
             }
         }
+        [constraints addObject:[item.topAnchor constraintGreaterThanOrEqualToAnchor:view.topAnchor constant:bottomMargin]];
         [constraints addObject:[item.bottomAnchor constraintLessThanOrEqualToAnchor:view.bottomAnchor constant:-bottomMargin]];
         NSLayoutConstraint *lowerPriorityConstraint = [item.bottomAnchor constraintEqualToAnchor:view.bottomAnchor constant:-bottomMargin];
         lowerPriorityConstraint.priority = 750.0;
@@ -145,6 +146,7 @@
         if (item == view.rightItems.lastObject) {
             [constraints addObject:[item.rightAnchor constraintEqualToAnchor:view.rightAnchor constant:-margin]];
         }
+        [constraints addObject:[item.topAnchor constraintGreaterThanOrEqualToAnchor:view.topAnchor constant:bottomMargin]];
         [constraints addObject:[item.bottomAnchor constraintLessThanOrEqualToAnchor:view.bottomAnchor constant:-bottomMargin]];
         NSLayoutConstraint *lowerPriorityConstraint = [item.bottomAnchor constraintEqualToAnchor:view.bottomAnchor constant:-bottomMargin];
         lowerPriorityConstraint.priority = 750.0;

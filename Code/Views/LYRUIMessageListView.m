@@ -30,9 +30,6 @@
 
 @interface LYRUIMessageListView ()
 
-@property (nonatomic, weak, readwrite) LYRConversation *conversation;
-
-@property (nonatomic, strong) LYRUIMessageListViewConfiguration *configuration;
 @property (nonatomic, strong) LYRUIMessageListQueryControllerDelegate *queryControllerDelegate;
 @property (nonatomic, strong) LYRUIMessageListPaginationController *paginationController;
 
@@ -54,7 +51,7 @@
     }
 }
 
-- (void)setupWithConversation:(LYRConversation *)conversation {
+- (void)setConversation:(LYRConversation *)conversation {
     LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRMessage class]];
     query.predicate = [LYRPredicate predicateWithProperty:@"conversation"
                                         predicateOperator:LYRPredicateOperatorIsEqualTo
@@ -78,7 +75,7 @@
     }
     
     self.queryController = queryController;
-    self.conversation = conversation;
+    _conversation = conversation;
 }
 
 - (void)setQueryController:(LYRQueryController *)queryController {
@@ -104,7 +101,7 @@
         self.loadMoreItems();
     }
     
-    self.conversation = self.paginationController.conversation;
+    _conversation = self.paginationController.conversation;
     
     LYRUIListSection *section = [[LYRUIListSection alloc] init];
     section.items = [queryController.paginatedObjects.array mutableCopy];
