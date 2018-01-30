@@ -23,8 +23,8 @@
 #import "LYRUITimeFormatting.h"
 #import "LYRUIConversationItemTitleFormatting.h"
 #import "LYRUIConversationItemAccessoryViewProviding.h"
-#import "LYRUIMessageTextFormatting.h"
-#import "LYRUIParticipantsFiltering.h"
+#import "LYRUIMessageType.h"
+#import "LYRUIMessageSerializer.h"
 
 @implementation LYRUIConversationItemViewPresenter
 @synthesize layerConfiguration = _layerConfiguration;
@@ -43,8 +43,8 @@
     _layerConfiguration = layerConfiguration;
     self.accessoryViewProvider = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIConversationItemAccessoryViewProviding) forClass:[self class]];
     self.titleFormatter = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIConversationItemTitleFormatting) forClass:[self class]];
-    self.lastMessageFormatter = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIMessageTextFormatting) forClass:[self class]];
     self.messageTimeFormatter = [layerConfiguration.injector protocolImplementation:@protocol(LYRUITimeFormatting) forClass:[self class]];
+    self.messageSerializer = [layerConfiguration.injector objectOfType:[LYRUIMessageSerializer class]];
 }
 
 #pragma mark - LYRUIConversationItemView setup
@@ -69,9 +69,10 @@
     
     LYRMessage *lastMessage = conversation.lastMessage;
     if (lastMessage) {
-        view.detailLabel.text = [self.messageTimeFormatter stringForTime:lastMessage.sentAt
-                                                       withCurrentTime:[NSDate date]];
-        view.subtitleLabel.text = [self.lastMessageFormatter stringForMessage:lastMessage];
+        view.detailLabel.text = [self.messageTimeFormatter stringForTime:lastMessage.sentAt ?: lastMessage.receivedAt
+                                                         withCurrentTime:[NSDate date]];
+        LYRUIMessageType *messageType = [self.messageSerializer typedMessageWithLayerMessage:lastMessage];
+        view.subtitleLabel.text = messageType.summary;
     }
     if (view.accessoryView == nil) {
         view.accessoryView = [self.accessoryViewProvider accessoryViewForConversation:conversation];

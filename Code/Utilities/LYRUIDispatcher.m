@@ -22,8 +22,16 @@
 
 @implementation LYRUIDispatcher
 
-- (void)dispatchAsyncOnMainQueue:(void(^)(void))block {
-    dispatch_async(dispatch_get_main_queue(), block);
+- (void)dispatchAsyncOnMainQueue:(void(^)())block {
+    [self dispatchAsyncOnQueue:dispatch_get_main_queue() block:block];
+}
+
+- (void)dispatchAsyncOnGlobalQueue:(dispatch_queue_priority_t)priority block:(void (^)())block {
+    [self dispatchAsyncOnQueue:dispatch_get_global_queue(priority, 0) block:block];
+}
+
+- (void)dispatchAsyncOnQueue:(dispatch_queue_t)queue block:(void (^)())block {
+    dispatch_async(queue, block);
 }
 
 @end

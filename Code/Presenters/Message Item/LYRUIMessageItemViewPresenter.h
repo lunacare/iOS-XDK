@@ -21,8 +21,9 @@
 #import "LYRUIMessageItemView.h"
 #import "LYRUIConfigurable.h"
 @protocol LYRUIMessageItemAccessoryViewProviding;
+@protocol LYRUIMessageListActionHandlingDelegate;
 @class LYRIdentity;
-@class LYRMessage;
+@class LYRUIMessageType;
 
 NS_ASSUME_NONNULL_BEGIN     // {
 @interface LYRUIMessageItemViewPresenter : NSObject <LYRUIConfigurable>
@@ -33,19 +34,24 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @property (nonatomic, strong) id<LYRUIMessageItemAccessoryViewProviding> primaryAccessoryViewProvider;
 
 /**
- @abstract Updates the view conforming to `LYRUIMessageItemView` protocol with data from given `LYRMessage`.
- @param messageItemView The UIView conforming to `LYRUIMessageItemView` protocol to be set up.
- @param message The `LYRMessage` object to be presented on messages list.
+ @abstract Delegate used for handling message actions.
  */
-- (void)setupMessageItemView:(UIView<LYRUIMessageItemView> *)messageItemView
-                 withMessage:(LYRMessage *)message;
+@property (nonatomic, weak) id<LYRUIMessageListActionHandlingDelegate> actionHandlingDelegate;
 
 /**
- @abstract Calculates height for displaying an UIView conforming to `LYRUIMessageItemView` protocol with data from given `LYRMessage`.
- @param message The `LYRMessage` object which height should be calculated.
+ @abstract Updates the view conforming to `LYRUIMessageItemView` protocol with data from given `LYRUIMessageType`.
+ @param messageItemView The UIView conforming to `LYRUIMessageItemView` protocol to be set up.
+ @param message The `LYRUIMessageType` object to be presented on messages list.
+ */
+- (void)setupMessageItemView:(UIView<LYRUIMessageItemView> *)messageItemView
+                 withMessage:(LYRUIMessageType *)message;
+
+/**
+ @abstract Calculates height for displaying an UIView conforming to `LYRUIMessageItemView` protocol with data from given `LYRUIMessageType`.
+ @param message The `LYRUIMessageType` object which height should be calculated.
  @param maxWidth Maximum width for presenting the `message`.
  */
-- (CGFloat)messageViewHeightForMessage:(LYRMessage *)message maxWidth:(CGFloat)maxWidth;
+- (CGFloat)messageViewHeightForMessage:(LYRUIMessageType *)message maxWidth:(CGFloat)maxWidth;
 
 @end
 NS_ASSUME_NONNULL_END       // }

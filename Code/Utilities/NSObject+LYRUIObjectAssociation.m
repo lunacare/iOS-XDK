@@ -1,8 +1,8 @@
 //
-//  LYRUIMessageTextDefaultFormatter.h
+//  NSObject+LYRUIObjectAssociation.m
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 09.08.2017.
+//  Created by Łukasz Przytuła on 03.10.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +18,17 @@
 //  limitations under the License.
 //
 
-#import "LYRUIMessageTextFormatting.h"
+#import "NSObject+LYRUIObjectAssociation.h"
+#import <objc/runtime.h>
 
-/**
- @abstract The `LYRUIMessageTextDefaultFormatter` objects will be used for providing a string representing an message.
- */
-@interface LYRUIMessageTextDefaultFormatter : NSObject <LYRUIMessageTextFormatting>
+@implementation NSObject (LYRUIObjectAssociation)
+
+- (id)lyr_getAssociatedPropertyWithKey:(const void *)key {
+    return objc_getAssociatedObject(self, key);
+}
+
+- (void)lyr_setAssociatedPropertyWithKey:(const void *)key object:(id)object {
+    objc_setAssociatedObject(self, key, object, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 @end

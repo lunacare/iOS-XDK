@@ -20,26 +20,26 @@
 
 #import <Foundation/Foundation.h>
 #import "LYRUIParticipantsFiltering.h"
-@class LYRMessage;
+@class LYRUIMessageType;
 
 NS_ASSUME_NONNULL_BEGIN     // {
 @protocol LYRUIMessageItemAccessoryViewProviding <NSObject>
 
 /**
  @abstract Provides an accessory view representing a message.
- @param message The `LYRMessage` object.
+ @param message The `LYRUIMessageType` object.
  @return An `UIView` visually representing the message.
  @discussion The view will be added to the `LYRUIMessageItemView` as an accessory view.
  */
-- (UIView *)accessoryViewForMessage:(LYRMessage *)message;
+- (UIView *)accessoryViewForMessage:(LYRUIMessageType *)message;
 
 /**
  @abstract Configures an existing accessory view representing a message.
  @param accessoryView The view to update with provided data.
- @param message The `LYRMessage` object.
+ @param message The `LYRUIMessageType` object.
  @discussion This method should be use to update appearance of existing, reused accessory view.
  */
-- (void)setupAccessoryView:(UIView *)accessoryView forMessage:(LYRMessage *)message;
+- (void)setupAccessoryView:(UIView *)accessoryView forMessage:(LYRUIMessageType *)message;
 
 @end
 NS_ASSUME_NONNULL_END       // }

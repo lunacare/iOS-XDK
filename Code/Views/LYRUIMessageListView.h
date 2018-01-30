@@ -20,15 +20,17 @@
 
 #import "LYRUIBaseListView.h"
 #import "LYRUIMessageListTypingIndicatorsController.h"
+#import "LYRUIMessageListActionHandlingDelegate.h"
 @class LYRConversation;
 @class LYRMessage;
 @class LYRIdentity;
+@class LYRUIMessageSender;
 
 IB_DESIGNABLE
 /**
  @abstract A typed `LYRUIBaseListView`, for presenting `LYRMessage` items.
  */
-@interface LYRUIMessageListView : LYRUIBaseListView<LYRMessage *>
+@interface LYRUIMessageListView : LYRUIBaseListView<LYRMessage *> <LYRUIMessageListActionHandlingDelegate>
 
 /**
  @abstract A `LYRConversation` from which the messages are presented in the list.
@@ -36,6 +38,12 @@ IB_DESIGNABLE
  @warning Setting this property also updates `queryController` property.
  */
 @property (nonatomic, strong) LYRConversation *conversation;
+
+/**
+ @abstract Object used for sending messages in the `LYRConversation`.
+ @discussion This property is set, when view is set up using `LYRUIConfiguration`.
+ */
+@property (nonatomic, strong, readonly) LYRUIMessageSender *messageSender;
 
 /**
  @abstract Minimal time interval between two messages to show message time in the list.
@@ -48,12 +56,27 @@ IB_DESIGNABLE
  */
 @property (nonatomic) NSUInteger pageSize;
 
+/**
+ @abstract Object controlling presence of typing indicators.
+ */
 @property (nonatomic, strong) LYRUIMessageListTypingIndicatorsController *typingIndicatorsController;
+
+/**
+ @abstract Delegate used for handling message actions.
+ */
+@property (nonatomic, weak) id<LYRUIMessageListActionHandlingDelegate> messageActionHandlingDelegate;
 
 /**
  @abstract Scroll the messages list to last message.
  @param animated YES to animate the transition at a constant velocity to the new offset, NO to make the transition immediate.
  */
 - (void)scrollToLastMessageAnimated:(BOOL)animated;
+
+/**
+ @abstract Registers view controller for presenting previews of message content.
+ @param viewController View controller used to push view controllers with preview of messages content.
+ @discussion The registered view controller will be used by the default action handlering delegate to present previews.
+ */
+- (void)registerViewControllerForPreviewing:(UIViewController *)viewController;
 
 @end

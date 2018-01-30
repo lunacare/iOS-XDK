@@ -36,7 +36,6 @@
 #import "LYRUIConversationItemViewPresenter.h"
 #import "LYRUIConversationItemAccessoryViewProviding.h"
 #import "LYRUIConversationItemTitleFormatter.h"
-#import "LYRUIMessageTextDefaultFormatter.h"
 #import "LYRUIMessageTimeDefaultFormatter.h"
 #import "LYRUIConversationListView.h"
 #import "LYRUIConversationListViewPresenter.h"
@@ -96,8 +95,13 @@
 @property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultLayouts;
 @property (nonatomic, readwrite) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, LYRUIDependencyProviding> *> *defaultProtocolImplementations;
 @property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultObjects;
+@property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultMessagePresenters;
+@property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultMessageContainerPresenters;
+@property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultMessageSerializers;
+@property (nonatomic, readwrite) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, LYRUIDependencyProviding> *> *defaultActionHandlers;
 
 @property (nonatomic, strong) id<LYRUIImageCaching> imagesCache;
+@property (nonatomic, strong) id<LYRUIThumbnailsCaching> thumbnailsCache;
 @property (nonatomic, strong) LYRUIBundleProvider *bundleProvider;
 
 @end
@@ -108,6 +112,7 @@
     self = [super init];
     if (self) {
         self.imagesCache = [[NSCache<NSURL *, UIImage *> alloc] init];
+        self.thumbnailsCache = [[NSCache<NSURL *, UIImage *> alloc] init];
         self.bundleProvider = [[LYRUIBundleProvider alloc] init];
         
         [self setupThemes];
@@ -116,6 +121,10 @@
         [self setupLayouts];
         [self setupProtocolImplementations];
         [self setupObjects];
+        [self setupMessagePresenters];
+        [self setupMessageContainerPresenters];
+        [self setupMessageSerializers];
+        [self setupActionHandlers];
     }
     return self;
 }
@@ -187,8 +196,6 @@
                      forProtocol:@protocol(LYRUIConversationItemAccessoryViewProviding)];
     [self setImplementationClass:[LYRUIConversationItemTitleFormatter class]
                      forProtocol:@protocol(LYRUIConversationItemTitleFormatting)];
-    [self setImplementationClass:[LYRUIMessageTextDefaultFormatter class]
-                     forProtocol:@protocol(LYRUIMessageTextFormatting)];
     [self setImplementationClass:[LYRUIMessageTimeDefaultFormatter class]
                      forProtocol:@protocol(LYRUITimeFormatting)];
     [self setImplementationClass:[LYRUIAvatarViewProvider class]
@@ -205,7 +212,7 @@
                      forProtocol:@protocol(LYRUIDataCreating)];
     [self setImplementationClass:[LYRUIDispatcher class]
                      forProtocol:@protocol(LYRUIDispatching)];
-    [self setupImagesCache];
+    [self setupImagesCaches];
     [self setImplementationClass:[LYRUIAvatarViewProvider class]
                      forProtocol:@protocol(LYRUIMessageItemAccessoryViewProviding)];
     
@@ -217,12 +224,17 @@
                      usedInClass:[LYRUIMessageListTimeSupplementaryViewPresenter class]];
 }
 
-- (void)setupImagesCache {
+- (void)setupImagesCaches {
     NSString *anyClassKey = NSStringFromClass([LYRUIDIAnyClass class]);
     NSString *imagesCachingKey = NSStringFromProtocol(@protocol(LYRUIImageCaching));
     __weak __typeof(self) weakSelf = self;
     self.defaultProtocolImplementations[anyClassKey][imagesCachingKey] = ^id (LYRUIConfiguration *configuration) {
         return weakSelf.imagesCache;
+    };
+    
+    NSString *thumbnailsCachingKey = NSStringFromProtocol(@protocol(LYRUIThumbnailsCaching));
+    self.defaultProtocolImplementations[anyClassKey][thumbnailsCachingKey] = ^id (LYRUIConfiguration *configuration) {
+        return weakSelf.thumbnailsCache;
     };
 }
 
@@ -262,6 +274,22 @@
     } forObjectType:[NSNotificationCenter class]];
 }
 
+- (void)setupMessagePresenters {
+    self.defaultMessagePresenters = [[NSMutableDictionary alloc] init];
+}
+
+- (void)setupMessageContainerPresenters {
+    self.defaultMessageContainerPresenters = [[NSMutableDictionary alloc] init];
+}
+
+- (void)setupMessageSerializers {
+    self.defaultMessageSerializers = [[NSMutableDictionary alloc] init];
+}
+
+- (void)setupActionHandlers {
+    self.defaultActionHandlers = [[NSMutableDictionary alloc] init];
+}
+
 #pragma mark - Helpers
 
 - (LYRUIDependencyProviding)providerWithClass:(Class)objectClass {
@@ -285,8 +313,8 @@
     self.defaultPresenters[NSStringFromClass(viewClass)] = [self providerWithClass:presenterClass];
 }
 
-- (void)setLayoutClass:(Class)presenterClass forViewClass:(Class)viewClass {
-    self.defaultLayouts[NSStringFromClass(viewClass)] = [self providerWithClass:presenterClass];
+- (void)setLayoutClass:(Class)layoutClass forViewClass:(Class)viewClass {
+    self.defaultLayouts[NSStringFromClass(viewClass)] = [self providerWithClass:layoutClass];
 }
 
 - (void)setImplementationClass:(Class)implementationClass forProtocol:(Protocol *)protocol {
@@ -304,6 +332,30 @@
 
 - (void)setProvider:(LYRUIDependencyProviding)provider forObjectType:(Class)objectType {
     self.defaultObjects[NSStringFromClass(objectType)] = provider;
+}
+
+- (void)setMessagePresenterClass:(Class)presenterClass forViewClass:(Class)viewClass {
+    self.defaultMessagePresenters[NSStringFromClass(viewClass)] = [self providerWithClass:presenterClass];
+}
+
+- (void)setMessageContainerPresenterClass:(Class)presenterClass forViewClass:(Class)viewClass {
+    self.defaultMessageContainerPresenters[NSStringFromClass(viewClass)] = [self providerWithClass:presenterClass];
+}
+
+- (void)setMessageSerializerClass:(Class)serializerClass forMIMEType:(NSString *)MIMEType {
+    self.defaultMessageSerializers[MIMEType] = [self providerWithClass:serializerClass];
+}
+
+- (void)setActionHandlerClass:(Class)implementationClass forEvent:(NSString *)event {
+    [self setActionHandlerClass:implementationClass forEvent:event usedInMessageType:[LYRUIDIAnyClass class]];
+}
+
+- (void)setActionHandlerClass:(Class)implementationClass forEvent:(NSString *)event usedInMessageType:(Class)usageMessageType {
+    NSString *usageClassKey = NSStringFromClass(usageMessageType);
+    if (self.defaultActionHandlers[usageClassKey] == nil) {
+        self.defaultActionHandlers[usageClassKey] = [[NSMutableDictionary alloc] init];
+    }
+    self.defaultActionHandlers[usageClassKey][event] = [self providerWithClass:implementationClass];
 }
 
 @end

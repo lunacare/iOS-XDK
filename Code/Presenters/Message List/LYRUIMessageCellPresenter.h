@@ -22,6 +22,13 @@
 #import "LYRUIConfigurable.h"
 #import "LYRUIListCellSizeCalculating.h"
 #import "LYRUIListCellPresenting.h"
+@protocol LYRUIMessageListActionHandlingDelegate;
 
 @interface LYRUIMessageCellPresenter : NSObject <LYRUIListCellSizeCalculating, LYRUIListCellPresenting, LYRUIConfigurable>
+
+/**
+ @abstract Delegate used for handling message actions.
+ */
+@property (nonatomic, weak) id<LYRUIMessageListActionHandlingDelegate> actionHandlingDelegate;
+
 @end

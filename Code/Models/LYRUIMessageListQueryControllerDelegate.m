@@ -19,23 +19,26 @@
 //
 
 #import "LYRUIMessageListQueryControllerDelegate.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 #import "LYRUIListDataSource.h"
 #import "LYRUIListSection.h"
 #import <LayerKit/LayerKit.h>
 #import "UIScrollView+LYRUIAdjustedContentInset.h"
+#import "LYRUIMessageSerializer.h"
 
 @interface LYRUIMessageListQueryControllerDelegate ()
-
-@property (nonatomic, strong) NSArray *itemsSelectedBeforeContentChange;
 
 @property (nonatomic, strong) NSMutableArray *insertedIndexPaths;
 @property (nonatomic, strong) NSMutableArray *adjacentToInsertedIndexPaths;
 @property (nonatomic, strong) NSMutableArray *deletedIndexPaths;
 @property (nonatomic, strong) NSMutableArray *updatedIndexPaths;
 
+@property(nonatomic, strong) LYRUIMessageSerializer *messageSerializer;
+
 @end
 
 @implementation LYRUIMessageListQueryControllerDelegate
+@synthesize layerConfiguration = _layerConfiguration;
 
 - (instancetype)init {
     self = [super init];
@@ -46,6 +49,19 @@
         self.updatedIndexPaths = [[NSMutableArray alloc] init];
     }
     return self;
+}
+
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
+    self = [self init];
+    if (self) {
+        self.layerConfiguration = configuration;
+    }
+    return self;
+}
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.messageSerializer = [layerConfiguration.injector objectOfType:[LYRUIMessageSerializer class]];
 }
 
 #pragma mark - LYRQueryControllerDelegate
@@ -123,8 +139,16 @@
 #pragma mark - Data updates;
 
 - (void)updateObjectsWithQueryController:(LYRQueryController *)queryController {
+    if (self.listDataSource.sections.count == 0) {
+        self.listDataSource.sections = [@[[[LYRUIListSection alloc] init]] mutableCopy];
+    }
     LYRUIListSection *section = self.listDataSource.sections[0];
-    section.items = [queryController.paginatedObjects.array mutableCopy];
+    NSMutableArray *items = [[NSMutableArray alloc] init];
+    for (LYRMessage *message in queryController.paginatedObjects.array) {
+        LYRUIMessageType *messageType = [self.messageSerializer typedMessageWithLayerMessage:message];
+        [items addObject:messageType];
+    }
+    section.items = items;
 }
 
 - (void)updateIndexPathsToReloadWithQueryController:(LYRQueryController *)queryController {

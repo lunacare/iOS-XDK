@@ -23,9 +23,9 @@
 #import "LYRUIConversationItemView.h"
 #import <LayerKit/LayerKit.h>
 @protocol LYRUIConversationItemTitleFormatting;
-@protocol LYRUIMessageTextFormatting;
 @protocol LYRUITimeFormatting;
 @protocol LYRUIConversationItemAccessoryViewProviding;
+@class LYRUIMessageSerializer;
 
 NS_ASSUME_NONNULL_BEGIN     // {
 
@@ -42,14 +42,14 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @property(nonatomic, strong) id<LYRUIConversationItemTitleFormatting> titleFormatter;
 
 /**
- @abstract The object provides summary of last message for the conversation item.
- */
-@property(nonatomic, strong) id<LYRUIMessageTextFormatting> lastMessageFormatter;
-
-/**
  @abstract The object provides formatted date of last message for the conversation item.
  */
 @property(nonatomic, strong) id<LYRUITimeFormatting> messageTimeFormatter;
+
+/**
+ @abstract The object parses `LYRMessage` objects into `LYRUIMessageType` model.
+ */
+@property(nonatomic, strong) LYRUIMessageSerializer *messageSerializer;
 
 /**
  @abstract Updates the view conforming to `LYRUIConversationItemView` protocol with data from given Conversation.

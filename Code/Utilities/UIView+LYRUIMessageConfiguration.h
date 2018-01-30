@@ -1,8 +1,8 @@
 //
-//  LYRUIMessageTextFormatting.h
+//  UIView+LYRUIMessageConfiguration.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 09.08.2017.
+//  Created by Łukasz Przytuła on 03.11.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,16 +18,12 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-@class LYRMessage;
+#import <UIKit/UIKit.h>
 
-@protocol LYRUIMessageTextFormatting <NSObject>
+@interface UIView (LYRUIMessageConfiguration)
 
-/**
- @abstract Provides a description string to display for a given message.
- @param message The `LYRMessage` object.
- @return The string to be displayed as the summary for a given message.
- */
-- (NSString *)stringForMessage:(LYRMessage *)message;
+@property (nonatomic, strong) NSString *lyr_configurationContextId;
+
+- (BOOL)lyr_isOutOfContext:(NSString *)contextId;
 
 @end

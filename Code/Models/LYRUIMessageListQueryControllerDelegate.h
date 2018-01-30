@@ -19,13 +19,14 @@
 //
 
 #import <LayerKit/LayerKit.h>
-#import "LYRUIListDataSource.h"
+#import "LYRUIConfigurable.h"
+@protocol LYRUIListDataSource;
 
 NS_ASSUME_NONNULL_BEGIN     // {
 /**
  @abstract A LYRQueryControllerDelegate which reacts to changes in queried items, and updates bot data source with collection view properly.
  */
-@interface LYRUIMessageListQueryControllerDelegate : NSObject <LYRQueryControllerDelegate>
+@interface LYRUIMessageListQueryControllerDelegate : NSObject <LYRQueryControllerDelegate, LYRUIConfigurable>
 
 /**
  @abstract A `LYRUIListView` data source to update with changes in queried items.
@@ -36,6 +37,11 @@ NS_ASSUME_NONNULL_BEGIN     // {
  @abstract An `UICollectionView` to update with the changes in data.
  */
 @property (nonatomic, weak) UICollectionView *collectionView;
+
+/**
+ @abstract Updates items in `listDataSource` with currently available items from the `queryController`.
+ */
+- (void)updateObjectsWithQueryController:(LYRQueryController *)queryController;
 
 @end
 NS_ASSUME_NONNULL_END       // }

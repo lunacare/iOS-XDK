@@ -20,14 +20,8 @@
 
 #import "LYRUIImageCaching.h"
 
-NS_ASSUME_NONNULL_BEGIN     // {
 @interface NSCache (LYRUIImageCaching) <LYRUIImageCaching>
-
-/**
- @abstract Creates if needed, and provides a shared instance of images cache.
- @returns An `NSCache` instance with `UIImage` objects assigned to the `NSURL` keys.
- */
-+ (NSCache<NSURL *, UIImage *> *)sharedImagesCache;
-
 @end
-NS_ASSUME_NONNULL_END       // }
+
+@interface NSCache (LYRUIThumbnailsCaching) <LYRUIThumbnailsCaching>
+@end

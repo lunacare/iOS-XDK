@@ -31,13 +31,18 @@ static CGFloat const LYRUIMessageItemViewContentDefaultCornerRadius = 16.0;
 @property (nonatomic, weak, readwrite) UIView *contentViewContainer;
 @property (nonatomic, weak, readwrite) UIView *secondaryAccessoryViewContainer;
 
+@property (nonatomic, weak, readwrite) UITapGestureRecognizer *tapGestureRecognizer;
+
 @end
 
 @implementation LYRUIMessageItemView
 @synthesize primaryAccessoryView = _primaryAccessoryView,
             contentView = _contentView,
             secondaryAccessoryView = _secondaryAccessoryView,
-            layerConfiguration = _layerConfiguration;
+            layerConfiguration = _layerConfiguration,
+            messageId = _messageId,
+            contentViewColor = _contentViewColor,
+            actionHandler = _actionHandler;
 @dynamic layout;
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -79,6 +84,11 @@ static CGFloat const LYRUIMessageItemViewContentDefaultCornerRadius = 16.0;
     self.contentViewContainer.layer.cornerRadius = LYRUIMessageItemViewContentDefaultCornerRadius;
     self.contentViewContainer.backgroundColor = [UIColor colorWithWhite:242.0/255.0 alpha:1.0];
     self.secondaryAccessoryViewContainer = [self addView];
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                           action:@selector(handleTap)];
+    [self.contentViewContainer addGestureRecognizer:tapGestureRecognizer];
+    self.tapGestureRecognizer = tapGestureRecognizer;
 }
 
 - (UIView *)addView {
@@ -131,6 +141,20 @@ static CGFloat const LYRUIMessageItemViewContentDefaultCornerRadius = 16.0;
     }
     _secondaryAccessoryView = secondaryAccessoryView;
     [self setNeedsUpdateConstraints];
+}
+
+- (void)setContentViewColor:(UIColor *)contentViewColor {
+    _contentViewColor = contentViewColor;
+    self.contentViewContainer.backgroundColor = contentViewColor;
+    self.contentViewContainer.layer.borderColor = contentViewColor.CGColor;
+}
+
+#pragma mark - Action handling
+
+- (void)handleTap {
+    if (self.actionHandler) {
+        self.actionHandler();
+    }
 }
 
 @end

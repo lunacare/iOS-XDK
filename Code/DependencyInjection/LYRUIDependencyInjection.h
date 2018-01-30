@@ -23,12 +23,22 @@
 @protocol LYRUIDependencyInjection;
 @protocol LYRUIBaseItemViewTheme;
 @protocol LYRUIImageCaching;
+@protocol LYRUIMessageItemContentPresenting;
+@protocol LYRUIMessageItemContentContainerPresenting;
+@protocol LYRUIMessageTypeSerializing;
+@protocol LYRUIActionHandling;
 
-typedef id(^LYRUIDependencyProviding)(LYRUIConfiguration *);
+NS_ASSUME_NONNULL_BEGIN     // {
+typedef id _Nonnull(^LYRUIDependencyProviding)(LYRUIConfiguration *);
 
 @protocol LYRUIDependencyInjection <NSObject>
 
 @property (nonatomic, weak) LYRUIConfiguration *layerConfiguration;
+
+/**
+ @abstract Array of classes of handled message types.
+ */
+@property (nonatomic, readonly) NSArray<Class> *handledMessageClasses;
 
 /**
  @abstract Returns a theme object for given view class.
@@ -73,4 +83,34 @@ typedef id(^LYRUIDependencyProviding)(LYRUIConfiguration *);
  */
 - (id)objectOfType:(Class)type;
 
+/**
+ @abstract Returns a presenter for message of provided `messageClass`.
+ @param messageClass Class of the message to present.
+ @return An object conforming to `LYRUIMessageItemContentPresenting` protocol.
+ */
+- (nullable id<LYRUIMessageItemContentPresenting>)presenterForMessageClass:(Class)messageClass;
+
+/**
+ @abstract Returns a container presenter for message of provided `messageClass`.
+ @param messageClass Class of the message to present in container.
+ @return An object conforming to `LYRUIMessageItemContentPresenting` protocol.
+ */
+- (nullable id<LYRUIMessageItemContentContainerPresenting>)containerPresenterForMessageClass:(Class)messageClass;
+
+/**
+ @abstract Returns a serializer for message with provided `MIMEType`.
+ @param MIMEType The MIMEType of the message to serialize.
+ @return An object conforming to `LYRUIMessageTypeSerializing` protocol.
+ */
+- (nullable id<LYRUIMessageTypeSerializing>)serializerForMessagePartMIMEType:(NSString *)MIMEType;
+
+/**
+ @abstract Returns a handler of message action with given `event`, for message of provided `messageClass`.
+ @param event The event type of message action.
+ @param messageClass Class of the message to present in container.
+ @return An object conforming to `LYRUIActionHandling` protocol.
+ */
+- (nullable id<LYRUIActionHandling>)handlerOfMessageActionWithEvent:(NSString *)event forMessageType:(nullable Class)messageClass;
+
 @end
+NS_ASSUME_NONNULL_END       // }

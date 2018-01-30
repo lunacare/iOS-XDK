@@ -22,8 +22,8 @@
 #import <LayerKit/LayerKit.h>
 
 NSString *const LYRUIMessagePartRoleRoot = @"root";
-static NSString *const LYRUIMessagePartParentNodeIdKey = @"parent-node-id";
-static NSString *const LYRUIMessagePartRoleKey = @"role";
+NSString *const LYRUIMessagePartParentNodeIdKey = @"parent-node-id";
+NSString *const LYRUIMessagePartRoleKey = @"role";
 
 @implementation LYRUIMessageAttributesManager
 

@@ -23,6 +23,8 @@
 @class LYRMessagePart;
 
 extern NSString *const LYRUIMessagePartRoleRoot;
+extern NSString *const LYRUIMessagePartParentNodeIdKey;
+extern NSString *const LYRUIMessagePartRoleKey;
 
 @interface LYRUIMessageAttributesManager : NSObject
 

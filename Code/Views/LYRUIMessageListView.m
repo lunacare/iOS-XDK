@@ -24,14 +24,20 @@
 #import "LYRUIMessageListIBSetup.h"
 #import "LYRUIMessageListQueryControllerDelegate.h"
 #import "LYRUIMessageListDelegate.h"
+#import "LYRUIListDataSource.h"
 #import "LYRUIListSection.h"
 #import "LYRUIMessageListPaginationController.h"
 #import <LayerKit/LayerKit.h>
+#import "LYRUIMessageAction.h"
+#import "LYRUIMessageSender.h"
+#import "LYRUIActionHandling.h"
 
-@interface LYRUIMessageListView ()
+@interface LYRUIMessageListView () <LYRUIActionHandlingDelegate>
 
 @property (nonatomic, strong) LYRUIMessageListQueryControllerDelegate *queryControllerDelegate;
 @property (nonatomic, strong) LYRUIMessageListPaginationController *paginationController;
+@property (nonatomic, strong, readwrite) LYRUIMessageSender *messageSender;
+@property (nonatomic, weak) UIViewController *presentationViewController;
 
 @end
 
@@ -39,12 +45,32 @@
 @synthesize queryController = _queryController;
 @dynamic queryControllerDelegate, delegate;
 
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    [super setLayerConfiguration:layerConfiguration];
+    self.messageSender = [layerConfiguration.injector objectOfType:[LYRUIMessageSender class]];
+}
+
 - (void)dealloc {
     [self.typingIndicatorsController removeNotificationsObserver];
 }
 
 - (void)prepareForInterfaceBuilder {
     [[[LYRUIMessageListIBSetup alloc] init] prepareMessageListForInterfaceBuilder:self];
+}
+
+#pragma mark - Public methods
+
+- (void)scrollToLastMessageAnimated:(BOOL)animated {
+    LYRUIListSection *section = self.dataSource.sections.lastObject;
+    if (section.items.count > 0) {
+        [self.collectionView scrollToItemAtIndexPath:self.dataSource.lastItemIndexPath
+                                    atScrollPosition:UICollectionViewScrollPositionTop
+                                            animated:animated];
+    }
+}
+
+- (void)registerViewControllerForPreviewing:(UIViewController *)viewController {
+    self.presentationViewController = viewController;
 }
 
 - (void)setPageSize:(NSUInteger)pageSize {
@@ -108,22 +134,35 @@
     _conversation = self.paginationController.conversation;
     [self.typingIndicatorsController registerForNotificationsInConversation:self.conversation];
     
-    LYRUIListSection *section = [[LYRUIListSection alloc] init];
-    section.items = [queryController.paginatedObjects.array mutableCopy];
-    self.items = [@[section] mutableCopy];
+    self.messageSender.conversation = self.conversation;
     
+    [self.queryControllerDelegate updateObjectsWithQueryController:queryController];
     [self.collectionView reloadData];
 }
 
-#pragma mark - Public methods
+#pragma mark - LYRUIMessageListActionHandlingDelegate
 
-- (void)scrollToLastMessageAnimated:(BOOL)animated {
-    LYRUIListSection *section = self.dataSource.sections.lastObject;
-    if (section.items.count > 0) {
-        [self.collectionView scrollToItemAtIndexPath:self.dataSource.lastItemIndexPath
-                                    atScrollPosition:UICollectionViewScrollPositionTop
-                                            animated:animated];
+- (void)handleAction:(LYRUIMessageAction *)action withHandler:(id<LYRUIActionHandling>)handler {
+    if (self.messageActionHandlingDelegate) {
+        [self.messageActionHandlingDelegate handleAction:action withHandler:handler];
+        return;
     }
+    
+    if (handler == nil) {
+        handler = [self.layerConfiguration.injector handlerOfMessageActionWithEvent:action.event
+                                                                     forMessageType:nil];
+    }
+    [handler handleActionWithData:action.data delegate:self];
+}
+
+#pragma mark - LYRUIActionHandlingDelegate
+
+- (void)actionHandler:(id<LYRUIActionHandling>)actionHandler sendMessage:(LYRUIMessageType *)messageType {
+    [self.messageSender sendMessage:messageType];
+}
+
+- (void)actionHandler:(id<LYRUIActionHandling>)actionHandler presentViewController:(UIViewController *)viewController {
+    [self.presentationViewController presentViewController:viewController animated:YES completion:nil];
 }
 
 @end
