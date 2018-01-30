@@ -200,8 +200,8 @@ describe(@"LYRUIListQueryControllerDelegate", ^{
             objectMock1 = mockObjectAndProtocol([NSObject class], @protocol(LYRQueryable));
             objectMock2 = mockObjectAndProtocol([NSObject class], @protocol(LYRQueryable));
             objectMock3 = mockObjectAndProtocol([NSObject class], @protocol(LYRQueryable));
-            NSOrderedSet *allObjects = [NSOrderedSet orderedSetWithArray:@[objectMock1, objectMock2]];
-            [given(queryControllerMock.allObjects) willReturn:allObjects];
+            NSOrderedSet *paginatedObjects = [NSOrderedSet orderedSetWithArray:@[objectMock1, objectMock2]];
+            [given(queryControllerMock.paginatedObjects) willReturn:paginatedObjects];
             
             deletedIndexPathsMock = mock([NSMutableArray class]);
             delegate.deletedIndexPaths = deletedIndexPathsMock;

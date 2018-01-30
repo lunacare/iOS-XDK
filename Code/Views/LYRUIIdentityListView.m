@@ -20,7 +20,7 @@
 
 #import "LYRUIIdentityListView.h"
 #import "LYRUIIdentityListIBSetup.h"
-#import "LYRUIIdentityListViewConfiguration.h"
+#import "LYRUIIdentityListViewPresenter.h"
 
 @interface LYRUIIdentityListView ()
 

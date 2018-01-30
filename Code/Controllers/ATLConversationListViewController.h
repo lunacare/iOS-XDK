@@ -145,11 +145,11 @@ NS_ASSUME_NONNULL_BEGIN
      query.predicate = [LYRPredicate predicateWithProperty:@"participants" predicateOperator:LYRPredicateOperatorIsIn value:self.layerClient.authenticatedUserID];
      query.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"lastMessage.receivedAt" ascending:NO]];
  
- Applications that require advanced query configuration can do so by implementing this data source method.
+ Applications that require advanced query presenter can do so by implementing this data source method.
  
- @param viewController The `ATLConversationViewController` requesting the configuration.
- @param defaultQuery An `LYRQuery` object with the default configuration for the controller.
- @return An `LYRQuery` object with any additional configuration.
+ @param viewController The `ATLConversationViewController` requesting the presenter.
+ @param defaultQuery An `LYRQuery` object with the default presenter for the controller.
+ @return An `LYRQuery` object with any additional presenter.
 @raises `NSInvalidArgumentException` if an `LYRQuery` object is not returned.
  */
 - (LYRQuery *)conversationListViewController:(ATLConversationListViewController *)viewController willLoadWithQuery:(LYRQuery *)defaultQuery;

@@ -339,7 +339,7 @@ NSString *const ATLConversationListViewControllerDeletionModeEveryone = @"Everyo
     return self.allowsEditing;
 }
 
-#pragma mark - Cell Configuration
+#pragma mark - Cell Presenter
 
 - (void)configureCell:(UITableViewCell<ATLConversationPresenting> *)conversationCell atIndexPath:(NSIndexPath *)indexPath
 {

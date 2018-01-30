@@ -22,8 +22,8 @@
 #import "LYRUIListSectionHeader.h"
 #import "LYRUIListHeaderView.h"
 @class LYRUIListSection<ModelType>;
-@protocol LYRUIListCellConfiguring;
-@protocol LYRUIListSupplementaryViewConfiguring;
+@protocol LYRUIListCellPresenting;
+@protocol LYRUIListSupplementaryViewPresenting;
 
 NS_ASSUME_NONNULL_BEGIN     // {
 /**
@@ -71,14 +71,14 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @interface LYRUIListDataSource : NSObject <LYRUIListDataSource>
 
 /**
- @abstract A method for registering objects conforming to `LYRUIListCellConfiguring` protocol that will be used to setup cells in the list view.
+ @abstract A method for registering objects conforming to `LYRUIListCellPresenting` protocol that will be used to setup cells in the list view.
  */
-- (void)registerCellConfiguration:(id<LYRUIListCellConfiguring>)cellConfiguration;
+- (void)registerCellPresenter:(id<LYRUIListCellPresenting>)cellPresenter;
 
 /**
- @abstract A method for registering objects conforming to `LYRUIListSupplementaryViewConfiguring` protocol that will be used to setup supplementary views in the list view.
+ @abstract A method for registering objects conforming to `LYRUIListSupplementaryViewPresenting` protocol that will be used to setup supplementary views in the list view.
  */
-- (void)registerSupplementaryViewConfiguration:(id<LYRUIListSupplementaryViewConfiguring>)supplementaryViewConfiguration;
+- (void)registerSupplementaryViewPresenter:(id<LYRUIListSupplementaryViewPresenting>)supplementaryViewPresenter;
 
 @end
 NS_ASSUME_NONNULL_END       // }

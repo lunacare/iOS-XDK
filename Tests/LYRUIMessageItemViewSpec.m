@@ -56,7 +56,7 @@ describe(@"LYRUIMessageItemView", ^{
         });
     });
     
-    describe(@"after initialization with configuration", ^{
+    describe(@"after initialization with presenter", ^{
         __block id<LYRUIMessageItemViewLayout> layoutMock;
         
         beforeEach(^{

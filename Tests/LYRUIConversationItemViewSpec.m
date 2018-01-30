@@ -69,7 +69,7 @@ describe(@"LYRUIConversationItemView", ^{
         });
     });
     
-    describe(@"after initialization with configuration", ^{
+    describe(@"after initialization with presenter", ^{
         __block LYRUIConfiguration *configurationMock;
         __block id<LYRUIDependencyInjection> injectorMock;
         __block NSObject<LYRUIBaseItemViewTheme> *themeMock;
@@ -96,13 +96,13 @@ describe(@"LYRUIConversationItemView", ^{
             view = [[LYRUIConversationItemView alloc] initWithConfiguration:configurationMock];
         });
         
-        it(@"should have layout set to the one from configuration", ^{
+        it(@"should have layout set to the one from presenter", ^{
             expect(view.layout).to.equal(layoutMock);
         });
-        it(@"should have theme set to the one from configuration", ^{
+        it(@"should have theme set to the one from presenter", ^{
             expect(view.theme).to.equal(themeMock);
         });
-        it(@"should have unread theme set to the one from configuration", ^{
+        it(@"should have unread theme set to the one from presenter", ^{
             expect(view.unreadTheme).to.equal(unreadThemeMock);
         });
     });
@@ -165,13 +165,13 @@ describe(@"LYRUIConversationItemView", ^{
                 view.layerConfiguration = configurationMock;
             });
             
-            it(@"should update layout to the one from configuration", ^{
+            it(@"should update layout to the one from presenter", ^{
                 expect(view.layout).to.equal(layoutMock);
             });
-            it(@"should update theme to the one from configuration", ^{
+            it(@"should update theme to the one from presenter", ^{
                 expect(view.theme).to.equal(themeMock);
             });
-            it(@"should update unread theme to the one from configuration", ^{
+            it(@"should update unread theme to the one from presenter", ^{
                 expect(view.unreadTheme).to.equal(unreadThemeMock);
             });
         });

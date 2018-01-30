@@ -6,19 +6,19 @@
 #import <Foundation/Foundation.h>
 #import <Atlas/LYRUIPresenceView.h>
 #import <Atlas/LYRUIConfiguration+DependencyInjection.h>
-#import <Atlas/LYRUIPresenceViewConfiguration.h>
+#import <Atlas/LYRUIPresenceViewPresenter.h>
 
 SharedExamplesBegin(LYRUIPresenceView)
 
-sharedExamplesFor(@"setting presence view identities using view configuration", ^(NSDictionary *data) {
+sharedExamplesFor(@"setting presence view identities using view presenter", ^(NSDictionary *data) {
     __block NSObject<LYRUIPresenceViewTheme> *themeMock;
-    __block LYRUIPresenceViewConfiguration *viewConfigurationMock;
+    __block LYRUIPresenceViewPresenter *viewPresenterMock;
     __block LYRUIPresenceView *presenceView;
     __block NSArray *identities;
     
     beforeEach(^{
         themeMock = data[@"theme"];
-        viewConfigurationMock = data[@"viewConfiguration"];
+        viewPresenterMock = data[@"viewPresenter"];
         presenceView = data[@"presenceView"];
         
         LYRIdentity *identityMock1 = mock([LYRIdentity class]);
@@ -27,8 +27,8 @@ sharedExamplesFor(@"setting presence view identities using view configuration", 
         presenceView.identities = identities;
     });
     
-    it(@"should setup view using configuration", ^{
-        [verify(viewConfigurationMock) setupPresenceView:presenceView withIdentities:identities usingTheme:themeMock];
+    it(@"should setup view using presenter", ^{
+        [verify(viewPresenterMock) setupPresenceView:presenceView withIdentities:identities usingTheme:themeMock];
     });
 });
 
@@ -40,7 +40,7 @@ describe(@"LYRUIPresenceView", ^{
     __block LYRUIConfiguration *configurationMock;
     __block id<LYRUIDependencyInjection> injectorMock;
     __block NSObject<LYRUIPresenceViewTheme> *themeMock;
-    __block LYRUIPresenceViewConfiguration *viewConfigurationMock;
+    __block LYRUIPresenceViewPresenter *viewPresenterMock;
     __block LYRUIPresenceView *presenceView;
     __block NSMutableDictionary *sharedContext = [NSMutableDictionary new];
 
@@ -53,22 +53,22 @@ describe(@"LYRUIPresenceView", ^{
         [[given([(id<NSCopying>)themeMock copyWithZone:NSDefaultMallocZone()]) withMatcher:anything()] willReturn:themeMock];
         [given([injectorMock themeForViewClass:[LYRUIPresenceView class]]) willReturn:themeMock];
         
-        viewConfigurationMock = mock([LYRUIPresenceViewConfiguration class]);
-        [given([injectorMock configurationForViewClass:[LYRUIPresenceView class]]) willReturn:viewConfigurationMock];
+        viewPresenterMock = mock([LYRUIPresenceViewPresenter class]);
+        [given([injectorMock presenterForViewClass:[LYRUIPresenceView class]]) willReturn:viewPresenterMock];
         
         sharedContext[@"theme"] = themeMock;
-        sharedContext[@"viewConfiguration"] = viewConfigurationMock;
+        sharedContext[@"viewPresenter"] = viewPresenterMock;
     });
 
     afterEach(^{
         [sharedContext removeAllObjects];
         presenceView = nil;
-        viewConfigurationMock = nil;
+        viewPresenterMock = nil;
         themeMock = nil;
         configurationMock = nil;
     });
     
-    context(@"when initialized with configuration", ^{
+    context(@"when initialized with presenter", ^{
         beforeEach(^{
             presenceView = [[LYRUIPresenceView alloc] initWithConfiguration:configurationMock];
             sharedContext[@"presenceView"] = presenceView;
@@ -78,11 +78,11 @@ describe(@"LYRUIPresenceView", ^{
             it(@"should have proper theme set", ^{
                 expect(presenceView.theme).to.equal(themeMock);
             });
-            itShouldBehaveLike(@"setting presence view identities using view configuration", sharedContext);
+            itShouldBehaveLike(@"setting presence view identities using view presenter", sharedContext);
         });
     });
     
-    context(@"when configuration is set after initialization", ^{
+    context(@"when presenter is set after initialization", ^{
         beforeEach(^{
             presenceView = [[LYRUIPresenceView alloc] init];
             presenceView.layerConfiguration = configurationMock;
@@ -93,7 +93,7 @@ describe(@"LYRUIPresenceView", ^{
             it(@"should have proper theme set", ^{
                 expect(presenceView.theme).to.equal(themeMock);
             });
-            itShouldBehaveLike(@"setting presence view identities using view configuration", sharedContext);
+            itShouldBehaveLike(@"setting presence view identities using view presenter", sharedContext);
         });
     });
 });

@@ -226,7 +226,7 @@ static NSString *const ATLAddressBarParticipantAttributeName = @"ATLAddressBarPa
     [self selectParticipant:participant];
 }
 
-#pragma mark - Cell Configuration
+#pragma mark - Cell Presenter
 
 - (void)configureCell:(UITableViewCell<ATLParticipantPresenting> *)participantCell atIndexPath:(NSIndexPath *)indexPath
 {

@@ -22,7 +22,7 @@
 #import "ATLParticipant.h"
 
 /**
- @abstract The `ATLParticipantPickerSortType` allows for configuration of the sorting order of participants.
+ @abstract The `ATLParticipantPickerSortType` allows for presenter of the sorting order of participants.
  */
 typedef NS_ENUM(NSUInteger, ATLParticipantPickerSortType) {
     ATLParticipantPickerSortTypeFirstName,

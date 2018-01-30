@@ -30,15 +30,15 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @required
 
 /**
- @abstract The `configuration` of object. Used to setup and retrieving dependencies.
+ @abstract The `presenter` of object. Used to setup and retrieving dependencies.
  @discussion When object is initialized without using `initWithConfiguration:` (e.g. when using storyboards), this property must be set explicitly.
  */
 @property (nonatomic, weak) LYRUIConfiguration *layerConfiguration;
 
 /**
- @abstract Initializes a new instance of `LYRUIConfigurable` object with the configuration.
- @param configuration An `LYRUIConfiguration` instance, used to retrieve themes, and setup.
- @return An object conforming to `LYRUIConfigurable` protocol, set up using `configuration`.
+ @abstract Initializes a new instance of `LYRUIConfigurable` object with the presenter.
+ @param presenter An `LYRUIConfiguration` instance, used to retrieve themes, and setup.
+ @return An object conforming to `LYRUIConfigurable` protocol, set up using `presenter`.
  */
 - (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration;
 

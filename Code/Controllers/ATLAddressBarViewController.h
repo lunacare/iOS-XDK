@@ -138,7 +138,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) ATLParticipantPickerSortType sortType;
 
 ///----------------------
-// @name UI Configuration
+// @name UI Presenter
 ///----------------------
 
 /**

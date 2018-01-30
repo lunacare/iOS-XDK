@@ -4,7 +4,7 @@
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
 #import <Atlas/LYRUIConfiguration+DependencyInjection.h>
-#import <Atlas/LYRUIListViewConfiguring.h>
+#import <Atlas/LYRUIListViewPresenting.h>
 #import <Atlas/LYRUIBaseListView.h>
 #import <Atlas/LYRUIListLayout.h>
 #import <Atlas/LYRUIListDataSource.h>
@@ -16,7 +16,7 @@ SpecBegin(LYRUIBaseListView)
 describe(@"LYRUIBaseListView", ^{
     __block LYRUIConfiguration *configurationMock;
     __block id<LYRUIDependencyInjection> injectorMock;
-    __block id<LYRUIListViewConfiguring> listViewConfigurationMock;
+    __block id<LYRUIListViewPresenting> listViewPresenterMock;
     __block LYRUIBaseListView *listView;
     __block UICollectionViewLayout<LYRUIListViewLayout> *layoutMock;
     __block id<LYRUIListDelegate> delegateMock;
@@ -27,8 +27,8 @@ describe(@"LYRUIBaseListView", ^{
         injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
         [given(configurationMock.injector) willReturn:injectorMock];
         
-        listViewConfigurationMock = mockProtocol(@protocol(LYRUIListViewConfiguring));
-        [given([injectorMock configurationForViewClass:[LYRUIBaseListView class]]) willReturn:listViewConfigurationMock];
+        listViewPresenterMock = mockProtocol(@protocol(LYRUIListViewPresenting));
+        [given([injectorMock presenterForViewClass:[LYRUIBaseListView class]]) willReturn:listViewPresenterMock];
         
         listView = [[LYRUIBaseListView alloc] initWithConfiguration:configurationMock];
         
@@ -50,8 +50,8 @@ describe(@"LYRUIBaseListView", ^{
         it(@"should have the collection view added as subview", ^{
             expect(listView.collectionView.superview).to.equal(listView);
         });
-        it(@"should setup view with configuration", ^{
-            [verify(listViewConfigurationMock) setupListView:listView];
+        it(@"should setup view with presenter", ^{
+            [verify(listViewPresenterMock) setupListView:listView];
         });
     });
     

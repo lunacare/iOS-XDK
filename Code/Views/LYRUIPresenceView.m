@@ -21,7 +21,7 @@
 #import "LYRUIPresenceView.h"
 #import "LYRUIShapedView.h"
 #import "LYRUINumberBadgeView.h"
-#import "LYRUIPresenceViewConfiguration.h"
+#import "LYRUIPresenceViewPresenter.h"
 #import "LYRUIPresenceViewDefaultTheme.h"
 #import "LYRUIConfiguration+DependencyInjection.h"
 
@@ -30,7 +30,7 @@
 @property (nonatomic, weak, readwrite) LYRUIShapedView *presenceIndicator;
 @property (nonatomic, weak, readwrite) LYRUINumberBadgeView *participantsCountView;
 
-@property (nonatomic, strong) LYRUIPresenceViewConfiguration *configuration;
+@property (nonatomic, strong) LYRUIPresenceViewPresenter *presenter;
 
 @end
 
@@ -97,7 +97,7 @@
 
 - (void)setIdentities:(NSArray<LYRIdentity *> *)identities {
     _identities = identities;
-    [self.configuration setupPresenceView:self withIdentities:identities usingTheme:self.theme];
+    [self.presenter setupPresenceView:self withIdentities:identities usingTheme:self.theme];
 }
 
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
@@ -105,7 +105,7 @@
     if (self.theme == nil) {
         self.theme = [layerConfiguration.injector themeForViewClass:[self class]];
     }
-    self.configuration = [layerConfiguration.injector configurationForViewClass:[self class]];
+    self.presenter = [layerConfiguration.injector presenterForViewClass:[self class]];
 }
 
 @end

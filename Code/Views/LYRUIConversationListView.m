@@ -20,7 +20,7 @@
 
 #import "LYRUIConversationListView.h"
 #import "LYRUIConversationListIBSetup.h"
-#import "LYRUIConversationListViewConfiguration.h"
+#import "LYRUIConversationListViewPresenter.h"
 
 @implementation LYRUIConversationListView
 

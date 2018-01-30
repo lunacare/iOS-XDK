@@ -5,19 +5,16 @@
 #import <OCHamcrest/OCHamcrest.h>
 #import <Atlas/LYRUIListDataSource.h>
 #import <Atlas/LYRUIListSection.h>
-#import <Atlas/LYRUIListCellConfiguring.h>
-#import <Atlas/LYRUIListSupplementaryViewConfiguring.h>
+#import <Atlas/LYRUIListCellPresenting.h>
+#import <Atlas/LYRUIListSupplementaryViewPresenting.h>
 
 SpecBegin(LYRUIListDataSource)
 
 describe(@"LYRUIListDataSource", ^{
     __block LYRUIListDataSource *dataSource;
-    __block NSObject *configurationMock;
 
     beforeEach(^{
         dataSource = [[LYRUIListDataSource alloc] init];
-        
-        configurationMock = mock([NSObject class]);
     });
 
     afterEach(^{
@@ -100,14 +97,14 @@ describe(@"LYRUIListDataSource", ^{
              willReturn:cellMock];
         });
         
-        context(@"when cell configuration for item type was registered", ^{
-            __block id<LYRUIListCellConfiguring> cellConfirgurationMock;
+        context(@"when cell presenter for item type was registered", ^{
+            __block id<LYRUIListCellPresenting> cellConfirgurationMock;
             
             beforeEach(^{
-                cellConfirgurationMock = mockProtocol(@protocol(LYRUIListCellConfiguring));
+                cellConfirgurationMock = mockProtocol(@protocol(LYRUIListCellPresenting));
                 [given(cellConfirgurationMock.handledItemTypes) willReturn:[NSSet setWithObject:[NSObject class]]];
                 [given(cellConfirgurationMock.cellReuseIdentifier) willReturn:@"test reuse identifier"];
-                [dataSource registerCellConfiguration:cellConfirgurationMock];
+                [dataSource registerCellPresenter:cellConfirgurationMock];
                 
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
                 returnedCell = [dataSource collectionView:collectionViewMock cellForItemAtIndexPath:indexPath];
@@ -116,13 +113,13 @@ describe(@"LYRUIListDataSource", ^{
             it(@"should return cell dequeued from collection view", ^{
                 expect(returnedCell).to.equal(cellMock);
             });
-            it(@"should setup dequeued cell using configuration", ^{
+            it(@"should setup dequeued cell using presenter", ^{
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
                 [verify(cellConfirgurationMock) setupCell:cellMock forItemAtIndexPath:indexPath];
             });
         });
         
-        context(@"when there is no configuration registered for item type", ^{
+        context(@"when there is no presenter registered for item type", ^{
             beforeEach(^{
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
                 returnedCell = [dataSource collectionView:collectionViewMock cellForItemAtIndexPath:indexPath];
@@ -157,14 +154,14 @@ describe(@"LYRUIListDataSource", ^{
              willReturn:viewMock];
         });
         
-        context(@"when cell configuration for item type was registered", ^{
-            __block id<LYRUIListSupplementaryViewConfiguring> supplementaryViewConfirgurationMock;
+        context(@"when cell presenter for item type was registered", ^{
+            __block id<LYRUIListSupplementaryViewPresenting> supplementaryViewConfirgurationMock;
             
             beforeEach(^{
-                supplementaryViewConfirgurationMock = mockProtocol(@protocol(LYRUIListSupplementaryViewConfiguring));
+                supplementaryViewConfirgurationMock = mockProtocol(@protocol(LYRUIListSupplementaryViewPresenting));
                 [given(supplementaryViewConfirgurationMock.viewKind) willReturn:@"test kind"];
                 [given(supplementaryViewConfirgurationMock.viewReuseIdentifier) willReturn:@"test reuse identifier"];
-                [dataSource registerSupplementaryViewConfiguration:supplementaryViewConfirgurationMock];
+                [dataSource registerSupplementaryViewPresenter:supplementaryViewConfirgurationMock];
                 
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
                 returnedView = [dataSource collectionView:collectionViewMock
@@ -175,13 +172,13 @@ describe(@"LYRUIListDataSource", ^{
             it(@"should return view dequeued from collection view", ^{
                 expect(returnedView).to.equal(viewMock);
             });
-            it(@"should setup dequeued view using configuration", ^{
+            it(@"should setup dequeued view using presenter", ^{
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
                 [verify(supplementaryViewConfirgurationMock) setupSupplementaryView:viewMock forItemAtIndexPath:indexPath];
             });
         });
         
-        context(@"when there is no configuration registered for item type", ^{
+        context(@"when there is no presenter registered for item type", ^{
             beforeEach(^{
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
                 returnedView = [dataSource collectionView:collectionViewMock

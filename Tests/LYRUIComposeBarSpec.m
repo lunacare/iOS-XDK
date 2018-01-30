@@ -5,7 +5,7 @@
 #import <OCHamcrest/OCHamcrest.h>
 #import <Atlas/LYRUIConfiguration+DependencyInjection.h>
 #import <Atlas/LYRUIComposeBar.h>
-#import <Atlas/LYRUIComposeBarConfiguration.h>
+#import <Atlas/LYRUIComposeBarPresenter.h>
 #import <Atlas/LYRUISendButton.h>
 #import "LYRUIComposeBarTestLayout.h"
 
@@ -15,15 +15,15 @@ describe(@"LYRUIComposeBar", ^{
     __block LYRUIConfiguration *configurationMock;
     __block id<LYRUIDependencyInjection> injectorMock;
     __block LYRUIComposeBar *composeBar;
-    __block LYRUIComposeBarConfiguration *viewConfigurationMock;
+    __block LYRUIComposeBarPresenter *viewPresenterMock;
 
     beforeEach(^{
         configurationMock = mock([LYRUIConfiguration class]);
         injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
         [given(configurationMock.injector) willReturn:injectorMock];
         
-        viewConfigurationMock = mock([LYRUIComposeBarConfiguration class]);
-        [given([injectorMock configurationForViewClass:[LYRUIComposeBar class]]) willReturn:viewConfigurationMock];
+        viewPresenterMock = mock([LYRUIComposeBarPresenter class]);
+        [given([injectorMock presenterForViewClass:[LYRUIComposeBar class]]) willReturn:viewPresenterMock];
         
         composeBar = [[LYRUIComposeBar alloc] initWithConfiguration:configurationMock];
     });
@@ -72,8 +72,8 @@ describe(@"LYRUIComposeBar", ^{
             UIColor *expectedColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
             expect(composeBar.placeholderColor).to.equal(expectedColor);
         });
-        it(@"should configure itself using configuration", ^{
-            [verify(viewConfigurationMock) configureComposeBar:composeBar];
+        it(@"should configure itself using presenter", ^{
+            [verify(viewPresenterMock) configureComposeBar:composeBar];
         });
     });
     
@@ -259,10 +259,10 @@ describe(@"LYRUIComposeBar", ^{
     describe(@"text", ^{
         context(@"getter", ^{
             beforeEach(^{
-                [given(viewConfigurationMock.text) willReturn:@"test message text"];
+                [given(viewPresenterMock.text) willReturn:@"test message text"];
             });
             
-            it(@"should return value from configuration", ^{
+            it(@"should return value from presenter", ^{
                 expect(composeBar.text).to.equal(@"test message text");
             });
         });
@@ -272,8 +272,8 @@ describe(@"LYRUIComposeBar", ^{
                 composeBar.text = @"test message text";
             });
             
-            it(@"should pass the value to configuration", ^{
-                [verify(viewConfigurationMock) setText:@"test message text"];
+            it(@"should pass the value to presenter", ^{
+                [verify(viewPresenterMock) setText:@"test message text"];
             });
         });
     });
@@ -282,10 +282,10 @@ describe(@"LYRUIComposeBar", ^{
         context(@"getter", ^{
             beforeEach(^{
                 NSAttributedString *messageText = [[NSAttributedString alloc] initWithString:@"test message text"];
-                [given(viewConfigurationMock.attributedText) willReturn:messageText];
+                [given(viewPresenterMock.attributedText) willReturn:messageText];
             });
             
-            it(@"should return value from configuration", ^{
+            it(@"should return value from presenter", ^{
                 NSAttributedString *messageText = [[NSAttributedString alloc] initWithString:@"test message text"];
                 expect(composeBar.attributedText).to.equal(messageText);
             });
@@ -297,9 +297,9 @@ describe(@"LYRUIComposeBar", ^{
                 composeBar.attributedText = messageText;
             });
             
-            it(@"should pass the value to configuration", ^{
+            it(@"should pass the value to presenter", ^{
                 NSAttributedString *messageText = [[NSAttributedString alloc] initWithString:@"test message text"];
-                [verify(viewConfigurationMock) setAttributedText:messageText];
+                [verify(viewPresenterMock) setAttributedText:messageText];
             });
         });
     });

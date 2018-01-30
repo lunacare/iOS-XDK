@@ -21,13 +21,13 @@
 #import "LYRUIListDataSource.h"
 #import "LYRUIListSection.h"
 #import "LYRUIListHeaderView.h"
-#import "LYRUIListCellConfiguring.h"
-#import "LYRUIListSupplementaryViewConfiguring.h"
+#import "LYRUIListCellPresenting.h"
+#import "LYRUIListSupplementaryViewPresenting.h"
 
 @interface LYRUIListDataSource ()
 
-@property (nonatomic, strong) NSMutableDictionary<NSString *, id<LYRUIListCellConfiguring>> *cellConfigurations;
-@property (nonatomic, strong) NSMutableDictionary<NSString *, id<LYRUIListSupplementaryViewConfiguring>> *supplementaryViewConfigurations;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, id<LYRUIListCellPresenting>> *cellPresenters;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, id<LYRUIListSupplementaryViewPresenting>> *supplementaryViewPresenters;
 
 @end
 
@@ -37,8 +37,8 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.cellConfigurations = [[NSMutableDictionary alloc] init];
-        self.supplementaryViewConfigurations = [[NSMutableDictionary alloc] init];
+        self.cellPresenters = [[NSMutableDictionary alloc] init];
+        self.supplementaryViewPresenters = [[NSMutableDictionary alloc] init];
         self.sections = [[NSMutableArray alloc] init];
     }
     return self;
@@ -61,22 +61,22 @@
     id modelItem = section.items[indexPath.item];
     
     NSString *itemType = NSStringFromClass([modelItem class]);
-    id<LYRUIListCellConfiguring> cellConfiguration = self.cellConfigurations[itemType];
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellConfiguration.cellReuseIdentifier
+    id<LYRUIListCellPresenting> cellPresenter = self.cellPresenters[itemType];
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellPresenter.cellReuseIdentifier
                                                                            forIndexPath:indexPath];
-    [cellConfiguration setupCell:cell forItemAtIndexPath:indexPath];
+    [cellPresenter setupCell:cell forItemAtIndexPath:indexPath];
     return cell;
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
            viewForSupplementaryElementOfKind:(NSString *)kind
                                  atIndexPath:(NSIndexPath *)indexPath {
-    id<LYRUIListSupplementaryViewConfiguring> supplementaryViewConfiguration = self.supplementaryViewConfigurations[kind];
-    NSString *reuseIdentifier = supplementaryViewConfiguration.viewReuseIdentifier;
+    id<LYRUIListSupplementaryViewPresenting> supplementaryViewPresenter = self.supplementaryViewPresenters[kind];
+    NSString *reuseIdentifier = supplementaryViewPresenter.viewReuseIdentifier;
     UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                                         withReuseIdentifier:reuseIdentifier
                                                                                forIndexPath:indexPath];
-    [supplementaryViewConfiguration setupSupplementaryView:view forItemAtIndexPath:indexPath];
+    [supplementaryViewPresenter setupSupplementaryView:view forItemAtIndexPath:indexPath];
     return view;
 }
 
@@ -119,25 +119,25 @@
     return [NSIndexPath indexPathForItem:itemIndex inSection:sectionIndex];
 }
 
-#pragma mark - LYRUIListCellConfiguring registration
+#pragma mark - LYRUIListCellPresenting registration
 
-- (void)registerCellConfiguration:(id<LYRUIListCellConfiguring>)cellConfiguration {
-    for (Class itemType in cellConfiguration.handledItemTypes) {
+- (void)registerCellPresenter:(id<LYRUIListCellPresenting>)cellPresenter {
+    for (Class itemType in cellPresenter.handledItemTypes) {
         NSString *key = NSStringFromClass(itemType);
         if (key.length == 0) {
             continue;
         }
-        self.cellConfigurations[key] = cellConfiguration;
-        cellConfiguration.listDataSource = self;
+        self.cellPresenters[key] = cellPresenter;
+        cellPresenter.listDataSource = self;
     }
 }
 
-#pragma mark - LYRUIListSupplementaryViewConfiguring registration
+#pragma mark - LYRUIListSupplementaryViewPresenting registration
 
-- (void)registerSupplementaryViewConfiguration:(id<LYRUIListSupplementaryViewConfiguring>)supplementaryViewConfiguration {
-    NSString *key = supplementaryViewConfiguration.viewKind;
-    self.supplementaryViewConfigurations[key] = supplementaryViewConfiguration;
-    supplementaryViewConfiguration.listDataSource = self;
+- (void)registerSupplementaryViewPresenter:(id<LYRUIListSupplementaryViewPresenting>)supplementaryViewPresenter {
+    NSString *key = supplementaryViewPresenter.viewKind;
+    self.supplementaryViewPresenters[key] = supplementaryViewPresenter;
+    supplementaryViewPresenter.listDataSource = self;
 }
 
 @end

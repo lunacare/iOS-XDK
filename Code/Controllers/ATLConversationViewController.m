@@ -444,10 +444,10 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     [self configureMoreMessagesIndicatorVisibility];
 }
 
-#pragma mark - Reusable View Configuration
+#pragma mark - Reusable View Presenter
 
 /**
- Atlas - Extracting the proper message part and analyzing its properties to determine the cell configuration.
+ Atlas - Extracting the proper message part and analyzing its properties to determine the cell presenter.
  */
 - (void)configureCell:(UICollectionViewCell<ATLMessagePresenting> *)cell forMessage:(LYRMessage *)message indexPath:(NSIndexPath *)indexPath
 {
@@ -493,7 +493,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     }
 }
 
-#pragma mark - UI Configuration
+#pragma mark - UI Presenter
 
 - (CGFloat)defaultCellHeightForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -876,7 +876,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     }
 }
 
-#pragma mark - Controller Configuration For Changed Participants
+#pragma mark - Controller Presenter For Changed Participants
 
 - (void)configureControllerForChangedParticipants
 {
@@ -975,7 +975,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     [self.collectionView flashScrollIndicators];
 }
 
-#pragma mark - Conversation Configuration
+#pragma mark - Conversation Presenter
 
 - (void)configureConversationForAddressBar
 {
@@ -995,7 +995,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     self.conversation = conversation;
 }
 
-#pragma mark - Address Bar Configuration
+#pragma mark - Address Bar Presenter
 
 - (void)configureAddressBarForChangedParticipants
 {
