@@ -19,6 +19,9 @@
 //
 
 #import "LYRUIComposeBarLayout.h"
+#import "UIView+LYRUISafeArea.h"
+#import "UIView+LYRUILayoutGuide.h"
+#import "UILayoutGuide+LYRUILayoutGuide.h"
 
 @interface LYRUIComposeBarLayout ()
 
@@ -69,19 +72,20 @@
 
 - (void)addBaseConstraintsInView:(LYRUIComposeBar *)view {
     CGFloat margin = 8.0;
+    id<LYRUILayoutGuide> layoutGuide = view.lyr_safeAreaLayoutGuide ?: view;
     NSMutableArray *constraints = [NSMutableArray new];
     [constraints addObject:[view.heightAnchor constraintGreaterThanOrEqualToConstant:48.0]];
     
-    [constraints addObject:[view.inputTextView.leftAnchor constraintGreaterThanOrEqualToAnchor:view.leftAnchor constant:margin]];
-    [constraints addObject:[view.inputTextView.topAnchor constraintGreaterThanOrEqualToAnchor:view.topAnchor constant:margin]];
-    [constraints addObject:[view.inputTextView.rightAnchor constraintLessThanOrEqualToAnchor:view.rightAnchor constant:-margin]];
-    [constraints addObject:[view.inputTextView.bottomAnchor constraintLessThanOrEqualToAnchor:view.bottomAnchor constant:-margin]];
+    [constraints addObject:[view.inputTextView.leftAnchor constraintGreaterThanOrEqualToAnchor:layoutGuide.leftAnchor constant:margin]];
+    [constraints addObject:[view.inputTextView.topAnchor constraintGreaterThanOrEqualToAnchor:layoutGuide.topAnchor constant:margin]];
+    [constraints addObject:[view.inputTextView.rightAnchor constraintLessThanOrEqualToAnchor:layoutGuide.rightAnchor constant:-margin]];
+    [constraints addObject:[view.inputTextView.bottomAnchor constraintLessThanOrEqualToAnchor:layoutGuide.bottomAnchor constant:-margin]];
     
     NSArray *highPriorityConstrints = @[
-            [view.inputTextView.leftAnchor constraintEqualToAnchor:view.leftAnchor constant:margin],
-            [view.inputTextView.topAnchor constraintEqualToAnchor:view.topAnchor constant:margin],
-            [view.inputTextView.rightAnchor constraintEqualToAnchor:view.rightAnchor constant:-margin],
-            [view.inputTextView.bottomAnchor constraintEqualToAnchor:view.bottomAnchor constant:-margin],
+            [view.inputTextView.leftAnchor constraintEqualToAnchor:layoutGuide.leftAnchor constant:margin],
+            [view.inputTextView.topAnchor constraintEqualToAnchor:layoutGuide.topAnchor constant:margin],
+            [view.inputTextView.rightAnchor constraintEqualToAnchor:layoutGuide.rightAnchor constant:-margin],
+            [view.inputTextView.bottomAnchor constraintEqualToAnchor:layoutGuide.bottomAnchor constant:-margin],
     ];
     for (NSLayoutConstraint *constraint in highPriorityConstrints) {
         constraint.priority = 750.0;
@@ -91,7 +95,6 @@
     [constraints addObject:[view.inputTextView.heightAnchor constraintLessThanOrEqualToConstant:106.0]];
     [constraints addObject:[view.inputTextView.heightAnchor constraintGreaterThanOrEqualToConstant:32.0]];
     [constraints addObject:[view.inputTextView.widthAnchor constraintGreaterThanOrEqualToConstant:150.0]];
-    [constraints addObject:[view.inputTextView.centerYAnchor constraintEqualToAnchor:view.centerYAnchor]];
     
     [self.baseConstraints addObjectsFromArray:constraints];
     [view addConstraints:constraints];
@@ -101,12 +104,13 @@
     CGFloat bottomMargin = 8.0;
     CGFloat margin = 12.0;
     CGFloat spacing = 16.0;
+    id<LYRUILayoutGuide> layoutGuide = view.lyr_safeAreaLayoutGuide ?: view;
     NSMutableArray *constraints = [NSMutableArray new];
     
     UIView *previousItem = nil;
     for (UIView *item in view.leftItems) {
         if (previousItem == nil) {
-            [constraints addObject:[item.leftAnchor constraintEqualToAnchor:view.leftAnchor constant:margin]];
+            [constraints addObject:[item.leftAnchor constraintEqualToAnchor:layoutGuide.leftAnchor constant:margin]];
         } else {
             [constraints addObject:[item.leftAnchor constraintEqualToAnchor:previousItem.rightAnchor constant:spacing]];
             [constraints addObject:[item.centerYAnchor constraintEqualToAnchor:previousItem.centerYAnchor]];
@@ -117,9 +121,9 @@
                 [constraints addObject:[item.centerYAnchor constraintEqualToAnchor:view.rightItems.firstObject.centerYAnchor]];
             }
         }
-        [constraints addObject:[item.topAnchor constraintGreaterThanOrEqualToAnchor:view.topAnchor constant:bottomMargin]];
-        [constraints addObject:[item.bottomAnchor constraintLessThanOrEqualToAnchor:view.bottomAnchor constant:-bottomMargin]];
-        NSLayoutConstraint *lowerPriorityConstraint = [item.bottomAnchor constraintEqualToAnchor:view.bottomAnchor constant:-bottomMargin];
+        [constraints addObject:[item.topAnchor constraintGreaterThanOrEqualToAnchor:layoutGuide.topAnchor constant:bottomMargin]];
+        [constraints addObject:[item.bottomAnchor constraintLessThanOrEqualToAnchor:layoutGuide.bottomAnchor constant:-bottomMargin]];
+        NSLayoutConstraint *lowerPriorityConstraint = [item.bottomAnchor constraintEqualToAnchor:layoutGuide.bottomAnchor constant:-bottomMargin];
         lowerPriorityConstraint.priority = 750.0;
         [constraints addObject:lowerPriorityConstraint];
         previousItem = item;
@@ -133,6 +137,7 @@
     CGFloat bottomMargin = 8.0;
     CGFloat margin = 12.0;
     CGFloat spacing = 16.0;
+    id<LYRUILayoutGuide> layoutGuide = view.lyr_safeAreaLayoutGuide ?: view;
     NSMutableArray *constraints = [NSMutableArray new];
     
     UIView *previousItem = nil;
@@ -144,11 +149,11 @@
             [constraints addObject:[item.centerYAnchor constraintEqualToAnchor:previousItem.centerYAnchor]];
         }
         if (item == view.rightItems.lastObject) {
-            [constraints addObject:[item.rightAnchor constraintEqualToAnchor:view.rightAnchor constant:-margin]];
+            [constraints addObject:[item.rightAnchor constraintEqualToAnchor:layoutGuide.rightAnchor constant:-margin]];
         }
-        [constraints addObject:[item.topAnchor constraintGreaterThanOrEqualToAnchor:view.topAnchor constant:bottomMargin]];
-        [constraints addObject:[item.bottomAnchor constraintLessThanOrEqualToAnchor:view.bottomAnchor constant:-bottomMargin]];
-        NSLayoutConstraint *lowerPriorityConstraint = [item.bottomAnchor constraintEqualToAnchor:view.bottomAnchor constant:-bottomMargin];
+        [constraints addObject:[item.topAnchor constraintGreaterThanOrEqualToAnchor:layoutGuide.topAnchor constant:bottomMargin]];
+        [constraints addObject:[item.bottomAnchor constraintLessThanOrEqualToAnchor:layoutGuide.bottomAnchor constant:-bottomMargin]];
+        NSLayoutConstraint *lowerPriorityConstraint = [item.bottomAnchor constraintEqualToAnchor:layoutGuide.bottomAnchor constant:-bottomMargin];
         lowerPriorityConstraint.priority = 750.0;
         [constraints addObject:lowerPriorityConstraint];
         previousItem = item;

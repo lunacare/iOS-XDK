@@ -20,6 +20,9 @@
 
 #import "LYRUIMessageCollectionViewCell.h"
 #import "LYRUIMessageItemView.h"
+#import "UIView+LYRUISafeArea.h"
+#import "UIView+LYRUILayoutGuide.h"
+#import "UILayoutGuide+LYRUILayoutGuide.h"
 
 @interface LYRUIMessageCollectionViewCell ()
 
@@ -53,10 +56,11 @@
     self.messageView = messageView;
     
     messageView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView.leftAnchor constraintEqualToAnchor:messageView.leftAnchor].active = YES;
-    [self.contentView.topAnchor constraintEqualToAnchor:messageView.topAnchor].active = YES;
-    [self.contentView.rightAnchor constraintEqualToAnchor:messageView.rightAnchor].active = YES;
-    [self.contentView.bottomAnchor constraintEqualToAnchor:messageView.bottomAnchor].active = YES;
+    id<LYRUILayoutGuide> layoutGuide = self.contentView.lyr_safeAreaLayoutGuide ?: self.contentView;
+    [layoutGuide.leftAnchor constraintEqualToAnchor:messageView.leftAnchor].active = YES;
+    [layoutGuide.topAnchor constraintEqualToAnchor:messageView.topAnchor].active = YES;
+    [layoutGuide.rightAnchor constraintEqualToAnchor:messageView.rightAnchor].active = YES;
+    [layoutGuide.bottomAnchor constraintEqualToAnchor:messageView.bottomAnchor].active = YES;
     
     self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;

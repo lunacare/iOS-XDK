@@ -20,6 +20,9 @@
 
 #import "LYRUIIdentityCollectionViewCell.h"
 #import "LYRUIIdentityItemView.h"
+#import "UIView+LYRUISafeArea.h"
+#import "UIView+LYRUILayoutGuide.h"
+#import "UILayoutGuide+LYRUILayoutGuide.h"
 
 @implementation LYRUIIdentityCollectionViewCell
 
@@ -42,8 +45,13 @@
 - (void)lyr_commonInit {
     LYRUIIdentityItemView *identityView = [[LYRUIIdentityItemView alloc] init];
     identityView.frame = self.contentView.bounds;
-    identityView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     [self.contentView addSubview:identityView];
+    identityView.translatesAutoresizingMaskIntoConstraints = NO;
+    id<LYRUILayoutGuide> layoutGuide = self.contentView.lyr_safeAreaLayoutGuide ?: self.contentView;
+    [layoutGuide.leftAnchor constraintEqualToAnchor:identityView.leftAnchor].active = YES;
+    [layoutGuide.topAnchor constraintEqualToAnchor:identityView.topAnchor].active = YES;
+    [layoutGuide.rightAnchor constraintEqualToAnchor:identityView.rightAnchor].active = YES;
+    [layoutGuide.bottomAnchor constraintEqualToAnchor:identityView.bottomAnchor].active = YES;
     self.identityView = identityView;
 }
 
