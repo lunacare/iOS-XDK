@@ -8,6 +8,9 @@
 #import <Atlas/LYRUIMessageItemAccessoryViewProviding.h>
 #import <Atlas/LYRUIMessageItemView.h>
 #import <Atlas/LYRUIAvatarViewProvider.h>
+#import <Atlas/LYRUIMessageType.h>
+#import <Atlas/LYRUIMessageItemContentPresentersProvider.h>
+#import <Atlas/LYRUIMessageItemContentPresenting.h>
 #import <LayerKit/LayerKit.h>
 
 SpecBegin(LYRUIMessageItemViewPresenter)
@@ -17,6 +20,8 @@ describe(@"LYRUIMessageItemViewPresenter", ^{
     __block LYRUIConfiguration *configurationMock;
     __block id<LYRUIDependencyInjection> injectorMock;
     __block id<LYRUIMessageItemAccessoryViewProviding> accessoryViewProviderMock;
+    __block LYRUIMessageItemContentPresentersProvider *contentPresentersProviderMock;
+    __block id<LYRUIMessageItemContentPresenting> contentPresenterMock;
 
     beforeEach(^{
         configurationMock = mock([LYRUIConfiguration class]);
@@ -27,6 +32,12 @@ describe(@"LYRUIMessageItemViewPresenter", ^{
         [given([injectorMock protocolImplementation:@protocol(LYRUIMessageItemAccessoryViewProviding)
                                            forClass:[LYRUIMessageItemViewPresenter class]])
          willReturn:accessoryViewProviderMock];
+        
+        contentPresentersProviderMock = mock([LYRUIMessageItemContentPresentersProvider class]);
+        [given([injectorMock objectOfType:[LYRUIMessageItemContentPresentersProvider class]]) willReturn:contentPresentersProviderMock];
+        
+        contentPresenterMock = mockProtocol(@protocol(LYRUIMessageItemContentPresenting));
+        [given([contentPresentersProviderMock presenterForMessageClass:anything()]) willReturn:contentPresenterMock];
         
         viewPresenter = [[LYRUIMessageItemViewPresenter alloc] initWithConfiguration:configurationMock];
     });
@@ -44,12 +55,12 @@ describe(@"LYRUIMessageItemViewPresenter", ^{
     
     describe(@"setupMessageItemView:withMessage:", ^{
         __block LYRUIMessageItemView *view;
-        __block LYRMessage *messageMock;
+        __block LYRUIMessageType *messageMock;
         __block UIView *accessoryView;
         
         beforeEach(^{
             view = [[LYRUIMessageItemView alloc] init];
-            messageMock = mock([LYRMessage class]);
+            messageMock = mock([LYRUIMessageType class]);
             LYRIdentity *senderMock = mock([LYRIdentity class]);
             [given(senderMock.userID) willReturn:@"test user id"];
             [given(messageMock.sender) willReturn:senderMock];
@@ -72,7 +83,7 @@ describe(@"LYRUIMessageItemViewPresenter", ^{
                 void(^callWithNil)() = ^{
                     messageMock = nil;
                     [viewPresenter setupMessageItemView:view
-                                                withMessage:messageMock];
+                                            withMessage:messageMock];
                 };
                 NSString *exceptionReason = @"Cannot setup Message Item View with nil `message` argument.";
                 expect(callWithNil).to.raiseWithReason(NSInvalidArgumentException, exceptionReason);
@@ -80,19 +91,25 @@ describe(@"LYRUIMessageItemViewPresenter", ^{
         });
         
         context(@"with both arguments passed", ^{
+            __block UIView *contentView;
+            
             beforeEach(^{
+                contentView = [[UIView alloc] init];
+                [given([contentPresenterMock viewForMessage:messageMock]) willReturn:contentView];
+                [given([contentPresenterMock backgroundColorForMessage:messageMock]) willReturn:UIColor.purpleColor];
+                
                 accessoryView = [[UIView alloc] init];
                 [given([accessoryViewProviderMock accessoryViewForMessage:messageMock]) willReturn:accessoryView];
                 
                 [viewPresenter setupMessageItemView:view
-                                            withMessage:messageMock];
+                                        withMessage:messageMock];
             });
             
             it(@"should set the content view", ^{
-                expect(view.contentView).to.beAKindOf([UITextView class]);
+                expect(view.contentView).to.equal(contentView);
             });
             it(@"should add the content view as a subview of container", ^{
-                expect(view.contentView.superview).to.equal(view.contentViewContainer);
+                expect(contentView.superview).to.equal(view.contentViewContainer);
             });
             it(@"should set the primary accessory view", ^{
                 expect(view.primaryAccessoryView).to.equal(accessoryView);
@@ -100,14 +117,8 @@ describe(@"LYRUIMessageItemViewPresenter", ^{
             it(@"should add the primary accessory view as a subview of container", ^{
                 expect(accessoryView.superview).to.equal(view.primaryAccessoryViewContainer);
             });
-            it(@"should set message content view color to gray", ^{
-                UIColor *expectedColor = [UIColor colorWithWhite:242.0/255.0 alpha:1.0];
-                expect(view.contentView.backgroundColor).to.equal(expectedColor);
-            });
-            it(@"should set text color to black", ^{
-                UIColor *expectedColor = UIColor.blackColor;
-                UITextView *textView = (UITextView *)view.contentView;
-                expect(textView.textColor).to.equal(expectedColor);
+            it(@"should set message content view container color to gray", ^{
+                expect(view.contentViewContainer.backgroundColor).to.equal(UIColor.purpleColor);
             });
         });
     });

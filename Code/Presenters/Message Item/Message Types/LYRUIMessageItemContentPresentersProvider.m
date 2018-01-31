@@ -69,54 +69,38 @@
     }
 }
 
-#pragma mark - Properties
-
-- (NSArray<id<LYRUIMessageItemContentPresenting>> *)allPresenters {
-    return [self.presenters.allValues valueForKeyPath:@"@distinctUnionOfObjects.self"];
-}
-
-- (void)setActionHandlingDelegate:(id<LYRUIMessageListActionHandlingDelegate>)actionHandlingDelegate {
-    _actionHandlingDelegate = actionHandlingDelegate;
-    for (id<LYRUIMessageItemContentPresenting> configurator in self.presenters.allValues) {
-        configurator.actionHandlingDelegate = actionHandlingDelegate;
-    }
-    for (id<LYRUIMessageItemContentContainerPresenting> configurator in self.containerPresenters.allValues) {
-        configurator.actionHandlingDelegate = actionHandlingDelegate;
-    }
-}
-
 #pragma mark - Presenters Management
 
-- (void)registerContentPresenter:(id<LYRUIMessageItemContentPresenting>)configurator forMessageClass:(Class)messageClass {
-    if (configurator != nil && messageClass != nil) {
-        configurator.reusableViewsQueue = self.reusableViewsQueue;
-        self.presenters[NSStringFromClass(messageClass)] = configurator;
+- (void)registerContentPresenter:(id<LYRUIMessageItemContentPresenting>)presenter forMessageClass:(Class)messageClass {
+    if (presenter != nil && messageClass != nil) {
+        presenter.presentersProvider = self;
+        self.presenters[NSStringFromClass(messageClass)] = presenter;
     }
 }
 
 - (id<LYRUIMessageItemContentPresenting>)contentPresenterForMessageClass:(Class)messageClass {
-    id<LYRUIMessageItemContentPresenting> configurator = self.presenters[NSStringFromClass(messageClass)];
-    return configurator ?: self.defaultPresenter;
+    id<LYRUIMessageItemContentPresenting> presenter = self.presenters[NSStringFromClass(messageClass)];
+    return presenter ?: self.defaultPresenter;
 }
 
-- (void)registerContainerPresenter:(id<LYRUIMessageItemContentContainerPresenting>)configurator forMessageClass:(Class)messageClass {
-    if (configurator != nil && messageClass != nil) {
-        configurator.reusableViewsQueue = self.reusableViewsQueue;
-        self.containerPresenters[NSStringFromClass(messageClass)] = configurator;
+- (void)registerContainerPresenter:(id<LYRUIMessageItemContentContainerPresenting>)presenter forMessageClass:(Class)messageClass {
+    if (presenter != nil && messageClass != nil) {
+        presenter.presentersProvider = self;
+        self.containerPresenters[NSStringFromClass(messageClass)] = presenter;
     }
 }
 
 - (id<LYRUIMessageItemContentContainerPresenting>)containerPresenterForMessageClass:(Class)messageClass {
-    id<LYRUIMessageItemContentContainerPresenting> configurator = self.containerPresenters[NSStringFromClass(messageClass)];
-    return configurator;
+    id<LYRUIMessageItemContentContainerPresenting> presenter = self.containerPresenters[NSStringFromClass(messageClass)];
+    return presenter;
 }
 
 - (id<LYRUIMessageItemContentPresenting>)presenterForMessageClass:(Class)messageClass {
-    id<LYRUIMessageItemContentPresenting> configurator = [self containerPresenterForMessageClass:messageClass];
-    if (configurator == nil) {
-        configurator = [self contentPresenterForMessageClass:messageClass];
+    id<LYRUIMessageItemContentPresenting> presenter = [self containerPresenterForMessageClass:messageClass];
+    if (presenter == nil) {
+        presenter = [self contentPresenterForMessageClass:messageClass];
     }
-    return configurator;
+    return presenter;
 }
 
 @end

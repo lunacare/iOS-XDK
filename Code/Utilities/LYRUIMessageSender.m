@@ -24,6 +24,7 @@
 #import <LayerKit/LayerKit.h>
 #import "LYRUIMessageSerializer.h"
 #import "LYRUIMessageType.h"
+#import "LYRUITextMessage.h"
 
 @interface LYRUIMessageSender ()
 
@@ -83,7 +84,7 @@
         if (trimmedSubstring.length == 0) {
             return;
         }
-        id textMessage = nil; // TODO: update with text message type
+        LYRUITextMessage *textMessage = [[LYRUITextMessage alloc] initWithText:trimmedSubstring];
         LYRMessage *message = [self.messageSerializer layerMessageWithTypedMessage:textMessage];
         if (message) {
             [messages addObject:message];

@@ -51,4 +51,12 @@
     return @"Unsupported message type";
 }
 
++ (NSString *)MIMEType {
+    return nil;
+}
+
+- (NSString *)MIMEType {
+    return [[self class] MIMEType];
+}
+
 @end

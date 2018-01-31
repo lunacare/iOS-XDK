@@ -86,6 +86,14 @@
 #import "LYRUITypingIndicatorFooterPresenter.h"
 #import "LYRUIBubbleTypingIndicatorCollectionViewCell.h"
 #import "LYRUITypingIndicatorCellPresenter.h"
+#import "LYRUIReusableViewsQueue.h"
+#import "LYRUITextMessage.h"
+#import "LYRUITextMessageSerializer.h"
+#import "LYRUITextMessageContentViewPresenter.h"
+#import "LYRUIStandardMessageContainerViewPresenter.h"
+#import "LYRUIStandardMessageContainerView.h"
+#import "LYRUIStandardMessageContainerViewLayout.h"
+#import "LYRUIStandardMessageContainerViewDefaultTheme.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -103,6 +111,7 @@
 @property (nonatomic, strong) id<LYRUIImageCaching> imagesCache;
 @property (nonatomic, strong) id<LYRUIThumbnailsCaching> thumbnailsCache;
 @property (nonatomic, strong) LYRUIBundleProvider *bundleProvider;
+@property (nonatomic, strong) LYRUIReusableViewsQueue *reusableViewsQueue;
 
 @end
 
@@ -114,6 +123,7 @@
         self.imagesCache = [[NSCache<NSURL *, UIImage *> alloc] init];
         self.thumbnailsCache = [[NSCache<NSURL *, UIImage *> alloc] init];
         self.bundleProvider = [[LYRUIBundleProvider alloc] init];
+        self.reusableViewsQueue = [[LYRUIReusableViewsQueue alloc] init];
         
         [self setupThemes];
         [self setupAlternativeThemes];
@@ -138,6 +148,7 @@
     [self setThemeClass:[LYRUIAvatarViewDefaultTheme class] forViewClass:[LYRUIAvatarView class]];
     [self setThemeClass:[LYRUIBaseItemViewDefaultTheme class] forViewClass:[LYRUIConversationItemView class]];
     [self setThemeClass:[LYRUIBaseItemViewDefaultTheme class] forViewClass:[LYRUIIdentityItemView class]];
+    [self setThemeClass:[LYRUIStandardMessageContainerViewDefaultTheme class] forViewClass:[LYRUIStandardMessageContainerView class]];
 }
 
 - (void)setupAlternativeThemes {
@@ -187,6 +198,7 @@
     [self setLayoutClass:[LYRUIMessageListLayout class] forViewClass:[LYRUIMessageListView class]];
     [self setLayoutClass:[LYRUIConversationViewLayout class] forViewClass:[LYRUIConversationView class]];
     [self setLayoutClass:[LYRUIPanelTypingIndicatorViewLayout class] forViewClass:[LYRUIPanelTypingIndicatorView class]];
+    [self setLayoutClass:[LYRUIStandardMessageContainerViewLayout class] forViewClass:[LYRUIStandardMessageContainerView class]];
 }
 
 - (void)setupProtocolImplementations {
@@ -272,18 +284,28 @@
     [self setProvider:^id (LYRUIConfiguration *configuration) {
         return [NSNotificationCenter defaultCenter];
     } forObjectType:[NSNotificationCenter class]];
+    
+    [self setProvider:^id (LYRUIConfiguration *configuration) {
+        return weakSelf.reusableViewsQueue;
+    } forObjectType:[LYRUIReusableViewsQueue class]];
 }
 
 - (void)setupMessagePresenters {
     self.defaultMessagePresenters = [[NSMutableDictionary alloc] init];
+    
+    [self setMessagePresenterClass:[LYRUITextMessageContentViewPresenter class] forMessageClass:[LYRUITextMessage class]];
 }
 
 - (void)setupMessageContainerPresenters {
     self.defaultMessageContainerPresenters = [[NSMutableDictionary alloc] init];
+    
+    [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUITextMessage class]];
 }
 
 - (void)setupMessageSerializers {
     self.defaultMessageSerializers = [[NSMutableDictionary alloc] init];
+    
+    [self setMessageSerializerClass:[LYRUITextMessageSerializer class] forMIMEType:LYRUITextMessage.MIMEType];
 }
 
 - (void)setupActionHandlers {
@@ -334,12 +356,12 @@
     self.defaultObjects[NSStringFromClass(objectType)] = provider;
 }
 
-- (void)setMessagePresenterClass:(Class)presenterClass forViewClass:(Class)viewClass {
-    self.defaultMessagePresenters[NSStringFromClass(viewClass)] = [self providerWithClass:presenterClass];
+- (void)setMessagePresenterClass:(Class)presenterClass forMessageClass:(Class)messageClass {
+    self.defaultMessagePresenters[NSStringFromClass(messageClass)] = [self providerWithClass:presenterClass];
 }
 
-- (void)setMessageContainerPresenterClass:(Class)presenterClass forViewClass:(Class)viewClass {
-    self.defaultMessageContainerPresenters[NSStringFromClass(viewClass)] = [self providerWithClass:presenterClass];
+- (void)setMessageContainerPresenterClass:(Class)presenterClass forMessageClass:(Class)messageClass {
+    self.defaultMessageContainerPresenters[NSStringFromClass(messageClass)] = [self providerWithClass:presenterClass];
 }
 
 - (void)setMessageSerializerClass:(Class)serializerClass forMIMEType:(NSString *)MIMEType {

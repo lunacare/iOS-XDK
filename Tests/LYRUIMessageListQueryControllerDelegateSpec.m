@@ -3,10 +3,13 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
+#import <Atlas/LYRUIConfiguration+DependencyInjection.h>
 #import <Atlas/LYRUIMessageListQueryControllerDelegate.h>
 #import <Atlas/LYRUIListDataSource.h>
 #import <Atlas/LYRUIListSection.h>
 #import <LayerKit/LayerKit.h>
+#import <Atlas/LYRUIMessageType.h>
+#import <Atlas/LYRUIMessageSerializer.h>
 
 @interface LYRUIMessageListQueryControllerDelegate (PrivateProperties)
 
@@ -22,12 +25,22 @@ SpecBegin(LYRUIMessageListQueryControllerDelegate)
 
 describe(@"LYRUIMessageListQueryControllerDelegate", ^{
     __block LYRUIMessageListQueryControllerDelegate *delegate;
+    __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
     __block id<LYRUIListDataSource> listDataSourceMock;
     __block UICollectionView *collectionViewMock;
     __block LYRQueryController *queryControllerMock;
+    __block LYRUIMessageSerializer *messageSerializerMock;
 
     beforeEach(^{
-        delegate = [[LYRUIMessageListQueryControllerDelegate alloc] init];
+        configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
+        
+        messageSerializerMock = mock([LYRUIMessageSerializer class]);
+        [given([injectorMock objectOfType:[LYRUIMessageSerializer class]]) willReturn:messageSerializerMock];
+        
+        delegate = [[LYRUIMessageListQueryControllerDelegate alloc] initWithConfiguration:configurationMock];
         
         listDataSourceMock = mockProtocol(@protocol(LYRUIListDataSource));
         delegate.listDataSource = listDataSourceMock;
@@ -244,6 +257,9 @@ describe(@"LYRUIMessageListQueryControllerDelegate", ^{
         __block NSMutableArray *insertedIndexPaths;
         __block NSMutableArray *adjacentToInsertedIndexPaths;
         __block NSMutableArray *updatedIndexPaths;
+        __block LYRUIMessageType *messageMock1;
+        __block LYRUIMessageType *messageMock2;
+        __block LYRUIMessageType *messageMock3;
         
         beforeEach(^{
             sectionMock = mock([LYRUIListSection class]);
@@ -270,7 +286,6 @@ describe(@"LYRUIMessageListQueryControllerDelegate", ^{
             delegate.adjacentToInsertedIndexPaths = adjacentToInsertedIndexPaths;
             updatedIndexPaths = [@[[NSIndexPath indexPathForItem:4 inSection:0]] mutableCopy];
             delegate.updatedIndexPaths = updatedIndexPaths;
-            delegate.itemsSelectedBeforeContentChange = @[objectMock1, objectMock2, objectMock3];
             
             [given([queryControllerMock objectAtIndexPath:[NSIndexPath indexPathForItem:2 inSection:0]]) willReturn:objectMock1];
             [given([queryControllerMock indexPathForObject:objectMock1]) willReturn:[NSIndexPath indexPathForItem:0 inSection:0]];
@@ -278,6 +293,13 @@ describe(@"LYRUIMessageListQueryControllerDelegate", ^{
             [given([queryControllerMock indexPathForObject:objectMock3]) willReturn:nil];
             
             [given([listDataSourceMock indexPathOfItem:objectMock1]) willReturn:[NSIndexPath indexPathForItem:0 inSection:0]];
+            
+            messageMock1 = mock([LYRUIMessageType class]);
+            [given([messageSerializerMock typedMessageWithLayerMessage:objectMock1]) willReturn:messageMock1];
+            messageMock2 = mock([LYRUIMessageType class]);
+            [given([messageSerializerMock typedMessageWithLayerMessage:objectMock2]) willReturn:messageMock2];
+            messageMock3 = mock([LYRUIMessageType class]);
+            [given([messageSerializerMock typedMessageWithLayerMessage:objectMock3]) willReturn:messageMock3];
             
             [delegate queryControllerDidChangeContent:queryControllerMock];
         });
@@ -315,7 +337,7 @@ describe(@"LYRUIMessageListQueryControllerDelegate", ^{
             });
             
             it(@"should update data source objects", ^{
-                [verify(sectionMock) setItems:[@[objectMock1, objectMock2] mutableCopy]];
+                [verify(sectionMock) setItems:[@[messageMock1, messageMock2] mutableCopy]];
             });
             it(@"should inform collection view about deleted index paths", ^{
                 [verify(collectionViewMock) deleteItemsAtIndexPaths:deletedIndexPaths];

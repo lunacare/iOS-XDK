@@ -27,7 +27,9 @@
 #import "LYRUIMessageItemView.h"
 #import "LYRUIListDataSource.h"
 #import "LYRUIListSection.h"
+
 #import "LYRUIMessageType.h"
+#import "LYRUITextMessage.h"
 
 static CGFloat const LYRUIMessageCellPresenterSmallWidth = 460.0;
 static CGFloat const LYRUIMessageCellPresenterWideWidth = 600.0;
@@ -63,7 +65,10 @@ static CGFloat const LYRUIMessageCellPresenterViewsWithMarginsWidth = 64.0;
 #pragma mark - LYRUIListCellSizeCalculating
 
 - (NSSet<Class> *)handledItemTypes {
-    return [NSSet setWithObject:[LYRUIMessageType class]];
+    return [NSSet setWithArray:@[
+            [LYRUIMessageType class],
+            [LYRUITextMessage class],
+    ]];
 }
 
 - (CGSize)cellSizeInCollectionView:(UICollectionView *)collectionView forItemAtIndexPath:(NSIndexPath *)indexPath {

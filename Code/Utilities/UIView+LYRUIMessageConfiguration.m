@@ -25,16 +25,16 @@ static void *LYRUIMessageContentViewConfigurationContextId = &LYRUIMessageConten
 
 @implementation UIView (LYRUIMessageConfiguration)
 
-- (NSString *)lyr_configurationContextId {
+- (NSString *)lyr_presentationContextId {
     return [self lyr_getAssociatedPropertyWithKey:LYRUIMessageContentViewConfigurationContextId];
 }
 
-- (void)setLyr_configurationContextId:(NSString *)lyr_configurationContextId {
+- (void)setLyr_presentationContextId:(NSString *)lyr_configurationContextId {
     [self lyr_setAssociatedPropertyWithKey:LYRUIMessageContentViewConfigurationContextId object:lyr_configurationContextId];
 }
 
 - (BOOL)lyr_isOutOfContext:(NSString *)contextId {
-    return ![self.lyr_configurationContextId isEqualToString:contextId];
+    return ![self.lyr_presentationContextId isEqualToString:contextId];
 }
 
 @end

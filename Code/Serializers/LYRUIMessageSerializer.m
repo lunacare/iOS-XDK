@@ -54,7 +54,8 @@
     NSArray *messageParts = [serializer layerMessagePartsWithTypedMessage:messageType];
     LYRMessageOptions *messageOptions = [serializer messageOptionsForTypedMessage:messageType];
     NSError *error = nil;
-    LYRMessage *message = [self.layerConfiguration.client newMessageWithParts:messageParts options:messageOptions error:&error];
+    NSSet *parts = [NSSet setWithArray:messageParts];
+    LYRMessage *message = [self.layerConfiguration.client newMessageWithParts:parts options:messageOptions error:&error];
     if (error) {
         NSLog(@"Failed to create message: %@", error);
         return nil;

@@ -128,7 +128,10 @@
         NSString *anyClassKey = NSStringFromClass([LYRUIDIAnyClass class]);
         provider = self.module.defaultActionHandlers[anyClassKey][event];
     }
-    return provider(self.layerConfiguration);
+    if (provider) {
+        return provider(self.layerConfiguration);
+    }
+    return nil;
 }
 
 @end

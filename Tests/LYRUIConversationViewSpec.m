@@ -52,9 +52,6 @@ describe(@"LYRUIConversationView", ^{
         it(@"should have compose bar added as a subview", ^{
             expect(conversationView.composeBar.superview).to.equal(conversationView);
         });
-        it(@"should have message sender set", ^{
-            expect(conversationView.messageSender).to.equal(messageSenderMock);
-        });
     });
     
     describe(@"setConversation:", ^{
@@ -85,9 +82,6 @@ describe(@"LYRUIConversationView", ^{
         });
         it(@"should set query controller's delegate", ^{
             [verify(queryControllerMock) setDelegate:isNot(nil)];
-        });
-        it(@"should set up message sender with provided conversation", ^{
-            [verify(messageSenderMock) setConversation:conversationMock];
         });
     });
     

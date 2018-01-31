@@ -27,6 +27,8 @@
 NS_ASSUME_NONNULL_BEGIN     // {
 @interface LYRUIMessageType : NSObject
 
+@property (nonatomic, readonly, class) NSString *MIMEType;
+
 @property (nonatomic, readonly, nullable) LYRIdentity *sender;
 
 @property (nonatomic, readonly) NSDate *sentAt;

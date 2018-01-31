@@ -68,6 +68,7 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     LYRUIMessageListLayout *layout = [injector layoutForViewClass:[LYRUIMessageListView class]];
     
     LYRUIMessageCellPresenter *cellPresenter = [injector presenterForViewClass:[LYRUIMessageCollectionViewCell class]];
+    cellPresenter.actionHandlingDelegate = messageListView;
     
     LYRUIMessageListTimeSupplementaryViewPresenter *messageTimeViewPresenter =
         [injector presenterForViewClass:[LYRUIMessageListMessageTimeView class]];

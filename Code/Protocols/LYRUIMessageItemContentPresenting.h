@@ -46,26 +46,26 @@
 @property (nonatomic, weak) LYRUIMessageItemContentPresentersProvider *presentersProvider;
 
 /**
- @abstract Method for creating and configuring content view for given `messageType`.
- @param messageType Instance of `LYRUIMessageType` to present.
- @return Content view representing the `messageType`.
+ @abstract Method for creating and configuring content view for given `message`.
+ @param message Instance of `LYRUIMessageType` to present.
+ @return Content view representing the `message`.
  */
-- (UIView *)viewForMessageType:(LYRUIMessageType *)messageType;
+- (UIView *)viewForMessage:(LYRUIMessageType *)message;
 
 /**
- @abstract Returns a background color to use wiht content view for given `messageType`.
- @param messageType Instance of `LYRUIMessageType` to present.
+ @abstract Returns a background color to use wiht content view for given `message`.
+ @param message Instance of `LYRUIMessageType` to present.
  @return Background color of the message content view.
  */
-- (UIColor *)backgroundColorForMessage:(LYRUIMessageType *)messageType;
+- (UIColor *)backgroundColorForMessage:(LYRUIMessageType *)message;
 
 /**
- @abstract Method for calculating height of content view for `messageType`, with given width boundaries.
- @param messageType Instance of `LYRUIMessageType` to present.
+ @abstract Method for calculating height of content view for `message`, with given width boundaries.
+ @param message Instance of `LYRUIMessageType` to present.
  @param minWidth Minimum width of the message content view.
  @param maxWidth Maximum width of the message content view.
- @return Height of the view representing the `messageType`.
+ @return Height of the view representing the `message`.
  */
-- (CGFloat)viewHeightForMessageType:(LYRUIMessageType *)messageType minWidth:(CGFloat)minWidth maxWidth:(CGFloat)maxWidth;
+- (CGFloat)viewHeightForMessage:(LYRUIMessageType *)message minWidth:(CGFloat)minWidth maxWidth:(CGFloat)maxWidth;
 
 @end

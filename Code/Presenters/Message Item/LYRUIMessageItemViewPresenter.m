@@ -56,7 +56,6 @@ static CGFloat const LYRUIMessageItemViewMinimumHeight = 32.0;
     self.primaryAccessoryViewProvider = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIMessageItemAccessoryViewProviding)
                                                                                    forClass:[self class]];
     self.contentPresentersProvider = [layerConfiguration.injector objectOfType:[LYRUIMessageItemContentPresentersProvider class]];
-    self.contentPresentersProvider.actionHandlingDelegate = self.actionHandlingDelegate;
     self.reusableViewsQueue = [layerConfiguration.injector objectOfType:[LYRUIReusableViewsQueue class]];
 }
 
@@ -65,7 +64,7 @@ static CGFloat const LYRUIMessageItemViewMinimumHeight = 32.0;
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot setup Message Item View with nil `messageItemView` argument." userInfo:nil];
     }
     if (message == nil) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot setup Message Item View with nil `messageType` argument." userInfo:nil];
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot setup Message Item View with nil `message` argument." userInfo:nil];
     }
     
     UIView *contentView = messageItemView.contentView;
@@ -100,14 +99,15 @@ static CGFloat const LYRUIMessageItemViewMinimumHeight = 32.0;
 
 - (UIView *)contentViewForMessage:(LYRUIMessageType *)message {
     id<LYRUIMessageItemContentPresenting> presenter = [self.contentPresentersProvider presenterForMessageClass:[message class]];
-    return [presenter viewForMessageType:message];
+    presenter.actionHandlingDelegate = self.actionHandlingDelegate;
+    return [presenter viewForMessage:message];
 }
 
 - (CGFloat)messageViewHeightForMessage:(LYRUIMessageType *)message maxWidth:(CGFloat)width {
     id<LYRUIMessageItemContentPresenting> presenter = [self.contentPresentersProvider presenterForMessageClass:[message class]];
-    CGFloat contentViewHeight = [presenter viewHeightForMessageType:message
-                                                           minWidth:LYRUIMessageItemViewMinimumContentWidth
-                                                           maxWidth:width];
+    CGFloat contentViewHeight = [presenter viewHeightForMessage:message
+                                                       minWidth:LYRUIMessageItemViewMinimumContentWidth
+                                                       maxWidth:width];
     return MAX(contentViewHeight, LYRUIMessageItemViewMinimumHeight);
 }
 
@@ -124,13 +124,6 @@ static CGFloat const LYRUIMessageItemViewMinimumHeight = 32.0;
 - (void)setupMessageItemViewBubbleColor:(UIView<LYRUIMessageItemView> *)messageItemView withMessage:(LYRUIMessageType *)message {
     id<LYRUIMessageItemContentPresenting> presenter = [self.contentPresentersProvider presenterForMessageClass:[message class]];
     messageItemView.contentViewColor = [presenter backgroundColorForMessage:message];
-}
-
-#pragma mark - Properties
-
-- (void)setActionHandlingDelegate:(id<LYRUIMessageListActionHandlingDelegate>)actionHandlingDelegate {
-    _actionHandlingDelegate = actionHandlingDelegate;
-    self.contentPresentersProvider.actionHandlingDelegate = actionHandlingDelegate;
 }
 
 #pragma mark = UIGestureRecognizerDelegate methods

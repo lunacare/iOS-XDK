@@ -1,8 +1,8 @@
 //
-//  LYRUIMessageItemContentPresentersProvider.h
+//  LYRUIStandardMessageContainerViewPresenter.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 02.10.2017.
+//  Created by Łukasz Przytuła on 12.10.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,23 +20,13 @@
 
 #import <Foundation/Foundation.h>
 #import "LYRUIConfigurable.h"
-#import "LYRUIMessageItemContentPresenting.h"
 #import "LYRUIMessageItemContentContainerPresenting.h"
+@class LYRUIStandardMessageContainerView;
+@class LYRUIMessageItemContentPresentersProvider;
 @class LYRUIMessageType;
-@class LYRUIReusableViewsQueue;
-@protocol LYRUIMessageListActionHandlingDelegate;
 
-NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIMessageItemContentPresentersProvider : NSObject <LYRUIConfigurable>
+@interface LYRUIStandardMessageContainerViewPresenter : NSObject <LYRUIMessageItemContentContainerPresenting, LYRUIConfigurable>
 
-@property (nonatomic, strong, nullable) id<LYRUIMessageItemContentPresenting> defaultPresenter;
-
-- (nullable id<LYRUIMessageItemContentPresenting>)contentPresenterForMessageClass:(Class)messageClass;
-
-- (nullable id<LYRUIMessageItemContentContainerPresenting>)containerPresenterForMessageClass:(Class)messageClass;
-
-- (nullable id<LYRUIMessageItemContentPresenting>)presenterForMessageClass:(Class)messageClass;
+@property (nonatomic, strong) LYRUIStandardMessageContainerView *sizingContainerView;
 
 @end
-NS_ASSUME_NONNULL_END       // }
-

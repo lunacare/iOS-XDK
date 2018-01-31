@@ -87,15 +87,15 @@ static CGFloat const LYRUIMessageItemViewMaximumPreviewImageSize = 300.0;
 
 #pragma mark - LYRUIMessageItemViewConfiguring
 
-- (UIView *)viewForMessageType:(LYRUIMessageType *)messageType {
+- (UIView *)viewForMessage:(LYRUIMessageType *)message {
     return nil;
 }
 
-- (UIColor *)backgroundColorForMessage:(LYRUIMessageType *)messageType direction:(BOOL)outgoing {
+- (UIColor *)backgroundColorForMessage:(LYRUIMessageType *)message {
     return [UIColor colorWithWhite:242.0/255.0 alpha:1.0];
 }
 
-- (CGFloat)viewHeightForMessageType:(LYRUIMessageType *)messageType minWidth:(CGFloat)minWidth maxWidth:(CGFloat)maxWidth {
+- (CGFloat)viewHeightForMessage:(LYRUIMessageType *)message minWidth:(CGFloat)minWidth maxWidth:(CGFloat)maxWidth {
     return 0.0;
 }
 

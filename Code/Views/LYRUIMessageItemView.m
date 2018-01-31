@@ -24,6 +24,7 @@
 #import "LYRUIMessageItemIBSetup.h"
 
 static CGFloat const LYRUIMessageItemViewContentDefaultCornerRadius = 16.0;
+static CGFloat const LYRUIMessageItemViewContentDefaultBorderWidth = 1.0;
 
 @interface LYRUIMessageItemView ()
 
@@ -82,7 +83,7 @@ static CGFloat const LYRUIMessageItemViewContentDefaultCornerRadius = 16.0;
     self.primaryAccessoryViewContainer = [self addView];
     self.contentViewContainer = [self addView];
     self.contentViewContainer.layer.cornerRadius = LYRUIMessageItemViewContentDefaultCornerRadius;
-    self.contentViewContainer.backgroundColor = [UIColor colorWithWhite:242.0/255.0 alpha:1.0];
+    self.contentViewContainer.layer.borderWidth = LYRUIMessageItemViewContentDefaultBorderWidth;
     self.secondaryAccessoryViewContainer = [self addView];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self

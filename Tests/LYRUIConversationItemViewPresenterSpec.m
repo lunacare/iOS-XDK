@@ -7,9 +7,10 @@
 #import <Atlas/LYRUIConversationItemViewPresenter.h>
 #import <Atlas/LYRUIConversationItemView.h>
 #import <Atlas/LYRUITimeFormatting.h>
-#import <Atlas/LYRUIMessageTextFormatting.h>
 #import <Atlas/LYRUIConversationItemTitleFormatting.h>
 #import <Atlas/LYRUIConversationItemAccessoryViewProviding.h>
+#import <Atlas/LYRUIMessageSerializer.h>
+#import <Atlas/LYRUIMessageType.h>
 #import <LayerKit/LayerKit.h>
 
 SpecBegin(LYRUIConversationItemViewPresenter)
@@ -20,8 +21,8 @@ describe(@"LYRUIConversationItemViewPresenter", ^{
     __block id<LYRUIDependencyInjection> injectorMock;
     __block id<LYRUIConversationItemAccessoryViewProviding> accessoryViewProviderMock;
     __block id<LYRUIConversationItemTitleFormatting> titleFormatterMock;
-    __block id<LYRUIMessageTextFormatting> lastMessageFormatterMock;
     __block id<LYRUITimeFormatting> messageTimeFormatterMock;
+    __block LYRUIMessageSerializer *messageSerializerMock;
     
     beforeEach(^{
         configurationMock = mock([LYRUIConfiguration class]);
@@ -38,15 +39,13 @@ describe(@"LYRUIConversationItemViewPresenter", ^{
                                                 forClass:[LYRUIConversationItemViewPresenter class]])
          willReturn:titleFormatterMock];
         
-        lastMessageFormatterMock = mockProtocol(@protocol(LYRUIMessageTextFormatting));
-        [given([injectorMock protocolImplementation:@protocol(LYRUIMessageTextFormatting)
-                                                forClass:[LYRUIConversationItemViewPresenter class]])
-         willReturn:lastMessageFormatterMock];
-        
         messageTimeFormatterMock = mockProtocol(@protocol(LYRUITimeFormatting));
         [given([injectorMock protocolImplementation:@protocol(LYRUITimeFormatting)
                                                 forClass:[LYRUIConversationItemViewPresenter class]])
          willReturn:messageTimeFormatterMock];
+        
+        messageSerializerMock = mock([LYRUIMessageSerializer class]);
+        [given([injectorMock objectOfType:[LYRUIMessageSerializer class]]) willReturn:messageSerializerMock];
         
         viewPresenter = [[LYRUIConversationItemViewPresenter alloc] initWithConfiguration:configurationMock];
     });
@@ -97,9 +96,12 @@ describe(@"LYRUIConversationItemViewPresenter", ^{
                 [given(lastMessageMock.sentAt) willReturn:lastMessageTimeMock];
                 accessoryView = [[UIView alloc] init];
                 
+                LYRUIMessageType *messageMock = mock([LYRUIMessageType class]);
+                [given(messageMock.summary) willReturn:@"test last message"];
+                [given([messageSerializerMock typedMessageWithLayerMessage:lastMessageMock]) willReturn:messageMock];
+                
                 [given([accessoryViewProviderMock accessoryViewForConversation:conversationMock]) willReturn:accessoryView];
                 [given([titleFormatterMock titleForConversation:conversationMock]) willReturn:@"test title"];
-                [given([lastMessageFormatterMock stringForMessage:lastMessageMock]) willReturn:@"test last message"];
                 [given([messageTimeFormatterMock stringForTime:lastMessageTimeMock
                                                withCurrentTime:anything()]) willReturn:@"test time description"];
                 

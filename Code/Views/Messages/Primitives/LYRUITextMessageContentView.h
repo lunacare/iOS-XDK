@@ -1,8 +1,8 @@
 //
-//  UIView+LYRUIMessageConfiguration.h
+//  LYRUITextMessageContentView.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 03.11.2017.
+//  Created by Łukasz Przytuła on 31.01.2018.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,10 +20,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIView (LYRUIMessageConfiguration)
+NS_ASSUME_NONNULL_BEGIN     // {
+@interface LYRUITextMessageContentView : UIView
 
-@property (nonatomic, strong) NSString *lyr_presentationContextId;
-
-- (BOOL)lyr_isOutOfContext:(NSString *)contextId;
+@property (nonatomic, readonly) UITextView *textView;
 
 @end
+NS_ASSUME_NONNULL_END       // }
