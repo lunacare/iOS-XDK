@@ -98,6 +98,11 @@
 #import "LYRUIFileMessageSerializer.h"
 #import "LYRUIFileMessageContentViewPresenter.h"
 #import "LYRUIMessageOpenFileActionHandler.h"
+#import "LYRUILinkMessage.h"
+#import "LYRUILinkMessageSerializer.h"
+#import "LYRUILinkMessageContentViewPresenter.h"
+#import "LYRUILinkMessageContainerViewPresenter.h"
+#import "LYRUIMessageOpenURLActionHandler.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -299,6 +304,7 @@
     
     [self setMessagePresenterClass:[LYRUITextMessageContentViewPresenter class] forMessageClass:[LYRUITextMessage class]];
     [self setMessagePresenterClass:[LYRUIFileMessageContentViewPresenter class] forMessageClass:[LYRUIFileMessage class]];
+    [self setMessagePresenterClass:[LYRUILinkMessageContentViewPresenter class] forMessageClass:[LYRUILinkMessage class]];
 }
 
 - (void)setupMessageContainerPresenters {
@@ -306,6 +312,7 @@
     
     [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUITextMessage class]];
     [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUIFileMessage class]];
+    [self setMessageContainerPresenterClass:[LYRUILinkMessageContainerViewPresenter class] forMessageClass:[LYRUILinkMessage class]];
 }
 
 - (void)setupMessageSerializers {
@@ -313,12 +320,14 @@
     
     [self setMessageSerializerClass:[LYRUITextMessageSerializer class] forMIMEType:LYRUITextMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIFileMessageSerializer class] forMIMEType:LYRUIFileMessage.MIMEType];
+    [self setMessageSerializerClass:[LYRUILinkMessageSerializer class] forMIMEType:LYRUILinkMessage.MIMEType];
 }
 
 - (void)setupActionHandlers {
     self.defaultActionHandlers = [[NSMutableDictionary alloc] init];
     
     [self setActionHandlerClass:[LYRUIMessageOpenFileActionHandler class] forEvent:@"open-file"];
+    [self setActionHandlerClass:[LYRUIMessageOpenURLActionHandler class] forEvent:@"open-url"];
 }
 
 #pragma mark - Helpers

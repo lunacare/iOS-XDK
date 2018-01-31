@@ -80,10 +80,10 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     LYRUIListLoadingIndicatorPresenter *loadingIndicatorPresenter =
         [injector presenterForViewClass:[LYRUIListLoadingIndicatorView class]];
     
-    LYRUIMessageListTypingIndicatorsController *typingIndicatorConfigurator =
+    LYRUIMessageListTypingIndicatorsController *typingIndicatorsController =
         [injector objectOfType:[LYRUIMessageListTypingIndicatorsController class]];
-    typingIndicatorConfigurator.collectionView = messageListView.collectionView;
-    messageListView.typingIndicatorsController = typingIndicatorConfigurator;
+    typingIndicatorsController.collectionView = messageListView.collectionView;
+    messageListView.typingIndicatorsController = typingIndicatorsController;
     
     LYRUITypingIndicatorCellPresenter *typingIndicatorCellPresenter =
         [injector presenterForViewClass:[LYRUIBubbleTypingIndicatorCollectionViewCell class]];

@@ -1,8 +1,8 @@
 //
-//  LYRUIStandardMessageContainerViewPresenter.h
+//  LYRUILinkMessageContainerViewPresenter.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 12.10.2017.
+//  Created by Łukasz Przytuła on 15.11.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,14 +18,7 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-#import "LYRUIConfigurable.h"
-#import "LYRUIMessageItemContentContainerPresenting.h"
-@class LYRUIStandardMessageContainerView;
-@class LYRUIMessageItemContentPresentersProvider;
-@class LYRUIMessageType;
+#import "LYRUIStandardMessageContainerViewPresenter.h"
 
-@interface LYRUIStandardMessageContainerViewPresenter : NSObject <LYRUIMessageItemContentContainerPresenting, LYRUIConfigurable>
-
-@property (nonatomic, strong) LYRUIStandardMessageContainerView *sizingContainerView;
+@interface LYRUILinkMessageContainerViewPresenter : LYRUIStandardMessageContainerViewPresenter
 @end

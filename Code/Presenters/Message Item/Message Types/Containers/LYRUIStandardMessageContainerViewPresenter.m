@@ -60,7 +60,7 @@
         container = [[LYRUIStandardMessageContainerView alloc] init];
         container.layerConfiguration = self.layerConfiguration;
     }
-    [self setupStandardMessageContainerView:container withMessageType:message];
+    [self setupStandardMessageContainerView:container withMessage:message];
     
     id<LYRUIMessageItemContentPresenting> presenter = [self.presentersProvider contentPresenterForMessageClass:[message class]];
     UIView *contentView = [presenter viewForMessage:message];
@@ -70,8 +70,8 @@
 }
 
 - (void)setupStandardMessageContainerView:(LYRUIStandardMessageContainerView *)view
-                          withMessageType:(LYRUIMessageType *)messageType {
-    LYRUIMessageMetadata *metadata = messageType.metadata;
+                              withMessage:(LYRUIMessageType *)message {
+    LYRUIMessageMetadata *metadata = message.metadata;
     view.descriptionLabel.text = metadata.messageDescription;
     view.titleLabel.text = metadata.title;
     view.footerLabel.text = metadata.footer;
@@ -88,7 +88,7 @@
     CGFloat metadataHeight = 0;
 
     if (message.metadata != nil) {
-        [self setupStandardMessageContainerView:self.sizingContainerView withMessageType:message];
+        [self setupStandardMessageContainerView:self.sizingContainerView withMessage:message];
         CGFloat maxTextWidth = maxWidth - 24.0;
         CGSize descriptionTextSize = [self textSizeInLabel:self.sizingContainerView.descriptionLabel withMaxWidth:maxTextWidth];
         CGSize titleTextSize = [self textSizeInLabel:self.sizingContainerView.titleLabel withMaxWidth:maxTextWidth];
