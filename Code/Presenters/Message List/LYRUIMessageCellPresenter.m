@@ -33,6 +33,7 @@
 #import "LYRUIFileMessage.h"
 #import "LYRUILinkMessage.h"
 #import "LYRUIImageMessage.h"
+#import "LYRUILocationMessage.h"
 
 static CGFloat const LYRUIMessageCellPresenterSmallWidth = 460.0;
 static CGFloat const LYRUIMessageCellPresenterWideWidth = 600.0;
@@ -74,6 +75,7 @@ static CGFloat const LYRUIMessageCellPresenterViewsWithMarginsWidth = 64.0;
             [LYRUIFileMessage class],
             [LYRUILinkMessage class],
             [LYRUIImageMessage class],
+            [LYRUILocationMessage class],
     ]];
 }
 

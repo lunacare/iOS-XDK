@@ -27,6 +27,8 @@
 #import "LYRUITextMessage.h"
 #import "LYRUIImageMessage.h"
 #import "UIImage+LYRUIThumbnail.h"
+#import "LYRUILocationMessage.h"
+#import <CoreLocation/CoreLocation.h>
 
 @interface LYRUIMessageSender ()
 
@@ -77,7 +79,16 @@
     LYRUIImageMessage *imageMessage = [[LYRUIImageMessage alloc] initWithImage:image
                                                                   previewImage:image.lyr_thumbnail];
     LYRMessage *message = [self.messageSerializer layerMessageWithTypedMessage:imageMessage];
-    [self sendMessage:message];
+    [self sendLayerMessage:message];
+}
+
+- (void)sendMessageWithLocation:(CLLocation *)location {
+    if (self.conversation == nil || self.layerConfiguration.client == nil) {
+        return;
+    }
+    LYRUILocationMessage *locationMessage = [[LYRUILocationMessage alloc] initWithLocation:location];
+    LYRMessage *message = [self.messageSerializer layerMessageWithTypedMessage:locationMessage];
+    [self sendLayerMessage:message];
 }
 
 - (void)sendMessage:(LYRUIMessageType *)message {

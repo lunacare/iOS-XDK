@@ -106,6 +106,10 @@
 #import "LYRUIImageMessage.h"
 #import "LYRUIImageMessageSerializer.h"
 #import "LYRUIImageMessageContentViewPresenter.h"
+#import "LYRUILocationMessage.h"
+#import "LYRUILocationMessageSerializer.h"
+#import "LYRUILocationMessageContentViewPresenter.h"
+#import "LYRUIMessageOpenMapActionHandler.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -309,6 +313,7 @@
     [self setMessagePresenterClass:[LYRUIFileMessageContentViewPresenter class] forMessageClass:[LYRUIFileMessage class]];
     [self setMessagePresenterClass:[LYRUILinkMessageContentViewPresenter class] forMessageClass:[LYRUILinkMessage class]];
     [self setMessagePresenterClass:[LYRUIImageMessageContentViewPresenter class] forMessageClass:[LYRUIImageMessage class]];
+    [self setMessagePresenterClass:[LYRUILocationMessageContentViewPresenter class] forMessageClass:[LYRUILocationMessage class]];
 }
 
 - (void)setupMessageContainerPresenters {
@@ -318,6 +323,7 @@
     [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUIFileMessage class]];
     [self setMessageContainerPresenterClass:[LYRUILinkMessageContainerViewPresenter class] forMessageClass:[LYRUILinkMessage class]];
     [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUIImageMessage class]];
+    [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUILocationMessage class]];
 }
 
 - (void)setupMessageSerializers {
@@ -327,6 +333,7 @@
     [self setMessageSerializerClass:[LYRUIFileMessageSerializer class] forMIMEType:LYRUIFileMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUILinkMessageSerializer class] forMIMEType:LYRUILinkMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIImageMessageSerializer class] forMIMEType:LYRUIImageMessage.MIMEType];
+    [self setMessageSerializerClass:[LYRUILocationMessageSerializer class] forMIMEType:LYRUILocationMessage.MIMEType];
 }
 
 - (void)setupActionHandlers {
@@ -334,6 +341,7 @@
     
     [self setActionHandlerClass:[LYRUIMessageOpenFileActionHandler class] forEvent:@"open-file"];
     [self setActionHandlerClass:[LYRUIMessageOpenURLActionHandler class] forEvent:@"open-url"];
+    [self setActionHandlerClass:[LYRUIMessageOpenMapActionHandler class] forEvent:@"open-map"];
 }
 
 #pragma mark - Helpers
