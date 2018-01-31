@@ -21,6 +21,10 @@
 #import "LYRUIDependencyInjector.h"
 #import "LYRUIConfigurable.h"
 #import "LYRUIDependencyInjectionDefaultModule.h"
+#import "LYRUIMessageTypeSerializing.h"
+#import "LYRUIMessageItemContentPresenting.h"
+#import "LYRUIMessageItemContentContainerPresenting.h"
+#import "LYRUIActionHandling.h"
 
 @implementation LYRUIDependencyInjector
 @synthesize layerConfiguration = _layerConfiguration;
@@ -75,6 +79,59 @@
         return [[type alloc] initWithConfiguration:self.layerConfiguration];
     }
     return [[type alloc] init];
+}
+
+- (NSArray<Class> *)handledMessageClasses {
+    NSMutableSet *classes = [[NSMutableSet alloc] init];
+    for (NSString *className in self.module.defaultMessagePresenters.allKeys) {
+        Class class = NSClassFromString(className);
+        if (className != nil) {
+            [classes addObject:class];
+        }
+    }
+    for (NSString *className in self.module.defaultMessageContainerPresenters.allKeys) {
+        Class class = NSClassFromString(className);
+        if (className != nil) {
+            [classes addObject:class];
+        }
+    }
+    return classes.allObjects;
+}
+
+- (id<LYRUIMessageItemContentPresenting>)presenterForMessageClass:(Class)messageClass {
+    LYRUIDependencyProviding provider = self.module.defaultMessagePresenters[NSStringFromClass(messageClass)];
+    if (provider) {
+        return provider(self.layerConfiguration);
+    }
+    return nil;
+}
+
+- (id<LYRUIMessageItemContentPresenting>)containerPresenterForMessageClass:(Class)messageClass {
+    LYRUIDependencyProviding provider = self.module.defaultMessageContainerPresenters[NSStringFromClass(messageClass)];
+    if (provider) {
+        return provider(self.layerConfiguration);
+    }
+    return nil;
+}
+
+- (id<LYRUIMessageTypeSerializing>)serializerForMessagePartMIMEType:(NSString *)MIMEType {
+    LYRUIDependencyProviding provider = self.module.defaultMessageSerializers[MIMEType];
+    if (provider) {
+        return provider(self.layerConfiguration);
+    }
+    return nil;
+}
+
+- (id<LYRUIActionHandling>)handlerOfMessageActionWithEvent:(NSString *)event forMessageType:(Class)messageClass {
+    LYRUIDependencyProviding provider = self.module.defaultActionHandlers[NSStringFromClass(messageClass)][event];
+    if (provider == nil) {
+        NSString *anyClassKey = NSStringFromClass([LYRUIDIAnyClass class]);
+        provider = self.module.defaultActionHandlers[anyClassKey][event];
+    }
+    if (provider) {
+        return provider(self.layerConfiguration);
+    }
+    return nil;
 }
 
 @end

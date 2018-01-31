@@ -21,6 +21,7 @@
 #import <Foundation/Foundation.h>
 #import "LYRUIConfigurable.h"
 @class LYRConversation;
+@class LYRUIMessageType;
 
 @interface LYRUIMessageSender : NSObject <LYRUIConfigurable>
 
@@ -35,5 +36,11 @@
  @param attributedString A `NSAttributedString` containing text and attachments, used to create new message.
  */
 - (void)sendMessageWithAttributedString:(NSAttributedString *)attributedString;
+
+/**
+ @abstract Method used to send provided `message`.
+ @param message A `LYRUIMessageType` to send.
+ */
+- (void)sendMessage:(LYRUIMessageType *)message;
 
 @end

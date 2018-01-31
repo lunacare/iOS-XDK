@@ -21,14 +21,7 @@
 #import "NSCache+LYRUIImageCaching.h"
 
 @implementation NSCache (LYRUIImageCaching)
+@end
 
-+ (NSCache<NSURL *, UIImage *> *)sharedImagesCache{
-    static NSCache<NSURL *, UIImage *> *sharedImagesCache;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedImagesCache = [[NSCache<NSURL *, UIImage *> alloc] init];
-    });
-    return sharedImagesCache;
-}
-
+@implementation NSCache (LYRUIThumbnailsCaching)
 @end

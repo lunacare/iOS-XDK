@@ -20,7 +20,6 @@
 #import <Atlas/LYRUIConversationItemViewUnreadTheme.h>
 #import <Atlas/LYRUIConversationItemViewPresenter.h>
 #import <Atlas/LYRUIConversationItemTitleFormatter.h>
-#import <Atlas/LYRUIMessageTextDefaultFormatter.h>
 #import <Atlas/LYRUIMessageTimeDefaultFormatter.h>
 #import <Atlas/LYRUIConversationListView.h>
 #import <Atlas/LYRUIConversationListViewPresenter.h>
@@ -344,19 +343,6 @@ describe(@"LYRUIDependencyInjector", ^{
             
             it(@"should return object of `LYRUIConversationItemTitleFormatter` type", ^{
                 expect(returnedObject).to.beAKindOf([LYRUIConversationItemTitleFormatter class]);
-            });
-        });
-        
-        context(@"of LYRUIMessageTextFormatting", ^{
-            __block id returnedObject;
-            
-            beforeEach(^{
-                returnedObject = [injector protocolImplementation:@protocol(LYRUIMessageTextFormatting)
-                                                         forClass:[NSObject class]];
-            });
-            
-            it(@"should return object of `LYRUIMessageTextDefaultFormatter` type", ^{
-                expect(returnedObject).to.beAKindOf([LYRUIMessageTextDefaultFormatter class]);
             });
         });
         

@@ -31,7 +31,6 @@
 
 @property (nonatomic, weak, readwrite) LYRUIMessageListView *messageListView;
 @property (nonatomic, weak, readwrite) LYRUIComposeBar *composeBar;
-@property (nonatomic, strong, readwrite) LYRUIMessageSender *messageSender;
 
 @end
 
@@ -72,6 +71,11 @@
     LYRUIComposeBar *composeBar = [[LYRUIComposeBar alloc] init];
     [self addSubview:composeBar];
     self.composeBar = composeBar;
+    
+    __weak __typeof(self) weakSelf = self;
+    self.composeBar.sendPressedBlock = ^(NSAttributedString *attributedText){
+        [weakSelf.messageListView.messageSender sendMessageWithAttributedString:attributedText];
+    };
 }
 
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
@@ -81,11 +85,6 @@
     if (self.layout == nil) {
         self.layout = [layerConfiguration.injector layoutForViewClass:[self class]];
     }
-    self.messageSender = [layerConfiguration.injector objectOfType:[LYRUIMessageSender class]];
-    __weak __typeof(self) weakSelf = self;
-    self.composeBar.sendPressedBlock = ^(NSAttributedString *attributedText){
-        [weakSelf.messageSender sendMessageWithAttributedString:attributedText];
-    };
 }
 
 - (void)prepareForInterfaceBuilder {
@@ -99,7 +98,6 @@
 }
 
 - (void)setConversation:(LYRConversation *)conversation {
-    self.messageSender.conversation = conversation;
     self.messageListView.conversation = conversation;
     self.composeBar.conversation = conversation;
 }
@@ -110,7 +108,6 @@
 
 - (void)setQueryController:(LYRQueryController *)queryController {
     self.messageListView.queryController = queryController;
-    self.messageSender.conversation = self.messageListView.conversation;
     self.composeBar.conversation = self.messageListView.conversation;
     [queryController execute:nil];
 }

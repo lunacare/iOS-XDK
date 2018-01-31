@@ -26,11 +26,17 @@
 NS_ASSUME_NONNULL_BEGIN     // {
 @protocol LYRUIMessageItemView <NSObject>
 
+@property (nonatomic, weak, readonly) UITapGestureRecognizer *tapGestureRecognizer;
+
 @property(nonatomic, strong, nullable) UIView *primaryAccessoryView;
 @property(nonatomic, strong, nullable) UIView *contentView;
 @property(nonatomic, strong, nullable) UIView *secondaryAccessoryView;
 
+@property (nonatomic, copy) NSString *messageId;
+
 @property(nonatomic, strong) UIColor *contentViewColor;
+
+@property (nonatomic, copy) void(^actionHandler)(void);
 
 @end
 

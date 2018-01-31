@@ -48,15 +48,9 @@ IB_DESIGNABLE
 @property (nonatomic, weak, readonly) LYRUIMessageListView *messageListView;
 
 /**
- @abstract A view containing input field and additional buttons for sending messages.
+ @abstract A view containing input field and additional buttons for sending messages. The `sendPressedBlock` of `composeBar` is automatically configured for sending messages using `messageListView` `messageSender`.
  */
 @property (nonatomic, weak, readonly) LYRUIComposeBar *composeBar;
-
-/**
- @abstract Object used for sending messages in the `LYRConversation`.
- @discussion This property is set, when view is set up using `LYRUIConfiguration`. It also sets the `sendPressedBlock` of `composeBar` for sending messages using `messageSender`.
- */
-@property (nonatomic, strong, readonly) LYRUIMessageSender *messageSender;
 
 /**
  @abstract A `LYRConversation` from which the messages are presented in the `messageListView`.

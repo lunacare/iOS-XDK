@@ -22,22 +22,15 @@
 #import "LYRUIConfiguration+DependencyInjection.h"
 #import "ATLMediaAttachment.h"
 #import <LayerKit/LayerKit.h>
+#import "LYRUIMessageSerializer.h"
+#import "LYRUIMessageType.h"
+#import "LYRUITextMessage.h"
 
-static NSString *const LYRUIPushNotificationSoundName = @"layerbell.caf";
-static NSString *const LYRUIDefaultPushAlertGIF = @"sent you a GIF.";
-static NSString *const LYRUIDefaultPushAlertImage = @"sent you a photo.";
-static NSString *const LYRUIDefaultPushAlertLocation = @"sent you a location.";
-static NSString *const LYRUIDefaultPushAlertVideo = @"sent you a video.";
-static NSString *const LYRUIDefaultPushAlertText = @"sent you a message.";
+@interface LYRUIMessageSender ()
 
-static NSString *const LYRUIMIMETypeTextPlain = @"text/plain";
-static NSString *const LYRUIMIMETypeImageGIF = @"image/gif";
-static NSString *const LYRUIMIMETypeImagePNG = @"image/png";
-static NSString *const LYRUIMIMETypeImageJPEG = @"image/jpeg";
-static NSString *const LYRUIMIMETypeLocation = @"location/coordinate";
-static NSString *const LYRUIMIMETypeVideoMP4 = @"video/mp4";
+@property (nonatomic, strong) LYRUIMessageSerializer *messageSerializer;
 
-static NSString *const LYRUIUserNotificationDefaultActionsCategoryIdentifier = @"layer:///categories/default";
+@end
 
 @implementation LYRUIMessageSender
 @synthesize layerConfiguration = _layerConfiguration;
@@ -50,126 +43,57 @@ static NSString *const LYRUIUserNotificationDefaultActionsCategoryIdentifier = @
     return self;
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.messageSerializer = [[LYRUIMessageSerializer alloc] init];
+    }
+    return self;
+}
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.messageSerializer = [layerConfiguration.injector objectOfType:[LYRUIMessageSerializer class]];
+}
+
 #pragma mark - Public methods
 
 - (void)sendMessageWithAttributedString:(NSAttributedString *)attributedString {
     if (self.conversation == nil || self.layerConfiguration.client == nil) {
         return;
     }
-    NSArray *mediaAttachments = [self mediaAttachmentsFromAttributedString:attributedString];
-    NSArray *messages = [self messagesForMediaAttachments:mediaAttachments];
+    NSArray *messages = [self messagesFromAttributedString:attributedString];
     for (LYRMessage *message in messages) {
-        [self sendMessage:message];
+        [self sendLayerMessage:message];
     }
 }
 
-#pragma mark - Media attachments
+- (void)sendMessage:(LYRUIMessageType *)message {
+    LYRMessage *layerMessage = [self.messageSerializer layerMessageWithTypedMessage:message];
+    [self sendLayerMessage:layerMessage];
+}
 
-- (NSArray *)mediaAttachmentsFromAttributedString:(NSAttributedString *)attributedString {
-    NSMutableArray *mediaAttachments = [NSMutableArray new];
+#pragma mark - Message Sending
+
+- (NSArray *)messagesFromAttributedString:(NSAttributedString *)attributedString {
+    NSMutableArray *messages = [NSMutableArray new];
     [attributedString enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(id attachment, NSRange range, BOOL *stop) {
-        if ([attachment isKindOfClass:[ATLMediaAttachment class]]) {
-            ATLMediaAttachment *mediaAttachment = (ATLMediaAttachment *)attachment;
-            [mediaAttachments addObject:mediaAttachment];
-            return;
-        }
         NSAttributedString *attributedSubstring = [attributedString attributedSubstringFromRange:range];
         NSString *substring = attributedSubstring.string;
         NSString *trimmedSubstring = [substring stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if (trimmedSubstring.length == 0) {
             return;
         }
-        ATLMediaAttachment *mediaAttachment = [ATLMediaAttachment mediaAttachmentWithText:trimmedSubstring];
-        [mediaAttachments addObject:mediaAttachment];
+        LYRUITextMessage *textMessage = [[LYRUITextMessage alloc] initWithText:trimmedSubstring];
+        LYRMessage *message = [self.messageSerializer layerMessageWithTypedMessage:textMessage];
+        if (message) {
+            [messages addObject:message];
+        }
     }];
-    return mediaAttachments;
-}
-
-#pragma mark - Message Sending
-
-- (NSArray *)messagesForMediaAttachments:(NSArray *)mediaAttachments {
-    NSMutableArray *messages = [NSMutableArray new];
-    for (ATLMediaAttachment *attachment in mediaAttachments) {
-        LYRMessage *message = [self messageForAttachment:attachment];
-        if (message)[messages addObject:message];
-    }
     return messages;
 }
 
-- (LYRMessage *)messageForAttachment:(ATLMediaAttachment *)attachment {
-    LYRPushNotificationConfiguration *defaultConfiguration = [self pushNotificationConfigurationForAttachment:attachment];
-    
-    NSArray *messageParts = [self messagePartsWithMediaAttachment:attachment];
-    LYRMessageOptions *messageOptions = [[LYRMessageOptions alloc] init];
-    messageOptions.pushNotificationConfiguration = defaultConfiguration;
-    
-    NSError *error;
-    LYRMessage *message = [self.layerConfiguration.client newMessageWithParts:messageParts options:messageOptions error:&error];
-    if (error) {
-        return nil;
-    }
-    return message;
-}
-
-- (LYRPushNotificationConfiguration *)pushNotificationConfigurationForAttachment:(ATLMediaAttachment *)attachment {
-    LYRPushNotificationConfiguration *defaultConfiguration = [[LYRPushNotificationConfiguration alloc] init];
-    defaultConfiguration.alert = [self pushMessageForAttachment:attachment];
-    defaultConfiguration.sound = LYRUIPushNotificationSoundName;
-    defaultConfiguration.category = LYRUIUserNotificationDefaultActionsCategoryIdentifier;
-    return defaultConfiguration;
-}
-
-- (NSString *)pushMessageForAttachment:(ATLMediaAttachment *)attachment {
-    NSString *pushMessageDetails;
-    NSString *senderName = [self.layerConfiguration.client.authenticatedUser displayName];
-    if ([attachment.mediaMIMEType isEqualToString:LYRUIMIMETypeTextPlain]) {
-        return [NSString stringWithFormat:@"%@: %@", senderName, attachment.textRepresentation];
-    } else if ([attachment.mediaMIMEType isEqualToString:LYRUIMIMETypeImageGIF]) {
-        pushMessageDetails = LYRUIDefaultPushAlertGIF;
-    } else if ([attachment.mediaMIMEType isEqualToString:LYRUIMIMETypeImagePNG] ||
-               [attachment.mediaMIMEType isEqualToString:LYRUIMIMETypeImageJPEG]) {
-        pushMessageDetails = LYRUIDefaultPushAlertImage;
-    } else if ([attachment.mediaMIMEType isEqualToString:LYRUIMIMETypeLocation]) {
-        pushMessageDetails = LYRUIDefaultPushAlertLocation;
-    } else if ([attachment.mediaMIMEType isEqualToString:LYRUIMIMETypeVideoMP4]){
-        pushMessageDetails = LYRUIDefaultPushAlertVideo;
-    } else {
-        pushMessageDetails = LYRUIDefaultPushAlertText;
-    }
-    return [NSString stringWithFormat:@"%@ %@", senderName, pushMessageDetails];
-}
-
-- (NSArray *)messagePartsWithMediaAttachment:(ATLMediaAttachment *)mediaAttachment {
-    NSMutableArray *messageParts = [NSMutableArray array];
-    if (!mediaAttachment.mediaInputStream) {
-        @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                       reason:@"Cannot create an LYRMessagePart with `nil` mediaInputStream."
-                                     userInfo:nil];
-    }
-    
-    if ([mediaAttachment.mediaMIMEType isEqualToString:LYRUIMIMETypeTextPlain]) {
-        return @[[LYRMessagePart messagePartWithText:mediaAttachment.textRepresentation]];
-    }
-    
-    // Create the message part for the main media (should be on index zero).
-    [messageParts addObject:[LYRMessagePart messagePartWithMIMEType:mediaAttachment.mediaMIMEType
-                                                             stream:mediaAttachment.mediaInputStream]];
-    
-    // If there's a thumbnail in the attachment, add it to the message parts on the second index.
-    if (mediaAttachment.thumbnailInputStream) {
-        [messageParts addObject:[LYRMessagePart messagePartWithMIMEType:mediaAttachment.thumbnailMIMEType
-                                                                 stream:mediaAttachment.thumbnailInputStream]];
-    }
-    
-    // If there's any additional metadata, add it to the message parts on the third index.
-    if (mediaAttachment.metadataInputStream) {
-        [messageParts addObject:[LYRMessagePart messagePartWithMIMEType:mediaAttachment.metadataMIMEType
-                                                                 stream:mediaAttachment.metadataInputStream]];
-    }
-    return messageParts;
-}
-
-- (void)sendMessage:(LYRMessage *)message {
+- (void)sendLayerMessage:(LYRMessage *)message {
     NSError *error;
     BOOL success = [self.conversation sendMessage:message error:&error];
     if (!success) {

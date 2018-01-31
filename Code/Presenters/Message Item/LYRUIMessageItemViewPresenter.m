@@ -22,26 +22,26 @@
 #import "LYRUIConfiguration+DependencyInjection.h"
 #import "LYRUIMessageItemView.h"
 #import <LayerKit/LayerKit.h>
-#import "LYRUIMessageTextFormatting.h"
 #import "LYRUIMessageItemAccessoryViewProviding.h"
+#import "LYRUIMessageType.h"
+#import "LYRUIMessageItemContentPresentersProvider.h"
+#import "LYRUIReusableViewsQueue.h"
+#import "LYRUIMessageItemView.h"
+#import "LYRUIMessageViewContainer.h"
+#import "LYRUIViewReusing.h"
+#import "LYRUIMessageItemContentBasePresenter.h"
 
-@interface LYRUIMessageItemViewPresenter ()
+static CGFloat const LYRUIMessageItemViewMinimumHeight = 32.0;
 
-@property (nonatomic, strong) UITextView *sizingTextView;
-@property (nonatomic, strong) id<LYRUIMessageTextFormatting> messageFormatter;
+@interface LYRUIMessageItemViewPresenter () <UIGestureRecognizerDelegate>
+
+@property (nonatomic, strong) LYRUIMessageItemContentPresentersProvider *contentPresentersProvider;
+@property (nonatomic, strong) LYRUIReusableViewsQueue *reusableViewsQueue;
 
 @end
 
 @implementation LYRUIMessageItemViewPresenter
 @synthesize layerConfiguration = _layerConfiguration;
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.sizingTextView = [self createContentTextView];
-    }
-    return self;
-}
 
 - (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
     self = [self init];
@@ -53,13 +53,13 @@
 
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     _layerConfiguration = layerConfiguration;
-    self.messageFormatter = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIMessageTextFormatting)
-                                                                       forClass:[self class]];
     self.primaryAccessoryViewProvider = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIMessageItemAccessoryViewProviding)
                                                                                    forClass:[self class]];
+    self.contentPresentersProvider = [layerConfiguration.injector objectOfType:[LYRUIMessageItemContentPresentersProvider class]];
+    self.reusableViewsQueue = [layerConfiguration.injector objectOfType:[LYRUIReusableViewsQueue class]];
 }
 
-- (void)setupMessageItemView:(UIView<LYRUIMessageItemView> *)messageItemView withMessage:(LYRMessage *)message {
+- (void)setupMessageItemView:(UIView<LYRUIMessageItemView> *)messageItemView withMessage:(LYRUIMessageType *)message {
     if (messageItemView == nil) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot setup Message Item View with nil `messageItemView` argument." userInfo:nil];
     }
@@ -67,16 +67,51 @@
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot setup Message Item View with nil `message` argument." userInfo:nil];
     }
     
-    if (messageItemView.contentView == nil) {
-        messageItemView.contentView = [self createContentTextView];
+    UIView *contentView = messageItemView.contentView;
+    messageItemView.contentView = nil;
+    [self enqueueReusableView:contentView];
+    
+    [self setupMessageItemViewBubbleColor:messageItemView withMessage:message];
+    messageItemView.contentView = [self contentViewForMessage:message];
+    [self setupAvatarViewInMessageItem:messageItemView withMessage:message];
+    
+    __weak __typeof(self) weakSelf = self;
+    LYRUIMessageAction *action = message.action;
+    messageItemView.actionHandler = ^{
+        [weakSelf.actionHandlingDelegate handleAction:action withHandler:nil];
+    };
+    messageItemView.tapGestureRecognizer.delegate = self;
+}
+
+- (void)enqueueReusableView:(__kindof UIView *)view {
+    if ([view conformsToProtocol:@protocol(LYRUIMessageViewContainer)]) {
+        UIView<LYRUIMessageViewContainer> *containerView = (UIView<LYRUIMessageViewContainer> *)view;
+        UIView *contentView = containerView.contentView;
+        containerView.contentView = nil;
+        [self enqueueReusableView:contentView];
     }
-    UITextView *textView = (UITextView *)messageItemView.contentView;
-    NSString *messageText = [self.messageFormatter stringForMessage:message];
-    textView.text = messageText;
-    
-    messageItemView.contentView.backgroundColor = [UIColor colorWithWhite:242.0/255.0 alpha:1.0];
-    textView.textColor = [UIColor blackColor];
-    
+    if ([view conformsToProtocol:@protocol(LYRUIViewReusing)]) {
+        UIView<LYRUIViewReusing> *reusableView = (UIView<LYRUIViewReusing> *)view;
+        [reusableView lyr_prepareForReuse];
+    }
+    [self.reusableViewsQueue enqueueReusableView:view];
+}
+
+- (UIView *)contentViewForMessage:(LYRUIMessageType *)message {
+    id<LYRUIMessageItemContentPresenting> presenter = [self.contentPresentersProvider presenterForMessageClass:[message class]];
+    presenter.actionHandlingDelegate = self.actionHandlingDelegate;
+    return [presenter viewForMessage:message];
+}
+
+- (CGFloat)messageViewHeightForMessage:(LYRUIMessageType *)message maxWidth:(CGFloat)width {
+    id<LYRUIMessageItemContentPresenting> presenter = [self.contentPresentersProvider presenterForMessageClass:[message class]];
+    CGFloat contentViewHeight = [presenter viewHeightForMessage:message
+                                                       minWidth:LYRUIMessageItemViewMinimumContentWidth
+                                                       maxWidth:width];
+    return MAX(contentViewHeight, LYRUIMessageItemViewMinimumHeight);
+}
+
+- (void)setupAvatarViewInMessageItem:(UIView<LYRUIMessageItemView> *)messageItemView withMessage:(LYRUIMessageType *)message {
     if (messageItemView.primaryAccessoryView == nil) {
         messageItemView.primaryAccessoryView = [self.primaryAccessoryViewProvider accessoryViewForMessage:message];
     } else {
@@ -84,27 +119,22 @@
     }
 }
 
-- (UITextView *)createContentTextView {
-    // TODO: extract to provider
-    UITextView *textView = [[UITextView alloc] init];
-    textView.editable = NO;
-    textView.scrollEnabled = NO;
-    textView.font = [UIFont systemFontOfSize:14.0];
-    textView.textContainerInset = UIEdgeInsetsMake(7.0, 7.0, 7.0, 7.0);
-    return textView;
+#pragma mark - Color setup
+
+- (void)setupMessageItemViewBubbleColor:(UIView<LYRUIMessageItemView> *)messageItemView withMessage:(LYRUIMessageType *)message {
+    id<LYRUIMessageItemContentPresenting> presenter = [self.contentPresentersProvider presenterForMessageClass:[message class]];
+    messageItemView.contentViewColor = [presenter backgroundColorForMessage:message];
 }
 
-- (CGFloat)messageViewHeightForMessage:(LYRMessage *)message maxWidth:(CGFloat)maxWidth {
-    // TODO: extract to provider
-    CGFloat textWidth = maxWidth - 28.0;
-    NSString *messageText = [self.messageFormatter stringForMessage:message];
-    self.sizingTextView.text = messageText;
-    CGRect stringRect = [self.sizingTextView.text boundingRectWithSize:CGSizeMake(textWidth, CGFLOAT_MAX)
-                                                               options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                                            attributes:self.sizingTextView.typingAttributes
-                                                               context:nil];
-    CGFloat textViewHeight = ceil(stringRect.size.height);
-    return textViewHeight + 14.0;
+#pragma mark = UIGestureRecognizerDelegate methods
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+shouldRecognizeSimultaneouslyWithGestureRecognizer:(nonnull UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return ![touch.view isKindOfClass:[UIControl class]];
 }
 
 @end

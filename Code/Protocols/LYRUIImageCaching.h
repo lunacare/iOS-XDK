@@ -41,4 +41,10 @@ NS_ASSUME_NONNULL_BEGIN     // {
 - (void)setObject:(UIImage *)obj forKey:(NSURL *)key;
 
 @end
+
+/**
+ @abstract Objects conforming to the `LYRUIThumbnailsCaching` protocol will be used to store and reuse locall thumbnails of images.
+ */
+@protocol LYRUIThumbnailsCaching <LYRUIImageCaching>
+@end
 NS_ASSUME_NONNULL_END       // }

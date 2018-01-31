@@ -31,5 +31,9 @@ typedef NSObject LYRUIDIAnyClass;
 @property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultLayouts;
 @property (nonatomic, readonly) NSDictionary<NSString *, NSDictionary<NSString *, LYRUIDependencyProviding> *> *defaultProtocolImplementations;
 @property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultObjects;
+@property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultMessagePresenters;
+@property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultMessageContainerPresenters;
+@property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *defaultMessageSerializers;
+@property (nonatomic, readonly) NSDictionary<NSString *, NSDictionary<NSString *, LYRUIDependencyProviding> *> *defaultActionHandlers;
 
 @end

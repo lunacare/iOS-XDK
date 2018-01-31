@@ -24,6 +24,7 @@
 #import "LYRUIParticipantsFiltering.h"
 #import "LYRUIParticipantsSorting.h"
 #import <LayerKit/LayerKit.h>
+#import "LYRUIMessageType.h"
 
 @implementation LYRUIAvatarViewProvider
 @synthesize layerConfiguration = _layerConfiguration;
@@ -82,13 +83,13 @@
 
 #pragma mark - LYRUIMessageItemAccessoryViewProviding methods
 
-- (LYRUIAvatarView *)accessoryViewForMessage:(LYRMessage *)message {
+- (LYRUIAvatarView *)accessoryViewForMessage:(LYRUIMessageType *)message {
     LYRUIAvatarView *avatarView = [self avatarView];
     [self setupAccessoryView:avatarView forMessage:message];
     return avatarView;
 }
 
-- (void)setupAccessoryView:(LYRUIAvatarView *)avatarView forMessage:(LYRMessage *)message {
+- (void)setupAccessoryView:(LYRUIAvatarView *)avatarView forMessage:(LYRUIMessageType *)message {
     [self setupAvatarView:avatarView forIdentity:message.sender];
 }
 
