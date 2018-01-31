@@ -44,6 +44,8 @@
 #import "LYRUITypingIndicatorFooterPresenter.h"
 #import "LYRUIBubbleTypingIndicatorCollectionViewCell.h"
 #import "LYRUITypingIndicatorCellPresenter.h"
+#import "LYRUIStatusMessageCollectionViewCell.h"
+#import "LYRUIStatusCellPresenter.h"
 
 static NSTimeInterval const LYRUIMessageListViewDefaultGroupintTimeInterval = 60.0 * 30.0;
 static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
@@ -91,14 +93,18 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     LYRUITypingIndicatorFooterPresenter *typingIndicatorFooterPresenter =
         [injector presenterForViewClass:[LYRUIPanelTypingIndicatorView class]];
     
+    LYRUIStatusCellPresenter *statusMessageCellPresenter =
+        [injector presenterForViewClass:[LYRUIStatusMessageCollectionViewCell class]];
+    
     [self registerCellsWithPresenters:@[cellPresenter,
-                                            typingIndicatorCellPresenter]
-                         inCollectionView:messageListView.collectionView];
+                                        typingIndicatorCellPresenter,
+                                        statusMessageCellPresenter]
+                     inCollectionView:messageListView.collectionView];
     [self registerSupplementaryViewsWithPresenters:@[messageTimeViewPresenter,
-                                                         messageStatusViewPresenter,
-                                                         loadingIndicatorPresenter,
-                                                         typingIndicatorFooterPresenter]
-                                      inCollectionView:messageListView.collectionView];
+                                                     messageStatusViewPresenter,
+                                                     loadingIndicatorPresenter,
+                                                     typingIndicatorFooterPresenter]
+                                  inCollectionView:messageListView.collectionView];
     
     messageListView.layout = layout;
     
@@ -106,6 +112,7 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     cellPresenter.listDataSource = dataSource;
     [dataSource registerCellPresenter:cellPresenter];
     [dataSource registerCellPresenter:typingIndicatorCellPresenter];
+    [dataSource registerCellPresenter:statusMessageCellPresenter];
     [dataSource registerSupplementaryViewPresenter:messageTimeViewPresenter];
     [dataSource registerSupplementaryViewPresenter:messageStatusViewPresenter];
     [dataSource registerSupplementaryViewPresenter:loadingIndicatorPresenter];
@@ -115,6 +122,7 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     LYRUIMessageListDelegate *delegate = [[LYRUIMessageListDelegate alloc] init];
     [delegate registerCellSizeCalculation:cellPresenter];
     [delegate registerCellSizeCalculation:typingIndicatorCellPresenter];
+    [delegate registerCellSizeCalculation:statusMessageCellPresenter];
     [delegate registerSupplementaryViewSizeCalculation:messageTimeViewPresenter];
     [delegate registerSupplementaryViewSizeCalculation:messageStatusViewPresenter];
     [delegate registerSupplementaryViewSizeCalculation:loadingIndicatorPresenter];

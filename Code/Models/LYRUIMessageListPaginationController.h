@@ -60,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
  @abstract A method for loading next page of items with a callback.
  @param callback A block called after loading next page of items.
  */
-- (void)loadNextPageWithCallback:(void(^)(BOOL))callback;
+- (void)loadNextPageWithCallback:(void(^ _Nullable)(BOOL))callback;
 
 /**
  @abstract A method for extracting `LYRConversation` from the `LYRPredicate`.
