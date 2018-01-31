@@ -44,7 +44,7 @@ static NSString *const LYRUIUserNotificationDefaultActionsCategoryIdentifier = @
 @synthesize layerConfiguration = _layerConfiguration;
 
 - (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
-    self = [super init];
+    self = [self init];
     if (self) {
         self.layerConfiguration = configuration;
     }

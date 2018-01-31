@@ -94,6 +94,10 @@
 #import "LYRUIStandardMessageContainerView.h"
 #import "LYRUIStandardMessageContainerViewLayout.h"
 #import "LYRUIStandardMessageContainerViewDefaultTheme.h"
+#import "LYRUIFileMessage.h"
+#import "LYRUIFileMessageSerializer.h"
+#import "LYRUIFileMessageContentViewPresenter.h"
+#import "LYRUIMessageOpenFileActionHandler.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -294,22 +298,27 @@
     self.defaultMessagePresenters = [[NSMutableDictionary alloc] init];
     
     [self setMessagePresenterClass:[LYRUITextMessageContentViewPresenter class] forMessageClass:[LYRUITextMessage class]];
+    [self setMessagePresenterClass:[LYRUIFileMessageContentViewPresenter class] forMessageClass:[LYRUIFileMessage class]];
 }
 
 - (void)setupMessageContainerPresenters {
     self.defaultMessageContainerPresenters = [[NSMutableDictionary alloc] init];
     
     [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUITextMessage class]];
+    [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUIFileMessage class]];
 }
 
 - (void)setupMessageSerializers {
     self.defaultMessageSerializers = [[NSMutableDictionary alloc] init];
     
     [self setMessageSerializerClass:[LYRUITextMessageSerializer class] forMIMEType:LYRUITextMessage.MIMEType];
+    [self setMessageSerializerClass:[LYRUIFileMessageSerializer class] forMIMEType:LYRUIFileMessage.MIMEType];
 }
 
 - (void)setupActionHandlers {
     self.defaultActionHandlers = [[NSMutableDictionary alloc] init];
+    
+    [self setActionHandlerClass:[LYRUIMessageOpenFileActionHandler class] forEvent:@"open-file"];
 }
 
 #pragma mark - Helpers
