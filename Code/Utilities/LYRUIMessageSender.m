@@ -25,6 +25,8 @@
 #import "LYRUIMessageSerializer.h"
 #import "LYRUIMessageType.h"
 #import "LYRUITextMessage.h"
+#import "LYRUIImageMessage.h"
+#import "UIImage+LYRUIThumbnail.h"
 
 @interface LYRUIMessageSender ()
 
@@ -66,6 +68,16 @@
     for (LYRMessage *message in messages) {
         [self sendLayerMessage:message];
     }
+}
+
+- (void)sendMessageWithImage:(UIImage *)image {
+    if (self.conversation == nil || self.layerConfiguration.client == nil) {
+        return;
+    }
+    LYRUIImageMessage *imageMessage = [[LYRUIImageMessage alloc] initWithImage:image
+                                                                  previewImage:image.lyr_thumbnail];
+    LYRMessage *message = [self.messageSerializer layerMessageWithTypedMessage:imageMessage];
+    [self sendMessage:message];
 }
 
 - (void)sendMessage:(LYRUIMessageType *)message {

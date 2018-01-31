@@ -103,6 +103,9 @@
 #import "LYRUILinkMessageContentViewPresenter.h"
 #import "LYRUILinkMessageContainerViewPresenter.h"
 #import "LYRUIMessageOpenURLActionHandler.h"
+#import "LYRUIImageMessage.h"
+#import "LYRUIImageMessageSerializer.h"
+#import "LYRUIImageMessageContentViewPresenter.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -305,6 +308,7 @@
     [self setMessagePresenterClass:[LYRUITextMessageContentViewPresenter class] forMessageClass:[LYRUITextMessage class]];
     [self setMessagePresenterClass:[LYRUIFileMessageContentViewPresenter class] forMessageClass:[LYRUIFileMessage class]];
     [self setMessagePresenterClass:[LYRUILinkMessageContentViewPresenter class] forMessageClass:[LYRUILinkMessage class]];
+    [self setMessagePresenterClass:[LYRUIImageMessageContentViewPresenter class] forMessageClass:[LYRUIImageMessage class]];
 }
 
 - (void)setupMessageContainerPresenters {
@@ -313,6 +317,7 @@
     [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUITextMessage class]];
     [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUIFileMessage class]];
     [self setMessageContainerPresenterClass:[LYRUILinkMessageContainerViewPresenter class] forMessageClass:[LYRUILinkMessage class]];
+    [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUIImageMessage class]];
 }
 
 - (void)setupMessageSerializers {
@@ -321,6 +326,7 @@
     [self setMessageSerializerClass:[LYRUITextMessageSerializer class] forMIMEType:LYRUITextMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIFileMessageSerializer class] forMIMEType:LYRUIFileMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUILinkMessageSerializer class] forMIMEType:LYRUILinkMessage.MIMEType];
+    [self setMessageSerializerClass:[LYRUIImageMessageSerializer class] forMIMEType:LYRUIImageMessage.MIMEType];
 }
 
 - (void)setupActionHandlers {

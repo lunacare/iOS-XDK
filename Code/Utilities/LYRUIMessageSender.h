@@ -32,10 +32,15 @@
 
 /**
  @abstract Method used to send message with provided `NSAttributedString`.
- @discussion This methods creates a `LYRQueryController` for `LYRMessage` objects assigned to provided conversation, sorted by `position` property, and using `pageSize` property.
  @param attributedString A `NSAttributedString` containing text and attachments, used to create new message.
  */
 - (void)sendMessageWithAttributedString:(NSAttributedString *)attributedString;
+
+/**
+ @abstract Method used to send message with provided `UIImage`.
+ @param image A `UIImage` used to create new message.
+ */
+- (void)sendMessageWithImage:(UIImage *)image;
 
 /**
  @abstract Method used to send provided `message`.
