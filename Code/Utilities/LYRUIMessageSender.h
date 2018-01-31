@@ -22,6 +22,7 @@
 #import "LYRUIConfigurable.h"
 @class LYRConversation;
 @class LYRUIMessageType;
+@class CLLocation;
 
 @interface LYRUIMessageSender : NSObject <LYRUIConfigurable>
 
@@ -41,6 +42,12 @@
  @param image A `UIImage` used to create new message.
  */
 - (void)sendMessageWithImage:(UIImage *)image;
+
+/**
+ @abstract Method used to send message with provided `CLLocation`.
+ @param location A `CLLocation` used to create new message.
+ */
+- (void)sendMessageWithLocation:(CLLocation *)location;
 
 /**
  @abstract Method used to send provided `message`.
