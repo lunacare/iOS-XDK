@@ -50,6 +50,7 @@
 
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     _layerConfiguration = layerConfiguration;
+    self.sizingContainerView.layerConfiguration = layerConfiguration;
     self.reusableViewsQueue = [layerConfiguration.injector objectOfType:[LYRUIReusableViewsQueue class]];
 }
 
@@ -79,6 +80,7 @@
 
 - (UIColor *)backgroundColorForMessage:(LYRUIMessageType *)message {
     id<LYRUIMessageItemContentPresenting> presenter = [self.presentersProvider contentPresenterForMessageClass:[message class]];
+    presenter.actionHandlingDelegate = self.actionHandlingDelegate;
     return [presenter backgroundColorForMessage:message];
 }
 

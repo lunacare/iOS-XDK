@@ -30,6 +30,7 @@
 
 #import "LYRUIMessageType.h"
 #import "LYRUITextMessage.h"
+#import "LYRUIFileMessage.h"
 
 static CGFloat const LYRUIMessageCellPresenterSmallWidth = 460.0;
 static CGFloat const LYRUIMessageCellPresenterWideWidth = 600.0;
@@ -68,6 +69,7 @@ static CGFloat const LYRUIMessageCellPresenterViewsWithMarginsWidth = 64.0;
     return [NSSet setWithArray:@[
             [LYRUIMessageType class],
             [LYRUITextMessage class],
+            [LYRUIFileMessage class],
     ]];
 }
 
