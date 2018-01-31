@@ -70,6 +70,9 @@
 - (void)lyr_commonInit {
     self.translatesAutoresizingMaskIntoConstraints = NO;
     
+    self.updateConstraintsOnWidthChange = YES;
+    self.updateConstraintsOnHeightChange = YES;
+    
     self.metadataContainer = [self addView];
     self.contentViewContainer = [self addView];
     
@@ -110,8 +113,13 @@
 }
 
 - (void)setDisclosureIndicatorHidden:(BOOL)disclosureIndicatorHidden {
+    if (self.disclosureIndicatorHidden == disclosureIndicatorHidden) {
+        return;
+    }
     self.disclosureIndicator.hidden = disclosureIndicatorHidden;
     [self setNeedsUpdateConstraints];
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
 }
 
 - (UIFont *)descriptionLabelFont {

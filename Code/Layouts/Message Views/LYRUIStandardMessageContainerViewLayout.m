@@ -114,6 +114,8 @@
     
     [constraints addObject:[view.disclosureIndicator.rightAnchor constraintEqualToAnchor:view.metadataContainer.rightAnchor constant:-12.0]];
     [constraints addObject:[view.disclosureIndicator.centerYAnchor constraintEqualToAnchor:view.metadataContainer.centerYAnchor]];
+    [constraints addObject:[view.disclosureIndicator.widthAnchor constraintEqualToConstant:24.0]];
+    [constraints addObject:[view.disclosureIndicator.heightAnchor constraintEqualToConstant:24.0]];
     
     [NSLayoutConstraint activateConstraints:constraints];
     [self.constantConstraints addObjectsFromArray:constraints];

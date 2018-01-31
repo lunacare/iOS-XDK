@@ -43,7 +43,7 @@ static CGFloat const LYRUIMessageItemViewMaximumPreviewImageSize = 300.0;
             layerConfiguration = _layerConfiguration;
 
 - (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
-    self = [super init];
+    self = [self init];
     if (self) {
         self.layerConfiguration = configuration;
     }
