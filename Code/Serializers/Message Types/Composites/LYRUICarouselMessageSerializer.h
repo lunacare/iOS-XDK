@@ -1,8 +1,8 @@
 //
-//  LYRUIMessageListViewPresenter.h
+//  LYRUICarouselMessageSeralizer.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 18.08.2017.
+//  Created by Łukasz Przytuła on 04.12.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,17 +18,8 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-#import "LYRUIConfigurable.h"
-#import "LYRUIListViewPresenting.h"
+#import "LYRUIBaseMessageTypeSerializer.h"
+#import "LYRUICarouselMessage.h"
 
-/**
- @abstract The `LYRUIMessageListViewPresenter` objects will be used for presenting a `LYRUIMessageListView` with proper layout, data source, and delegate for presenting list of `LYRIdentity` items.
- */
-@interface LYRUIMessageListViewPresenter : NSObject <LYRUIListViewPresenting, LYRUIConfigurable>
-
-- (Class)layoutClass;
-- (Class)delegateClass;
-- (Class)cellPresenterClass;
-
+@interface LYRUICarouselMessageSerializer : LYRUIBaseMessageTypeSerializer<LYRUICarouselMessage *>
 @end
