@@ -110,6 +110,10 @@
 #import "LYRUILocationMessageSerializer.h"
 #import "LYRUILocationMessageContentViewPresenter.h"
 #import "LYRUIMessageOpenMapActionHandler.h"
+#import "LYRUIStatusMessageCollectionViewCell.h"
+#import "LYRUIStatusCellPresenter.h"
+#import "LYRUIStatusMessage.h"
+#import "LYRUIStatusMessageSerializer.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -198,6 +202,7 @@
     [self setPresenterClass:[LYRUIMessageListViewPresenter class] forViewClass:[LYRUIMessageListView class]];
     [self setPresenterClass:[LYRUITypingIndicatorFooterPresenter class] forViewClass:[LYRUIPanelTypingIndicatorView class]];
     [self setPresenterClass:[LYRUITypingIndicatorCellPresenter class] forViewClass:[LYRUIBubbleTypingIndicatorCollectionViewCell class]];
+    [self setPresenterClass:[LYRUIStatusCellPresenter class] forViewClass:[LYRUIStatusMessageCollectionViewCell class]];
 }
 
 - (void)setupLayouts {
@@ -334,6 +339,7 @@
     [self setMessageSerializerClass:[LYRUILinkMessageSerializer class] forMIMEType:LYRUILinkMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIImageMessageSerializer class] forMIMEType:LYRUIImageMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUILocationMessageSerializer class] forMIMEType:LYRUILocationMessage.MIMEType];
+    [self setMessageSerializerClass:[LYRUIStatusMessageSerializer class] forMIMEType:LYRUIStatusMessage.MIMEType];
 }
 
 - (void)setupActionHandlers {
