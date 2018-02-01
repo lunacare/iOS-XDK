@@ -20,8 +20,10 @@
 
 #import "LYRUICarouselMessageViewLayout.h"
 #import "LYRUICarouselMessageListView.h"
+#import "UIView+LYRUISafeArea.h"
+#import "UIView+LYRUILayoutGuide.h"
+#import "UILayoutGuide+LYRUILayoutGuide.h"
 
-static CGFloat const LYRUIMessageItemViewVerticalMargin = 2.0;
 static CGFloat const LYRUIMessageItemViewHorizontalMargin = 12.0;
 static CGFloat const LYRUIMessageItemViewSmallHorizontalMargin = 8.0;
 
@@ -105,7 +107,6 @@ static CGFloat const LYRUIMessageItemViewSmallHorizontalMargin = 8.0;
 
 - (void)addContentViewContainerConstraintsInView:(LYRUIMessageItemView *)view {
     UIView *content = view.contentViewContainer;
-    CGFloat verticalMargin = LYRUIMessageItemViewVerticalMargin;
     
     NSMutableArray *constraints = [NSMutableArray new];
     
@@ -169,17 +170,18 @@ static CGFloat const LYRUIMessageItemViewSmallHorizontalMargin = 8.0;
 - (NSArray<NSLayoutAnchor *> *)anchorsForAccessoryView:(UIView *)accessoryView
                                                 inView:(LYRUIMessageItemView *)view
                                              direction:(LYRUIMessageItemViewLayoutDirection)direction {
+    id<LYRUILayoutGuide> layoutGuide = view.lyr_safeAreaLayoutGuide ?: view;
     switch (direction) {
         case LYRUIMessageItemViewLayoutDirectionLeft:
             return @[
                      accessoryView.leftAnchor,
-                     view.leftAnchor,
+                     layoutGuide.leftAnchor,
                      view.contentViewContainer.leftAnchor,
                      accessoryView.rightAnchor
                      ];
         case LYRUIMessageItemViewLayoutDirectionRight:
             return @[
-                     view.rightAnchor,
+                     layoutGuide.rightAnchor,
                      accessoryView.rightAnchor,
                      accessoryView.leftAnchor,
                      view.contentViewContainer.rightAnchor
@@ -236,9 +238,11 @@ static CGFloat const LYRUIMessageItemViewSmallHorizontalMargin = 8.0;
     NSArray *constraints = [self layoutViewInSuperview:contentView];
     [self.contentViewConstraints addObjectsFromArray:constraints];
     if (self.layoutDirection == LYRUIMessageItemViewLayoutDirectionLeft) {
-        contentView.collectionView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 12.0);
+        CGFloat inset = view.lyr_safeAreaInsets.right + 12.0;
+        contentView.collectionView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, inset);
     } else {
-        contentView.collectionView.contentInset = UIEdgeInsetsMake(0.0, 12.0, 0.0, 0.0);
+        CGFloat inset = view.lyr_safeAreaInsets.left + 12.0;
+        contentView.collectionView.contentInset = UIEdgeInsetsMake(0.0, inset, 0.0, 0.0);
     }
 }
 

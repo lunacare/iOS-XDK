@@ -44,7 +44,7 @@
     } else if (collectionViewWidth > 460.0) {
         cellWidth = (0.75 * collectionViewWidth);
     }
-    return cellWidth;
+    return MIN(cellWidth, 260.0);
 }
 
 - (CGFloat)maxContentViewWidthForCellWidth:(CGFloat)cellWidth {

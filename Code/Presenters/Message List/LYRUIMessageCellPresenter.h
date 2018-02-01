@@ -23,6 +23,7 @@
 #import "LYRUIListCellSizeCalculating.h"
 #import "LYRUIListCellPresenting.h"
 @protocol LYRUIMessageListActionHandlingDelegate;
+@class LYRUIMessageType;
 
 @interface LYRUIMessageCellPresenter : NSObject <LYRUIListCellSizeCalculating, LYRUIListCellPresenting, LYRUIConfigurable>
 
@@ -30,5 +31,7 @@
  @abstract Delegate used for handling message actions.
  */
 @property (nonatomic, weak) id<LYRUIMessageListActionHandlingDelegate> actionHandlingDelegate;
+
+- (CGFloat)cellHeightForMessage:(LYRUIMessageType *)message contentViewWidth:(CGFloat)width;
 
 @end

@@ -27,6 +27,7 @@
 #import "LYRUIMessageItemView.h"
 #import "LYRUIListDataSource.h"
 #import "LYRUIListSection.h"
+#import "UIView+LYRUISafeArea.h"
 
 #import "LYRUIMessageType.h"
 #import "LYRUITextMessage.h"
@@ -90,18 +91,35 @@ static CGFloat const LYRUIMessageCellPresenterViewsWithMarginsWidth = 64.0;
 - (CGSize)cellSizeInCollectionView:(UICollectionView *)collectionView forItemAtIndexPath:(NSIndexPath *)indexPath {
     LYRUIMessageType *message = (LYRUIMessageType *)[self.listDataSource itemAtIndexPath:indexPath];
     CGFloat width = [self cellWidthInCollectionView:collectionView];
-    CGFloat height = [self cellHeightForMessage:message width:width];
+    CGFloat maxContentViewWidth = [self maxContentViewWidthForCellWidth:width];
+    CGFloat height = [self cellHeightForMessage:message contentViewWidth:maxContentViewWidth];
     return CGSizeMake(width, height);
 }
 
 - (CGFloat)cellWidthInCollectionView:(UICollectionView *)collectionView {
-    return CGRectGetWidth(collectionView.bounds);
+    UIEdgeInsets insets = collectionView.lyr_safeAreaInsets;
+    return CGRectGetWidth(collectionView.bounds) - insets.left - insets.right;
+}
+
+- (CGFloat)cellHeightForMessage:(LYRUIMessageType *)message contentViewWidth:(CGFloat)width {
+    return [self.messageItemPresenter messageViewHeightForMessage:message
+                                                         maxWidth:width];
+}
+
+- (CGFloat)maxContentViewWidthForCellWidth:(CGFloat)cellWidth {
+    CGFloat maxContentViewWidth = cellWidth - LYRUIMessageCellPresenterViewsWithMarginsWidth;
+    if (cellWidth > LYRUIMessageCellPresenterWideWidth) {
+        maxContentViewWidth = (LYRUIMessageCellPresenterSmallMaxWidthRatio * cellWidth);
+    } else if (cellWidth > LYRUIMessageCellPresenterSmallWidth) {
+        maxContentViewWidth = (LYRUIMessageCellPresenterMediumMaxWidthRatio * cellWidth);
+    }
+    return maxContentViewWidth;
 }
 
 #pragma mark - LYRUIListCellPresenting
 
 - (NSString *)cellReuseIdentifier {
-    return NSStringFromClass([LYRUIMessageItemView class]);
+    return NSStringFromClass([LYRUIMessageCollectionViewCell class]);
 }
 
 - (void)registerCellInCollectionView:(UICollectionView *)collectionView {
@@ -151,24 +169,6 @@ static CGFloat const LYRUIMessageCellPresenterViewsWithMarginsWidth = 64.0;
 - (BOOL)isOutgoingMessage:(LYRUIMessageType *)message {
     NSString *currentUserId = self.layerConfiguration.client.authenticatedUser.userID;
     return [message.sender.userID isEqualToString:currentUserId];
-}
-
-#pragma mark - LYRUIMessageListCellHeightCalculator
-
-- (CGFloat)cellHeightForMessage:(LYRUIMessageType *)message width:(CGFloat)width {
-    CGFloat maxContentViewWidth = [self maxContentViewWidthForCellWidth:width];
-    return [self.messageItemPresenter messageViewHeightForMessage:message
-                                                         maxWidth:maxContentViewWidth];
-}
-
-- (CGFloat)maxContentViewWidthForCellWidth:(CGFloat)cellWidth {
-    CGFloat maxContentViewWidth = cellWidth - LYRUIMessageCellPresenterViewsWithMarginsWidth;
-    if (cellWidth > LYRUIMessageCellPresenterWideWidth) {
-        maxContentViewWidth = (LYRUIMessageCellPresenterSmallMaxWidthRatio * cellWidth);
-    } else if (cellWidth > LYRUIMessageCellPresenterSmallWidth) {
-        maxContentViewWidth = (LYRUIMessageCellPresenterMediumMaxWidthRatio * cellWidth);
-    }
-    return maxContentViewWidth;
 }
 
 #pragma mark - Properties
