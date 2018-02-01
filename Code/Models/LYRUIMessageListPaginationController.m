@@ -19,6 +19,9 @@
 //
 
 #import "LYRUIMessageListPaginationController.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
+
+static NSInteger const LYRUIMessageListPaginationControllerDefaultPageSize = -30;
 
 @interface LYRUIMessageListPaginationController ()
 
@@ -36,22 +39,27 @@
 @end
 
 @implementation LYRUIMessageListPaginationController
+@synthesize layerConfiguration = _layerConfiguration;
 
 - (instancetype)init {
-    self = [self initWithNotificationCenter:nil];
+    self = [super init];
+    if (self) {
+        self.pageSize = LYRUIMessageListPaginationControllerDefaultPageSize;
+    }
     return self;
 }
 
-- (instancetype)initWithNotificationCenter:(NSNotificationCenter *)notificationCenter {
-    self = [super init];
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
+    self = [self init];
     if (self) {
-        if (notificationCenter == nil) {
-            notificationCenter = [NSNotificationCenter defaultCenter];
-        }
-        self.notificationCenter = notificationCenter;
-        self.pageSize = -30;
+        self.layerConfiguration = configuration;
     }
     return self;
+}
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.notificationCenter = [layerConfiguration.injector objectOfType:[NSNotificationCenter class]];
 }
 
 - (void)dealloc {
@@ -59,6 +67,8 @@
         [self.notificationCenter removeObserver:self.observer];
     }
 }
+
+#pragma mark - Public methods
 
 - (void)loadNextPage {
     [self loadNextPageWithCallback:nil];

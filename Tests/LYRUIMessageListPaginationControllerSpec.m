@@ -3,12 +3,15 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <OCHamcrest/OCHamcrest.h>
+#import <Atlas/LYRUIConfiguration+DependencyInjection.h>
 #import <Atlas/LYRUIMessageListPaginationController.h>
 #import <LayerKit/LayerKit.h>
 
 SpecBegin(LYRUIMessageListPaginationController)
 
 describe(@"LYRUIMessageListPaginationController", ^{
+    __block LYRUIConfiguration *configurationMock;
+    __block id<LYRUIDependencyInjection> injectorMock;
     __block LYRUIMessageListPaginationController *paginationController;
     __block LYRQueryController *queryControllerMock;
     __block LYRConversation *conversationMock;
@@ -16,8 +19,14 @@ describe(@"LYRUIMessageListPaginationController", ^{
     __block id observerMock;
 
     beforeEach(^{
+        configurationMock = mock([LYRUIConfiguration class]);
+        injectorMock = mockProtocol(@protocol(LYRUIDependencyInjection));
+        [given(configurationMock.injector) willReturn:injectorMock];
+        
         notificationCenterMock = mock([NSNotificationCenter class]);
-        paginationController = [[LYRUIMessageListPaginationController alloc] initWithNotificationCenter:notificationCenterMock];
+        [given([injectorMock objectOfType:[NSNotificationCenter class]]) willReturn:notificationCenterMock];
+        
+        paginationController = [[LYRUIMessageListPaginationController alloc] initWithConfiguration:configurationMock];
         
         queryControllerMock = mock([LYRQueryController class]);
         conversationMock = mock([LYRConversation class]);

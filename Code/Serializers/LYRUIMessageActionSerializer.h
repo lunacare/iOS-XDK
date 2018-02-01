@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
  @return An `LYRUIMessageAction` instance with given properties, or nil if there are no sufficient properties.
  */
 - (nullable LYRUIMessageAction *)actionFromProperties:(NSDictionary *)properties
-                                     withDefaultEvent:(NSString *)event;
+                                     withDefaultEvent:(nullable NSString *)event;
 
 /**
  @abstract Deserializes `LYRUIMessageAction` object from given `properties` of serialized message, overriding the base action properties.
@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
  @return An `LYRUIMessageAction` instance with given properties, or nil if there are no sufficient properties.
  */
 - (nullable LYRUIMessageAction *)actionFromProperties:(NSDictionary *)properties
-                                     overridingAction:(LYRUIMessageAction *)baseAction;
+                                     overridingAction:(nullable LYRUIMessageAction *)baseAction;
 
 /**
  @abstract Serializes `LYRUIMessageAction` object to `NSDictionary`.

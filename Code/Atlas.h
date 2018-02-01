@@ -29,68 +29,27 @@
 /// @name Controllers
 ///------------------
 
-#import "ATLAddressBarViewController.h"
-#import "ATLBaseConversationViewController.h"
-#import "ATLConversationListViewController.h"
-#import "ATLConversationViewController.h"
-#import "ATLMessageInputToolbar.h"
-#import "ATLParticipantTableViewController.h"
-#import "ATLTypingIndicatorViewController.h"
 #import "LYRUIConversationItemViewPresenter.h"
 
 ///-------------
 /// @name Models
 ///-------------
 
-#import "ATLConversationDataSource.h"
-#import "ATLDataSourceChange.h"
-#import "ATLMediaAttachment.h"
-#import "ATLParticipantTableDataSet.h"
 
 ///----------------
 /// @name Protocols
 ///----------------
 
-#import "ATLAvatarItem.h"
-#import "ATLConversationPresenting.h"
-#import "ATLMessagePresenting.h"
-#import "ATLParticipant.h"
-#import "ATLParticipantPresenting.h"
 
 ///----------------
 /// @name Utilities
 ///----------------
 
-#import "ATLConstants.h"
-#import "ATLErrors.h"
-#import "ATLLocationManager.h"
-#import "ATLMessagingUtilities.h"
-#import "ATLMediaInputStream.h"
 
 ///------------
 /// @name Views
 ///------------
 
-#import "ATLAddressBarContainerView.h"
-#import "ATLAddressBarView.h"
-#import "ATLAvatarView.h"
-#import "ATLConversationCollectionView.h"
-#import "ATLConversationCollectionViewFooter.h"
-#import "ATLConversationCollectionViewHeader.h"
-#import "ATLConversationCollectionViewMoreMessagesHeader.h"
-#import "ATLConversationTableViewCell.h"
-#import "ATLConversationView.h"
-#import "ATLIncomingMessageCollectionViewCell.h"
-#import "ATLMessageBubbleView.h"
-#import "ATLMessageCollectionViewCell.h"
-#import "ATLMessageComposeTextView.h"
-#import "ATLOutgoingMessageCollectionViewCell.h"
-#import "ATLParticipantSectionHeaderView.h"
-#import "ATLParticipantTableViewCell.h"
-#import "ATLPlayView.h"
-#import "ATLPresenceStatusView.h"
-#import "ATLProgressView.h"
-#import "ATLUIImageHelper.h"
 #import "LYRUIViewLayout.h"
 #import "LYRUIConversationItemView.h"
 #import "LYRUIConversationItemTableViewCell.h"

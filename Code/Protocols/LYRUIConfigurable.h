@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
 
 /**
  @abstract Initializes a new instance of `LYRUIConfigurable` object with the presenter.
- @param presenter An `LYRUIConfiguration` instance, used to retrieve themes, and setup.
+ @param configuration An `LYRUIConfiguration` instance, used to retrieve themes, and setup.
  @return An object conforming to `LYRUIConfigurable` protocol, set up using `presenter`.
  */
 - (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration;

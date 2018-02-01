@@ -63,7 +63,7 @@
         if ([button.type isEqualToString:@"action"]) {
             [self addActionButton:button inButtonsMessageView:buttonsMessageView];
         } else if ([button.type isEqualToString:@"choice"]) {
-            [self addChoiceButton:button inButtonsMessageView:buttonsMessageView];
+            [self addChoiceButton:(LYRUIButtonsMessageChoiceButton *)button inButtonsMessageView:buttonsMessageView];
         }
     }
 }

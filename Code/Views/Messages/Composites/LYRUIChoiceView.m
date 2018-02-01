@@ -87,7 +87,7 @@
     if (numberOfButtons < self.buttons.count) {
         NSRange rangeOfButtonsToRemove = NSMakeRange(numberOfButtons - 1, self.buttons.count - numberOfButtons);
         NSArray *buttonsToRemove = [self.buttons subarrayWithRange:rangeOfButtonsToRemove];
-        for (UIButton *button in buttonsToRemove) {
+        for (LYRUIChoiceButton *button in buttonsToRemove) {
             [button removeFromSuperview];
             [self.buttons removeObject:button];
         }
@@ -112,7 +112,7 @@
     
     __weak __typeof(self) weakSelf = self;
     button.lyr_actionHandler = ^(UIButton *button) {
-        [weakSelf.selectionHandler buttonTapped:button];
+        [weakSelf.selectionHandler buttonTapped:(LYRUIChoiceButton *)button];
     };
     
     [self.stackView addArrangedSubview:button];

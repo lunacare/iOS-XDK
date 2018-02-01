@@ -19,9 +19,10 @@
 //
 
 #import <LayerKit/LayerKit.h>
+#import "LYRUIConfigurable.h"
 
 NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIMessageListPaginationController : NSObject
+@interface LYRUIMessageListPaginationController : NSObject <LYRUIConfigurable>
 
 /**
  @abstract A query controller used to load more messages.
@@ -43,13 +44,6 @@ NS_ASSUME_NONNULL_BEGIN     // {
  @abstract A bool value indicating if more items are available for loading.
  */
 @property (nonatomic, readonly) BOOL moreItemsAvailable;
-
-/**
- @abstract Initialize with a notification center.
- @param notificationCenter A `NSNotificationCenter` used for registering observer for `LYRConversationDidFinishSynchronizingNotification`.
- @return An instance of `LYRUIMessageListPaginationController`.
- */
-- (instancetype)initWithNotificationCenter:(NSNotificationCenter *)notificationCenter;
 
 /**
  @abstract A method for loading next page of items.

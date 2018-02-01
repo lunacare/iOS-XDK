@@ -20,6 +20,7 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN     // {
 @interface LYRUIReceiptDiscount : NSObject
 
 @property (nonatomic, readonly, nullable) NSString *name;
@@ -28,3 +29,4 @@
 - (instancetype)initWithName:(nullable NSString *)name amount:(double)amount;
 
 @end
+NS_ASSUME_NONNULL_END       // }

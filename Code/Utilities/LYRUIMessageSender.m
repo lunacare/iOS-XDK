@@ -20,7 +20,6 @@
 
 #import "LYRUIMessageSender.h"
 #import "LYRUIConfiguration+DependencyInjection.h"
-#import "ATLMediaAttachment.h"
 #import <LayerKit/LayerKit.h>
 #import "LYRUIMessageSerializer.h"
 #import "LYRUIMessageType.h"

@@ -19,7 +19,6 @@
 //
 
 #import "LYRUIShapedViewDefaultShapeDrawer.h"
-#import "ATLMessagingUtilities.h"
 
 static CGFloat const LYRUIShapedViewDefaultShapeOutsideStrokeWidth = 2.0;
 static CGFloat const LYRUIShapedViewDefaultShapeStrokeWidth = 4.0;
@@ -75,13 +74,19 @@ outsideStrokeColor:(UIColor *)outsideStrokeColor {
     CGFloat radius = round((shorterSide - (2.0 * LYRUIShapedViewDefaultShapeOutsideStrokeWidth)) / 2.0);
     UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:arcCenter
                                                         radius:radius
-                                                    startAngle:ATLDegreeToRadians(0.0)
-                                                      endAngle:ATLDegreeToRadians(360.0)
+                                                    startAngle:[self degreesToRadians:0.0]
+                                                      endAngle:[self degreesToRadians:360.0]
                                                      clockwise:YES];
     path.lineWidth = LYRUIShapedViewDefaultShapeStrokeWidth;
     self.storedPath = path;
     self.storedPathSize = size;
     return path;
 };
+
+#pragma mark - Helpers
+
+- (CGFloat)degreesToRadians:(CGFloat)degrees {
+    return ((M_PI * degrees)/ 180);
+}
 
 @end

@@ -21,6 +21,7 @@
 #import <Foundation/Foundation.h>
 @class LYRUIChoice;
 
+NS_ASSUME_NONNULL_BEGIN     // {
 @protocol LYRUIChoiceSet <NSObject>
 
 @property (nonatomic, copy, readonly) NSArray<LYRUIChoice *> *choices;
@@ -38,3 +39,4 @@
 @property (nonatomic, readonly, nonnull) NSString *responseNodeId;
 
 @end
+NS_ASSUME_NONNULL_END       // }

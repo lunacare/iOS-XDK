@@ -52,7 +52,7 @@ IB_DESIGNABLE
 
 /**
  @abstract Initializes a new `LYRUIPresenceView` with the presenter.
- @param presenter An `LYRUIConfiguration` instance, used to retrieve themes, and setup.
+ @param configuration An `LYRUIConfiguration` instance, used to retrieve themes, and setup.
  @return An `LYRUIPresenceView` object.
  */
 - (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration;
