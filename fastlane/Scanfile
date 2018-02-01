@@ -1,2 +1,2 @@
-device "iPhone 6"
+device "iPhone 7"
 include_simulator_logs false

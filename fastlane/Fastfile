@@ -10,13 +10,8 @@ platform :ios do
   desc "Runs all the tests"
   lane :test do
     scan(
-      scheme: "AtlasHost"
-    )
-    scan(
-      scheme: "Programmatic"
-    )
-    scan(
-      scheme: "Storyboard"
+      workspace: 'UI/Layer-XDK-UI.xcworkspace',
+      scheme: "Layer-XDK-UI-UnitTests"
     )
   end
 end
