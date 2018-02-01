@@ -50,7 +50,8 @@
     LYRUIStatusMessage *statusMessage = (LYRUIStatusMessage *)[self.listDataSource itemAtIndexPath:indexPath];
     self.sizingCell.textView.text = statusMessage.text;
     CGFloat width = CGRectGetWidth(collectionView.bounds) - 24.0;
-    CGFloat height = [self textSizeInTextView:self.sizingCell.textView withMaxWidth:width].height + 22.0;
+    CGFloat textHeight = [self textSizeInTextView:self.sizingCell.textView withMaxWidth:width].height;
+    CGFloat height = ceil(textHeight) + 20.0;
     return CGSizeMake(width, height);
 }
 
