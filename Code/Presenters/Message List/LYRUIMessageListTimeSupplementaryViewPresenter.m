@@ -29,6 +29,7 @@
 #import "LYRUIListDelegate.h"
 #import "LYRUIListSection.h"
 #import <LayerKit/LayerKit.h>
+#import "LYRUIMessageType.h"
 
 static CGFloat const LYRUIMessageListTimeSupplementaryViewDefaultHeight = 37.0;
 
@@ -118,7 +119,7 @@ static CGFloat const LYRUIMessageListTimeSupplementaryViewDefaultHeight = 37.0;
     }
     id<LYRUIListDataSource> dataSource = self.listDataSource;
     id item = [dataSource itemAtIndexPath:indexPath];
-    if (![item isKindOfClass:[LYRMessage class]]) {
+    if (![item isKindOfClass:[LYRUIMessageType class]]) {
         return NO;
     }
     LYRUIListSection *section = dataSource.sections[indexPath.section];

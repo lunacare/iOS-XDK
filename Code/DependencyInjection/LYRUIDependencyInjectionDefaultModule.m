@@ -116,6 +116,9 @@
 #import "LYRUIStatusMessageSerializer.h"
 #import "LYRUIResponseMessage.h"
 #import "LYRUIResponseMessageSerializer.h"
+#import "LYRUIButtonsMessage.h"
+#import "LYRUIButtonsMessageSerializer.h"
+#import "LYRUIButtonsMessageContentViewPresenter.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -321,6 +324,7 @@
     [self setMessagePresenterClass:[LYRUILinkMessageContentViewPresenter class] forMessageClass:[LYRUILinkMessage class]];
     [self setMessagePresenterClass:[LYRUIImageMessageContentViewPresenter class] forMessageClass:[LYRUIImageMessage class]];
     [self setMessagePresenterClass:[LYRUILocationMessageContentViewPresenter class] forMessageClass:[LYRUILocationMessage class]];
+    [self setMessagePresenterClass:[LYRUIButtonsMessageContentViewPresenter class] forMessageClass:[LYRUIButtonsMessage class]];
 }
 
 - (void)setupMessageContainerPresenters {
@@ -343,6 +347,7 @@
     [self setMessageSerializerClass:[LYRUILocationMessageSerializer class] forMIMEType:LYRUILocationMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIStatusMessageSerializer class] forMIMEType:LYRUIStatusMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIResponseMessageSerializer class] forMIMEType:LYRUIResponseMessage.MIMEType];
+    [self setMessageSerializerClass:[LYRUIButtonsMessageSerializer class] forMIMEType:LYRUIButtonsMessage.MIMEType];
 }
 
 - (void)setupActionHandlers {
