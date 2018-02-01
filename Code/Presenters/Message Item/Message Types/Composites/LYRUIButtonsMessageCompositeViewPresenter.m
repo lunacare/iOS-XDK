@@ -1,5 +1,5 @@
 //
-//  LYRUIButtonsMessageContentViewPresenter.m
+//  LYRUIButtonsMessageCompositeViewPresenter.m
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 13.10.2017.
@@ -18,7 +18,7 @@
 //  limitations under the License.
 //
 
-#import "LYRUIButtonsMessageContentViewPresenter.h"
+#import "LYRUIButtonsMessageCompositeViewPresenter.h"
 #import "LYRUIButtonsMessageCompositeView.h"
 #import "LYRUIButtonsMessage.h"
 #import "LYRUIMessageItemContentPresentersProvider.h"
@@ -33,7 +33,7 @@
 #import "LYRUIChoiceSingleReSelectionHandler.h"
 #import "LYRUIChoiceMultiSelectionHandler.h"
 
-@implementation LYRUIButtonsMessageContentViewPresenter
+@implementation LYRUIButtonsMessageCompositeViewPresenter
 
 - (UIView *)viewForMessage:(LYRUIButtonsMessage *)message {
     LYRUIButtonsMessageCompositeView *buttonsCompositeView = [self.reusableViewsQueue dequeueReusableViewOfType:[LYRUIButtonsMessageCompositeView class]];
