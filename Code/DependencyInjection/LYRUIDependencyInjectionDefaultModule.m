@@ -128,6 +128,11 @@
 #import "LYRUIReceiptMessage.h"
 #import "LYRUIReceiptMessageSerializer.h"
 #import "LYRUIReceiptMessageCompositeViewPresenter.h"
+#import "LYRUICarouselMessage.h"
+#import "LYRUICarouselMessageSerializer.h"
+#import "LYRUICarouselMessageCompositeViewPresenter.h"
+#import "LYRUICarouselMessageListView.h"
+#import "LYRUICarouselMessageListViewPresenter.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -217,6 +222,7 @@
     [self setPresenterClass:[LYRUITypingIndicatorFooterPresenter class] forViewClass:[LYRUIPanelTypingIndicatorView class]];
     [self setPresenterClass:[LYRUITypingIndicatorCellPresenter class] forViewClass:[LYRUIBubbleTypingIndicatorCollectionViewCell class]];
     [self setPresenterClass:[LYRUIStatusCellPresenter class] forViewClass:[LYRUIStatusMessageCollectionViewCell class]];
+    [self setPresenterClass:[LYRUICarouselMessageListViewPresenter class] forViewClass:[LYRUICarouselMessageListView class]];
 }
 
 - (void)setupLayouts {
@@ -337,6 +343,7 @@
     [self setMessagePresenterClass:[LYRUIChoiceMessageCompositeViewPresenter class] forMessageClass:[LYRUIChoiceMessage class]];
     [self setMessagePresenterClass:[LYRUIProductMessageCompositeViewPresenter class] forMessageClass:[LYRUIProductMessage class]];
     [self setMessagePresenterClass:[LYRUIReceiptMessageCompositeViewPresenter class] forMessageClass:[LYRUIReceiptMessage class]];
+    [self setMessagePresenterClass:[LYRUICarouselMessageCompositeViewPresenter class] forMessageClass:[LYRUICarouselMessage class]];
 }
 
 - (void)setupMessageContainerPresenters {
@@ -363,6 +370,7 @@
     [self setMessageSerializerClass:[LYRUIChoiceMessageSerializer class] forMIMEType:LYRUIChoiceMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIProductMessageSerializer class] forMIMEType:LYRUIProductMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIReceiptMessageSerializer class] forMIMEType:LYRUIReceiptMessage.MIMEType];
+    [self setMessageSerializerClass:[LYRUICarouselMessageSerializer class] forMIMEType:LYRUICarouselMessage.MIMEType];
 }
 
 - (void)setupActionHandlers {

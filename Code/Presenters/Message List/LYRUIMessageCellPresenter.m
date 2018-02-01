@@ -89,9 +89,13 @@ static CGFloat const LYRUIMessageCellPresenterViewsWithMarginsWidth = 64.0;
 
 - (CGSize)cellSizeInCollectionView:(UICollectionView *)collectionView forItemAtIndexPath:(NSIndexPath *)indexPath {
     LYRUIMessageType *message = (LYRUIMessageType *)[self.listDataSource itemAtIndexPath:indexPath];
-    CGFloat width = CGRectGetWidth(collectionView.bounds);
+    CGFloat width = [self cellWidthInCollectionView:collectionView];
     CGFloat height = [self cellHeightForMessage:message width:width];
     return CGSizeMake(width, height);
+}
+
+- (CGFloat)cellWidthInCollectionView:(UICollectionView *)collectionView {
+    return CGRectGetWidth(collectionView.bounds);
 }
 
 #pragma mark - LYRUIListCellPresenting
