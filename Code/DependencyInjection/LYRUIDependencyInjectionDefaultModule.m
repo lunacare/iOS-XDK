@@ -122,6 +122,9 @@
 #import "LYRUIChoiceMessage.h"
 #import "LYRUIChoiceMessageSerializer.h"
 #import "LYRUIChoiceMessageCompositeViewPresenter.h"
+#import "LYRUIProductMessage.h"
+#import "LYRUIProductMessageSerializer.h"
+#import "LYRUIProductMessageCompositeViewPresenter.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -329,6 +332,7 @@
     [self setMessagePresenterClass:[LYRUILocationMessageContentViewPresenter class] forMessageClass:[LYRUILocationMessage class]];
     [self setMessagePresenterClass:[LYRUIButtonsMessageCompositeViewPresenter class] forMessageClass:[LYRUIButtonsMessage class]];
     [self setMessagePresenterClass:[LYRUIChoiceMessageCompositeViewPresenter class] forMessageClass:[LYRUIChoiceMessage class]];
+    [self setMessagePresenterClass:[LYRUIProductMessageCompositeViewPresenter class] forMessageClass:[LYRUIProductMessage class]];
 }
 
 - (void)setupMessageContainerPresenters {
@@ -353,6 +357,7 @@
     [self setMessageSerializerClass:[LYRUIResponseMessageSerializer class] forMIMEType:LYRUIResponseMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIButtonsMessageSerializer class] forMIMEType:LYRUIButtonsMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIChoiceMessageSerializer class] forMIMEType:LYRUIChoiceMessage.MIMEType];
+    [self setMessageSerializerClass:[LYRUIProductMessageSerializer class] forMIMEType:LYRUIProductMessage.MIMEType];
 }
 
 - (void)setupActionHandlers {

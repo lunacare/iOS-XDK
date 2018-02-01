@@ -36,6 +36,7 @@
 #import "LYRUILocationMessage.h"
 #import "LYRUIButtonsMessage.h"
 #import "LYRUIChoiceMessage.h"
+#import "LYRUIProductMessage.h"
 
 static CGFloat const LYRUIMessageCellPresenterSmallWidth = 460.0;
 static CGFloat const LYRUIMessageCellPresenterWideWidth = 600.0;
@@ -80,6 +81,7 @@ static CGFloat const LYRUIMessageCellPresenterViewsWithMarginsWidth = 64.0;
             [LYRUILocationMessage class],
             [LYRUIButtonsMessage class],
             [LYRUIChoiceMessage class],
+            [LYRUIProductMessage class],
     ]];
 }
 
