@@ -20,7 +20,6 @@
 
 #import <LayerKit/LayerKit.h>
 #import "LYRUIConfigurable.h"
-@class LYRIdentity;
 
 NS_ASSUME_NONNULL_BEGIN     // {
 /**

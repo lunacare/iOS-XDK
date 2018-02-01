@@ -30,13 +30,13 @@
 #import "LYRUIListDelegate.h"
 #import "LYRUIListSection.h"
 #import <LayerKit/LayerKit.h>
+#import "LYRUIMessageType.h"
 
 static CGFloat const LYRUIMessageListStatusSupplementaryViewDefaultHeight = 17.0;
 
 @interface LYRUIMessageListStatusSupplementaryViewPresenter ()
 
 @property (nonatomic, strong) LYRUIMessageListMessageStatusViewLayout *messageStatusLayout;
-@property (nonatomic, strong) LYRUIMessageRecipientStatusFormatter *statusFormatter;
 
 @property (nonatomic, strong) NSIndexPath *firstMessageStatusIndexPath;
 @property (nonatomic, strong) NSMutableDictionary<NSIndexPath *, NSNumber *> *showStatusForIndexPath;
@@ -68,7 +68,6 @@ static CGFloat const LYRUIMessageListStatusSupplementaryViewDefaultHeight = 17.0
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     _layerConfiguration = layerConfiguration;
     self.messageStatusLayout = [layerConfiguration.injector layoutForViewClass:[LYRUIMessageListMessageStatusView class]];
-    self.statusFormatter = [layerConfiguration.injector objectOfType:[LYRUIMessageRecipientStatusFormatter class]];
 }
 
 - (NSString *)viewKind {
@@ -82,14 +81,18 @@ static CGFloat const LYRUIMessageListStatusSupplementaryViewDefaultHeight = 17.0
 #pragma mark - LYRUIListSupplementaryViewPresenting
 
 - (void)setupSupplementaryView:(LYRUIListHeaderView *)view forItemAtIndexPath:(NSIndexPath *)indexPath {
-    LYRMessage *message = (LYRMessage *)[self.listDataSource itemAtIndexPath:indexPath];
+    id item = (LYRMessage *)[self.listDataSource itemAtIndexPath:indexPath];
+    if (![item isKindOfClass:[LYRUIMessageType class]]) {
+        return;
+    }
+    LYRUIMessageType *message = (LYRUIMessageType *)item;
     [self setupMessageStatusView:view withMessage:message];
 }
 
 - (void)setupMessageStatusView:(LYRUIListHeaderView *)statusView
-                   withMessage:(LYRMessage *)message {
+                   withMessage:(LYRUIMessageType *)message {
     statusView.layout = self.messageStatusLayout;
-    statusView.title = [self.statusFormatter stringForMessageRecipientStatus:message];
+    statusView.title = message.status.statusDescription;
 }
 
 - (void)registerSupplementaryViewInCollectionView:(UICollectionView *)collectionView {
@@ -118,10 +121,10 @@ static CGFloat const LYRUIMessageListStatusSupplementaryViewDefaultHeight = 17.0
     }
     id<LYRUIListDataSource> dataSource = self.listDataSource;
     id item = [dataSource itemAtIndexPath:indexPath];
-    if (![item isKindOfClass:[LYRMessage class]]) {
+    if (![item isKindOfClass:[LYRUIMessageType class]]) {
         return NO;
     }
-    LYRMessage *message = (LYRMessage *)item;
+    LYRUIMessageType *message = (LYRUIMessageType *)item;
     BOOL shouldShowStatus = ([self isOutgoingMessage:message] &&
                              [self indexPathIsAfterFirstMessageStatusIndexPath:indexPath]);
     self.showStatusForIndexPath[indexPath] = @(shouldShowStatus);
@@ -137,10 +140,10 @@ static CGFloat const LYRUIMessageListStatusSupplementaryViewDefaultHeight = 17.0
         return;
     }
     for (id item in [section.items reverseObjectEnumerator].allObjects) {
-        if (![item isKindOfClass:[LYRMessage class]]) {
+        if (![item isKindOfClass:[LYRUIMessageType class]]) {
             continue;
         }
-        LYRMessage *message = (LYRMessage *)item;
+        LYRUIMessageType *message = (LYRUIMessageType *)item;
         if (![self isOutgoingMessage:message]) {
             continue;
         }
@@ -149,9 +152,9 @@ static CGFloat const LYRUIMessageListStatusSupplementaryViewDefaultHeight = 17.0
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:itemIndex
                                                      inSection:sectionIndex];
         
-        BOOL messageRead = ([self.statusFormatter statusForMessage:message] == LYRRecipientStatusRead);
+        BOOL messageRead = (message.status.status == LYRRecipientStatusRead);
         
-        LYRMessage *previousMessage;
+        LYRUIMessageType *previousMessage;
         if (indexPath.item > 0) {
             previousMessage = section.items[indexPath.item - 1];
         }
@@ -165,7 +168,7 @@ static CGFloat const LYRUIMessageListStatusSupplementaryViewDefaultHeight = 17.0
 
 #pragma mark - Helpers
 
-- (BOOL)isOutgoingMessage:(LYRMessage *)message {
+- (BOOL)isOutgoingMessage:(LYRUIMessageType *)message {
     NSString *currentUserId = self.layerConfiguration.client.authenticatedUser.userID;
     return [message.sender.userID isEqualToString:currentUserId];
 }
