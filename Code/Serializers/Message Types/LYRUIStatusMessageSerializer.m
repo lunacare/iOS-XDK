@@ -28,7 +28,7 @@
 - (LYRUIStatusMessage *)typedMessageWithMessagePart:(LYRMessagePart *)messagePart {
     return [[LYRUIStatusMessage alloc] initWithText:messagePart.properties[@"text"]
                                              action:[self.actionSerializer actionFromProperties:messagePart.properties]
-                                             sender:messagePart.message.sender
+                                             sender:nil
                                              sentAt:messagePart.message.sentAt
                                              status:[self statusWithMessage:messagePart.message]];
 }

@@ -114,6 +114,8 @@
 #import "LYRUIStatusCellPresenter.h"
 #import "LYRUIStatusMessage.h"
 #import "LYRUIStatusMessageSerializer.h"
+#import "LYRUIResponseMessage.h"
+#import "LYRUIResponseMessageSerializer.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -340,6 +342,7 @@
     [self setMessageSerializerClass:[LYRUIImageMessageSerializer class] forMIMEType:LYRUIImageMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUILocationMessageSerializer class] forMIMEType:LYRUILocationMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIStatusMessageSerializer class] forMIMEType:LYRUIStatusMessage.MIMEType];
+    [self setMessageSerializerClass:[LYRUIResponseMessageSerializer class] forMIMEType:LYRUIResponseMessage.MIMEType];
 }
 
 - (void)setupActionHandlers {
