@@ -1,5 +1,5 @@
 //
-//  LYRUIButtonsMessageContentViewPresenter.h
+//  LYRUIButtonsMessageCompositeViewPresenter.h
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 13.10.2017.
@@ -22,7 +22,7 @@
 @protocol LYRUIMessageItemContentPresenting;
 
 NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIButtonsMessageContentViewPresenter : LYRUIMessageItemContentBasePresenter
+@interface LYRUIButtonsMessageCompositeViewPresenter : LYRUIMessageItemContentBasePresenter
 
 @property (nonatomic, strong, nullable) id<LYRUIMessageItemContentPresenting> contentViewConfiguration;
 
