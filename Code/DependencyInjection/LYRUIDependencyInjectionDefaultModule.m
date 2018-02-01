@@ -125,6 +125,9 @@
 #import "LYRUIProductMessage.h"
 #import "LYRUIProductMessageSerializer.h"
 #import "LYRUIProductMessageCompositeViewPresenter.h"
+#import "LYRUIReceiptMessage.h"
+#import "LYRUIReceiptMessageSerializer.h"
+#import "LYRUIReceiptMessageCompositeViewPresenter.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -333,6 +336,7 @@
     [self setMessagePresenterClass:[LYRUIButtonsMessageCompositeViewPresenter class] forMessageClass:[LYRUIButtonsMessage class]];
     [self setMessagePresenterClass:[LYRUIChoiceMessageCompositeViewPresenter class] forMessageClass:[LYRUIChoiceMessage class]];
     [self setMessagePresenterClass:[LYRUIProductMessageCompositeViewPresenter class] forMessageClass:[LYRUIProductMessage class]];
+    [self setMessagePresenterClass:[LYRUIReceiptMessageCompositeViewPresenter class] forMessageClass:[LYRUIReceiptMessage class]];
 }
 
 - (void)setupMessageContainerPresenters {
@@ -358,6 +362,7 @@
     [self setMessageSerializerClass:[LYRUIButtonsMessageSerializer class] forMIMEType:LYRUIButtonsMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIChoiceMessageSerializer class] forMIMEType:LYRUIChoiceMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIProductMessageSerializer class] forMIMEType:LYRUIProductMessage.MIMEType];
+    [self setMessageSerializerClass:[LYRUIReceiptMessageSerializer class] forMIMEType:LYRUIReceiptMessage.MIMEType];
 }
 
 - (void)setupActionHandlers {
