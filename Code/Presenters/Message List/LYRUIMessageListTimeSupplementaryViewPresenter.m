@@ -120,6 +120,12 @@ static CGFloat const LYRUIMessageListTimeSupplementaryViewDefaultHeight = 37.0;
     id<LYRUIListDataSource> dataSource = self.listDataSource;
     id item = [dataSource itemAtIndexPath:indexPath];
     if (![item isKindOfClass:[LYRUIMessageType class]]) {
+        self.showTimeForIndexPath[indexPath] = @(NO);
+        return NO;
+    }
+    LYRMessage *message = (LYRMessage *)item;
+    if (message.sender == nil) {
+        self.showTimeForIndexPath[indexPath] = @(NO);
         return NO;
     }
     LYRUIListSection *section = dataSource.sections[indexPath.section];
@@ -128,9 +134,9 @@ static CGFloat const LYRUIMessageListTimeSupplementaryViewDefaultHeight = 37.0;
         previousMessage = section.items[indexPath.item - 1];
     }
     if (previousMessage == nil) {
+        self.showTimeForIndexPath[indexPath] = @(YES);
         return YES;
     }
-    LYRMessage *message = (LYRMessage *)item;
     BOOL shouldShowTime = [message.sentAt timeIntervalSinceDate:previousMessage.sentAt] > self.messageListView.messageGroupingTimeInterval;
     self.showTimeForIndexPath[indexPath] = @(shouldShowTime);
     return shouldShowTime;
