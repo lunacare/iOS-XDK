@@ -24,6 +24,10 @@
 #import "LYRUIMessageType.h"
 #import "LYRUICarouselMessageViewLayout.h"
 #import "LYRUICarouselMessageCollectionViewCell.h"
+#import "LYRUIListDataSource.h"
+#import "UIView+LYRUISafeArea.h"
+
+static CGFloat const LYRUICarouselMessageCellPresenterViewsWithMarginsWidth = 52.0;
 
 @implementation LYRUICarouselMessageCellPresenter
 
@@ -37,6 +41,15 @@
 
 - (void)registerCellInCollectionView:(UICollectionView *)collectionView {
     [collectionView registerClass:[LYRUICarouselMessageCollectionViewCell class] forCellWithReuseIdentifier:self.cellReuseIdentifier];
+}
+
+- (CGSize)cellSizeInCollectionView:(UICollectionView *)collectionView forItemAtIndexPath:(NSIndexPath *)indexPath {
+    LYRUIMessageType *message = (LYRUIMessageType *)[self.listDataSource itemAtIndexPath:indexPath];
+    CGFloat cellWidth = CGRectGetWidth(collectionView.bounds);
+    UIEdgeInsets insets = collectionView.lyr_safeAreaInsets;
+    CGFloat maxContentViewWidth = cellWidth - insets.left - LYRUICarouselMessageCellPresenterViewsWithMarginsWidth;
+    CGFloat height = [self cellHeightForMessage:message contentViewWidth:maxContentViewWidth];
+    return CGSizeMake(cellWidth, height);
 }
 
 - (void)setupMessageViewLayout:(LYRUIMessageItemView *)messageView

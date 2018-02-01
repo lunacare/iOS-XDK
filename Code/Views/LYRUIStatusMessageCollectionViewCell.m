@@ -49,7 +49,6 @@
     self.translatesAutoresizingMaskIntoConstraints = NO;
     UITextView *textView = [[UITextView alloc] init];
     textView.scrollEnabled = NO;
-    textView.textContainerInset = UIEdgeInsetsMake(-3.0, -5.0, -1.0, -5.0);
     textView.translatesAutoresizingMaskIntoConstraints = NO;
     textView.font = [UIFont systemFontOfSize:13.0];
     textView.textColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];

@@ -56,13 +56,14 @@
     } else if (maxWidth > 460.0) {
         carouselItemsWidth = (0.75 * maxWidth);
     }
+    carouselItemsWidth = MIN(carouselItemsWidth, 260.0);
     for (LYRUIMessageType *carouselItem in message.carouselItemMessages) {
         id<LYRUIMessageItemContentPresenting> configuration =
                 [self.presentersProvider presenterForMessageClass:[carouselItem class]];
         CGFloat itemHeight = [configuration viewHeightForMessage:carouselItem minWidth:carouselItemsWidth maxWidth:carouselItemsWidth];
         height = MAX(height, itemHeight);
     }
-    return height + 4.0;
+    return height;
 }
 
 - (void)setupViewConstraints:(UIView *)view {

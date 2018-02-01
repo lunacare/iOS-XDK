@@ -19,6 +19,9 @@
 //
 
 #import "LYRUIStatusMessageCellLayout.h"
+#import "UIView+LYRUISafeArea.h"
+#import "UIView+LYRUILayoutGuide.h"
+#import "UILayoutGuide+LYRUILayoutGuide.h"
 
 @interface LYRUIStatusMessageCellLayout ()
 
@@ -46,10 +49,11 @@
 
 - (void)addConstraintsInView:(UIView<LYRUIStatusMessageView> *)view {
     NSMutableArray *constraints = self.textLabelConstraints;
-    [constraints addObject:[view.textView.topAnchor constraintEqualToAnchor:view.topAnchor constant:12.0]];
-    [constraints addObject:[view.textView.leftAnchor constraintEqualToAnchor:view.leftAnchor constant:12.0]];
-    [constraints addObject:[view.textView.bottomAnchor constraintEqualToAnchor:view.bottomAnchor constant:-10.0]];
-    [constraints addObject:[view.textView.rightAnchor constraintEqualToAnchor:view.rightAnchor constant:-12.0]];
+    id<LYRUILayoutGuide> layoutGuide = view.lyr_safeAreaLayoutGuide ?: view;
+    [constraints addObject:[view.textView.topAnchor constraintEqualToAnchor:view.topAnchor constant:1.0]];
+    [constraints addObject:[view.textView.leftAnchor constraintEqualToAnchor:layoutGuide.leftAnchor constant:7.0]];
+    [constraints addObject:[view.textView.bottomAnchor constraintEqualToAnchor:view.bottomAnchor constant:-2.0]];
+    [constraints addObject:[view.textView.rightAnchor constraintEqualToAnchor:layoutGuide.rightAnchor constant:-7.0]];
     view.textView.textAlignment = NSTextAlignmentCenter;
     [NSLayoutConstraint activateConstraints:constraints];
 }

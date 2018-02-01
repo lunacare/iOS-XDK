@@ -19,6 +19,9 @@
 //
 
 #import "LYRUIMessageItemViewLayout.h"
+#import "UIView+LYRUISafeArea.h"
+#import "UIView+LYRUILayoutGuide.h"
+#import "UILayoutGuide+LYRUILayoutGuide.h"
 
 static CGFloat const LYRUIMessageItemViewHorizontalMargin = 12.0;
 static CGFloat const LYRUIMessageItemViewSmallHorizontalMargin = 8.0;
@@ -120,9 +123,10 @@ static CGSize const LYRUIMessageItemPrimaryAccessoryViewSize = { 32.0, 32.0 };
     
     NSMutableArray *constraints = [NSMutableArray new];
     
-    [constraints addObject:[content.leftAnchor constraintGreaterThanOrEqualToAnchor:view.leftAnchor
+    id<LYRUILayoutGuide> layoutGuide = view.lyr_safeAreaLayoutGuide ?: view;
+    [constraints addObject:[content.leftAnchor constraintGreaterThanOrEqualToAnchor:layoutGuide.leftAnchor
                                                                            constant:horizontalMargin]];
-    [constraints addObject:[content.rightAnchor constraintLessThanOrEqualToAnchor:view.rightAnchor
+    [constraints addObject:[content.rightAnchor constraintLessThanOrEqualToAnchor:layoutGuide.rightAnchor
                                                                          constant:-horizontalMargin]];
     [constraints addObject:[content.topAnchor constraintEqualToAnchor:view.topAnchor]];
     [constraints addObject:[content.bottomAnchor constraintEqualToAnchor:view.bottomAnchor]];
@@ -156,11 +160,12 @@ static CGSize const LYRUIMessageItemPrimaryAccessoryViewSize = { 32.0, 32.0 };
         self.contentViewContainerDirectionSnapConstraint.active = NO;
         CGFloat horizontalMargin = LYRUIMessageItemViewHorizontalMargin;
         NSLayoutConstraint *snapConstraint;
+        id<LYRUILayoutGuide> layoutGuide = view.lyr_safeAreaLayoutGuide ?: view;
         if (self.layoutDirection == LYRUIMessageItemViewLayoutDirectionLeft) {
-            snapConstraint = [view.contentViewContainer.leftAnchor constraintEqualToAnchor:view.leftAnchor
+            snapConstraint = [view.contentViewContainer.leftAnchor constraintEqualToAnchor:layoutGuide.leftAnchor
                                                                                   constant:horizontalMargin];
         } else {
-            snapConstraint = [view.contentViewContainer.rightAnchor constraintEqualToAnchor:view.rightAnchor
+            snapConstraint = [view.contentViewContainer.rightAnchor constraintEqualToAnchor:layoutGuide.rightAnchor
                                                                                    constant:-horizontalMargin];
         }
         snapConstraint.priority = UILayoutPriorityDefaultHigh;
@@ -222,17 +227,18 @@ static CGSize const LYRUIMessageItemPrimaryAccessoryViewSize = { 32.0, 32.0 };
 - (NSArray<NSLayoutAnchor *> *)anchorsForAccessoryView:(UIView *)accessoryView
                                                 inView:(LYRUIMessageItemView *)view
                                              direction:(LYRUIMessageItemViewLayoutDirection)direction {
+    id<LYRUILayoutGuide> layoutGuide = view.lyr_safeAreaLayoutGuide ?: view;
     switch (direction) {
         case LYRUIMessageItemViewLayoutDirectionLeft:
             return @[
                     accessoryView.leftAnchor,
-                    view.leftAnchor,
+                    layoutGuide.leftAnchor,
                     view.contentViewContainer.leftAnchor,
                     accessoryView.rightAnchor
             ];
         case LYRUIMessageItemViewLayoutDirectionRight:
             return @[
-                    view.rightAnchor,
+                    layoutGuide.rightAnchor,
                     accessoryView.rightAnchor,
                     accessoryView.leftAnchor,
                     view.contentViewContainer.rightAnchor
