@@ -93,11 +93,23 @@
 }
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath == nil) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot retrieve Item with nil `indexPath` argument." userInfo:nil];
+    }
+    if (self.sections.count < (indexPath.section + 1)) {
+        return nil;
+    }
     LYRUIListSection *section = self.sections[indexPath.section];
+    if (section.items.count < (indexPath.item + 1)) {
+        return nil;
+    }
     return section.items[indexPath.item];
 }
 
 - (NSIndexPath *)indexPathOfItem:(id)item {
+    if (item == nil) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot retrieve Index Path with nil `item` argument." userInfo:nil];
+    }
     for (LYRUIListSection *section in self.sections) {
         if (section.items == nil) {
             continue;
@@ -113,8 +125,18 @@
 }
 
 - (NSIndexPath *)lastItemIndexPath {
-    LYRUIListSection *section = self.sections.lastObject;
-    NSUInteger sectionIndex = self.sections.count - 1;
+    LYRUIListSection *section;
+    for (LYRUIListSection *aSection in self.sections.reverseObjectEnumerator) {
+        if (aSection.items.count == 0) {
+            continue;
+        }
+        section = aSection;
+        break;
+    }
+    if (section == nil) {
+        return nil;
+    }
+    NSUInteger sectionIndex = [self.sections indexOfObject:section];
     NSUInteger itemIndex = section.items.count - 1;
     return [NSIndexPath indexPathForItem:itemIndex inSection:sectionIndex];
 }

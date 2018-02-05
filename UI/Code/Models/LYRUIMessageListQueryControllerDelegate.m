@@ -178,8 +178,11 @@
 #pragma mark - Content offset updates
 
 - (void)scrollToLastMessage {
-    NSIndexPath *lastItemIndexPath = self.listDataSource.lastItemIndexPath;
-    [self.collectionView scrollToItemAtIndexPath:lastItemIndexPath
+    NSIndexPath *lastMessageIndexPath = self.listDataSource.lastItemIndexPath;
+    if (lastMessageIndexPath == nil) {
+        return;
+    }
+    [self.collectionView scrollToItemAtIndexPath:lastMessageIndexPath
                                 atScrollPosition:UICollectionViewScrollPositionBottom
                                         animated:YES];
 }
@@ -201,6 +204,9 @@
 
 - (BOOL)newMessagesReceived {
     NSIndexPath *lastMessageIndexPath = self.listDataSource.lastItemIndexPath;
+    if (lastMessageIndexPath == nil) {
+        return YES;
+    }
     for (NSIndexPath *indexPath in self.insertedIndexPaths.reverseObjectEnumerator.allObjects) {
         if (indexPath.item > lastMessageIndexPath.item) {
             return YES;
@@ -210,7 +216,11 @@
 }
 
 - (BOOL)lastMessageIsVisible {
-    return [self.collectionView.indexPathsForVisibleItems containsObject:self.listDataSource.lastItemIndexPath];
+    NSIndexPath *lastMessageIndexPath = self.listDataSource.lastItemIndexPath;
+    if (lastMessageIndexPath == nil) {
+        return YES;
+    }
+    return [self.collectionView.indexPathsForVisibleItems containsObject:lastMessageIndexPath];
 }
 
 - (BOOL)oldMessagesLoaded {
