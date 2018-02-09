@@ -61,8 +61,13 @@
     }
     
     view.titleLabel.text = [self.nameFormatter nameForIdentity:identity];
-    view.detailLabel.text = [self.lastSeenAtTimeFormatter stringForTime:identity.lastSeenAt
-                                                      withCurrentTime:[NSDate date]];
+    NSString *lastSeenAtText = @"Not seen";
+    if (identity.lastSeenAt != nil) {
+        lastSeenAtText = [self.lastSeenAtTimeFormatter stringForTime:identity.lastSeenAt
+                                                     withCurrentTime:[NSDate date]];
+    }
+    view.detailLabel.text = lastSeenAtText;
+        
     if (self.metadataFormatter) {
         view.subtitleLabel.text = self.metadataFormatter(identity.metadata);
     }
