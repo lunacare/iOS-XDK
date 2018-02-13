@@ -119,14 +119,14 @@ static CGFloat const LYRUIMessageListStatusSupplementaryViewDefaultHeight = 17.0
     if (self.showStatusForIndexPath[indexPath]) {
         return self.showStatusForIndexPath[indexPath].boolValue;
     }
-    id<LYRUIListDataSource> dataSource = self.listDataSource;
-    id item = [dataSource itemAtIndexPath:indexPath];
-    if (![item isKindOfClass:[LYRUIMessageType class]]) {
+    LYRUIMessageType *message = [self messageAtIndexPath:indexPath];
+    if (message == nil) {
         return NO;
     }
-    LYRUIMessageType *message = (LYRUIMessageType *)item;
+    LYRUIMessageType *nextMessage = [self nextMessageForIndexPath:indexPath];
     BOOL shouldShowStatus = ([self isOutgoingMessage:message] &&
-                             [self indexPathIsAfterFirstMessageStatusIndexPath:indexPath]);
+                             [self indexPathIsAfterFirstMessageStatusIndexPath:indexPath] &&
+                             [self message:message statusIsDifferentThanNextMessageStatus:nextMessage]);
     self.showStatusForIndexPath[indexPath] = @(shouldShowStatus);
     return shouldShowStatus;
 }
@@ -168,6 +168,19 @@ static CGFloat const LYRUIMessageListStatusSupplementaryViewDefaultHeight = 17.0
 
 #pragma mark - Helpers
 
+- (LYRUIMessageType *)messageAtIndexPath:(NSIndexPath *)indexPath {
+    id item = [self.listDataSource itemAtIndexPath:indexPath];
+    if (![item isKindOfClass:[LYRUIMessageType class]]) {
+        return nil;
+    }
+    return (LYRUIMessageType *)item;
+}
+
+- (LYRUIMessageType *)nextMessageForIndexPath:(NSIndexPath *)indexPath {
+    NSIndexPath *nextMessageIndexPath = [NSIndexPath indexPathForItem:(indexPath.item + 1) inSection:indexPath.section];
+    return [self messageAtIndexPath:nextMessageIndexPath];
+}
+
 - (BOOL)isOutgoingMessage:(LYRUIMessageType *)message {
     NSString *currentUserId = self.layerConfiguration.client.authenticatedUser.userID;
     return [message.sender.userID isEqualToString:currentUserId];
@@ -181,6 +194,13 @@ static CGFloat const LYRUIMessageListStatusSupplementaryViewDefaultHeight = 17.0
             ((indexPath.section == self.firstMessageStatusIndexPath.section &&
               indexPath.item >= self.firstMessageStatusIndexPath.item) ||
              indexPath.section > self.firstMessageStatusIndexPath.section));
+}
+
+- (BOOL)message:(LYRUIMessageType *)message statusIsDifferentThanNextMessageStatus:(LYRUIMessageType *)nextMessage {
+    if (nextMessage == nil) {
+        return YES;
+    }
+    return message.status.status != nextMessage.status.status;
 }
 
 @end
