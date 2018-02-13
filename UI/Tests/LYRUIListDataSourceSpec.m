@@ -248,13 +248,44 @@ describe(@"LYRUIListDataSource", ^{
             [given(sectionMock2.items) willReturn:@[itemMock1, itemMock2, itemMock, itemMock3, itemMock4]];
             
             dataSource.sections = [@[sectionMock1, sectionMock2] mutableCopy];
-            
-            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:2 inSection:1];
-            returnedItem = [dataSource itemAtIndexPath:indexPath];
         });
         
-        it(@"should return item under provided index paths", ^{
-            expect(returnedItem).to.equal(itemMock);
+        context(@"for an existing index path", ^{
+            beforeEach(^{
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:2 inSection:1];
+                returnedItem = [dataSource itemAtIndexPath:indexPath];
+            });
+            
+            it(@"should return item under provided index paths", ^{
+                expect(returnedItem).to.equal(itemMock);
+            });
+        });
+        
+        context(@"for a non-existing index path", ^{
+            beforeEach(^{
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:1 inSection:0];
+                returnedItem = [dataSource itemAtIndexPath:indexPath];
+            });
+            
+            it(@"should return nil", ^{
+                expect(returnedItem).to.beNil();
+            });
+        });
+        
+        context(@"for nil index path", ^{
+            __block void(^callWithNil)();
+            
+            beforeEach(^{
+                callWithNil = ^{
+                    NSIndexPath *indexPath = nil;
+                    returnedItem = [dataSource itemAtIndexPath:indexPath];
+                };
+            });
+            
+            it(@"should throw a NSInvalidArgumentException with proper reason", ^{
+                NSString *exceptionReason = @"Cannot retrieve Item with nil `indexPath` argument.";
+                expect(callWithNil).to.raiseWithReason(NSInvalidArgumentException, exceptionReason);
+            });
         });
     });
     
@@ -275,13 +306,117 @@ describe(@"LYRUIListDataSource", ^{
             [given(sectionMock2.items) willReturn:@[itemMock1, itemMock2, itemMock, itemMock3, itemMock4]];
             
             dataSource.sections = [@[sectionMock1, sectionMock2] mutableCopy];
-            
-            returnedIndexPath = [dataSource indexPathOfItem:itemMock];
         });
         
-        it(@"should return index path 1-2", ^{
-            NSIndexPath *expectedIndexPath = [NSIndexPath indexPathForItem:2 inSection:1];
-            expect(returnedIndexPath).to.equal(expectedIndexPath);
+        context(@"for an item available in the data source", ^{
+            beforeEach(^{
+                returnedIndexPath = [dataSource indexPathOfItem:itemMock];
+            });
+            
+            it(@"should return index path 1-2", ^{
+                NSIndexPath *expectedIndexPath = [NSIndexPath indexPathForItem:2 inSection:1];
+                expect(returnedIndexPath).to.equal(expectedIndexPath);
+            });
+        });
+        
+        context(@"for an item which is not available in the data source", ^{
+            beforeEach(^{
+                NSObject *otherItemMock = mock([NSObject class]);
+                returnedIndexPath = [dataSource indexPathOfItem:otherItemMock];
+            });
+            
+            it(@"should return nil", ^{
+                expect(returnedIndexPath).to.beNil();
+            });
+        });
+        
+        context(@"for nil item", ^{
+            __block void(^callWithNil)();
+            
+            beforeEach(^{
+                callWithNil = ^{
+                    NSObject *otherItemMock = nil;
+                    returnedIndexPath = [dataSource indexPathOfItem:otherItemMock];
+                };
+            });
+            
+            it(@"should throw a NSInvalidArgumentException with proper reason", ^{
+                NSString *exceptionReason = @"Cannot retrieve Index Path with nil `item` argument.";
+                expect(callWithNil).to.raiseWithReason(NSInvalidArgumentException, exceptionReason);
+            });
+        });
+    });
+    
+    describe(@"lastItemIndexPath", ^{
+        __block NSIndexPath *returnedIndexPath;
+        
+        context(@"when data source contains items", ^{
+            beforeEach(^{
+                LYRUIListSection *sectionMock1 = mock([LYRUIListSection class]);
+                LYRUIListSection *sectionMock2 = mock([LYRUIListSection class]);
+                
+                NSObject *itemMock1 = mock([NSObject class]);
+                NSObject *itemMock2 = mock([NSObject class]);
+                NSObject *itemMock3 = mock([NSObject class]);
+                NSObject *itemMock4 = mock([NSObject class]);
+                [given(sectionMock2.items) willReturn:@[itemMock1, itemMock2, itemMock3, itemMock4]];
+                
+                dataSource.sections = [@[sectionMock1, sectionMock2] mutableCopy];
+                returnedIndexPath = dataSource.lastItemIndexPath;
+            });
+            
+            it(@"should return index path of last item", ^{
+                NSIndexPath *expectedIndexPath = [NSIndexPath indexPathForItem:3 inSection:1];
+                expect(returnedIndexPath).to.equal(expectedIndexPath);
+            });
+        });
+        
+        context(@"when data source contains items, but last section is empty", ^{
+            beforeEach(^{
+                LYRUIListSection *sectionMock1 = mock([LYRUIListSection class]);
+                LYRUIListSection *sectionMock2 = mock([LYRUIListSection class]);
+                LYRUIListSection *sectionMock3 = mock([LYRUIListSection class]);
+                
+                NSObject *itemMock1 = mock([NSObject class]);
+                NSObject *itemMock2 = mock([NSObject class]);
+                NSObject *itemMock3 = mock([NSObject class]);
+                NSObject *itemMock4 = mock([NSObject class]);
+                [given(sectionMock2.items) willReturn:@[itemMock1, itemMock2, itemMock3, itemMock4]];
+                
+                dataSource.sections = [@[sectionMock1, sectionMock2, sectionMock3] mutableCopy];
+                returnedIndexPath = dataSource.lastItemIndexPath;
+            });
+            
+            it(@"should return index path of last item", ^{
+                NSIndexPath *expectedIndexPath = [NSIndexPath indexPathForItem:3 inSection:1];
+                expect(returnedIndexPath).to.equal(expectedIndexPath);
+            });
+        });
+        
+        context(@"when data source contains only empty sections", ^{
+            beforeEach(^{
+                LYRUIListSection *sectionMock1 = mock([LYRUIListSection class]);
+                LYRUIListSection *sectionMock2 = mock([LYRUIListSection class]);
+                LYRUIListSection *sectionMock3 = mock([LYRUIListSection class]);
+                
+                dataSource.sections = [@[sectionMock1, sectionMock2, sectionMock3] mutableCopy];
+                returnedIndexPath = dataSource.lastItemIndexPath;
+            });
+            
+            it(@"should return nil", ^{
+                expect(returnedIndexPath).to.beNil();
+            });
+        });
+        
+        context(@"when data source is empty", ^{
+            beforeEach(^{
+                dataSource.sections = [@[] mutableCopy];
+                returnedIndexPath = dataSource.lastItemIndexPath;
+            });
+            
+            it(@"should return nil", ^{
+                expect(returnedIndexPath).to.beNil();
+            });
         });
     });
 });

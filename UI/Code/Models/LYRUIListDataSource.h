@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
 /**
  @abstract Provides the index path of the last item in list.
  */
-@property (nonatomic, readonly) NSIndexPath *lastItemIndexPath;
+@property (nonatomic, readonly, nullable) NSIndexPath *lastItemIndexPath;
 
 /**
  @abstract Provides objects selected in the list view.
@@ -53,14 +53,14 @@ NS_ASSUME_NONNULL_BEGIN     // {
  @param indexPath The index path of an object to retrieve.
  @returns An model object at the corresponding `indexPath`.
  */
-- (id)itemAtIndexPath:(NSIndexPath *)indexPath;
+- (nullable id)itemAtIndexPath:(NSIndexPath *)indexPath;
 
 /**
  @abstract Provides the index path of given `item`.
  @param item The item for which an index path should be returned.
  @returns An `NSIndexPath` for provided object.
  */
-- (NSIndexPath *)indexPathOfItem:(id)item;
+- (nullable NSIndexPath *)indexPathOfItem:(id)item;
 
 
 @end

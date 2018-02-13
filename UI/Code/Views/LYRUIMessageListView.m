@@ -61,12 +61,13 @@
 #pragma mark - Public methods
 
 - (void)scrollToLastMessageAnimated:(BOOL)animated {
-    LYRUIListSection *section = self.dataSource.sections.lastObject;
-    if (section.items.count > 0) {
-        [self.collectionView scrollToItemAtIndexPath:self.dataSource.lastItemIndexPath
-                                    atScrollPosition:UICollectionViewScrollPositionTop
-                                            animated:animated];
+    NSIndexPath *lastMessageIndexPath = self.dataSource.lastItemIndexPath;
+    if (lastMessageIndexPath == nil) {
+        return;
     }
+    [self.collectionView scrollToItemAtIndexPath:lastMessageIndexPath
+                                atScrollPosition:UICollectionViewScrollPositionTop
+                                        animated:animated];
 }
 
 - (void)registerViewControllerForPreviewing:(UIViewController *)viewController {

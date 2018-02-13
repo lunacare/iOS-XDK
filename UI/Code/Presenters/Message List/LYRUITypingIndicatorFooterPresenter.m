@@ -50,7 +50,11 @@ static CGFloat const LYRUITypingIndicatorFooterHeight = 22.0;
 #pragma mark - LYRUIListSupplementaryViewPresenting
 
 - (void)setupSupplementaryView:(LYRUIPanelTypingIndicatorView *)view forItemAtIndexPath:(NSIndexPath *)indexPath {
-    id item = [self.listDataSource itemAtIndexPath:self.listDataSource.lastItemIndexPath];
+    NSIndexPath *lastMessageIndexPath = self.listDataSource.lastItemIndexPath;
+    if (lastMessageIndexPath == nil) {
+        return;
+    }
+    id item = [self.listDataSource itemAtIndexPath:lastMessageIndexPath];
     if (![item isKindOfClass:[LYRUITypingIndicator class]]) {
         return;
     }
@@ -68,7 +72,11 @@ static CGFloat const LYRUITypingIndicatorFooterHeight = 22.0;
 #pragma mark - LYRUIListSupplementaryViewSizeCalculating
 
 - (CGSize)supplementaryViewSizeInCollectionView:(UICollectionView *)collectionView forItemAtIndexPath:(NSIndexPath *)indexPath {
-    id item = [self.listDataSource itemAtIndexPath:self.listDataSource.lastItemIndexPath];
+    NSIndexPath *lastMessageIndexPath = self.listDataSource.lastItemIndexPath;
+    if (lastMessageIndexPath == nil) {
+        return CGSizeZero;
+    }
+    id item = [self.listDataSource itemAtIndexPath:lastMessageIndexPath];
     if ([item isKindOfClass:[LYRUITypingIndicator class]]) {
         return CGSizeMake(CGRectGetWidth(collectionView.bounds), LYRUITypingIndicatorFooterHeight);
     }
