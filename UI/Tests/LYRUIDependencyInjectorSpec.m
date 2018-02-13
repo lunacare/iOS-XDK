@@ -42,6 +42,8 @@
 #import <LayerXDK/LYRUIComposeBar.h>
 #import <LayerXDK/LYRUIComposeBarPresenter.h>
 #import <LayerXDK/LYRUIAvatarViewProvider.h>
+#import <LayerXDK/LYRUICarouselContentOffsetHandler.h>
+#import <LayerXDK/LYRUICarouselContentOffsetsCache.h>
 
 SpecBegin(LYRUIDependencyInjector)
 
@@ -490,6 +492,19 @@ describe(@"LYRUIDependencyInjector", ^{
                 });
             });
         });
+        
+        context(@"of LYRUICarouselContentOffsetHandling", ^{
+            __block id returnedObject;
+            
+            beforeEach(^{
+                returnedObject = [injector protocolImplementation:@protocol(LYRUICarouselContentOffsetHandling)
+                                                         forClass:[NSObject class]];
+            });
+            
+            it(@"should return object of `LYRUICarouselContentOffsetHandler` type", ^{
+                expect(returnedObject).to.beAKindOf([LYRUICarouselContentOffsetHandler class]);
+            });
+        });
     });
     
     describe(@"objectOfType:", ^{
@@ -583,6 +598,30 @@ describe(@"LYRUIDependencyInjector", ^{
             
             it(@"should return default notification center", ^{
                 expect(returnedObject).to.equal([NSNotificationCenter defaultCenter]);
+            });
+        });
+        
+        context(@"for LYRUICarouselContentOffsetsCache", ^{
+            __block id returnedObject;
+            
+            beforeEach(^{
+                returnedObject = [injector objectOfType:[LYRUICarouselContentOffsetsCache class]];
+            });
+            
+            it(@"should return `LYRUICarouselContentOffsetsCache` instance", ^{
+                expect(returnedObject).to.beAKindOf([LYRUICarouselContentOffsetsCache class]);
+            });
+            
+            context(@"when called multiple times", ^{
+                __block id anotherReturnedObject;
+                
+                beforeEach(^{
+                    anotherReturnedObject = [injector objectOfType:[LYRUICarouselContentOffsetsCache class]];
+                });
+                
+                it(@"should return the same instance", ^{
+                    expect(anotherReturnedObject).to.equal(returnedObject);
+                });
             });
         });
     });
