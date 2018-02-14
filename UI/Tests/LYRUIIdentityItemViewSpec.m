@@ -317,6 +317,26 @@ describe(@"LYRUIIdentityItemView", ^{
             });
         });
     });
+    
+    describe(@"backgroundColo", ^{
+        context(@"setter", ^{
+            __block UIView *accessoryView;
+            
+            beforeEach(^{
+                accessoryView = [[UIView alloc] init];
+                view.accessoryView = accessoryView;
+                
+                view.backgroundColor = UIColor.redColor;
+            });
+            
+            it(@"should update background color", ^{
+                expect(view.backgroundColor).to.equal(UIColor.redColor);
+            });
+            it(@"should update accessory view's background color", ^{
+                expect(accessoryView.backgroundColor).to.equal(UIColor.redColor);
+            });
+        });
+    });
 });
 
 SpecEnd

@@ -27,6 +27,35 @@ describe(@"LYRUIIdentityCollectionViewCell", ^{
             expect(cell.identityView.superview).to.equal(cell.contentView);
         });
     });
+    
+    describe(@"selected", ^{
+        context(@"setter", ^{
+            context(@"when set to `YES`", ^{
+                beforeEach(^{
+                    beforeEach(^{
+                        cell.selected = YES;
+                    });
+                    
+                    it(@"should update identity item view's background color to light gray", ^{
+                        UIColor *expectedColor = [UIColor colorWithWhite:242.0/255.0 alpha:1.0];
+                        expect(cell.identityView.backgroundColor).to.equal(expectedColor);
+                    });
+                });
+            });
+            
+            context(@"when set to `NO`", ^{
+                beforeEach(^{
+                    beforeEach(^{
+                        cell.selected = NO;
+                    });
+                    
+                    it(@"should update identity item view's background color to white", ^{
+                        expect(cell.identityView.backgroundColor).to.equal(UIColor.whiteColor);
+                    });
+                });
+            });
+        });
+    });
 });
 
 SpecEnd

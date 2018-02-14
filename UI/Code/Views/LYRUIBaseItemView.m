@@ -62,6 +62,7 @@
 }
 
 - (void)lyr_commonInit {
+    self.updateConstraintsOnHeightChange = YES;
     // TODO: update with colors from color palette
     UIColor *blackColor = [UIColor colorWithRed:27.0/255.0 green:28.0/255.0 blue:29.0/255.0 alpha:1.0];
     UIColor *grayColor = [UIColor colorWithRed:163.0/255.0 green:168.0/255.0 blue:178.0/255.0 alpha:1.0];
@@ -183,6 +184,11 @@
     if (theme.detailLabelColor) {
         self.detailLabelColor = theme.detailLabelColor;
     }
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    [super setBackgroundColor:backgroundColor];
+    self.accessoryView.backgroundColor = backgroundColor;
 }
 
 @end

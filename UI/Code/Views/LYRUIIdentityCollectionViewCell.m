@@ -55,4 +55,13 @@
     self.identityView = identityView;
 }
 
+- (void)setSelected:(BOOL)selected {
+    [super setSelected:selected];
+    if (selected == YES) {
+        self.identityView.backgroundColor = [UIColor colorWithWhite:242.0/255.0 alpha:1.0];
+    } else {
+        self.identityView.backgroundColor = UIColor.whiteColor;
+    }
+}
+
 @end
