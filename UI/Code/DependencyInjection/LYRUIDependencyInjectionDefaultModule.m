@@ -122,6 +122,7 @@
 #import "LYRUIChoiceMessage.h"
 #import "LYRUIChoiceMessageSerializer.h"
 #import "LYRUIChoiceMessageCompositeViewPresenter.h"
+#import "LYRUIMessageChoiceSelectedActionHandler.h"
 #import "LYRUIProductMessage.h"
 #import "LYRUIProductMessageSerializer.h"
 #import "LYRUIProductMessageCompositeViewPresenter.h"
@@ -389,6 +390,7 @@
     [self setActionHandlerClass:[LYRUIMessageOpenFileActionHandler class] forEvent:@"open-file"];
     [self setActionHandlerClass:[LYRUIMessageOpenURLActionHandler class] forEvent:@"open-url"];
     [self setActionHandlerClass:[LYRUIMessageOpenMapActionHandler class] forEvent:@"open-map"];
+    [self setActionHandlerClass:[LYRUIMessageChoiceSelectedActionHandler class] forEvent:@"layer-choice-select"];
 }
 
 #pragma mark - Helpers
