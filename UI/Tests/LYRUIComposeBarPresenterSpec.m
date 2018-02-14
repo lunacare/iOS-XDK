@@ -456,34 +456,80 @@ describe(@"LYRUIComposeBarPresenter", ^{
             context(@"when message text is nil", ^{
                 beforeEach(^{
                     presenter.placeholderVisible = NO;
-                    presenter.text = nil;
                 });
                 
-                it(@"should update placeholder visible property to YES", ^{
-                    expect(presenter.placeholderVisible).to.beTruthy();
+                context(@"and text view is not a first responder", ^{
+                    beforeEach(^{
+                        [given(textViewMock.isFirstResponder) willReturnBool:NO];
+                        presenter.text = nil;
+                    });
+                    
+                    it(@"should update placeholder visible property to YES", ^{
+                        expect(presenter.placeholderVisible).to.beTruthy();
+                    });
+                    it(@"should set text view's text color to compose bar placeholder color", ^{
+                        [verify(textViewMock) setTextColor:[UIColor magentaColor]];
+                    });
+                    it(@"should update text view's text to placeholder", ^{
+                        [verify(textViewMock) setText:@"test placeholder"];
+                    });
                 });
-                it(@"should set text view's text color to compose bar placeholder color", ^{
-                    [verify(textViewMock) setTextColor:[UIColor magentaColor]];
-                });
-                it(@"should update text view's text to placeholder", ^{
-                    [verify(textViewMock) setText:@"test placeholder"];
+                
+                context(@"and text view is first responder", ^{
+                    beforeEach(^{
+                        [given(textViewMock.isFirstResponder) willReturnBool:YES];
+                        presenter.text = nil;
+                    });
+                    
+                    it(@"should update placeholder visible property to NO", ^{
+                        expect(presenter.placeholderVisible).to.beFalsy();
+                    });
+                    it(@"should set text view's text color to compose bar text color", ^{
+                        [verify(textViewMock) setTextColor:[UIColor purpleColor]];
+                    });
+                    it(@"should update text view's text to nil", ^{
+                        [verify(textViewMock) setText:nil];
+                    });
                 });
             });
             
             context(@"when message text is empty string", ^{
                 beforeEach(^{
                     presenter.placeholderVisible = NO;
-                    presenter.text = @"";
                 });
                 
-                it(@"should update placeholder visible property to YES", ^{
-                    expect(presenter.placeholderVisible).to.beTruthy();
+                context(@"and text view is not a first responder", ^{
+                    beforeEach(^{
+                        [given(textViewMock.isFirstResponder) willReturnBool:NO];
+                        presenter.text = @"";
+                    });
+                    
+                    it(@"should update placeholder visible property to YES", ^{
+                        expect(presenter.placeholderVisible).to.beTruthy();
+                    });
+                    it(@"should set text view's text color to compose bar placeholder color", ^{
+                        [verify(textViewMock) setTextColor:[UIColor magentaColor]];
+                    });
+                    it(@"should update text view's text to placeholder", ^{
+                        [verify(textViewMock) setText:@"test placeholder"];
+                    });
                 });
-                it(@"should set text view's text color to compose bar placeholder color", ^{
-                    [verify(textViewMock) setTextColor:[UIColor magentaColor]];
-                });
-                it(@"should update text view's text to placeholder", ^{
-                    [verify(textViewMock) setText:@"test placeholder"];
+                
+                context(@"and text view is first responder", ^{
+                    beforeEach(^{
+                        [given(textViewMock.isFirstResponder) willReturnBool:YES];
+                        presenter.text = @"";
+                    });
+                    
+                    it(@"should update placeholder visible property to NO", ^{
+                        expect(presenter.placeholderVisible).to.beFalsy();
+                    });
+                    it(@"should set text view's text color to compose bar text color", ^{
+                        [verify(textViewMock) setTextColor:[UIColor purpleColor]];
+                    });
+                    it(@"should update text view's text to empty string", ^{
+                        [verify(textViewMock) setText:@""];
+                    });
                 });
             });
             
@@ -546,35 +592,82 @@ describe(@"LYRUIComposeBarPresenter", ^{
             context(@"when message text is nil", ^{
                 beforeEach(^{
                     presenter.placeholderVisible = NO;
-                    presenter.attributedText = nil;
                 });
                 
-                it(@"should update placeholder visible property to YES", ^{
-                    expect(presenter.placeholderVisible).to.beTruthy();
+                context(@"and text view is not a first responder", ^{
+                    beforeEach(^{
+                        [given(textViewMock.isFirstResponder) willReturnBool:NO];
+                        presenter.attributedText = nil;
+                    });
+                    
+                    it(@"should update placeholder visible property to YES", ^{
+                        expect(presenter.placeholderVisible).to.beTruthy();
+                    });
+                    it(@"should set text view's text color to compose bar placeholder color", ^{
+                        [verify(textViewMock) setTextColor:[UIColor magentaColor]];
+                    });
+                    it(@"should update text view's text to placeholder", ^{
+                        [verify(textViewMock) setText:@"test placeholder"];
+                    });
                 });
-                it(@"should set text view's text color to compose bar placeholder color", ^{
-                    [verify(textViewMock) setTextColor:[UIColor magentaColor]];
-                });
-                it(@"should update text view's text to placeholder", ^{
-                    [verify(textViewMock) setText:@"test placeholder"];
+                
+                context(@"and text view is first responder", ^{
+                    beforeEach(^{
+                        [given(textViewMock.isFirstResponder) willReturnBool:YES];
+                        presenter.attributedText = nil;
+                    });
+                    
+                    it(@"should update placeholder visible property to NO", ^{
+                        expect(presenter.placeholderVisible).to.beFalsy();
+                    });
+                    it(@"should set text view's text color to compose bar text color", ^{
+                        [verify(textViewMock) setTextColor:[UIColor purpleColor]];
+                    });
+                    it(@"should update text view's attributed text to nil", ^{
+                        [verify(textViewMock) setAttributedText:nil];
+                    });
                 });
             });
             
             context(@"when message text is empty attributed string", ^{
                 beforeEach(^{
                     presenter.placeholderVisible = NO;
-                    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@""];
-                    presenter.attributedText = attributedString;
                 });
                 
-                it(@"should update placeholder visible property to YES", ^{
-                    expect(presenter.placeholderVisible).to.beTruthy();
+                context(@"and text view is not a first responder", ^{
+                    beforeEach(^{
+                        [given(textViewMock.isFirstResponder) willReturnBool:NO];
+                        NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@""];
+                        presenter.attributedText = attributedString;
+                    });
+                    
+                    it(@"should update placeholder visible property to YES", ^{
+                        expect(presenter.placeholderVisible).to.beTruthy();
+                    });
+                    it(@"should set text view's text color to compose bar placeholder color", ^{
+                        [verify(textViewMock) setTextColor:[UIColor magentaColor]];
+                    });
+                    it(@"should update text view's text to placeholder", ^{
+                        [verify(textViewMock) setText:@"test placeholder"];
+                    });
                 });
-                it(@"should set text view's text color to compose bar placeholder color", ^{
-                    [verify(textViewMock) setTextColor:[UIColor magentaColor]];
-                });
-                it(@"should update text view's text to placeholder", ^{
-                    [verify(textViewMock) setText:@"test placeholder"];
+                
+                context(@"and text view is first responder", ^{
+                    beforeEach(^{
+                        [given(textViewMock.isFirstResponder) willReturnBool:YES];
+                        NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@""];
+                        presenter.attributedText = attributedString;
+                    });
+                    
+                    it(@"should update placeholder visible property to NO", ^{
+                        expect(presenter.placeholderVisible).to.beFalsy();
+                    });
+                    it(@"should set text view's text color to compose bar text color", ^{
+                        [verify(textViewMock) setTextColor:[UIColor purpleColor]];
+                    });
+                    it(@"should update text view's attributed text to empty string", ^{
+                        [verify(textViewMock) setAttributedText:[[NSAttributedString alloc] initWithString:@""]];
+                    });
                 });
             });
             
