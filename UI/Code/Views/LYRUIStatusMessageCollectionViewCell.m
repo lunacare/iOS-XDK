@@ -48,6 +48,7 @@
 - (void)lyr_commonInit {
     self.translatesAutoresizingMaskIntoConstraints = NO;
     UITextView *textView = [[UITextView alloc] init];
+    textView.editable = NO;
     textView.scrollEnabled = NO;
     textView.translatesAutoresizingMaskIntoConstraints = NO;
     textView.font = [UIFont systemFontOfSize:13.0];
