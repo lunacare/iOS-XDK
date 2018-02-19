@@ -19,11 +19,12 @@
 //
 
 #import <LayerKit/LayerKit.h>
+#import "LYRUICustomMessageTypeRegistering.h"
 #import "LYRUIParticipantsFiltering.h"
 #import "LYRUIParticipantsSorting.h"
 
 NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIConfiguration : NSObject
+@interface LYRUIConfiguration : NSObject <LYRUICustomMessageTypeRegistering>
 
 /**
  @abstract The `LYRClient` object used to fetch objects for display.

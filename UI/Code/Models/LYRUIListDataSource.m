@@ -62,6 +62,9 @@
     
     NSString *itemType = NSStringFromClass([modelItem class]);
     id<LYRUIListCellPresenting> cellPresenter = self.cellPresenters[itemType];
+    if (cellPresenter == nil) {
+        cellPresenter = self.defaultCellPresenter;
+    }
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellPresenter.cellReuseIdentifier
                                                                            forIndexPath:indexPath];
     [cellPresenter setupCell:cell forItemAtIndexPath:indexPath];

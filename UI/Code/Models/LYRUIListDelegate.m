@@ -59,6 +59,9 @@
     
     NSString *itemType = NSStringFromClass([item class]);
     id<LYRUIListCellSizeCalculating> cellSizeCalculation = self.cellSizeCalculations[itemType];
+    if (cellSizeCalculation == nil) {
+        cellSizeCalculation = self.defaultCellSizeCalculation;
+    }
     if (cellSizeCalculation) {
         return [cellSizeCalculation cellSizeInCollectionView:collectionView forItemAtIndexPath:indexPath];
     }

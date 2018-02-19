@@ -70,6 +70,8 @@ NS_ASSUME_NONNULL_BEGIN     // {
  */
 @interface LYRUIListDelegate : NSObject <LYRUIListLayoutDelegate, LYRUIListDelegate>
 
+@property (nonatomic, strong) id<LYRUIListCellSizeCalculating> defaultCellSizeCalculation;
+
 /**
  @abstract A method for registering objects conforming to `LYRUIListCellSizeCalculating` protocol that will be used to calculate sizes of cells in the list view.
  */

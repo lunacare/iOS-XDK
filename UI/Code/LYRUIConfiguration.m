@@ -49,4 +49,33 @@
     }
 }
 
+- (void)registerMessageTypeClass:(Class)messageTypeClass
+             withSerializerClass:(Class)serializerClass
+           contentPresenterClass:(Class)contentPresenterClass {
+    [self.injector registerMessageTypeClass:messageTypeClass
+                        withSerializerClass:serializerClass
+                      contentPresenterClass:contentPresenterClass];
+}
+
+- (void)registerMessageTypeClass:(Class)messageTypeClass
+             withSerializerClass:(Class)serializerClass
+           contentPresenterClass:(Class)contentPresenterClass
+         containerPresenterClass:(Class)containerPresenterClass {
+    [self.injector registerMessageTypeClass:messageTypeClass
+                        withSerializerClass:serializerClass
+                      contentPresenterClass:contentPresenterClass
+                    containerPresenterClass:containerPresenterClass];
+}
+
+- (void)registerActionHandlerClass:(Class)actionHandlerClass
+                          forEvent:(NSString *)event {
+    [self.injector registerActionHandlerClass:actionHandlerClass forEvent:event];
+}
+
+- (void)registerActionHandlerClass:(Class)actionHandlerClass
+                          forEvent:(NSString *)event
+                  messageTypeClass:(Class)messageTypeClass {
+    [self.injector registerActionHandlerClass:actionHandlerClass forEvent:event messageTypeClass:messageTypeClass];
+}
+
 @end

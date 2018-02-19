@@ -115,7 +115,7 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     
     LYRUIListDataSource *dataSource = [[LYRUIListDataSource alloc] init];
     cellPresenter.listDataSource = dataSource;
-    [dataSource registerCellPresenter:cellPresenter];
+    dataSource.defaultCellPresenter = cellPresenter;
     [dataSource registerCellPresenter:carouselCellPresenter];
     [dataSource registerCellPresenter:typingIndicatorCellPresenter];
     [dataSource registerCellPresenter:statusMessageCellPresenter];
@@ -126,7 +126,7 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     messageListView.dataSource = dataSource;
     
     LYRUIMessageListDelegate *delegate = [injector objectOfType:[self delegateClass]];
-    [delegate registerCellSizeCalculation:cellPresenter];
+    delegate.defaultCellSizeCalculation = cellPresenter;
     [delegate registerCellSizeCalculation:carouselCellPresenter];
     [delegate registerCellSizeCalculation:typingIndicatorCellPresenter];
     [delegate registerCellSizeCalculation:statusMessageCellPresenter];

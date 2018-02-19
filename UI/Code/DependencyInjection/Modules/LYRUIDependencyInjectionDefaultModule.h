@@ -19,7 +19,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "LYRUIDependencyInjectionModule.h"
+#import "LYRUIDependencyInjectionBaseModule.h"
 
-@interface LYRUIDependencyInjectionDefaultModule : NSObject <LYRUIDependencyInjectionModule>
+@interface LYRUIDependencyInjectionDefaultModule : LYRUIDependencyInjectionBaseModule
 @end
