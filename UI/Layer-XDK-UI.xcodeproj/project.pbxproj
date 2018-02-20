@@ -62,6 +62,14 @@
 		15BA3A8E1F7CE9EF001AB286 /* LYRUIMessageItemViewLayoutSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 15BA3A8D1F7CE9EF001AB286 /* LYRUIMessageItemViewLayoutSpec.m */; };
 		15C19FCB1F46F72D002AA604 /* LYRUIMessageListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15C19FCA1F46F72D002AA604 /* LYRUIMessageListView.xib */; };
 		15C332BF2023793D00869CD0 /* LYRUIMessageAttributesManagerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C332BE2023793D00869CD0 /* LYRUIMessageAttributesManagerSpec.m */; };
+		15C39F4D203B14C800F8C293 /* LYRUIFakeTestMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C39F4C203B14C800F8C293 /* LYRUIFakeTestMessage.m */; };
+		15C39F50203B155B00F8C293 /* LYRUIFakeTestMessageSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C39F4F203B155B00F8C293 /* LYRUIFakeTestMessageSerializer.m */; };
+		15C39F53203B15DA00F8C293 /* LYRUIFakeTestMessagePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C39F52203B15DA00F8C293 /* LYRUIFakeTestMessagePresenter.m */; };
+		15C39F56203B224E00F8C293 /* LYRUIFakeTestMessageContainerPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C39F55203B224E00F8C293 /* LYRUIFakeTestMessageContainerPresenter.m */; };
+		15C39F59203B260C00F8C293 /* LYRUIFakeImageMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C39F58203B260C00F8C293 /* LYRUIFakeImageMessage.m */; };
+		15C39F5C203B271B00F8C293 /* LYRUIFakeTestActionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C39F5B203B271B00F8C293 /* LYRUIFakeTestActionHandler.m */; };
+		15C39F5E203C637600F8C293 /* LYRUIMessageListViewPresenterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C39F5D203C637600F8C293 /* LYRUIMessageListViewPresenterSpec.m */; };
+		15C39F60203C77EB00F8C293 /* LYRUICarouselMessageListViewPresenterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C39F5F203C77EB00F8C293 /* LYRUICarouselMessageListViewPresenterSpec.m */; };
 		15C4A5791F7D49C300643F8F /* LYRUIMessageListDelegateSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C4A5781F7D49C300643F8F /* LYRUIMessageListDelegateSpec.m */; };
 		15C660AD1F5832CB0072CB16 /* LYRUIConversationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15C660AC1F5832CB0072CB16 /* LYRUIConversationView.xib */; };
 		15CE1B101FB9DD1D00B410ED /* LYRUISendButtonSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 15CE1B0F1FB9DD1D00B410ED /* LYRUISendButtonSpec.m */; };
@@ -143,6 +151,20 @@
 		15C19FCA1F46F72D002AA604 /* LYRUIMessageListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIMessageListView.xib; sourceTree = "<group>"; };
 		15C332BC2023792B00869CD0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		15C332BE2023793D00869CD0 /* LYRUIMessageAttributesManagerSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIMessageAttributesManagerSpec.m; sourceTree = "<group>"; };
+		15C39F4B203B14C800F8C293 /* LYRUIFakeTestMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LYRUIFakeTestMessage.h; sourceTree = "<group>"; };
+		15C39F4C203B14C800F8C293 /* LYRUIFakeTestMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUIFakeTestMessage.m; sourceTree = "<group>"; };
+		15C39F4E203B155B00F8C293 /* LYRUIFakeTestMessageSerializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LYRUIFakeTestMessageSerializer.h; sourceTree = "<group>"; };
+		15C39F4F203B155B00F8C293 /* LYRUIFakeTestMessageSerializer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUIFakeTestMessageSerializer.m; sourceTree = "<group>"; };
+		15C39F51203B15DA00F8C293 /* LYRUIFakeTestMessagePresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LYRUIFakeTestMessagePresenter.h; sourceTree = "<group>"; };
+		15C39F52203B15DA00F8C293 /* LYRUIFakeTestMessagePresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUIFakeTestMessagePresenter.m; sourceTree = "<group>"; };
+		15C39F54203B224E00F8C293 /* LYRUIFakeTestMessageContainerPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LYRUIFakeTestMessageContainerPresenter.h; sourceTree = "<group>"; };
+		15C39F55203B224E00F8C293 /* LYRUIFakeTestMessageContainerPresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUIFakeTestMessageContainerPresenter.m; sourceTree = "<group>"; };
+		15C39F57203B260C00F8C293 /* LYRUIFakeImageMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LYRUIFakeImageMessage.h; sourceTree = "<group>"; };
+		15C39F58203B260C00F8C293 /* LYRUIFakeImageMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUIFakeImageMessage.m; sourceTree = "<group>"; };
+		15C39F5A203B271B00F8C293 /* LYRUIFakeTestActionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LYRUIFakeTestActionHandler.h; sourceTree = "<group>"; };
+		15C39F5B203B271B00F8C293 /* LYRUIFakeTestActionHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUIFakeTestActionHandler.m; sourceTree = "<group>"; };
+		15C39F5D203C637600F8C293 /* LYRUIMessageListViewPresenterSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUIMessageListViewPresenterSpec.m; sourceTree = "<group>"; };
+		15C39F5F203C77EB00F8C293 /* LYRUICarouselMessageListViewPresenterSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUICarouselMessageListViewPresenterSpec.m; sourceTree = "<group>"; };
 		15C4A5781F7D49C300643F8F /* LYRUIMessageListDelegateSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUIMessageListDelegateSpec.m; sourceTree = "<group>"; };
 		15C660AC1F5832CB0072CB16 /* LYRUIConversationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIConversationView.xib; sourceTree = "<group>"; };
 		15CE1B0F1FB9DD1D00B410ED /* LYRUISendButtonSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUISendButtonSpec.m; sourceTree = "<group>"; };
@@ -267,6 +289,18 @@
 				150772141F28E9AF00E903D1 /* LYRUISpecDispatcher.m */,
 				1574F63E20193A15002742BE /* LYRUIComposeBarTestLayout.h */,
 				1574F63F20193A15002742BE /* LYRUIComposeBarTestLayout.m */,
+				15C39F4B203B14C800F8C293 /* LYRUIFakeTestMessage.h */,
+				15C39F4C203B14C800F8C293 /* LYRUIFakeTestMessage.m */,
+				15C39F57203B260C00F8C293 /* LYRUIFakeImageMessage.h */,
+				15C39F58203B260C00F8C293 /* LYRUIFakeImageMessage.m */,
+				15C39F4E203B155B00F8C293 /* LYRUIFakeTestMessageSerializer.h */,
+				15C39F4F203B155B00F8C293 /* LYRUIFakeTestMessageSerializer.m */,
+				15C39F51203B15DA00F8C293 /* LYRUIFakeTestMessagePresenter.h */,
+				15C39F52203B15DA00F8C293 /* LYRUIFakeTestMessagePresenter.m */,
+				15C39F54203B224E00F8C293 /* LYRUIFakeTestMessageContainerPresenter.h */,
+				15C39F55203B224E00F8C293 /* LYRUIFakeTestMessageContainerPresenter.m */,
+				15C39F5A203B271B00F8C293 /* LYRUIFakeTestActionHandler.h */,
+				15C39F5B203B271B00F8C293 /* LYRUIFakeTestActionHandler.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -315,6 +349,8 @@
 				15E369EC2020D43F0009D921 /* LYRUIListCellPresenterSpec.m */,
 				15E369ED2020D43F0009D921 /* LYRUIListSupplementaryViewPresenterSpec.m */,
 				15E369EE2020D43F0009D921 /* LYRUIMessageItemViewPresenterSpec.m */,
+				15C39F5D203C637600F8C293 /* LYRUIMessageListViewPresenterSpec.m */,
+				15C39F5F203C77EB00F8C293 /* LYRUICarouselMessageListViewPresenterSpec.m */,
 				15E369EF2020D43F0009D921 /* LYRUIPresenceViewPresenterSpec.m */,
 			);
 			name = Presenters;
@@ -764,20 +800,25 @@
 				152515271F30A8520074CE03 /* LYRUIConversationCollectionViewCellSpec.m in Sources */,
 				15E369F32020D4400009D921 /* LYRUIIdentityListViewPresenterSpec.m in Sources */,
 				15AF424A1F5843B500C03BE5 /* LYRUIConversationViewSpec.m in Sources */,
+				15C39F5C203B271B00F8C293 /* LYRUIFakeTestActionHandler.m in Sources */,
 				152515251F30A79F0074CE03 /* LYRUIConversationListViewSpec.m in Sources */,
 				1504137D1F21D147006F46BD /* LYRUIParticipantsCountViewSpec.m in Sources */,
 				15654C281F264F4000255309 /* LYRUIAvatarViewSpec.m in Sources */,
 				15E369F82020D4400009D921 /* LYRUIListSupplementaryViewPresenterSpec.m in Sources */,
 				15654C241F2642F500255309 /* LYRUIAvatarViewSingleLayoutSpec.m in Sources */,
 				152515191F308EC80074CE03 /* LYRUIListDelegateSpec.m in Sources */,
+				15C39F56203B224E00F8C293 /* LYRUIFakeTestMessageContainerPresenter.m in Sources */,
 				150771FF1F28BEF700E903D1 /* LYRUIImageFetcherSpec.m in Sources */,
 				15E369F72020D4400009D921 /* LYRUIListCellPresenterSpec.m in Sources */,
 				15E369FA2020D4400009D921 /* LYRUIPresenceViewPresenterSpec.m in Sources */,
+				15C39F60203C77EB00F8C293 /* LYRUICarouselMessageListViewPresenterSpec.m in Sources */,
+				15C39F50203B155B00F8C293 /* LYRUIFakeTestMessageSerializer.m in Sources */,
 				15C332BF2023793D00869CD0 /* LYRUIMessageAttributesManagerSpec.m in Sources */,
 				15E369F92020D4400009D921 /* LYRUIMessageItemViewPresenterSpec.m in Sources */,
 				15E369F12020D4400009D921 /* LYRUIConversationItemViewPresenterSpec.m in Sources */,
 				1518DA03203328AC00654309 /* LYRUICarouselContentOffsetHandlerSpec.m in Sources */,
 				15C4A5791F7D49C300643F8F /* LYRUIMessageListDelegateSpec.m in Sources */,
+				15C39F4D203B14C800F8C293 /* LYRUIFakeTestMessage.m in Sources */,
 				157F36731F7C3163004D12C6 /* LYRUIParticipantsDefaultFilterSpec.m in Sources */,
 				1575B47A1FE9609100269488 /* LYRUIDependencyInjectorSpec.m in Sources */,
 				15062C4E1FE2AC6700943614 /* LYRUIPresenceViewSpec.m in Sources */,
@@ -785,6 +826,7 @@
 				151684411F99332200EBA969 /* LYRUIBaseListViewSpec.m in Sources */,
 				15E369FB2020D4400009D921 /* LYRUIComposeBarPresenterSpec.m in Sources */,
 				15E369F62020D4400009D921 /* LYRUIAvatarViewPresenterSpec.m in Sources */,
+				15C39F5E203C637600F8C293 /* LYRUIMessageListViewPresenterSpec.m in Sources */,
 				15E369FF2020D4650009D921 /* LYRUIListQueryControllerDelegateSpec.m in Sources */,
 				152515171F3084580074CE03 /* LYRUIListDataSourceSpec.m in Sources */,
 				159A26F11F1F8F4000BC416C /* LYRUIShapedViewSpec.m in Sources */,
@@ -803,11 +845,13 @@
 				152515211F30996A0074CE03 /* LYRUIIdentityListViewSpec.m in Sources */,
 				15CE1B101FB9DD1D00B410ED /* LYRUISendButtonSpec.m in Sources */,
 				15A4C4621F0E86FF00741D91 /* LYRUIConversationItemTitleFormatterSpec.m in Sources */,
+				15C39F53203B15DA00F8C293 /* LYRUIFakeTestMessagePresenter.m in Sources */,
 				15836DBE1F151C8C00FAF433 /* LYRUIBaseItemViewLayoutSpec.m in Sources */,
 				1518DA05203328B400654309 /* LYRUICarouselMessageListViewSpec.m in Sources */,
 				15A4C45A1F0E7BF500741D91 /* LYRUIMessageTimeDefaultFormatterSpec.m in Sources */,
 				1582730B1F0D09AA00F8974C /* LYRUIViewWithLayoutSpec.m in Sources */,
 				150373E11F17D86A00FA6AAB /* LYRUIIdentityItemViewSpec.m in Sources */,
+				15C39F59203B260C00F8C293 /* LYRUIFakeImageMessage.m in Sources */,
 				158273091F0D071E00F8974C /* LYRUIConversationItemViewSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

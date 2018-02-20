@@ -98,13 +98,13 @@ describe(@"LYRUIListDataSource", ^{
         });
         
         context(@"when cell presenter for item type was registered", ^{
-            __block id<LYRUIListCellPresenting> cellConfirgurationMock;
+            __block id<LYRUIListCellPresenting> cellPresenterMock;
             
             beforeEach(^{
-                cellConfirgurationMock = mockProtocol(@protocol(LYRUIListCellPresenting));
-                [given(cellConfirgurationMock.handledItemTypes) willReturn:[NSSet setWithObject:[NSObject class]]];
-                [given(cellConfirgurationMock.cellReuseIdentifier) willReturn:@"test reuse identifier"];
-                [dataSource registerCellPresenter:cellConfirgurationMock];
+                cellPresenterMock = mockProtocol(@protocol(LYRUIListCellPresenting));
+                [given(cellPresenterMock.handledItemTypes) willReturn:[NSSet setWithObject:[NSObject class]]];
+                [given(cellPresenterMock.cellReuseIdentifier) willReturn:@"test reuse identifier"];
+                [dataSource registerCellPresenter:cellPresenterMock];
                 
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
                 returnedCell = [dataSource collectionView:collectionViewMock cellForItemAtIndexPath:indexPath];
@@ -115,18 +115,41 @@ describe(@"LYRUIListDataSource", ^{
             });
             it(@"should setup dequeued cell using presenter", ^{
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-                [verify(cellConfirgurationMock) setupCell:cellMock forItemAtIndexPath:indexPath];
+                [verify(cellPresenterMock) setupCell:cellMock forItemAtIndexPath:indexPath];
             });
         });
         
         context(@"when there is no presenter registered for item type", ^{
-            beforeEach(^{
-                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-                returnedCell = [dataSource collectionView:collectionViewMock cellForItemAtIndexPath:indexPath];
+            context(@"and there's no default presenter set", ^{
+                beforeEach(^{
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+                    returnedCell = [dataSource collectionView:collectionViewMock cellForItemAtIndexPath:indexPath];
+                });
+                
+                it(@"should return nil", ^{
+                    expect(returnedCell).to.beNil();
+                });
             });
             
-            it(@"should return nil", ^{
-                expect(returnedCell).to.beNil();
+            context(@"and default presenter is set", ^{
+                __block id<LYRUIListCellPresenting> cellPresenterMock;
+                
+                beforeEach(^{
+                    cellPresenterMock = mockProtocol(@protocol(LYRUIListCellPresenting));
+                    [given(cellPresenterMock.cellReuseIdentifier) willReturn:@"test reuse identifier"];
+                    dataSource.defaultCellPresenter = cellPresenterMock;
+                    
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+                    returnedCell = [dataSource collectionView:collectionViewMock cellForItemAtIndexPath:indexPath];
+                });
+                
+                it(@"should return cell dequeued from collection view", ^{
+                    expect(returnedCell).to.equal(cellMock);
+                });
+                it(@"should setup dequeued cell using presenter", ^{
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+                    [verify(cellPresenterMock) setupCell:cellMock forItemAtIndexPath:indexPath];
+                });
             });
         });
     });

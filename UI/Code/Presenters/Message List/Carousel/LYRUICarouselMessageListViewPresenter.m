@@ -35,10 +35,6 @@
     messageListView.collectionView.showsHorizontalScrollIndicator = NO;
 }
 
-- (Class)layoutClass {
-    return [LYRUICarouselMessageListLayout class];
-}
-
 - (Class)delegateClass {
     return [LYRUICarouselListDelegate class];
 }

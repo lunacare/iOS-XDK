@@ -133,6 +133,7 @@
 #import "LYRUICarouselMessageSerializer.h"
 #import "LYRUICarouselMessageCompositeViewPresenter.h"
 #import "LYRUICarouselMessageListView.h"
+#import "LYRUICarouselMessageListLayout.h"
 #import "LYRUICarouselMessageListViewPresenter.h"
 #import "LYRUICarouselContentOffsetHandler.h"
 #import "LYRUICarouselContentOffsetsCache.h"
@@ -200,16 +201,7 @@
     [self setPresenterClass:[LYRUIIdentityListViewPresenter class] forViewClass:[LYRUIIdentityListView class]];
     [self setPresenterClass:[LYRUIComposeBarPresenter class] forViewClass:[LYRUIComposeBar class]];
     [self setPresenterClass:[LYRUIMessageItemViewPresenter class] forViewClass:[LYRUIMessageItemView class]];
-    [self setPresenterClass:[LYRUIMessageCellPresenter class] forViewClass:[LYRUIMessageCollectionViewCell class]];
-    [self setPresenterClass:[LYRUIMessageListTimeSupplementaryViewPresenter class] forViewClass:[LYRUIMessageListMessageTimeView class]];
-    [self setPresenterClass:[LYRUIMessageListStatusSupplementaryViewPresenter class] forViewClass:[LYRUIMessageListMessageStatusView class]];
-    [self setPresenterProvider:^id (LYRUIConfiguration *configuration) {
-        return [LYRUIListLoadingIndicatorPresenter loadingOldItemsIndicatorPresenter];
-    } forViewClass:[LYRUIListLoadingIndicatorView class]];
     [self setPresenterClass:[LYRUIMessageListViewPresenter class] forViewClass:[LYRUIMessageListView class]];
-    [self setPresenterClass:[LYRUITypingIndicatorFooterPresenter class] forViewClass:[LYRUIPanelTypingIndicatorView class]];
-    [self setPresenterClass:[LYRUITypingIndicatorCellPresenter class] forViewClass:[LYRUIBubbleTypingIndicatorCollectionViewCell class]];
-    [self setPresenterClass:[LYRUIStatusCellPresenter class] forViewClass:[LYRUIStatusMessageCollectionViewCell class]];
     [self setPresenterClass:[LYRUICarouselMessageListViewPresenter class] forViewClass:[LYRUICarouselMessageListView class]];
 }
 
@@ -226,6 +218,7 @@
     [self setLayoutClass:[LYRUIConversationViewLayout class] forViewClass:[LYRUIConversationView class]];
     [self setLayoutClass:[LYRUIPanelTypingIndicatorViewLayout class] forViewClass:[LYRUIPanelTypingIndicatorView class]];
     [self setLayoutClass:[LYRUIStandardMessageContainerViewLayout class] forViewClass:[LYRUIStandardMessageContainerView class]];
+    [self setLayoutClass:[LYRUICarouselMessageListLayout class] forViewClass:[LYRUICarouselMessageListView class]];
 }
 
 - (void)setupProtocolImplementations {
@@ -310,6 +303,10 @@
     [self setProvider:^id (LYRUIConfiguration *configuration) {
         return weakSelf.reusableViewsQueue;
     } forObjectType:[LYRUIReusableViewsQueue class]];
+    
+    [self setProvider:^id (LYRUIConfiguration *configuration) {
+        return [LYRUIListLoadingIndicatorPresenter loadingOldItemsIndicatorPresenter];
+    } forObjectType:[LYRUIListLoadingIndicatorPresenter class]];
     
     [self setProvider:^id (LYRUIConfiguration *configuration) {
         return weakSelf.carouselContentOffsetsCache;
