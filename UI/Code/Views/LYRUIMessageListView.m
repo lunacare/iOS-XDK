@@ -31,8 +31,9 @@
 #import "LYRUIMessageAction.h"
 #import "LYRUIMessageSender.h"
 #import "LYRUIActionHandling.h"
+#import "LYRUIViewWithAction.h"
 
-@interface LYRUIMessageListView () <LYRUIActionHandlingDelegate>
+@interface LYRUIMessageListView () <LYRUIActionHandlingDelegate, UIViewControllerPreviewingDelegate>
 
 @property (nonatomic, strong) LYRUIMessageListQueryControllerDelegate *queryControllerDelegate;
 @property (nonatomic, strong) LYRUIMessageListPaginationController *paginationController;
@@ -72,6 +73,7 @@
 
 - (void)registerViewControllerForPreviewing:(UIViewController *)viewController {
     self.presentationViewController = viewController;
+    [viewController registerForPreviewingWithDelegate:self sourceView:self];
 }
 
 - (void)setPageSize:(NSUInteger)pageSize {
@@ -156,6 +158,18 @@
     [handler handleActionWithData:action.data delegate:self];
 }
 
+- (UIViewController *)previewControllerForAction:(LYRUIMessageAction *)action withHandler:(id<LYRUIActionHandling>)handler {
+    if (self.messageActionHandlingDelegate) {
+        return [self.messageActionHandlingDelegate previewControllerForAction:action withHandler:handler];
+    }
+    
+    if (handler == nil) {
+        handler = [self.layerConfiguration.injector handlerOfMessageActionWithEvent:action.event
+                                                                     forMessageType:nil];
+    }
+    return [handler viewControllerForActionWithData:action.data];
+}
+
 #pragma mark - LYRUIActionHandlingDelegate
 
 - (void)actionHandler:(id<LYRUIActionHandling>)actionHandler sendMessage:(LYRUIMessageType *)messageType {
@@ -164,6 +178,36 @@
 
 - (void)actionHandler:(id<LYRUIActionHandling>)actionHandler presentViewController:(UIViewController *)viewController {
     [self.presentationViewController presentViewController:viewController animated:YES completion:nil];
+}
+
+#pragma mark - UIViewControllerPreviewingDelegate
+
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    [self.presentationViewController presentViewController:viewControllerToCommit animated:YES completion:nil];
+}
+
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    UIView *touchedView = [self hitTest:location withEvent:nil];
+    UIViewController *(^previewHandler)(void) = [self actionPreviewHandlerForView:touchedView];
+    UIViewController *previewController;
+    if (previewHandler) {
+        previewController = previewHandler();
+    }
+    return previewController;
+}
+
+- (UIViewController *(^)(void))actionPreviewHandlerForView:(UIView *)view {
+    if (view == nil) {
+        return nil;
+    }
+    if (![view conformsToProtocol:@protocol(LYRUIViewWithAction)]) {
+        return [self actionPreviewHandlerForView:view.superview];
+    }
+    id<LYRUIViewWithAction> viewWithAction = (id<LYRUIViewWithAction>)view;
+    if (viewWithAction.actionPreviewHandler == nil) {
+        return [self actionPreviewHandlerForView:view.superview];
+    }
+    return viewWithAction.actionPreviewHandler;
 }
 
 @end

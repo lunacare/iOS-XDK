@@ -21,10 +21,11 @@
 #import <UIKit/UIKit.h>
 #import "LYRUIConfigurable.h"
 #import "LYRUIViewWithLayout.h"
+#import "LYRUIViewWithAction.h"
 @class LYRUIMessageItemView;
 
 NS_ASSUME_NONNULL_BEGIN     // {
-@protocol LYRUIMessageItemView <NSObject>
+@protocol LYRUIMessageItemView <LYRUIViewWithAction>
 
 @property (nonatomic, weak, readonly) UITapGestureRecognizer *tapGestureRecognizer;
 
@@ -35,8 +36,6 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @property (nonatomic, copy) NSString *messageId;
 
 @property(nonatomic, strong) UIColor *contentViewColor;
-
-@property (nonatomic, copy) void(^actionHandler)(void);
 
 @end
 

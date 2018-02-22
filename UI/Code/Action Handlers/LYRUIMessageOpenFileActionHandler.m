@@ -40,14 +40,22 @@
 }
 
 - (void)handleActionWithData:(NSDictionary *)data delegate:(id<LYRUIActionHandlingDelegate>)delegate {
+    UIViewController *viewController = [self viewControllerForActionWithData:data];
+    if (viewController) {
+        [delegate actionHandler:self presentViewController:viewController];
+    }
+}
+
+- (UIViewController *)viewControllerForActionWithData:(NSDictionary *)data {
     if (data == nil || data[@"url"] == nil) {
-        return;
+        return nil;
     }
     NSURL *fileURL = [NSURL fileURLWithPath:data[@"url"]];
     if ([QLPreviewController canPreviewItem:fileURL]) {
         UIViewController *viewController = [[LYRUIFilePreviewController alloc] initWithPreviewItem:fileURL];
-        [delegate actionHandler:self presentViewController:viewController];
+        return viewController;
     }
+    return nil;
 }
 
 @end

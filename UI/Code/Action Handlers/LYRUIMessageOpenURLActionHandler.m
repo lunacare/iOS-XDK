@@ -25,12 +25,19 @@
 @implementation LYRUIMessageOpenURLActionHandler
 
 - (void)handleActionWithData:(NSDictionary *)data delegate:(id<LYRUIActionHandlingDelegate>)delegate {
+    UIViewController *viewController = [self viewControllerForActionWithData:data];
+    if (viewController) {
+        [delegate actionHandler:self presentViewController:viewController];
+    }
+}
+
+- (UIViewController *)viewControllerForActionWithData:(NSDictionary *)data {
     if (data == nil || data[@"url"] == nil) {
-        return;
+        return nil;
     }
     NSURL *linkURL = [NSURL URLWithString:data[@"url"]];
     UIViewController *viewController = [[SFSafariViewController alloc] initWithURL:linkURL];
-    [delegate actionHandler:self presentViewController:viewController];
+    return viewController;
 }
 
 @end

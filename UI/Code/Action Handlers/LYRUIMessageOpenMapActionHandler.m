@@ -37,8 +37,15 @@
 }
 
 - (void)handleActionWithData:(NSDictionary *)data delegate:(id<LYRUIActionHandlingDelegate>)delegate {
+    UIViewController *viewController = [self viewControllerForActionWithData:data];
+    if (viewController) {
+        [delegate actionHandler:self presentViewController:viewController];
+    }
+}
+
+- (UIViewController *)viewControllerForActionWithData:(NSDictionary *)data {
     if (data == nil || data[@"latitude"] == nil || data[@"longitude"] == nil) {
-        return;
+        return nil;
     }
     CGFloat latitude = [data[@"latitude"] doubleValue];
     CGFloat longitude = [data[@"longitude"] doubleValue];
@@ -47,7 +54,8 @@
     LYRUILocationPreviewViewController *previewController = [[LYRUILocationPreviewViewController alloc] init];
     [previewController showCoordinate:coordinate];
     UINavigationController *navigationViewController = [[UINavigationController alloc] initWithRootViewController:previewController];
-    [delegate actionHandler:self presentViewController:navigationViewController];
+    
+    return navigationViewController;
 }
 
 @end

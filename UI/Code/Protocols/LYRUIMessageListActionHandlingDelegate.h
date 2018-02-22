@@ -32,5 +32,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
  */
 - (void)handleAction:(LYRUIMessageAction *)action withHandler:(nullable id<LYRUIActionHandling>)handler;
 
+- (nullable UIViewController *)previewControllerForAction:(LYRUIMessageAction *)action withHandler:(nullable id<LYRUIActionHandling>)handler;
+
 @end
 NS_ASSUME_NONNULL_END       // }
