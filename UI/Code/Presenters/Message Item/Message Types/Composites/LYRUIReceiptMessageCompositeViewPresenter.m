@@ -19,6 +19,7 @@
 //
 
 #import "LYRUIReceiptMessageCompositeViewPresenter.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 #import "LYRUIReceiptMessage.h"
 #import "LYRUIReceiptSummary.h"
 #import "LYRUIReceiptMessageCompositeView.h"
@@ -29,10 +30,12 @@
 #import "LYRUIChoiceMessage.h"
 #import "LYRUIReusableViewsQueue.h"
 #import "LYRUIReceiptProductView.h"
+#import "LYRUIImageCreating.h"
 
 @interface LYRUIReceiptMessageCompositeViewPresenter ()
 
 @property (nonatomic, strong) LYRUIReceiptMessageCompositeView *sizingReceiptView;
+@property (nonatomic, strong) id<LYRUIImageCreating> imageFactory;
 
 @end
 
@@ -46,14 +49,26 @@
     return self;
 }
 
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    [super setLayerConfiguration:layerConfiguration];
+    self.imageFactory = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIImageCreating)
+                                                                   forClass:[self class]];
+}
+
 - (UIView *)viewForMessage:(LYRUIReceiptMessage *)message {
     LYRUIReceiptMessageCompositeView *receiptCompositeView = [self.reusableViewsQueue dequeueReusableViewOfType:[LYRUIReceiptMessageCompositeView class]];
     if (receiptCompositeView == nil) {
         receiptCompositeView = [[LYRUIReceiptMessageCompositeView alloc] init];
     }
+    
+    [self setupIconInReceiptView:receiptCompositeView];
     [self setupLabelsInReceiptView:receiptCompositeView withMessage:message];
     [self setupProductsInReceiptView:receiptCompositeView withMessage:message];
     return receiptCompositeView;
+}
+
+- (void)setupIconInReceiptView:(LYRUIReceiptMessageCompositeView *)receiptView {
+    receiptView.iconView.image = [self.imageFactory imageNamed:@"Receipt"];
 }
 
 - (void)setupLabelsInReceiptView:(LYRUIReceiptMessageCompositeView *)receiptView

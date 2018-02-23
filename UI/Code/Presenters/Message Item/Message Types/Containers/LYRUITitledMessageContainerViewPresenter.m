@@ -63,6 +63,7 @@
 
 - (void)setupStandardMessageContainerView:(LYRUITitledMessageContainerView *)view
                               withMessage:(LYRUIMessageType *)message {
+    view.icon.image = self.iconImage;
     LYRUIMessageMetadata *metadata = message.metadata;
     view.titleLabel.text = metadata.title;
     [view setNeedsUpdateConstraints];

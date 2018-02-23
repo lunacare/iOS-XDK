@@ -84,12 +84,12 @@
     [constraints addObject:[view.titleContainer.topAnchor constraintEqualToAnchor:view.topAnchor]];
     
     [constraints addObject:[view.icon.leftAnchor constraintEqualToAnchor:view.titleContainer.leftAnchor constant:12.0]];
-    [constraints addObject:[view.icon.topAnchor constraintGreaterThanOrEqualToAnchor:view.titleContainer.topAnchor constant:12.0]];
-    [constraints addObject:[view.icon.bottomAnchor constraintLessThanOrEqualToAnchor:view.titleContainer.bottomAnchor constant:-12.0]];
-    [constraints addObject:[view.icon.widthAnchor constraintEqualToConstant:16.0]];
-    [constraints addObject:[view.icon.heightAnchor constraintEqualToConstant:16.0]];
+    [constraints addObject:[view.icon.topAnchor constraintGreaterThanOrEqualToAnchor:view.titleContainer.topAnchor constant:8.0]];
+    [constraints addObject:[view.icon.bottomAnchor constraintLessThanOrEqualToAnchor:view.titleContainer.bottomAnchor constant:-8.0]];
+    [constraints addObject:[view.icon.widthAnchor constraintEqualToConstant:24.0]];
+    [constraints addObject:[view.icon.heightAnchor constraintEqualToConstant:24.0]];
     
-    [constraints addObject:[view.titleLabel.leftAnchor constraintEqualToAnchor:view.icon.rightAnchor constant:12.0]];
+    [constraints addObject:[view.titleLabel.leftAnchor constraintEqualToAnchor:view.icon.rightAnchor constant:8.0]];
     [constraints addObject:[view.titleLabel.topAnchor constraintEqualToAnchor:view.titleContainer.topAnchor constant:12.0]];
     [constraints addObject:[view.titleLabel.rightAnchor constraintEqualToAnchor:view.titleContainer.rightAnchor constant:-12.0]];
     [constraints addObject:[view.titleLabel.bottomAnchor constraintEqualToAnchor:view.titleContainer.bottomAnchor constant:-12.0]];
