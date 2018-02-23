@@ -26,7 +26,6 @@
 #import "LYRUIFileMessage.h"
 #import "LYRUIReusableViewsQueue.h"
 
-static CGFloat const LYRUIFileMessageContentViewWidth = 66.0;
 static CGFloat const LYRUIFileMessageContentViewHeight = 104.0;
 
 static NSString *const LYRUIFileMessageZipIcon = @"FileIconZIP";
@@ -72,7 +71,6 @@ static NSString *const LYRUIFileMIMETypeIWork = @"application/x-iwork";
         imageView.translatesAutoresizingMaskIntoConstraints = NO;
     }
     
-    [self setupImageView:imageView withMessage:message];
     [self setupViewConstraints:imageView];
     [self setupImageView:imageView withMessage:message];
     
@@ -109,9 +107,8 @@ static NSString *const LYRUIFileMIMETypeIWork = @"application/x-iwork";
 }
 
 - (void)setupViewConstraints:(UIView *)view {
-    [NSLayoutConstraint deactivateConstraints:view.constraints];
+    [super setupViewConstraints:view];
     [view.heightAnchor constraintGreaterThanOrEqualToConstant:LYRUIFileMessageContentViewHeight].active = YES;
-    [view.widthAnchor constraintGreaterThanOrEqualToConstant:LYRUIFileMessageContentViewWidth].active = YES;
 }
 
 - (CGFloat)viewHeightForMessage:(LYRUIMessageType *)message minWidth:(CGFloat)minWidth maxWidth:(CGFloat)maxWidth {
