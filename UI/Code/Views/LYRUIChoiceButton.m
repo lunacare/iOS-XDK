@@ -41,6 +41,8 @@
         self.titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
         self.backgroundColor = [UIColor whiteColor];
         self.titleLabel.font = [UIFont systemFontOfSize:16.0];
+        self.titleLabel.numberOfLines = 0;
+        self.titleLabel.textAlignment = NSTextAlignmentCenter;
     }
     return self;
 }
