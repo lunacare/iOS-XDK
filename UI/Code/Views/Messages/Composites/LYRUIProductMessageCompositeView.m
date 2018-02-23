@@ -22,6 +22,8 @@
 #import "LYRUIProductMessage.h"
 #import "LYRUIProductOptionView.h"
 
+static CGFloat const LYRUIProductMessageCompositeViewMinWidth = 292.0;
+
 @interface LYRUIProductMessageCompositeView ()
 
 @property (nonatomic, readwrite, weak) UIImageView *imageView;
@@ -123,13 +125,14 @@
 - (void)addConstraints {
     self.translatesAutoresizingMaskIntoConstraints = NO;
     
+    [self.widthAnchor constraintGreaterThanOrEqualToConstant:LYRUIProductMessageCompositeViewMinWidth].active = YES;
+    
     [self.imageView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
     [self.imageView.leftAnchor constraintEqualToAnchor:self.leftAnchor].active = YES;
     [self.imageView.rightAnchor constraintEqualToAnchor:self.rightAnchor].active = YES;
     [self.containerView.topAnchor constraintEqualToAnchor:self.imageView.bottomAnchor].active = YES;
     [self.containerView.leftAnchor constraintEqualToAnchor:self.leftAnchor].active = YES;
     [self.containerView.rightAnchor constraintEqualToAnchor:self.rightAnchor].active = YES;
-//    [self.containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
     
     [self.containerView.bottomAnchor constraintLessThanOrEqualToAnchor:self.bottomAnchor].active = YES;
     [self.imageView.heightAnchor constraintEqualToConstant:236.0].active = YES;
