@@ -127,7 +127,6 @@ static CGFloat const LYRUIMessageItemViewContentDefaultBorderWidth = 1.0;
     }
     if (contentView != nil) {
         [self.contentViewContainer addSubview:contentView];
-        contentView.backgroundColor = self.contentViewContainer.backgroundColor;
     }
     _contentView = contentView;
     [self setNeedsUpdateConstraints];
