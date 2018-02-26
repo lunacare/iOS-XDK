@@ -122,6 +122,7 @@
 #import <LayerXDK/LYRUICarouselMessageListViewPresenter.h>
 #import <LayerXDK/LYRUICarouselContentOffsetHandler.h>
 #import <LayerXDK/LYRUICarouselContentOffsetsCache.h>
+#import <LayerXDK/LYRUIMessageListViewPreviewingDelegate.h>
 
 SpecBegin(LYRUIDependencyInjector)
 
@@ -681,6 +682,19 @@ describe(@"LYRUIDependencyInjector", ^{
             
             it(@"should return object of `LYRUICarouselContentOffsetHandler` type", ^{
                 expect(returnedObject).to.beAKindOf([LYRUICarouselContentOffsetHandler class]);
+            });
+        });
+        
+        context(@"of UIViewControllerPreviewingDelegate", ^{
+            __block id returnedObject;
+            
+            beforeEach(^{
+                returnedObject = [injector protocolImplementation:@protocol(UIViewControllerPreviewingDelegate)
+                                                         forClass:[NSObject class]];
+            });
+            
+            it(@"should return object of `LYRUIMessageListViewPreviewingDelegate` type", ^{
+                expect(returnedObject).to.beAKindOf([LYRUIMessageListViewPreviewingDelegate class]);
             });
         });
     });
