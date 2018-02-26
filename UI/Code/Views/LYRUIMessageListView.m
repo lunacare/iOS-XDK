@@ -31,14 +31,15 @@
 #import "LYRUIMessageAction.h"
 #import "LYRUIMessageSender.h"
 #import "LYRUIActionHandling.h"
-#import "LYRUIViewWithAction.h"
+#import "LYRUIMessageListViewPreviewingDelegate.h"
 
-@interface LYRUIMessageListView () <LYRUIActionHandlingDelegate, UIViewControllerPreviewingDelegate>
+@interface LYRUIMessageListView () <LYRUIActionHandlingDelegate>
 
 @property (nonatomic, strong) LYRUIMessageListQueryControllerDelegate *queryControllerDelegate;
 @property (nonatomic, strong) LYRUIMessageListPaginationController *paginationController;
 @property (nonatomic, strong, readwrite) LYRUIMessageSender *messageSender;
 @property (nonatomic, weak) UIViewController *presentationViewController;
+@property (nonatomic, strong) LYRUIMessageListViewPreviewingDelegate *previewingDelegate;
 
 @end
 
@@ -49,6 +50,8 @@
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     [super setLayerConfiguration:layerConfiguration];
     self.messageSender = [layerConfiguration.injector objectOfType:[LYRUIMessageSender class]];
+    self.previewingDelegate = [layerConfiguration.injector protocolImplementation:@protocol(UIViewControllerPreviewingDelegate)
+                                                                         forClass:[self class]];
 }
 
 - (void)dealloc {
@@ -73,7 +76,7 @@
 
 - (void)registerViewControllerForPreviewing:(UIViewController *)viewController {
     self.presentationViewController = viewController;
-    [viewController registerForPreviewingWithDelegate:self sourceView:self];
+    [self.previewingDelegate registerViewControllerForPreviewing:viewController withSourceView:self];
 }
 
 - (void)setPageSize:(NSUInteger)pageSize {
@@ -152,8 +155,7 @@
     }
     
     if (handler == nil) {
-        handler = [self.layerConfiguration.injector handlerOfMessageActionWithEvent:action.event
-                                                                     forMessageType:nil];
+        handler = [self handlerForAction:action];
     }
     [handler handleActionWithData:action.data delegate:self];
 }
@@ -164,10 +166,14 @@
     }
     
     if (handler == nil) {
-        handler = [self.layerConfiguration.injector handlerOfMessageActionWithEvent:action.event
-                                                                     forMessageType:nil];
+        handler = [self handlerForAction:action];
     }
     return [handler viewControllerForActionWithData:action.data];
+}
+
+- (id<LYRUIActionHandling>)handlerForAction:(LYRUIMessageAction *)action {
+    return [self.layerConfiguration.injector handlerOfMessageActionWithEvent:action.event
+                                                              forMessageType:nil];
 }
 
 #pragma mark - LYRUIActionHandlingDelegate
@@ -178,36 +184,6 @@
 
 - (void)actionHandler:(id<LYRUIActionHandling>)actionHandler presentViewController:(UIViewController *)viewController {
     [self.presentationViewController presentViewController:viewController animated:YES completion:nil];
-}
-
-#pragma mark - UIViewControllerPreviewingDelegate
-
-- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
-    [self.presentationViewController presentViewController:viewControllerToCommit animated:YES completion:nil];
-}
-
-- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
-    UIView *touchedView = [self hitTest:location withEvent:nil];
-    UIViewController *(^previewHandler)(void) = [self actionPreviewHandlerForView:touchedView];
-    UIViewController *previewController;
-    if (previewHandler) {
-        previewController = previewHandler();
-    }
-    return previewController;
-}
-
-- (UIViewController *(^)(void))actionPreviewHandlerForView:(UIView *)view {
-    if (view == nil) {
-        return nil;
-    }
-    if (![view conformsToProtocol:@protocol(LYRUIViewWithAction)]) {
-        return [self actionPreviewHandlerForView:view.superview];
-    }
-    id<LYRUIViewWithAction> viewWithAction = (id<LYRUIViewWithAction>)view;
-    if (viewWithAction.actionPreviewHandler == nil) {
-        return [self actionPreviewHandlerForView:view.superview];
-    }
-    return viewWithAction.actionPreviewHandler;
 }
 
 @end
