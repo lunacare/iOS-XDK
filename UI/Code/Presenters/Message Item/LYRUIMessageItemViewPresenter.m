@@ -80,6 +80,9 @@ static CGFloat const LYRUIMessageItemViewMinimumHeight = 32.0;
     messageItemView.actionHandler = ^{
         [weakSelf.actionHandlingDelegate handleAction:action withHandler:nil];
     };
+    messageItemView.actionPreviewHandler = ^ UIViewController *{
+        return [weakSelf.actionHandlingDelegate previewControllerForAction:action withHandler:nil];
+    };
     messageItemView.tapGestureRecognizer.delegate = self;
 }
 

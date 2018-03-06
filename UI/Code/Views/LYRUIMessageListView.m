@@ -31,6 +31,7 @@
 #import "LYRUIMessageAction.h"
 #import "LYRUIMessageSender.h"
 #import "LYRUIActionHandling.h"
+#import "LYRUIMessageListViewPreviewingDelegate.h"
 
 @interface LYRUIMessageListView () <LYRUIActionHandlingDelegate>
 
@@ -38,6 +39,7 @@
 @property (nonatomic, strong) LYRUIMessageListPaginationController *paginationController;
 @property (nonatomic, strong, readwrite) LYRUIMessageSender *messageSender;
 @property (nonatomic, weak) UIViewController *presentationViewController;
+@property (nonatomic, strong) LYRUIMessageListViewPreviewingDelegate *previewingDelegate;
 
 @end
 
@@ -48,6 +50,8 @@
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     [super setLayerConfiguration:layerConfiguration];
     self.messageSender = [layerConfiguration.injector objectOfType:[LYRUIMessageSender class]];
+    self.previewingDelegate = [layerConfiguration.injector protocolImplementation:@protocol(UIViewControllerPreviewingDelegate)
+                                                                         forClass:[self class]];
 }
 
 - (void)dealloc {
@@ -72,6 +76,7 @@
 
 - (void)registerViewControllerForPreviewing:(UIViewController *)viewController {
     self.presentationViewController = viewController;
+    [self.previewingDelegate registerViewControllerForPreviewing:viewController withSourceView:self];
 }
 
 - (void)setPageSize:(NSUInteger)pageSize {
@@ -150,10 +155,25 @@
     }
     
     if (handler == nil) {
-        handler = [self.layerConfiguration.injector handlerOfMessageActionWithEvent:action.event
-                                                                     forMessageType:nil];
+        handler = [self handlerForAction:action];
     }
     [handler handleActionWithData:action.data delegate:self];
+}
+
+- (UIViewController *)previewControllerForAction:(LYRUIMessageAction *)action withHandler:(id<LYRUIActionHandling>)handler {
+    if (self.messageActionHandlingDelegate) {
+        return [self.messageActionHandlingDelegate previewControllerForAction:action withHandler:handler];
+    }
+    
+    if (handler == nil) {
+        handler = [self handlerForAction:action];
+    }
+    return [handler viewControllerForActionWithData:action.data];
+}
+
+- (id<LYRUIActionHandling>)handlerForAction:(LYRUIMessageAction *)action {
+    return [self.layerConfiguration.injector handlerOfMessageActionWithEvent:action.event
+                                                              forMessageType:nil];
 }
 
 #pragma mark - LYRUIActionHandlingDelegate

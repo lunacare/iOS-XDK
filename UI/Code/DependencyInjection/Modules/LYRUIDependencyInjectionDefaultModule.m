@@ -137,6 +137,7 @@
 #import "LYRUICarouselMessageListViewPresenter.h"
 #import "LYRUICarouselContentOffsetHandler.h"
 #import "LYRUICarouselContentOffsetsCache.h"
+#import "LYRUIMessageListViewPreviewingDelegate.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -247,6 +248,8 @@
                      forProtocol:@protocol(LYRUIMessageItemAccessoryViewProviding)];
     [self setImplementationClass:[LYRUICarouselContentOffsetHandler class]
                      forProtocol:@protocol(LYRUICarouselContentOffsetHandling)];
+    [self setImplementationClass:[LYRUIMessageListViewPreviewingDelegate class]
+                     forProtocol:@protocol(UIViewControllerPreviewingDelegate)];
     
     [self setImplementationClass:[LYRUITimeAgoFormatter class]
                      forProtocol:@protocol(LYRUITimeFormatting)

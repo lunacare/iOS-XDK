@@ -34,4 +34,8 @@
     [delegate actionHandler:self sendMessage:responseMessage];
 }
 
+- (UIViewController *)viewControllerForActionWithData:(NSDictionary *)data {
+    return nil;
+}
+
 @end

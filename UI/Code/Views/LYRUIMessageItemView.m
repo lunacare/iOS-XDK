@@ -43,7 +43,8 @@ static CGFloat const LYRUIMessageItemViewContentDefaultBorderWidth = 1.0;
             layerConfiguration = _layerConfiguration,
             messageId = _messageId,
             contentViewColor = _contentViewColor,
-            actionHandler = _actionHandler;
+            actionHandler = _actionHandler,
+            actionPreviewHandler = _actionPreviewHandler;
 @dynamic layout;
 
 - (instancetype)initWithFrame:(CGRect)frame {
