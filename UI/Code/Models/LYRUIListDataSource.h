@@ -70,6 +70,8 @@ NS_ASSUME_NONNULL_BEGIN     // {
  */
 @interface LYRUIListDataSource : NSObject <LYRUIListDataSource>
 
+@property (nonatomic, strong) id<LYRUIListCellPresenting> defaultCellPresenter;
+
 /**
  @abstract A method for registering objects conforming to `LYRUIListCellPresenting` protocol that will be used to setup cells in the list view.
  */

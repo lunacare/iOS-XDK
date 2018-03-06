@@ -19,6 +19,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LYRUICustomMessageTypeRegistering.h"
 @class LYRUIConfiguration;
 @protocol LYRUIDependencyInjection;
 @protocol LYRUIBaseItemViewTheme;
@@ -31,7 +32,7 @@
 NS_ASSUME_NONNULL_BEGIN     // {
 typedef id _Nonnull(^LYRUIDependencyProviding)(LYRUIConfiguration *);
 
-@protocol LYRUIDependencyInjection <NSObject>
+@protocol LYRUIDependencyInjection <NSObject, LYRUICustomMessageTypeRegistering>
 
 @property (nonatomic, weak) LYRUIConfiguration *layerConfiguration;
 

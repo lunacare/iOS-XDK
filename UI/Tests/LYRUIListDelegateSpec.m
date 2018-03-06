@@ -67,15 +67,37 @@ describe(@"LYRUIListDelegate", ^{
         });
         
         context(@"when there is no size calculation registered for item type", ^{
-            beforeEach(^{
-                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-                returnedSize = [delegate collectionView:collectionViewMock
-                                                 layout:layoutMock
-                                 sizeForItemAtIndexPath:indexPath];
+            context(@"and there's no default size calculation set", ^{
+                beforeEach(^{
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+                    returnedSize = [delegate collectionView:collectionViewMock
+                                                     layout:layoutMock
+                                     sizeForItemAtIndexPath:indexPath];
+                });
+                
+                it(@"should return size zero", ^{
+                    expect(returnedSize).to.equal(CGSizeZero);
+                });
             });
             
-            it(@"should return size zero", ^{
-                expect(returnedSize).to.equal(CGSizeZero);
+            context(@"and default size calculation is set", ^{
+                __block id<LYRUIListCellSizeCalculating> cellSizeCalculationMock;
+                
+                beforeEach(^{
+                    cellSizeCalculationMock = mockProtocol(@protocol(LYRUIListCellSizeCalculating));
+                    CGSize cellSize = CGSizeMake(300, 50);
+                    [given([cellSizeCalculationMock cellSizeInCollectionView:collectionViewMock forItemAtIndexPath:indexPath])
+                     willReturnStruct:&cellSize objCType:@encode(CGSize)];
+                    delegate.defaultCellSizeCalculation = cellSizeCalculationMock;
+                    
+                    returnedSize = [delegate collectionView:collectionViewMock
+                                                     layout:layoutMock
+                                     sizeForItemAtIndexPath:indexPath];
+                });
+                
+                it(@"should return size provided by cell size calculation", ^{
+                    expect(returnedSize).to.equal(CGSizeMake(300, 50));
+                });
             });
         });
     });

@@ -133,22 +133,12 @@
 #import "LYRUICarouselMessageSerializer.h"
 #import "LYRUICarouselMessageCompositeViewPresenter.h"
 #import "LYRUICarouselMessageListView.h"
+#import "LYRUICarouselMessageListLayout.h"
 #import "LYRUICarouselMessageListViewPresenter.h"
 #import "LYRUICarouselContentOffsetHandler.h"
 #import "LYRUICarouselContentOffsetsCache.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
-
-@property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultThemes;
-@property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultAlternativeThemes;
-@property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultPresenters;
-@property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultLayouts;
-@property (nonatomic, readwrite) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, LYRUIDependencyProviding> *> *defaultProtocolImplementations;
-@property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultObjects;
-@property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultMessagePresenters;
-@property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultMessageContainerPresenters;
-@property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *defaultMessageSerializers;
-@property (nonatomic, readwrite) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, LYRUIDependencyProviding> *> *defaultActionHandlers;
 
 @property (nonatomic, strong) id<LYRUIImageCaching> imagesCache;
 @property (nonatomic, strong) id<LYRUIThumbnailsCaching> thumbnailsCache;
@@ -186,8 +176,6 @@
 #pragma mark - Setup
 
 - (void)setupThemes {
-    self.defaultThemes = [[NSMutableDictionary alloc] init];
-    
     [self setThemeClass:[LYRUIPresenceViewDefaultTheme class] forViewClass:[LYRUIPresenceView class]];
     [self setThemeClass:[LYRUIAvatarViewDefaultTheme class] forViewClass:[LYRUIAvatarView class]];
     [self setThemeClass:[LYRUIBaseItemViewDefaultTheme class] forViewClass:[LYRUIConversationItemView class]];
@@ -196,43 +184,28 @@
 }
 
 - (void)setupAlternativeThemes {
-    self.defaultAlternativeThemes = [[NSMutableDictionary alloc] init];
-    
     [self setAlternativeThemeClass:[LYRUIConversationItemViewUnreadTheme class] forViewClass:[LYRUIConversationItemView class]];
 }
 
 - (void)setupPresenters {
-    self.defaultPresenters = [[NSMutableDictionary alloc] init];
-    
     [self setPresenterClass:[LYRUIPresenceViewPresenter class] forViewClass:[LYRUIPresenceView class]];
     [self setPresenterClass:[LYRUIAvatarViewPresenter class] forViewClass:[LYRUIAvatarView class]];
     [self setPresenterClass:[LYRUIImageWithLettersViewPresenter class] forViewClass:[LYRUIImageWithLettersView class]];
     [self setPresenterClass:[LYRUIConversationItemViewPresenter class] forViewClass:[LYRUIConversationItemView class]];
     [self setPresenterClass:[LYRUIListCellPresenter class] forViewClass:[UICollectionViewCell class]];
-    self.defaultPresenters[NSStringFromClass([LYRUIListHeaderView class])] = ^id (LYRUIConfiguration *configuration) {
+    [self setPresenterProvider:^id (LYRUIConfiguration *configuration) {
         return [LYRUIListSupplementaryViewPresenter headerPresenter];
-    };
+    } forViewClass:[LYRUIListHeaderView class]];
     [self setPresenterClass:[LYRUIConversationListViewPresenter class] forViewClass:[LYRUIConversationListView class]];
     [self setPresenterClass:[LYRUIIdentityItemViewPresenter class] forViewClass:[LYRUIIdentityItemView class]];
     [self setPresenterClass:[LYRUIIdentityListViewPresenter class] forViewClass:[LYRUIIdentityListView class]];
     [self setPresenterClass:[LYRUIComposeBarPresenter class] forViewClass:[LYRUIComposeBar class]];
     [self setPresenterClass:[LYRUIMessageItemViewPresenter class] forViewClass:[LYRUIMessageItemView class]];
-    [self setPresenterClass:[LYRUIMessageCellPresenter class] forViewClass:[LYRUIMessageCollectionViewCell class]];
-    [self setPresenterClass:[LYRUIMessageListTimeSupplementaryViewPresenter class] forViewClass:[LYRUIMessageListMessageTimeView class]];
-    [self setPresenterClass:[LYRUIMessageListStatusSupplementaryViewPresenter class] forViewClass:[LYRUIMessageListMessageStatusView class]];
-    self.defaultPresenters[NSStringFromClass([LYRUIListLoadingIndicatorView class])] = ^id (LYRUIConfiguration *configuration) {
-        return [LYRUIListLoadingIndicatorPresenter loadingOldItemsIndicatorPresenter];
-    };
     [self setPresenterClass:[LYRUIMessageListViewPresenter class] forViewClass:[LYRUIMessageListView class]];
-    [self setPresenterClass:[LYRUITypingIndicatorFooterPresenter class] forViewClass:[LYRUIPanelTypingIndicatorView class]];
-    [self setPresenterClass:[LYRUITypingIndicatorCellPresenter class] forViewClass:[LYRUIBubbleTypingIndicatorCollectionViewCell class]];
-    [self setPresenterClass:[LYRUIStatusCellPresenter class] forViewClass:[LYRUIStatusMessageCollectionViewCell class]];
     [self setPresenterClass:[LYRUICarouselMessageListViewPresenter class] forViewClass:[LYRUICarouselMessageListView class]];
 }
 
 - (void)setupLayouts {
-    self.defaultLayouts = [[NSMutableDictionary alloc] init];
-
     [self setLayoutClass:[LYRUIListLayout class] forViewClass:[LYRUIConversationListView class]];
     [self setLayoutClass:[LYRUIBaseItemViewLayout class] forViewClass:[LYRUIConversationItemView class]];
     [self setLayoutClass:[LYRUIListLayout class] forViewClass:[LYRUIIdentityListView class]];
@@ -245,11 +218,10 @@
     [self setLayoutClass:[LYRUIConversationViewLayout class] forViewClass:[LYRUIConversationView class]];
     [self setLayoutClass:[LYRUIPanelTypingIndicatorViewLayout class] forViewClass:[LYRUIPanelTypingIndicatorView class]];
     [self setLayoutClass:[LYRUIStandardMessageContainerViewLayout class] forViewClass:[LYRUIStandardMessageContainerView class]];
+    [self setLayoutClass:[LYRUICarouselMessageListLayout class] forViewClass:[LYRUICarouselMessageListView class]];
 }
 
 - (void)setupProtocolImplementations {
-    self.defaultProtocolImplementations = [[NSMutableDictionary alloc] init];
-    
     [self setImplementationClass:[LYRUIAvatarViewProvider class]
                      forProtocol:@protocol(LYRUIConversationItemAccessoryViewProviding)];
     [self setImplementationClass:[LYRUIConversationItemTitleFormatter class]
@@ -285,22 +257,17 @@
 }
 
 - (void)setupImagesCaches {
-    NSString *anyClassKey = NSStringFromClass([LYRUIDIAnyClass class]);
-    NSString *imagesCachingKey = NSStringFromProtocol(@protocol(LYRUIImageCaching));
     __weak __typeof(self) weakSelf = self;
-    self.defaultProtocolImplementations[anyClassKey][imagesCachingKey] = ^id (LYRUIConfiguration *configuration) {
+    [self setImplementationProvider:^id (LYRUIConfiguration *configuration) {
         return weakSelf.imagesCache;
-    };
+    } forProtocol:@protocol(LYRUIImageCaching) usedInClass:nil];
     
-    NSString *thumbnailsCachingKey = NSStringFromProtocol(@protocol(LYRUIThumbnailsCaching));
-    self.defaultProtocolImplementations[anyClassKey][thumbnailsCachingKey] = ^id (LYRUIConfiguration *configuration) {
+    [self setImplementationProvider:^id (LYRUIConfiguration *configuration) {
         return weakSelf.thumbnailsCache;
-    };
+    } forProtocol:@protocol(LYRUIThumbnailsCaching) usedInClass:nil];
 }
 
 - (void)setupObjects {
-    self.defaultObjects = [[NSMutableDictionary alloc] init];
-    
     [self setProvider:^id (LYRUIConfiguration *configuration) {
         return [NSCalendar currentCalendar];
     } forObjectType:[NSCalendar class]];
@@ -338,13 +305,15 @@
     } forObjectType:[LYRUIReusableViewsQueue class]];
     
     [self setProvider:^id (LYRUIConfiguration *configuration) {
+        return [LYRUIListLoadingIndicatorPresenter loadingOldItemsIndicatorPresenter];
+    } forObjectType:[LYRUIListLoadingIndicatorPresenter class]];
+    
+    [self setProvider:^id (LYRUIConfiguration *configuration) {
         return weakSelf.carouselContentOffsetsCache;
     } forObjectType:[LYRUICarouselContentOffsetsCache class]];
 }
 
 - (void)setupMessagePresenters {
-    self.defaultMessagePresenters = [[NSMutableDictionary alloc] init];
-    
     [self setMessagePresenterClass:[LYRUITextMessageContentViewPresenter class] forMessageClass:[LYRUITextMessage class]];
     [self setMessagePresenterClass:[LYRUIFileMessageContentViewPresenter class] forMessageClass:[LYRUIFileMessage class]];
     [self setMessagePresenterClass:[LYRUILinkMessageContentViewPresenter class] forMessageClass:[LYRUILinkMessage class]];
@@ -358,8 +327,6 @@
 }
 
 - (void)setupMessageContainerPresenters {
-    self.defaultMessageContainerPresenters = [[NSMutableDictionary alloc] init];
-    
     [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUITextMessage class]];
     [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUIFileMessage class]];
     [self setMessageContainerPresenterClass:[LYRUILinkMessageContainerViewPresenter class] forMessageClass:[LYRUILinkMessage class]];
@@ -368,8 +335,6 @@
 }
 
 - (void)setupMessageSerializers {
-    self.defaultMessageSerializers = [[NSMutableDictionary alloc] init];
-    
     [self setMessageSerializerClass:[LYRUITextMessageSerializer class] forMIMEType:LYRUITextMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIFileMessageSerializer class] forMIMEType:LYRUIFileMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUILinkMessageSerializer class] forMIMEType:LYRUILinkMessage.MIMEType];
@@ -385,80 +350,10 @@
 }
 
 - (void)setupActionHandlers {
-    self.defaultActionHandlers = [[NSMutableDictionary alloc] init];
-    
     [self setActionHandlerClass:[LYRUIMessageOpenFileActionHandler class] forEvent:@"open-file"];
     [self setActionHandlerClass:[LYRUIMessageOpenURLActionHandler class] forEvent:@"open-url"];
     [self setActionHandlerClass:[LYRUIMessageOpenMapActionHandler class] forEvent:@"open-map"];
     [self setActionHandlerClass:[LYRUIMessageChoiceSelectedActionHandler class] forEvent:@"layer-choice-select"];
-}
-
-#pragma mark - Helpers
-
-- (LYRUIDependencyProviding)providerWithClass:(Class)objectClass {
-    return ^id (LYRUIConfiguration *configuration) {
-        if ([objectClass conformsToProtocol:@protocol(LYRUIConfigurable)]) {
-            return [[objectClass alloc] initWithConfiguration:configuration];
-        }
-        return [[objectClass alloc] init];
-    };
-}
-
-- (void)setThemeClass:(Class)themeClass forViewClass:(Class)viewClass {
-    self.defaultThemes[NSStringFromClass(viewClass)] = [self providerWithClass:themeClass];
-}
-
-- (void)setAlternativeThemeClass:(Class)themeClass forViewClass:(Class)viewClass {
-    self.defaultAlternativeThemes[NSStringFromClass(viewClass)] = [self providerWithClass:themeClass];
-}
-
-- (void)setPresenterClass:(Class)presenterClass forViewClass:(Class)viewClass {
-    self.defaultPresenters[NSStringFromClass(viewClass)] = [self providerWithClass:presenterClass];
-}
-
-- (void)setLayoutClass:(Class)layoutClass forViewClass:(Class)viewClass {
-    self.defaultLayouts[NSStringFromClass(viewClass)] = [self providerWithClass:layoutClass];
-}
-
-- (void)setImplementationClass:(Class)implementationClass forProtocol:(Protocol *)protocol {
-    [self setImplementationClass:implementationClass forProtocol:protocol usedInClass:[LYRUIDIAnyClass class]];
-}
-
-- (void)setImplementationClass:(Class)implementationClass forProtocol:(Protocol *)protocol usedInClass:(Class)usageClass {
-    NSString *usageClassKey = NSStringFromClass(usageClass);
-    NSString *protocolKey = NSStringFromProtocol(protocol);
-    if (self.defaultProtocolImplementations[usageClassKey] == nil) {
-        self.defaultProtocolImplementations[usageClassKey] = [[NSMutableDictionary alloc] init];
-    }
-    self.defaultProtocolImplementations[usageClassKey][protocolKey] = [self providerWithClass:implementationClass];
-}
-
-- (void)setProvider:(LYRUIDependencyProviding)provider forObjectType:(Class)objectType {
-    self.defaultObjects[NSStringFromClass(objectType)] = provider;
-}
-
-- (void)setMessagePresenterClass:(Class)presenterClass forMessageClass:(Class)messageClass {
-    self.defaultMessagePresenters[NSStringFromClass(messageClass)] = [self providerWithClass:presenterClass];
-}
-
-- (void)setMessageContainerPresenterClass:(Class)presenterClass forMessageClass:(Class)messageClass {
-    self.defaultMessageContainerPresenters[NSStringFromClass(messageClass)] = [self providerWithClass:presenterClass];
-}
-
-- (void)setMessageSerializerClass:(Class)serializerClass forMIMEType:(NSString *)MIMEType {
-    self.defaultMessageSerializers[MIMEType] = [self providerWithClass:serializerClass];
-}
-
-- (void)setActionHandlerClass:(Class)implementationClass forEvent:(NSString *)event {
-    [self setActionHandlerClass:implementationClass forEvent:event usedInMessageType:[LYRUIDIAnyClass class]];
-}
-
-- (void)setActionHandlerClass:(Class)implementationClass forEvent:(NSString *)event usedInMessageType:(Class)usageMessageType {
-    NSString *usageClassKey = NSStringFromClass(usageMessageType);
-    if (self.defaultActionHandlers[usageClassKey] == nil) {
-        self.defaultActionHandlers[usageClassKey] = [[NSMutableDictionary alloc] init];
-    }
-    self.defaultActionHandlers[usageClassKey][event] = [self providerWithClass:implementationClass];
 }
 
 @end

@@ -1,8 +1,8 @@
 //
-//  LYRUIMessageListViewPresenter.h
+//  LYRUIFakeTestMessageContainerPresenter.m
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 18.08.2017.
+//  Created by Łukasz Przytuła on 19.02.2018.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,16 +18,21 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-#import "LYRUIConfigurable.h"
-#import "LYRUIListViewPresenting.h"
+#import "LYRUIFakeTestMessageContainerPresenter.h"
 
-/**
- @abstract The `LYRUIMessageListViewPresenter` objects will be used for presenting a `LYRUIMessageListView` with proper layout, data source, and delegate for presenting list of `LYRIdentity` items.
- */
-@interface LYRUIMessageListViewPresenter : NSObject <LYRUIListViewPresenting, LYRUIConfigurable>
+@implementation LYRUIFakeTestMessageContainerPresenter
+@synthesize reusableViewsQueue, actionHandlingDelegate, presentersProvider;
 
-- (Class)delegateClass;
-- (Class)cellPresenterClass;
+- (UIColor *)backgroundColorForMessage:(LYRUIMessageType *)message {
+    return UIColor.whiteColor;
+}
+
+- (UIView *)viewForMessage:(LYRUIMessageType *)message {
+    return [[UIView alloc] init];
+}
+
+- (CGFloat)viewHeightForMessage:(LYRUIMessageType *)message minWidth:(CGFloat)minWidth maxWidth:(CGFloat)maxWidth {
+    return 10.0;
+}
 
 @end

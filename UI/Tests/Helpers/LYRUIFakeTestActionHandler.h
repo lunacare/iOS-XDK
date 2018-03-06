@@ -1,8 +1,8 @@
 //
-//  LYRUIDependencyInjectionDefaultModule.h
+//  LYRUIFakeTestActionHandler.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 15.12.2017.
+//  Created by Łukasz Przytuła on 19.02.2018.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,8 +18,7 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-#import "LYRUIDependencyInjectionModule.h"
+#import <LayerXDK/LYRUIActionHandling.h>
 
-@interface LYRUIDependencyInjectionDefaultModule : NSObject <LYRUIDependencyInjectionModule>
+@interface LYRUIFakeTestActionHandler : NSObject <LYRUIActionHandling>
 @end
