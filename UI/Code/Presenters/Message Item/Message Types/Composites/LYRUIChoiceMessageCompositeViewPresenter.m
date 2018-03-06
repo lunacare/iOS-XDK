@@ -29,12 +29,21 @@
 #import "LYRUIChoiceSingleReSelectionHandler.h"
 #import "LYRUIChoiceMultiSelectionHandler.h"
 #import "LYRUIChoiceSet.h"
+#import "LYRUIImageCreating.h"
 
 @implementation LYRUIChoiceMessageCompositeViewPresenter
 
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     [super setLayerConfiguration:layerConfiguration];
-    self.contentViewConfiguration = [layerConfiguration.injector objectOfType:[LYRUITitledMessageContainerViewPresenter class]];
+    
+    id<LYRUIImageCreating> imageFactory = [layerConfiguration.injector protocolImplementation:@protocol(LYRUIImageCreating)
+                                                                                     forClass:[self class]];
+    UIImage *choiceIcon = [imageFactory imageNamed:@"Choice"];
+    
+    LYRUITitledMessageContainerViewPresenter *titledContainerPresenter =
+        [layerConfiguration.injector objectOfType:[LYRUITitledMessageContainerViewPresenter class]];
+    titledContainerPresenter.iconImage = choiceIcon;
+    self.contentViewConfiguration = titledContainerPresenter;
 }
 
 - (UIView *)viewForMessage:(LYRUIChoiceMessage *)message {

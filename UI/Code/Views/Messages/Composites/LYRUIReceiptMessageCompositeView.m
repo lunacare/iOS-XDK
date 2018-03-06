@@ -20,6 +20,8 @@
 
 #import "LYRUIReceiptMessageCompositeView.h"
 
+static CGFloat const LYRUIReceiptMessageCompositeViewMinWidth = 292.0;
+
 @interface LYRUIReceiptMessageCompositeView ()
 
 @property (nonatomic, readwrite, weak) UIStackView *stackView;
@@ -211,7 +213,7 @@
 - (void)addConstraints {
     self.translatesAutoresizingMaskIntoConstraints = NO;
     
-    [self.widthAnchor constraintGreaterThanOrEqualToConstant:192.0].active = YES;
+    [self.widthAnchor constraintGreaterThanOrEqualToConstant:LYRUIReceiptMessageCompositeViewMinWidth].active = YES;
     
     [self.stackView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
     [self.stackView.rightAnchor constraintEqualToAnchor:self.rightAnchor].active = YES;

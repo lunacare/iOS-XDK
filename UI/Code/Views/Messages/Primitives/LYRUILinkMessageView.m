@@ -58,6 +58,7 @@
 - (void)addImageView {
     UIImageView *imageView = [[UIImageView alloc] init];
     imageView.translatesAutoresizingMaskIntoConstraints = NO;
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self addSubview:imageView];
     self.imageView = imageView;
 }

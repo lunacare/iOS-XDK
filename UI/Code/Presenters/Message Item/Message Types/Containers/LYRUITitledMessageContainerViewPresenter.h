@@ -25,6 +25,7 @@
 
 @interface LYRUITitledMessageContainerViewPresenter : NSObject <LYRUIMessageItemContentContainerPresenting>
 
+@property (nonatomic, strong) UIImage *iconImage;
 @property (nonatomic, strong) LYRUITitledMessageContainerView *sizingContainerView;
 
 @end

@@ -91,7 +91,6 @@
 
 - (void)addIcon {
     UIImageView *icon = [[UIImageView alloc] init];
-    icon.hidden = YES;
     icon.backgroundColor = UIColor.clearColor;
     [self.titleContainer addSubview:icon];
     self.icon = icon;
