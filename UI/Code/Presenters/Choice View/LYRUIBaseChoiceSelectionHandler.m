@@ -47,12 +47,16 @@
     return self;
 }
 
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    _layerConfiguration = layerConfiguration;
+    self.selectionsCache = [layerConfiguration.injector objectOfType:[LYRUIChoiceSelectionsCache class]];
+}
+
 - (instancetype)initWithChoiceSet:(id<LYRUIChoiceSet>)choiceSet configuration:(LYRUIConfiguration *)configuration {
     self = [self initWithConfiguration:configuration];
     if (self) {
-        self.selectionsCache = LYRUIChoiceSelectionsCache.sharedCache;
         self.choiceSet = choiceSet;
-        NSOrderedSet *cachedSelections = [self.selectionsCache selectionsForChoiceSet:choiceSet];
+        NSMutableOrderedSet *cachedSelections = [[self.selectionsCache selectionsForChoiceSet:choiceSet] mutableCopy];
         self.selectedIdentifiers = cachedSelections ?: [choiceSet.selectedChoices mutableCopy] ?: [[NSMutableOrderedSet alloc] init];
     }
     return self;

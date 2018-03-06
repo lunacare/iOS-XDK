@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
     sub.frameworks             = 'UIKit', 'CoreLocation', 'MapKit', 'MobileCoreServices', 'SafariServices', 'QuickLook'
     sub.source_files           = 'UI/Code/**/*.{h,m}'
     sub.ios.resource_bundle    = { 'LayerXDKUIResource' => 'UI/Resources/*' }
-    sub.dependency               'LayerKit', '= 1.0.0-pre1'
+    sub.dependency               'LayerKit', '= 1.0.0-pre2'
   end
 
   s.default_subspec         = 'UI'

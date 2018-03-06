@@ -49,4 +49,14 @@
     }
 }
 
+- (void)choiceWithIdentifier:(NSString *)identifier selected:(BOOL)selected {
+    if (identifier == nil) {
+        return;
+    }
+    if (selected) {
+        [self.selectedIdentifiers removeAllObjects];
+    }
+    [super choiceWithIdentifier:identifier selected:selected];
+}
+
 @end
