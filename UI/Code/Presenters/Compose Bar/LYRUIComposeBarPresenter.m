@@ -215,7 +215,7 @@
 }
 
 - (void)setText:(NSString *)text {
-    if (text == nil || text.length == 0) {
+    if (self.textView.isFirstResponder == NO && (text == nil || text.length == 0)) {
         [self showPlaceholder];
     } else {
         self.placeholderVisible = NO;
@@ -233,7 +233,7 @@
 }
 
 - (void)setAttributedText:(NSAttributedString *)attributedText {
-    if (attributedText == nil || attributedText.length == 0) {
+    if (self.textView.isFirstResponder == NO && (attributedText == nil || attributedText.length == 0)) {
         [self showPlaceholder];
     } else {
         self.placeholderVisible = NO;
