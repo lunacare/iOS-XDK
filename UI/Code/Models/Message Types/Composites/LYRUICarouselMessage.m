@@ -24,12 +24,14 @@
 @interface LYRUICarouselMessage ()
 
 @property (nonatomic, strong, readwrite) NSArray<LYRUIMessageType *> *carouselItemMessages;
+@property (nonatomic, copy, readwrite) NSString *identifier;
 
 @end
 
 @implementation LYRUICarouselMessage
 
 - (instancetype)initWithItemMessages:(NSArray<LYRUIMessageType *> *)itemMessages
+                          identifier:(nullable NSString *)identifier
                               action:(nullable LYRUIMessageAction *)action
                               sender:(nullable LYRIdentity *)sender
                               sentAt:(nullable NSDate *)sentAt
@@ -40,6 +42,7 @@
                           status:status];
     if (self) {
         self.carouselItemMessages = itemMessages;
+        self.identifier = identifier;
     }
     return self;
 }

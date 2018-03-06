@@ -24,8 +24,10 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @interface LYRUICarouselMessage : LYRUIMessageType
 
 @property (nonatomic, strong, readonly) NSArray<LYRUIMessageType *> *carouselItemMessages;
+@property (nonatomic, copy, readonly) NSString *identifier;
 
 - (instancetype)initWithItemMessages:(NSArray<LYRUIMessageType *> *)itemMessages
+                          identifier:(nullable NSString *)identifier
                               action:(nullable LYRUIMessageAction *)action
                               sender:(nullable LYRIdentity *)sender
                               sentAt:(nullable NSDate *)sentAt

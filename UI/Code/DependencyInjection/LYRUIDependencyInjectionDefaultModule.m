@@ -133,6 +133,8 @@
 #import "LYRUICarouselMessageCompositeViewPresenter.h"
 #import "LYRUICarouselMessageListView.h"
 #import "LYRUICarouselMessageListViewPresenter.h"
+#import "LYRUICarouselContentOffsetHandler.h"
+#import "LYRUICarouselContentOffsetsCache.h"
 
 @interface LYRUIDependencyInjectionDefaultModule ()
 
@@ -151,6 +153,7 @@
 @property (nonatomic, strong) id<LYRUIThumbnailsCaching> thumbnailsCache;
 @property (nonatomic, strong) LYRUIBundleProvider *bundleProvider;
 @property (nonatomic, strong) LYRUIReusableViewsQueue *reusableViewsQueue;
+@property (nonatomic, strong) LYRUICarouselContentOffsetsCache *carouselContentOffsetsCache;
 
 @end
 
@@ -163,6 +166,7 @@
         self.thumbnailsCache = [[NSCache<NSURL *, UIImage *> alloc] init];
         self.bundleProvider = [[LYRUIBundleProvider alloc] init];
         self.reusableViewsQueue = [[LYRUIReusableViewsQueue alloc] init];
+        self.carouselContentOffsetsCache = [[LYRUICarouselContentOffsetsCache alloc] init];
         
         [self setupThemes];
         [self setupAlternativeThemes];
@@ -268,6 +272,8 @@
     [self setupImagesCaches];
     [self setImplementationClass:[LYRUIAvatarViewProvider class]
                      forProtocol:@protocol(LYRUIMessageItemAccessoryViewProviding)];
+    [self setImplementationClass:[LYRUICarouselContentOffsetHandler class]
+                     forProtocol:@protocol(LYRUICarouselContentOffsetHandling)];
     
     [self setImplementationClass:[LYRUITimeAgoFormatter class]
                      forProtocol:@protocol(LYRUITimeFormatting)
@@ -329,6 +335,10 @@
     [self setProvider:^id (LYRUIConfiguration *configuration) {
         return weakSelf.reusableViewsQueue;
     } forObjectType:[LYRUIReusableViewsQueue class]];
+    
+    [self setProvider:^id (LYRUIConfiguration *configuration) {
+        return weakSelf.carouselContentOffsetsCache;
+    } forObjectType:[LYRUICarouselContentOffsetsCache class]];
 }
 
 - (void)setupMessagePresenters {

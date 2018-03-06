@@ -40,6 +40,7 @@
     }
     
     return [[LYRUICarouselMessage alloc] initWithItemMessages:itemsMessages
+                                                   identifier:messagePart.message.identifier.lastPathComponent
                                                        action:[self.actionSerializer actionFromProperties:messagePart.properties]
                                                        sender:messagePart.message.sender
                                                        sentAt:messagePart.message.sentAt

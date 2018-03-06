@@ -1,8 +1,8 @@
 //
-//  LYRUICarouselMessageListView.h
+//  LYRUICarouselContentOffsetHandler.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 04.12.2017.
+//  Created by Łukasz Przytuła on 12.02.2018.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,15 +18,9 @@
 //  limitations under the License.
 //
 
-#import "LYRUIMessageListView.h"
-#import "LYRUIViewReusing.h"
+#import <Foundation/Foundation.h>
 #import "LYRUICarouselContentOffsetHandling.h"
+#import "LYRUIConfigurable.h"
 
-@interface LYRUICarouselMessageListView : LYRUIMessageListView <LYRUIViewReusing>
-
-/**
- @abstract Content offset handler, used to store current content offset of the carousel's `collectionView` when view is reused.
- */
-@property (nonatomic, strong) id<LYRUICarouselContentOffsetHandling> contentOffsetHandler;
-
+@interface LYRUICarouselContentOffsetHandler : NSObject <LYRUICarouselContentOffsetHandling, LYRUIConfigurable>
 @end

@@ -19,11 +19,13 @@
 //
 
 #import "LYRUICarouselMessageCompositeViewPresenter.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 #import "LYRUICarouselMessageListView.h"
 #import "LYRUICarouselMessage.h"
 #import "LYRUIMessageItemContentPresentersProvider.h"
 #import "LYRUIListSection.h"
 #import "LYRUIReusableViewsQueue.h"
+#import "LYRUICarouselContentOffsetHandling.h"
 
 @implementation LYRUICarouselMessageCompositeViewPresenter
 
@@ -39,11 +41,15 @@
         carouselCompositeView = [[LYRUICarouselMessageListView alloc] init];
         carouselCompositeView.layerConfiguration = self.layerConfiguration;
     }
+    carouselCompositeView.contentOffsetHandler = [self.layerConfiguration.injector protocolImplementation:@protocol(LYRUICarouselContentOffsetHandling)
+                                                                                                 forClass:[self class]];
+    carouselCompositeView.contentOffsetHandler.messageIdentifier = message.identifier;
     carouselCompositeView.messageActionHandlingDelegate = self.actionHandlingDelegate;
     LYRUIListSection *section = [[LYRUIListSection alloc] init];
     section.items = [message.carouselItemMessages mutableCopy];
     carouselCompositeView.items = [@[section] mutableCopy];
     [carouselCompositeView.collectionView reloadData];
+    [carouselCompositeView.contentOffsetHandler restoreContentOffsetInCarousel:carouselCompositeView];
     [self setupViewConstraints:carouselCompositeView];
     return carouselCompositeView;
 }

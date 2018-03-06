@@ -25,6 +25,9 @@
 		150B19041F7E814C00EFA6D8 /* LYRUIMessageListQueryControllerDelegateSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 150B19031F7E814C00EFA6D8 /* LYRUIMessageListQueryControllerDelegateSpec.m */; };
 		150B19061F7E8F0A00EFA6D8 /* LYRUIMessageListPaginationControllerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 150B19051F7E8F0A00EFA6D8 /* LYRUIMessageListPaginationControllerSpec.m */; };
 		151684411F99332200EBA969 /* LYRUIBaseListViewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 151684401F99332200EBA969 /* LYRUIBaseListViewSpec.m */; };
+		1518DA012033289E00654309 /* LYRUICarouselContentOffsetsCacheSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 1518DA002033289E00654309 /* LYRUICarouselContentOffsetsCacheSpec.m */; };
+		1518DA03203328AC00654309 /* LYRUICarouselContentOffsetHandlerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 1518DA02203328AC00654309 /* LYRUICarouselContentOffsetHandlerSpec.m */; };
+		1518DA05203328B400654309 /* LYRUICarouselMessageListViewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 1518DA04203328B400654309 /* LYRUICarouselMessageListViewSpec.m */; };
 		152475191F3DE38700777BA3 /* LYRUIMessageItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 152475181F3DE38700777BA3 /* LYRUIMessageItemView.xib */; };
 		152515171F3084580074CE03 /* LYRUIListDataSourceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 152515161F3084580074CE03 /* LYRUIListDataSourceSpec.m */; };
 		152515191F308EC80074CE03 /* LYRUIListDelegateSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 152515181F308EC80074CE03 /* LYRUIListDelegateSpec.m */; };
@@ -98,6 +101,9 @@
 		150B19031F7E814C00EFA6D8 /* LYRUIMessageListQueryControllerDelegateSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUIMessageListQueryControllerDelegateSpec.m; sourceTree = "<group>"; };
 		150B19051F7E8F0A00EFA6D8 /* LYRUIMessageListPaginationControllerSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUIMessageListPaginationControllerSpec.m; sourceTree = "<group>"; };
 		151684401F99332200EBA969 /* LYRUIBaseListViewSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUIBaseListViewSpec.m; sourceTree = "<group>"; };
+		1518DA002033289E00654309 /* LYRUICarouselContentOffsetsCacheSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUICarouselContentOffsetsCacheSpec.m; sourceTree = "<group>"; };
+		1518DA02203328AC00654309 /* LYRUICarouselContentOffsetHandlerSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUICarouselContentOffsetHandlerSpec.m; sourceTree = "<group>"; };
+		1518DA04203328B400654309 /* LYRUICarouselMessageListViewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUICarouselMessageListViewSpec.m; sourceTree = "<group>"; };
 		152475181F3DE38700777BA3 /* LYRUIMessageItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIMessageItemView.xib; sourceTree = "<group>"; };
 		152515161F3084580074CE03 /* LYRUIListDataSourceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIListDataSourceSpec.m; sourceTree = "<group>"; };
 		152515181F308EC80074CE03 /* LYRUIListDelegateSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIListDelegateSpec.m; sourceTree = "<group>"; };
@@ -298,6 +304,7 @@
 		159A26F21F1F9ADB00BC416C /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
+				1518DA02203328AC00654309 /* LYRUICarouselContentOffsetHandlerSpec.m */,
 				15E369EB2020D43F0009D921 /* LYRUIAvatarViewPresenterSpec.m */,
 				15E369F02020D4400009D921 /* LYRUIComposeBarPresenterSpec.m */,
 				15E369E62020D43F0009D921 /* LYRUIConversationItemViewPresenterSpec.m */,
@@ -327,6 +334,7 @@
 		15C3554D1F3076E70039EEFC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1518DA002033289E00654309 /* LYRUICarouselContentOffsetsCacheSpec.m */,
 				15E369FE2020D4650009D921 /* LYRUIListQueryControllerDelegateSpec.m */,
 				152515161F3084580074CE03 /* LYRUIListDataSourceSpec.m */,
 				152515181F308EC80074CE03 /* LYRUIListDelegateSpec.m */,
@@ -460,6 +468,7 @@
 		D6C0454D1A994B3A0028E9D0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1518DA04203328B400654309 /* LYRUICarouselMessageListViewSpec.m */,
 				15E369FC2020D4530009D921 /* LYRUIBubbleTypingIndicatorView.xib */,
 				159A26F01F1F8F4000BC416C /* LYRUIShapedViewSpec.m */,
 				150373F11F1CD7E500FA6AAB /* LYRUIShapedView.xib */,
@@ -750,6 +759,7 @@
 				15E369F52020D4400009D921 /* LYRUIImageWithLettersViewPresenterSpec.m in Sources */,
 				150373EA1F17E59D00FA6AAB /* LYRUIIdentityNameFormatterSpec.m in Sources */,
 				150373F01F19017800FA6AAB /* LYRUITimeAgoFormatterSpec.m in Sources */,
+				1518DA012033289E00654309 /* LYRUICarouselContentOffsetsCacheSpec.m in Sources */,
 				1525151D1F3094680074CE03 /* LYRUIListHeaderViewSpec.m in Sources */,
 				152515271F30A8520074CE03 /* LYRUIConversationCollectionViewCellSpec.m in Sources */,
 				15E369F32020D4400009D921 /* LYRUIIdentityListViewPresenterSpec.m in Sources */,
@@ -766,6 +776,7 @@
 				15C332BF2023793D00869CD0 /* LYRUIMessageAttributesManagerSpec.m in Sources */,
 				15E369F92020D4400009D921 /* LYRUIMessageItemViewPresenterSpec.m in Sources */,
 				15E369F12020D4400009D921 /* LYRUIConversationItemViewPresenterSpec.m in Sources */,
+				1518DA03203328AC00654309 /* LYRUICarouselContentOffsetHandlerSpec.m in Sources */,
 				15C4A5791F7D49C300643F8F /* LYRUIMessageListDelegateSpec.m in Sources */,
 				157F36731F7C3163004D12C6 /* LYRUIParticipantsDefaultFilterSpec.m in Sources */,
 				1575B47A1FE9609100269488 /* LYRUIDependencyInjectorSpec.m in Sources */,
@@ -793,6 +804,7 @@
 				15CE1B101FB9DD1D00B410ED /* LYRUISendButtonSpec.m in Sources */,
 				15A4C4621F0E86FF00741D91 /* LYRUIConversationItemTitleFormatterSpec.m in Sources */,
 				15836DBE1F151C8C00FAF433 /* LYRUIBaseItemViewLayoutSpec.m in Sources */,
+				1518DA05203328B400654309 /* LYRUICarouselMessageListViewSpec.m in Sources */,
 				15A4C45A1F0E7BF500741D91 /* LYRUIMessageTimeDefaultFormatterSpec.m in Sources */,
 				1582730B1F0D09AA00F8974C /* LYRUIViewWithLayoutSpec.m in Sources */,
 				150373E11F17D86A00FA6AAB /* LYRUIIdentityItemViewSpec.m in Sources */,

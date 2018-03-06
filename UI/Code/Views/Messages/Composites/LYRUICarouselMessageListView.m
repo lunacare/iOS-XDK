@@ -25,4 +25,9 @@
 #import "LYRUICarouselListDelegate.h"
 
 @implementation LYRUICarouselMessageListView
+
+- (void)lyr_prepareForReuse {
+    [self.contentOffsetHandler storeContentOffsetFromCarousel:self];
+}
+
 @end
