@@ -122,6 +122,18 @@ describe(@"LYRUIIdentityItemViewPresenter", ^{
                 expect(accessoryView.superview).to.equal(view.accessoryViewContainer);
             });
         });
+        
+        context(@"with both arguments passed, and identity `lastSeenAt` is nil", ^{
+            beforeEach(^{
+                [given(identityMock.lastSeenAt) willReturn:nil];
+                [viewPresenter setupIdentityItemView:view
+                                        withIdentity:identityMock];
+            });
+            
+            it(@"should set the text of detailLabel to \"Not seen\"", ^{
+                expect(view.detailLabel.text).to.equal(@"Not seen");
+            });
+        });
     });
 });
 
