@@ -119,6 +119,7 @@
     [self.collectionView performBatchUpdates:^{
         [weakSelf updateCollectionViewItemsWithQueryController:queryController];
     } completion:^(BOOL finished) {
+        [weakSelf.collectionView reloadData];
         if (shouldScrollToLastMessage) {
             [weakSelf scrollToLastMessage];
         } else if (oldMessagesLoaded) {

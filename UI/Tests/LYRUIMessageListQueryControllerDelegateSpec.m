@@ -372,6 +372,10 @@ describe(@"LYRUIMessageListQueryControllerDelegate", ^{
                 void(^completion)(BOOL) = completionArgument.value;
                 completion(YES);
             });
+            
+            it(@"should reload data (workaround for reloading supplementary views content)", ^{
+                [verify(collectionViewMock) reloadData];
+            });
         });
     });
 });
