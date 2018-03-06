@@ -23,7 +23,7 @@
 
 @implementation LYRUIMessageChoiceSelectedActionHandler
 
-- (void)handleActionWithData:(id)data delegate:(id<LYRUIActionHandlingDelegate>)delegate {
+- (void)handleActionWithData:(NSDictionary *)data delegate:(id<LYRUIActionHandlingDelegate>)delegate {
     if (data == nil || data[@"text"] == nil) {
         return;
     }
