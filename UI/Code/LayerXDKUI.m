@@ -19,4 +19,4 @@
 
 #import "LayerXDKUI.h"
 
-NSString *const LYRUIVersionString = @"1.0.0-pre1";
+NSString *const LYRUIVersionString = @"1.0.0-pre2";
