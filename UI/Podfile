@@ -18,7 +18,7 @@ target 'UnitTests' do
   pod 'OCMockito'
   pod 'KIF'
   pod 'LayerXDK/UI', path: '../.'
-  pod 'LayerKit', '= 1.0.0-pre1'
+  pod 'LayerKit', '= 1.0.0-pre2'
 end
 
 # If we are building LayerKit from source then we need a post install hook to handle non-modular SQLite imports

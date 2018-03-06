@@ -19,43 +19,82 @@
 //
 
 #import "LYRUIChoiceSelectionsCache.h"
+#import "LYRUIConfiguration+DependencyInjection.h"
 #import "LYRUIChoiceSet.h"
-
-@interface LYRUIChoiceSelectionsCache ()
-
-@property (nonatomic, strong) NSMutableDictionary<NSString *, NSOrderedSet<NSString *> *> *selectionsForChoiceSets;
-
-@end
+#import <LayerKit/LayerKit.h>
 
 @implementation LYRUIChoiceSelectionsCache
+@synthesize layerConfiguration = _layerConfiguration;
 
-- (instancetype)init {
+- (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
     self = [super init];
     if (self) {
-        self.selectionsForChoiceSets = [[NSMutableDictionary alloc] init];
+        self.layerConfiguration = configuration;
     }
     return self;
 }
 
-+ (LYRUIChoiceSelectionsCache *)sharedCache {
-    static LYRUIChoiceSelectionsCache *sharedCache;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedCache = [[LYRUIChoiceSelectionsCache alloc] init];
-    });
-    return sharedCache;
-}
-
 - (void)setSelections:(NSOrderedSet<NSString *> *)choiceSelections forChoiceSet:(id<LYRUIChoiceSet>)choiceSet {
-    self.selectionsForChoiceSets[[self keyForChoiceSet:choiceSet]] = choiceSelections;
+    LYRMessage *message = [self messageWithIdentifier:choiceSet.responseMessageId];
+    
+    NSMutableDictionary *selections;
+    if (message.localData != nil) {
+        NSError *error = nil;
+        selections = [NSJSONSerialization JSONObjectWithData:message.localData
+                                                     options:(NSJSONReadingMutableLeaves | NSJSONReadingMutableContainers)
+                                                       error:&error];
+    }
+    if (selections == nil) {
+        selections = [[NSMutableDictionary alloc] init];
+    }
+    
+    NSMutableDictionary *nodeSelections = selections[choiceSet.responseNodeId];
+    if (nodeSelections == nil) {
+        nodeSelections = [[NSMutableDictionary alloc] init];
+    }
+    nodeSelections[choiceSet.responseName] = [choiceSelections array];
+    selections[choiceSet.responseNodeId] = nodeSelections;
+    
+    NSError *error = nil;
+    NSData *selectionsData = [NSJSONSerialization dataWithJSONObject:selections
+                                                             options:0
+                                                               error:&error];
+    if (error == nil && selectionsData) {
+        [message setLocalData:selectionsData error:&error];
+    }
 }
 
 - (NSOrderedSet<NSString *> *)selectionsForChoiceSet:(id<LYRUIChoiceSet>)choiceSet {
-    return self.selectionsForChoiceSets[[self keyForChoiceSet:choiceSet]];
+    LYRMessage *message = [self messageWithIdentifier:choiceSet.responseMessageId];
+    if (message.localData == nil) {
+        return nil;
+    }
+    
+    NSError *error = nil;
+    NSDictionary *selections = [NSJSONSerialization JSONObjectWithData:message.localData
+                                                               options:0
+                                                                 error:&error];
+    if (error) {
+        return nil;
+    }
+    NSArray<NSString *> *selectionsArray = selections[choiceSet.responseNodeId][choiceSet.responseName];
+    if (selectionsArray == nil) {
+        return nil;
+    }
+    return [NSOrderedSet orderedSetWithArray:selectionsArray];
 }
 
-- (NSString *)keyForChoiceSet:(id<LYRUIChoiceSet>)choiceSet {
-    return [NSString stringWithFormat:@"%@;%@;%@", choiceSet.responseMessageId, choiceSet.responseNodeId, choiceSet.responseName];
+- (LYRMessage *)messageWithIdentifier:(NSString *)identifier {
+    LYRClient *client = self.layerConfiguration.client;
+    
+    NSURL *urlIdentifier = [NSURL URLWithString:identifier];
+    
+    LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRMessage class]];
+    query.predicate = [LYRPredicate predicateWithProperty:@"identifier"
+                                        predicateOperator:LYRPredicateOperatorIsEqualTo
+                                                    value:urlIdentifier];
+    query.limit = 1;
+    return [client executeQuery:query error:nil].firstObject;
 }
 
 @end

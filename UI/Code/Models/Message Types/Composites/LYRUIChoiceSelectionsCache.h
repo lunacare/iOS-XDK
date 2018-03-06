@@ -19,11 +19,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LYRUIConfigurable.h"
 @protocol LYRUIChoiceSet;
 
-@interface LYRUIChoiceSelectionsCache : NSObject
-
-@property (nonatomic, readonly, class) LYRUIChoiceSelectionsCache *sharedCache;
+@interface LYRUIChoiceSelectionsCache : NSObject <LYRUIConfigurable>
 
 - (void)setSelections:(NSOrderedSet<NSString *> *)choiceSelections forChoiceSet:(id<LYRUIChoiceSet>)choiceSet;
 - (NSOrderedSet<NSString *> *)selectionsForChoiceSet:(id<LYRUIChoiceSet>)choiceSet;
