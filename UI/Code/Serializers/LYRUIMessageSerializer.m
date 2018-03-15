@@ -38,8 +38,20 @@
 }
 
 - (LYRUIMessageType *)typedMessageWithLayerMessage:(LYRMessage *)message {
-    id<LYRUIMessageTypeSerializing> serializer = [self.layerConfiguration.injector serializerForMessagePartMIMEType:message.rootPart.contentType];
-    LYRUIMessageType *messageType = [serializer typedMessageWithMessagePart:message.rootPart];
+    LYRMessagePart *rootPart = message.rootPart;
+    id<LYRUIMessageTypeSerializing> serializer;
+    if (rootPart != nil) {
+        serializer = [self.layerConfiguration.injector serializerForMessagePartMIMEType:rootPart.contentType];
+    } else {
+        for (LYRMessagePart *part in message.parts) {
+            serializer = [self.layerConfiguration.injector serializerForMessagePartMIMEType:part.contentType];
+            if (serializer != nil) {
+                rootPart = part;
+                break;
+            }
+        }
+    }
+    LYRUIMessageType *messageType = [serializer typedMessageWithMessagePart:rootPart];
     if (!messageType) {
         messageType = [[LYRUIMessageType alloc] initWithAction:nil sender:message.sender sentAt:message.sentAt status:nil];
     }

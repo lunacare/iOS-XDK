@@ -1158,9 +1158,59 @@ describe(@"LYRUIDependencyInjector", ^{
             });
         });
         
+        context(@"for `text/plain`", ^{
+            beforeEach(^{
+                returnedSerializer = [injector serializerForMessagePartMIMEType:@"text/plain"];
+            });
+            
+            it(@"should return `LYRUITextMessageSerializer`", ^{
+                expect(returnedSerializer).to.beAKindOf([LYRUITextMessageSerializer class]);
+            });
+        });
+        
         context(@"for `application/vnd.layer.image+json`", ^{
             beforeEach(^{
                 returnedSerializer = [injector serializerForMessagePartMIMEType:@"application/vnd.layer.image+json"];
+            });
+            
+            it(@"should return `LYRUIImageMessageSerializer`", ^{
+                expect(returnedSerializer).to.beAKindOf([LYRUIImageMessageSerializer class]);
+            });
+        });
+        
+        context(@"for `image/jpg`", ^{
+            beforeEach(^{
+                returnedSerializer = [injector serializerForMessagePartMIMEType:@"image/jpg"];
+            });
+            
+            it(@"should return `LYRUIImageMessageSerializer`", ^{
+                expect(returnedSerializer).to.beAKindOf([LYRUIImageMessageSerializer class]);
+            });
+        });
+        
+        context(@"for `image/jpeg`", ^{
+            beforeEach(^{
+                returnedSerializer = [injector serializerForMessagePartMIMEType:@"image/jpeg"];
+            });
+            
+            it(@"should return `LYRUIImageMessageSerializer`", ^{
+                expect(returnedSerializer).to.beAKindOf([LYRUIImageMessageSerializer class]);
+            });
+        });
+        
+        context(@"for `image/png`", ^{
+            beforeEach(^{
+                returnedSerializer = [injector serializerForMessagePartMIMEType:@"image/png"];
+            });
+            
+            it(@"should return `LYRUIImageMessageSerializer`", ^{
+                expect(returnedSerializer).to.beAKindOf([LYRUIImageMessageSerializer class]);
+            });
+        });
+        
+        context(@"for `image/gif`", ^{
+            beforeEach(^{
+                returnedSerializer = [injector serializerForMessagePartMIMEType:@"image/gif"];
             });
             
             it(@"should return `LYRUIImageMessageSerializer`", ^{
@@ -1188,9 +1238,29 @@ describe(@"LYRUIDependencyInjector", ^{
             });
         });
         
+        context(@"for `application/pdf`", ^{
+            beforeEach(^{
+                returnedSerializer = [injector serializerForMessagePartMIMEType:@"application/pdf"];
+            });
+            
+            it(@"should return `LYRUIFileMessageSerializer`", ^{
+                expect(returnedSerializer).to.beAKindOf([LYRUIFileMessageSerializer class]);
+            });
+        });
+        
         context(@"for `application/vnd.layer.location+json`", ^{
             beforeEach(^{
                 returnedSerializer = [injector serializerForMessagePartMIMEType:@"application/vnd.layer.location+json"];
+            });
+            
+            it(@"should return `LYRUILocationMessageSerializer`", ^{
+                expect(returnedSerializer).to.beAKindOf([LYRUILocationMessageSerializer class]);
+            });
+        });
+        
+        context(@"for `location/coordinate`", ^{
+            beforeEach(^{
+                returnedSerializer = [injector serializerForMessagePartMIMEType:@"location/coordinate"];
             });
             
             it(@"should return `LYRUILocationMessageSerializer`", ^{
