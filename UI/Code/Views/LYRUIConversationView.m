@@ -55,9 +55,8 @@
 }
 
 - (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
-    self = [super init];
+    self = [self init];
     if (self) {
-        [self lyr_commonInit];
         self.layerConfiguration = configuration;
     }
     return self;

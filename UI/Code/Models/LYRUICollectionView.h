@@ -1,8 +1,8 @@
 //
-//  UIScrollView+LYRUIAdjustedContentInset.h
+//  LYRUICollectionView.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 25.01.2018.
+//  Created by Łukasz Przytuła on 21.03.2018.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,16 +20,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIScrollView (LYRUIAdjustedContentInset)
-
-/**
- @abstract Returns `adjustedContentInset` when used on iOS 11 and nower. Otherwise returns `contentInset`.
- */
-@property (nonatomic, readonly) UIEdgeInsets lyr_adjustedContentInset;
-
-/**
- @abstract Used for storing original content inset before maintining it.
- */
-@property (nonatomic, strong) NSString *lyr_serializedOriginalContentInset;
+@interface LYRUICollectionView : UICollectionView
 
 @end

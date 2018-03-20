@@ -19,6 +19,9 @@
 //
 
 #import "UIScrollView+LYRUIAdjustedContentInset.h"
+#import "NSObject+LYRUIObjectAssociation.h"
+
+static void *LYRUICollectionViewOriginalContentInset = &LYRUICollectionViewOriginalContentInset;
 
 @implementation UIScrollView (LYRUIAdjustedContentInset)
 
@@ -40,6 +43,14 @@
     UIEdgeInsets returnValue;
     [invocation getReturnValue:&returnValue];
     return returnValue;
+}
+
+- (NSString *)lyr_serializedOriginalContentInset {
+    return [self lyr_getAssociatedPropertyWithKey:LYRUICollectionViewOriginalContentInset];
+}
+
+- (void)setLyr_serializedOriginalContentInset:(NSString *)lyr_serializedOriginalContentInset {
+    [self lyr_setAssociatedPropertyWithKey:LYRUICollectionViewOriginalContentInset object:lyr_serializedOriginalContentInset];
 }
 
 @end

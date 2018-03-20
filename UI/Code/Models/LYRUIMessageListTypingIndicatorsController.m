@@ -51,7 +51,7 @@
 }
 
 - (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
-    self = [super init];
+    self = [self init];
     if (self) {
         self.layerConfiguration = configuration;
     }
@@ -104,44 +104,88 @@
 }
 
 - (void)addTypingIndicators {
-    NSUInteger lastMessageIndex = [self.collectionView numberOfItemsInSection:0] - 1;
-    NSIndexPath *lastMessageIndexPath = [NSIndexPath indexPathForItem:lastMessageIndex inSection:0];
-    BOOL shouldScrollToBottom = [self.collectionView.indexPathsForVisibleItems containsObject:lastMessageIndexPath];
+    CGPoint oldOffset = self.collectionView.contentOffset;
+    BOOL shouldScrollToBottom = [self shouldScrollToBottom];
     
-    LYRUIListDataSource *dataSource = (LYRUIListDataSource *)self.collectionView.dataSource;
-    LYRUIListSection *section = dataSource.sections.firstObject;
-    if ([section.items containsObject:self.typingIndicator]) {
+    if ([self dataSourceContainsTypingIndicator:YES]) {
         return;
     }
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:(lastMessageIndex + 1) inSection:0];
+    NSIndexPath *indexPath = [self newItemIndexPath];
+    LYRUIListSection *section = [self typingIndicatorSection];
     [self.collectionView performBatchUpdates:^{
         [section.items addObject:self.typingIndicator];
+        [self.collectionView.collectionViewLayout invalidateLayout];
         [self.collectionView insertItemsAtIndexPaths:@[indexPath]];
     } completion:^(BOOL finished) {
+        self.collectionView.contentOffset = oldOffset;
         LYRUIBubbleTypingIndicatorCollectionViewCell *typingIndicatorCell =
             (LYRUIBubbleTypingIndicatorCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
         typingIndicatorCell.typingIndicatorView.bubbleView.animating = YES;
         if (typingIndicatorCell && shouldScrollToBottom) {
-            [self.collectionView scrollToItemAtIndexPath:indexPath
-                                        atScrollPosition:UICollectionViewScrollPositionTop
-                                                animated:YES];
+            [self scrollToBottom];
         }
     }];
 }
 
 - (void)removeTypingIndicators {
-    LYRUIListDataSource *dataSource = (LYRUIListDataSource *)self.collectionView.dataSource;
-    LYRUIListSection *section = dataSource.sections.firstObject;
-    if (![section.items containsObject:self.typingIndicator]) {
+    CGPoint oldOffset = self.collectionView.contentOffset;
+    BOOL shouldMaintainOffset = [self shouldMaintainOffset];
+    BOOL shouldScrollToBottom = [self shouldScrollToBottom];
+    
+    if ([self dataSourceContainsTypingIndicator:NO]) {
         return;
     }
-    NSUInteger itemIndex = [section.items indexOfObject:self.typingIndicator];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:itemIndex inSection:0];
-    [self.collectionView.collectionViewLayout invalidateLayout];
+    NSIndexPath *indexPath = [self lastItemIndexPath];
+    LYRUIListSection *section = [self typingIndicatorSection];
     [self.collectionView performBatchUpdates:^{
         [section.items removeObject:self.typingIndicator];
+        [self.collectionView.collectionViewLayout invalidateLayout];
         [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
-    } completion:nil];
+    } completion:^(BOOL finished) {
+        if (shouldMaintainOffset) {
+            self.collectionView.contentOffset = oldOffset;
+        }
+        if (shouldScrollToBottom) {
+            [self scrollToBottom];
+        }
+    }];
+}
+
+- (BOOL)shouldMaintainOffset {
+    CGFloat contentHeight = [self.collectionView.collectionViewLayout collectionViewContentSize].height;
+    CGFloat collectionViewHeight = self.collectionView.bounds.size.height;
+    return (contentHeight < collectionViewHeight);
+}
+
+- (BOOL)shouldScrollToBottom {
+    return [self.collectionView.indexPathsForVisibleItems containsObject:[self lastItemIndexPath]];
+}
+
+- (void)scrollToBottom {
+    CGPoint contentOffset = self.collectionView.contentOffset;
+    CGSize contentSize = [self.collectionView.collectionViewLayout collectionViewContentSize];
+    contentOffset.y = contentSize.height - self.collectionView.bounds.size.height;
+    [self.collectionView setContentOffset:contentOffset animated:YES];
+}
+
+- (LYRUIListSection *)typingIndicatorSection {
+    LYRUIListDataSource *dataSource = (LYRUIListDataSource *)self.collectionView.dataSource;
+    return dataSource.sections.firstObject;
+}
+
+- (BOOL)dataSourceContainsTypingIndicator:(BOOL)contains {
+    LYRUIListSection *section = [self typingIndicatorSection];
+    return ([section.items containsObject:self.typingIndicator] == contains);
+}
+
+- (NSIndexPath *)lastItemIndexPath {
+    LYRUIListDataSource *dataSource = (LYRUIListDataSource *)self.collectionView.dataSource;
+    return [dataSource lastItemIndexPath];
+}
+
+- (NSIndexPath *)newItemIndexPath {
+    NSIndexPath *lastItemIndexPath = [self lastItemIndexPath];
+    return [NSIndexPath indexPathForItem:lastItemIndexPath.item + 1 inSection:lastItemIndexPath.section];
 }
 
 - (void)updateTypingIndicators {

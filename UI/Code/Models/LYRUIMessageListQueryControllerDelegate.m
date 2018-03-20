@@ -25,6 +25,7 @@
 #import <LayerKit/LayerKit.h>
 #import "UIScrollView+LYRUIAdjustedContentInset.h"
 #import "LYRUIMessageSerializer.h"
+#import "LYRUITypingIndicator.h"
 
 @interface LYRUIMessageListQueryControllerDelegate ()
 
@@ -33,7 +34,7 @@
 @property (nonatomic, strong) NSMutableArray *deletedIndexPaths;
 @property (nonatomic, strong) NSMutableArray *updatedIndexPaths;
 
-@property(nonatomic, strong) LYRUIMessageSerializer *messageSerializer;
+@property (nonatomic, strong) LYRUIMessageSerializer *messageSerializer;
 
 @end
 
@@ -111,6 +112,7 @@
     __weak __typeof(self) weakSelf = self;
     [self updateIndexPathsToReloadWithQueryController:queryController];
     BOOL shouldScrollToLastMessage = [self newMessagesReceived] && [self lastMessageIsVisible];
+    BOOL shouldAnimateScroll = (self.listDataSource.sections.count > 0 && self.listDataSource.sections.firstObject.items.count > 0);
     BOOL oldMessagesLoaded = [self oldMessagesLoaded];
     CGFloat oldOffset = self.collectionView.contentOffset.y;
     CGFloat offsetToBottom = self.collectionView.contentSize.height - self.collectionView.contentOffset.y;
@@ -120,12 +122,11 @@
         [weakSelf updateCollectionViewItemsWithQueryController:queryController];
     } completion:^(BOOL finished) {
         [weakSelf.collectionView reloadData];
+        [weakSelf maintainOldOffset:oldOffset];
         if (shouldScrollToLastMessage) {
-            [weakSelf scrollToLastMessage];
+            [weakSelf scrollToLastMessageAnimated:shouldAnimateScroll];
         } else if (oldMessagesLoaded) {
             [weakSelf maintainOffsetToBottom:offsetToBottom];
-        } else {
-            [weakSelf maintainOldOffset:oldOffset];
         }
         [CATransaction commit];
     }];
@@ -143,11 +144,21 @@
     if (self.listDataSource.sections.count == 0) {
         self.listDataSource.sections = [@[[[LYRUIListSection alloc] init]] mutableCopy];
     }
+    LYRUITypingIndicator *typingIndicator;
+    if (self.listDataSource.lastItemIndexPath) {
+        id lastItem = [self.listDataSource itemAtIndexPath:self.listDataSource.lastItemIndexPath];
+        if ([lastItem isKindOfClass:[LYRUITypingIndicator class]]) {
+            typingIndicator = (LYRUITypingIndicator *)lastItem;
+        }
+    }
     LYRUIListSection *section = self.listDataSource.sections[0];
     NSMutableArray *items = [[NSMutableArray alloc] init];
     for (LYRMessage *message in queryController.paginatedObjects.array) {
         LYRUIMessageType *messageType = [self.messageSerializer typedMessageWithLayerMessage:message];
         [items addObject:messageType];
+    }
+    if (typingIndicator) {
+        [items addObject:typingIndicator];
     }
     section.items = items;
 }
@@ -178,14 +189,11 @@
 
 #pragma mark - Content offset updates
 
-- (void)scrollToLastMessage {
-    NSIndexPath *lastMessageIndexPath = self.listDataSource.lastItemIndexPath;
-    if (lastMessageIndexPath == nil) {
-        return;
-    }
-    [self.collectionView scrollToItemAtIndexPath:lastMessageIndexPath
-                                atScrollPosition:UICollectionViewScrollPositionBottom
-                                        animated:YES];
+- (void)scrollToLastMessageAnimated:(BOOL)animated {
+    CGPoint contentOffset = self.collectionView.contentOffset;
+    CGSize contentSize = [self.collectionView.collectionViewLayout collectionViewContentSize];
+    contentOffset.y = contentSize.height - self.collectionView.bounds.size.height;
+    [self.collectionView setContentOffset:contentOffset animated:animated];
 }
 
 - (void)maintainOffsetToBottom:(CGFloat)offsetToBottom {
