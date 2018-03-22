@@ -1,8 +1,8 @@
 //
-//  LYRUIBaseChoiceSelectionHandler.h
+//  LYRUILWWNRegister.m
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 18.01.2018.
+//  Created by Łukasz Przytuła on 22.03.2018.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,16 +18,26 @@
 //  limitations under the License.
 //
 
-#import "LYRUIChoiceSelectionHandling.h"
-#import "LYRUIConfigurable.h"
-#import "LYRUIORSet.h"
+#import "LYRUILWWNRegister.h"
 
-@interface LYRUIBaseChoiceSelectionHandler : NSObject <LYRUIChoiceSelectionHandling, LYRUIConfigurable>
+@implementation LYRUILWWNRegister
 
-@property (nonatomic, strong, readonly) NSOrderedSet<NSString *> *selectedIdentifiers;
+#pragma mark - Properties
 
-@property (nonatomic, strong, readonly) LYRUIORSet *selectionsSet;
+- (NSString *)type {
+    return @"LWWN";
+}
 
-- (void)choiceWithIdentifier:(NSString *)identifier selected:(BOOL)selected;
+#pragma mark - Public methods
+
+- (void)addOperation:(LYRUIOROperation *)operation {
+    if ([self containsOperationWithID:operation.operationID]) {
+        return;
+    }
+    for (LYRUIOROperation *operation in [self.adds copy]) {
+        [self removeOperationWithID:operation.operationID];
+    }
+    [self.adds addObject:operation];
+}
 
 @end

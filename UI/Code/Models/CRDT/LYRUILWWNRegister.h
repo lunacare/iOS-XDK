@@ -1,8 +1,8 @@
 //
-//  LYRUIChoiceSelectionsCache.h
+//  LYRUILWWNRegister.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 23.01.2018.
+//  Created by Łukasz Przytuła on 22.03.2018.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,13 +18,7 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-#import "LYRUIConfigurable.h"
-@protocol LYRUIChoiceSet;
+#import "LYRUIORSet.h"
 
-@interface LYRUIChoiceSelectionsCache : NSObject <LYRUIConfigurable>
-
-- (void)setSelections:(NSOrderedSet<NSString *> *)choiceSelections forChoiceSet:(id<LYRUIChoiceSet>)choiceSet;
-- (NSOrderedSet<NSString *> *)selectionsForChoiceSet:(id<LYRUIChoiceSet>)choiceSet;
-
+@interface LYRUILWWNRegister : LYRUIORSet
 @end

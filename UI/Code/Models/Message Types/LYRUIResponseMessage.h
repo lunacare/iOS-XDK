@@ -26,11 +26,13 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @property (nonatomic, copy, readonly, nullable) NSString *responseTo;
 @property (nonatomic, copy, readonly, nullable) NSString *responseToNodeId;
 @property (nonatomic, copy, readonly, nullable) NSDictionary *participantData;
+@property (nonatomic, copy, readonly) NSArray *changes;
 @property (nonatomic, copy, readonly) NSString *text;
 
 - (instancetype)initWithResponseTo:(nullable NSString *)responseTo
                   responseToNodeId:(nullable NSString *)responseToNodeId
                    participantData:(nullable NSDictionary *)participantData
+                           changes:(NSArray *)changes
                               text:(NSString *)text
                             action:(nullable LYRUIMessageAction *)action
                             sender:(nullable LYRIdentity *)sender
@@ -40,6 +42,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
 - (instancetype)initWithResponseTo:(nullable NSString *)responseTo
                   responseToNodeId:(nullable NSString *)responseToNodeId
                    participantData:(nullable NSDictionary *)participantData
+                           changes:(NSArray *)changes
                               text:(NSString *)text;
 
 @end

@@ -34,7 +34,7 @@
 @property (nonatomic, strong, readwrite, nullable) NSString *responseName;
 @property (nonatomic, strong, readwrite, nullable) NSDictionary *customResponseData;
 @property (nonatomic, strong, readwrite, nullable) NSString *preselectedChoice;
-@property (nonatomic, strong, readwrite, nullable) NSOrderedSet<NSString *> *selectedChoices;
+@property (nonatomic, strong, readwrite, nullable) LYRUIORSet *selectionsSet;
 @property (nonatomic, readwrite, nonnull) NSString *responseMessageId;
 @property (nonatomic, readwrite, nonnull) NSString *responseNodeId;
 
@@ -55,7 +55,7 @@
                  responseName:(NSString *)responseName
            customResponseData:(NSDictionary *)customResponseData
             preselectedChoice:(NSString *)preselectedChoice
-              selectedChoices:(NSOrderedSet<NSString *> *)selectedChoices
+                selectionsSet:(LYRUIORSet *)selectionsSet
             responseMessageId:(NSString *)responseMessageId
                responseNodeId:(NSString *)responseNodeId
                        action:(LYRUIMessageAction *)action
@@ -81,7 +81,7 @@
         self.responseName = responseName;
         self.customResponseData = customResponseData;
         self.preselectedChoice = preselectedChoice;
-        self.selectedChoices = selectedChoices;
+        self.selectionsSet = selectionsSet;
         self.responseMessageId = responseMessageId;
         self.responseNodeId = responseNodeId;
     }

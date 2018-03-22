@@ -21,6 +21,7 @@
 #import "LYRUIButtonsMessage.h"
 #import "LYRUIChoice.h"
 #import "LYRUIChoiceSet.h"
+#import "LYRUIORSet.h"
 
 typedef NS_ENUM(NSUInteger, LYRUIChoiceMessageType) {
     LYRUIChoiceMessageTypeDefault,
@@ -48,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
                  responseName:(nullable NSString *)responseName
            customResponseData:(nullable NSDictionary *)customResponseData
             preselectedChoice:(nullable NSString *)preselectedChoice
-              selectedChoices:(nullable NSOrderedSet<NSString *> *)selectedChoices
+                selectionsSet:(nullable LYRUIORSet *)selectionsSet
             responseMessageId:(NSString *)responseMessageId
                responseNodeId:(NSString *)responseNodeId
                        action:(nullable LYRUIMessageAction *)action

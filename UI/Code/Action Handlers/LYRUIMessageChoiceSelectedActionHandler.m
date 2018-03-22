@@ -24,12 +24,13 @@
 @implementation LYRUIMessageChoiceSelectedActionHandler
 
 - (void)handleActionWithData:(NSDictionary *)data delegate:(id<LYRUIActionHandlingDelegate>)delegate {
-    if (data == nil || data[@"text"] == nil) {
+    if (data == nil || data[@"text"] == nil || data[@"changes"] == nil) {
         return;
     }
     LYRUIResponseMessage *responseMessage = [[LYRUIResponseMessage alloc] initWithResponseTo:data[@"response_to"]
                                                                             responseToNodeId:data[@"response_to_node_id"]
                                                                              participantData:data[@"participant_data"]
+                                                                                     changes:data[@"changes"]
                                                                                         text:data[@"text"]];
     [delegate actionHandler:self sendMessage:responseMessage];
 }

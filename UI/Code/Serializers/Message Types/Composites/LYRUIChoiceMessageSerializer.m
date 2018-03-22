@@ -24,6 +24,10 @@
 #import "LYRMessagePart+LYRUIHelpers.h"
 #import "LYRUITextMessage.h"
 #import "LYRUIMessageActionSerializer.h"
+#import "LYRUIORSet.h"
+#import "LYRUIFWWRegister.h"
+#import "LYRUILWWRegister.h"
+#import "LYRUILWWNRegister.h"
 
 @implementation LYRUIChoiceMessageSerializer
 
@@ -62,12 +66,12 @@
     
     NSString *responseName = messagePart.properties[@"response_name"] ?: @"selection";
     
-    NSOrderedSet<NSString *> *selectedIdentifiers;
+    LYRUIORSet *selectionsSet;
     LYRMessagePart *responseSummaryPart = [messagePart childPartWithRole:@"response_summary"];
     if (responseSummaryPart != nil) {
-        selectedIdentifiers = [self selectedIdentifiersFromResponseSummary:responseSummaryPart.properties
-                                                        customResponseName:responseName
-                                                         preselectedChoice:messagePart.properties[@"preselected_choice"]];
+        selectionsSet = [self selectionsSetFromResponseSummary:responseSummaryPart.properties
+                                                dataProperties:messagePart.properties
+                                            customResponseName:responseName];
     }
     
     return [[LYRUIChoiceMessage alloc] initWithTitle:title
@@ -83,7 +87,7 @@
                                         responseName:responseName
                                   customResponseData:messagePart.properties[@"custom_data_response"]
                                    preselectedChoice:messagePart.properties[@"preselected_choice"]
-                                     selectedChoices:selectedIdentifiers
+                                       selectionsSet:selectionsSet
                                    responseMessageId:[messagePart.message.identifier absoluteString]
                                       responseNodeId:messagePart.nodeId
                                               action:[self.actionSerializer actionFromProperties:messagePart.properties]
@@ -107,21 +111,24 @@
     return LYRUIChoiceMessageTypeDefault;
 }
 
-- (NSOrderedSet<NSString *> *)selectedIdentifiersFromResponseSummary:(NSDictionary *)responseSummary
-                                           customResponseName:(NSString *)responseName
-                                            preselectedChoice:(NSString *)preselectedChoice {
-    NSOrderedSet<NSString *> *preselectedChoiceSet;
-    if (preselectedChoice != nil) {
-        preselectedChoiceSet = [NSOrderedSet orderedSetWithObject:preselectedChoice];
+- (LYRUIORSet *)selectionsSetFromResponseSummary:(NSDictionary *)responseSummary
+                                  dataProperties:(NSDictionary *)dataProperties
+                              customResponseName:(NSString *)responseName {
+    NSString *currentUserID = self.layerConfiguration.client.authenticatedUser.identifier.lastPathComponent;
+    NSDictionary *userData = responseSummary[currentUserID];
+    NSDictionary *selectionsSetDictionary = userData[responseName];
+    if (selectionsSetDictionary == nil || ![selectionsSetDictionary isKindOfClass:[NSDictionary class]]) {
+        return nil;
     }
-    NSDictionary *participantsData = responseSummary[@"participant_data"];
-    NSString *dataKey = participantsData.allKeys.firstObject;
-    NSDictionary *data = participantsData[dataKey];
-    NSString *selections = data[responseName];
-    if (selections == nil || ![selections isKindOfClass:[NSString class]]) {
-        return preselectedChoiceSet;
+    if ([dataProperties[@"allow_multiselect"] boolValue]) {
+        return [[LYRUIORSet alloc] initWithPropertyName:responseName dictionary:selectionsSetDictionary];
+    } else if ([dataProperties[@"allow_deselect"] boolValue]) {
+        return [[LYRUILWWNRegister alloc] initWithPropertyName:responseName dictionary:selectionsSetDictionary];
+    } else if ([dataProperties[@"allow_reselect"] boolValue]) {
+        return [[LYRUILWWRegister alloc] initWithPropertyName:responseName dictionary:selectionsSetDictionary];
+    } else {
+        return [[LYRUIFWWRegister alloc] initWithPropertyName:responseName dictionary:selectionsSetDictionary];
     }
-    return [NSOrderedSet orderedSetWithArray:[selections componentsSeparatedByString:@","]];
 }
 
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUIChoiceMessage *)messageType

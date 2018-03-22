@@ -29,7 +29,7 @@
 @property (nonatomic, readwrite) NSString *name;
 @property (nonatomic, readwrite) NSString *responseName;
 @property (nonatomic, readwrite) NSString *preselectedChoice;
-@property (nonatomic, readwrite) NSOrderedSet<NSString *> *selectedChoices;
+@property (nonatomic, readwrite) LYRUIORSet *selectionsSet;
 @property (nonatomic, readwrite, nonnull) NSString *responseMessageId;
 @property (nonatomic, readwrite, nonnull) NSString *responseNodeId;
 
@@ -46,7 +46,7 @@
                            name:(NSString *)name
                    responseName:(NSString *)responseName
               preselectedChoice:(NSString *)preselectedChoice
-                selectedChoices:(NSOrderedSet<NSString *> *)selectedChoices
+                  selectionsSet:(LYRUIORSet *)selectionsSet
               responseMessageId:(NSString *)responseMessageId
                  responseNodeId:(NSString *)responseNodeId {
     self = [super init];
@@ -58,7 +58,7 @@
         self.name = name;
         self.responseName = responseName;
         self.preselectedChoice = preselectedChoice;
-        self.selectedChoices = selectedChoices;
+        self.selectionsSet = selectionsSet;
         self.responseMessageId = responseMessageId;
         self.responseNodeId = responseNodeId;
     }

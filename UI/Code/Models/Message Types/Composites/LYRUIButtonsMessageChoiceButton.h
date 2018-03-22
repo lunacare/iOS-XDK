@@ -22,6 +22,7 @@
 #import "LYRUIButtonsMessageButton.h"
 #import "LYRUIChoice.h"
 #import "LYRUIChoiceSet.h"
+#import "LYRUIORSet.h"
 
 NS_ASSUME_NONNULL_BEGIN     // {
 @interface LYRUIButtonsMessageChoiceButton : NSObject <LYRUIButtonsMessageButton, LYRUIChoiceSet>
@@ -33,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
                            name:(nullable NSString *)name
                    responseName:(nullable NSString *)responseName
               preselectedChoice:(nullable NSString *)preselectedChoice
-                selectedChoices:(nullable NSOrderedSet<NSString *> *)selectedChoices
+                  selectionsSet:(nullable LYRUIORSet *)selectionsSet
               responseMessageId:(NSString *)responseMessageId
                  responseNodeId:(NSString *)responseNodeId;
 

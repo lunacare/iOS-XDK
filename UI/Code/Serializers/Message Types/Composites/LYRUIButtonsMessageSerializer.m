@@ -25,6 +25,10 @@
 #import "LYRMessagePart+LYRUIHelpers.h"
 #import "LYRUIChoice.h"
 #import "LYRUIMessageActionSerializer.h"
+#import "LYRUIORSet.h"
+#import "LYRUIFWWRegister.h"
+#import "LYRUILWWRegister.h"
+#import "LYRUILWWNRegister.h"
 
 @implementation LYRUIButtonsMessageSerializer
 
@@ -61,12 +65,12 @@
             
             NSString *responseName = dataProperties[@"response_name"] ?: @"selection";
             
-            NSOrderedSet<NSString *> *selectedIdentifiers;
+            LYRUIORSet *selectionsSet;
             LYRMessagePart *responseSummaryPart = [messagePart childPartWithRole:@"response_summary"];
             if (responseSummaryPart != nil) {
-                selectedIdentifiers = [self selectedIdentifiersFromResponseSummary:responseSummaryPart.properties
-                                                                customResponseName:responseName
-                                                                 preselectedChoice:dataProperties[@"preselected_choice"]];
+                selectionsSet = [self selectionsSetFromResponseSummary:responseSummaryPart.properties
+                                                              dataProperties:dataProperties
+                                                          customResponseName:responseName];
             }
             
             LYRUIButtonsMessageChoiceButton *button = [[LYRUIButtonsMessageChoiceButton alloc] initWithChoices:choices
@@ -76,7 +80,7 @@
                                                                                                           name:dataProperties[@"name"]
                                                                                                   responseName:responseName
                                                                                              preselectedChoice:dataProperties[@"preselected_choice"]
-                                                                                               selectedChoices:selectedIdentifiers
+                                                                                                 selectionsSet:selectionsSet
                                                                                              responseMessageId:[messagePart.message.identifier absoluteString]
                                                                                                 responseNodeId:messagePart.nodeId];
             [serializedButtons addObject:button];
@@ -91,21 +95,24 @@
                                                  status:[self statusWithMessage:messagePart.message]];
 }
 
-- (NSOrderedSet<NSString *> *)selectedIdentifiersFromResponseSummary:(NSDictionary *)responseSummary
-                                           customResponseName:(NSString *)responseName
-                                            preselectedChoice:(NSString *)preselectedChoice {
-    NSOrderedSet<NSString *> *preselectedChoiceSet;
-    if (preselectedChoice != nil) {
-        preselectedChoiceSet = [NSOrderedSet orderedSetWithObject:preselectedChoice];
+- (LYRUIORSet *)selectionsSetFromResponseSummary:(NSDictionary *)responseSummary
+                                  dataProperties:(NSDictionary *)dataProperties
+                              customResponseName:(NSString *)responseName {
+    NSString *currentUserID = self.layerConfiguration.client.authenticatedUser.identifier.lastPathComponent;
+    NSDictionary *userData = responseSummary[currentUserID];
+    NSDictionary *selectionsSetDictionary = userData[responseName];
+    if (selectionsSetDictionary == nil || ![selectionsSetDictionary isKindOfClass:[NSDictionary class]]) {
+        return nil;
     }
-    NSDictionary *participantsData = responseSummary[@"participant_data"];
-    NSString *dataKey = participantsData.allKeys.firstObject;
-    NSDictionary *data = participantsData[dataKey];
-    NSString *selections = data[responseName];
-    if (selections == nil || ![selections isKindOfClass:[NSString class]]) {
-        return preselectedChoiceSet;
+    if ([dataProperties[@"allow_multiselect"] boolValue]) {
+        return [[LYRUIORSet alloc] initWithPropertyName:responseName dictionary:selectionsSetDictionary];
+    } else if ([dataProperties[@"allow_deselect"] boolValue]) {
+        return [[LYRUILWWNRegister alloc] initWithPropertyName:responseName dictionary:selectionsSetDictionary];
+    } else if ([dataProperties[@"allow_reselect"] boolValue]) {
+        return [[LYRUILWWRegister alloc] initWithPropertyName:responseName dictionary:selectionsSetDictionary];
+    } else {
+        return [[LYRUIFWWRegister alloc] initWithPropertyName:responseName dictionary:selectionsSetDictionary];
     }
-    return [NSOrderedSet orderedSetWithArray:[selections componentsSeparatedByString:@","]];
 }
 
 - (LYRUIButtonsMessageActionButton *)buttonWithProperties:(NSDictionary *)buttonProperties defaultAction:(LYRUIMessageAction *)action {

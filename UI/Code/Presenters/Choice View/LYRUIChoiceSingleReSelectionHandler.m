@@ -45,18 +45,8 @@
     }
     for (LYRUIChoiceButton *button in buttons) {
         button.selected = [self.selectedIdentifiers containsObject:button.choiceIdentifier];
-        button.enabled = !self.choiceSet.allowDeselect || !button.selected;
+        button.enabled = self.choiceSet.allowDeselect || !button.selected;
     }
-}
-
-- (void)choiceWithIdentifier:(NSString *)identifier selected:(BOOL)selected {
-    if (identifier == nil) {
-        return;
-    }
-    if (selected) {
-        [self.selectedIdentifiers removeAllObjects];
-    }
-    [super choiceWithIdentifier:identifier selected:selected];
 }
 
 @end
