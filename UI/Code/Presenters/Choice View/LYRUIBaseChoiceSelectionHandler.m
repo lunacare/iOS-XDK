@@ -57,7 +57,7 @@
     if (self) {
         self.choiceSet = choiceSet;
         self.selectionsSet = [self.setsCache ORSetForChoiceSet:choiceSet];
-        [self.selectionsSet synchronizeWithSet:choiceSet.selectionsSet];
+        [self.selectionsSet synchronizeWithSet:choiceSet.selectionsSet ?: choiceSet.initialResponseState];
     }
     return self;
 }
@@ -66,6 +66,17 @@
 
 - (NSOrderedSet<NSString *> *)selectedIdentifiers {
     return self.selectionsSet.selectedValues;
+}
+
+- (void)setButtons:(NSArray<LYRUIChoiceButton *> *)buttons {
+    _buttons = buttons;
+    NSString *userID = self.layerConfiguration.client.authenticatedUser.identifier.absoluteString;
+    if (![self.choiceSet.enabledFor containsObject:userID]) {
+        for (LYRUIChoiceButton *button in buttons) {
+            button.selected = NO;
+            button.enabled = NO;
+        }
+    }
 }
 
 #pragma mark - Public methods
@@ -79,26 +90,18 @@
     NSMutableArray<NSDictionary *> *changes = [[NSMutableArray alloc] init];
     if (selected) {
         LYRUIOROperation *operation = [[LYRUIOROperation alloc] initWithValue:identifier];
-        [self.selectionsSet addOperation:operation];
-        [changes addObject:@{
-                @"operation": @"add",
-                @"type": self.selectionsSet.type,
-                @"value": operation.value,
-                @"name": self.choiceSet.responseName,
-                @"id": operation.operationID,
-        }];
+        NSArray *operationDicts = [self.selectionsSet addOperation:operation];
+        if (operationDicts != nil) {
+            [changes addObjectsFromArray:operationDicts];
+        }
     } else {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"value == %@", identifier];
         NSOrderedSet<LYRUIOROperation *> *operationsWithValue = [self.selectionsSet.adds filteredOrderedSetUsingPredicate:predicate];
         for (LYRUIOROperation *operation in operationsWithValue) {
-            [self.selectionsSet removeOperationWithID:operation.operationID];
-            [changes addObject:@{
-                    @"operation": @"remove",
-                    @"type": self.selectionsSet.type,
-                    @"value": operation.value,
-                    @"name": self.choiceSet.responseName,
-                    @"id": operation.operationID,
-            }];
+            NSArray *operationDicts = [self.selectionsSet removeOperationWithID:operation.operationID];
+            if (operationDicts != nil) {
+                [changes addObjectsFromArray:operationDicts];
+            }
         }
     }
     [self.setsCache storeORSet:self.selectionsSet forChoiceSet:self.choiceSet];
@@ -110,10 +113,10 @@
         }
     }
     
-    [self sendActionForChoice:choice selection:selected];
+    [self sendActionForChoice:choice changes:changes selection:selected];
 }
 
-- (void)sendActionForChoice:(LYRUIChoice *)choice selection:(BOOL)selected {
+- (void)sendActionForChoice:(LYRUIChoice *)choice changes:(NSArray *)changes selection:(BOOL)selected {
     NSMutableDictionary *participantData = [[NSMutableDictionary alloc] init];
     [participantData addEntriesFromDictionary:self.choiceSet.customResponseData];
     [participantData addEntriesFromDictionary:choice.customResponseData];

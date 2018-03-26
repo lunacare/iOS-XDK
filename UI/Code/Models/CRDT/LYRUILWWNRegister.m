@@ -30,14 +30,16 @@
 
 #pragma mark - Public methods
 
-- (void)addOperation:(LYRUIOROperation *)operation {
+- (NSArray<NSDictionary *> *)addOperation:(LYRUIOROperation *)operation {
     if ([self containsOperationWithID:operation.operationID]) {
-        return;
+        return nil;
     }
+    NSMutableArray *operationDictionaries = [[NSMutableArray alloc] init];
     for (LYRUIOROperation *operation in [self.adds copy]) {
-        [self removeOperationWithID:operation.operationID];
+        [operationDictionaries addObjectsFromArray:[super removeOperationWithID:operation.operationID]];
     }
-    [self.adds addObject:operation];
+    [operationDictionaries addObjectsFromArray:[super addOperation:operation]];
+    return operationDictionaries;
 }
 
 @end

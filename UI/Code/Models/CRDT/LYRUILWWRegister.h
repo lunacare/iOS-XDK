@@ -18,7 +18,7 @@
 //  limitations under the License.
 //
 
-#import "LYRUIORSet.h"
+#import "LYRUILWWNRegister.h"
 
-@interface LYRUILWWRegister : LYRUIORSet
+@interface LYRUILWWRegister : LYRUILWWNRegister
 @end

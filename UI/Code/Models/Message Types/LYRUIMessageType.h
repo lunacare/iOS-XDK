@@ -22,6 +22,7 @@
 #import "LYRUIMessageMetadata.h"
 #import "LYRUIMessageAction.h"
 #import "LYRUIMessageTypeStatus.h"
+#import "LYRUIORSet.h"
 @class LYRIdentity;
 
 NS_ASSUME_NONNULL_BEGIN     // {
@@ -45,10 +46,18 @@ NS_ASSUME_NONNULL_BEGIN     // {
 
 @property (nonatomic, readonly, nullable) LYRUIMessageAction *action;
 
+@property (nonatomic, readonly, nullable) LYRUIORSet *initialResponseState;
+
 - (instancetype)initWithAction:(nullable LYRUIMessageAction *)action
                         sender:(nullable LYRIdentity *)sender
                         sentAt:(nullable NSDate *)sentAt
                         status:(nullable LYRUIMessageTypeStatus *)status;
+
+- (instancetype)initWithInitialResponseState:(nullable LYRUIORSet *)initialResponseState
+                                      action:(nullable LYRUIMessageAction *)action
+                                      sender:(nullable LYRIdentity *)sender
+                                      sentAt:(nullable NSDate *)sentAt
+                                      status:(nullable LYRUIMessageTypeStatus *)status;
 
 @end
 NS_ASSUME_NONNULL_END       // }

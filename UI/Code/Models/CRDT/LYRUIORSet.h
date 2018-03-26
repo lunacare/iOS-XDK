@@ -21,6 +21,7 @@
 #import <Foundation/Foundation.h>
 #import "LYRUIOROperation.h"
 
+NS_ASSUME_NONNULL_BEGIN     // {
 @interface LYRUIORSet : NSObject
 
 @property (nonatomic, strong, readonly) NSString *type;
@@ -33,16 +34,19 @@
 
 @property (nonatomic, readonly) NSDictionary *dictionary;
 
-@property (nonatomic, readonly) NSOrderedSet *selectedValues;
+@property (nonatomic, readonly) NSArray *operationsDictionaries;
+
+@property (nonatomic, readonly) NSOrderedSet<NSString *> *selectedValues;
 
 - (instancetype)initWithPropertyName:(NSString *)propertyName;
 - (instancetype)initWithPropertyName:(NSString *)propertyName dictionary:(NSDictionary *)dictionary;
 
-- (void)addOperation:(LYRUIOROperation *)operation;
-- (void)removeOperationWithID:(NSString *)operationID;
+- (nullable NSArray<NSDictionary *> *)addOperation:(LYRUIOROperation *)operation;
+- (nullable NSArray<NSDictionary *> *)removeOperationWithID:(NSString *)operationID;
 - (void)synchronizeWithSet:(LYRUIORSet *)remoteSet;
 
 - (BOOL)containsOperationWithID:(NSString *)operationID;
 - (LYRUIOROperation *)operationWithID:(NSString *)operationID;
 
 @end
+NS_ASSUME_NONNULL_END       // }

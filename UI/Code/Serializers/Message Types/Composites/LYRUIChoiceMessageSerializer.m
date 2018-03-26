@@ -25,11 +25,20 @@
 #import "LYRUITextMessage.h"
 #import "LYRUIMessageActionSerializer.h"
 #import "LYRUIORSet.h"
-#import "LYRUIFWWRegister.h"
-#import "LYRUILWWRegister.h"
-#import "LYRUILWWNRegister.h"
+#import "LYRUIChoiceSelectionsSetFactory.h"
+
+@interface LYRUIChoiceMessageSerializer ()
+
+@property (nonatomic, strong) LYRUIChoiceSelectionsSetFactory *selectionsSetFactory;
+
+@end
 
 @implementation LYRUIChoiceMessageSerializer
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    [super setLayerConfiguration:layerConfiguration];
+    self.selectionsSetFactory = [layerConfiguration.injector objectOfType:[LYRUIChoiceSelectionsSetFactory class]];
+}
 
 - (LYRUIChoiceMessage *)typedMessageWithMessagePart:(LYRMessagePart *)messagePart {
     NSArray *choices = messagePart.properties[@"choices"];
@@ -66,12 +75,19 @@
     
     NSString *responseName = messagePart.properties[@"response_name"] ?: @"selection";
     
+    LYRUIORSet *initialResponseState;
+    if (messagePart.properties[@"initial_response_state"]) {
+        initialResponseState = [self.selectionsSetFactory selectionsSetFromInitialResponseState:messagePart.properties[@"initial_response_state"]
+                                                                                 dataProperties:messagePart.properties
+                                                                             customResponseName:responseName];
+    }
+    
     LYRUIORSet *selectionsSet;
     LYRMessagePart *responseSummaryPart = [messagePart childPartWithRole:@"response_summary"];
     if (responseSummaryPart != nil) {
-        selectionsSet = [self selectionsSetFromResponseSummary:responseSummaryPart.properties
-                                                dataProperties:messagePart.properties
-                                            customResponseName:responseName];
+        selectionsSet = [self.selectionsSetFactory selectionsSetFromResponseSummary:responseSummaryPart.properties
+                                                                     dataProperties:messagePart.properties
+                                                                 customResponseName:responseName];
     }
     
     return [[LYRUIChoiceMessage alloc] initWithTitle:title
@@ -86,7 +102,8 @@
                                                 name:messagePart.properties[@"name"]
                                         responseName:responseName
                                   customResponseData:messagePart.properties[@"custom_data_response"]
-                                   preselectedChoice:messagePart.properties[@"preselected_choice"]
+                                          enabledFor:[self setWithEnabledFor:messagePart.properties[@"enabled_for"]]
+                                initialResponseState:initialResponseState
                                        selectionsSet:selectionsSet
                                    responseMessageId:[messagePart.message.identifier absoluteString]
                                       responseNodeId:messagePart.nodeId
@@ -111,24 +128,13 @@
     return LYRUIChoiceMessageTypeDefault;
 }
 
-- (LYRUIORSet *)selectionsSetFromResponseSummary:(NSDictionary *)responseSummary
-                                  dataProperties:(NSDictionary *)dataProperties
-                              customResponseName:(NSString *)responseName {
-    NSString *currentUserID = self.layerConfiguration.client.authenticatedUser.identifier.lastPathComponent;
-    NSDictionary *userData = responseSummary[currentUserID];
-    NSDictionary *selectionsSetDictionary = userData[responseName];
-    if (selectionsSetDictionary == nil || ![selectionsSetDictionary isKindOfClass:[NSDictionary class]]) {
-        return nil;
+- (NSSet<NSString *> *)setWithEnabledFor:(id)enabledFor {
+    if ([enabledFor isKindOfClass:[NSString class]]) {
+        return [NSSet setWithObject:enabledFor];
+    } else if ([enabledFor isKindOfClass:[NSArray class]]) {
+        return [NSSet setWithArray:enabledFor];
     }
-    if ([dataProperties[@"allow_multiselect"] boolValue]) {
-        return [[LYRUIORSet alloc] initWithPropertyName:responseName dictionary:selectionsSetDictionary];
-    } else if ([dataProperties[@"allow_deselect"] boolValue]) {
-        return [[LYRUILWWNRegister alloc] initWithPropertyName:responseName dictionary:selectionsSetDictionary];
-    } else if ([dataProperties[@"allow_reselect"] boolValue]) {
-        return [[LYRUILWWRegister alloc] initWithPropertyName:responseName dictionary:selectionsSetDictionary];
-    } else {
-        return [[LYRUIFWWRegister alloc] initWithPropertyName:responseName dictionary:selectionsSetDictionary];
-    }
+    return nil;
 }
 
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUIChoiceMessage *)messageType
@@ -150,6 +156,9 @@
         [choices addObject:choiceJson];
     }
     
+    NSArray *initialResponseOperations = [self operationsForInitialResponseState:messageType.initialResponseState
+                                                                      enabledFor:messageType.enabledFor];
+    
     NSMutableDictionary *messageJson = [[NSMutableDictionary alloc] init];
     messageJson[@"title"] = messageType.title;
     messageJson[@"label"] = messageType.label;
@@ -162,7 +171,8 @@
     messageJson[@"name"] = messageType.name;
     messageJson[@"response_name"] = messageType.responseName;
     messageJson[@"custom_data_response"] = messageType.customResponseData;
-    messageJson[@"preselected_choice"] = messageType.preselectedChoice;
+    messageJson[@"enabled_for"] = messageType.enabledFor.anyObject;
+    messageJson[@"initial_response_state"] = initialResponseOperations;
     [messageJson addEntriesFromDictionary:[self.actionSerializer propertiesForAction:messageType.action]];
     
     NSError *error = nil;
@@ -171,9 +181,27 @@
         NSLog(@"Failed to serialize choice message JSON object: %@", error);
         return nil;
     }
+    NSMutableArray *messageParts = [[NSMutableArray alloc] init];
     NSString *MIMEType = [self MIMETypeForContentType:messageType.MIMEType parentNodeId:parentNodeId role:role];
     LYRMessagePart *messagePart = [LYRMessagePart messagePartWithMIMEType:MIMEType data:messageJsonData];
-    return @[messagePart];
+    [messageParts addObject:messagePart];
+    
+    NSData *initialResponseData;
+    if (initialResponseOperations.count > 0) {
+        initialResponseData = [NSJSONSerialization dataWithJSONObject:initialResponseOperations options:0 error:&error];
+        if (error) {
+            NSLog(@"Failed to serialize initial response JSON object: %@", error);
+        }
+    }
+    if (initialResponseData) {
+        NSString *MIMEType = [self MIMETypeForContentType:@"application/vnd.layer.initialresponsestate-v1+json"
+                                             parentNodeId:messagePart.nodeId
+                                                     role:@"initial_response_summary"];
+        LYRMessagePart *initialResponsePart = [LYRMessagePart messagePartWithMIMEType:MIMEType data:initialResponseData];
+        [messageParts addObject:initialResponsePart];
+    }
+    
+    return messageParts;
 }
 
 - (NSDictionary *)dictionaryForChoiceProperties:(id<LYRUIChoiceProperties>)choiceProperties {
@@ -190,10 +218,26 @@
 - (NSString *)stringForChoiceMessageType:(LYRUIChoiceMessageType)type {
     switch (type) {
         case LYRUIChoiceMessageTypeDefault:
-            return @"default";
+            return @"standard";
         case LYRUIChoiceMessageTypeLabel:
             return @"label";
     }
+}
+
+- (NSArray *)operationsForInitialResponseState:(LYRUIORSet *)initialResponseState
+                                    enabledFor:(NSSet<NSString *> *)enabledFor {
+    if (initialResponseState == nil || enabledFor.count == 0) {
+        return @[];
+    }
+    NSMutableArray *initialResponseOperations = [[NSMutableArray alloc] init];
+    for (NSString *identityID in enabledFor) {
+        for (NSDictionary *operation in initialResponseState.operationsDictionaries) {
+            NSMutableDictionary *operationWithID = [operation mutableCopy];
+            operationWithID[@"identity_id"] = identityID;
+            [initialResponseOperations addObject:operationWithID];
+        }
+    }
+    return initialResponseOperations;
 }
 
 - (LYRMessageOptions *)messageOptionsForTypedMessage:(LYRUIMessageType *)messageType {

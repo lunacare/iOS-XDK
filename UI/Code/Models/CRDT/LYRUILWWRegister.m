@@ -30,24 +30,13 @@
 
 #pragma mark - Public methods
 
-- (void)addOperation:(LYRUIOROperation *)operation {
-    if ([self containsOperationWithID:operation.operationID]) {
-        return;
-    }
-    for (LYRUIOROperation *operation in [self.adds copy]) {
-        [self.adds removeObject:operation];
-        [self.removes addObject:operation.operationID];
-    }
-    [self.adds addObject:operation];
-}
-
-- (void)removeOperationWithID:(NSString *)operationID {
+- (NSArray<NSDictionary *> *)removeOperationWithID:(NSString *)operationID {
     if ([self containsOperationWithID:operationID]) {
         @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                        reason:@"Cannot remove added value from LWW Register"
                                      userInfo:nil];
     }
-    [self.removes addObject:operationID];
+    return [super removeOperationWithID:operationID];
 }
 
 @end

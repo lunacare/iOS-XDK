@@ -19,22 +19,24 @@
 //
 
 #import "LYRUIChoiceMessage.h"
+#import "LYRUIChoiceSelectionsSetFactory.h"
 
 @interface LYRUIChoiceMessage ()
 
-@property (nonatomic, strong, readwrite, nullable) NSString *title;
-@property (nonatomic, strong, readwrite, nullable) NSString *label;
+@property (nonatomic, copy, readwrite, nullable) NSString *title;
+@property (nonatomic, copy, readwrite, nullable) NSString *label;
+@property (nonatomic, strong, readwrite, nullable) LYRUIMessageType *contentMessage;
 @property (nonatomic, copy, readwrite) NSArray<LYRUIChoice *> *choices;
 @property (nonatomic, readwrite) LYRUIChoiceMessageType type;
 @property (nonatomic, readwrite) LYRUIChoiceMessageType expandedType;
 @property (nonatomic, readwrite) BOOL allowReselect;
 @property (nonatomic, readwrite) BOOL allowDeselect;
 @property (nonatomic, readwrite) BOOL allowMultiselect;
-@property (nonatomic, strong, readwrite, nullable) NSString *name;
-@property (nonatomic, strong, readwrite, nullable) NSString *responseName;
-@property (nonatomic, strong, readwrite, nullable) NSDictionary *customResponseData;
-@property (nonatomic, strong, readwrite, nullable) NSString *preselectedChoice;
-@property (nonatomic, strong, readwrite, nullable) LYRUIORSet *selectionsSet;
+@property (nonatomic, copy, readwrite, nullable) NSString *name;
+@property (nonatomic, copy, readwrite, nullable) NSString *responseName;
+@property (nonatomic, copy, readwrite, nullable) NSDictionary *customResponseData;
+@property (nonatomic, copy, readwrite) NSSet<NSString *> *enabledFor;
+@property (nonatomic, readwrite, nullable) LYRUIORSet *selectionsSet;
 @property (nonatomic, readwrite, nonnull) NSString *responseMessageId;
 @property (nonatomic, readwrite, nonnull) NSString *responseNodeId;
 
@@ -54,7 +56,8 @@
                          name:(NSString *)name
                  responseName:(NSString *)responseName
            customResponseData:(NSDictionary *)customResponseData
-            preselectedChoice:(NSString *)preselectedChoice
+                   enabledFor:(NSSet<NSString *> *)enabledFor
+         initialResponseState:(LYRUIORSet *)initialResponseState
                 selectionsSet:(LYRUIORSet *)selectionsSet
             responseMessageId:(NSString *)responseMessageId
                responseNodeId:(NSString *)responseNodeId
@@ -62,15 +65,15 @@
                        sender:(LYRIdentity *)sender
                        sentAt:(NSDate *)sentAt
                        status:(LYRUIMessageTypeStatus *)status {
-    self = [super initWithButtons:choices
-                   contentMessage:contentMessage
-                           action:action
-                           sender:sender
-                           sentAt:sentAt
-                           status:status];
+    self = [super initWithInitialResponseState:initialResponseState
+                                        action:action
+                                        sender:sender
+                                        sentAt:sentAt
+                                        status:status];
     if (self) {
         self.title = title;
         self.label = label;
+        self.contentMessage = contentMessage;
         self.choices = choices;
         self.type = type;
         self.expandedType = expandedType;
@@ -79,12 +82,58 @@
         self.allowMultiselect = allowMultiselect;
         self.name = name;
         self.responseName = responseName;
+        self.enabledFor = enabledFor;
         self.customResponseData = customResponseData;
-        self.preselectedChoice = preselectedChoice;
         self.selectionsSet = selectionsSet;
         self.responseMessageId = responseMessageId;
         self.responseNodeId = responseNodeId;
     }
+    return self;
+}
+
+- (instancetype)initWithTitle:(NSString *)title
+                        label:(NSString *)label
+                      choices:(NSArray<LYRUIChoice *> *)choices
+                         type:(LYRUIChoiceMessageType)type
+                 expandedType:(LYRUIChoiceMessageType)expandedType
+                allowReselect:(BOOL)allowReselect
+                allowDeselect:(BOOL)allowDeselect
+             allowMultiselect:(BOOL)allowMultiselect
+                         name:(NSString *)name
+                 responseName:(NSString *)responseName
+           customResponseData:(NSDictionary *)customResponseData
+                   enabledFor:(NSString *)enabledFor
+               selectedChoice:(NSString *)selectedChoice {
+    LYRUIORSet *initialResponseState;
+    if (selectedChoice) {
+        initialResponseState = [[[LYRUIChoiceSelectionsSetFactory alloc] init] selectionsSetWithResponseName:responseName
+                                                                                               allowReselect:allowReselect
+                                                                                               allowDeselect:allowDeselect
+                                                                                            allowMultiselect:allowMultiselect];
+        LYRUIOROperation *operation = [[LYRUIOROperation alloc] initWithValue:selectedChoice];
+        [initialResponseState addOperation:operation];
+    }
+    self = [self initWithTitle:title
+                         label:label
+                contentMessage:nil
+                       choices:choices
+                          type:type
+                  expandedType:expandedType
+                 allowReselect:allowReselect
+                 allowDeselect:allowDeselect
+              allowMultiselect:allowMultiselect
+                          name:name
+                  responseName:responseName
+            customResponseData:customResponseData
+                    enabledFor:[NSSet setWithObjects:enabledFor, nil]
+          initialResponseState:initialResponseState
+                 selectionsSet:nil
+             responseMessageId:nil
+                responseNodeId:nil
+                        action:nil
+                        sender:nil
+                        sentAt:nil
+                        status:nil];
     return self;
 }
 

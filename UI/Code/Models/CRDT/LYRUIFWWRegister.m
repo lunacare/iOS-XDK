@@ -30,24 +30,24 @@
 
 #pragma mark - Public methods
 
-- (void)addOperation:(LYRUIOROperation *)operation {
+- (NSArray<NSDictionary *> *)addOperation:(LYRUIOROperation *)operation {
     if ([self containsOperationWithID:operation.operationID]) {
-        return;
+        return nil;
     }
     if (self.adds.count > 1) {
         [self removeOperationWithID:operation.operationID];
-        return;
+        return nil;
     }
-    [self.adds addObject:operation];
+    return [super addOperation:operation];
 }
 
-- (void)removeOperationWithID:(NSString *)operationID {
+- (NSArray<NSDictionary *> *)removeOperationWithID:(NSString *)operationID {
     if ([self containsOperationWithID:operationID]) {
         @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                        reason:@"Cannot remove added value from FWW Register"
                                      userInfo:nil];
     }
-    [self.removes addObject:operationID];
+    return [super removeOperationWithID:operationID];
 }
 
 @end

@@ -36,7 +36,8 @@
 
 - (void)setButtons:(NSArray<LYRUIChoiceButton *> *)buttons {
     [super setButtons:buttons];
-    if (self.selectedIdentifiers.count == 0) {
+    NSString *userID = self.layerConfiguration.client.authenticatedUser.identifier.absoluteString;
+    if (self.selectedIdentifiers.count == 0 || ![self.choiceSet.enabledFor containsObject:userID]) {
         return;
     }
     for (LYRUIChoiceButton *button in buttons) {

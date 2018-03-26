@@ -26,11 +26,20 @@
 #import "LYRUIChoice.h"
 #import "LYRUIMessageActionSerializer.h"
 #import "LYRUIORSet.h"
-#import "LYRUIFWWRegister.h"
-#import "LYRUILWWRegister.h"
-#import "LYRUILWWNRegister.h"
+#import "LYRUIChoiceSelectionsSetFactory.h"
+
+@interface LYRUIButtonsMessageSerializer ()
+
+@property (nonatomic, strong) LYRUIChoiceSelectionsSetFactory *selectionsSetFactory;
+
+@end
 
 @implementation LYRUIButtonsMessageSerializer
+
+- (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
+    [super setLayerConfiguration:layerConfiguration];
+    self.selectionsSetFactory = [layerConfiguration.injector objectOfType:[LYRUIChoiceSelectionsSetFactory class]];
+}
 
 - (LYRUIButtonsMessage *)typedMessageWithMessagePart:(LYRMessagePart *)messagePart {
     NSArray *buttons = messagePart.properties[@"buttons"];
@@ -65,12 +74,19 @@
             
             NSString *responseName = dataProperties[@"response_name"] ?: @"selection";
             
+            LYRUIORSet *initialResponseState;
+            if (messagePart.properties[@"initial_response_state"]) {
+                initialResponseState = [self.selectionsSetFactory selectionsSetFromInitialResponseState:messagePart.properties[@"initial_response_state"]
+                                                                                         dataProperties:dataProperties
+                                                                                     customResponseName:responseName];
+            }
+            
             LYRUIORSet *selectionsSet;
             LYRMessagePart *responseSummaryPart = [messagePart childPartWithRole:@"response_summary"];
             if (responseSummaryPart != nil) {
-                selectionsSet = [self selectionsSetFromResponseSummary:responseSummaryPart.properties
-                                                              dataProperties:dataProperties
-                                                          customResponseName:responseName];
+                selectionsSet = [self.selectionsSetFactory selectionsSetFromResponseSummary:responseSummaryPart.properties
+                                                                             dataProperties:dataProperties
+                                                                         customResponseName:responseName];
             }
             
             LYRUIButtonsMessageChoiceButton *button = [[LYRUIButtonsMessageChoiceButton alloc] initWithChoices:choices
@@ -79,7 +95,8 @@
                                                                                               allowMultiselect:[dataProperties[@"allow_multiselect"] boolValue]
                                                                                                           name:dataProperties[@"name"]
                                                                                                   responseName:responseName
-                                                                                             preselectedChoice:dataProperties[@"preselected_choice"]
+                                                                                                    enabledFor:[self setWithEnabledFor:dataProperties[@"enabled_for"]]
+                                                                                          initialResponseState:initialResponseState
                                                                                                  selectionsSet:selectionsSet
                                                                                              responseMessageId:[messagePart.message.identifier absoluteString]
                                                                                                 responseNodeId:messagePart.nodeId];
@@ -95,26 +112,6 @@
                                                  status:[self statusWithMessage:messagePart.message]];
 }
 
-- (LYRUIORSet *)selectionsSetFromResponseSummary:(NSDictionary *)responseSummary
-                                  dataProperties:(NSDictionary *)dataProperties
-                              customResponseName:(NSString *)responseName {
-    NSString *currentUserID = self.layerConfiguration.client.authenticatedUser.identifier.lastPathComponent;
-    NSDictionary *userData = responseSummary[currentUserID];
-    NSDictionary *selectionsSetDictionary = userData[responseName];
-    if (selectionsSetDictionary == nil || ![selectionsSetDictionary isKindOfClass:[NSDictionary class]]) {
-        return nil;
-    }
-    if ([dataProperties[@"allow_multiselect"] boolValue]) {
-        return [[LYRUIORSet alloc] initWithPropertyName:responseName dictionary:selectionsSetDictionary];
-    } else if ([dataProperties[@"allow_deselect"] boolValue]) {
-        return [[LYRUILWWNRegister alloc] initWithPropertyName:responseName dictionary:selectionsSetDictionary];
-    } else if ([dataProperties[@"allow_reselect"] boolValue]) {
-        return [[LYRUILWWRegister alloc] initWithPropertyName:responseName dictionary:selectionsSetDictionary];
-    } else {
-        return [[LYRUIFWWRegister alloc] initWithPropertyName:responseName dictionary:selectionsSetDictionary];
-    }
-}
-
 - (LYRUIButtonsMessageActionButton *)buttonWithProperties:(NSDictionary *)buttonProperties defaultAction:(LYRUIMessageAction *)action {
     if (buttonProperties[@"event"] != nil && buttonProperties[@"data"] != nil) {
         action = [[LYRUIMessageAction alloc] initWithEvent:buttonProperties[@"event"] data:buttonProperties[@"data"]];
@@ -124,10 +121,20 @@
     return button;
 }
 
+- (NSSet<NSString *> *)setWithEnabledFor:(id)enabledFor {
+    if ([enabledFor isKindOfClass:[NSString class]]) {
+        return [NSSet setWithObject:enabledFor];
+    } else if ([enabledFor isKindOfClass:[NSArray class]]) {
+        return [NSSet setWithArray:enabledFor];
+    }
+    return nil;
+}
+
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUIButtonsMessage *)messageType
                                                     parentNodeId:(NSString *)parentNodeId
                                                             role:(NSString *)role {
     NSMutableArray *buttons = [[NSMutableArray alloc] init];
+    NSMutableArray *initialResponseOperations = [[NSMutableArray alloc] init];
     for (id<LYRUIButtonsMessageButton> button in messageType.buttons) {
         if ([button.type isEqualToString:@"action"]) {
             LYRUIButtonsMessageActionButton *actionButton = (LYRUIButtonsMessageActionButton *)button;
@@ -138,12 +145,43 @@
             buttonJson[@"data"] = actionButton.action.data;
             [buttons addObject:buttonJson];
         } else if ([button.type isEqualToString:@"choice"]) {
-            // TODO: implement
+            LYRUIButtonsMessageChoiceButton *choiceButton = (LYRUIButtonsMessageChoiceButton *)button;
+            
+            NSArray *operations = [self operationsForInitialResponseState:choiceButton.initialResponseState
+                                                               enabledFor:choiceButton.enabledFor];
+            [initialResponseOperations addObjectsFromArray:operations];
+            
+            NSMutableArray *choices = [[NSMutableArray alloc] init];
+            for (LYRUIChoice *choice in choiceButton.choices) {
+                NSMutableDictionary *choiceJson = [[NSMutableDictionary alloc] init];
+                choiceJson[@"id"] = choice.identifier;
+                choiceJson[@"text"] = choice.text;
+                choiceJson[@"tooltip"] = choice.tooltip;
+                [choices addObject:choiceJson];
+            }
+            
+            NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
+            data[@"allow_reselect"] = @(choiceButton.allowReselect);
+            data[@"allow_deselect"] = @(choiceButton.allowDeselect);
+            data[@"allow_multiselect"] = @(choiceButton.allowMultiselect);
+            data[@"response_name"] = choiceButton.responseName;
+            data[@"enabled_for"] = choiceButton.enabledFor.anyObject;
+            
+            [buttons addObject:@{
+                    @"choices": choices,
+                    @"data": data,
+            }];
         }
     }
     
     NSMutableDictionary *messageJson = [[NSMutableDictionary alloc] init];
     messageJson[@"buttons"] = buttons;
+    if (initialResponseOperations.count > 0) {
+        messageJson[@"initial_response_state"] = initialResponseOperations;
+        NSString *MIMEType = [self MIMETypeForContentType:@"application/vnd.layer.initialresponsestate-v1+json"
+                                             parentNodeId:nil
+                                                     role:@"initial_response_summary"];
+    }
     [messageJson addEntriesFromDictionary:[self.actionSerializer propertiesForAction:messageType.action]];
 
     NSError *error = nil;
@@ -168,7 +206,38 @@
         }
     }
     
+    NSData *initialResponseData;
+    if (initialResponseOperations.count > 0) {
+        initialResponseData = [NSJSONSerialization dataWithJSONObject:initialResponseOperations options:0 error:&error];
+        if (error) {
+            NSLog(@"Failed to serialize initial response JSON object: %@", error);
+        }
+    }
+    if (initialResponseData) {
+        NSString *MIMEType = [self MIMETypeForContentType:@"application/vnd.layer.initialresponsestate-v1+json"
+                                             parentNodeId:messagePart.nodeId
+                                                     role:@"initial_response_summary"];
+        LYRMessagePart *initialResponsePart = [LYRMessagePart messagePartWithMIMEType:MIMEType data:initialResponseData];
+        [messageParts addObject:initialResponsePart];
+    }
+    
     return messageParts;
+}
+
+- (NSArray *)operationsForInitialResponseState:(LYRUIORSet *)initialResponseState
+                                    enabledFor:(NSSet<NSString *> *)enabledFor {
+    if (initialResponseState == nil || enabledFor.count == 0) {
+        return @[];
+    }
+    NSMutableArray *initialResponseOperations = [[NSMutableArray alloc] init];
+    for (NSString *identityID in enabledFor) {
+        for (NSDictionary *operation in initialResponseState.operationsDictionaries) {
+            NSMutableDictionary *operationWithID = [operation mutableCopy];
+            operationWithID[@"identity_id"] = identityID;
+            [initialResponseOperations addObject:operationWithID];
+        }
+    }
+    return initialResponseOperations;
 }
 
 - (LYRMessageOptions *)messageOptionsForTypedMessage:(LYRUIMessageType *)messageType {

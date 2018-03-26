@@ -108,7 +108,7 @@
     Class<LYRUIChoiceSelectionHandling> handlerClass;
     if (choiceButton.allowMultiselect) {
         handlerClass = [LYRUIChoiceMultiSelectionHandler class];
-    } else if (choiceButton.allowReselect) {
+    } else if (choiceButton.allowReselect || choiceButton.allowDeselect) {
         handlerClass = [LYRUIChoiceSingleReSelectionHandler class];
     } else {
         handlerClass = [LYRUIChoiceSingleSelectionHandler class];

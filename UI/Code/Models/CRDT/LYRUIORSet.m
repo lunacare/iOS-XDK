@@ -94,6 +94,17 @@
     };
 }
 
+- (NSArray *)operationsDictionaries {
+    NSMutableArray *operations = [[NSMutableArray alloc] initWithCapacity:self.adds.count + self.removes.count];
+    for (LYRUIOROperation *operation in self.adds) {
+        [operations addObject:[self dictionaryForOperation:@"add" value:operation.value identifier:operation.operationID]];
+    }
+    for (NSString *operationID in self.removes) {
+        [operations addObject:[self dictionaryForOperation:@"remove" value:nil identifier:operationID]];
+    }
+    return [operations copy];
+}
+
 - (NSOrderedSet *)selectedValues {
     NSMutableOrderedSet *values = [[NSMutableOrderedSet alloc] init];
     for (LYRUIOROperation *operation in self.adds) {
@@ -104,18 +115,23 @@
 
 #pragma mark - Public methods
 
-- (void)addOperation:(LYRUIOROperation *)operation {
+- (NSArray<NSDictionary *> *)addOperation:(LYRUIOROperation *)operation {
     if ([self containsOperationWithID:operation.operationID]) {
-        return;
+        return nil;
     }
     [self.adds addObject:operation];
+    return @[[self dictionaryForOperation:@"add" value:operation.value identifier:operation.operationID]];
 }
 
-- (void)removeOperationWithID:(NSString *)operationID {
+- (NSArray<NSDictionary *> *)removeOperationWithID:(NSString *)operationID {
+    NSString *value = nil;
     if ([self containsOperationWithID:operationID]) {
-        [self.adds removeObject:[self operationWithID:operationID]];
+        LYRUIOROperation *operation = [self operationWithID:operationID];
+        [self.adds removeObject:operation];
+        value = operation.value;
     }
     [self.removes addObject:operationID];
+    return @[[self dictionaryForOperation:@"remove" value:value identifier:operationID]];
 }
 
 - (void)synchronizeWithSet:(LYRUIORSet *)remoteSet {
@@ -157,6 +173,19 @@
                                      userInfo:nil];
     }
     return operationsWithID.firstObject;
+}
+
+- (NSDictionary *)dictionaryForOperation:(NSString *)operation
+                                   value:(nullable NSString *)value
+                              identifier:(NSString *)identifier {
+    NSMutableDictionary *operationDictionary = [[NSMutableDictionary alloc] initWithDictionary:@{
+            @"operation": operation,
+            @"type": self.type,
+            @"name": self.propertyName,
+            @"id": identifier,
+    }];
+    operationDictionary[@"value"] = value;
+    return [operationDictionary copy];
 }
 
 @end
