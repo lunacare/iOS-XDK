@@ -79,6 +79,7 @@
                                        allowReselect:[messagePart.properties[@"allow_reselect"] boolValue]
                                        allowDeselect:[messagePart.properties[@"allow_deselect"] boolValue]
                                     allowMultiselect:[messagePart.properties[@"allow_multiselect"] boolValue]
+                                                name:messagePart.properties[@"name"]
                                         responseName:responseName
                                   customResponseData:messagePart.properties[@"custom_data_response"]
                                    preselectedChoice:messagePart.properties[@"preselected_choice"]
@@ -151,6 +152,7 @@
     messageJson[@"allow_reselect"] = @(messageType.allowReselect);
     messageJson[@"allow_deselect"] = @(messageType.allowDeselect);
     messageJson[@"allow_multiselect"] = @(messageType.allowMultiselect);
+    messageJson[@"name"] = messageType.name;
     messageJson[@"response_name"] = messageType.responseName;
     messageJson[@"custom_data_response"] = messageType.customResponseData;
     messageJson[@"preselected_choice"] = messageType.preselectedChoice;

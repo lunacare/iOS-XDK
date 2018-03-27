@@ -82,21 +82,34 @@
         }
     }
     
+    [self sendActionForChoice:choice selection:selected];
+}
+
+- (void)sendActionForChoice:(LYRUIChoice *)choice selection:(BOOL)selected {
     NSMutableDictionary *participantData = [[NSMutableDictionary alloc] init];
     NSString *responseName = self.choiceSet.responseName;
     [participantData addEntriesFromDictionary:self.choiceSet.customResponseData];
     participantData[responseName] = [self.selectedIdentifiers.array componentsJoinedByString:@","];
     [participantData addEntriesFromDictionary:choice.customResponseData];
-    NSString *senderName = self.layerConfiguration.client.authenticatedUser.displayName;
-    NSString *selectionString = selected ? @"selected" : @"deselected";
-    NSString *responseMessageText = [NSString stringWithFormat:@"%@ has %@ \"%@\"", senderName, selectionString, choice.text];
+    
     NSMutableDictionary *actionData = [[NSMutableDictionary alloc] init];
     actionData[@"response_to"] = self.choiceSet.responseMessageId;
     actionData[@"response_to_node_id"] = self.choiceSet.responseNodeId;
     actionData[@"participant_data"] = participantData;
-    actionData[@"text"] = responseMessageText;
+    actionData[@"text"] = [self responseMessageTextForSelecting:selected choice:choice];
+    
     LYRUIMessageAction *action = [[LYRUIMessageAction alloc] initWithEvent:@"layer-choice-select" data:actionData];
     [self.actionHandlingDelegate handleAction:action withHandler:nil];
+}
+
+- (NSString *)responseMessageTextForSelecting:(BOOL)selected choice:(LYRUIChoice *)choice {
+    NSString *senderName = self.layerConfiguration.client.authenticatedUser.displayName;
+    NSString *selectionString = selected ? @"selected" : @"deselected";
+    NSString *responseMessageText = [NSString stringWithFormat:@"%@ has %@ \"%@\"", senderName, selectionString, choice.text];
+    if (self.choiceSet.name.length > 0) {
+        responseMessageText = [responseMessageText stringByAppendingFormat:@" from \"%@\"", self.choiceSet.name];
+    }
+    return responseMessageText;
 }
 
 @end

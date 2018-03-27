@@ -26,6 +26,7 @@
 @property (nonatomic, readwrite) BOOL allowReselect;
 @property (nonatomic, readwrite) BOOL allowDeselect;
 @property (nonatomic, readwrite) BOOL allowMultiselect;
+@property (nonatomic, readwrite) NSString *name;
 @property (nonatomic, readwrite) NSString *responseName;
 @property (nonatomic, readwrite) NSString *preselectedChoice;
 @property (nonatomic, readwrite) NSOrderedSet<NSString *> *selectedChoices;
@@ -42,6 +43,7 @@
                   allowDeselect:(BOOL)allowDeselect
                   allowReselect:(BOOL)allowReselect
                allowMultiselect:(BOOL)allowMultiselect
+                           name:(NSString *)name
                    responseName:(NSString *)responseName
               preselectedChoice:(NSString *)preselectedChoice
                 selectedChoices:(NSOrderedSet<NSString *> *)selectedChoices
@@ -53,6 +55,7 @@
         self.allowDeselect = allowDeselect;
         self.allowReselect = allowReselect;
         self.allowMultiselect = allowMultiselect;
+        self.name = name;
         self.responseName = responseName;
         self.preselectedChoice = preselectedChoice;
         self.selectedChoices = selectedChoices;

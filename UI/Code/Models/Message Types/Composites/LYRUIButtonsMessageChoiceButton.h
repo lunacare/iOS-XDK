@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
                   allowDeselect:(BOOL)allowDeselect
                   allowReselect:(BOOL)allowReselect
                allowMultiselect:(BOOL)allowMultiselect
+                           name:(nullable NSString *)name
                    responseName:(nullable NSString *)responseName
               preselectedChoice:(nullable NSString *)preselectedChoice
                 selectedChoices:(nullable NSOrderedSet<NSString *> *)selectedChoices
