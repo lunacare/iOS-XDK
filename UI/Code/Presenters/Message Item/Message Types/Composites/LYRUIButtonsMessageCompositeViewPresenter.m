@@ -79,7 +79,7 @@
     button.titleLabel.adjustsFontSizeToFitWidth = YES;
     button.titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
     button.backgroundColor = [UIColor whiteColor];
-    button.titleLabel.font = [UIFont systemFontOfSize:16.0];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
     button.titleLabel.numberOfLines = 0;
     button.titleLabel.textAlignment = NSTextAlignmentCenter;
     
