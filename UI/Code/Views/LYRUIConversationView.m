@@ -26,6 +26,7 @@
 #import "LYRUIMessageSender.h"
 #import <LayerKit/LayerKit.h>
 #import "LYRUIConversationViewIBSetup.h"
+#import "LYRUIKeyboardAccessoryView.h"
 
 @interface LYRUIConversationView ()
 
@@ -69,6 +70,7 @@
     self.messageListView = messageListView;
     
     LYRUIComposeBar *composeBar = [[LYRUIComposeBar alloc] init];
+    composeBar.inputTextView.inputAccessoryView = [[LYRUIKeyboardAccessoryView alloc] initWithConversationView:self];
     [self addSubview:composeBar];
     self.composeBar = composeBar;
     

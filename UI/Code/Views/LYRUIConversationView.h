@@ -69,4 +69,9 @@ IB_DESIGNABLE
  */
 @property (nonatomic, copy) IBOutlet id<LYRUIConversationViewLayout> layout;
 
+/**
+ @abstract An constraint which will be updated with keyboard height to properly move compose bar.
+ */
+@property (nonatomic, weak) NSLayoutConstraint *keyboardMaintainedConstraint;
+
 @end
