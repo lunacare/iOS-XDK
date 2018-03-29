@@ -22,35 +22,20 @@
 #import "LYRUIChoice.h"
 
 NS_ASSUME_NONNULL_BEGIN     // {
-@protocol LYRUIChoiceProperties <NSObject>
-
-@property (nonatomic, strong, readonly, nullable) NSString *text;
-@property (nonatomic, strong, readonly, nullable) NSString *tooltip;
-
-@end
-
-@interface LYRUIChoice : LYRUIButtonsMessageActionButton <LYRUIChoiceProperties>
+@interface LYRUIChoice : LYRUIButtonsMessageActionButton
 
 @property (nonatomic, strong, readonly) NSString *identifier;
 @property (nonatomic, strong, readonly) NSString *text;
+@property (nonatomic, strong, readonly, nullable) NSString *selectedText;
 @property (nonatomic, strong, readonly, nullable) NSDictionary *customResponseData;
 
-@property (nonatomic, strong, readonly, nullable) id<LYRUIChoiceProperties> defaultStateProperties;
-@property (nonatomic, strong, readonly, nullable) id<LYRUIChoiceProperties> selectedStateProperties;
-
-- (instancetype)initWithText:(nullable NSString *)text
-                     tooltip:(nullable NSString *)tooltip;
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                              text:(NSString *)text;
 
 - (instancetype)initWithIdentifier:(NSString *)identifier
                               text:(NSString *)text
-                           tooltip:(nullable NSString *)tooltip;
-
-- (instancetype)initWithIdentifier:(NSString *)identifier
-                              text:(NSString *)text
-                           tooltip:(nullable NSString *)tooltip
-                customResponseData:(nullable NSDictionary *)customResponseData
-            defaultStateProperties:(nullable id<LYRUIChoiceProperties>)defaultStateProperties
-           selectedStateProperties:(nullable id<LYRUIChoiceProperties>)selectedStateProperties;
+                      selectedText:(nullable NSString *)selectedText
+                customResponseData:(nullable NSDictionary *)customResponseData;
 
 @end
 NS_ASSUME_NONNULL_END       // }

@@ -66,8 +66,9 @@
             NSArray *choicesProperties = buttonProperties[@"choices"];
             for (NSDictionary *choiceProperties in choicesProperties) {
                 LYRUIChoice *choice = [[LYRUIChoice alloc] initWithIdentifier:choiceProperties[@"id"]
-                                                                         text:choiceProperties[@"text"]
-                                                                      tooltip:choiceProperties[@"tooltip"]];
+                                                                         text:choiceProperties[@"states"][@"default"][@"text"] ?: choiceProperties[@"text"]
+                                                                 selectedText:choiceProperties[@"states"][@"selected"][@"text"]
+                                                           customResponseData:choiceProperties[@"custom_response_data"]];
                 [choices addObject:choice];
             }
             NSDictionary *dataProperties = buttonProperties[@"data"];
@@ -132,7 +133,8 @@
 
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUIButtonsMessage *)messageType
                                                     parentNodeId:(NSString *)parentNodeId
-                                                            role:(NSString *)role {
+                                                            role:(NSString *)role
+                                              MIMETypeAttributes:(NSDictionary *)MIMETypeAttributes {
     NSMutableArray *buttons = [[NSMutableArray alloc] init];
     NSMutableArray *initialResponseOperations = [[NSMutableArray alloc] init];
     for (id<LYRUIButtonsMessageButton> button in messageType.buttons) {
@@ -156,7 +158,10 @@
                 NSMutableDictionary *choiceJson = [[NSMutableDictionary alloc] init];
                 choiceJson[@"id"] = choice.identifier;
                 choiceJson[@"text"] = choice.text;
-                choiceJson[@"tooltip"] = choice.tooltip;
+                if (choice.selectedText) {
+                    choiceJson[@"states"] = @{ @"selected" : @{ @"text": choice.selectedText } };
+                }
+                choiceJson[@"custom_response_data"] = choice.customResponseData;
                 [choices addObject:choiceJson];
             }
             
@@ -180,7 +185,8 @@
         messageJson[@"initial_response_state"] = initialResponseOperations;
         NSString *MIMEType = [self MIMETypeForContentType:@"application/vnd.layer.initialresponsestate-v1+json"
                                              parentNodeId:nil
-                                                     role:@"initial_response_summary"];
+                                                     role:@"initial_response_summary"
+                                               attributes:MIMETypeAttributes];
     }
     [messageJson addEntriesFromDictionary:[self.actionSerializer propertiesForAction:messageType.action]];
 
@@ -191,7 +197,10 @@
         return nil;
     }
     NSMutableArray *messageParts = [[NSMutableArray alloc] init];
-    NSString *MIMEType = [self MIMETypeForContentType:messageType.MIMEType parentNodeId:parentNodeId role:role];
+    NSString *MIMEType = [self MIMETypeForContentType:messageType.MIMEType
+                                         parentNodeId:parentNodeId
+                                                 role:role
+                                           attributes:MIMETypeAttributes];
     LYRMessagePart *messagePart = [LYRMessagePart messagePartWithMIMEType:MIMEType data:messageJsonData];
     [messageParts addObject:messagePart];
     
@@ -216,7 +225,8 @@
     if (initialResponseData) {
         NSString *MIMEType = [self MIMETypeForContentType:@"application/vnd.layer.initialresponsestate-v1+json"
                                              parentNodeId:messagePart.nodeId
-                                                     role:@"initial_response_summary"];
+                                                     role:@"initial_response_summary"
+                                               attributes:MIMETypeAttributes];
         LYRMessagePart *initialResponsePart = [LYRMessagePart messagePartWithMIMEType:MIMEType data:initialResponseData];
         [messageParts addObject:initialResponsePart];
     }

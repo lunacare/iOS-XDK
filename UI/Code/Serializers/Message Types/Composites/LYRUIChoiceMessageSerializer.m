@@ -48,20 +48,11 @@
     
     NSMutableArray *serializedChoices = [[NSMutableArray alloc] init];
     for (NSDictionary *choiceProperties in choices) {
-        id<LYRUIChoiceProperties> selectedChoiceProperties;
-        id<LYRUIChoiceProperties> defaultChoiceProperties;
-        NSDictionary *states = choiceProperties[@"states"];
-        if (states != nil && [states isKindOfClass:[NSDictionary class]]) {
-            selectedChoiceProperties = [self choicePropertiesWithDictionary:states[@"selected"]];
-            defaultChoiceProperties = [self choicePropertiesWithDictionary:states[@"default"]];
-        }
-        
         LYRUIChoice *choice = [[LYRUIChoice alloc] initWithIdentifier:choiceProperties[@"id"]
-                                                                 text:choiceProperties[@"text"]
-                                                              tooltip:choiceProperties[@"tooltip"]
-                                                   customResponseData:choiceProperties[@"custom_response_data"]
-                                               defaultStateProperties:defaultChoiceProperties
-                                              selectedStateProperties:selectedChoiceProperties];
+                                                                 text:choiceProperties[@"states"][@"default"][@"text"] ?: choiceProperties[@"text"]
+                                                         selectedText:choiceProperties[@"states"][@"selected"][@"text"]
+                                                   customResponseData:choiceProperties[@"custom_response_data"]];
+        
         [serializedChoices addObject:choice];
     }
     
@@ -113,14 +104,6 @@
                                               status:[self statusWithMessage:messagePart.message]];
 }
 
-- (id<LYRUIChoiceProperties>)choicePropertiesWithDictionary:(NSDictionary *)dictionary {
-    if (dictionary == nil || ![dictionary isKindOfClass:[NSDictionary class]]) {
-        return nil;
-    }
-    return [[LYRUIChoice alloc] initWithText:dictionary[@"text"]
-                                     tooltip:dictionary[@"tooltip"]];
-}
-
 - (LYRUIChoiceMessageType)choiceMessageTypeWithString:(NSString *)string {
     if ([string isEqualToString:@"label"]) {
         return LYRUIChoiceMessageTypeLabel;
@@ -139,20 +122,17 @@
 
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUIChoiceMessage *)messageType
                                                     parentNodeId:(NSString *)parentNodeId
-                                                            role:(NSString *)role {
+                                                            role:(NSString *)role
+                                              MIMETypeAttributes:(NSDictionary *)MIMETypeAttributes {
     NSMutableArray *choices = [[NSMutableArray alloc] init];
     for (LYRUIChoice *choice in messageType.choices) {
         NSMutableDictionary *choiceJson = [[NSMutableDictionary alloc] init];
         choiceJson[@"id"] = choice.identifier;
         choiceJson[@"text"] = choice.text;
-        choiceJson[@"tooltip"] = choice.tooltip;
-        choiceJson[@"custom_response_data"] = choice.customResponseData;
-        NSMutableDictionary *states = [[NSMutableDictionary alloc] init];
-        states[@"default"] = [self dictionaryForChoiceProperties:choice.defaultStateProperties];
-        states[@"selected"] = [self dictionaryForChoiceProperties:choice.selectedStateProperties];
-        if (states.allKeys.count > 0) {
-            choiceJson[@"states"] = states;
+        if (choice.selectedText) {
+            choiceJson[@"states"] = @{ @"selected" : @{ @"text": choice.selectedText } };
         }
+        choiceJson[@"custom_response_data"] = choice.customResponseData;
         [choices addObject:choiceJson];
     }
     
@@ -182,7 +162,10 @@
         return nil;
     }
     NSMutableArray *messageParts = [[NSMutableArray alloc] init];
-    NSString *MIMEType = [self MIMETypeForContentType:messageType.MIMEType parentNodeId:parentNodeId role:role];
+    NSString *MIMEType = [self MIMETypeForContentType:messageType.MIMEType
+                                         parentNodeId:parentNodeId
+                                                 role:role
+                                           attributes:MIMETypeAttributes];
     LYRMessagePart *messagePart = [LYRMessagePart messagePartWithMIMEType:MIMEType data:messageJsonData];
     [messageParts addObject:messagePart];
     
@@ -196,23 +179,13 @@
     if (initialResponseData) {
         NSString *MIMEType = [self MIMETypeForContentType:@"application/vnd.layer.initialresponsestate-v1+json"
                                              parentNodeId:messagePart.nodeId
-                                                     role:@"initial_response_summary"];
+                                                     role:@"initial_response_summary"
+                                               attributes:MIMETypeAttributes];
         LYRMessagePart *initialResponsePart = [LYRMessagePart messagePartWithMIMEType:MIMEType data:initialResponseData];
         [messageParts addObject:initialResponsePart];
     }
     
     return messageParts;
-}
-
-- (NSDictionary *)dictionaryForChoiceProperties:(id<LYRUIChoiceProperties>)choiceProperties {
-    if (choiceProperties == nil) {
-        return nil;
-    }
-    
-    NSMutableDictionary *choicePropertiesDictionary = [[NSMutableDictionary alloc] init];
-    choicePropertiesDictionary[@"text"] = choiceProperties.text;
-    choicePropertiesDictionary[@"tooltip"] = choiceProperties.tooltip;
-    return choicePropertiesDictionary;
 }
 
 - (NSString *)stringForChoiceMessageType:(LYRUIChoiceMessageType)type {

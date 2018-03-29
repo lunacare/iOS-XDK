@@ -49,10 +49,31 @@
 
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUICarouselMessage *)messageType
                                                     parentNodeId:(NSString *)parentNodeId
-                                                            role:(NSString *)role {
-    //TODO: implement
+                                                            role:(NSString *)role
+                                              MIMETypeAttributes:(NSDictionary *)MIMETypeAttributes {
+    NSMutableArray *messageParts = [[NSMutableArray alloc] init];
+    NSString *MIMEType = [self MIMETypeForContentType:messageType.MIMEType
+                                         parentNodeId:parentNodeId
+                                                 role:role
+                                           attributes:MIMETypeAttributes];
+    LYRMessagePart *messagePart = [LYRMessagePart messagePartWithMIMEType:MIMEType data:[NSData data]];
+    [messageParts addObject:messagePart];
     
-    return @[];
+    NSArray<LYRMessagePart *> *contentParts;
+    NSUInteger i = 0;
+    for (LYRUIMessageType *itemMessage in messageType.carouselItemMessages) {
+        id<LYRUIMessageTypeSerializing> contentSerializer = [self.layerConfiguration.injector serializerForMessagePartMIMEType:itemMessage.MIMEType];
+        contentParts = [contentSerializer layerMessagePartsWithTypedMessage:itemMessage
+                                                               parentNodeId:messagePart.nodeId
+                                                                       role:@"carousel-item"
+                                                         MIMETypeAttributes:@{ @"item-order": @(i) }];
+        if (contentParts) {
+            [messageParts addObjectsFromArray:contentParts];
+        }
+        i += 1;
+    }
+    
+    return messageParts;
 }
 
 - (LYRMessageOptions *)messageOptionsForTypedMessage:(LYRUIMessageType *)messageType {

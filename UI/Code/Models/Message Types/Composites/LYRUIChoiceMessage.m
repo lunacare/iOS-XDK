@@ -81,7 +81,7 @@
         self.allowDeselect = allowDeselect;
         self.allowMultiselect = allowMultiselect;
         self.name = name;
-        self.responseName = responseName;
+        self.responseName = responseName ?: @"selection";
         self.enabledFor = enabledFor;
         self.customResponseData = customResponseData;
         self.selectionsSet = selectionsSet;
@@ -104,6 +104,9 @@
            customResponseData:(NSDictionary *)customResponseData
                    enabledFor:(NSString *)enabledFor
                selectedChoice:(NSString *)selectedChoice {
+    if (responseName == nil) {
+        responseName = @"selection";
+    }
     LYRUIORSet *initialResponseState;
     if (selectedChoice) {
         initialResponseState = [[[LYRUIChoiceSelectionsSetFactory alloc] init] selectionsSetWithResponseName:responseName
