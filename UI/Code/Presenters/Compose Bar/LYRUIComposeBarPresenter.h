@@ -45,7 +45,8 @@
 
 /**
  @abstract Cleans all observers from the `LYRUIComposeBar` configured using `configureComposeBar:` method.
+ @param composeBar An `LYRUIComposeBar` to be cleaned up.
  */
-- (void)cleanup;
+- (void)cleanupComposeBar:(LYRUIComposeBar *)composeBar;
 
 @end

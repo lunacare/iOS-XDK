@@ -114,7 +114,7 @@
 }
 
 - (void)dealloc {
-    [self.presenter cleanup];
+    [self.presenter cleanupComposeBar:self];
 }
 
 #pragma mark - Properties
