@@ -19,11 +19,17 @@
 //
 
 #import <Foundation/Foundation.h>
+@class LYRUIMessageListView;
 @class LYRConversation;
+@class LYRUITypingIndicator;
 
 @protocol LYRUIMessageListTypingIndicatorsControlling <NSObject>
 
-@property (nonatomic, weak) UICollectionView *collectionView;
+@property (nonatomic, weak) LYRUIMessageListView *messageListView;
+
+@property (nonatomic, readonly) BOOL typingIndicatorPresented;
+
+@property (nonatomic, strong, readonly) LYRUITypingIndicator *typingIndicator;
 
 - (void)registerForNotificationsInConversation:(LYRConversation *)conversation;
 

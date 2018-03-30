@@ -27,18 +27,21 @@
 #import "LYRUIBubbleTypingIndicatorView.h"
 #import "LYRUIDotsBubbleView.h"
 #import "LYRUITypingIndicator.h"
+#import "LYRUIMessageListView.h"
 
 @interface LYRUIMessageListTypingIndicatorsController ()
 
+@property (nonatomic, readonly) UICollectionView *collectionView;
 @property (nonatomic, strong) NSNotificationCenter *notificationCenter;
 @property (nonatomic, strong) NSMutableSet<LYRIdentity *> *typingParticipants;
 @property (nonatomic, strong) LYRConversation *conversation;
-@property (nonatomic, strong) LYRUITypingIndicator *typingIndicator;
+@property (nonatomic, strong, readwrite) LYRUITypingIndicator *typingIndicator;
+@property (nonatomic, readwrite) BOOL typingIndicatorPresented;
 
 @end
 
 @implementation LYRUIMessageListTypingIndicatorsController
-@synthesize collectionView = _collectionView,
+@synthesize messageListView = _messageListView,
             layerConfiguration = _layerConfiguration;
 
 - (instancetype)init {
@@ -76,6 +79,12 @@
     [self.notificationCenter removeObserver:self];
 }
 
+#pragma mark - Properties
+
+- (UICollectionView *)collectionView {
+    return self.messageListView.collectionView;
+}
+
 #pragma mark - Notification handler
 
 - (void)didReceiveTypingIndicator:(NSNotification *)notification {
@@ -104,51 +113,75 @@
 }
 
 - (void)addTypingIndicators {
+    if (self.typingIndicatorPresented) {
+        return;
+    }
+    
+    self.typingIndicatorPresented = YES;
+    
     CGPoint oldOffset = self.collectionView.contentOffset;
     BOOL shouldScrollToBottom = [self shouldScrollToBottom];
     
-    if ([self dataSourceContainsTypingIndicator:YES]) {
-        return;
-    }
     NSIndexPath *indexPath = [self newItemIndexPath];
     LYRUIListSection *section = [self typingIndicatorSection];
+    __weak __typeof(self) weakSelf = self;
     [self.collectionView performBatchUpdates:^{
-        [section.items addObject:self.typingIndicator];
-        [self.collectionView.collectionViewLayout invalidateLayout];
-        [self.collectionView insertItemsAtIndexPaths:@[indexPath]];
+        if ([weakSelf inlineTypingIndicatorEnabled]) {
+            [section.items addObject:weakSelf.typingIndicator];
+        }
+        [weakSelf.collectionView.collectionViewLayout invalidateLayout];
+        if ([weakSelf inlineTypingIndicatorEnabled]) {
+            [weakSelf.collectionView insertItemsAtIndexPaths:@[indexPath]];
+        }
     } completion:^(BOOL finished) {
-        self.collectionView.contentOffset = oldOffset;
+        weakSelf.collectionView.contentOffset = oldOffset;
         LYRUIBubbleTypingIndicatorCollectionViewCell *typingIndicatorCell =
-            (LYRUIBubbleTypingIndicatorCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+            (LYRUIBubbleTypingIndicatorCollectionViewCell *)[weakSelf.collectionView cellForItemAtIndexPath:indexPath];
         typingIndicatorCell.typingIndicatorView.bubbleView.animating = YES;
-        if (typingIndicatorCell && shouldScrollToBottom) {
-            [self scrollToBottom];
+        if (shouldScrollToBottom) {
+            [weakSelf scrollToBottom];
         }
     }];
 }
 
 - (void)removeTypingIndicators {
+    if (!self.typingIndicatorPresented) {
+        return;
+    }
+    
+    self.typingIndicatorPresented = NO;
+    
     CGPoint oldOffset = self.collectionView.contentOffset;
     BOOL shouldMaintainOffset = [self shouldMaintainOffset];
     BOOL shouldScrollToBottom = [self shouldScrollToBottom];
     
-    if ([self dataSourceContainsTypingIndicator:NO]) {
-        return;
-    }
     NSIndexPath *indexPath = [self lastItemIndexPath];
     LYRUIListSection *section = [self typingIndicatorSection];
+    __weak __typeof(self) weakSelf = self;
     [self.collectionView performBatchUpdates:^{
-        [section.items removeObject:self.typingIndicator];
-        [self.collectionView.collectionViewLayout invalidateLayout];
-        [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+        if ([weakSelf inlineTypingIndicatorEnabled]) {
+            [section.items removeObject:weakSelf.typingIndicator];
+        }
+        [weakSelf.collectionView.collectionViewLayout invalidateLayout];
+        if ([weakSelf inlineTypingIndicatorEnabled]) {
+            [weakSelf.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+        }
     } completion:^(BOOL finished) {
         if (shouldMaintainOffset) {
-            self.collectionView.contentOffset = oldOffset;
+            weakSelf.collectionView.contentOffset = oldOffset;
         }
         if (shouldScrollToBottom) {
-            [self scrollToBottom];
+            [weakSelf scrollToBottom];
         }
     }];
+}
+
+- (BOOL)inlineTypingIndicatorEnabled {
+    return (self.messageListView.typingIndicatorMode & LYRUITypingIndicatorModeInline);
+}
+
+- (BOOL)textTypingIndicatorEnabled {
+    return (self.messageListView.typingIndicatorMode & LYRUITypingIndicatorModeText);
 }
 
 - (BOOL)shouldMaintainOffset {
@@ -173,11 +206,6 @@
     return dataSource.sections.firstObject;
 }
 
-- (BOOL)dataSourceContainsTypingIndicator:(BOOL)contains {
-    LYRUIListSection *section = [self typingIndicatorSection];
-    return ([section.items containsObject:self.typingIndicator] == contains);
-}
-
 - (NSIndexPath *)lastItemIndexPath {
     LYRUIListDataSource *dataSource = (LYRUIListDataSource *)self.collectionView.dataSource;
     return [dataSource lastItemIndexPath];
@@ -189,11 +217,12 @@
 }
 
 - (void)updateTypingIndicators {
-    LYRUIListDataSource *dataSource = (LYRUIListDataSource *)self.collectionView.dataSource;
-    LYRUIListSection *section = dataSource.sections.firstObject;
-    if (![section.items containsObject:self.typingIndicator]) {
+    if (!self.typingIndicatorPresented) {
         return;
     }
+
+    LYRUIListDataSource *dataSource = (LYRUIListDataSource *)self.collectionView.dataSource;
+    LYRUIListSection *section = dataSource.sections.firstObject;
     NSUInteger itemIndex = [section.items indexOfObject:self.typingIndicator];
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:itemIndex inSection:0];
     [self.collectionView.collectionViewLayout invalidateLayout];

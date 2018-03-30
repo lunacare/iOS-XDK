@@ -39,9 +39,8 @@
             collectionView = _collectionView;
 
 - (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
-    self = [super initWithFrame:CGRectZero];
+    self = [self initWithFrame:CGRectZero];
     if (self) {
-        [self lyr_commonInit];
         self.layerConfiguration = configuration;
     }
     return self;

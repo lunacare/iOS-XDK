@@ -47,6 +47,22 @@
 @synthesize queryController = _queryController;
 @dynamic queryControllerDelegate, delegate;
 
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.typingIndicatorMode = LYRUITypingIndicatorModeBoth;
+    }
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        self.typingIndicatorMode = LYRUITypingIndicatorModeBoth;
+    }
+    return self;
+}
+
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     [super setLayerConfiguration:layerConfiguration];
     self.messageSender = [layerConfiguration.injector objectOfType:[LYRUIMessageSender class]];

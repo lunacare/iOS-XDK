@@ -22,6 +22,13 @@
 #import "LYRUIConfigurable.h"
 #import "LYRUIListSupplementaryViewPresenting.h"
 #import "LYRUIListSupplementaryViewSizeCalculating.h"
+@protocol LYRUIMessageListTypingIndicatorsControlling;
+@class LYRUIMessageListView;
 
 @interface LYRUITypingIndicatorFooterPresenter : NSObject <LYRUIListSupplementaryViewSizeCalculating, LYRUIListSupplementaryViewPresenting, LYRUIConfigurable>
+
+@property (nonatomic, weak) LYRUIMessageListView *messageListView;
+
+@property (nonatomic, weak) id<LYRUIMessageListTypingIndicatorsControlling> typingIndicatorsController;
+
 @end

@@ -81,7 +81,7 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     
     LYRUIMessageListTypingIndicatorsController *typingIndicatorsController =
         [injector objectOfType:[LYRUIMessageListTypingIndicatorsController class]];
-    typingIndicatorsController.collectionView = messageListView.collectionView;
+    typingIndicatorsController.messageListView = messageListView;
     messageListView.typingIndicatorsController = typingIndicatorsController;
     
     LYRUITypingIndicatorCellPresenter *typingIndicatorCellPresenter =
@@ -89,6 +89,8 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     
     LYRUITypingIndicatorFooterPresenter *typingIndicatorFooterPresenter =
         [injector objectOfType:[LYRUITypingIndicatorFooterPresenter class]];
+    typingIndicatorFooterPresenter.typingIndicatorsController = typingIndicatorsController;
+    typingIndicatorFooterPresenter.messageListView = messageListView;
     
     LYRUIStatusCellPresenter *statusMessageCellPresenter =
         [injector objectOfType:[LYRUIStatusCellPresenter class]];
