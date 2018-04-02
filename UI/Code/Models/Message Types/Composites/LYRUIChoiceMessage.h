@@ -44,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
                 allowReselect:(BOOL)allowReselect
                 allowDeselect:(BOOL)allowDeselect
              allowMultiselect:(BOOL)allowMultiselect
+                         name:(nullable NSString *)name
                  responseName:(nullable NSString *)responseName
            customResponseData:(nullable NSDictionary *)customResponseData
             preselectedChoice:(nullable NSString *)preselectedChoice

@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @property (nonatomic, readonly) BOOL allowDeselect;
 @property (nonatomic, readonly) BOOL allowMultiselect;
 
+@property (nonatomic, strong, readonly, nullable) NSString *name;
 @property (nonatomic, strong, readonly, nullable) NSString *responseName;
 @property (nonatomic, strong, readonly, nullable) NSDictionary *customResponseData;
 @property (nonatomic, strong, readonly, nullable) NSString *preselectedChoice;

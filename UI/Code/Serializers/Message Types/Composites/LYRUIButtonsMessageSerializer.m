@@ -70,9 +70,10 @@
             }
             
             LYRUIButtonsMessageChoiceButton *button = [[LYRUIButtonsMessageChoiceButton alloc] initWithChoices:choices
-                                                                                                 allowDeselect:dataProperties[@"allow_deselect"]
-                                                                                                 allowReselect:dataProperties[@"allow_reselect"]
-                                                                                              allowMultiselect:dataProperties[@"allow_multiselect"]
+                                                                                                 allowDeselect:[dataProperties[@"allow_deselect"] boolValue]
+                                                                                                 allowReselect:[dataProperties[@"allow_reselect"] boolValue]
+                                                                                              allowMultiselect:[dataProperties[@"allow_multiselect"] boolValue]
+                                                                                                          name:dataProperties[@"name"]
                                                                                                   responseName:responseName
                                                                                              preselectedChoice:dataProperties[@"preselected_choice"]
                                                                                                selectedChoices:selectedIdentifiers
