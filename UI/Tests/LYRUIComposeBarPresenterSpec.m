@@ -147,7 +147,7 @@ describe(@"LYRUIComposeBarPresenter", ^{
             
             [presenter configureComposeBar:composeBarMock];
             
-            [presenter cleanup];
+            [presenter cleanupComposeBar:composeBarMock];
         });
         
         it(@"should remove observer for UITextViewTextDidBeginEditingNotification", ^{

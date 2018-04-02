@@ -102,9 +102,9 @@
     [composeBar addObserver:self forKeyPath:@"placeholderColor" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
-- (void)cleanup {
+- (void)cleanupComposeBar:(LYRUIComposeBar *)composeBar {
     [self removeTextViewNotifications];
-    [self removeComposeBarKVO:self.composeBar];
+    [self removeComposeBarKVO:composeBar];
 }
 
 - (void)removeTextViewNotifications {
