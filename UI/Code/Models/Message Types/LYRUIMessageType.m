@@ -28,6 +28,7 @@
 @property (nonatomic, readwrite) LYRUIMessageTypeStatus *status;
 @property (nonatomic, weak, readwrite) LYRUIMessageType *parentMessage;
 @property (nonatomic, readwrite) LYRUIMessageAction *action;
+@property (nonatomic, readwrite) LYRUIORSet *initialResponseState;
 
 @end
 
@@ -43,6 +44,18 @@
         self.sender = sender;
         self.sentAt = sentAt;
         self.status = status;
+    }
+    return self;
+}
+
+- (instancetype)initWithInitialResponseState:(nullable LYRUIORSet *)initialResponseState
+                                      action:(nullable LYRUIMessageAction *)action
+                                      sender:(nullable LYRIdentity *)sender
+                                      sentAt:(nullable NSDate *)sentAt
+                                      status:(nullable LYRUIMessageTypeStatus *)status {
+    self = [self initWithAction:action sender:sender sentAt:sentAt status:status];
+    if (self) {
+        self.initialResponseState = initialResponseState;
     }
     return self;
 }

@@ -1,5 +1,5 @@
 //
-//  LYRUIChoiceSelectionsCache.m
+//  LYRUIORSetValuesStore.m
 //  Layer-UI-iOS
 //
 //  Created by Łukasz Przytuła on 23.01.2018.
@@ -18,12 +18,12 @@
 //  limitations under the License.
 //
 
-#import "LYRUIChoiceSelectionsCache.h"
+#import "LYRUIORSetValuesStore.h"
 #import "LYRUIConfiguration+DependencyInjection.h"
 #import "LYRUIChoiceSet.h"
 #import <LayerKit/LayerKit.h>
 
-@implementation LYRUIChoiceSelectionsCache
+@implementation LYRUIORSetValuesStore
 @synthesize layerConfiguration = _layerConfiguration;
 
 - (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
@@ -34,7 +34,7 @@
     return self;
 }
 
-- (void)setSelections:(NSOrderedSet<NSString *> *)choiceSelections forChoiceSet:(id<LYRUIChoiceSet>)choiceSet {
+- (void)setDictionary:(NSDictionary *)dictionary forChoiceSet:(id<LYRUIChoiceSet>)choiceSet {
     LYRMessage *message = [self messageWithIdentifier:choiceSet.responseMessageId];
     
     NSMutableDictionary *selections;
@@ -52,7 +52,7 @@
     if (nodeSelections == nil) {
         nodeSelections = [[NSMutableDictionary alloc] init];
     }
-    nodeSelections[choiceSet.responseName] = [choiceSelections array];
+    nodeSelections[choiceSet.responseName] = dictionary;
     selections[choiceSet.responseNodeId] = nodeSelections;
     
     NSError *error = nil;
@@ -64,7 +64,7 @@
     }
 }
 
-- (NSOrderedSet<NSString *> *)selectionsForChoiceSet:(id<LYRUIChoiceSet>)choiceSet {
+- (NSDictionary *)dictionaryForChoiceSet:(id<LYRUIChoiceSet>)choiceSet {
     LYRMessage *message = [self messageWithIdentifier:choiceSet.responseMessageId];
     if (message.localData == nil) {
         return nil;
@@ -77,11 +77,8 @@
     if (error) {
         return nil;
     }
-    NSArray<NSString *> *selectionsArray = selections[choiceSet.responseNodeId][choiceSet.responseName];
-    if (selectionsArray == nil) {
-        return nil;
-    }
-    return [NSOrderedSet orderedSetWithArray:selectionsArray];
+    NSDictionary *dictionary = selections[choiceSet.responseNodeId][choiceSet.responseName];
+    return dictionary;
 }
 
 - (LYRMessage *)messageWithIdentifier:(NSString *)identifier {

@@ -91,7 +91,8 @@
 
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUILocationMessage *)messageType
                                                     parentNodeId:(NSString *)parentNodeId
-                                                            role:(NSString *)role {
+                                                            role:(NSString *)role
+                                              MIMETypeAttributes:(NSDictionary *)MIMETypeAttributes {
     NSMutableDictionary *messageJson = [[NSMutableDictionary alloc] init];
     messageJson[@"latitude"] = @(messageType.location.coordinate.latitude);
     messageJson[@"longitude"] = @(messageType.location.coordinate.longitude);
@@ -110,7 +111,10 @@
         NSLog(@"Failed to serialize location message JSON object: %@", error);
         return nil;
     }
-    NSString *MIMEType = [self MIMETypeForContentType:messageType.MIMEType parentNodeId:parentNodeId role:role];
+    NSString *MIMEType = [self MIMETypeForContentType:messageType.MIMEType
+                                         parentNodeId:parentNodeId
+                                                 role:role
+                                           attributes:MIMETypeAttributes];
     LYRMessagePart *messagePart = [LYRMessagePart messagePartWithMIMEType:MIMEType data:messageJsonData];
     return @[messagePart];
 }

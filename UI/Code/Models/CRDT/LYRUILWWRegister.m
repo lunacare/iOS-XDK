@@ -1,8 +1,8 @@
 //
-//  LYRUIBaseChoiceSelectionHandler.h
+//  LYRUILWWRegister.m
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 18.01.2018.
+//  Created by Łukasz Przytuła on 22.03.2018.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,16 +18,25 @@
 //  limitations under the License.
 //
 
-#import "LYRUIChoiceSelectionHandling.h"
-#import "LYRUIConfigurable.h"
-#import "LYRUIORSet.h"
+#import "LYRUILWWRegister.h"
 
-@interface LYRUIBaseChoiceSelectionHandler : NSObject <LYRUIChoiceSelectionHandling, LYRUIConfigurable>
+@implementation LYRUILWWRegister
 
-@property (nonatomic, strong, readonly) NSOrderedSet<NSString *> *selectedIdentifiers;
+#pragma mark - Properties
 
-@property (nonatomic, strong, readonly) LYRUIORSet *selectionsSet;
+- (NSString *)type {
+    return @"LWW";
+}
 
-- (void)choiceWithIdentifier:(NSString *)identifier selected:(BOOL)selected;
+#pragma mark - Public methods
+
+- (NSArray<NSDictionary *> *)removeOperationWithID:(NSString *)operationID {
+    if ([self containsOperationWithID:operationID]) {
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                       reason:@"Cannot remove added value from LWW Register"
+                                     userInfo:nil];
+    }
+    return [super removeOperationWithID:operationID];
+}
 
 @end

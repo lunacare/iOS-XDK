@@ -37,6 +37,10 @@ NS_ASSUME_NONNULL_BEGIN     // {
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(MessageType)messageType
                                                     parentNodeId:(nullable NSString *)parentNodeId
                                                             role:(nullable NSString *)role;
+- (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(MessageType)messageType
+                                                    parentNodeId:(nullable NSString *)parentNodeId
+                                                            role:(nullable NSString *)role
+                                              MIMETypeAttributes:(nullable NSDictionary *)MIMETypeAttributes;
 - (LYRMessageOptions *)messageOptionsForTypedMessage:(MessageType)message;
 
 - (LYRUIMessageTypeStatus *)statusWithMessage:(LYRMessage *)message;
@@ -47,7 +51,8 @@ NS_ASSUME_NONNULL_BEGIN     // {
 
 - (NSString *)MIMETypeForContentType:(NSString *)contentType
                         parentNodeId:(NSString *)parentNodeId
-                                role:(NSString *)role;
+                                role:(NSString *)role
+                          attributes:(NSDictionary *)attributes;
 
 - (LYRMessageOptions *)defaultMessageOptionsWithMessageText:(NSString *)messageText;
 - (LYRMessageOptions *)defaultMessageOptionsWithPushNotificationText:(NSString *)notificationText;

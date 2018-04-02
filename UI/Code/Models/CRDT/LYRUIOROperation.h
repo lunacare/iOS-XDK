@@ -1,8 +1,8 @@
 //
-//  LYRUIBaseChoiceSelectionHandler.h
+//  LYRUIOROperation.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 18.01.2018.
+//  Created by Łukasz Przytuła on 22.03.2018.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,16 +18,18 @@
 //  limitations under the License.
 //
 
-#import "LYRUIChoiceSelectionHandling.h"
-#import "LYRUIConfigurable.h"
-#import "LYRUIORSet.h"
+#import <Foundation/Foundation.h>
 
-@interface LYRUIBaseChoiceSelectionHandler : NSObject <LYRUIChoiceSelectionHandling, LYRUIConfigurable>
+NS_ASSUME_NONNULL_BEGIN     // {
+@interface LYRUIOROperation : NSObject
 
-@property (nonatomic, strong, readonly) NSOrderedSet<NSString *> *selectedIdentifiers;
+@property (nonatomic, readonly) NSString *value;
 
-@property (nonatomic, strong, readonly) LYRUIORSet *selectionsSet;
+@property (nonatomic, readonly) NSString *operationID;
 
-- (void)choiceWithIdentifier:(NSString *)identifier selected:(BOOL)selected;
+- (instancetype)initWithValue:(NSString *)value;
+
+- (instancetype)initWithValue:(NSString *)value operationID:(nullable NSString *)operationID;
 
 @end
+NS_ASSUME_NONNULL_END       // }

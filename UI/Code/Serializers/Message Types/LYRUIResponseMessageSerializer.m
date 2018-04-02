@@ -38,11 +38,15 @@
 
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUIResponseMessage *)messageType
                                                     parentNodeId:(NSString *)parentNodeId
-                                                            role:(NSString *)role {
+                                                            role:(NSString *)role
+                                              MIMETypeAttributes:(NSDictionary *)MIMETypeAttributes {
     NSMutableDictionary *messageJson = [[NSMutableDictionary alloc] init];
     messageJson[@"response_to"] = messageType.responseTo;
     messageJson[@"response_to_node_id"] = messageType.responseToNodeId;
-    messageJson[@"participant_data"] = messageType.participantData;
+    messageJson[@"changes"] = messageType.changes;
+    if (messageType.participantData.count > 0) {
+        messageJson[@"participant_data"] = messageType.participantData;
+    }
     
     NSError *error = nil;
     NSData *messageJsonData = [NSJSONSerialization dataWithJSONObject:messageJson options:0 error:&error];
@@ -52,7 +56,10 @@
     }
     NSMutableArray *messageParts = [[NSMutableArray alloc] init];
     
-    NSString *MIMEType = [self MIMETypeForContentType:messageType.MIMEType parentNodeId:parentNodeId role:role];
+    NSString *MIMEType = [self MIMETypeForContentType:messageType.MIMEType
+                                         parentNodeId:parentNodeId
+                                                 role:role
+                                           attributes:MIMETypeAttributes];
     LYRMessagePart *messagePart = [LYRMessagePart messagePartWithMIMEType:MIMEType data:messageJsonData];
     [messageParts addObject:messagePart];
     

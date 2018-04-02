@@ -1,8 +1,8 @@
 //
-//  LYRUICollectionView.h
+//  LYRUILWWRegister.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 21.03.2018.
+//  Created by Łukasz Przytuła on 22.03.2018.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,8 +18,7 @@
 //  limitations under the License.
 //
 
-#import <UIKit/UIKit.h>
+#import "LYRUILWWNRegister.h"
 
-@interface LYRUICollectionView : UICollectionView
-
+@interface LYRUILWWRegister : LYRUILWWNRegister
 @end

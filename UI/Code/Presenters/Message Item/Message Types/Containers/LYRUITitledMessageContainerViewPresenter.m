@@ -25,6 +25,8 @@
 #import "LYRUIMessageItemContentPresentersProvider.h"
 #import "LYRUIReusableViewsQueue.h"
 
+static CGFloat const LYRUITitledMessageContainerViewMinHeaderHeight = 40.0;
+
 @implementation LYRUITitledMessageContainerViewPresenter
 @synthesize reusableViewsQueue = _reusableViewsQueue,
             presentersProvider = _presentersProvider,
@@ -81,7 +83,7 @@
         [self setupStandardMessageContainerView:self.sizingContainerView withMessage:message];
         CGFloat maxTextWidth = maxWidth - 24.0;
         CGSize titleTextSize = [self textSizeInLabel:self.sizingContainerView.titleLabel withMaxWidth:maxTextWidth];
-        metadataHeight = ceil(titleTextSize.height + 24.0);
+        metadataHeight = MAX(ceil(titleTextSize.height + 24.0), LYRUITitledMessageContainerViewMinHeaderHeight);
         minWidth = ceil(titleTextSize.width + 52.0);
     }
     

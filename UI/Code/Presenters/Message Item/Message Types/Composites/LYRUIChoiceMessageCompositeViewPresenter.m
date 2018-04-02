@@ -75,7 +75,7 @@
     Class<LYRUIChoiceSelectionHandling> handlerClass;
     if (choiceSet.allowMultiselect) {
         handlerClass = [LYRUIChoiceMultiSelectionHandler class];
-    } else if (choiceSet.allowReselect) {
+    } else if (choiceSet.allowReselect || choiceSet.allowDeselect) {
         handlerClass = [LYRUIChoiceSingleReSelectionHandler class];
     } else {
         handlerClass = [LYRUIChoiceSingleSelectionHandler class];
@@ -87,7 +87,7 @@
 
 - (CGFloat)viewHeightForMessage:(LYRUIChoiceMessage *)message minWidth:(CGFloat)minWidth maxWidth:(CGFloat)maxWidth {
     CGFloat contentViewHeight = [self contentViewHeightForMessageType:message minWidth:minWidth maxWidth:maxWidth];
-    CGFloat buttonsHeight = MAX((message.buttons.count * 49.0) - 1.0, 0.0);
+    CGFloat buttonsHeight = MAX((message.choices.count * 49.0) - 1.0, 0.0);
     return buttonsHeight + contentViewHeight;
 }
 

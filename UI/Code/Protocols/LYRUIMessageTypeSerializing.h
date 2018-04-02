@@ -36,22 +36,35 @@ NS_ASSUME_NONNULL_BEGIN     // {
 - (LYRUIMessageType *)typedMessageWithMessagePart:(LYRMessagePart *)messagePart;
 
 /**
- @abstract Serializes provided message type into `LYRMessagePart` object.
+ @abstract Serializes provided message type into `LYRMessagePart` objects.
  @param messageType Instance of `LYRUIMessageType` to serialize.
- @return An instance of `LYRMessagePart`.
+ @return An array of `LYRMessagePart` objects.
  */
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUIMessageType *)messageType;
 
 /**
- @abstract Serializes provided message type into `LYRMessagePart` object, with `parentNodeId` and `role` attributes.
+ @abstract Serializes provided message type into `LYRMessagePart` objects, with `parentNodeId` and `role` attributes.
  @param messageType Instance of `LYRUIMessageType` to serialize.
  @param parentNodeId Identifier of parent `LYRMessagePart` node.
  @paran role The `role` of serialized `LYRMessagePart`.
- @return An instance of `LYRMessagePart`.
+ @return An array of `LYRMessagePart` objects.
  */
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUIMessageType *)messageType
                                                     parentNodeId:(nullable NSString *)parentNodeId
                                                             role:(nullable NSString *)role;
+
+/**
+ @abstract Serializes provided message type into `LYRMessagePart` objects, with `parentNodeId`, `role`, and additional attributes.
+ @param messageType Instance of `LYRUIMessageType` to serialize.
+ @param parentNodeId Identifier of parent `LYRMessagePart` node.
+ @paran role The `role` of serialized `LYRMessagePart`.
+ @paran MIMETypeAttributes Additional attributes added to the MIME Type of main message part.
+ @return An array of `LYRMessagePart` objects.
+ */
+- (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUIMessageType *)messageType
+                                                    parentNodeId:(nullable NSString *)parentNodeId
+                                                            role:(nullable NSString *)role
+                                              MIMETypeAttributes:(nullable NSDictionary *)MIMETypeAttributes;
 
 /**
  @abstract Returns `LYRMessageOptions` with push notification configuration for provided `LYRUIMessageType`.

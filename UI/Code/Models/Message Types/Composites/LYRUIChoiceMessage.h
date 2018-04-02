@@ -18,9 +18,10 @@
 //  limitations under the License.
 //
 
-#import "LYRUIButtonsMessage.h"
+#import "LYRUIMessageType.h"
 #import "LYRUIChoice.h"
 #import "LYRUIChoiceSet.h"
+#import "LYRUIORSet.h"
 
 typedef NS_ENUM(NSUInteger, LYRUIChoiceMessageType) {
     LYRUIChoiceMessageTypeDefault,
@@ -28,10 +29,11 @@ typedef NS_ENUM(NSUInteger, LYRUIChoiceMessageType) {
 };
 
 NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIChoiceMessage : LYRUIButtonsMessage <LYRUIChoiceSet>
+@interface LYRUIChoiceMessage : LYRUIMessageType <LYRUIChoiceSet>
 
-@property (nonatomic, strong, readonly, nullable) NSString *title;
-@property (nonatomic, strong, readonly, nullable) NSString *label;
+@property (nonatomic, copy, readonly, nullable) NSString *title;
+@property (nonatomic, copy, readonly, nullable) NSString *label;
+@property (nonatomic, strong, readonly, nullable) LYRUIMessageType *contentMessage;
 @property (nonatomic, readonly) LYRUIChoiceMessageType type;
 @property (nonatomic, readonly) LYRUIChoiceMessageType expandedType;
 
@@ -47,14 +49,29 @@ NS_ASSUME_NONNULL_BEGIN     // {
                          name:(nullable NSString *)name
                  responseName:(nullable NSString *)responseName
            customResponseData:(nullable NSDictionary *)customResponseData
-            preselectedChoice:(nullable NSString *)preselectedChoice
-              selectedChoices:(nullable NSOrderedSet<NSString *> *)selectedChoices
-            responseMessageId:(NSString *)responseMessageId
-               responseNodeId:(NSString *)responseNodeId
+                   enabledFor:(NSSet<NSString *> *)enabledFor
+         initialResponseState:(nullable LYRUIORSet *)initialResponseState
+                selectionsSet:(nullable LYRUIORSet *)selectionsSet
+            responseMessageId:(nullable NSString *)responseMessageId
+               responseNodeId:(nullable NSString *)responseNodeId
                        action:(nullable LYRUIMessageAction *)action
                        sender:(nullable LYRIdentity *)sender
                        sentAt:(nullable NSDate *)sentAt
                        status:(nullable LYRUIMessageTypeStatus *)status;
+
+- (instancetype)initWithTitle:(nullable NSString *)title
+                        label:(nullable NSString *)label
+                      choices:(NSArray<LYRUIChoice *> *)choices
+                         type:(LYRUIChoiceMessageType)type
+                 expandedType:(LYRUIChoiceMessageType)expandedType
+                allowReselect:(BOOL)allowReselect
+                allowDeselect:(BOOL)allowDeselect
+             allowMultiselect:(BOOL)allowMultiselect
+                         name:(nullable NSString *)name
+                 responseName:(nullable NSString *)responseName
+           customResponseData:(nullable NSDictionary *)customResponseData
+                   enabledFor:(NSString *)enabledFor
+               selectedChoice:(nullable NSString *)selectedChoice;
 
 @end
 NS_ASSUME_NONNULL_END       // }

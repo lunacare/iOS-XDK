@@ -35,7 +35,8 @@
 
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUIStatusMessage *)messageType
                                                     parentNodeId:(NSString *)parentNodeId
-                                                            role:(NSString *)role {
+                                                            role:(NSString *)role
+                                              MIMETypeAttributes:(NSDictionary *)MIMETypeAttributes {
     NSMutableDictionary *messageJson = [[NSMutableDictionary alloc] init];
     messageJson[@"text"] = messageType.text;
     
@@ -45,7 +46,10 @@
         NSLog(@"Failed to serialize status message JSON object: %@", error);
         return nil;
     }
-    NSString *MIMEType = [self MIMETypeForContentType:messageType.MIMEType parentNodeId:parentNodeId role:role];
+    NSString *MIMEType = [self MIMETypeForContentType:messageType.MIMEType
+                                         parentNodeId:parentNodeId
+                                                 role:role
+                                           attributes:MIMETypeAttributes];
     LYRMessagePart *messagePart = [LYRMessagePart messagePartWithMIMEType:MIMEType data:messageJsonData];
     return @[messagePart];
 }

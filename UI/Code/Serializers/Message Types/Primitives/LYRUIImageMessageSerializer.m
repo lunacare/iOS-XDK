@@ -115,7 +115,8 @@
 
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUIImageMessage *)messageType
                                                     parentNodeId:(NSString *)parentNodeId
-                                                            role:(NSString *)role {
+                                                            role:(NSString *)role
+                                              MIMETypeAttributes:(NSDictionary *)MIMETypeAttributes {
     NSMutableDictionary *messageJson = [[NSMutableDictionary alloc] init];
     messageJson[@"artist"] = messageType.artist;
     messageJson[@"title"] = messageType.title;
@@ -142,18 +143,27 @@
     }
     NSMutableArray *messageParts = [[NSMutableArray alloc] init];
     
-    NSString *MIMEType = [self MIMETypeForContentType:messageType.MIMEType parentNodeId:parentNodeId role:role];
+    NSString *MIMEType = [self MIMETypeForContentType:messageType.MIMEType
+                                         parentNodeId:parentNodeId
+                                                 role:role
+                                           attributes:MIMETypeAttributes];
     LYRMessagePart *messagePart = [LYRMessagePart messagePartWithMIMEType:MIMEType data:messageJsonData];
     [messageParts addObject:messagePart];
     
     if (messageType.sourceImageData) {
-        NSString *sourceMIMEType = [self MIMETypeForContentType:@"image/jpeg" parentNodeId:messagePart.nodeId role:@"source"];
+        NSString *sourceMIMEType = [self MIMETypeForContentType:@"image/jpeg"
+                                                   parentNodeId:messagePart.nodeId
+                                                           role:@"source"
+                                                     attributes:MIMETypeAttributes];
         LYRMessagePart *sourcePart = [LYRMessagePart messagePartWithMIMEType:sourceMIMEType data:messageType.sourceImageData];
         [messageParts addObject:sourcePart];
     }
     
     if (messageType.previewImageData) {
-        NSString *previewMIMEType = [self MIMETypeForContentType:@"image/jpeg" parentNodeId:messagePart.nodeId role:@"preview"];
+        NSString *previewMIMEType = [self MIMETypeForContentType:@"image/jpeg"
+                                                    parentNodeId:messagePart.nodeId
+                                                            role:@"preview"
+                                                      attributes:MIMETypeAttributes];
         LYRMessagePart *previewPart = [LYRMessagePart messagePartWithMIMEType:previewMIMEType data:messageType.previewImageData];
         [messageParts addObject:previewPart];
     }

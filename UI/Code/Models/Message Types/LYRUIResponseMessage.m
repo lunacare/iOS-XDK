@@ -25,6 +25,7 @@
 @property (nonatomic, copy, readwrite) NSString *responseTo;
 @property (nonatomic, copy, readwrite) NSString *responseToNodeId;
 @property (nonatomic, copy, readwrite) NSDictionary *participantData;
+@property (nonatomic, copy, readwrite) NSArray *changes;
 @property (nonatomic, copy, readwrite) NSString *text;
 
 @end
@@ -34,6 +35,7 @@
 - (instancetype)initWithResponseTo:(NSString *)responseTo
                   responseToNodeId:(NSString *)responseToNodeId
                    participantData:(NSDictionary *)participantData
+                           changes:(NSArray *)changes
                               text:(NSString *)text
                             action:(LYRUIMessageAction *)action
                             sender:(LYRIdentity *)sender
@@ -44,6 +46,7 @@
         self.responseTo = responseTo;
         self.responseToNodeId = responseToNodeId;
         self.participantData = participantData;
+        self.changes = changes;
         self.text = text;
     }
     return self;
@@ -52,19 +55,21 @@
 - (instancetype)initWithResponseTo:(NSString *)responseTo
                   responseToNodeId:(NSString *)responseToNodeId
                    participantData:(NSDictionary *)participantData
+                           changes:(NSArray *)changes
                               text:(NSString *)text {
     self = [super init];
     if (self) {
         self.responseTo = responseTo;
         self.responseToNodeId = responseToNodeId;
         self.participantData = participantData;
+        self.changes = changes;
         self.text = text;
     }
     return self;
 }
 
 + (NSString *)MIMEType {
-    return @"application/vnd.layer.response+json";
+    return @"application/vnd.layer.response-v2+json";
 }
 
 - (NSString *)summary {

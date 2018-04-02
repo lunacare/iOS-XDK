@@ -24,51 +24,30 @@
 
 @property (nonatomic, strong, readwrite) NSString *identifier;
 @property (nonatomic, strong, readwrite) NSString *text;
-@property (nonatomic, strong, readwrite) NSString *tooltip;
+@property (nonatomic, strong, readwrite) NSString *selectedText;
 @property (nonatomic, strong, readwrite) NSDictionary *customResponseData;
-
-@property (nonatomic, strong, readwrite) id<LYRUIChoiceProperties> defaultStateProperties;
-@property (nonatomic, strong, readwrite) id<LYRUIChoiceProperties> selectedStateProperties;
 
 @end
 
 @implementation LYRUIChoice
 
-- (instancetype)initWithText:(NSString *)text
-                     tooltip:(NSString *)tooltip {
-    self = [super init];
-    if (self) {
-        self.text = text;
-        self.tooltip = tooltip;
-    }
-    return self;
-}
-
 - (instancetype)initWithIdentifier:(NSString *)identifier
                               text:(NSString *)text
-                           tooltip:(NSString *)tooltip {
+                      selectedText:(NSString *)selectedText
+                customResponseData:(NSDictionary *)customResponseData{
     self = [super init];
     if (self) {
         self.identifier = identifier;
         self.text = text;
-        self.tooltip = tooltip;
-    }
-    return self;
-}
-
-- (instancetype)initWithIdentifier:(NSString *)identifier
-                              text:(NSString *)text
-                           tooltip:(NSString *)tooltip
-                customResponseData:(NSDictionary *)customResponseData
-            defaultStateProperties:(id <LYRUIChoiceProperties>)defaultStateProperties
-           selectedStateProperties:(id <LYRUIChoiceProperties>)selectedStateProperties {
-    self = [self initWithText:text tooltip:tooltip];
-    if (self) {
-        self.identifier = identifier;
+        self.selectedText = selectedText;
         self.customResponseData = customResponseData;
-        self.defaultStateProperties = defaultStateProperties;
-        self.selectedStateProperties = selectedStateProperties;
     }
+    return self;
+}
+
+- (instancetype)initWithIdentifier:(NSString *)identifier
+                              text:(NSString *)text {
+    self = [self initWithIdentifier:identifier text:text selectedText:nil customResponseData:nil];
     return self;
 }
 

@@ -20,6 +20,7 @@
 
 #import <Foundation/Foundation.h>
 @class LYRUIChoice;
+@class LYRUIORSet;
 
 NS_ASSUME_NONNULL_BEGIN     // {
 @protocol LYRUIChoiceSet <NSObject>
@@ -30,11 +31,12 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @property (nonatomic, readonly) BOOL allowDeselect;
 @property (nonatomic, readonly) BOOL allowMultiselect;
 
-@property (nonatomic, strong, readonly, nullable) NSString *name;
-@property (nonatomic, strong, readonly, nullable) NSString *responseName;
-@property (nonatomic, strong, readonly, nullable) NSDictionary *customResponseData;
-@property (nonatomic, strong, readonly, nullable) NSString *preselectedChoice;
-@property (nonatomic, strong, readonly, nullable) NSOrderedSet<NSString *> *selectedChoices;
+@property (nonatomic, copy, readonly, nullable) NSString *name;
+@property (nonatomic, copy, readonly, nullable) NSString *responseName;
+@property (nonatomic, copy, readonly, nullable) NSDictionary *customResponseData;
+@property (nonatomic, copy, readonly) NSSet<NSString *> *enabledFor;
+@property (nonatomic, readonly, nullable) LYRUIORSet *initialResponseState;
+@property (nonatomic, readonly, nullable) LYRUIORSet *selectionsSet;
 
 @property (nonatomic, readonly, nonnull) NSString *responseMessageId;
 @property (nonatomic, readonly, nonnull) NSString *responseNodeId;

@@ -24,13 +24,13 @@
 #import "LYRUIChoiceButton.h"
 #import "LYRUIChoice.h"
 #import "LYRUIMessageListActionHandlingDelegate.h"
-#import "LYRUIChoiceSelectionsCache.h"
+#import "LYRUIORSetsCache.h"
 
 @interface LYRUIBaseChoiceSelectionHandler ()
 
 @property (nonatomic, strong, readwrite) id<LYRUIChoiceSet> choiceSet;
-@property (nonatomic, strong, readwrite) NSMutableOrderedSet<NSString *> *selectedIdentifiers;
-@property (nonatomic, strong) LYRUIChoiceSelectionsCache *selectionsCache;
+@property (nonatomic, strong, readwrite) LYRUIORSet *selectionsSet;
+@property (nonatomic, strong) LYRUIORSetsCache *setsCache;
 
 @end
 
@@ -49,18 +49,37 @@
 
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     _layerConfiguration = layerConfiguration;
-    self.selectionsCache = [layerConfiguration.injector objectOfType:[LYRUIChoiceSelectionsCache class]];
+    self.setsCache = [layerConfiguration.injector objectOfType:[LYRUIORSetsCache class]];
 }
 
 - (instancetype)initWithChoiceSet:(id<LYRUIChoiceSet>)choiceSet configuration:(LYRUIConfiguration *)configuration {
     self = [self initWithConfiguration:configuration];
     if (self) {
         self.choiceSet = choiceSet;
-        NSMutableOrderedSet *cachedSelections = [[self.selectionsCache selectionsForChoiceSet:choiceSet] mutableCopy];
-        self.selectedIdentifiers = cachedSelections ?: [choiceSet.selectedChoices mutableCopy] ?: [[NSMutableOrderedSet alloc] init];
+        self.selectionsSet = [self.setsCache ORSetForChoiceSet:choiceSet];
+        [self.selectionsSet synchronizeWithSet:choiceSet.selectionsSet ?: choiceSet.initialResponseState];
     }
     return self;
 }
+
+#pragma mark - Properties
+
+- (NSOrderedSet<NSString *> *)selectedIdentifiers {
+    return self.selectionsSet.selectedValues;
+}
+
+- (void)setButtons:(NSArray<LYRUIChoiceButton *> *)buttons {
+    _buttons = buttons;
+    NSString *userID = self.layerConfiguration.client.authenticatedUser.identifier.absoluteString;
+    if (![self.choiceSet.enabledFor containsObject:userID]) {
+        for (LYRUIChoiceButton *button in buttons) {
+            button.selected = NO;
+            button.enabled = NO;
+        }
+    }
+}
+
+#pragma mark - Public methods
 
 - (void)buttonTapped:(LYRUIChoiceButton *)tappedButton {}
 
@@ -68,12 +87,24 @@
     if (identifier == nil) {
         return;
     }
+    NSMutableArray<NSDictionary *> *changes = [[NSMutableArray alloc] init];
     if (selected) {
-        [self.selectedIdentifiers addObject:identifier];
+        LYRUIOROperation *operation = [[LYRUIOROperation alloc] initWithValue:identifier];
+        NSArray *operationDicts = [self.selectionsSet addOperation:operation];
+        if (operationDicts != nil) {
+            [changes addObjectsFromArray:operationDicts];
+        }
     } else {
-        [self.selectedIdentifiers removeObject:identifier];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"value == %@", identifier];
+        NSOrderedSet<LYRUIOROperation *> *operationsWithValue = [self.selectionsSet.adds filteredOrderedSetUsingPredicate:predicate];
+        for (LYRUIOROperation *operation in operationsWithValue) {
+            NSArray *operationDicts = [self.selectionsSet removeOperationWithID:operation.operationID];
+            if (operationDicts != nil) {
+                [changes addObjectsFromArray:operationDicts];
+            }
+        }
     }
-    [self.selectionsCache setSelections:self.selectedIdentifiers forChoiceSet:self.choiceSet];
+    [self.setsCache storeORSet:self.selectionsSet forChoiceSet:self.choiceSet];
     
     LYRUIChoice *choice;
     for (LYRUIChoice *aChoice in self.choiceSet.choices) {
@@ -82,19 +113,18 @@
         }
     }
     
-    [self sendActionForChoice:choice selection:selected];
+    [self sendActionForChoice:choice changes:changes selection:selected];
 }
 
-- (void)sendActionForChoice:(LYRUIChoice *)choice selection:(BOOL)selected {
+- (void)sendActionForChoice:(LYRUIChoice *)choice changes:(NSArray *)changes selection:(BOOL)selected {
     NSMutableDictionary *participantData = [[NSMutableDictionary alloc] init];
-    NSString *responseName = self.choiceSet.responseName;
     [participantData addEntriesFromDictionary:self.choiceSet.customResponseData];
-    participantData[responseName] = [self.selectedIdentifiers.array componentsJoinedByString:@","];
     [participantData addEntriesFromDictionary:choice.customResponseData];
     
     NSMutableDictionary *actionData = [[NSMutableDictionary alloc] init];
     actionData[@"response_to"] = self.choiceSet.responseMessageId;
     actionData[@"response_to_node_id"] = self.choiceSet.responseNodeId;
+    actionData[@"changes"] = changes;
     actionData[@"participant_data"] = participantData;
     actionData[@"text"] = [self responseMessageTextForSelecting:selected choice:choice];
     

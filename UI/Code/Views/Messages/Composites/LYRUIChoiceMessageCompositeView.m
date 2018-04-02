@@ -96,6 +96,7 @@
 
 - (void)lyr_prepareForReuse {
     self.actionHandler = nil;
+    self.choiceView.selectionHandler = nil;
 }
 
 @end

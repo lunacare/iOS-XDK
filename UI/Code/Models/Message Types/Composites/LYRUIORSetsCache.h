@@ -1,8 +1,8 @@
 //
-//  LYRUIBaseChoiceSelectionHandler.h
+//  LYRUIORSetsCache.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 18.01.2018.
+//  Created by Łukasz Przytuła on 22.03.2018.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,16 +18,14 @@
 //  limitations under the License.
 //
 
-#import "LYRUIChoiceSelectionHandling.h"
+#import <Foundation/Foundation.h>
 #import "LYRUIConfigurable.h"
-#import "LYRUIORSet.h"
+@class LYRUIORSet;
+@protocol LYRUIChoiceSet;
 
-@interface LYRUIBaseChoiceSelectionHandler : NSObject <LYRUIChoiceSelectionHandling, LYRUIConfigurable>
+@interface LYRUIORSetsCache : NSObject <LYRUIConfigurable>
 
-@property (nonatomic, strong, readonly) NSOrderedSet<NSString *> *selectedIdentifiers;
-
-@property (nonatomic, strong, readonly) LYRUIORSet *selectionsSet;
-
-- (void)choiceWithIdentifier:(NSString *)identifier selected:(BOOL)selected;
+- (void)storeORSet:(LYRUIORSet *)ORSet forChoiceSet:(id<LYRUIChoiceSet>)choiceSet;
+- (LYRUIORSet *)ORSetForChoiceSet:(id<LYRUIChoiceSet>)choiceSet;
 
 @end

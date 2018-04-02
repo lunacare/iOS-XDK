@@ -143,7 +143,8 @@
 
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUIProductMessage *)messageType
                                                     parentNodeId:(NSString *)parentNodeId
-                                                            role:(NSString *)role {
+                                                            role:(NSString *)role
+                                              MIMETypeAttributes:(NSDictionary *)MIMETypeAttributes {
     // TODO: implement
     return @[];
 }

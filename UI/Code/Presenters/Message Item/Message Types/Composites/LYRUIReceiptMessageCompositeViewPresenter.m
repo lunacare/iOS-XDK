@@ -153,11 +153,11 @@
 }
 
 - (nullable NSString *)choiceMessageSelectedText:(LYRUIChoiceMessage *)choiceMessage {
-    if (choiceMessage.preselectedChoice == nil) {
+    if (choiceMessage.initialResponseState == nil) {
         return nil;
     }
     for (LYRUIChoice *choice in choiceMessage.choices) {
-        if ([choice.identifier isEqualToString:choiceMessage.preselectedChoice]) {
+        if ([choice.identifier isEqualToString:choiceMessage.initialResponseState.selectedValues.firstObject]) {
             return choice.text;
         }
     }

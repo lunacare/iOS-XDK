@@ -71,6 +71,16 @@ static NSString *const LYRUIUserNotificationDefaultActionsCategoryIdentifier = @
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUIMessageType *)messageType
                                                     parentNodeId:(NSString *)parentNodeId
                                                             role:(NSString *)role {
+    return [self layerMessagePartsWithTypedMessage:messageType
+                                      parentNodeId:parentNodeId
+                                              role:role
+                                MIMETypeAttributes:nil];
+}
+
+- (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUIMessageType *)messageType
+                                                    parentNodeId:(NSString *)parentNodeId
+                                                            role:(NSString *)role
+                                              MIMETypeAttributes:(NSDictionary *)MIMETypeAttributes {
     return nil;
 }
 
@@ -107,13 +117,17 @@ static NSString *const LYRUIUserNotificationDefaultActionsCategoryIdentifier = @
 
 - (NSString *)MIMETypeForContentType:(NSString *)contentType
                         parentNodeId:(NSString *)parentNodeId
-                                role:(NSString *)role {
+                                role:(NSString *)role
+                          attributes:(NSDictionary *)attributes {
     NSMutableArray<NSString *> *attributesToAppend = [[NSMutableArray alloc] init];
     if (parentNodeId != nil) {
         [attributesToAppend addObject:[NSString stringWithFormat:@"%@=%@", LYRUIMessagePartParentNodeIdKey, parentNodeId]];
     }
     if (role == nil) {
         role = LYRUIMessagePartRoleRoot;
+    }
+    for (NSString *key in attributes) {
+        [attributesToAppend addObject:[NSString stringWithFormat:@"%@=%@", key, attributes[key]]];
     }
     NSMutableString *MIMEType = [NSMutableString stringWithFormat:@"%@; %@=%@", contentType, LYRUIMessagePartRoleKey, role];
     for (NSString *attribute in attributesToAppend) {

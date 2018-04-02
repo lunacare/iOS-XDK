@@ -69,7 +69,8 @@ static NSString *const LYRUITextMessageDefaultActionEvent = @"open-url";
 
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUITextMessage *)messageType
                                                     parentNodeId:(NSString *)parentNodeId
-                                                            role:(NSString *)role {
+                                                            role:(NSString *)role
+                                              MIMETypeAttributes:(NSDictionary *)MIMETypeAttributes {
     NSMutableDictionary *messageJson = [[NSMutableDictionary alloc] init];
     messageJson[LYRUITextMessageAuthorKey] = messageType.author;
     messageJson[LYRUITextMessageTextKey] = messageType.text;
@@ -85,7 +86,10 @@ static NSString *const LYRUITextMessageDefaultActionEvent = @"open-url";
         NSLog(@"Failed to serialize text message JSON object: %@", error);
         return nil;
     }
-    NSString *MIMEType = [self MIMETypeForContentType:messageType.MIMEType parentNodeId:parentNodeId role:role];
+    NSString *MIMEType = [self MIMETypeForContentType:messageType.MIMEType
+                                         parentNodeId:parentNodeId
+                                                 role:role
+                                           attributes:MIMETypeAttributes];
     LYRMessagePart *messagePart = [LYRMessagePart messagePartWithMIMEType:MIMEType data:messageJsonData];
     return @[messagePart];
 }
