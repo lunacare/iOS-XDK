@@ -1,8 +1,8 @@
 //
-//  LYRUIMessageListTimeFormatter.m
+//  LYRUIConversationItemTimeFormatter.m
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 23.08.2017.
+//  Created by Łukasz Przytuła on 02.04.2018.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,17 +18,17 @@
 //  limitations under the License.
 //
 
-#import "LYRUIMessageListTimeFormatter.h"
+#import "LYRUIConversationItemTimeFormatter.h"
 #import "LYRUIConfiguration+DependencyInjection.h"
 
-@interface LYRUIMessageListTimeFormatter ()
+@interface LYRUIConversationItemTimeFormatter ()
 
 @property (nonatomic, strong) NSCalendar *calendar;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
 @end
 
-@implementation LYRUIMessageListTimeFormatter
+@implementation LYRUIConversationItemTimeFormatter
 @synthesize layerConfiguration = _layerConfiguration;
 
 - (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
@@ -51,7 +51,10 @@
             withCurrentTime:(NSDate *)currentTime {
     if ([self.calendar isDate:messageTime inSameDayAsDate:currentTime]) {
         [self setupDateFormatterForCurrentDay];
-    } else if ([self numberOfUnits:NSCalendarUnitDay sinceTime:messageTime toCurrentTime:currentTime] < 8) {
+    } else if ([self numberOfUnits:NSCalendarUnitDay sinceTime:messageTime toCurrentTime:currentTime] == 1) {
+        [self setupDateFormatterForYesterday];
+        return [self.dateFormatter stringFromDate:[self yesterdayDate]];
+    } else if ([self numberOfUnits:NSCalendarUnitDay sinceTime:messageTime toCurrentTime:currentTime] < 7) {
         [self setupDateFormatterForCurrentWeek];
     } else if ([self numberOfUnits:NSCalendarUnitYear sinceTime:messageTime toCurrentTime:currentTime] < 1) {
         [self setupDateFormatterForCurrentYear];
@@ -64,22 +67,37 @@
 #pragma mark - Date formatter setup
 
 - (void)setupDateFormatterForCurrentDay {
+    self.dateFormatter.doesRelativeDateFormatting = NO;
     [self.dateFormatter setLocalizedDateFormatFromTemplate:@"jj:mm"];
 }
 
+- (void)setupDateFormatterForYesterday {
+    self.dateFormatter.timeStyle = NSDateFormatterNoStyle;
+    self.dateFormatter.dateStyle = NSDateFormatterMediumStyle;
+    self.dateFormatter.doesRelativeDateFormatting = YES;
+}
+
 - (void)setupDateFormatterForCurrentWeek {
-    [self.dateFormatter setLocalizedDateFormatFromTemplate:@"Ejj:mm"];
+    self.dateFormatter.doesRelativeDateFormatting = NO;
+    [self.dateFormatter setLocalizedDateFormatFromTemplate:@"E"];
 }
 
 - (void)setupDateFormatterForCurrentYear {
-    [self.dateFormatter setLocalizedDateFormatFromTemplate:@"EdMMMM jj:mm"];
+    self.dateFormatter.doesRelativeDateFormatting = NO;
+    [self.dateFormatter setLocalizedDateFormatFromTemplate:@"MMMd"];
 }
 
 - (void)setupDateFormatterForPreviousYears {
-    [self.dateFormatter setLocalizedDateFormatFromTemplate:@"EyMMMMd jj:mm"];
+    self.dateFormatter.doesRelativeDateFormatting = NO;
+    self.dateFormatter.timeStyle = NSDateFormatterNoStyle;
+    self.dateFormatter.dateStyle = NSDateFormatterShortStyle;
 }
 
 #pragma mark - Helpers
+
+- (NSDate *)yesterdayDate {
+    return [NSDate dateWithTimeIntervalSinceNow:-(60*60*24)];
+}
 
 - (NSUInteger)numberOfUnits:(NSCalendarUnit)units sinceTime:(NSDate *)time toCurrentTime:(NSDate *)currentTime {
     NSDateComponents *components = [self.calendar components:units

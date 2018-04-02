@@ -1,8 +1,8 @@
 //
-//  LYRUIMessageListTimeFormatter.h
+//  LYRUIConversationItemTimeFormatter.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 23.08.2017.
+//  Created by Łukasz Przytuła on 02.04.2018.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,7 +22,7 @@
 #import "LYRUIConfigurable.h"
 
 /**
- @abstract The `LYRUIMessageListTimeFormatter` objects will be used for providing a string describing the time of sending a message.
+ @abstract The `LYRUIConversationItemTimeFormatter` objects will be used for providing a string describing the time of last message in conversation.
  */
-@interface LYRUIMessageListTimeFormatter : NSObject <LYRUITimeFormatting, LYRUIConfigurable>
+@interface LYRUIConversationItemTimeFormatter : NSObject <LYRUITimeFormatting, LYRUIConfigurable>
 @end

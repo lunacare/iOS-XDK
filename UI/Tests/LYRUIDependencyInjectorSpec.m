@@ -20,6 +20,7 @@
 #import <LayerXDK/LYRUIConversationItemViewUnreadTheme.h>
 #import <LayerXDK/LYRUIConversationItemViewPresenter.h>
 #import <LayerXDK/LYRUIConversationItemTitleFormatter.h>
+#import <LayerXDK/LYRUIConversationItemTimeFormatter.h>
 #import <LayerXDK/LYRUIMessageTimeDefaultFormatter.h>
 #import <LayerXDK/LYRUIConversationListView.h>
 #import <LayerXDK/LYRUIConversationListViewPresenter.h>
@@ -510,6 +511,17 @@ describe(@"LYRUIDependencyInjector", ^{
                 
                 it(@"should return object of `LYRUIMessageTimeDefaultFormatter` type", ^{
                     expect(returnedObject).to.beAKindOf([LYRUIMessageTimeDefaultFormatter class]);
+                });
+            });
+            
+            context(@"for `LYRUIConversationItemViewPresenter` class", ^{
+                beforeEach(^{
+                    returnedObject = [injector protocolImplementation:@protocol(LYRUITimeFormatting)
+                                                             forClass:[LYRUIConversationItemViewPresenter class]];
+                });
+                
+                it(@"should return object of `LYRUITimeAgoFormatter` type", ^{
+                    expect(returnedObject).to.beAKindOf([LYRUIConversationItemTimeFormatter class]);
                 });
             });
             
