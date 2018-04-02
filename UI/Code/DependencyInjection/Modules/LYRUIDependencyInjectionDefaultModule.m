@@ -36,6 +36,7 @@
 #import "LYRUIConversationItemViewPresenter.h"
 #import "LYRUIConversationItemAccessoryViewProviding.h"
 #import "LYRUIConversationItemTitleFormatter.h"
+#import "LYRUIConversationItemTimeFormatter.h"
 #import "LYRUIMessageTimeDefaultFormatter.h"
 #import "LYRUIConversationListView.h"
 #import "LYRUIConversationListViewPresenter.h"
@@ -251,6 +252,9 @@
     [self setImplementationClass:[LYRUIMessageListViewPreviewingDelegate class]
                      forProtocol:@protocol(UIViewControllerPreviewingDelegate)];
     
+    [self setImplementationClass:[LYRUIConversationItemTimeFormatter class]
+                     forProtocol:@protocol(LYRUITimeFormatting)
+                     usedInClass:[LYRUIConversationItemViewPresenter class]];
     [self setImplementationClass:[LYRUITimeAgoFormatter class]
                      forProtocol:@protocol(LYRUITimeFormatting)
                      usedInClass:[LYRUIIdentityItemViewPresenter class]];

@@ -3,14 +3,14 @@
 #import <OCMock/OCMock.h>
 #import <OCMockito/OCMockito.h>
 #import <LayerXDK/LYRUIConfiguration+DependencyInjection.h>
-#import <LayerXDK/LYRUITimeAgoFormatter.h>
+#import <LayerXDK/LYRUIConversationItemTimeFormatter.h>
 
-SpecBegin(LYRUITimeAgoFormatter)
+SpecBegin(LYRUIConversationItemTimeFormatter)
 
-describe(@"LYRUITimeAgoFormatter", ^{
+describe(@"LYRUIConversationItemTimeFormatter", ^{
     __block LYRUIConfiguration *configurationMock;
     __block id<LYRUIDependencyInjection> injectorMock;
-    __block LYRUITimeAgoFormatter *formatter;
+    __block LYRUIConversationItemTimeFormatter *formatter;
     
     beforeEach(^{
         configurationMock = mock([LYRUIConfiguration class]);
@@ -18,13 +18,19 @@ describe(@"LYRUITimeAgoFormatter", ^{
         [given(configurationMock.injector) willReturn:injectorMock];
         
         NSLocale *locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];
+        NSTimeZone *timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
         
         NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
         calendar.locale = locale;
-        calendar.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+        calendar.timeZone = timeZone;
         [given([injectorMock objectOfType:[NSCalendar class]]) willReturn:calendar];
         
-        formatter = [[LYRUITimeAgoFormatter alloc] initWithConfiguration:configurationMock];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.locale = locale;
+        dateFormatter.timeZone = timeZone;
+        [given([injectorMock objectOfType:[NSDateFormatter class]]) willReturn:dateFormatter];
+        
+        formatter = [[LYRUIConversationItemTimeFormatter alloc] initWithConfiguration:configurationMock];
     });
     
     afterEach(^{
@@ -45,8 +51,8 @@ describe(@"LYRUITimeAgoFormatter", ^{
                 returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
-            it(@"should return '1 min ago'", ^{
-                expect(returnedString).to.equal(@"1 min ago");
+            it(@"should return '12:34'", ^{
+                expect(returnedString).to.equal(@"12:34 PM");
             });
         });
         context(@"when the time is one min before current time", ^{
@@ -55,18 +61,8 @@ describe(@"LYRUITimeAgoFormatter", ^{
                 returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
-            it(@"should return '1 min ago'", ^{
-                expect(returnedString).to.equal(@"1 min ago");
-            });
-        });
-        context(@"when the time is 61 sec before current time", ^{
-            beforeEach(^{
-                NSDate *time = [NSDate dateWithTimeIntervalSince1970:578406835];
-                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
-            });
-            
-            it(@"should return '1 min ago'", ^{
-                expect(returnedString).to.equal(@"1 min ago");
+            it(@"should return '12:33'", ^{
+                expect(returnedString).to.equal(@"12:33 PM");
             });
         });
         context(@"when the time is two mins before current time", ^{
@@ -75,8 +71,8 @@ describe(@"LYRUITimeAgoFormatter", ^{
                 returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
-            it(@"should return '2 mins ago'", ^{
-                expect(returnedString).to.equal(@"2 mins ago");
+            it(@"should return '12:32'", ^{
+                expect(returnedString).to.equal(@"12:32 PM");
             });
         });
         context(@"when the time is one hour before current time", ^{
@@ -85,18 +81,8 @@ describe(@"LYRUITimeAgoFormatter", ^{
                 returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
-            it(@"should return '60 mins ago'", ^{
-                expect(returnedString).to.equal(@"60 mins ago");
-            });
-        });
-        context(@"when the time is one second less than two hours before current time", ^{
-            beforeEach(^{
-                NSDate *time = [NSDate dateWithTimeIntervalSince1970:578399697];
-                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
-            });
-            
-            it(@"should return '119 mins ago'", ^{
-                expect(returnedString).to.equal(@"119 mins ago");
+            it(@"should return '11:34'", ^{
+                expect(returnedString).to.equal(@"11:34 AM");
             });
         });
         context(@"when the time is two hours before current time", ^{
@@ -105,18 +91,8 @@ describe(@"LYRUITimeAgoFormatter", ^{
                 returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
-            it(@"should return '2 hours ago'", ^{
-                expect(returnedString).to.equal(@"2 hours ago");
-            });
-        });
-        context(@"when the time is two hours and one second before current time", ^{
-            beforeEach(^{
-                NSDate *time = [NSDate dateWithTimeIntervalSince1970:578399695];
-                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
-            });
-            
-            it(@"should return '2 hours ago'", ^{
-                expect(returnedString).to.equal(@"2 hours ago");
+            it(@"should return '10:34'", ^{
+                expect(returnedString).to.equal(@"10:34 AM");
             });
         });
         context(@"when the time is one day before current time", ^{
@@ -125,18 +101,8 @@ describe(@"LYRUITimeAgoFormatter", ^{
                 returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
-            it(@"should return '24 hours ago'", ^{
-                expect(returnedString).to.equal(@"24 hours ago");
-            });
-        });
-        context(@"when the time is one second less than two days before current time", ^{
-            beforeEach(^{
-                NSDate *time = [NSDate dateWithTimeIntervalSince1970:578234097];
-                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
-            });
-            
-            it(@"should return '47 hours ago'", ^{
-                expect(returnedString).to.equal(@"47 hours ago");
+            it(@"should return 'Yesterday'", ^{
+                expect(returnedString).to.equal(@"Yesterday");
             });
         });
         context(@"when the time is two days before current time", ^{
@@ -145,18 +111,38 @@ describe(@"LYRUITimeAgoFormatter", ^{
                 returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
-            it(@"should return '2 days ago'", ^{
-                expect(returnedString).to.equal(@"2 days ago");
+            it(@"should return 'Thu'", ^{
+                expect(returnedString).to.equal(@"Thu");
             });
         });
-        context(@"when the time is two days and one second before current time", ^{
+        context(@"when the time is 6 days before current time", ^{
             beforeEach(^{
-                NSDate *time = [NSDate dateWithTimeIntervalSince1970:578234095];
+                NSDate *time = [NSDate dateWithTimeIntervalSince1970:577888496];
                 returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
-            it(@"should return '2 days ago'", ^{
-                expect(returnedString).to.equal(@"2 days ago");
+            it(@"should return 'Sun'", ^{
+                expect(returnedString).to.equal(@"Sun");
+            });
+        });
+        context(@"when the time is 7 days before current time", ^{
+            beforeEach(^{
+                NSDate *time = [NSDate dateWithTimeIntervalSince1970:577802096];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
+            });
+            
+            it(@"should return 'Apr'", ^{
+                expect(returnedString).to.equal(@"Apr 23");
+            });
+        });
+        context(@"when the time is 8 days before current time", ^{
+            beforeEach(^{
+                NSDate *time = [NSDate dateWithTimeIntervalSince1970:577715696];
+                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
+            });
+            
+            it(@"should return 'Apr'", ^{
+                expect(returnedString).to.equal(@"Apr 22");
             });
         });
         context(@"when the time is 30 days before current time", ^{
@@ -165,38 +151,8 @@ describe(@"LYRUITimeAgoFormatter", ^{
                 returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
-            it(@"should return '30 days ago'", ^{
-                expect(returnedString).to.equal(@"30 days ago");
-            });
-        });
-        context(@"when the time is one second after midnight of the day two months before current time", ^{
-            beforeEach(^{
-                NSDate *time = [NSDate dateWithTimeIntervalSince1970:573177601];
-                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
-            });
-            
-            it(@"should return '60 days ago'", ^{
-                expect(returnedString).to.equal(@"60 days ago");
-            });
-        });
-        context(@"when the time is on the midnight of the day two months before current time", ^{
-            beforeEach(^{
-                NSDate *time = [NSDate dateWithTimeIntervalSince1970:573177600];
-                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
-            });
-            
-            it(@"should return '60 days ago'", ^{
-                expect(returnedString).to.equal(@"60 days ago");
-            });
-        });
-        context(@"when the time is one second to the midnight of the day two months before current time", ^{
-            beforeEach(^{
-                NSDate *time = [NSDate dateWithTimeIntervalSince1970:573177599];
-                returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
-            });
-            
-            it(@"should return '2 months ago'", ^{
-                expect(returnedString).to.equal(@"2 months ago");
+            it(@"should return 'Mar'", ^{
+                expect(returnedString).to.equal(@"Mar 31");
             });
         });
         context(@"when the time is two months before current time", ^{
@@ -205,8 +161,8 @@ describe(@"LYRUITimeAgoFormatter", ^{
                 returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
-            it(@"should return '2 months ago'", ^{
-                expect(returnedString).to.equal(@"2 months ago");
+            it(@"should return 'Feb'", ^{
+                expect(returnedString).to.equal(@"Feb 29");
             });
         });
         context(@"when the time is 1 year before current time", ^{
@@ -215,8 +171,8 @@ describe(@"LYRUITimeAgoFormatter", ^{
                 returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
-            it(@"should return '1 year ago'", ^{
-                expect(returnedString).to.equal(@"1 year ago");
+            it(@"should return '4/30/87'", ^{
+                expect(returnedString).to.equal(@"4/30/87");
             });
         });
         context(@"when the time is 2 years before current time", ^{
@@ -225,8 +181,8 @@ describe(@"LYRUITimeAgoFormatter", ^{
                 returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
-            it(@"should return '2 years ago'", ^{
-                expect(returnedString).to.equal(@"2 years ago");
+            it(@"should return '4/30/86'", ^{
+                expect(returnedString).to.equal(@"4/30/86");
             });
         });
         context(@"when the time is long before the current time", ^{
@@ -235,11 +191,12 @@ describe(@"LYRUITimeAgoFormatter", ^{
                 returnedString = [formatter stringForTime:time withCurrentTime:currentTimeFixture];
             });
             
-            it(@"should return '18 years ago'", ^{
-                expect(returnedString).to.equal(@"18 years ago");
+            it(@"should return '1/1/70'", ^{
+                expect(returnedString).to.equal(@"1/1/70");
             });
         });
     });
 });
 
 SpecEnd
+
