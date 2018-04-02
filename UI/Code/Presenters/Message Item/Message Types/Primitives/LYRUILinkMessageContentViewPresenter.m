@@ -36,7 +36,7 @@ static CGFloat const LYRUIMessageItemViewLinkImageMaxHeight = 450.0;
 
 static CGFloat const LYRUILinkMessageContentViewVerticalPadding = 17.0;
 
-@interface LYRUILinkMessageContentViewPresenter ()
+@interface LYRUILinkMessageContentViewPresenter () <UITextViewDelegate>
 
 @property (nonatomic, strong) NSCache *pageImageURLsCache;
 @property (nonatomic, strong) LYRUILinkMessageView *sizingLinkView;
@@ -98,6 +98,7 @@ static CGFloat const LYRUILinkMessageContentViewVerticalPadding = 17.0;
         [self fetchAndPresentImageWithURL:messageType.imageURL inImageView:linkView.imageView contextId:contextId completion:nil];
     } else {
         linkView.textView.text = messageType.URL.absoluteString;
+        linkView.textView.delegate = self;
         
         BOOL outgoingMessage = [self isMessageOutgoing:messageType];
         UIColor *textColor;
@@ -182,6 +183,16 @@ static CGFloat const LYRUILinkMessageContentViewVerticalPadding = 17.0;
     }
     CGFloat height = [self heightForSize:imageSize withMinWidth:minWidth maxWidth:maxWidth];
     return MIN(height, LYRUIMessageItemViewLinkImageMaxHeight);
+}
+
+#pragma mark - UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+    return NO;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction {
+    return (interaction == UITextItemInteractionPreview);
 }
 
 @end

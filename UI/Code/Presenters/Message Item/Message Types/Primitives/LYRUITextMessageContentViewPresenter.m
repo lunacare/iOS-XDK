@@ -28,7 +28,7 @@
 
 static CGFloat const LYRUITextMessageContentViewVerticalPadding = 17.0;
 
-@interface LYRUITextMessageContentViewPresenter ()
+@interface LYRUITextMessageContentViewPresenter () <UITextViewDelegate>
 
 @property (nonatomic, strong) LYRUITextMessageContentView *sizingTextMessageView;
 
@@ -81,6 +81,7 @@ static CGFloat const LYRUITextMessageContentViewVerticalPadding = 17.0;
     }
     textView.textColor = textColor;
     textView.tintColor = textColor;
+    textView.delegate = self;
 }
 
 - (CGFloat)viewHeightForMessage:(LYRUITextMessage *)message minWidth:(CGFloat)minWidth maxWidth:(CGFloat)maxWidth {
@@ -94,6 +95,25 @@ static CGFloat const LYRUITextMessageContentViewVerticalPadding = 17.0;
                                                     context:nil];
     CGFloat textViewHeight = ceil(stringRect.size.height);
     return textViewHeight + LYRUITextMessageContentViewVerticalPadding;
+}
+
+#pragma mark - UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+    [self openURL:URL];
+    return NO;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction {
+    if (interaction == UITextItemInteractionInvokeDefaultAction) {
+        [self openURL:URL];
+    }
+    return (interaction == UITextItemInteractionPreview);
+}
+
+- (void)openURL:(NSURL *)URL {
+    LYRUIMessageAction *openURLAction = [[LYRUIMessageAction alloc] initWithURL:URL];
+    [self.actionHandlingDelegate handleAction:openURLAction withHandler:nil];
 }
 
 @end
