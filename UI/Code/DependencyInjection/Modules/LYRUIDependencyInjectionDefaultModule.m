@@ -140,6 +140,14 @@
 #import "LYRUICarouselContentOffsetsCache.h"
 #import "LYRUIMessageListViewPreviewingDelegate.h"
 
+static NSString * const LYRUILegacyTextMessageMimeType = @"text/plain";
+static NSString * const LYRUILegacyPDFFileMessageMimeType = @"application/pdf";
+static NSString * const LYRUILegacyJPGImageMessageMimeType = @"image/jpg";
+static NSString * const LYRUILegacyJPEGImageMessageMimeType = @"image/jpeg";
+static NSString * const LYRUILegacyPNGImageMessageMimeType = @"image/png";
+static NSString * const LYRUILegacyGIFImageMessageMimeType = @"image/gif";
+static NSString * const LYRUILegacyLocationMessageMimeType = @"location/coordinate";
+
 @interface LYRUIDependencyInjectionDefaultModule ()
 
 @property (nonatomic, strong) id<LYRUIImageCaching> imagesCache;
@@ -343,10 +351,17 @@
 
 - (void)setupMessageSerializers {
     [self setMessageSerializerClass:[LYRUITextMessageSerializer class] forMIMEType:LYRUITextMessage.MIMEType];
+    [self setMessageSerializerClass:[LYRUITextMessageSerializer class] forMIMEType:LYRUILegacyTextMessageMimeType];
     [self setMessageSerializerClass:[LYRUIFileMessageSerializer class] forMIMEType:LYRUIFileMessage.MIMEType];
+    [self setMessageSerializerClass:[LYRUIFileMessageSerializer class] forMIMEType:LYRUILegacyPDFFileMessageMimeType];
     [self setMessageSerializerClass:[LYRUILinkMessageSerializer class] forMIMEType:LYRUILinkMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIImageMessageSerializer class] forMIMEType:LYRUIImageMessage.MIMEType];
+    [self setMessageSerializerClass:[LYRUIImageMessageSerializer class] forMIMEType:LYRUILegacyJPGImageMessageMimeType];
+    [self setMessageSerializerClass:[LYRUIImageMessageSerializer class] forMIMEType:LYRUILegacyJPEGImageMessageMimeType];
+    [self setMessageSerializerClass:[LYRUIImageMessageSerializer class] forMIMEType:LYRUILegacyPNGImageMessageMimeType];
+    [self setMessageSerializerClass:[LYRUIImageMessageSerializer class] forMIMEType:LYRUILegacyGIFImageMessageMimeType];
     [self setMessageSerializerClass:[LYRUILocationMessageSerializer class] forMIMEType:LYRUILocationMessage.MIMEType];
+    [self setMessageSerializerClass:[LYRUILocationMessageSerializer class] forMIMEType:LYRUILegacyLocationMessageMimeType];
     [self setMessageSerializerClass:[LYRUIStatusMessageSerializer class] forMIMEType:LYRUIStatusMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIResponseMessageSerializer class] forMIMEType:LYRUIResponseMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIButtonsMessageSerializer class] forMIMEType:LYRUIButtonsMessage.MIMEType];
