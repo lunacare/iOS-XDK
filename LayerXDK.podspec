@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   # Package information
   s.name                      = 'LayerXDK'
-  s.version                   = '1.0.0-pre2'
+  s.version                   = '4.0.0'
   s.summary                   = 'Layer XDK for Cocoa is a collection of Frameworks that provide native interfaces to access the Layer communications cloud and UI components to build rich messaging apps.'
   s.homepage                  = 'https://github.com/layerhq/iOS-XDK'
   s.social_media_url          = 'http://twitter.com/layer'
@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
     sub.frameworks             = 'UIKit', 'CoreLocation', 'MapKit', 'MobileCoreServices', 'SafariServices', 'QuickLook'
     sub.source_files           = 'UI/Code/**/*.{h,m}'
     sub.ios.resource_bundle    = { 'LayerXDKUIResource' => 'UI/Resources/*' }
-    sub.dependency               'LayerKit', '= 1.0.0-pre2'
+    sub.dependency               'LayerKit', '= 4.0.0'
   end
 
   s.default_subspec         = 'UI'
