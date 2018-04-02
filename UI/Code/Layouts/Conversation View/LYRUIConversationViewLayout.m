@@ -55,8 +55,10 @@
     [self.constraints addObject:[view.messageListView.bottomAnchor constraintEqualToAnchor:view.composeBar.topAnchor]];
     [self.constraints addObject:[view.composeBar.rightAnchor constraintEqualToAnchor:view.rightAnchor]];
     [self.constraints addObject:[view.composeBar.leftAnchor constraintEqualToAnchor:view.leftAnchor]];
-    [self.constraints addObject:[view.composeBar.bottomAnchor constraintEqualToAnchor:view.bottomAnchor]];
+    NSLayoutConstraint *bottomConstraint = [view.bottomAnchor constraintEqualToAnchor:view.composeBar.bottomAnchor];
+    [self.constraints addObject:bottomConstraint];
     [NSLayoutConstraint activateConstraints:self.constraints];
+    view.keyboardMaintainedConstraint = bottomConstraint;
 }
 
 - (void)updateConstraintsInView:(LYRUIConversationView *)view {}

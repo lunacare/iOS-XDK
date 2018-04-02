@@ -68,6 +68,7 @@
                                                           collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
     collectionView.backgroundColor = [UIColor whiteColor];
     collectionView.allowsSelection = YES;
+    collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     [self addSubview:collectionView];
     self.collectionView = collectionView;
 }
