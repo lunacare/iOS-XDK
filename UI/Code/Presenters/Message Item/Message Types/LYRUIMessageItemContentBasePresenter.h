@@ -44,6 +44,10 @@ NS_ASSUME_NONNULL_BEGIN     // {
 
 - (CGFloat)heightForSize:(CGSize)size withMinWidth:(CGFloat)minWidth maxWidth:(CGFloat)width;
 
+#pragma mark - Helpers
+
+- (BOOL)isMessageOutgoing:(LYRUIMessageType *)message;
+
 #pragma mark - Views height calculation
 
 - (CGSize)textSizeInLabel:(UILabel *)label withMaxWidth:(CGFloat)maxWidth;

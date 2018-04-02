@@ -73,15 +73,14 @@ static CGFloat const LYRUITextMessageContentViewVerticalPadding = 17.0;
     textView.text = message.text;
     
     BOOL outgoingMessage = [self isMessageOutgoing:message];
+    UIColor *textColor;
     if (message.parentMessage == nil && outgoingMessage && message.metadata == nil) {
-        textView.textColor = [UIColor whiteColor];
+        textColor = [UIColor whiteColor];
     } else {
-        textView.textColor = [UIColor blackColor];
+        textColor = [UIColor blackColor];
     }
-}
-
-- (BOOL)isMessageOutgoing:(LYRUITextMessage *)message {
-    return [message.sender.userID isEqualToString:self.layerConfiguration.client.authenticatedUser.userID];
+    textView.textColor = textColor;
+    textView.tintColor = textColor;
 }
 
 - (CGFloat)viewHeightForMessage:(LYRUITextMessage *)message minWidth:(CGFloat)minWidth maxWidth:(CGFloat)maxWidth {

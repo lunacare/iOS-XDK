@@ -51,6 +51,7 @@
     textView.backgroundColor = UIColor.clearColor;
     textView.translatesAutoresizingMaskIntoConstraints = NO;
     textView.dataDetectorTypes = UIDataDetectorTypeAll;
+    textView.linkTextAttributes = @{ NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle) };
     textView.editable = NO;
     textView.scrollEnabled = NO;
     textView.font = [UIFont systemFontOfSize:14.0];

@@ -99,6 +99,12 @@ static CGFloat const LYRUIMessageItemViewMaximumPreviewImageSize = 300.0;
     return 0.0;
 }
 
+#pragma mark - Helpers
+
+- (BOOL)isMessageOutgoing:(LYRUIMessageType *)message {
+    return [message.sender.userID isEqualToString:self.layerConfiguration.client.authenticatedUser.userID];
+}
+
 #pragma mark - Views height calculation
 
 - (CGSize)textSizeInLabel:(UILabel *)label withMaxWidth:(CGFloat)maxWidth {

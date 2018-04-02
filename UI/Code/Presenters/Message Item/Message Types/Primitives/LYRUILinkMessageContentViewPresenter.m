@@ -34,6 +34,8 @@ static CGFloat const LYRUIMessageItemViewLinkImageDefaultRatio = 4.0 / 3.0;
 static CGSize const LYRUIMessageItemViewLinkImageDefaultSize = { 4.0, 3.0 };
 static CGFloat const LYRUIMessageItemViewLinkImageMaxHeight = 450.0;
 
+static CGFloat const LYRUILinkMessageContentViewVerticalPadding = 17.0;
+
 @interface LYRUILinkMessageContentViewPresenter ()
 
 @property (nonatomic, strong) NSCache *pageImageURLsCache;
@@ -70,11 +72,20 @@ static CGFloat const LYRUIMessageItemViewLinkImageMaxHeight = 450.0;
     if (message.imageURL) {
         [self setupViewConstraints:linkView forImageSize:message.imageSize];
     } else {
-        [self setupViewConstraints:linkView];
+        [NSLayoutConstraint deactivateConstraints:linkView.constraints];
+        [self setupConstantViewConstraints:linkView];
     }
     [self setupLinkView:linkView withMessageType:message];
     
     return linkView;
+}
+
+- (UIColor *)backgroundColorForMessage:(LYRUILinkMessage *)messageType {
+    BOOL outgoingMessage = [self isMessageOutgoing:messageType];
+    if (outgoingMessage && messageType.imageURL == nil && messageType.metadata == nil) {
+        return [UIColor colorWithRed:16.0/255.0 green:148.0/255.0 blue:208.0/255.0 alpha:1.0];
+    }
+    return [super backgroundColorForMessage:messageType];
 }
 
 - (void)setupLinkView:(__weak LYRUILinkMessageView *)linkView withMessageType:(LYRUILinkMessage *)messageType {
@@ -87,11 +98,20 @@ static CGFloat const LYRUIMessageItemViewLinkImageMaxHeight = 450.0;
         [self fetchAndPresentImageWithURL:messageType.imageURL inImageView:linkView.imageView contextId:contextId completion:nil];
     } else {
         linkView.textView.text = messageType.URL.absoluteString;
+        
+        BOOL outgoingMessage = [self isMessageOutgoing:messageType];
+        UIColor *textColor;
+        if (messageType.parentMessage == nil && outgoingMessage && messageType.metadata == nil) {
+            textColor = [UIColor whiteColor];
+        } else {
+            textColor = [UIColor blackColor];
+        }
+        linkView.textView.textColor = textColor;
+        linkView.textView.tintColor = textColor;
     }
 }
 
-- (void)setupViewConstraints:(LYRUILinkMessageView *)view {
-    [super setupViewConstraints:view];
+- (void)setupConstantViewConstraints:(LYRUILinkMessageView *)view {
     [view.textView.topAnchor constraintEqualToAnchor:view.topAnchor].active = YES;
     [view.textView.rightAnchor constraintEqualToAnchor:view.rightAnchor].active = YES;
     [view.textView.bottomAnchor constraintEqualToAnchor:view.bottomAnchor].active = YES;
@@ -105,7 +125,8 @@ static CGFloat const LYRUIMessageItemViewLinkImageMaxHeight = 450.0;
 - (void)setupViewConstraints:(UIView *)view forImageSize:(CGSize)size {
     CGFloat maxHeight = LYRUIMessageItemViewLinkImageMaxHeight;
     CGFloat ratio = (size.height != 0.0) ? (size.width / size.height) : LYRUIMessageItemViewLinkImageDefaultRatio;
-    [self setupViewConstraints:view];
+    [super setupViewConstraints:view];
+    [self setupConstantViewConstraints:view];
     if (size.width != 0.0) {
         CGFloat width = (size.height > maxHeight) ? (maxHeight * ratio) : size.width;
         NSLayoutConstraint *widthConstraint = [view.widthAnchor constraintEqualToConstant:width];
@@ -135,14 +156,16 @@ static CGFloat const LYRUIMessageItemViewLinkImageMaxHeight = 450.0;
                            maxWidth:(CGFloat)maxWidth {
     LYRUILinkMessageView *linkView = self.sizingLinkView;
     [self setupLinkView:linkView withMessageType:messageType];
-    CGFloat textWidth = maxWidth - 28.0;
+    UITextView *textView = linkView.textView;
+    CGFloat textInsets = textView.textContainerInset.left + textView.textContainerInset.right + textView.textContainer.lineFragmentPadding;
+    CGFloat textWidth = maxWidth - textInsets;
     CGRect stringRect = [linkView.textView.text boundingRectWithSize:CGSizeMake(textWidth, CGFLOAT_MAX)
                                                              options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
                                                           attributes:linkView.textView.typingAttributes
                                                              context:nil];
     CGFloat screenScale = [UIScreen mainScreen].scale;
     CGFloat linkViewHeight = ceil(stringRect.size.height * screenScale) / screenScale;
-    return linkViewHeight + 14.0;
+    return linkViewHeight + LYRUILinkMessageContentViewVerticalPadding;
 }
 
 - (CGFloat)imageHeightForMessageType:(LYRUILinkMessage *)messageType
