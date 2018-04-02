@@ -1,6 +1,6 @@
 //
 //  LYRUIFilePreviewController.h
-//  Layer-UI-iOS
+//  Layer-XDK-UI-iOS
 //
 //  Created by Łukasz Przytuła on 25.09.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.
