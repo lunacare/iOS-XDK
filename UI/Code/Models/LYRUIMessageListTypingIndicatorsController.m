@@ -27,18 +27,21 @@
 #import "LYRUIBubbleTypingIndicatorView.h"
 #import "LYRUIDotsBubbleView.h"
 #import "LYRUITypingIndicator.h"
+#import "LYRUIMessageListView.h"
 
 @interface LYRUIMessageListTypingIndicatorsController ()
 
+@property (nonatomic, readonly) UICollectionView *collectionView;
 @property (nonatomic, strong) NSNotificationCenter *notificationCenter;
 @property (nonatomic, strong) NSMutableSet<LYRIdentity *> *typingParticipants;
 @property (nonatomic, strong) LYRConversation *conversation;
-@property (nonatomic, strong) LYRUITypingIndicator *typingIndicator;
+@property (nonatomic, strong, readwrite) LYRUITypingIndicator *typingIndicator;
+@property (nonatomic, readwrite) BOOL typingIndicatorPresented;
 
 @end
 
 @implementation LYRUIMessageListTypingIndicatorsController
-@synthesize collectionView = _collectionView,
+@synthesize messageListView = _messageListView,
             layerConfiguration = _layerConfiguration;
 
 - (instancetype)init {
@@ -51,7 +54,7 @@
 }
 
 - (instancetype)initWithConfiguration:(LYRUIConfiguration *)configuration {
-    self = [super init];
+    self = [self init];
     if (self) {
         self.layerConfiguration = configuration;
     }
@@ -74,6 +77,12 @@
 - (void)removeNotificationsObserver {
     self.conversation = nil;
     [self.notificationCenter removeObserver:self];
+}
+
+#pragma mark - Properties
+
+- (UICollectionView *)collectionView {
+    return self.messageListView.collectionView;
 }
 
 #pragma mark - Notification handler
@@ -104,52 +113,116 @@
 }
 
 - (void)addTypingIndicators {
-    NSUInteger lastMessageIndex = [self.collectionView numberOfItemsInSection:0] - 1;
-    NSIndexPath *lastMessageIndexPath = [NSIndexPath indexPathForItem:lastMessageIndex inSection:0];
-    BOOL shouldScrollToBottom = [self.collectionView.indexPathsForVisibleItems containsObject:lastMessageIndexPath];
-    
-    LYRUIListDataSource *dataSource = (LYRUIListDataSource *)self.collectionView.dataSource;
-    LYRUIListSection *section = dataSource.sections.firstObject;
-    if ([section.items containsObject:self.typingIndicator]) {
+    if (self.typingIndicatorPresented) {
         return;
     }
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:(lastMessageIndex + 1) inSection:0];
+    
+    self.typingIndicatorPresented = YES;
+    
+    CGPoint oldOffset = self.collectionView.contentOffset;
+    BOOL shouldScrollToBottom = [self shouldScrollToBottom];
+    
+    NSIndexPath *indexPath = [self newItemIndexPath];
+    LYRUIListSection *section = [self typingIndicatorSection];
+    __weak __typeof(self) weakSelf = self;
     [self.collectionView performBatchUpdates:^{
-        [section.items addObject:self.typingIndicator];
-        [self.collectionView insertItemsAtIndexPaths:@[indexPath]];
+        if ([weakSelf inlineTypingIndicatorEnabled]) {
+            [section.items addObject:weakSelf.typingIndicator];
+        }
+        [weakSelf.collectionView.collectionViewLayout invalidateLayout];
+        if ([weakSelf inlineTypingIndicatorEnabled]) {
+            [weakSelf.collectionView insertItemsAtIndexPaths:@[indexPath]];
+        }
     } completion:^(BOOL finished) {
+        weakSelf.collectionView.contentOffset = oldOffset;
         LYRUIBubbleTypingIndicatorCollectionViewCell *typingIndicatorCell =
-            (LYRUIBubbleTypingIndicatorCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+            (LYRUIBubbleTypingIndicatorCollectionViewCell *)[weakSelf.collectionView cellForItemAtIndexPath:indexPath];
         typingIndicatorCell.typingIndicatorView.bubbleView.animating = YES;
-        if (typingIndicatorCell && shouldScrollToBottom) {
-            [self.collectionView scrollToItemAtIndexPath:indexPath
-                                        atScrollPosition:UICollectionViewScrollPositionTop
-                                                animated:YES];
+        if (shouldScrollToBottom) {
+            [weakSelf scrollToBottom];
         }
     }];
 }
 
 - (void)removeTypingIndicators {
-    LYRUIListDataSource *dataSource = (LYRUIListDataSource *)self.collectionView.dataSource;
-    LYRUIListSection *section = dataSource.sections.firstObject;
-    if (![section.items containsObject:self.typingIndicator]) {
+    if (!self.typingIndicatorPresented) {
         return;
     }
-    NSUInteger itemIndex = [section.items indexOfObject:self.typingIndicator];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:itemIndex inSection:0];
-    [self.collectionView.collectionViewLayout invalidateLayout];
+    
+    self.typingIndicatorPresented = NO;
+    
+    CGPoint oldOffset = self.collectionView.contentOffset;
+    BOOL shouldMaintainOffset = [self shouldMaintainOffset];
+    BOOL shouldScrollToBottom = [self shouldScrollToBottom];
+    
+    NSIndexPath *indexPath = [self lastItemIndexPath];
+    LYRUIListSection *section = [self typingIndicatorSection];
+    __weak __typeof(self) weakSelf = self;
     [self.collectionView performBatchUpdates:^{
-        [section.items removeObject:self.typingIndicator];
-        [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
-    } completion:nil];
+        if ([weakSelf inlineTypingIndicatorEnabled]) {
+            [section.items removeObject:weakSelf.typingIndicator];
+        }
+        [weakSelf.collectionView.collectionViewLayout invalidateLayout];
+        if ([weakSelf inlineTypingIndicatorEnabled]) {
+            [weakSelf.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+        }
+    } completion:^(BOOL finished) {
+        if (shouldMaintainOffset) {
+            weakSelf.collectionView.contentOffset = oldOffset;
+        }
+        if (shouldScrollToBottom) {
+            [weakSelf scrollToBottom];
+        }
+    }];
+}
+
+- (BOOL)inlineTypingIndicatorEnabled {
+    return (self.messageListView.typingIndicatorMode & LYRUITypingIndicatorModeInline);
+}
+
+- (BOOL)textTypingIndicatorEnabled {
+    return (self.messageListView.typingIndicatorMode & LYRUITypingIndicatorModeText);
+}
+
+- (BOOL)shouldMaintainOffset {
+    CGFloat contentHeight = [self.collectionView.collectionViewLayout collectionViewContentSize].height;
+    CGFloat collectionViewHeight = self.collectionView.bounds.size.height;
+    return (contentHeight < collectionViewHeight);
+}
+
+- (BOOL)shouldScrollToBottom {
+    return [self.collectionView.indexPathsForVisibleItems containsObject:[self lastItemIndexPath]];
+}
+
+- (void)scrollToBottom {
+    CGPoint contentOffset = self.collectionView.contentOffset;
+    CGSize contentSize = [self.collectionView.collectionViewLayout collectionViewContentSize];
+    contentOffset.y = contentSize.height - self.collectionView.bounds.size.height;
+    [self.collectionView setContentOffset:contentOffset animated:YES];
+}
+
+- (LYRUIListSection *)typingIndicatorSection {
+    LYRUIListDataSource *dataSource = (LYRUIListDataSource *)self.collectionView.dataSource;
+    return dataSource.sections.firstObject;
+}
+
+- (NSIndexPath *)lastItemIndexPath {
+    LYRUIListDataSource *dataSource = (LYRUIListDataSource *)self.collectionView.dataSource;
+    return [dataSource lastItemIndexPath];
+}
+
+- (NSIndexPath *)newItemIndexPath {
+    NSIndexPath *lastItemIndexPath = [self lastItemIndexPath];
+    return [NSIndexPath indexPathForItem:lastItemIndexPath.item + 1 inSection:lastItemIndexPath.section];
 }
 
 - (void)updateTypingIndicators {
-    LYRUIListDataSource *dataSource = (LYRUIListDataSource *)self.collectionView.dataSource;
-    LYRUIListSection *section = dataSource.sections.firstObject;
-    if (![section.items containsObject:self.typingIndicator]) {
+    if (!self.typingIndicatorPresented) {
         return;
     }
+
+    LYRUIListDataSource *dataSource = (LYRUIListDataSource *)self.collectionView.dataSource;
+    LYRUIListSection *section = dataSource.sections.firstObject;
     NSUInteger itemIndex = [section.items indexOfObject:self.typingIndicator];
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:itemIndex inSection:0];
     [self.collectionView.collectionViewLayout invalidateLayout];

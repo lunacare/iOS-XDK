@@ -82,6 +82,9 @@ static NSInteger const LYRUIMessageListPaginationControllerDefaultPageSize = -30
     self.loadingMore = YES;
     if (!self.queryController || !self.moreItemsAvailable) {
         self.loadingMore = NO;
+        if (callback) {
+            callback(NO);
+        }
         return;
     }
     

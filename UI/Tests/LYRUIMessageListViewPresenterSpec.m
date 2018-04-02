@@ -123,8 +123,8 @@ describe(@"LYRUIMessageListViewPresenter", ^{
         it(@"should set typing indicators controller", ^{
             expect(view.typingIndicatorsController).to.equal(typingIndicatorsControllerMock);
         });
-        it(@"should set typing indicators controller's collection view to message list's collection view", ^{
-            [verify(typingIndicatorsControllerMock) setCollectionView:collectionViewMock];
+        it(@"should set typing indicators controller's message list view", ^{
+            [verify(typingIndicatorsControllerMock) setMessageListView:view];
         });
         
         it(@"should register message cell presenter cell", ^{
@@ -151,6 +151,12 @@ describe(@"LYRUIMessageListViewPresenter", ^{
         });
         it(@"should register typing indicator footer presenter supplementary view", ^{
             [verify(typingIndicatorFooterPresenterMock) registerSupplementaryViewInCollectionView:collectionViewMock];
+        });
+        it(@"should set typing indicator footer presenter's message list view", ^{
+            [verify(typingIndicatorFooterPresenterMock) setMessageListView:view];
+        });
+        it(@"should set typing indicator footer presenter's typing indicators controller", ^{
+            [verify(typingIndicatorFooterPresenterMock) setTypingIndicatorsController:typingIndicatorsControllerMock];
         });
         
         context(@"data source", ^{

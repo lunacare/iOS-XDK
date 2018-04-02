@@ -23,6 +23,8 @@
 #import "LYRUIPanelTypingIndicatorView.h"
 #import "LYRUIListDataSource.h"
 #import "LYRUITypingIndicator.h"
+#import "LYRUIMessageListView.h"
+#import "LYRUIMessageListTypingIndicatorsControlling.h"
 
 static CGFloat const LYRUITypingIndicatorFooterHeight = 22.0;
 
@@ -50,15 +52,10 @@ static CGFloat const LYRUITypingIndicatorFooterHeight = 22.0;
 #pragma mark - LYRUIListSupplementaryViewPresenting
 
 - (void)setupSupplementaryView:(LYRUIPanelTypingIndicatorView *)view forItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSIndexPath *lastMessageIndexPath = self.listDataSource.lastItemIndexPath;
-    if (lastMessageIndexPath == nil) {
+    if (![self shouldShowTypingIndicator]) {
         return;
     }
-    id item = [self.listDataSource itemAtIndexPath:lastMessageIndexPath];
-    if (![item isKindOfClass:[LYRUITypingIndicator class]]) {
-        return;
-    }
-    LYRUITypingIndicator *typingIndicator = (LYRUITypingIndicator *)item;
+    LYRUITypingIndicator *typingIndicator = self.typingIndicatorsController.typingIndicator;
     view.layerConfiguration = self.layerConfiguration;
     view.identities = typingIndicator.typingParticipants;
 }
@@ -72,17 +69,19 @@ static CGFloat const LYRUITypingIndicatorFooterHeight = 22.0;
 #pragma mark - LYRUIListSupplementaryViewSizeCalculating
 
 - (CGSize)supplementaryViewSizeInCollectionView:(UICollectionView *)collectionView forItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSIndexPath *lastMessageIndexPath = self.listDataSource.lastItemIndexPath;
-    if (lastMessageIndexPath == nil) {
-        return CGSizeZero;
-    }
-    id item = [self.listDataSource itemAtIndexPath:lastMessageIndexPath];
-    if ([item isKindOfClass:[LYRUITypingIndicator class]]) {
+    if ([self shouldShowTypingIndicator]) {
         return CGSizeMake(CGRectGetWidth(collectionView.bounds), LYRUITypingIndicatorFooterHeight);
     }
     return CGSizeZero;
 }
 
 - (void)invalidateAllSupplementaryViewSizes {}
+
+#pragma mark - Helpers
+
+- (BOOL)shouldShowTypingIndicator {
+    return ((self.messageListView.typingIndicatorMode & LYRUITypingIndicatorModeText) &&
+            self.typingIndicatorsController.typingIndicatorPresented);
+}
 
 @end

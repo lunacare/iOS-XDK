@@ -26,6 +26,12 @@
 @class LYRIdentity;
 @class LYRUIMessageSender;
 
+typedef NS_ENUM(NSUInteger, LYRUITypingIndicatorMode) {
+    LYRUITypingIndicatorModeInline = 1 << 0,
+    LYRUITypingIndicatorModeText = 1 << 1,
+    LYRUITypingIndicatorModeBoth = LYRUITypingIndicatorModeInline | LYRUITypingIndicatorModeText,
+};
+
 IB_DESIGNABLE
 /**
  @abstract A typed `LYRUIBaseListView`, for presenting `LYRMessage` items.
@@ -55,6 +61,11 @@ IB_DESIGNABLE
  @discussion This property is used only when list is set up using `setupWithConversation:client:` or `setQueryController:`.
  */
 @property (nonatomic) NSUInteger pageSize;
+
+/**
+ @abstract Way of presenting typing indicator. Default is LYRUITypingIndicatorModeBoth.
+ */
+@property (nonatomic) LYRUITypingIndicatorMode typingIndicatorMode;
 
 /**
  @abstract Object controlling presence of typing indicators.

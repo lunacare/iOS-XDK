@@ -114,7 +114,7 @@ static CGFloat const LYRUIMessageCellPresenterViewsWithMarginsWidth = 64.0;
 - (void)setupMessageItemView:(LYRUIMessageItemView *)messageItemView withMessage:(LYRUIMessageType *)message {
     messageItemView.layerConfiguration = self.layerConfiguration;
     [self setupAccessoryViewVisibility:messageItemView.primaryAccessoryViewContainer
-                          forMessage:message];
+                            forMessage:message];
     
     [self.messageItemPresenter setupMessageItemView:messageItemView withMessage:message];
     
@@ -140,7 +140,11 @@ static CGFloat const LYRUIMessageCellPresenterViewsWithMarginsWidth = 64.0;
     LYRUIListSection *section = self.listDataSource.sections[indexPath.section];
     if (indexPath.item < (section.items.count - 1)) {
         LYRUIMessageType *message = section.items[indexPath.item];
-        LYRUIMessageType *nextMessage = section.items[indexPath.item + 1];
+        id nextItem = section.items[indexPath.item + 1];
+        if (![nextItem isKindOfClass:[LYRUIMessageType class]]) {
+            return;
+        }
+        LYRUIMessageType *nextMessage = (LYRUIMessageType *)nextItem;
         accessoryView.hidden = [message.sender.userID isEqualToString:nextMessage.sender.userID];
     }
 }

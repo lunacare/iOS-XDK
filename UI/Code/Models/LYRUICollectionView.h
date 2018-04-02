@@ -1,8 +1,8 @@
 //
-//  LYRUIMessageListTypingIndicatorsControlling.h
+//  LYRUICollectionView.h
 //  Layer-UI-iOS
 //
-//  Created by Łukasz Przytuła on 01.02.2018.
+//  Created by Łukasz Przytuła on 21.03.2018.
 //  Copyright (c) 2017 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,21 +18,8 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-@class LYRUIMessageListView;
-@class LYRConversation;
-@class LYRUITypingIndicator;
+#import <UIKit/UIKit.h>
 
-@protocol LYRUIMessageListTypingIndicatorsControlling <NSObject>
-
-@property (nonatomic, weak) LYRUIMessageListView *messageListView;
-
-@property (nonatomic, readonly) BOOL typingIndicatorPresented;
-
-@property (nonatomic, strong, readonly) LYRUITypingIndicator *typingIndicator;
-
-- (void)registerForNotificationsInConversation:(LYRConversation *)conversation;
-
-- (void)removeNotificationsObserver;
+@interface LYRUICollectionView : UICollectionView
 
 @end

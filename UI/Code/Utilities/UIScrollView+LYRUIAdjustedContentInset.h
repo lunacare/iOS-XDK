@@ -27,4 +27,9 @@
  */
 @property (nonatomic, readonly) UIEdgeInsets lyr_adjustedContentInset;
 
+/**
+ @abstract Used for storing original content inset before maintining it.
+ */
+@property (nonatomic, strong) NSString *lyr_serializedOriginalContentInset;
+
 @end

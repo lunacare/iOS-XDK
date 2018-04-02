@@ -47,6 +47,22 @@
 @synthesize queryController = _queryController;
 @dynamic queryControllerDelegate, delegate;
 
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.typingIndicatorMode = LYRUITypingIndicatorModeBoth;
+    }
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        self.typingIndicatorMode = LYRUITypingIndicatorModeBoth;
+    }
+    return self;
+}
+
 - (void)setLayerConfiguration:(LYRUIConfiguration *)layerConfiguration {
     [super setLayerConfiguration:layerConfiguration];
     self.messageSender = [layerConfiguration.injector objectOfType:[LYRUIMessageSender class]];
@@ -62,16 +78,27 @@
     [[[LYRUIMessageListIBSetup alloc] init] prepareMessageListForInterfaceBuilder:self];
 }
 
+#pragma mark - Sizing
+
+- (void)setBounds:(CGRect)bounds {
+    BOOL shouldMaintainOffset = [self shouldMaintainOffset];
+    [super setBounds:bounds];
+    if (shouldMaintainOffset) {
+        [self scrollToLastMessageAnimated:NO];
+    }
+}
+
+- (BOOL)shouldMaintainOffset {
+    return (self.bounds.size.height == (self.collectionView.contentSize.height - self.collectionView.contentOffset.y));
+}
+
 #pragma mark - Public methods
 
 - (void)scrollToLastMessageAnimated:(BOOL)animated {
-    NSIndexPath *lastMessageIndexPath = self.dataSource.lastItemIndexPath;
-    if (lastMessageIndexPath == nil) {
-        return;
-    }
-    [self.collectionView scrollToItemAtIndexPath:lastMessageIndexPath
-                                atScrollPosition:UICollectionViewScrollPositionTop
-                                        animated:animated];
+    CGPoint contentOffset = self.collectionView.contentOffset;
+    CGSize contentSize = [self.collectionView.collectionViewLayout collectionViewContentSize];
+    contentOffset.y = contentSize.height - self.collectionView.bounds.size.height;
+    [self.collectionView setContentOffset:contentOffset animated:animated];
 }
 
 - (void)registerViewControllerForPreviewing:(UIViewController *)viewController {
