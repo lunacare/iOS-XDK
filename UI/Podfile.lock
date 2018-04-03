@@ -3,9 +3,9 @@ PODS:
   - KIF (3.6.0):
     - KIF/Core (= 3.6.0)
   - KIF/Core (3.6.0)
-  - LayerKit (1.0.0-pre2)
-  - LayerXDK/UI (1.0.0-pre2):
-    - LayerKit (= 1.0.0-pre2)
+  - LayerKit (4.0.0)
+  - LayerXDK/UI (4.0.0):
+    - LayerKit (= 4.0.0)
   - OCHamcrest (7.0.2)
   - OCMock (3.4.1)
   - OCMockito (5.0.1):
@@ -15,7 +15,7 @@ PODS:
 DEPENDENCIES:
   - Expecta
   - KIF
-  - LayerKit (= 1.0.0-pre2)
+  - LayerKit (= 4.0.0)
   - LayerXDK/UI (from `../.`)
   - OCMock
   - OCMockito
@@ -28,13 +28,13 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
   KIF: bd770edd8ce49bc7308501e4871e58a02d137be3
-  LayerKit: 57228d59f2036a8c81e8c871fdaeffb1ad7740e0
-  LayerXDK: e5d9fe01dc7e0a7f8ac31edb97177f511d3bd086
+  LayerKit: 865c5fb9faaaf4fc785c910a8e66fcdef39ba771
+  LayerXDK: 46b880a6b6ae4118ff87ebdca8427bdcffcd216d
   OCHamcrest: 706bfbf69a3df55a873bad096014e80e2e8ca93c
   OCMock: 2cd0716969bab32a2283ff3a46fd26a8c8b4c5e3
   OCMockito: 063837a086c058e764fcd23e771089c1759e7197
   Specta: 3e1bd89c3517421982dc4d1c992503e48bd5fe66
 
-PODFILE CHECKSUM: 424435314705d0d6138b6d52746d7c5c3a82c2f1
+PODFILE CHECKSUM: f02f1e851a5b3e768f8468e3a71b10208640edb8
 
 COCOAPODS: 1.4.0

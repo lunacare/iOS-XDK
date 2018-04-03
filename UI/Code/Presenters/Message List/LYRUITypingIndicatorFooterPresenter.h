@@ -1,6 +1,6 @@
 //
 //  LYRUITypingIndicatorFooterPresenter.h
-//  Layer-UI-iOS
+//  Layer-XDK-UI-iOS
 //
 //  Created by Łukasz Przytuła on 28.01.2018.
 //  Copyright (c) 2017 Layer. All rights reserved.

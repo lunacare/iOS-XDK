@@ -1,8 +1,18 @@
 # LayerXDK Changelog
 
-## 1.0.0-pre1
+## 4.0.0
 
-### Initial release
+### Enhancements
+
+* Messages are moved to the bottom of messages list
+* Added conflict resolution to choice messages and choice buttons
+* Improved keyboard hiding and animations in conversation view
+
+### Bug fixes
+
+* Fixed support for legacy message types
+* Fixed crash when going out from conversation on iOS 10
+* Fixed multiple minor UI issues
 
 ## 1.0.0-pre2
 
@@ -21,3 +31,7 @@
 * Fixed input field and send button state in `LYRUIConversationView` after sending a message
 * Fixed sending message responses
 * Fixed multiple UI layout issues
+
+## 1.0.0-pre1
+
+### Initial release

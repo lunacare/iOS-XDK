@@ -1,6 +1,6 @@
 //
 //  LYRUIShapedView.m
-//  Layer-UI-iOS
+//  Layer-XDK-UI-iOS
 //
 //  Created by Jeremy Wyld on 03.07.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.

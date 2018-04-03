@@ -1,6 +1,6 @@
 //
 //  LYRUILinkMessageView.m
-//  Layer-UI-iOS
+//  Layer-XDK-UI-iOS
 //
 //  Created by Łukasz Przytuła on 15.11.2017.
 //  Copyright (c) 2017 Layer. All rights reserved.

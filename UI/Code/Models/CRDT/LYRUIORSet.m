@@ -1,6 +1,6 @@
 //
 //  LYRUIORSet.m
-//  Layer-UI-iOS
+//  Layer-XDK-UI-iOS
 //
 //  Created by Łukasz Przytuła on 22.03.2018.
 //  Copyright (c) 2017 Layer. All rights reserved.
