@@ -4,6 +4,7 @@ machine:
 dependencies:
   pre:
     - gem install bundler
+    - pod repo update
 test:
   override:
     - bundle exec fastlane test
