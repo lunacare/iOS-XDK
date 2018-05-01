@@ -98,6 +98,8 @@ build-iPhoneSimulator/
 /_yardoc/
 /doc/
 /rdoc/
+Docs/
+/UI/Code/LayerKit
 
 ## Environment normalization:
 /.bundle/
@@ -158,4 +160,3 @@ build
 .DS_Store
 
 # End of https://www.gitignore.io/api/xcode,swift,fastlane,carthage,appcode,ruby
-

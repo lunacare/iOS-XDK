@@ -1,0 +1,18 @@
+output: Docs
+clean: true
+sdk: iphonesimulator
+objc: true
+umbrella_header: Code/LayerXDKUI.h
+framework_root: .
+exclude: Code/LayerKit/*
+source_directory: ./..
+author: Layer
+author_url: https://layer.com
+module: Layer-XDK-UI
+module_version: 4.0.0
+copyright: 2018 [Layer](https://layer.com)
+readme: ../README.md
+github_url: https://github.com/layerhq/iOS-XDK
+github_file_prefix: https://github.com/layerhq/iOS-XDK/tree/v4.0.0
+min_acl: public
+theme: fullwidth
