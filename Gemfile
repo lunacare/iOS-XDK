@@ -1,8 +1,8 @@
 source "http://rubygems.org"
-ruby '2.3.5'
+ruby '2.5.0'
 
 gem "fastlane"
-gem "rake", "~> 10.5.0"
-gem 'cocoapods', '~> 1.4.0'
-gem 'xcpretty', '~> 0.2.2'
-gem 'highline', '~> 1.7.8'
+gem "rake", "~> 12.3.1"
+gem 'cocoapods', '~> 1.5.0'
+gem 'xcpretty', '~> 0.2.8'
+gem 'highline', '~> 1.7.10'
