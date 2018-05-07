@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "98EB201C6BDC5F7D2A820A63"
+               BlueprintIdentifier = "53FDA26AF5792E5F44FEF056"
                BlueprintName = "UI"
                ReferencedContainer = "container:UI-Carthage.xcodeproj"
                BuildableName = "UI.framework">

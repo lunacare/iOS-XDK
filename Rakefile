@@ -130,7 +130,7 @@ namespace :carthage do
     framework_target.build_configuration_list.set_setting("LD_RUNPATH_SEARCH_PATHS", "@executable_path/Frameworks @loader_path/Frameworks")
     framework_target.build_configuration_list.set_setting("FRAMEWORK_SEARCH_PATHS", "${SRCROOT}/../Carthage/Build/iOS/**")
     framework_target.build_configuration_list.set_setting("GCC_PREFIX_HEADER", "${SRCROOT}/Code/Support/LayerXDK-prefix.pch")
-    framework_target.build_configuration_list.set_setting("INFOPLIST_FILE", "$(SRCROOT)/Resources/Info.plist")
+    framework_target.build_configuration_list.set_setting("INFOPLIST_FILE", "$(SRCROOT)/Info.plist")
     framework_target.build_configuration_list.set_setting("PRODUCT_BUNDLE_IDENTIFIER", "com.layer.xdk.ui")
 
     # 6. Add system libraries (CoreLocation.framework, Foundation.framework,
@@ -141,6 +141,8 @@ namespace :carthage do
 
     # 7. Add resource build phase and put all files from `../Resources` in it.
     resources_bundle_target = xcproj.new_resources_bundle("Assets", :ios)
+    resources_bundle_target.build_configuration_list.set_setting("INFOPLIST_FILE", "$(SRCROOT)/Assets-Info.plist")
+    resources_bundle_target.build_configuration_list.set_setting("PRODUCT_BUNDLE_IDENTIFIER", "com.layer.xdk.ui.assets")
     resources_code_path = File.join(root_dir, "UI", "Resources")
     resource_files = Dir.glob("#{resources_code_path}/**/*.*").map { |resurce_file| xcproj.new_file(resurce_file, :group) }
     resources_bundle_target.add_resources(resource_files)
