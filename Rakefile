@@ -141,9 +141,12 @@ namespace :carthage do
     framework_target.add_system_frameworks(system_frameworks)
 
     # 7. Add resource build phase and put all files from `../Resources` in it.
+    resources_bundle_target = xcproj.new_resources_bundle("Assets", :ios)
     resources_code_path = File.join(root_dir, "UI", "Resources")
     resource_files = Dir.glob("#{resources_code_path}/**/*.*").map { |resurce_file| xcproj.new_file(resurce_file, :group) }
-    framework_target.add_resources(resource_files)
+    resources_bundle_target.add_resources(resource_files)
+    framework_target.add_resources([resources_bundle_target.product_reference])
+    framework_target.add_dependency(resources_bundle_target)
 
     # 8. Create a shared scheme.
     xcproj.recreate_user_schemes(true)
