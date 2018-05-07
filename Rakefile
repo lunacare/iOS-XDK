@@ -92,11 +92,11 @@ namespace :carthage do
   task :initialize do
     root_dir = File.expand_path(File.dirname(__FILE__))
     ui_path = File.join(root_dir, "UI")
-    carthage_path = "./UI/Carthage"
+    carthage_path = "./Carthage"
     carthage_project_filename = "UI.xcodeproj"
 
     # 0. Make sure carthage gets all dependencies.
-    # run("cd #{ui_path} && carthage update")
+    run("cd #{ui_path} && carthage update")
 
     # 1. Purge existing Carthage XCode project.
     carthage_project_path = File.join(root_dir, carthage_path, carthage_project_filename)
@@ -117,19 +117,17 @@ namespace :carthage do
 
     # 5. Add Public Headers (scan all .h files in `../Code`).
     header_files = Dir.glob("#{ui_code_path}/**/*.h").map { |header_file| xcproj.new_file(header_file, :group) }
-    header_files.each do |f|
-      build_file = framework_target.headers_build_phase.add_file_reference(f, nil)
-    end
+    header_files.map { |f| framework_target.headers_build_phase.add_file_reference(f, nil) }
 
     # 6. Link LayerKit.framework.
-    layerkit_framework_path = File.join("Build", "iOS", "LayerKit.framework")
+    layerkit_framework_path = File.join("..", "UI", "Carthage", "Build", "iOS", "LayerKit.framework")
     layerkit_framework_xcode_file = xcproj.new_file(layerkit_framework_path, :group)
     framework_target.frameworks_build_phase.add_file_reference(layerkit_framework_xcode_file, nil)
 
     # 7. Add framework search paths for LayerKit.
     framework_target.build_configuration_list.set_setting("LD_RUNPATH_SEARCH_PATHS", "@executable_path/Frameworks @loader_path/Frameworks")
-    framework_target.build_configuration_list.set_setting("FRAMEWORK_SEARCH_PATHS", "${SRCROOT}/Build/iOS/**")
-    framework_target.build_configuration_list.set_setting("GCC_PREFIX_HEADER", "${SRCROOT}/../Code/Support/LayerXDK-prefix.pch")
+    framework_target.build_configuration_list.set_setting("FRAMEWORK_SEARCH_PATHS", "${SRCROOT}/../UI/Carthage/Build/iOS/**")
+    framework_target.build_configuration_list.set_setting("GCC_PREFIX_HEADER", "${SRCROOT}/../UI/Code/Support/LayerXDK-prefix.pch")
 
     # 6. Add system libraries (CoreLocation.framework, Foundation.framework,
     # MapKit.framework, MobileCoreServices.framework, QuickLook.framework,
@@ -138,6 +136,9 @@ namespace :carthage do
     framework_target.add_system_frameworks(system_frameworks)
 
     # 7. Add resource build phase and put all files from `../Resources` in it.
+    resources_code_path = File.join(root_dir, "UI", "Resources")
+    resource_files = Dir.glob("#{resources_code_path}/**/*.*").map { |resurce_file| xcproj.new_file(resurce_file, :group) }
+    framework_target.add_resources(resource_files)
 
     # Save the changes to the newly created project.
     xcproj.recreate_user_schemes
