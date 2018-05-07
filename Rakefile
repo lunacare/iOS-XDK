@@ -92,11 +92,11 @@ namespace :carthage do
   task :initialize do
     root_dir = File.expand_path(File.dirname(__FILE__))
     ui_path = File.join(root_dir, "UI")
-    carthage_path = "./UI/Carthage"
+    carthage_path = "./Carthage"
     carthage_project_filename = "UI.xcodeproj"
 
     # 0. Make sure carthage gets all dependencies.
-    run("cd #{ui_path} && carthage update")
+    run("carthage update")
 
     # 1. Purge existing Carthage XCode project.
     carthage_project_path = File.join(root_dir, carthage_path, carthage_project_filename)
@@ -106,7 +106,7 @@ namespace :carthage do
     xcproj = Xcodeproj::Project.new(carthage_project_path)
 
     # 3. Add target for the framework.
-    framework_product_group = xcproj.new_group("UI", "../Code", :group)
+    framework_product_group = xcproj.new_group("UI", "./UI/Code", :group)
     framework_target = xcproj.new_target(:framework, "UI", :ios, nil, framework_product_group, :objc)
 
     # 4. Add file references to the target (scan all .m files in `../Coode`,
@@ -127,8 +127,8 @@ namespace :carthage do
     # 7. Configure the project's build settings.
     framework_target.build_configuration_list.set_setting("LD_RUNPATH_SEARCH_PATHS", "@executable_path/Frameworks @loader_path/Frameworks")
     framework_target.build_configuration_list.set_setting("FRAMEWORK_SEARCH_PATHS", "${SRCROOT}/Build/iOS/**")
-    framework_target.build_configuration_list.set_setting("GCC_PREFIX_HEADER", "${SRCROOT}/../Code/Support/LayerXDK-prefix.pch")
-    framework_target.build_configuration_list.set_setting("INFOPLIST_FILE", "$(SRCROOT)/../Resources/Info.plist")
+    framework_target.build_configuration_list.set_setting("GCC_PREFIX_HEADER", "${SRCROOT}/../UI/Code/Support/LayerXDK-prefix.pch")
+    framework_target.build_configuration_list.set_setting("INFOPLIST_FILE", "$(SRCROOT)/../UI/Resources/Info.plist")
     framework_target.build_configuration_list.set_setting("PRODUCT_BUNDLE_IDENTIFIER", "com.layer.xdk.ui")
 
     # 6. Add system libraries (CoreLocation.framework, Foundation.framework,
