@@ -92,14 +92,13 @@ namespace :carthage do
   task :initialize do
     root_dir = File.expand_path(File.dirname(__FILE__))
     ui_path = File.join(root_dir, "UI")
-    carthage_path = "./Carthage"
-    carthage_project_filename = "UI.xcodeproj"
+    carthage_project_filename = "./UI/UI-Carthage.xcodeproj"
 
     # 0. Make sure carthage gets all dependencies.
     run("carthage update")
 
     # 1. Purge existing Carthage XCode project.
-    carthage_project_path = File.join(root_dir, carthage_path, carthage_project_filename)
+    carthage_project_path = File.join(root_dir, carthage_project_filename)
     FileUtils.remove_dir(carthage_project_path, true)
 
     # 2. Create an empty project.
@@ -123,15 +122,15 @@ namespace :carthage do
     end
 
     # 6. Link LayerKit.framework.
-    layerkit_framework_path = File.join("Build", "iOS", "LayerKit.framework")
+    layerkit_framework_path = File.join("../Carthage", "Build", "iOS", "LayerKit.framework")
     layerkit_framework_xcode_file = xcproj.new_file(layerkit_framework_path, :group)
     framework_target.frameworks_build_phase.add_file_reference(layerkit_framework_xcode_file, nil)
 
     # 7. Configure the project's build settings.
     framework_target.build_configuration_list.set_setting("LD_RUNPATH_SEARCH_PATHS", "@executable_path/Frameworks @loader_path/Frameworks")
-    framework_target.build_configuration_list.set_setting("FRAMEWORK_SEARCH_PATHS", "${SRCROOT}/Build/iOS/**")
-    framework_target.build_configuration_list.set_setting("GCC_PREFIX_HEADER", "${SRCROOT}/../UI/Code/Support/LayerXDK-prefix.pch")
-    framework_target.build_configuration_list.set_setting("INFOPLIST_FILE", "$(SRCROOT)/../UI/Resources/Info.plist")
+    framework_target.build_configuration_list.set_setting("FRAMEWORK_SEARCH_PATHS", "${SRCROOT}/../Carthage/Build/iOS/**")
+    framework_target.build_configuration_list.set_setting("GCC_PREFIX_HEADER", "${SRCROOT}/Code/Support/LayerXDK-prefix.pch")
+    framework_target.build_configuration_list.set_setting("INFOPLIST_FILE", "$(SRCROOT)/Resources/Info.plist")
     framework_target.build_configuration_list.set_setting("PRODUCT_BUNDLE_IDENTIFIER", "com.layer.xdk.ui")
 
     # 6. Add system libraries (CoreLocation.framework, Foundation.framework,
