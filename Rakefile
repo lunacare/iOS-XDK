@@ -117,7 +117,10 @@ namespace :carthage do
 
     # 5. Add Public Headers (scan all .h files in `../Code`).
     header_files = Dir.glob("#{ui_code_path}/**/*.h").map { |header_file| xcproj.new_file(header_file, :group) }
-    header_files.map { |f| framework_target.headers_build_phase.add_file_reference(f, nil) }
+    header_files.map do |f|
+      buil_file = framework_target.headers_build_phase.add_file_reference(f, nil)
+      buil_file.settings = { "ATTRIBUTES" => ["Public"] }
+    end
 
     # 6. Link LayerKit.framework.
     layerkit_framework_path = File.join("Build", "iOS", "LayerKit.framework")
