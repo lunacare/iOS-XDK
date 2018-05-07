@@ -903,7 +903,7 @@
 		8E2C94A6D58CF05527EC2274 /* LYRUIDependencyInjectionModule.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LYRUIDependencyInjectionModule.h; path = ../Code/DependencyInjection/Modules/LYRUIDependencyInjectionModule.h; sourceTree = "<group>"; };
 		8E499B5C3FE2ED407F417AA1 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/MapKit.framework; sourceTree = DEVELOPER_DIR; };
 		8F0BAF28F2F900050F51C829 /* LYRUIConfigurable.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LYRUIConfigurable.h; path = ../Code/Protocols/LYRUIConfigurable.h; sourceTree = "<group>"; };
-		8F0E757120BC354DD3FA32F8 /* layerbell.caf */ = {isa = PBXFileReference; includeInIndex = 1; name = layerbell.caf; path = ../Resources/layerbell.caf; sourceTree = "<group>"; };
+		8F0E757120BC354DD3FA32F8 /* layerbell.caf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = layerbell.caf; path = ../Resources/layerbell.caf; sourceTree = "<group>"; };
 		8F73A08E3B3BD7772844642A /* SingleParticipantPlaceholder@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "SingleParticipantPlaceholder@2x.png"; path = "../Resources/SingleParticipantPlaceholder@2x.png"; sourceTree = "<group>"; };
 		908E2FCEFCF0A5C9A2F1691F /* LYRUIListDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LYRUIListDelegate.h; path = ../Code/Models/LYRUIListDelegate.h; sourceTree = "<group>"; };
 		9109F0AAE5C824FFF04F6D45 /* LYRUIIdentityShortNameFormatter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LYRUIIdentityShortNameFormatter.h; path = ../Code/Formatters/LYRUIIdentityShortNameFormatter.h; sourceTree = "<group>"; };
@@ -2433,6 +2433,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "${SRCROOT}/Build/iOS/**";
 				GCC_PREFIX_HEADER = "${SRCROOT}/../Code/Support/LayerXDK-prefix.pch";
+				HEADER_SEARCH_PATHS = "${SRCROOT}/Build/iOS/**";
 				INFOPLIST_FILE = "$(SRCROOT)/../Resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks @loader_path/Frameworks";
@@ -2562,6 +2563,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "${SRCROOT}/Build/iOS/**";
 				GCC_PREFIX_HEADER = "${SRCROOT}/../Code/Support/LayerXDK-prefix.pch";
+				HEADER_SEARCH_PATHS = "${SRCROOT}/Build/iOS/**";
 				INFOPLIST_FILE = "$(SRCROOT)/../Resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks @loader_path/Frameworks";
