@@ -142,8 +142,12 @@ namespace :carthage do
     resource_files = Dir.glob("#{resources_code_path}/**/*.*").map { |resurce_file| xcproj.new_file(resurce_file, :group) }
     framework_target.add_resources(resource_files)
 
+    # 8. Create a shared scheme.
+    xcproj.recreate_user_schemes(true)
+    Xcodeproj::XCScheme.share_scheme(carthage_project_path, "UI", nil)
+
     # Save the changes to the newly created project.
-    xcproj.recreate_user_schemes
+
     xcproj.save
   end
 end
