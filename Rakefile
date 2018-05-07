@@ -92,7 +92,7 @@ namespace :carthage do
   task :initialize do
     root_dir = File.expand_path(File.dirname(__FILE__))
     ui_path = File.join(root_dir, "UI")
-    carthage_path = "./Carthage"
+    carthage_path = "./UI/Carthage"
     carthage_project_filename = "UI.xcodeproj"
 
     # 0. Make sure carthage gets all dependencies.
@@ -120,14 +120,16 @@ namespace :carthage do
     header_files.map { |f| framework_target.headers_build_phase.add_file_reference(f, nil) }
 
     # 6. Link LayerKit.framework.
-    layerkit_framework_path = File.join("..", "UI", "Carthage", "Build", "iOS", "LayerKit.framework")
+    layerkit_framework_path = File.join("Build", "iOS", "LayerKit.framework")
     layerkit_framework_xcode_file = xcproj.new_file(layerkit_framework_path, :group)
     framework_target.frameworks_build_phase.add_file_reference(layerkit_framework_xcode_file, nil)
 
-    # 7. Add framework search paths for LayerKit.
+    # 7. Configure the project's build settings.
     framework_target.build_configuration_list.set_setting("LD_RUNPATH_SEARCH_PATHS", "@executable_path/Frameworks @loader_path/Frameworks")
-    framework_target.build_configuration_list.set_setting("FRAMEWORK_SEARCH_PATHS", "${SRCROOT}/../UI/Carthage/Build/iOS/**")
-    framework_target.build_configuration_list.set_setting("GCC_PREFIX_HEADER", "${SRCROOT}/../UI/Code/Support/LayerXDK-prefix.pch")
+    framework_target.build_configuration_list.set_setting("FRAMEWORK_SEARCH_PATHS", "${SRCROOT}/Build/iOS/**")
+    framework_target.build_configuration_list.set_setting("GCC_PREFIX_HEADER", "${SRCROOT}/../Code/Support/LayerXDK-prefix.pch")
+    framework_target.build_configuration_list.set_setting("INFOPLIST_FILE", "$(SRCROOT)/../Resources/Info.plist")
+    framework_target.build_configuration_list.set_setting("PRODUCT_BUNDLE_IDENTIFIER", "com.layer.xdk.ui")
 
     # 6. Add system libraries (CoreLocation.framework, Foundation.framework,
     # MapKit.framework, MobileCoreServices.framework, QuickLook.framework,
