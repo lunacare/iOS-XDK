@@ -21,9 +21,19 @@ DEPENDENCIES:
   - OCMockito
   - Specta
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Expecta
+    - KIF
+    - LayerKit
+    - OCHamcrest
+    - OCMock
+    - OCMockito
+    - Specta
+
 EXTERNAL SOURCES:
   LayerXDK:
-    :path: ../.
+    :path: "../."
 
 SPEC CHECKSUMS:
   Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
@@ -35,6 +45,6 @@ SPEC CHECKSUMS:
   OCMockito: 063837a086c058e764fcd23e771089c1759e7197
   Specta: 3e1bd89c3517421982dc4d1c992503e48bd5fe66
 
-PODFILE CHECKSUM: f02f1e851a5b3e768f8468e3a71b10208640edb8
+PODFILE CHECKSUM: 59461c298e508f1b8139a123abb037454b1c7888
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.0

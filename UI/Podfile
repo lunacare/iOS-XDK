@@ -1,4 +1,6 @@
 source 'https://github.com/CocoaPods/Specs.git'
+workspace 'Layer-XDK-UI.xcworkspace'
+project 'Layer-XDK-UI.xcodeproj'
 if !ENV['LAYER_USE_CORE_SDK_LOCATION'].blank? then
   source ENV['LAYER_ADDITIONAL_SOURCE']
 end
