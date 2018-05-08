@@ -1,8 +1,10 @@
 machine:
   xcode:
-    version: 9.0
+    version: 9.3
 dependencies:
   pre:
+    - brew install rbenv
+    - rbenv install
     - gem install bundler
     - pod repo update
 test:
