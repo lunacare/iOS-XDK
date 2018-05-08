@@ -154,7 +154,6 @@ namespace :carthage do
     Xcodeproj::XCScheme.share_scheme(carthage_project_path, "UI", nil)
 
     # Save the changes to the newly created project.
-
     xcproj.save
   end
 end
