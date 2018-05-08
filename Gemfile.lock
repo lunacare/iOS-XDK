@@ -206,7 +206,7 @@ DEPENDENCIES
   xcpretty (~> 0.2.8)
 
 RUBY VERSION
-   ruby 2.5.0p0
+   ruby 2.3.5p376
 
 BUNDLED WITH
    1.16.1

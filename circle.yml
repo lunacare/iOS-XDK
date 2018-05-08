@@ -3,9 +3,6 @@ machine:
     version: 9.2
 dependencies:
   pre:
-    - brew install rbenv
-    - rbenv install
-    - eval "$(rbenv init - --no-rehash)"
     - gem install bundler
     - pod repo update
 test:
