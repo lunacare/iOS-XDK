@@ -43,12 +43,10 @@ task :init do
   run("rbenv whence bundle | grep `cat .ruby-version` || rbenv exec gem install bundler")
   puts green("Bundling Ruby Gems...")
   run("rbenv exec bundle install --binstubs .bundle/bin --quiet")
-  puts green("Ensuring Layer Specs repository")
-  run("[ -d ~/.cocoapods/repos/layer ] || rbenv exec bundle exec pod repo add layer git@github.com:layerhq/cocoapods-specs.git")
   puts green("Updating Submodules")
   run("git submodule update --init --recursive")
   puts green("Installing CocoaPods...")
-  run("rbenv exec bundle exec pod install")
+  run("cd UI && rbenv exec bundle exec pod install")
   puts green("Checking rbenv configuration...")
   system <<-SH
   if [ -f ~/.zshrc ]; then
