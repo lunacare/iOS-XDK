@@ -127,11 +127,8 @@
 		152515201F30996A0074CE03 /* LYRUIIdentityListViewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIIdentityListViewSpec.m; sourceTree = "<group>"; };
 		152515241F30A79F0074CE03 /* LYRUIConversationListViewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIConversationListViewSpec.m; sourceTree = "<group>"; };
 		152515261F30A8520074CE03 /* LYRUIConversationCollectionViewCellSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIConversationCollectionViewCellSpec.m; sourceTree = "<group>"; };
-		152515611F39DECF0074CE03 /* LYRUIListSectionSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIListSectionSpec.m; sourceTree = "<group>"; };
 		153310B01F2F66FB00B58675 /* LYRUIConversationListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIConversationListView.xib; sourceTree = "<group>"; };
 		154DB68E1F3C99210080A0D2 /* LYRUIComposeBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LYRUIComposeBar.xib; sourceTree = "<group>"; };
-		156081751F42EBC60013C86B /* LYRUIBaseListViewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIBaseListViewSpec.m; sourceTree = "<group>"; };
-		156081771F42F1E10013C86B /* LYRUIListQueryControllerDelegateSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIListQueryControllerDelegateSpec.m; sourceTree = "<group>"; };
 		156081821F4463680013C86B /* LYRUIComposeBarSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYRUIComposeBarSpec.m; sourceTree = "<group>"; };
 		1562E23820724BA4005B54F6 /* LYRUIConversationItemTimeFormatterSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUIConversationItemTimeFormatterSpec.m; sourceTree = "<group>"; };
 		1562E23A20725C61005B54F6 /* LYRUIMessageListTimeFormatterSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYRUIMessageListTimeFormatterSpec.m; sourceTree = "<group>"; };
@@ -228,42 +225,6 @@
 		B085A18188DCFC913F85665D /* Pods_Programmatic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Programmatic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0294DD81A93F33900702856 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D63C68DF1A94250000D235D5 /* test-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "test-logo.png"; sourceTree = "<group>"; };
-		D6C045431A9914080028E9D0 /* ProgrammaticAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProgrammaticAppDelegate.h; path = Examples/Programmatic/ProgrammaticAppDelegate.h; sourceTree = SOURCE_ROOT; };
-		D6C045441A9914080028E9D0 /* ProgrammaticAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProgrammaticAppDelegate.m; path = Examples/Programmatic/ProgrammaticAppDelegate.m; sourceTree = SOURCE_ROOT; };
-		D6F405A71A8FDDAA00AE9581 /* ATLSampleConversationAvatarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATLSampleConversationAvatarItem.h; path = Examples/ATLSampleConversationAvatarItem.h; sourceTree = SOURCE_ROOT; };
-		D6F405A81A8FDDAA00AE9581 /* ATLSampleConversationAvatarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATLSampleConversationAvatarItem.m; path = Examples/ATLSampleConversationAvatarItem.m; sourceTree = SOURCE_ROOT; };
-		D6F405A91A8FDDAA00AE9581 /* ATLSampleConversationListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATLSampleConversationListViewController.h; path = Examples/ATLSampleConversationListViewController.h; sourceTree = SOURCE_ROOT; };
-		D6F405AA1A8FDDAA00AE9581 /* ATLSampleConversationListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATLSampleConversationListViewController.m; path = Examples/ATLSampleConversationListViewController.m; sourceTree = SOURCE_ROOT; };
-		D6F405AB1A8FDDAA00AE9581 /* ATLSampleConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATLSampleConversationViewController.h; path = Examples/ATLSampleConversationViewController.h; sourceTree = SOURCE_ROOT; };
-		D6F405AC1A8FDDAA00AE9581 /* ATLSampleConversationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATLSampleConversationViewController.m; path = Examples/ATLSampleConversationViewController.m; sourceTree = SOURCE_ROOT; };
-		D6F405AD1A8FDDAA00AE9581 /* ATLSampleParticipantTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATLSampleParticipantTableViewController.h; path = Examples/ATLSampleParticipantTableViewController.h; sourceTree = SOURCE_ROOT; };
-		D6F405AE1A8FDDAA00AE9581 /* ATLSampleParticipantTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATLSampleParticipantTableViewController.m; path = Examples/ATLSampleParticipantTableViewController.m; sourceTree = SOURCE_ROOT; };
-		D6F405B31A8FDDE300AE9581 /* LayerKitMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LayerKitMock.h; path = Examples/Mocks/LayerKitMock.h; sourceTree = SOURCE_ROOT; };
-		D6F405B61A8FDDE300AE9581 /* LYRClientMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LYRClientMock.h; path = Examples/Mocks/LYRClientMock.h; sourceTree = SOURCE_ROOT; };
-		D6F405B71A8FDDE300AE9581 /* LYRClientMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LYRClientMock.m; path = Examples/Mocks/LYRClientMock.m; sourceTree = SOURCE_ROOT; };
-		D6F405B81A8FDDE300AE9581 /* LYRConversationMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LYRConversationMock.h; path = Examples/Mocks/LYRConversationMock.h; sourceTree = SOURCE_ROOT; };
-		D6F405B91A8FDDE300AE9581 /* LYRConversationMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LYRConversationMock.m; path = Examples/Mocks/LYRConversationMock.m; sourceTree = SOURCE_ROOT; };
-		D6F405BA1A8FDDE300AE9581 /* LYRMessageMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LYRMessageMock.h; path = Examples/Mocks/LYRMessageMock.h; sourceTree = SOURCE_ROOT; };
-		D6F405BB1A8FDDE300AE9581 /* LYRMessageMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LYRMessageMock.m; path = Examples/Mocks/LYRMessageMock.m; sourceTree = SOURCE_ROOT; };
-		D6F405BC1A8FDDE300AE9581 /* LYRMessagePartMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LYRMessagePartMock.h; path = Examples/Mocks/LYRMessagePartMock.h; sourceTree = SOURCE_ROOT; };
-		D6F405BD1A8FDDE300AE9581 /* LYRMessagePartMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LYRMessagePartMock.m; path = Examples/Mocks/LYRMessagePartMock.m; sourceTree = SOURCE_ROOT; };
-		D6F405BE1A8FDDE300AE9581 /* LYRMockContentStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LYRMockContentStore.h; path = Examples/Mocks/LYRMockContentStore.h; sourceTree = SOURCE_ROOT; };
-		D6F405BF1A8FDDE300AE9581 /* LYRMockContentStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LYRMockContentStore.m; path = Examples/Mocks/LYRMockContentStore.m; sourceTree = SOURCE_ROOT; };
-		D6F405C01A8FDDE300AE9581 /* LYRQueryControllerMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LYRQueryControllerMock.h; path = Examples/Mocks/LYRQueryControllerMock.h; sourceTree = SOURCE_ROOT; };
-		D6F405C11A8FDDE300AE9581 /* LYRQueryControllerMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LYRQueryControllerMock.m; path = Examples/Mocks/LYRQueryControllerMock.m; sourceTree = SOURCE_ROOT; };
-		D6F405C21A8FDDE300AE9581 /* ATLUserMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATLUserMock.h; path = Examples/Mocks/ATLUserMock.h; sourceTree = SOURCE_ROOT; };
-		D6F405C31A8FDDE300AE9581 /* ATLUserMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATLUserMock.m; path = Examples/Mocks/ATLUserMock.m; sourceTree = SOURCE_ROOT; };
-		D6F405CC1A8FDE1B00AE9581 /* Atlas.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Atlas.storyboard; path = Examples/Storyboard/Atlas.storyboard; sourceTree = SOURCE_ROOT; };
-		D6F405D11A8FDE1B00AE9581 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = LaunchScreen.xib; sourceTree = "<group>"; };
-		D6F405D21A8FDE1B00AE9581 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Examples/Storyboard/Images.xcassets; sourceTree = SOURCE_ROOT; };
-		D6F405D31A8FDE1B00AE9581 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Examples/Storyboard/Info.plist; sourceTree = SOURCE_ROOT; };
-		D6F405D41A8FDE1B00AE9581 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Examples/Storyboard/main.m; sourceTree = SOURCE_ROOT; };
-		D6F405D51A8FDE1B00AE9581 /* StoryboardAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoryboardAppDelegate.h; path = Examples/Storyboard/StoryboardAppDelegate.h; sourceTree = SOURCE_ROOT; };
-		D6F405D61A8FDE1B00AE9581 /* StoryboardAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoryboardAppDelegate.m; path = Examples/Storyboard/StoryboardAppDelegate.m; sourceTree = SOURCE_ROOT; };
-		D6F405E11A8FDE3900AE9581 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = LaunchScreen.xib; sourceTree = "<group>"; };
-		D6F405E21A8FDE3900AE9581 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Examples/Programmatic/Images.xcassets; sourceTree = SOURCE_ROOT; };
-		D6F405E31A8FDE3900AE9581 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Examples/Programmatic/Info.plist; sourceTree = SOURCE_ROOT; };
-		D6F405E41A8FDE3900AE9581 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Examples/Programmatic/main.m; sourceTree = SOURCE_ROOT; };
 		D6F4060F1A8FDEEB00AE9581 /* ProgrammaticTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ProgrammaticTests-Info.plist"; sourceTree = "<group>"; };
 		D6F406101A8FDEEB00AE9581 /* StoryboardTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "StoryboardTests-Info.plist"; sourceTree = "<group>"; };
 		D6F406121A8FDEEB00AE9581 /* Unit Tests.xcscheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Unit Tests.xcscheme"; sourceTree = "<group>"; };
@@ -313,16 +274,6 @@
 				15C39F5B203B271B00F8C293 /* LYRUIFakeTestActionHandler.m */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		155D422C1FA0FCA200B5BADC /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				152515611F39DECF0074CE03 /* LYRUIListSectionSpec.m */,
-				156081751F42EBC60013C86B /* LYRUIBaseListViewSpec.m */,
-				156081771F42F1E10013C86B /* LYRUIListQueryControllerDelegateSpec.m */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		15654C221F2642AE00255309 /* Layouts */ = {
@@ -458,12 +409,10 @@
 			isa = PBXGroup;
 			children = (
 				7858B60B1CE54B81007795AB /* Resources */,
-				D676CF171A8C4344002D9D27 /* Examples */,
 				412524007C3A7505AC34F33C /* Frameworks */,
 				D0D778941A02EAA9000A5F51 /* Products */,
 				D6F406001A8FDEEB00AE9581 /* Tests */,
 				B174A0FE34EB0548FDFABF32 /* Pods */,
-				155D422C1FA0FCA200B5BADC /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -473,47 +422,6 @@
 				D0294DD81A93F33900702856 /* UnitTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		D0E729491A02F1C700B76672 /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-				D6F405B31A8FDDE300AE9581 /* LayerKitMock.h */,
-				D6F405B61A8FDDE300AE9581 /* LYRClientMock.h */,
-				D6F405B71A8FDDE300AE9581 /* LYRClientMock.m */,
-				D6F405B81A8FDDE300AE9581 /* LYRConversationMock.h */,
-				D6F405B91A8FDDE300AE9581 /* LYRConversationMock.m */,
-				D6F405BA1A8FDDE300AE9581 /* LYRMessageMock.h */,
-				D6F405BB1A8FDDE300AE9581 /* LYRMessageMock.m */,
-				D6F405BC1A8FDDE300AE9581 /* LYRMessagePartMock.h */,
-				D6F405BD1A8FDDE300AE9581 /* LYRMessagePartMock.m */,
-				D6F405BE1A8FDDE300AE9581 /* LYRMockContentStore.h */,
-				D6F405BF1A8FDDE300AE9581 /* LYRMockContentStore.m */,
-				D6F405C01A8FDDE300AE9581 /* LYRQueryControllerMock.h */,
-				D6F405C11A8FDDE300AE9581 /* LYRQueryControllerMock.m */,
-				D6F405C21A8FDDE300AE9581 /* ATLUserMock.h */,
-				D6F405C31A8FDDE300AE9581 /* ATLUserMock.m */,
-			);
-			name = Mocks;
-			path = "Sample Code/Shared";
-			sourceTree = "<group>";
-		};
-		D676CF171A8C4344002D9D27 /* Examples */ = {
-			isa = PBXGroup;
-			children = (
-				D0E729491A02F1C700B76672 /* Mocks */,
-				D6F405A71A8FDDAA00AE9581 /* ATLSampleConversationAvatarItem.h */,
-				D6F405A81A8FDDAA00AE9581 /* ATLSampleConversationAvatarItem.m */,
-				D6F405A91A8FDDAA00AE9581 /* ATLSampleConversationListViewController.h */,
-				D6F405AA1A8FDDAA00AE9581 /* ATLSampleConversationListViewController.m */,
-				D6F405AB1A8FDDAA00AE9581 /* ATLSampleConversationViewController.h */,
-				D6F405AC1A8FDDAA00AE9581 /* ATLSampleConversationViewController.m */,
-				D6F405AD1A8FDDAA00AE9581 /* ATLSampleParticipantTableViewController.h */,
-				D6F405AE1A8FDDAA00AE9581 /* ATLSampleParticipantTableViewController.m */,
-				D6F57E2B1A8BE4AF00B62BD9 /* Programmatic */,
-				D6F57E551A8BE4B500B62BD9 /* Storyboard */,
-			);
-			name = Examples;
 			sourceTree = "<group>";
 		};
 		D6C0454D1A994B3A0028E9D0 /* Views */ = {
@@ -568,24 +476,6 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
-		D6F405CF1A8FDE1B00AE9581 /* Base.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				D6F405D01A8FDE1B00AE9581 /* LaunchScreen.xib */,
-			);
-			name = Base.lproj;
-			path = Examples/Storyboard/Base.lproj;
-			sourceTree = SOURCE_ROOT;
-		};
-		D6F405DF1A8FDE3900AE9581 /* Base.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				D6F405E01A8FDE3900AE9581 /* LaunchScreen.xib */,
-			);
-			name = Base.lproj;
-			path = Examples/Programmatic/Base.lproj;
-			sourceTree = SOURCE_ROOT;
-		};
 		D6F406001A8FDEEB00AE9581 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -624,33 +514,6 @@
 			path = Schemes;
 			sourceTree = "<group>";
 		};
-		D6F57E2B1A8BE4AF00B62BD9 /* Programmatic */ = {
-			isa = PBXGroup;
-			children = (
-				D6C045431A9914080028E9D0 /* ProgrammaticAppDelegate.h */,
-				D6C045441A9914080028E9D0 /* ProgrammaticAppDelegate.m */,
-				D6F405DF1A8FDE3900AE9581 /* Base.lproj */,
-				D6F405E21A8FDE3900AE9581 /* Images.xcassets */,
-				D6F405E31A8FDE3900AE9581 /* Info.plist */,
-				D6F405E41A8FDE3900AE9581 /* main.m */,
-			);
-			path = Programmatic;
-			sourceTree = "<group>";
-		};
-		D6F57E551A8BE4B500B62BD9 /* Storyboard */ = {
-			isa = PBXGroup;
-			children = (
-				D6F405CC1A8FDE1B00AE9581 /* Atlas.storyboard */,
-				D6F405CF1A8FDE1B00AE9581 /* Base.lproj */,
-				D6F405D21A8FDE1B00AE9581 /* Images.xcassets */,
-				D6F405D31A8FDE1B00AE9581 /* Info.plist */,
-				D6F405D41A8FDE1B00AE9581 /* main.m */,
-				D6F405D51A8FDE1B00AE9581 /* StoryboardAppDelegate.h */,
-				D6F405D61A8FDE1B00AE9581 /* StoryboardAppDelegate.m */,
-			);
-			path = Storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -663,7 +526,6 @@
 				D0294DD51A93F33900702856 /* Frameworks */,
 				D0294DD61A93F33900702856 /* Resources */,
 				DBB73C07ACFE371256674EFE /* [CP] Embed Pods Frameworks */,
-				F728FF30D518513156FA5822 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -781,21 +643,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F728FF30D518513156FA5822 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -877,25 +724,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		D6F405D01A8FDE1B00AE9581 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D6F405D11A8FDE1B00AE9581 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-		D6F405E01A8FDE3900AE9581 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D6F405E11A8FDE3900AE9581 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		D0294DE01A93F33900702856 /* Debug */ = {
