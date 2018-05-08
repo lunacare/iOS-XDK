@@ -104,7 +104,7 @@ namespace :carthage do
 
     # 3. Add target for the framework.
     framework_product_group = xcproj.new_group("UI", "./UI/Code", :group)
-    framework_target = xcproj.new_target(:framework, "UI", :ios, nil, framework_product_group, :objc)
+    framework_target = xcproj.new_target(:framework, "LayerXDK", :ios, nil, framework_product_group, :objc)
 
     # 4. Add file references to the target (scan all .m files in `../Coode`,
     # there's about 232 files in total).
@@ -149,7 +149,7 @@ namespace :carthage do
 
     # 8. Create a shared scheme.
     xcproj.recreate_user_schemes(true)
-    Xcodeproj::XCScheme.share_scheme(carthage_project_path, "UI", nil)
+    Xcodeproj::XCScheme.share_scheme(carthage_project_path, "LayerXDK", nil)
 
     # Save the changes to the newly created project.
     xcproj.save
