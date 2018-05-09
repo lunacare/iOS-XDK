@@ -15,7 +15,7 @@ PODS:
 DEPENDENCIES:
   - Expecta
   - KIF
-  - LayerKit (= 4.0.0)
+  - LayerKit (~> 4.0.0)
   - LayerXDK/UI (from `../.`)
   - OCMock
   - OCMockito
@@ -45,6 +45,6 @@ SPEC CHECKSUMS:
   OCMockito: 063837a086c058e764fcd23e771089c1759e7197
   Specta: 3e1bd89c3517421982dc4d1c992503e48bd5fe66
 
-PODFILE CHECKSUM: 59461c298e508f1b8139a123abb037454b1c7888
+PODFILE CHECKSUM: 1a80bfc98575444dbf29e7efe6c7d2c318b8e13b
 
 COCOAPODS: 1.5.0

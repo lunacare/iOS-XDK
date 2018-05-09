@@ -1,5 +1,11 @@
 # LayerXDK Changelog
 
+## 4.0.1
+
+### Enhancements
+
+* Support for sending messages with a single link (URL).
+
 ## 4.0.0
 
 ### Enhancements

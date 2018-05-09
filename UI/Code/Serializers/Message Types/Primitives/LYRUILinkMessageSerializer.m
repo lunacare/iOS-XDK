@@ -53,10 +53,28 @@
 
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUILinkMessage *)messageType
                                                     parentNodeId:(NSString *)parentNodeId
-                                                            role:(NSString *)role
-                                              MIMETypeAttributes:(NSDictionary *)MIMETypeAttributes {
-    // TODO: implement
-    return @[];
+                                                            role:(NSString *)role {
+    NSMutableDictionary *messageJson = [[NSMutableDictionary alloc] init];
+    messageJson[@"author"] = messageType.author;
+    messageJson[@"title"] = messageType.title;
+    messageJson[@"description"] = messageType.contentDescription;
+    messageJson[@"image_url"] = messageType.imageURL.absoluteString;
+    if (!CGSizeEqualToSize(messageType.imageSize, CGSizeZero)) {
+        messageJson[@"image_width"] = @(messageType.imageSize.width);
+        messageJson[@"image_height"] = @(messageType.imageSize.height);
+    }
+    messageJson[@"url"] = messageType.URL.absoluteString;
+    [messageJson addEntriesFromDictionary:[self.actionSerializer propertiesForAction:messageType.action]];
+    
+    NSError *error = nil;
+    NSData *messageJsonData = [NSJSONSerialization dataWithJSONObject:messageJson options:0 error:&error];
+    if (error) {
+        NSLog(@"Failed to serialize link message JSON object: %@", error);
+        return nil;
+    }
+    NSString *MIMEType = [self MIMETypeForContentType:messageType.MIMEType parentNodeId:parentNodeId role:role attributes:@{}];
+    LYRMessagePart *messagePart = [LYRMessagePart messagePartWithMIMEType:MIMEType data:messageJsonData];
+    return @[messagePart];
 }
 
 - (LYRMessageOptions *)messageOptionsForTypedMessage:(LYRUILinkMessage *)messageType {

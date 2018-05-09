@@ -74,8 +74,8 @@
     self.composeBar = composeBar;
     
     __weak __typeof(self) weakSelf = self;
-    self.composeBar.sendPressedBlock = ^(NSAttributedString *attributedText){
-        [weakSelf.messageListView.messageSender sendMessageWithAttributedString:attributedText];
+    self.composeBar.sendPressedBlock = ^(NSString *text){
+        [weakSelf.messageListView.messageSender sendMessageWithString:text];
     };
 }
 

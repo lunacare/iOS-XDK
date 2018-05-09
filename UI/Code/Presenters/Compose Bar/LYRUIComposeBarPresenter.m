@@ -190,7 +190,7 @@
 - (void)buttonPressed:(LYRUISendButton *)sendButton {
     if (self.composeBar.text != nil) {
         if (self.composeBar.sendPressedBlock) {
-            self.composeBar.sendPressedBlock(self.composeBar.attributedText);
+            self.composeBar.sendPressedBlock(self.composeBar.text);
         }
         self.composeBar.text = nil;
     }

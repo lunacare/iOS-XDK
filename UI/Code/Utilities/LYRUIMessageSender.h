@@ -38,6 +38,13 @@
 - (void)sendMessageWithAttributedString:(NSAttributedString *)attributedString;
 
 /**
+ @abstract Method used to send message with provided `NSString`.
+ @param string A `NSString` used to create new message.
+ @discussion This method supports link (URL) detection and encodes the message in an appropriate format.
+ */
+- (void)sendMessageWithString:(NSString *)string;
+
+/**
  @abstract Method used to send message with provided `UIImage`.
  @param image A `UIImage` used to create new message.
  */

@@ -24,6 +24,7 @@
 #import "LYRUIMessageSerializer.h"
 #import "LYRUIMessageType.h"
 #import "LYRUITextMessage.h"
+#import "LYRUILinkMessage.h"
 #import "LYRUIImageMessage.h"
 #import "UIImage+LYRUIThumbnail.h"
 #import "LYRUILocationMessage.h"
@@ -71,6 +72,13 @@
     }
 }
 
+- (void)sendMessageWithString:(NSString *)string {
+    if (self.conversation == nil || self.layerConfiguration.client == nil) {
+        return;
+    }
+    [self sendMessage:[self messageFromString:string]];
+}
+
 - (void)sendMessageWithImage:(UIImage *)image {
     if (self.conversation == nil || self.layerConfiguration.client == nil) {
         return;
@@ -113,6 +121,28 @@
         }
     }];
     return messages;
+}
+
+- (LYRUIMessageType *)messageFromString:(NSString *)string {
+    NSRange stringRange = NSMakeRange(0, string.length);
+
+    NSError *error = nil;
+    NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink
+                                                               error:&error];
+    __block LYRUILinkMessage *linkMessage;
+    [detector enumerateMatchesInString:string
+                               options:0
+                                 range:stringRange
+                            usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+                                if (NSEqualRanges(stringRange, result.range)) {
+                                    linkMessage = [[LYRUILinkMessage alloc] initWithURL:[result URL]];
+                                }
+                            }];
+    
+    if (linkMessage != nil) {
+        return linkMessage;
+    }
+    return [[LYRUITextMessage alloc] initWithText:string];
 }
 
 - (void)sendLayerMessage:(LYRMessage *)message {

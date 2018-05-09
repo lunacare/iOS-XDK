@@ -113,9 +113,9 @@ IB_DESIGNABLE
 
 /**
  @abstract Action block called on `sendButton` touch up inside event.
- @param attributedText The `inputTextView` attributed text.
+ @param text The `inputTextView` text.
  */
-@property (nonatomic, copy) void(^sendPressedBlock)(NSAttributedString *attributedText);
+@property (nonatomic, copy) void(^sendPressedBlock)(NSString *text);
 
 /**
  @abstract Corner radius of the message input. Default value is 8.0 pt.

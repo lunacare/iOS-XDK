@@ -35,16 +35,18 @@ NS_ASSUME_NONNULL_BEGIN     // {
 
 @property (nonatomic, readonly, nonnull) NSURL *URL;
 
-- (nonnull instancetype)initWithAuthor:(nullable NSString *)author
-                                 title:(nullable NSString *)title
-                    contentDescription:(nullable NSString *)contentDescription
-                              imageURL:(nullable NSURL *)imageURL
-                             imageSize:(CGSize)imageSize
-                                   URL:(NSURL *)URL
-                                action:(nullable LYRUIMessageAction *)action
-                                sender:(nullable LYRIdentity *)sender
-                                sentAt:(nullable NSDate *)sentAt
-                                status:(nullable LYRUIMessageTypeStatus *)status;
+- (instancetype)initWithAuthor:(nullable NSString *)author
+                         title:(nullable NSString *)title
+            contentDescription:(nullable NSString *)contentDescription
+                      imageURL:(nullable NSURL *)imageURL
+                     imageSize:(CGSize)imageSize
+                           URL:(NSURL *)URL
+                        action:(nullable LYRUIMessageAction *)action
+                        sender:(nullable LYRIdentity *)sender
+                        sentAt:(nullable NSDate *)sentAt
+                        status:(nullable LYRUIMessageTypeStatus *)status;
+
+- (instancetype)initWithURL:(NSURL *)URL;
 
 @end
 NS_ASSUME_NONNULL_END       // }

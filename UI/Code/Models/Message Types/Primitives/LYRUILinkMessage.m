@@ -61,6 +61,20 @@
     return self;
 }
 
+- (instancetype)initWithURL:(NSURL *)URL {
+    self = [self initWithAuthor:nil
+                          title:nil
+             contentDescription:nil
+                       imageURL:nil
+                      imageSize:CGSizeZero
+                            URL:URL
+                         action:nil
+                         sender:nil
+                         sentAt:nil
+                         status:nil];
+    return self;
+}
+
 - (LYRUIMessageMetadata *)metadata {
     LYRUIMessageMetadata *metadata;
     if (self.title.length > 0 || self.contentDescription.length > 0 || self.author.length > 0) {
