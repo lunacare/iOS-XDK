@@ -10,6 +10,7 @@
 #import <LayerXDK/LYRUICarouselItemCellPresenter.h>
 #import <LayerXDK/LYRUICarouselMessageCellPresenter.h>
 #import <LayerXDK/LYRUIMessageListTimeSupplementaryViewPresenter.h>
+#import <LayerXDK/LYRUIMessageListSenderSupplementaryViewPresenter.h>
 #import <LayerXDK/LYRUIMessageListStatusSupplementaryViewPresenter.h>
 #import <LayerXDK/LYRUIListLoadingIndicatorPresenter.h>
 #import <LayerXDK/LYRUIMessageListTypingIndicatorsController.h>
@@ -33,6 +34,7 @@ describe(@"LYRUICarouselMessageListViewPresenter", ^{
     __block LYRUICarouselItemCellPresenter *cellPresenterMock;
     __block LYRUICarouselMessageCellPresenter *carouselCellPresenterMock;
     __block LYRUIStatusCellPresenter *statusCellPresenterMock;
+    __block LYRUIMessageListSenderSupplementaryViewPresenter *senderViewPresenterMock;
     __block LYRUIMessageListTimeSupplementaryViewPresenter *timeViewPresenterMock;
     __block LYRUIMessageListStatusSupplementaryViewPresenter *statusViewPresenterMock;
     __block LYRUIListLoadingIndicatorPresenter *loadingIndicatorPresenterMock;
@@ -58,10 +60,13 @@ describe(@"LYRUICarouselMessageListViewPresenter", ^{
         
         carouselCellPresenterMock = mock([LYRUICarouselMessageCellPresenter class]);
         [given([injectorMock objectOfType:[LYRUICarouselMessageCellPresenter class]]) willReturn:carouselCellPresenterMock];
-        
+
         statusCellPresenterMock = mock([LYRUIStatusCellPresenter class]);
         [given([injectorMock objectOfType:[LYRUIStatusCellPresenter class]]) willReturn:statusCellPresenterMock];
-        
+
+        senderViewPresenterMock = mock([LYRUIMessageListSenderSupplementaryViewPresenter class]);
+        [given([injectorMock objectOfType:[LYRUIMessageListSenderSupplementaryViewPresenter class]]) willReturn:senderViewPresenterMock];
+
         timeViewPresenterMock = mock([LYRUIMessageListTimeSupplementaryViewPresenter class]);
         [given([injectorMock objectOfType:[LYRUIMessageListTimeSupplementaryViewPresenter class]]) willReturn:timeViewPresenterMock];
         

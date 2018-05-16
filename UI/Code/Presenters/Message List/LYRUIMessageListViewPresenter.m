@@ -33,6 +33,7 @@
 #import "LYRUIListSupplementaryViewPresenting.h"
 #import "LYRUIMessageListTimeSupplementaryViewPresenter.h"
 #import "LYRUIMessageListStatusSupplementaryViewPresenter.h"
+#import "LYRUIMessageListSenderSupplementaryViewPresenter.h"
 #import "LYRUIListLoadingIndicatorPresenter.h"
 #import "LYRUIMessageCollectionViewCell.h"
 #import "LYRUIMessageListTypingIndicatorsController.h"
@@ -75,7 +76,11 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     
     LYRUIMessageListStatusSupplementaryViewPresenter *messageStatusViewPresenter =
         [injector objectOfType:[LYRUIMessageListStatusSupplementaryViewPresenter class]];
-    
+
+    LYRUIMessageListSenderSupplementaryViewPresenter *messageSenderViewPresenter =
+        [injector objectOfType:[LYRUIMessageListSenderSupplementaryViewPresenter class]];
+    messageSenderViewPresenter.messageListView = messageListView;
+
     LYRUIListLoadingIndicatorPresenter *loadingIndicatorPresenter =
         [injector objectOfType:[LYRUIListLoadingIndicatorPresenter class]];
     
@@ -94,7 +99,7 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     
     LYRUIStatusCellPresenter *statusMessageCellPresenter =
         [injector objectOfType:[LYRUIStatusCellPresenter class]];
-    
+
     [self registerCellsWithPresenters:@[cellPresenter,
                                         carouselCellPresenter,
                                         typingIndicatorCellPresenter,
@@ -102,6 +107,7 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
                      inCollectionView:messageListView.collectionView];
     [self registerSupplementaryViewsWithPresenters:@[messageTimeViewPresenter,
                                                      messageStatusViewPresenter,
+                                                     messageSenderViewPresenter,
                                                      loadingIndicatorPresenter,
                                                      typingIndicatorFooterPresenter]
                                   inCollectionView:messageListView.collectionView];
@@ -116,6 +122,7 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     [dataSource registerCellPresenter:statusMessageCellPresenter];
     [dataSource registerSupplementaryViewPresenter:messageTimeViewPresenter];
     [dataSource registerSupplementaryViewPresenter:messageStatusViewPresenter];
+    [dataSource registerSupplementaryViewPresenter:messageSenderViewPresenter];
     [dataSource registerSupplementaryViewPresenter:loadingIndicatorPresenter];
     [dataSource registerSupplementaryViewPresenter:typingIndicatorFooterPresenter];
     messageListView.dataSource = dataSource;
@@ -127,6 +134,7 @@ static NSInteger const LYRUIMessageListViewDefaultPageSize = 30;
     [delegate registerCellSizeCalculation:statusMessageCellPresenter];
     [delegate registerSupplementaryViewSizeCalculation:messageTimeViewPresenter];
     [delegate registerSupplementaryViewSizeCalculation:messageStatusViewPresenter];
+    [delegate registerSupplementaryViewSizeCalculation:messageSenderViewPresenter];
     [delegate registerSupplementaryViewSizeCalculation:loadingIndicatorPresenter];
     [delegate registerSupplementaryViewSizeCalculation:typingIndicatorFooterPresenter];
     delegate.loadingDelegate = loadingIndicatorPresenter;

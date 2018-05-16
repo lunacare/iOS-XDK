@@ -9,6 +9,7 @@
 #import <LayerXDK/LYRUIMessageListLayout.h>
 #import <LayerXDK/LYRUIMessageCellPresenter.h>
 #import <LayerXDK/LYRUICarouselMessageCellPresenter.h>
+#import <LayerXDK/LYRUIMessageListSenderSupplementaryViewPresenter.h>
 #import <LayerXDK/LYRUIMessageListTimeSupplementaryViewPresenter.h>
 #import <LayerXDK/LYRUIMessageListStatusSupplementaryViewPresenter.h>
 #import <LayerXDK/LYRUIListLoadingIndicatorPresenter.h>
@@ -33,6 +34,7 @@ describe(@"LYRUIMessageListViewPresenter", ^{
     __block LYRUIMessageCellPresenter *cellPresenterMock;
     __block LYRUICarouselMessageCellPresenter *carouselCellPresenterMock;
     __block LYRUIStatusCellPresenter *statusCellPresenterMock;
+    __block LYRUIMessageListSenderSupplementaryViewPresenter *senderViewPresenterMock;
     __block LYRUIMessageListTimeSupplementaryViewPresenter *timeViewPresenterMock;
     __block LYRUIMessageListStatusSupplementaryViewPresenter *statusViewPresenterMock;
     __block LYRUIListLoadingIndicatorPresenter *loadingIndicatorPresenterMock;
@@ -61,7 +63,10 @@ describe(@"LYRUIMessageListViewPresenter", ^{
         
         statusCellPresenterMock = mock([LYRUIStatusCellPresenter class]);
         [given([injectorMock objectOfType:[LYRUIStatusCellPresenter class]]) willReturn:statusCellPresenterMock];
-        
+
+        senderViewPresenterMock = mock([LYRUIMessageListSenderSupplementaryViewPresenter class]);
+        [given([injectorMock objectOfType:[LYRUIMessageListSenderSupplementaryViewPresenter class]]) willReturn:senderViewPresenterMock];
+
         timeViewPresenterMock = mock([LYRUIMessageListTimeSupplementaryViewPresenter class]);
         [given([injectorMock objectOfType:[LYRUIMessageListTimeSupplementaryViewPresenter class]]) willReturn:timeViewPresenterMock];
         

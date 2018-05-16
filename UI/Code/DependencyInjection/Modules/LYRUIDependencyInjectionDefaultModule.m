@@ -70,6 +70,8 @@
 #import "LYRUIMessageCellPresenter.h"
 #import "LYRUIMessageListMessageTimeView.h"
 #import "LYRUIMessageListMessageTimeViewLayout.h"
+#import "LYRUIMessageListMessageSenderView.h"
+#import "LYRUIMessageListMessageSenderViewLayout.h"
 #import "LYRUIMessageListTimeSupplementaryViewPresenter.h"
 #import "LYRUIMessageListMessageStatusView.h"
 #import "LYRUIMessageListMessageStatusViewLayout.h"
@@ -223,6 +225,7 @@ static NSString * const LYRUILegacyLocationMessageMimeType = @"location/coordina
     [self setLayoutClass:[LYRUIComposeBarLayout class] forViewClass:[LYRUIComposeBar class]];
     [self setLayoutClass:[LYRUIMessageItemViewLayout class] forViewClass:[LYRUIMessageItemView class]];
     [self setLayoutClass:[LYRUIMessageListMessageTimeViewLayout class] forViewClass:[LYRUIMessageListMessageTimeView class]];
+    [self setLayoutClass:[LYRUIMessageListMessageSenderViewLayout class] forViewClass:[LYRUIMessageListMessageSenderView class]];
     [self setLayoutClass:[LYRUIMessageListMessageStatusViewLayout class] forViewClass:[LYRUIMessageListMessageStatusView class]];
     [self setLayoutClass:[LYRUIMessageListLayout class] forViewClass:[LYRUIMessageListView class]];
     [self setLayoutClass:[LYRUIConversationViewLayout class] forViewClass:[LYRUIConversationView class]];

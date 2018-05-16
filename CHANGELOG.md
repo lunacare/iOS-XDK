@@ -4,7 +4,8 @@
 
 ### Enhancements
 
-* Support for sending messages with a single link (URL).
+* Support for sending messages with a single link (URL). [IOS-3362]
+* Adds sender's name for incoming messages. [IOS-3412]
 
 ## 4.0.0
 

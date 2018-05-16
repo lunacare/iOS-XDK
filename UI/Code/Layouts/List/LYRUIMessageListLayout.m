@@ -22,6 +22,7 @@
 #import "LYRUIListDataSource.h"
 #import "LYRUIListSection.h"
 
+NSString *const LYRUIMessageListMessageSenderViewKind = @"LYRUIMessageSender";
 NSString *const LYRUIMessageListMessageTimeViewKind = @"LYRUIMessageTime";
 NSString *const LYRUIMessageListMessageStatusViewKind = @"LYRUIMessageStatus";
 
@@ -44,6 +45,14 @@ NSString *const LYRUIMessageListMessageStatusViewKind = @"LYRUIMessageStatus";
 }
 
 #pragma mark - Supplementary views sizes
+
+- (CGSize)senderSupplementaryViewSizeAtIndexPath:(NSIndexPath *)indexPath {
+    CGSize senderViewSize = [self.delegate collectionView:self.collectionView
+                                                   layout:self
+                                         sizeOfViewOfKind:LYRUIMessageListMessageSenderViewKind
+                                              atIndexPath:indexPath];
+    return senderViewSize;
+}
 
 - (CGSize)timeSupplementaryViewSizeAtIndexPath:(NSIndexPath *)indexPath {
     CGSize timeViewSize = [self.delegate collectionView:self.collectionView
@@ -89,9 +98,14 @@ NSString *const LYRUIMessageListMessageStatusViewKind = @"LYRUIMessageStatus";
             if (!CGSizeEqualToSize(timeViewSize, CGSizeZero)) {
                 offset += timeViewSize.height;
             }
-            
+
+            CGSize senderViewSize = [self senderSupplementaryViewSizeAtIndexPath:indexPath];
+            if (!CGSizeEqualToSize(senderViewSize, CGSizeZero)) {
+                offset += senderViewSize.height;
+            }
+
             self.offsetForIndexPath[indexPath] = @(offset);
-            
+
             CGSize statusViewSize = [self statusSupplementaryViewSizeAtIndexPath:indexPath];
             if (!CGSizeEqualToSize(statusViewSize, CGSizeZero)) {
                 offset += statusViewSize.height;
@@ -149,7 +163,13 @@ NSString *const LYRUIMessageListMessageStatusViewKind = @"LYRUIMessageStatus";
             [allAttributes removeObject:attributes];
             continue;
         }
-        
+
+        CGSize senderViewSize = [self senderSupplementaryViewSizeAtIndexPath:attributes.indexPath];
+        if (!CGSizeEqualToSize(senderViewSize, CGSizeZero)) {
+            [additionalAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:LYRUIMessageListMessageSenderViewKind
+                                                                                 atIndexPath:attributes.indexPath]];
+        }
+
         CGSize timeViewSize = [self timeSupplementaryViewSizeAtIndexPath:attributes.indexPath];
         if (!CGSizeEqualToSize(timeViewSize, CGSizeZero)) {
             [additionalAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:LYRUIMessageListMessageTimeViewKind
@@ -187,6 +207,12 @@ NSString *const LYRUIMessageListMessageStatusViewKind = @"LYRUIMessageStatus";
     CGSize size = CGSizeZero;
     if ([kind isEqualToString:LYRUIMessageListMessageTimeViewKind]) {
         size = [self timeSupplementaryViewSizeAtIndexPath:indexPath];
+        CGSize sizeForSenderName = [self senderSupplementaryViewSizeAtIndexPath:indexPath];
+        if (CGSizeEqualToSize(sizeForSenderName, CGSizeZero)) {
+            size.height += sizeForSenderName.height;
+        }
+    } else if ([kind isEqualToString:LYRUIMessageListMessageSenderViewKind]) {
+        size = [self senderSupplementaryViewSizeAtIndexPath:indexPath];
     } else if ([kind isEqualToString:LYRUIMessageListMessageStatusViewKind]) {
         size = [self statusSupplementaryViewSizeAtIndexPath:indexPath];
     }
@@ -202,8 +228,11 @@ NSString *const LYRUIMessageListMessageStatusViewKind = @"LYRUIMessageStatus";
     UICollectionViewLayoutAttributes *cellAttributes = [self layoutAttributesForItemAtIndexPath:indexPath];
     CGRect frame = cellAttributes.frame;
     if ([kind isEqualToString:LYRUIMessageListMessageTimeViewKind]) {
-        frame.size = size;
         frame.origin.y -= size.height;
+        frame.size = size;
+    } else if ([kind isEqualToString:LYRUIMessageListMessageSenderViewKind]) {
+        frame.origin.y -= size.height;
+        frame.size = size;
     } else if ([kind isEqualToString:LYRUIMessageListMessageStatusViewKind]) {
         frame.origin.y += frame.size.height;
         frame.size = size;

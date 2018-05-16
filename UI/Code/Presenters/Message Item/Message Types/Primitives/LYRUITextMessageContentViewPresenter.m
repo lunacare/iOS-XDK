@@ -104,7 +104,7 @@ static CGFloat const LYRUITextMessageContentViewVerticalPadding = 17.0;
     return NO;
 }
 
-- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction {
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction API_AVAILABLE(ios(10.0)) {
     if (interaction == UITextItemInteractionInvokeDefaultAction) {
         [self openURL:URL];
     }

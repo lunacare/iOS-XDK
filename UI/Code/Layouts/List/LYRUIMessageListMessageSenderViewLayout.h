@@ -1,9 +1,9 @@
 //
-//  LYRUIMessageListLayout.h
+//  LYRUIMessageListMessageSenderViewLayout.h
 //  Layer-XDK-UI-iOS
 //
-//  Created by Łukasz Przytuła on 24.08.2017.
-//  Copyright (c) 2017 Layer. All rights reserved.
+//  Created by Klemen Verdnik on 05/10/2018.
+//  Copyright (c) 2018 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,11 +18,7 @@
 //  limitations under the License.
 //
 
-#import "LYRUIListLayout.h"
+#import "LYRUIListHeaderView.h"
 
-extern NSString *const LYRUIMessageListMessageSenderViewKind;
-extern NSString *const LYRUIMessageListMessageTimeViewKind;
-extern NSString *const LYRUIMessageListMessageStatusViewKind;
-
-@interface LYRUIMessageListLayout : LYRUIListLayout
+@interface LYRUIMessageListMessageSenderViewLayout : NSObject <LYRUIListHeaderViewLayout>
 @end
