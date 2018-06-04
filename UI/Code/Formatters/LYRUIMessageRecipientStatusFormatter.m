@@ -68,9 +68,17 @@
 }
 
 - (LYRRecipientStatus)statusForMessage:(LYRMessage *)message {
-    NSDictionary *filteredStatus = [self recipientStatusWithoutCurrentUser:message.recipientStatusByUserID];
-    NSNumber *highestStatus = [filteredStatus.allValues valueForKeyPath:@"@max.self"];
-    LYRRecipientStatus status = (LYRRecipientStatus)highestStatus.integerValue;
+    NSDictionary *recipientStatus = message.recipientStatusByUserID;
+    NSDictionary *filteredStatus = [self recipientStatusWithoutCurrentUser:recipientStatus];
+    NSNumber *highestStatus;
+    LYRRecipientStatus status;
+    if (filteredStatus.count == 0) {
+        highestStatus = [recipientStatus.allValues valueForKeyPath:@"@max.self"];
+        status = highestStatus > 0 ? LYRRecipientStatusSent : (LYRRecipientStatus)highestStatus.integerValue;
+    } else {
+        highestStatus = [filteredStatus.allValues valueForKeyPath:@"@max.self"];
+        status = (LYRRecipientStatus)highestStatus.integerValue;
+    }
     return status;
 }
 

@@ -7,6 +7,10 @@
 * Support for sending messages with a single link (URL). [IOS-3362]
 * Adds sender's name for incoming messages. [IOS-3412]
 
+### Bug fixes
+
+* Fixed message status to display as `sent` instead of `pending` when the current user is the only participant in a conversation. [IOS-3419]
+
 ## 4.0.0
 
 ### Enhancements
