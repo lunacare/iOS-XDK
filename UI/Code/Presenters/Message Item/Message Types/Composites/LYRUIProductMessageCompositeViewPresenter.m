@@ -71,11 +71,11 @@
     productView.descriptionLabel.text = message.productDescription;
 }
 
-- (NSString *)stringForPrice:(double)price withCurrency:(NSString *)currency {
+- (NSString *)stringForPrice:(NSNumber *)price withCurrency:(NSString *)currency {
     NSNumberFormatter *priceFormatter = [[NSNumberFormatter alloc] init];
     [priceFormatter setNumberStyle: NSNumberFormatterCurrencyStyle];
     priceFormatter.currencyCode = currency;
-    NSString *priceString = [priceFormatter stringFromNumber:@(price)];
+    NSString *priceString = [priceFormatter stringFromNumber:price];
     return priceString;
 }
 

@@ -40,7 +40,7 @@
                                                  name:messagePart.properties[@"name"]
                                    productDescription:messagePart.properties[@"description"]
                                             imageURLs:[self imageURLsFromStrings:messagePart.properties[@"image_urls"]]
-                                                price:[messagePart.properties[@"price"] doubleValue]
+                                                price:messagePart.properties[@"price"]
                                              quantity:[messagePart.properties[@"quantity"] unsignedIntegerValue]
                                              currency:messagePart.properties[@"currency"]
                                               options:options

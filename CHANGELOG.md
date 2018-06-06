@@ -2,6 +2,10 @@
 
 ## 4.0.1
 
+### Public API Changes
+
+* Changed the `LYRUIProductMessage` object's `price` property from `double` to `NSNumber` to support null values. This also affects the corresponding `LYRUIProductMessageSerializer` and `LYRUIProductMessageCompositeViewPresenter` classes. [IOS-3420]
+
 ### Enhancements
 
 * Support for sending messages with a single link (URL). [IOS-3362]

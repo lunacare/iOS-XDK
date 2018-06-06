@@ -27,7 +27,7 @@
 @property (nonatomic, readwrite) NSString *name;
 @property (nonatomic, readwrite) NSString *productDescription;
 @property (nonatomic, readwrite) NSArray<NSURL *> *imageURLs;
-@property (nonatomic, readwrite) double price;
+@property (nonatomic, readwrite) NSNumber *price;
 @property (nonatomic, readwrite) NSUInteger quantity;
 @property (nonatomic, readwrite) NSString *currency;
 @property (nonatomic, readwrite) NSArray<LYRUIChoiceMessage *> *options;
@@ -40,7 +40,7 @@
                          name:(NSString *)name
            productDescription:(NSString *)productDescription
                     imageURLs:(NSArray<NSURL *> *)imageURLs
-                        price:(double)price
+                        price:(NSNumber *)price
                      quantity:(NSUInteger)quantity
                      currency:(NSString *)currency
                       options:(NSArray<LYRUIChoiceMessage *> *)options
