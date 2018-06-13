@@ -125,8 +125,8 @@
 
 - (instancetype)initWithImage:(UIImage *)image
                  previewImage:(UIImage *)previewImage {
-    NSData *sourceImageData = UIImageJPEGRepresentation(image, 1.0);
-    NSData *previewImageData = UIImageJPEGRepresentation(previewImage, 1.0);
+    NSData *sourceImageData = UIImageJPEGRepresentation([self imageWithImageOrientationUp:image], 1.0);
+    NSData *previewImageData = UIImageJPEGRepresentation([self imageWithImageOrientationUp:previewImage], 1.0);
     self = [self initWithArtist:nil
                           title:nil
                        subtitle:nil
@@ -135,7 +135,7 @@
                            size:image.size
                     previewSize:previewImage.size
                       createdAt:nil
-                    orientation:0
+                    orientation:1
                 previewImageURL:nil
            previewImageLocalURL:nil
                previewImageData:previewImageData
@@ -186,6 +186,19 @@
 
 - (NSString *)summary {
     return self.title ?: @"Image";
+}
+
+#pragma mark - Helpers
+
+- (UIImage *)imageWithImageOrientationUp:(UIImage *)image
+{
+    if (image.imageOrientation != UIImageOrientationUp) {
+        UIGraphicsBeginImageContextWithOptions(image.size, NO, image.scale);
+        [image drawInRect:(CGRect){{0, 0}, image.size}];
+        image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
+    return image;
 }
 
 @end

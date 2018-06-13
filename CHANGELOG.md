@@ -14,6 +14,7 @@
 ### Bug fixes
 
 * Fixed message status to display as `sent` instead of `pending` when the current user is the only participant in a conversation. [IOS-3419]
+* Fixed image orientation when choosing 'Take Photo' from the compose bar. [IOS-3421]
 
 ## 4.0.0
 
