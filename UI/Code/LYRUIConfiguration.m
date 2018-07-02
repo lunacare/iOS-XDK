@@ -22,6 +22,8 @@
 #import "LYRUIConfiguration+DependencyInjection.h"
 #import "LYRUIDependencyInjector.h"
 
+extern LYRUIMessageSizeVariant LYRUIMessageSizeVariantMedium;
+
 @implementation LYRUIConfiguration
 
 - (instancetype)init {
@@ -54,7 +56,18 @@
            contentPresenterClass:(Class)contentPresenterClass {
     [self.injector registerMessageTypeClass:messageTypeClass
                         withSerializerClass:serializerClass
-                      contentPresenterClass:contentPresenterClass];
+                      contentPresenterClass:contentPresenterClass
+                                sizeVariant:LYRUIMessageSizeVariantMedium];
+}
+
+- (void)registerMessageTypeClass:(Class)messageTypeClass
+             withSerializerClass:(Class)serializerClass
+           contentPresenterClass:(Class)contentPresenterClass
+                     sizeVariant:(LYRUIMessageSizeVariant)sizeVariant {
+    [self.injector registerMessageTypeClass:messageTypeClass
+                        withSerializerClass:serializerClass
+                      contentPresenterClass:contentPresenterClass
+                                sizeVariant:sizeVariant];
 }
 
 - (void)registerMessageTypeClass:(Class)messageTypeClass
@@ -64,7 +77,20 @@
     [self.injector registerMessageTypeClass:messageTypeClass
                         withSerializerClass:serializerClass
                       contentPresenterClass:contentPresenterClass
-                    containerPresenterClass:containerPresenterClass];
+                    containerPresenterClass:containerPresenterClass
+                                sizeVariant:LYRUIMessageSizeVariantMedium];
+}
+
+- (void)registerMessageTypeClass:(Class)messageTypeClass
+             withSerializerClass:(Class)serializerClass
+           contentPresenterClass:(Class)contentPresenterClass
+         containerPresenterClass:(Class)containerPresenterClass
+                     sizeVariant:(LYRUIMessageSizeVariant)sizeVariant {
+    [self.injector registerMessageTypeClass:messageTypeClass
+                        withSerializerClass:serializerClass
+                      contentPresenterClass:contentPresenterClass
+                    containerPresenterClass:containerPresenterClass
+                                sizeVariant:sizeVariant];
 }
 
 - (void)registerActionHandlerClass:(Class)actionHandlerClass

@@ -22,9 +22,13 @@
 #import "LYRUIConfigurable.h"
 #import "LYRUIMessageItemContentPresenting.h"
 #import "LYRUIMessageItemContentContainerPresenting.h"
+#import "LYRUIDependencyInjection.h"
+
 @class LYRUIMessageType;
 @class LYRUIReusableViewsQueue;
 @protocol LYRUIMessageListActionHandlingDelegate;
+
+extern LYRUIMessageSizeVariant LYRUIMessageSizeVariantMedium;
 
 NS_ASSUME_NONNULL_BEGIN     // {
 @interface LYRUIMessageItemContentPresentersProvider : NSObject <LYRUIConfigurable>
@@ -36,6 +40,12 @@ NS_ASSUME_NONNULL_BEGIN     // {
 - (nullable id<LYRUIMessageItemContentContainerPresenting>)containerPresenterForMessageClass:(Class)messageClass;
 
 - (nullable id<LYRUIMessageItemContentPresenting>)presenterForMessageClass:(Class)messageClass;
+
+/**
+ @abstract An overridable class method that returns a size variant represented by a string.
+ @return Return a string representing the message size variant the provider supports.
+ */
++ (LYRUIMessageSizeVariant)messageSizeVariant;
 
 @end
 NS_ASSUME_NONNULL_END       // }

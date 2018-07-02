@@ -29,8 +29,8 @@
 @property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *layouts;
 @property (nonatomic, readwrite) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, LYRUIDependencyProviding> *> *protocolImplementations;
 @property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *objects;
-@property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *messagePresenters;
-@property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *messageContainerPresenters;
+@property (nonatomic, readwrite) NSMutableDictionary<LYRUIMessageSizeVariant, NSMutableDictionary<NSString *, LYRUIDependencyProviding> *> *sizedMessagePresenters;
+@property (nonatomic, readwrite) NSMutableDictionary<LYRUIMessageSizeVariant, NSMutableDictionary<NSString *, LYRUIDependencyProviding> *> *sizedMessageContainerPresenters;
 @property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *messageSerializers;
 @property (nonatomic, readwrite) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, LYRUIDependencyProviding> *> *actionHandlers;
 
@@ -47,8 +47,8 @@
         self.layouts = [[NSMutableDictionary alloc] init];
         self.protocolImplementations = [[NSMutableDictionary alloc] init];
         self.objects = [[NSMutableDictionary alloc] init];
-        self.messagePresenters = [[NSMutableDictionary alloc] init];
-        self.messageContainerPresenters = [[NSMutableDictionary alloc] init];
+        self.sizedMessagePresenters = [[NSMutableDictionary alloc] init];
+        self.sizedMessageContainerPresenters = [[NSMutableDictionary alloc] init];
         self.messageSerializers = [[NSMutableDictionary alloc] init];
         self.actionHandlers = [[NSMutableDictionary alloc] init];
     }
@@ -122,12 +122,22 @@
     self.objects[NSStringFromClass(objectType)] = provider;
 }
 
-- (void)setMessagePresenterClass:(Class)presenterClass forMessageClass:(Class)messageClass {
-    self.messagePresenters[NSStringFromClass(messageClass)] = [self providerWithClass:presenterClass];
+- (void)setMessagePresenterClass:(Class)presenterClass forMessageClass:(Class)messageClass sizeVariant:(LYRUIMessageSizeVariant)sizeVariant {
+    NSMutableDictionary<NSString *, LYRUIDependencyProviding> *messagePresenters = self.sizedMessagePresenters[sizeVariant];
+    if (!messagePresenters) {
+        messagePresenters = [NSMutableDictionary dictionary];
+        self.sizedMessagePresenters[sizeVariant] = messagePresenters;
+    }
+    messagePresenters[NSStringFromClass(messageClass)] = [self providerWithClass:presenterClass];
 }
 
-- (void)setMessageContainerPresenterClass:(Class)presenterClass forMessageClass:(Class)messageClass {
-    self.messageContainerPresenters[NSStringFromClass(messageClass)] = [self providerWithClass:presenterClass];
+- (void)setMessageContainerPresenterClass:(Class)presenterClass forMessageClass:(Class)messageClass sizeVariant:(LYRUIMessageSizeVariant)sizeVariant {
+    NSMutableDictionary<NSString *, LYRUIDependencyProviding> *messageContainerPresenters = self.sizedMessageContainerPresenters[sizeVariant];
+    if (!messageContainerPresenters) {
+        messageContainerPresenters = [NSMutableDictionary dictionary];
+        self.sizedMessageContainerPresenters[sizeVariant] = messageContainerPresenters;
+    }
+    messageContainerPresenters[NSStringFromClass(messageClass)] = [self providerWithClass:presenterClass];
 }
 
 - (void)setMessageSerializerClass:(Class)serializerClass forMIMEType:(NSString *)MIMEType {

@@ -1,5 +1,11 @@
 # LayerXDK Changelog
 
+## 4.0.2
+
+### Enhancements
+
+* Added an ability to register message presenters for different size variants. [IOS-3425]
+
 ## 4.0.1
 
 ### Public API Changes

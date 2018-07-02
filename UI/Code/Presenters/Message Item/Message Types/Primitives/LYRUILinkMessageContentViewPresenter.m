@@ -123,7 +123,7 @@ static CGFloat const LYRUILinkMessageContentViewVerticalPadding = 17.0;
     [view.imageView.leftAnchor constraintEqualToAnchor:view.leftAnchor].active = YES;
 }
 
-- (void)setupViewConstraints:(UIView *)view forImageSize:(CGSize)size {
+- (void)setupViewConstraints:(LYRUILinkMessageView *)view forImageSize:(CGSize)size {
     CGFloat maxHeight = LYRUIMessageItemViewLinkImageMaxHeight;
     CGFloat ratio = (size.height != 0.0) ? (size.width / size.height) : LYRUIMessageItemViewLinkImageDefaultRatio;
     [super setupViewConstraints:view];

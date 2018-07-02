@@ -25,12 +25,14 @@ NS_ASSUME_NONNULL_BEGIN     // {
 
 - (void)registerMessageTypeClass:(Class)messageTypeClass
              withSerializerClass:(Class)serializerClass
-           contentPresenterClass:(Class)contentPresenterClass;
+           contentPresenterClass:(Class)contentPresenterClass
+                     sizeVariant:(NSString const*)sizeVariant;
 
 - (void)registerMessageTypeClass:(Class)messageTypeClass
              withSerializerClass:(Class)serializerClass
            contentPresenterClass:(Class)contentPresenterClass
-         containerPresenterClass:(nullable Class)containerPresenterClass;
+         containerPresenterClass:(nullable Class)containerPresenterClass
+                     sizeVariant:(NSString const*)sizeVariant;
 
 - (void)registerActionHandlerClass:(Class)actionHandlerClass
                           forEvent:(NSString *)event;

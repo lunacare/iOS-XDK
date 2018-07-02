@@ -31,8 +31,8 @@ typedef NSObject LYRUIDIAnyClass;
 @property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *layouts;
 @property (nonatomic, readonly) NSDictionary<NSString *, NSDictionary<NSString *, LYRUIDependencyProviding> *> *protocolImplementations;
 @property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *objects;
-@property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *messagePresenters;
-@property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *messageContainerPresenters;
+@property (nonatomic, readonly) NSMutableDictionary<LYRUIMessageSizeVariant, NSMutableDictionary<NSString *, LYRUIDependencyProviding> *> *sizedMessagePresenters;
+@property (nonatomic, readonly) NSMutableDictionary<LYRUIMessageSizeVariant, NSMutableDictionary<NSString *, LYRUIDependencyProviding> *> *sizedMessageContainerPresenters;
 @property (nonatomic, readonly) NSDictionary<NSString *, LYRUIDependencyProviding> *messageSerializers;
 @property (nonatomic, readonly) NSDictionary<NSString *, NSDictionary<NSString *, LYRUIDependencyProviding> *> *actionHandlers;
 

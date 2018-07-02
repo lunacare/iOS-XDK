@@ -141,6 +141,9 @@
 #import "LYRUICarouselContentOffsetHandler.h"
 #import "LYRUICarouselContentOffsetsCache.h"
 #import "LYRUIMessageListViewPreviewingDelegate.h"
+#import "LYRUISmallMessageItemContentPresentersProvider.h"
+#import "LYRUIMessageItemContentPresentersProvider.h"
+#import "LYRUILargeMessageItemContentPresentersProvider.h"
 
 static NSString * const LYRUILegacyTextMessageMimeType = @"text/plain";
 static NSString * const LYRUILegacyPDFFileMessageMimeType = @"application/pdf";
@@ -332,24 +335,24 @@ static NSString * const LYRUILegacyLocationMessageMimeType = @"location/coordina
 }
 
 - (void)setupMessagePresenters {
-    [self setMessagePresenterClass:[LYRUITextMessageContentViewPresenter class] forMessageClass:[LYRUITextMessage class]];
-    [self setMessagePresenterClass:[LYRUIFileMessageContentViewPresenter class] forMessageClass:[LYRUIFileMessage class]];
-    [self setMessagePresenterClass:[LYRUILinkMessageContentViewPresenter class] forMessageClass:[LYRUILinkMessage class]];
-    [self setMessagePresenterClass:[LYRUIImageMessageContentViewPresenter class] forMessageClass:[LYRUIImageMessage class]];
-    [self setMessagePresenterClass:[LYRUILocationMessageContentViewPresenter class] forMessageClass:[LYRUILocationMessage class]];
-    [self setMessagePresenterClass:[LYRUIButtonsMessageCompositeViewPresenter class] forMessageClass:[LYRUIButtonsMessage class]];
-    [self setMessagePresenterClass:[LYRUIChoiceMessageCompositeViewPresenter class] forMessageClass:[LYRUIChoiceMessage class]];
-    [self setMessagePresenterClass:[LYRUIProductMessageCompositeViewPresenter class] forMessageClass:[LYRUIProductMessage class]];
-    [self setMessagePresenterClass:[LYRUIReceiptMessageCompositeViewPresenter class] forMessageClass:[LYRUIReceiptMessage class]];
-    [self setMessagePresenterClass:[LYRUICarouselMessageCompositeViewPresenter class] forMessageClass:[LYRUICarouselMessage class]];
+    [self setMessagePresenterClass:[LYRUITextMessageContentViewPresenter class] forMessageClass:[LYRUITextMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessagePresenterClass:[LYRUIFileMessageContentViewPresenter class] forMessageClass:[LYRUIFileMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessagePresenterClass:[LYRUILinkMessageContentViewPresenter class] forMessageClass:[LYRUILinkMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessagePresenterClass:[LYRUIImageMessageContentViewPresenter class] forMessageClass:[LYRUIImageMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessagePresenterClass:[LYRUILocationMessageContentViewPresenter class] forMessageClass:[LYRUILocationMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessagePresenterClass:[LYRUIButtonsMessageCompositeViewPresenter class] forMessageClass:[LYRUIButtonsMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessagePresenterClass:[LYRUIChoiceMessageCompositeViewPresenter class] forMessageClass:[LYRUIChoiceMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessagePresenterClass:[LYRUIProductMessageCompositeViewPresenter class] forMessageClass:[LYRUIProductMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessagePresenterClass:[LYRUIReceiptMessageCompositeViewPresenter class] forMessageClass:[LYRUIReceiptMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessagePresenterClass:[LYRUICarouselMessageCompositeViewPresenter class] forMessageClass:[LYRUICarouselMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
 }
 
 - (void)setupMessageContainerPresenters {
-    [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUITextMessage class]];
-    [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUIFileMessage class]];
-    [self setMessageContainerPresenterClass:[LYRUILinkMessageContainerViewPresenter class] forMessageClass:[LYRUILinkMessage class]];
-    [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUIImageMessage class]];
-    [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUILocationMessage class]];
+    [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUITextMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUIFileMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessageContainerPresenterClass:[LYRUILinkMessageContainerViewPresenter class] forMessageClass:[LYRUILinkMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUIImageMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUILocationMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
 }
 
 - (void)setupMessageSerializers {

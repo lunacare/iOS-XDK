@@ -32,6 +32,8 @@
 NS_ASSUME_NONNULL_BEGIN     // {
 typedef id _Nonnull(^LYRUIDependencyProviding)(LYRUIConfiguration *);
 
+typedef NSString const* LYRUIMessageSizeVariant;
+
 @protocol LYRUIDependencyInjection <NSObject, LYRUICustomMessageTypeRegistering>
 
 @property (nonatomic, weak) LYRUIConfiguration *layerConfiguration;
@@ -87,16 +89,32 @@ typedef id _Nonnull(^LYRUIDependencyProviding)(LYRUIConfiguration *);
 /**
  @abstract Returns a presenter for message of provided `messageClass`.
  @param messageClass Class of the message to present.
+ @param sizeVariant The message size variant the presenter supports.
  @return An object conforming to `LYRUIMessageItemContentPresenting` protocol.
  */
-- (nullable id<LYRUIMessageItemContentPresenting>)presenterForMessageClass:(Class)messageClass;
+- (nullable id<LYRUIMessageItemContentPresenting>)presenterForMessageClass:(Class)messageClass sizeVariant:(LYRUIMessageSizeVariant)sizeVariant;
+
+/**
+ @abstract Returns a presenter for message of provided `messageClass`.
+ @param messageClass Class of the message to present.
+ @return An object conforming to `LYRUIMessageItemContentPresenting` protocol.
+ */
+- (nullable id<LYRUIMessageItemContentPresenting>)presenterForMessageClass:(Class)messageClass __deprecated_msg("use the -presenterForMessageClass:sizeVariant: method instead");
+
+/**
+ @abstract Returns a container presenter for message of provided `messageClass`.
+ @param messageClass Class of the message to present in container.
+ @param sizeVariant The message size variant the presenter supports.
+ @return An object conforming to `LYRUIMessageItemContentPresenting` protocol.
+ */
+- (nullable id<LYRUIMessageItemContentContainerPresenting>)containerPresenterForMessageClass:(Class)messageClass sizeVariant:(LYRUIMessageSizeVariant)sizeVariant;
 
 /**
  @abstract Returns a container presenter for message of provided `messageClass`.
  @param messageClass Class of the message to present in container.
  @return An object conforming to `LYRUIMessageItemContentPresenting` protocol.
  */
-- (nullable id<LYRUIMessageItemContentContainerPresenting>)containerPresenterForMessageClass:(Class)messageClass;
+- (nullable id<LYRUIMessageItemContentContainerPresenting>)containerPresenterForMessageClass:(Class)messageClass __deprecated_msg("use the -containerPresenterForMessageClass:sizeVariant: method instead");
 
 /**
  @abstract Returns a serializer for message with provided `MIMEType`.

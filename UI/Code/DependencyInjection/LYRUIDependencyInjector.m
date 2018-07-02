@@ -28,6 +28,8 @@
 #import "LYRUIMessageType.h"
 #import "LYRUIDependencyInjectionBaseModule.h"
 
+extern LYRUIMessageSizeVariant LYRUIMessageSizeVariantMedium;
+
 @interface LYRUIDependencyInjector ()
 
 @property (nonatomic, readwrite) NSMutableDictionary<NSString *, LYRUIDependencyProviding> *customMessagePresenters;
@@ -96,25 +98,34 @@
 
 - (NSArray<Class> *)handledMessageClasses {
     NSMutableSet *classes = [[NSMutableSet alloc] init];
-    for (NSString *className in self.module.messagePresenters.allKeys) {
-        Class class = NSClassFromString(className);
-        if (className != nil) {
-            [classes addObject:class];
+    for (NSDictionary *presenters in self.module.sizedMessagePresenters.allValues) {
+        for (NSString *className in presenters.allKeys) {
+            Class class = NSClassFromString(className);
+            if (className != nil) {
+                [classes addObject:class];
+            }
         }
     }
-    for (NSString *className in self.customMessagesModule.messagePresenters.allKeys) {
-        Class class = NSClassFromString(className);
-        if (className != nil) {
-            [classes addObject:class];
+    for (NSDictionary *presenters in self.customMessagesModule.sizedMessagePresenters.allValues) {
+        for (NSString *className in presenters.allKeys) {
+            Class class = NSClassFromString(className);
+            if (className != nil) {
+                [classes addObject:class];
+            }
         }
     }
     return classes.allObjects;
 }
 
-- (id<LYRUIMessageItemContentPresenting>)presenterForMessageClass:(Class)messageClass {
-    LYRUIDependencyProviding provider = self.customMessagesModule.messagePresenters[NSStringFromClass(messageClass)];
+- (nullable id<LYRUIMessageItemContentPresenting>)presenterForMessageClass:(Class)messageClass sizeVariant:(LYRUIMessageSizeVariant)sizeVariant {
+    if (!sizeVariant) {
+        return nil;
+    }
+    NSMutableDictionary<NSString *, LYRUIDependencyProviding> *messagePresenters = self.customMessagesModule.sizedMessagePresenters[sizeVariant];
+    LYRUIDependencyProviding provider = messagePresenters[NSStringFromClass(messageClass)];
     if (provider == nil) {
-        provider = self.module.messagePresenters[NSStringFromClass(messageClass)];
+        messagePresenters = self.module.sizedMessagePresenters[sizeVariant];
+        provider = messagePresenters[NSStringFromClass(messageClass)];
     }
     if (provider) {
         return provider(self.layerConfiguration);
@@ -122,10 +133,15 @@
     return nil;
 }
 
-- (id<LYRUIMessageItemContentPresenting>)containerPresenterForMessageClass:(Class)messageClass {
-    LYRUIDependencyProviding provider = self.customMessagesModule.messageContainerPresenters[NSStringFromClass(messageClass)];
+- (id<LYRUIMessageItemContentPresenting>)containerPresenterForMessageClass:(Class)messageClass sizeVariant:(LYRUIMessageSizeVariant)sizeVariant {
+    if (!sizeVariant) {
+        return nil;
+    }
+    NSMutableDictionary<NSString *, LYRUIDependencyProviding> *messageContainerPresenters = self.customMessagesModule.sizedMessageContainerPresenters[sizeVariant];
+    LYRUIDependencyProviding provider = messageContainerPresenters[NSStringFromClass(messageClass)];
     if (provider == nil) {
-        provider = self.module.messageContainerPresenters[NSStringFromClass(messageClass)];
+        messageContainerPresenters = self.module.sizedMessageContainerPresenters[sizeVariant];
+        provider = messageContainerPresenters[NSStringFromClass(messageClass)];
     }
     if (provider) {
         return provider(self.layerConfiguration);
@@ -146,9 +162,6 @@
 
 - (id<LYRUIActionHandling>)handlerOfMessageActionWithEvent:(NSString *)event forMessageType:(Class)messageClass {
     LYRUIDependencyProviding provider = self.customMessagesModule.actionHandlers[NSStringFromClass(messageClass)][event];
-    if (provider == nil) {
-        provider = self.module.messagePresenters[NSStringFromClass(messageClass)];
-    }
     if (provider == nil) {
         NSString *anyClassKey = NSStringFromClass([LYRUIDIAnyClass class]);
         provider = self.customMessagesModule.actionHandlers[anyClassKey][event];
@@ -171,13 +184,38 @@
     [self registerMessageTypeClass:messageTypeClass
                withSerializerClass:serializerClass
              contentPresenterClass:contentPresenterClass
-           containerPresenterClass:nil];
+           containerPresenterClass:nil
+                       sizeVariant:LYRUIMessageSizeVariantMedium];
+}
+
+- (void)registerMessageTypeClass:(Class)messageTypeClass
+             withSerializerClass:(Class)serializerClass
+           contentPresenterClass:(Class)contentPresenterClass
+                     sizeVariant:(LYRUIMessageSizeVariant)sizeVariant {
+    [self registerMessageTypeClass:messageTypeClass
+               withSerializerClass:serializerClass
+             contentPresenterClass:contentPresenterClass
+           containerPresenterClass:nil
+                       sizeVariant:sizeVariant];
 }
 
 - (void)registerMessageTypeClass:(Class)messageTypeClass
              withSerializerClass:(Class)serializerClass
            contentPresenterClass:(Class)contentPresenterClass
          containerPresenterClass:(Class)containerPresenterClass {
+    [self registerMessageTypeClass:messageTypeClass
+               withSerializerClass:serializerClass
+             contentPresenterClass:contentPresenterClass
+           containerPresenterClass:contentPresenterClass
+                       sizeVariant:LYRUIMessageSizeVariantMedium];
+}
+
+
+- (void)registerMessageTypeClass:(Class)messageTypeClass
+             withSerializerClass:(Class)serializerClass
+           contentPresenterClass:(Class)contentPresenterClass
+         containerPresenterClass:(Class)containerPresenterClass
+                     sizeVariant:(LYRUIMessageSizeVariant)sizeVariant {
     if (messageTypeClass == nil) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"`messageTypeClass` argument can not be nil." userInfo:nil];
     }
@@ -200,9 +238,9 @@
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"`containerPresenterClass` must conform to `LYRUIMessageItemContentContainerPresenting` protocol." userInfo:nil];
     }
     [self.customMessagesModule setMessageSerializerClass:serializerClass forMIMEType:[messageTypeClass MIMEType]];
-    [self.customMessagesModule setMessagePresenterClass:contentPresenterClass forMessageClass:messageTypeClass];
+    [self.customMessagesModule setMessagePresenterClass:contentPresenterClass forMessageClass:messageTypeClass sizeVariant:sizeVariant];
     if (containerPresenterClass != nil) {
-        [self.customMessagesModule setMessageContainerPresenterClass:containerPresenterClass forMessageClass:messageTypeClass];
+        [self.customMessagesModule setMessageContainerPresenterClass:containerPresenterClass forMessageClass:messageTypeClass sizeVariant:sizeVariant];
     }
 }
 
@@ -225,5 +263,20 @@
     }
     [self.customMessagesModule setActionHandlerClass:actionHandlerClass forEvent:event usedInMessageType:messageTypeClass];
 }
+
+#pragma mark - Deprecated Methods
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
+
+- (nullable id<LYRUIMessageItemContentPresenting>)presenterForMessageClass:(Class)messageClass {
+    return [self presenterForMessageClass:messageClass sizeVariant:LYRUIMessageSizeVariantMedium];
+}
+
+- (id<LYRUIMessageItemContentPresenting>)containerPresenterForMessageClass:(Class)messageClass {
+    return [self containerPresenterForMessageClass:messageClass sizeVariant:LYRUIMessageSizeVariantMedium];
+}
+
+#pragma clang diagnostic pop
 
 @end

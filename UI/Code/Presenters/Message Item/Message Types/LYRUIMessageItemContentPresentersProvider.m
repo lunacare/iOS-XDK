@@ -22,6 +22,8 @@
 #import "LYRUIConfiguration+DependencyInjection.h"
 #import "LYRUIMessageItemContentPresenting.h"
 
+LYRUIMessageSizeVariant LYRUIMessageSizeVariantMedium = @"LYRUIMessageSizeVariantMedium";
+
 @interface LYRUIMessageItemContentPresentersProvider ()
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, id<LYRUIMessageItemContentPresenting>> *presenters;
@@ -57,14 +59,14 @@
 
 - (void)setupMessagePresenters {
     for (Class messageClass in self.layerConfiguration.injector.handledMessageClasses) {
-        id<LYRUIMessageItemContentPresenting> presenter = [self.layerConfiguration.injector presenterForMessageClass:messageClass];
+        id<LYRUIMessageItemContentPresenting> presenter = [self.layerConfiguration.injector presenterForMessageClass:messageClass sizeVariant:[self.class messageSizeVariant]];
         [self registerContentPresenter:presenter forMessageClass:messageClass];
     }
 }
 
 - (void)setupMessageContainerPresenters {
     for (Class messageClass in self.layerConfiguration.injector.handledMessageClasses) {
-        id<LYRUIMessageItemContentContainerPresenting> presenter = [self.layerConfiguration.injector containerPresenterForMessageClass:messageClass];
+        id<LYRUIMessageItemContentContainerPresenting> presenter = [self.layerConfiguration.injector containerPresenterForMessageClass:messageClass sizeVariant:[self.class messageSizeVariant]];
         [self registerContainerPresenter:presenter forMessageClass:messageClass];
     }
 }
@@ -101,6 +103,13 @@
         presenter = [self contentPresenterForMessageClass:messageClass];
     }
     return presenter;
+}
+
+#pragma mark - Message Size Variant
+
++ (LYRUIMessageSizeVariant)messageSizeVariant
+{
+    return LYRUIMessageSizeVariantMedium;
 }
 
 @end

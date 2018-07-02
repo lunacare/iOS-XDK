@@ -43,8 +43,8 @@
 
 - (void)setProvider:(LYRUIDependencyProviding)provider forObjectType:(Class)objectType;
 
-- (void)setMessagePresenterClass:(Class)presenterClass forMessageClass:(Class)messageClass;
-- (void)setMessageContainerPresenterClass:(Class)presenterClass forMessageClass:(Class)messageClass;
+- (void)setMessagePresenterClass:(Class)presenterClass forMessageClass:(Class)messageClass sizeVariant:(LYRUIMessageSizeVariant)sizeVariant;
+- (void)setMessageContainerPresenterClass:(Class)presenterClass forMessageClass:(Class)messageClass sizeVariant:(LYRUIMessageSizeVariant)sizeVariant;
 - (void)setMessageSerializerClass:(Class)serializerClass forMIMEType:(NSString *)MIMEType;
 - (void)setActionHandlerClass:(Class)implementationClass forEvent:(NSString *)event;
 - (void)setActionHandlerClass:(Class)implementationClass forEvent:(NSString *)event usedInMessageType:(Class)usageMessageType;

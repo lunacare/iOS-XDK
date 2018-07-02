@@ -124,6 +124,7 @@
 #import <LayerXDK/LYRUICarouselContentOffsetHandler.h>
 #import <LayerXDK/LYRUICarouselContentOffsetsCache.h>
 #import <LayerXDK/LYRUIMessageListViewPreviewingDelegate.h>
+#import <LayerXDK/LYRUIMessageItemContentPresentersProvider.h>
 
 SpecBegin(LYRUIDependencyInjector)
 
@@ -905,7 +906,8 @@ describe(@"LYRUIDependencyInjector", ^{
             beforeEach(^{
                 [injector registerMessageTypeClass:[LYRUIFakeTestMessage class]
                                withSerializerClass:[LYRUIFakeTestMessageSerializer class]
-                             contentPresenterClass:[LYRUIFakeTestMessagePresenter class]];
+                             contentPresenterClass:[LYRUIFakeTestMessagePresenter class]
+                                       sizeVariant:LYRUIMessageSizeVariantMedium];
                 
                 returnedClasses = [injector handledMessageClasses];
             });
@@ -954,7 +956,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUITextMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector presenterForMessageClass:[LYRUITextMessage class]];
+                returnedPresenter = [injector presenterForMessageClass:[LYRUITextMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return `LYRUITextMessageContentViewPresenter`", ^{
@@ -1375,7 +1377,8 @@ describe(@"LYRUIDependencyInjector", ^{
                     [injector registerMessageTypeClass:messageTypeClass
                                    withSerializerClass:[LYRUIFakeTestMessageSerializer class]
                                  contentPresenterClass:[LYRUIFakeTestMessagePresenter class]
-                               containerPresenterClass:[LYRUIFakeTestMessageContainerPresenter class]];
+                               containerPresenterClass:[LYRUIFakeTestMessageContainerPresenter class]
+                                           sizeVariant:LYRUIMessageSizeVariantMedium];
                 };
             });
             
@@ -1393,7 +1396,8 @@ describe(@"LYRUIDependencyInjector", ^{
                     [injector registerMessageTypeClass:[NSObject class]
                                    withSerializerClass:[LYRUIFakeTestMessageSerializer class]
                                  contentPresenterClass:[LYRUIFakeTestMessagePresenter class]
-                               containerPresenterClass:[LYRUIFakeTestMessageContainerPresenter class]];
+                               containerPresenterClass:[LYRUIFakeTestMessageContainerPresenter class]
+                                           sizeVariant:LYRUIMessageSizeVariantMedium];
                 };
             });
             
@@ -1412,7 +1416,8 @@ describe(@"LYRUIDependencyInjector", ^{
                     [injector registerMessageTypeClass:[LYRUIFakeTestMessage class]
                                    withSerializerClass:messageSerializerClass
                                  contentPresenterClass:[LYRUIFakeTestMessagePresenter class]
-                               containerPresenterClass:[LYRUIFakeTestMessageContainerPresenter class]];
+                               containerPresenterClass:[LYRUIFakeTestMessageContainerPresenter class]
+                                           sizeVariant:LYRUIMessageSizeVariantMedium];
                 };
             });
             
@@ -1430,7 +1435,8 @@ describe(@"LYRUIDependencyInjector", ^{
                     [injector registerMessageTypeClass:[LYRUIFakeTestMessage class]
                                    withSerializerClass:[NSObject class]
                                  contentPresenterClass:[LYRUIFakeTestMessagePresenter class]
-                               containerPresenterClass:[LYRUIFakeTestMessageContainerPresenter class]];
+                               containerPresenterClass:[LYRUIFakeTestMessageContainerPresenter class]
+                                           sizeVariant:LYRUIMessageSizeVariantMedium];
                 };
             });
             
@@ -1449,7 +1455,8 @@ describe(@"LYRUIDependencyInjector", ^{
                     [injector registerMessageTypeClass:[LYRUIFakeTestMessage class]
                                    withSerializerClass:[LYRUIFakeTestMessageSerializer class]
                                  contentPresenterClass:messagePresenterClass
-                               containerPresenterClass:[LYRUIFakeTestMessageContainerPresenter class]];
+                               containerPresenterClass:[LYRUIFakeTestMessageContainerPresenter class]
+                                           sizeVariant:LYRUIMessageSizeVariantMedium];
                 };
             });
             
@@ -1467,7 +1474,8 @@ describe(@"LYRUIDependencyInjector", ^{
                     [injector registerMessageTypeClass:[LYRUIFakeTestMessage class]
                                    withSerializerClass:[LYRUIFakeTestMessageSerializer class]
                                  contentPresenterClass:[NSObject class]
-                               containerPresenterClass:[LYRUIFakeTestMessageContainerPresenter class]];
+                               containerPresenterClass:[LYRUIFakeTestMessageContainerPresenter class]
+                                           sizeVariant:LYRUIMessageSizeVariantMedium];
                 };
             });
             
@@ -1485,7 +1493,8 @@ describe(@"LYRUIDependencyInjector", ^{
                     [injector registerMessageTypeClass:[LYRUIFakeTestMessage class]
                                    withSerializerClass:[LYRUIFakeTestMessageSerializer class]
                                  contentPresenterClass:[LYRUIFakeTestMessagePresenter class]
-                               containerPresenterClass:[NSObject class]];
+                               containerPresenterClass:[NSObject class]
+                                           sizeVariant:LYRUIMessageSizeVariantMedium];
                 };
             });
             
@@ -1500,7 +1509,8 @@ describe(@"LYRUIDependencyInjector", ^{
                 [injector registerMessageTypeClass:[LYRUIFakeTestMessage class]
                                withSerializerClass:[LYRUIFakeTestMessageSerializer class]
                              contentPresenterClass:[LYRUIFakeTestMessagePresenter class]
-                           containerPresenterClass:[LYRUIFakeTestMessageContainerPresenter class]];
+                           containerPresenterClass:[LYRUIFakeTestMessageContainerPresenter class]
+                                       sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should register a serializer for proper mime type", ^{
@@ -1508,11 +1518,11 @@ describe(@"LYRUIDependencyInjector", ^{
                 expect(serializer).to.beAKindOf([LYRUIFakeTestMessageSerializer class]);
             });
             it(@"should register a presenter for new message type", ^{
-                id<LYRUIMessageItemContentPresenting> presenter = [injector presenterForMessageClass:[LYRUIFakeTestMessage class]];
+                id<LYRUIMessageItemContentPresenting> presenter = [injector presenterForMessageClass:[LYRUIFakeTestMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
                 expect(presenter).to.beAKindOf([LYRUIFakeTestMessagePresenter class]);
             });
             it(@"should register a content presenter for new message type", ^{
-                id<LYRUIMessageItemContentContainerPresenting> presenter = [injector containerPresenterForMessageClass:[LYRUIFakeTestMessage class]];
+                id<LYRUIMessageItemContentContainerPresenting> presenter = [injector containerPresenterForMessageClass:[LYRUIFakeTestMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
                 expect(presenter).to.beAKindOf([LYRUIFakeTestMessageContainerPresenter class]);
             });
         });
@@ -1522,7 +1532,8 @@ describe(@"LYRUIDependencyInjector", ^{
                 [injector registerMessageTypeClass:[LYRUIFakeTestMessage class]
                                withSerializerClass:[LYRUIFakeTestMessageSerializer class]
                              contentPresenterClass:[LYRUIFakeTestMessagePresenter class]
-                           containerPresenterClass:nil];
+                           containerPresenterClass:nil
+                                       sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should register a serializer for proper mime type", ^{
@@ -1544,7 +1555,8 @@ describe(@"LYRUIDependencyInjector", ^{
                 [injector registerMessageTypeClass:[LYRUIFakeImageMessage class]
                                withSerializerClass:[LYRUIFakeTestMessageSerializer class]
                              contentPresenterClass:[LYRUIFakeTestMessagePresenter class]
-                           containerPresenterClass:[LYRUIFakeTestMessageContainerPresenter class]];
+                           containerPresenterClass:[LYRUIFakeTestMessageContainerPresenter class]
+                                       sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should override a serializer for proper mime type", ^{
@@ -1552,11 +1564,11 @@ describe(@"LYRUIDependencyInjector", ^{
                 expect(serializer).to.beAKindOf([LYRUIFakeTestMessageSerializer class]);
             });
             it(@"should register a presenter for new message type", ^{
-                id<LYRUIMessageItemContentPresenting> presenter = [injector presenterForMessageClass:[LYRUIFakeImageMessage class]];
+                id<LYRUIMessageItemContentPresenting> presenter = [injector presenterForMessageClass:[LYRUIFakeImageMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
                 expect(presenter).to.beAKindOf([LYRUIFakeTestMessagePresenter class]);
             });
             it(@"should register a content presenter for new message type", ^{
-                id<LYRUIMessageItemContentContainerPresenting> presenter = [injector containerPresenterForMessageClass:[LYRUIFakeImageMessage class]];
+                id<LYRUIMessageItemContentContainerPresenting> presenter = [injector containerPresenterForMessageClass:[LYRUIFakeImageMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
                 expect(presenter).to.beAKindOf([LYRUIFakeTestMessageContainerPresenter class]);
             });
         });
@@ -1566,7 +1578,8 @@ describe(@"LYRUIDependencyInjector", ^{
                 [injector registerMessageTypeClass:[LYRUIImageMessage class]
                                withSerializerClass:[LYRUIFakeTestMessageSerializer class]
                              contentPresenterClass:[LYRUIFakeTestMessagePresenter class]
-                           containerPresenterClass:[LYRUIFakeTestMessageContainerPresenter class]];
+                           containerPresenterClass:[LYRUIFakeTestMessageContainerPresenter class]
+                                       sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should override a serializer for proper mime type", ^{
@@ -1574,11 +1587,11 @@ describe(@"LYRUIDependencyInjector", ^{
                 expect(serializer).to.beAKindOf([LYRUIFakeTestMessageSerializer class]);
             });
             it(@"should register a presenter for new message type", ^{
-                id<LYRUIMessageItemContentPresenting> presenter = [injector presenterForMessageClass:[LYRUIImageMessage class]];
+                id<LYRUIMessageItemContentPresenting> presenter = [injector presenterForMessageClass:[LYRUIImageMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
                 expect(presenter).to.beAKindOf([LYRUIFakeTestMessagePresenter class]);
             });
             it(@"should register a content presenter for new message type", ^{
-                id<LYRUIMessageItemContentContainerPresenting> presenter = [injector containerPresenterForMessageClass:[LYRUIImageMessage class]];
+                id<LYRUIMessageItemContentContainerPresenting> presenter = [injector containerPresenterForMessageClass:[LYRUIImageMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
                 expect(presenter).to.beAKindOf([LYRUIFakeTestMessageContainerPresenter class]);
             });
         });
