@@ -53,7 +53,7 @@
     }
     LYRUIMessageType *messageType = [serializer typedMessageWithMessagePart:rootPart];
     if (!messageType) {
-        messageType = [[LYRUIMessageType alloc] initWithAction:nil sender:message.sender sentAt:message.sentAt status:nil];
+        messageType = [[LYRUIMessageType alloc] initWithAction:nil sender:message.sender sentAt:message.sentAt status:nil messagePart:rootPart];
     }
     return messageType;
 }

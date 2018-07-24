@@ -37,12 +37,14 @@
 - (nonnull instancetype)initWithText:(nonnull NSString *)text;
 
 - (nonnull instancetype)initWithText:(nonnull NSString *)text
-                               title:(nonnull NSString *)title;
+                               title:(nonnull NSString *)title
+                         messagePart:(nullable LYRMessagePart *)messagePart;
 
 - (nonnull instancetype)initWithText:(nonnull NSString *)text
                               sender:(nullable LYRIdentity *)sender
                               sentAt:(nullable NSDate *)sentAt
-                              status:(nullable LYRUIMessageTypeStatus *)status;
+                              status:(nullable LYRUIMessageTypeStatus *)status
+                         messagePart:(nullable LYRMessagePart *)messagePart;
 
 - (nonnull instancetype)initWithAuthor:(nullable NSString *)author
                                   text:(nonnull NSString *)text
@@ -53,6 +55,7 @@
                                 action:(nullable LYRUIMessageAction *)action
                                 sender:(nullable LYRIdentity *)sender
                                 sentAt:(nullable NSDate *)sentAt
-                                status:(nullable LYRUIMessageTypeStatus *)status;
+                                status:(nullable LYRUIMessageTypeStatus *)status
+                           messagePart:(nullable LYRMessagePart *)messagePart;
 
 @end

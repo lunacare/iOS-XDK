@@ -57,7 +57,8 @@ NS_ASSUME_NONNULL_BEGIN     // {
                        action:(nullable LYRUIMessageAction *)action
                        sender:(nullable LYRIdentity *)sender
                        sentAt:(nullable NSDate *)sentAt
-                       status:(nullable LYRUIMessageTypeStatus *)status;
+                       status:(nullable LYRUIMessageTypeStatus *)status
+                  messagePart:(nullable LYRMessagePart *)messagePart;
 
 - (instancetype)initWithTitle:(nullable NSString *)title
                         label:(nullable NSString *)label
@@ -71,7 +72,8 @@ NS_ASSUME_NONNULL_BEGIN     // {
                  responseName:(nullable NSString *)responseName
            customResponseData:(nullable NSDictionary *)customResponseData
                    enabledFor:(NSString *)enabledFor
-               selectedChoice:(nullable NSString *)selectedChoice;
+               selectedChoice:(nullable NSString *)selectedChoice
+                  messagePart:(nullable LYRMessagePart *)messagePart;
 
 @end
 NS_ASSUME_NONNULL_END       // }

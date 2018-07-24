@@ -35,11 +35,13 @@
                               action:(nullable LYRUIMessageAction *)action
                               sender:(nullable LYRIdentity *)sender
                               sentAt:(nullable NSDate *)sentAt
-                              status:(nullable LYRUIMessageTypeStatus *)status {
+                              status:(nullable LYRUIMessageTypeStatus *)status
+                         messagePart:(nullable LYRMessagePart *)messagePart {
     self = [super initWithAction:action
                           sender:sender
                           sentAt:sentAt
-                          status:status];
+                          status:status
+                     messagePart:messagePart];
     if (self) {
         self.carouselItemMessages = itemMessages;
         self.identifier = identifier;

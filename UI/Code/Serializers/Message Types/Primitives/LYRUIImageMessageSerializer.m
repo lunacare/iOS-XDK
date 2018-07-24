@@ -52,7 +52,8 @@
                                                                  size:imageSize
                                                                sender:messagePart.message.sender
                                                                sentAt:messagePart.message.sentAt
-                                                               status:[self statusWithMessage:messagePart.message]];
+                                                               status:[self statusWithMessage:messagePart.message]
+                                                          messagePart:messagePart];
     }
     
     LYRMessagePart *imagePart = [messagePart childPartWithRole:@"source"];
@@ -60,7 +61,7 @@
         [imagePart downloadContent:NULL];
     }
     
-    LYRMessagePart *previewImagePart = [messagePart childPartWithRole:@"previev"];
+    LYRMessagePart *previewImagePart = [messagePart childPartWithRole:@"preview"];
     if (previewImagePart.transferStatus == LYRContentTransferReadyForDownload) {
         [previewImagePart downloadContent:NULL];
     }
@@ -95,7 +96,8 @@
                                               action:action
                                               sender:messagePart.message.sender
                                               sentAt:messagePart.message.sentAt
-                                              status:[self statusWithMessage:messagePart.message]];
+                                              status:[self statusWithMessage:messagePart.message]
+                                         messagePart:messagePart];
 }
 
 - (CGSize)imageSizeFromProperties:(NSDictionary *)properties {

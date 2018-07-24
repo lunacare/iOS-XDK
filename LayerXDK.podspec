@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.subspec 'UI' do |sub|
     # UI is a set of communications user interface components integrated with Layer Messaging for iOS.
     sub.platform               = :ios, '9.0'
-    sub.frameworks             = 'UIKit', 'CoreLocation', 'MapKit', 'MobileCoreServices', 'SafariServices', 'QuickLook'
+    sub.frameworks             = 'UIKit', 'CoreLocation', 'MapKit', 'MobileCoreServices', 'SafariServices', 'QuickLook', 'AVFoundation'
     sub.source_files           = 'UI/Code/**/*.{h,m}'
     sub.ios.resource_bundle    = { 'LayerXDKUIResource' => 'UI/Resources/*' }
     sub.dependency               'LayerKit', '~> 4.0.0'

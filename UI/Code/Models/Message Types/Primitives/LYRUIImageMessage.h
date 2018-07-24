@@ -72,7 +72,8 @@ NS_ASSUME_NONNULL_BEGIN     // {
                                 action:(nullable LYRUIMessageAction *)action
                                 sender:(nullable LYRIdentity *)sender
                                 sentAt:(nullable NSDate *)sentAt
-                                status:(nullable LYRUIMessageTypeStatus *)status;
+                                status:(nullable LYRUIMessageTypeStatus *)status
+                           messagePart:(nullable LYRMessagePart *)messagePart;
 
 - (instancetype)initWithSourceImageMIMEType:(NSString *)imageMIMEType
                               imageLocalURL:(nullable NSURL *)sourceImageLocalURL
@@ -82,7 +83,8 @@ NS_ASSUME_NONNULL_BEGIN     // {
                                        size:(CGSize)size
                                      sender:(nullable LYRIdentity *)sender
                                      sentAt:(nullable NSDate *)sentAt
-                                     status:(nullable LYRUIMessageTypeStatus *)status;
+                                     status:(nullable LYRUIMessageTypeStatus *)status
+                                messagePart:(nullable LYRMessagePart *)messagePart;   
 
 - (nonnull instancetype)initWithImage:(nullable UIImage *)image
                          previewImage:(nullable UIImage *)previewImage;

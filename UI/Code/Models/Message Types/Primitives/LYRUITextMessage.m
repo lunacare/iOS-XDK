@@ -35,12 +35,13 @@
 @synthesize summary;
 
 - (instancetype)initWithText:(NSString *)text {
-    self = [self initWithText:text sender:nil sentAt:nil status:nil];
+    self = [self initWithText:text sender:nil sentAt:nil status:nil messagePart:nil];
     return self;
 }
 
 - (instancetype)initWithText:(NSString *)text
-                       title:(NSString *)title {
+                       title:(NSString *)title
+                 messagePart:(LYRMessagePart *)messagePart {
     self = [self initWithAuthor:nil
                            text:text
                    textMIMEType:nil
@@ -50,14 +51,16 @@
                          action:nil
                          sender:nil
                          sentAt:nil
-                         status:nil];
+                         status:nil
+                    messagePart:messagePart];
     return self;
 }
 
 - (instancetype)initWithText:(NSString *)text
                       sender:(LYRIdentity *)sender
                       sentAt:(NSDate *)sentAt
-                      status:(LYRUIMessageTypeStatus *)status {
+                      status:(LYRUIMessageTypeStatus *)status
+                 messagePart:(LYRMessagePart *)messagePart {
     self = [self initWithAuthor:nil
                            text:text
                    textMIMEType:@"text/plain"
@@ -67,7 +70,8 @@
                          action:nil
                          sender:sender
                          sentAt:sentAt
-                         status:status];
+                         status:status
+                    messagePart:messagePart];
     return self;
 }
 
@@ -80,11 +84,13 @@
                         action:(LYRUIMessageAction *)action
                         sender:(LYRIdentity *)sender
                         sentAt:(NSDate *)sentAt
-                        status:(LYRUIMessageTypeStatus *)status {
+                        status:(LYRUIMessageTypeStatus *)status
+                   messagePart:(LYRMessagePart *)messagePart {
     self = [super initWithAction:action
                           sender:sender
                           sentAt:sentAt
-                          status:status];
+                          status:status
+                     messagePart:messagePart];
     if (self) {
         self.author = author;
         self.text = text;

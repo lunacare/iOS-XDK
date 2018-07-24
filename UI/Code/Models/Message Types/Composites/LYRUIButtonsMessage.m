@@ -35,11 +35,13 @@
                          action:(LYRUIMessageAction *)action
                          sender:(LYRIdentity *)sender
                          sentAt:(NSDate *)sentAt
-                         status:(LYRUIMessageTypeStatus *)status {
+                         status:(LYRUIMessageTypeStatus *)status
+                    messagePart:(nullable LYRMessagePart *)messagePart {
     self = [super initWithAction:action
                           sender:sender
                           sentAt:sentAt
-                          status:status];
+                          status:status
+                     messagePart:messagePart];
     if (self) {
         self.buttons = buttons;
         self.contentMessage = contentMessage;

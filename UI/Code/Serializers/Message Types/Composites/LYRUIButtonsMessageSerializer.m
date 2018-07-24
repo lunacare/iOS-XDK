@@ -110,7 +110,8 @@
                                                  action:action
                                                  sender:messagePart.message.sender
                                                  sentAt:messagePart.message.sentAt
-                                                 status:[self statusWithMessage:messagePart.message]];
+                                                 status:[self statusWithMessage:messagePart.message]
+                                            messagePart:messagePart];
 }
 
 - (LYRUIButtonsMessageActionButton *)buttonWithProperties:(NSDictionary *)buttonProperties defaultAction:(LYRUIMessageAction *)action {

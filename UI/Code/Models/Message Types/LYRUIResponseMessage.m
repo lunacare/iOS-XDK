@@ -40,8 +40,9 @@
                             action:(LYRUIMessageAction *)action
                             sender:(LYRIdentity *)sender
                             sentAt:(NSDate *)sentAt
-                            status:(LYRUIMessageTypeStatus *)status {
-    self = [super initWithAction:action sender:sender sentAt:sentAt status:status];
+                            status:(LYRUIMessageTypeStatus *)status
+                       messagePart:(LYRMessagePart *)messagePart {
+    self = [super initWithAction:action sender:sender sentAt:sentAt status:status messagePart:messagePart];
     if (self) {
         self.responseTo = responseTo;
         self.responseToNodeId = responseToNodeId;
@@ -56,7 +57,8 @@
                   responseToNodeId:(NSString *)responseToNodeId
                    participantData:(NSDictionary *)participantData
                            changes:(NSArray *)changes
-                              text:(NSString *)text {
+                              text:(NSString *)text
+                       messagePart:(LYRMessagePart *)messagePart {
     self = [super init];
     if (self) {
         self.responseTo = responseTo;

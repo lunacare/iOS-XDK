@@ -125,6 +125,8 @@
 #import <LayerXDK/LYRUICarouselContentOffsetsCache.h>
 #import <LayerXDK/LYRUIMessageListViewPreviewingDelegate.h>
 #import <LayerXDK/LYRUIMessageItemContentPresentersProvider.h>
+#import <LayerXDK/LYRUIAudioMessage.h>
+#import <LayerXDK/LYRUIVideoMessage.h>
 
 SpecBegin(LYRUIDependencyInjector)
 
@@ -867,8 +869,8 @@ describe(@"LYRUIDependencyInjector", ^{
                 returnedClasses = [injector handledMessageClasses];
             });
             
-            it(@"should contain 10 message types", ^{
-                expect(returnedClasses).to.haveCount(10);
+            it(@"should contain 12 message types", ^{
+                expect(returnedClasses).to.haveCount(12);
             });
             it(@"should contain LYRUITextMessage", ^{
                 expect(returnedClasses).to.contain([LYRUITextMessage class]);
@@ -900,6 +902,12 @@ describe(@"LYRUIDependencyInjector", ^{
             it(@"should contain LYRUIReceiptMessage", ^{
                 expect(returnedClasses).to.contain([LYRUIReceiptMessage  class]);
             });
+            it(@"should contain LYRUIAudioMessage", ^{
+                expect(returnedClasses).to.contain([LYRUIAudioMessage class]);
+            });
+            it(@"should contain LYRUIVideoMessage", ^{
+                expect(returnedClasses).to.contain([LYRUIVideoMessage class]);
+            });
         });
         
         context(@"when custom message type is registered", ^{
@@ -913,7 +921,7 @@ describe(@"LYRUIDependencyInjector", ^{
             });
             
             it(@"should contain 11 message types", ^{
-                expect(returnedClasses).to.haveCount(11);
+                expect(returnedClasses).to.haveCount(13);
             });
             it(@"should contain LYRUITextMessage", ^{
                 expect(returnedClasses).to.contain([LYRUITextMessage class]);
@@ -948,6 +956,12 @@ describe(@"LYRUIDependencyInjector", ^{
             it(@"should contain LYRUIFakeTestMessage", ^{
                 expect(returnedClasses).to.contain([LYRUIFakeTestMessage  class]);
             });
+            it(@"should contain LYRUIAudioMessage", ^{
+                expect(returnedClasses).to.contain([LYRUIAudioMessage class]);
+            });
+            it(@"should contain LYRUIVideoMessage", ^{
+                expect(returnedClasses).to.contain([LYRUIVideoMessage class]);
+            });
         });
     });
     
@@ -966,7 +980,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUIImageMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector presenterForMessageClass:[LYRUIImageMessage class]];
+                returnedPresenter = [injector presenterForMessageClass:[LYRUIImageMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return `LYRUIImageMessageContentViewPresenter`", ^{
@@ -976,7 +990,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUILinkMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector presenterForMessageClass:[LYRUILinkMessage class]];
+                returnedPresenter = [injector presenterForMessageClass:[LYRUILinkMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return `LYRUILinkMessageContentViewPresenter`", ^{
@@ -986,7 +1000,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUIFileMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector presenterForMessageClass:[LYRUIFileMessage class]];
+                returnedPresenter = [injector presenterForMessageClass:[LYRUIFileMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return `LYRUIFileMessageContentViewPresenter`", ^{
@@ -996,7 +1010,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUILocationMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector presenterForMessageClass:[LYRUILocationMessage class]];
+                returnedPresenter = [injector presenterForMessageClass:[LYRUILocationMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return `LYRUILocationMessageContentViewPresenter`", ^{
@@ -1006,7 +1020,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUIButtonsMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector presenterForMessageClass:[LYRUIButtonsMessage class]];
+                returnedPresenter = [injector presenterForMessageClass:[LYRUIButtonsMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return `LYRUIButtonsMessageCompositeViewPresenter`", ^{
@@ -1016,7 +1030,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUIChoiceMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector presenterForMessageClass:[LYRUIChoiceMessage class]];
+                returnedPresenter = [injector presenterForMessageClass:[LYRUIChoiceMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return `LYRUIChoiceMessageCompositeViewPresenter`", ^{
@@ -1026,7 +1040,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUICarouselMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector presenterForMessageClass:[LYRUICarouselMessage class]];
+                returnedPresenter = [injector presenterForMessageClass:[LYRUICarouselMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return `LYRUICarouselMessageCompositeViewPresenter`", ^{
@@ -1036,7 +1050,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUIProductMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector presenterForMessageClass:[LYRUIProductMessage class]];
+                returnedPresenter = [injector presenterForMessageClass:[LYRUIProductMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return `LYRUIProductMessageCompositeViewPresenter`", ^{
@@ -1046,7 +1060,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUIReceiptMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector presenterForMessageClass:[LYRUIReceiptMessage class]];
+                returnedPresenter = [injector presenterForMessageClass:[LYRUIReceiptMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return `LYRUIReceiptMessageCompositeViewPresenter`", ^{
@@ -1060,7 +1074,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUITextMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUITextMessage class]];
+                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUITextMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return `LYRUIStandardMessageContainerViewPresenter`", ^{
@@ -1070,7 +1084,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUIImageMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUIImageMessage class]];
+                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUIImageMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return `LYRUIStandardMessageContainerViewPresenter`", ^{
@@ -1080,7 +1094,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUILinkMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUILinkMessage class]];
+                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUILinkMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return `LYRUILinkMessageContainerViewPresenter`", ^{
@@ -1090,7 +1104,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUIFileMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUIFileMessage class]];
+                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUIFileMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return `LYRUIStandardMessageContainerViewPresenter`", ^{
@@ -1100,7 +1114,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUILocationMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUILocationMessage class]];
+                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUILocationMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return `LYRUIStandardMessageContainerViewPresenter`", ^{
@@ -1110,7 +1124,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUIButtonsMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUIButtonsMessage class]];
+                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUIButtonsMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return nil", ^{
@@ -1120,7 +1134,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUIChoiceMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUIChoiceMessage class]];
+                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUIChoiceMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return nil", ^{
@@ -1130,7 +1144,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUICarouselMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUICarouselMessage class]];
+                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUICarouselMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return nil", ^{
@@ -1140,7 +1154,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUIProductMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUIProductMessage class]];
+                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUIProductMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return nil", ^{
@@ -1150,7 +1164,7 @@ describe(@"LYRUIDependencyInjector", ^{
         
         context(@"for LYRUIReceiptMessage", ^{
             beforeEach(^{
-                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUIReceiptMessage class]];
+                returnedPresenter = [injector containerPresenterForMessageClass:[LYRUIReceiptMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
             });
             
             it(@"should return nil", ^{
@@ -1541,11 +1555,11 @@ describe(@"LYRUIDependencyInjector", ^{
                 expect(serializer).to.beAKindOf([LYRUIFakeTestMessageSerializer class]);
             });
             it(@"should register a presenter for new message type", ^{
-                id<LYRUIMessageItemContentPresenting> presenter = [injector presenterForMessageClass:[LYRUIFakeTestMessage class]];
+                id<LYRUIMessageItemContentPresenting> presenter = [injector presenterForMessageClass:[LYRUIFakeTestMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
                 expect(presenter).to.beAKindOf([LYRUIFakeTestMessagePresenter class]);
             });
             it(@"should not register a content presenter for new message type", ^{
-                id<LYRUIMessageItemContentContainerPresenting> presenter = [injector containerPresenterForMessageClass:[LYRUIFakeTestMessage class]];
+                id<LYRUIMessageItemContentContainerPresenting> presenter = [injector containerPresenterForMessageClass:[LYRUIFakeTestMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
                 expect(presenter).to.beNil();
             });
         });

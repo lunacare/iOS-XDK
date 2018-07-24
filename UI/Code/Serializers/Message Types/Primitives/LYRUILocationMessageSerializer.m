@@ -56,7 +56,8 @@
         return [[LYRUILocationMessage alloc] initWithLocation:location
                                                        sender:messagePart.message.sender
                                                        sentAt:messagePart.message.sentAt
-                                                       status:[self statusWithMessage:messagePart.message]];
+                                                       status:[self statusWithMessage:messagePart.message]
+                                                  messagePart:messagePart];
     }
     
     CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([messagePart.properties[@"latitude"] doubleValue],
@@ -86,7 +87,8 @@
                                                    action:action
                                                    sender:messagePart.message.sender
                                                    sentAt:messagePart.message.sentAt
-                                                   status:[self statusWithMessage:messagePart.message]];
+                                                   status:[self statusWithMessage:messagePart.message]
+                                              messagePart:messagePart];
 }
 
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUILocationMessage *)messageType

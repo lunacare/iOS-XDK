@@ -44,7 +44,8 @@
                                                        action:[self.actionSerializer actionFromProperties:messagePart.properties]
                                                        sender:messagePart.message.sender
                                                        sentAt:messagePart.message.sentAt
-                                                       status:[self statusWithMessage:messagePart.message]];
+                                                       status:[self statusWithMessage:messagePart.message]
+                                                  messagePart:messagePart];
 }
 
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUICarouselMessage *)messageType

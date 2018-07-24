@@ -43,7 +43,7 @@
 /**
  @abstract A delegate used for handling message actions.
  */
-@property (nonatomic, weak) LYRUIMessageItemContentPresentersProvider *presentersProvider;
+@property (nonatomic, weak) __kindof LYRUIMessageItemContentPresentersProvider *presentersProvider;
 
 /**
  @abstract Method for creating and configuring content view for given `message`.

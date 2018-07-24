@@ -51,14 +51,16 @@
                           action:(LYRUIMessageAction *)action
                           sender:(LYRIdentity *)sender
                           sentAt:(NSDate *)sentAt
-                          status:(LYRUIMessageTypeStatus *)status {
+                          status:(LYRUIMessageTypeStatus *)status
+                     messagePart:(LYRMessagePart *)messagePart {
     if (action == nil) {
         action = [[LYRUIMessageAction alloc] initWithLocation:location];
     }
     self = [super initWithAction:action
                           sender:sender
                           sentAt:sentAt
-                          status:status];
+                          status:status
+                     messagePart:messagePart];
     if (self) {
         self.location = location;
         self.zoom = zoom;
@@ -77,7 +79,8 @@
 - (nonnull instancetype)initWithLocation:(nonnull CLLocation *)location
                                   sender:(nullable LYRIdentity *)sender
                                   sentAt:(nullable NSDate *)sentAt
-                                  status:(LYRUIMessageTypeStatus *)status {
+                                  status:(LYRUIMessageTypeStatus *)status
+                             messagePart:(LYRMessagePart *)messagePart {
     self = [self initWithLocation:location
                              zoom:17
                             title:nil
@@ -91,7 +94,8 @@
                            action:nil
                            sender:sender
                            sentAt:sentAt
-                           status:status];
+                           status:status
+                      messagePart:messagePart];
     return self;
 }
 
@@ -99,7 +103,8 @@
     self = [self initWithLocation:location
                            sender:nil
                            sentAt:nil
-                           status:nil];
+                           status:nil
+                      messagePart:nil];
     return self;
 }
 

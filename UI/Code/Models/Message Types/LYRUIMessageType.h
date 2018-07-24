@@ -48,16 +48,20 @@ NS_ASSUME_NONNULL_BEGIN     // {
 
 @property (nonatomic, readonly, nullable) LYRUIORSet *initialResponseState;
 
+@property (nonatomic, readonly, nullable) LYRMessagePart *messagePart;
+
 - (instancetype)initWithAction:(nullable LYRUIMessageAction *)action
                         sender:(nullable LYRIdentity *)sender
                         sentAt:(nullable NSDate *)sentAt
-                        status:(nullable LYRUIMessageTypeStatus *)status;
+                        status:(nullable LYRUIMessageTypeStatus *)status
+                   messagePart:(nullable LYRMessagePart *)messagePart;
 
 - (instancetype)initWithInitialResponseState:(nullable LYRUIORSet *)initialResponseState
                                       action:(nullable LYRUIMessageAction *)action
                                       sender:(nullable LYRIdentity *)sender
                                       sentAt:(nullable NSDate *)sentAt
-                                      status:(nullable LYRUIMessageTypeStatus *)status;
+                                      status:(nullable LYRUIMessageTypeStatus *)status
+                                 messagePart:(nullable LYRMessagePart *)messagePart;
 
 @end
 NS_ASSUME_NONNULL_END       // }

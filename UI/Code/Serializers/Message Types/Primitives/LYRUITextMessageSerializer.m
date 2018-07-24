@@ -46,7 +46,8 @@ static NSString *const LYRUITextMessageDefaultActionEvent = @"open-url";
         return [[LYRUITextMessage alloc] initWithText:messageText
                                                sender:messagePart.message.sender
                                                sentAt:messagePart.message.sentAt
-                                               status:[self statusWithMessage:messagePart.message]];
+                                               status:[self statusWithMessage:messagePart.message]
+                                          messagePart:messagePart];
     }
     
     if (messagePart.properties[@"text"] == nil) {
@@ -64,7 +65,8 @@ static NSString *const LYRUITextMessageDefaultActionEvent = @"open-url";
                                              action:action
                                              sender:messagePart.message.sender
                                              sentAt:messagePart.message.sentAt
-                                             status:[self statusWithMessage:messagePart.message]];
+                                             status:[self statusWithMessage:messagePart.message]
+                                        messagePart:messagePart];
 }
 
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUITextMessage *)messageType

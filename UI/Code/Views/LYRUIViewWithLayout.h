@@ -29,7 +29,7 @@
 /**
  @abstract Layout of the view's subviews.
  */
-@property(nonatomic, copy, nullable) id<LYRUIViewLayout> layout;
+@property (nonatomic, copy, nullable) id<LYRUIViewLayout> layout;
 
 /**
  @abstract Flag used to determine if constraints should be updated on view width change.

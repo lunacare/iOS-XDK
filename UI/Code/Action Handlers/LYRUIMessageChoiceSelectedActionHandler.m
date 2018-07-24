@@ -31,7 +31,8 @@
                                                                             responseToNodeId:data[@"response_to_node_id"]
                                                                              participantData:data[@"participant_data"]
                                                                                      changes:data[@"changes"]
-                                                                                        text:data[@"text"]];
+                                                                                        text:data[@"text"]
+                                                                                 messagePart:nil];
     [delegate actionHandler:self sendMessage:responseMessage];
 }
 

@@ -30,7 +30,8 @@
                                              action:[self.actionSerializer actionFromProperties:messagePart.properties]
                                              sender:nil
                                              sentAt:messagePart.message.sentAt
-                                             status:[self statusWithMessage:messagePart.message]];
+                                             status:[self statusWithMessage:messagePart.message]
+                                        messagePart:messagePart];
 }
 
 - (NSArray<LYRMessagePart *> *)layerMessagePartsWithTypedMessage:(LYRUIStatusMessage *)messageType

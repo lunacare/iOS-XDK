@@ -64,12 +64,14 @@
                        action:(LYRUIMessageAction *)action
                        sender:(LYRIdentity *)sender
                        sentAt:(NSDate *)sentAt
-                       status:(LYRUIMessageTypeStatus *)status {
+                       status:(LYRUIMessageTypeStatus *)status
+                  messagePart:(nullable LYRMessagePart *)messagePart {
     self = [super initWithInitialResponseState:initialResponseState
                                         action:action
                                         sender:sender
                                         sentAt:sentAt
-                                        status:status];
+                                        status:status
+                                   messagePart:messagePart];
     if (self) {
         self.title = title;
         self.label = label;
@@ -103,7 +105,8 @@
                  responseName:(NSString *)responseName
            customResponseData:(NSDictionary *)customResponseData
                    enabledFor:(NSString *)enabledFor
-               selectedChoice:(NSString *)selectedChoice {
+               selectedChoice:(NSString *)selectedChoice
+                  messagePart:(nullable LYRMessagePart *)messagePart {
     if (responseName == nil) {
         responseName = @"selection";
     }
@@ -136,7 +139,8 @@
                         action:nil
                         sender:nil
                         sentAt:nil
-                        status:nil];
+                        status:nil
+                   messagePart:messagePart];
     return self;
 }
 

@@ -50,7 +50,8 @@
                                 action:(LYRUIMessageAction *)action
                                 sender:(LYRIdentity *)sender
                                 sentAt:(NSDate *)sentAt
-                                status:(LYRUIMessageTypeStatus *)status {
+                                status:(LYRUIMessageTypeStatus *)status
+                           messagePart:(LYRMessagePart *)messagePart {
     if (action == nil) {
         if (sourceURL != nil) {
             action = [[LYRUIMessageAction alloc] initWithURL:sourceURL];
@@ -61,7 +62,8 @@
     self = [super initWithAction:action
                           sender:sender
                           sentAt:sentAt
-                          status:status];
+                          status:status
+                     messagePart:messagePart];
     if (self) {
         self.author = author;
         self.title = title;
@@ -81,7 +83,8 @@
                       sourceLocalURL:(NSURL *)sourceLocalURL
                               sender:(LYRIdentity *)sender
                               sentAt:(NSDate *)sentAt
-                              status:(LYRUIMessageTypeStatus *)status {
+                              status:(LYRUIMessageTypeStatus *)status
+                         messagePart:(LYRMessagePart *)messagePart {
     self = [self initWithAuthor:nil
                           title:nil
                         comment:nil
@@ -95,7 +98,8 @@
                          action:nil
                          sender:sender
                          sentAt:sentAt
-                         status:status];
+                         status:status
+                    messagePart:messagePart];
     return self;
 }
 

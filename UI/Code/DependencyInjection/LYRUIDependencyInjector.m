@@ -57,22 +57,22 @@ extern LYRUIMessageSizeVariant LYRUIMessageSizeVariantMedium;
 
 - (id)themeForViewClass:(Class)viewClass {
     LYRUIDependencyProviding provider = self.module.themes[NSStringFromClass(viewClass)];
-    return provider(self.layerConfiguration);
+    return provider ? provider(self.layerConfiguration) : nil;
 }
 
 - (id)alternativeThemeForViewClass:(Class)viewClass {
     LYRUIDependencyProviding provider = self.module.alternativeThemes[NSStringFromClass(viewClass)];
-    return provider(self.layerConfiguration);
+    return provider ? provider(self.layerConfiguration) : nil;
 }
 
 - (id)presenterForViewClass:(Class)viewClass {
     LYRUIDependencyProviding provider = self.module.presenters[NSStringFromClass(viewClass)];
-    return provider(self.layerConfiguration);
+    return provider ? provider(self.layerConfiguration) : nil;
 }
 
 - (id)layoutForViewClass:(Class)viewClass {
     LYRUIDependencyProviding provider = self.module.layouts[NSStringFromClass(viewClass)];
-    return provider(self.layerConfiguration);
+    return provider ? provider(self.layerConfiguration) : nil;
 }
 
 - (id)protocolImplementation:(Protocol *)protocol forClass:(Class)class {
@@ -82,7 +82,7 @@ extern LYRUIMessageSizeVariant LYRUIMessageSizeVariantMedium;
         NSString *anyClassKey = NSStringFromClass([LYRUIDIAnyClass class]);
         provider = self.module.protocolImplementations[anyClassKey][protocolKey];
     }
-    return provider(self.layerConfiguration);
+    return provider ? provider(self.layerConfiguration) : nil;
 }
 
 - (id)objectOfType:(Class)type {

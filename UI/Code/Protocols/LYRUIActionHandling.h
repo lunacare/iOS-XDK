@@ -33,8 +33,8 @@ NS_ASSUME_NONNULL_BEGIN     // {
 
 @protocol LYRUIActionHandling <NSObject>
 
-- (void)handleActionWithData:(id)data delegate:(id<LYRUIActionHandlingDelegate>)delegate;
-- (nullable UIViewController *)viewControllerForActionWithData:(id)data;
+- (void)handleActionWithData:(NSDictionary<NSString *, id> *)data delegate:(id<LYRUIActionHandlingDelegate>)delegate;
+- (nullable UIViewController *)viewControllerForActionWithData:(NSDictionary<NSString *, id> *)data;
 
 @end
 NS_ASSUME_NONNULL_END       // }

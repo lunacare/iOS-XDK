@@ -29,7 +29,7 @@
 @implementation LYRUIStatusMessage
 
 - (instancetype)initWithText:(NSString *)text {
-    self = [self initWithText:text action:nil sender:nil sentAt:nil status:nil];
+    self = [self initWithText:text action:nil sender:nil sentAt:nil status:nil messagePart:nil];
     return self;
 }
 
@@ -37,8 +37,9 @@
                       action:(LYRUIMessageAction *)action
                       sender:(LYRIdentity *)sender
                       sentAt:(NSDate *)sentAt
-                      status:(LYRUIMessageTypeStatus *)status {
-    self = [super initWithAction:action sender:sender sentAt:sentAt status:status];
+                      status:(LYRUIMessageTypeStatus *)status
+                 messagePart:(nullable LYRMessagePart *)messagePart {
+    self = [super initWithAction:action sender:sender sentAt:sentAt status:status messagePart:messagePart];
     if (self) {
         self.text = text;
     }

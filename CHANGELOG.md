@@ -1,5 +1,11 @@
 # LayerXDK Changelog
 
+## 4.1.0
+
+### Enhancements
+
+* Adds support for audio and video messages, including the large size variants. [IOS-3378], [IOS-3387]
+
 ## 4.0.2
 
 ### Enhancements

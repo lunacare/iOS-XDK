@@ -60,7 +60,8 @@
                         action:(LYRUIMessageAction *)action
                         sender:(LYRIdentity *)sender
                         sentAt:(NSDate *)sentAt
-                        status:(LYRUIMessageTypeStatus *)status {
+                        status:(LYRUIMessageTypeStatus *)status
+                   messagePart:(LYRMessagePart *)messagePart {
     if (action == nil) {
         if (sourceImageURL != nil) {
             action = [[LYRUIMessageAction alloc] initWithURL:sourceImageURL];
@@ -71,7 +72,8 @@
     self = [super initWithAction:action
                           sender:sender
                           sentAt:sentAt
-                          status:status];
+                          status:status
+                     messagePart:messagePart];
     if (self) {
         self.artist = artist;
         self.title = title;
@@ -100,7 +102,8 @@
                                        size:(CGSize)size
                                      sender:(LYRIdentity *)sender
                                      sentAt:(NSDate *)sentAt
-                                     status:(LYRUIMessageTypeStatus *)status {
+                                     status:(LYRUIMessageTypeStatus *)status
+                                messagePart:(LYRMessagePart *)messagePart {
     self = [self initWithArtist:nil
                           title:nil
                        subtitle:nil
@@ -119,7 +122,8 @@
                          action:nil
                          sender:sender
                          sentAt:sentAt
-                         status:status];
+                         status:status
+                    messagePart:messagePart];
     return self;
 }
 
@@ -145,7 +149,8 @@
                          action:nil
                          sender:nil
                          sentAt:nil
-                         status:nil];
+                         status:nil
+                    messagePart:nil];
     return self;
 }
 

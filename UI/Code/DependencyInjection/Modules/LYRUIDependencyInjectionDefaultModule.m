@@ -144,6 +144,30 @@
 #import "LYRUISmallMessageItemContentPresentersProvider.h"
 #import "LYRUIMessageItemContentPresentersProvider.h"
 #import "LYRUILargeMessageItemContentPresentersProvider.h"
+#import "LYRUIAudioMessage.h"
+#import "LYRUIAudioMessageSerializer.h"
+#import "LYRUIAudioMessageContainerView.h"
+#import "LYRUIAudioContainerViewPresenter.h"
+#import "LYRUIVideoMessage.h"
+#import "LYRUIVideoMessageSerializer.h"
+#import "LYRUIVideoMessageContainerView.h"
+#import "LYRUIVideoContainerViewPresenter.h"
+#import "LYRUIMediaMessageContentViewPresenter.h"
+#import "LYRUIPlayableMediaContainerViewPresenter.h"
+#import "LYRUIAudioMessageContainerViewLayout.h"
+#import "LYRUIVideoMessageContainerViewLayout.h"
+#import "LYRUIMediaHandler.h"
+#import "LYRUIMediaPlaying.h"
+#import "LYRUIMessageOpenMessageActionHandler.h"
+#import "LYRUILargeAudioContainerViewPresenter.h"
+#import "LYRUILargeVideoContainerViewPresenter.h"
+#import "LYRUILargeVideoMessageContainerView.h"
+#import "LYRUILargeAudioMessageContainerView.h"
+#import "LYRUILargePlayableMediaMessageContainerViewLayout.h"
+#import "LYRUILargeVideoMessageContainerViewLayout.h"
+#import "LYRUILargeMediaMessageContentViewPresenter.h"
+#import "LYRUILargeVideoMessageContentViewPresenter.h"
+#import "LYRUILargeMessageContainerViewDefaultTheme.h"
 
 static NSString * const LYRUILegacyTextMessageMimeType = @"text/plain";
 static NSString * const LYRUILegacyPDFFileMessageMimeType = @"application/pdf";
@@ -173,7 +197,7 @@ static NSString * const LYRUILegacyLocationMessageMimeType = @"location/coordina
         self.bundleProvider = [[LYRUIBundleProvider alloc] init];
         self.reusableViewsQueue = [[LYRUIReusableViewsQueue alloc] init];
         self.carouselContentOffsetsCache = [[LYRUICarouselContentOffsetsCache alloc] init];
-        
+
         [self setupThemes];
         [self setupAlternativeThemes];
         [self setupPresenters];
@@ -196,6 +220,10 @@ static NSString * const LYRUILegacyLocationMessageMimeType = @"location/coordina
     [self setThemeClass:[LYRUIBaseItemViewDefaultTheme class] forViewClass:[LYRUIConversationItemView class]];
     [self setThemeClass:[LYRUIBaseItemViewDefaultTheme class] forViewClass:[LYRUIIdentityItemView class]];
     [self setThemeClass:[LYRUIStandardMessageContainerViewDefaultTheme class] forViewClass:[LYRUIStandardMessageContainerView class]];
+    [self setThemeClass:[LYRUIStandardMessageContainerViewDefaultTheme class] forViewClass:[LYRUIAudioMessageContainerView class]];
+    [self setThemeClass:[LYRUIStandardMessageContainerViewDefaultTheme class] forViewClass:[LYRUIVideoMessageContainerView class]];
+    [self setThemeClass:[LYRUILargeMessageContainerViewDefaultTheme class] forViewClass:[LYRUILargeAudioMessageContainerView class]];
+    [self setThemeClass:[LYRUILargeMessageContainerViewDefaultTheme class] forViewClass:[LYRUILargeVideoMessageContainerView class]];
 }
 
 - (void)setupAlternativeThemes {
@@ -234,7 +262,11 @@ static NSString * const LYRUILegacyLocationMessageMimeType = @"location/coordina
     [self setLayoutClass:[LYRUIConversationViewLayout class] forViewClass:[LYRUIConversationView class]];
     [self setLayoutClass:[LYRUIPanelTypingIndicatorViewLayout class] forViewClass:[LYRUIPanelTypingIndicatorView class]];
     [self setLayoutClass:[LYRUIStandardMessageContainerViewLayout class] forViewClass:[LYRUIStandardMessageContainerView class]];
+    [self setLayoutClass:[LYRUIAudioMessageContainerViewLayout class] forViewClass:[LYRUIAudioMessageContainerView class]];
+    [self setLayoutClass:[LYRUIVideoMessageContainerViewLayout class] forViewClass:[LYRUIVideoMessageContainerView class]];
     [self setLayoutClass:[LYRUICarouselMessageListLayout class] forViewClass:[LYRUICarouselMessageListView class]];
+    [self setLayoutClass:[LYRUILargePlayableMediaMessageContainerViewLayout class] forViewClass:[LYRUILargeAudioMessageContainerView class]];
+    [self setLayoutClass:[LYRUILargeVideoMessageContainerViewLayout class] forViewClass:[LYRUILargeVideoMessageContainerView class]];
 }
 
 - (void)setupProtocolImplementations {
@@ -265,7 +297,6 @@ static NSString * const LYRUILegacyLocationMessageMimeType = @"location/coordina
                      forProtocol:@protocol(LYRUICarouselContentOffsetHandling)];
     [self setImplementationClass:[LYRUIMessageListViewPreviewingDelegate class]
                      forProtocol:@protocol(UIViewControllerPreviewingDelegate)];
-    
     [self setImplementationClass:[LYRUIConversationItemTimeFormatter class]
                      forProtocol:@protocol(LYRUITimeFormatting)
                      usedInClass:[LYRUIConversationItemViewPresenter class]];
@@ -286,6 +317,15 @@ static NSString * const LYRUILegacyLocationMessageMimeType = @"location/coordina
     [self setImplementationProvider:^id (LYRUIConfiguration *configuration) {
         return weakSelf.thumbnailsCache;
     } forProtocol:@protocol(LYRUIThumbnailsCaching) usedInClass:nil];
+
+    [self setImplementationProvider:^id (LYRUIConfiguration *configuration) {
+        static dispatch_once_t onceToken;
+        static LYRUIMediaHandler *mediaPlayer;
+        dispatch_once(&onceToken, ^{
+            mediaPlayer = [[LYRUIMediaHandler alloc] initWithConfiguration:configuration];
+        });
+        return mediaPlayer;
+    } forProtocol:@protocol(LYRUIMediaPlaying) usedInClass:nil];
 }
 
 - (void)setupObjects {
@@ -335,6 +375,7 @@ static NSString * const LYRUILegacyLocationMessageMimeType = @"location/coordina
 }
 
 - (void)setupMessagePresenters {
+    // Medium size messages
     [self setMessagePresenterClass:[LYRUITextMessageContentViewPresenter class] forMessageClass:[LYRUITextMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
     [self setMessagePresenterClass:[LYRUIFileMessageContentViewPresenter class] forMessageClass:[LYRUIFileMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
     [self setMessagePresenterClass:[LYRUILinkMessageContentViewPresenter class] forMessageClass:[LYRUILinkMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
@@ -345,14 +386,27 @@ static NSString * const LYRUILegacyLocationMessageMimeType = @"location/coordina
     [self setMessagePresenterClass:[LYRUIProductMessageCompositeViewPresenter class] forMessageClass:[LYRUIProductMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
     [self setMessagePresenterClass:[LYRUIReceiptMessageCompositeViewPresenter class] forMessageClass:[LYRUIReceiptMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
     [self setMessagePresenterClass:[LYRUICarouselMessageCompositeViewPresenter class] forMessageClass:[LYRUICarouselMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+
+    // Large size messages
+    [self setMessagePresenterClass:[LYRUIMediaMessageContentViewPresenter class] forMessageClass:[LYRUIAudioMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessagePresenterClass:[LYRUIMediaMessageContentViewPresenter class] forMessageClass:[LYRUIVideoMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessagePresenterClass:[LYRUILargeMediaMessageContentViewPresenter class] forMessageClass:[LYRUIAudioMessage class] sizeVariant:LYRUIMessageSizeVariantLarge];
+    [self setMessagePresenterClass:[LYRUILargeVideoMessageContentViewPresenter class] forMessageClass:[LYRUIVideoMessage class] sizeVariant:LYRUIMessageSizeVariantLarge];
 }
 
 - (void)setupMessageContainerPresenters {
+    // Medium size messages
     [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUITextMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
     [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUIFileMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
     [self setMessageContainerPresenterClass:[LYRUILinkMessageContainerViewPresenter class] forMessageClass:[LYRUILinkMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
     [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUIImageMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
     [self setMessageContainerPresenterClass:[LYRUIStandardMessageContainerViewPresenter class] forMessageClass:[LYRUILocationMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessageContainerPresenterClass:[LYRUIAudioContainerViewPresenter class] forMessageClass:[LYRUIAudioMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessageContainerPresenterClass:[LYRUIVideoContainerViewPresenter class] forMessageClass:[LYRUIVideoMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+
+    // Large size messages
+    [self setMessageContainerPresenterClass:[LYRUILargeVideoContainerViewPresenter class] forMessageClass:[LYRUIVideoMessage class] sizeVariant:LYRUIMessageSizeVariantLarge];
+    [self setMessageContainerPresenterClass:[LYRUILargeAudioContainerViewPresenter class] forMessageClass:[LYRUIAudioMessage class] sizeVariant:LYRUIMessageSizeVariantLarge];
 }
 
 - (void)setupMessageSerializers {
@@ -375,6 +429,8 @@ static NSString * const LYRUILegacyLocationMessageMimeType = @"location/coordina
     [self setMessageSerializerClass:[LYRUIProductMessageSerializer class] forMIMEType:LYRUIProductMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIReceiptMessageSerializer class] forMIMEType:LYRUIReceiptMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUICarouselMessageSerializer class] forMIMEType:LYRUICarouselMessage.MIMEType];
+    [self setMessageSerializerClass:[LYRUIAudioMessageSerializer class] forMIMEType:LYRUIAudioMessage.MIMEType];
+    [self setMessageSerializerClass:[LYRUIVideoMessageSerializer class] forMIMEType:LYRUIVideoMessage.MIMEType];
 }
 
 - (void)setupActionHandlers {
@@ -382,6 +438,7 @@ static NSString * const LYRUILegacyLocationMessageMimeType = @"location/coordina
     [self setActionHandlerClass:[LYRUIMessageOpenURLActionHandler class] forEvent:@"open-url"];
     [self setActionHandlerClass:[LYRUIMessageOpenMapActionHandler class] forEvent:@"open-map"];
     [self setActionHandlerClass:[LYRUIMessageChoiceSelectedActionHandler class] forEvent:@"layer-choice-select"];
+    [self setActionHandlerClass:[LYRUIMessageOpenMessageActionHandler class] forEvent:@"open-message"];
 }
 
 @end

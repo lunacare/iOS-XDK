@@ -56,12 +56,14 @@
                                   action:(nullable LYRUIMessageAction *)action
                                   sender:(nullable LYRIdentity *)sender
                                   sentAt:(nullable NSDate *)sentAt
-                                  status:(nullable LYRUIMessageTypeStatus *)status;
+                                  status:(nullable LYRUIMessageTypeStatus *)status
+                             messagePart:(nullable LYRMessagePart *)messagePart;;
 
 - (nonnull instancetype)initWithLocation:(nonnull CLLocation *)location
                                   sender:(nullable LYRIdentity *)sender
                                   sentAt:(nullable NSDate *)sentAt
-                                  status:(nullable LYRUIMessageTypeStatus *)status;
+                                  status:(nullable LYRUIMessageTypeStatus *)status
+                             messagePart:(nullable LYRMessagePart *)messagePart;;
 
 - (nonnull instancetype)initWithLocation:(nonnull CLLocation *)location;
 
