@@ -35,7 +35,8 @@
 @synthesize indexPathSelected = _indexPathSelected,
             canLoadMoreItems = _canLoadMoreItems,
             loadMoreItems = _loadMoreItems,
-            loadingDelegate = _loadingDelegate;
+            loadingDelegate = _loadingDelegate,
+            listViewDidScroll = _listViewDidScroll;
 
 - (instancetype)init {
     self = [super init];

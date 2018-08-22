@@ -30,6 +30,8 @@
 #import "LYRUIMessageViewContainer.h"
 #import "LYRUIViewReusing.h"
 #import "LYRUIMessageItemContentBasePresenter.h"
+#import "LYRUIMessageSelectedAnalyticsEvent+Private.h"
+#import "LYRUIMessageViewedAnalyticsEvent+Private.h"
 
 static CGFloat const LYRUIMessageItemViewMinimumHeight = 32.0;
 
@@ -79,11 +81,18 @@ static CGFloat const LYRUIMessageItemViewMinimumHeight = 32.0;
     LYRUIMessageAction *action = message.action;
     messageItemView.actionHandler = ^{
         [weakSelf.actionHandlingDelegate handleAction:action withHandler:nil];
+        // Post an analytics events whenever user taps on a message.
+        LYRUIMessageSelectedAnalyticsEvent *event = [LYRUIMessageSelectedAnalyticsEvent messageSelectedAnalyticsEventWithMessage:message.messagePart.message];
+        [weakSelf.layerConfiguration.client postAnalyticsEvent:event];
     };
     messageItemView.actionPreviewHandler = ^ UIViewController *{
         return [weakSelf.actionHandlingDelegate previewControllerForAction:action withHandler:nil];
     };
     messageItemView.tapGestureRecognizer.delegate = self;
+
+    // Post an analytics event when a message is rendered.
+    LYRUIMessageViewedAnalyticsEvent *event = [LYRUIMessageViewedAnalyticsEvent messageViewedAnalyticsEventWithMessage:message.messagePart.message];
+    [weakSelf.layerConfiguration.client postAnalyticsEvent:event];
 }
 
 - (void)enqueueReusableView:(__kindof UIView *)view {

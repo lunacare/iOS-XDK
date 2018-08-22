@@ -119,6 +119,9 @@
             weakSelf.loadMoreItems();
         }
     };
+    delegate.listViewDidScroll = ^(CGFloat scrollPosition) {
+        [weakSelf listViewDidScroll:scrollPosition];
+    };
 }
 
 - (void)setDataSource:(id<LYRUIListDataSource>)dataSource {
@@ -138,6 +141,12 @@
 
 - (NSArray *)selectedItems {
     return [self.dataSource selectedItemsInCollectionView:self.collectionView];
+}
+
+#pragma mark - Scrolling
+
+- (void)listViewDidScroll:(CGFloat)scrollPosition {
+    // No-op
 }
 
 @end

@@ -21,6 +21,9 @@
 #import "LYRUIMessageListView.h"
 #import "LYRUIViewReusing.h"
 #import "LYRUICarouselContentOffsetHandling.h"
+#import "LYRUIMessageType.h"
+
+NS_ASSUME_NONNULL_BEGIN     // {
 
 @interface LYRUICarouselMessageListView : LYRUIMessageListView <LYRUIViewReusing>
 
@@ -29,4 +32,11 @@
  */
 @property (nonatomic, strong) id<LYRUICarouselContentOffsetHandling> contentOffsetHandler;
 
+/**
+ @abstract The message associated with the view.
+ */
+@property (nonatomic, strong, readwrite, nullable) LYRUIMessageType *message;
+
 @end
+
+NS_ASSUME_NONNULL_END        // }

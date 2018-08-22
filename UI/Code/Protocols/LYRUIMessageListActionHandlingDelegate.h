@@ -29,8 +29,9 @@ NS_ASSUME_NONNULL_BEGIN     // {
  @abstract Method for handling the `LYRUIMessageAction` with given `handler`.
  @param action The `LYRUIMessageAction` to handle.
  @param handler An action handler specific for the message type it was called from. When nil, `action` should be handled by a default handler.
+ @return Returns `YES` in case the action was handled, otherwise `NO`.
  */
-- (void)handleAction:(LYRUIMessageAction *)action withHandler:(nullable id<LYRUIActionHandling>)handler;
+- (BOOL)handleAction:(LYRUIMessageAction *)action withHandler:(nullable id<LYRUIActionHandling>)handler;
 
 - (nullable UIViewController *)previewControllerForAction:(LYRUIMessageAction *)action withHandler:(nullable id<LYRUIActionHandling>)handler;
 

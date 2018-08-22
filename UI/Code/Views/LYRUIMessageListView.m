@@ -175,16 +175,17 @@
 
 #pragma mark - LYRUIMessageListActionHandlingDelegate
 
-- (void)handleAction:(LYRUIMessageAction *)action withHandler:(id<LYRUIActionHandling>)handler {
+- (BOOL)handleAction:(LYRUIMessageAction *)action withHandler:(id<LYRUIActionHandling>)handler {
     if (self.messageActionHandlingDelegate) {
         [self.messageActionHandlingDelegate handleAction:action withHandler:handler];
-        return;
+        return YES;
     }
     
     if (handler == nil) {
         handler = [self handlerForAction:action];
     }
     [handler handleActionWithData:action.data delegate:self];
+    return handler != nil;
 }
 
 - (UIViewController *)previewControllerForAction:(LYRUIMessageAction *)action withHandler:(id<LYRUIActionHandling>)handler {

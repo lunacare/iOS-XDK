@@ -23,11 +23,17 @@
 #import "LYRUICarouselItemCellPresenter.h"
 #import "LYRUIListDataSource.h"
 #import "LYRUICarouselListDelegate.h"
+#import "LYRUICarouselScrolledAnalyticsEvent+Private.h"
 
 @implementation LYRUICarouselMessageListView
 
 - (void)lyr_prepareForReuse {
     [self.contentOffsetHandler storeContentOffsetFromCarousel:self];
+}
+
+- (void)listViewDidScroll:(CGFloat)scrollPosition {
+    LYRUICarouselScrolledAnalyticsEvent *event = [LYRUICarouselScrolledAnalyticsEvent carouselScrolledAnalyticsEventWithMessage:self.message.messagePart.message position:scrollPosition];
+    [self.layerConfiguration.client postAnalyticsEvent:event];
 }
 
 @end

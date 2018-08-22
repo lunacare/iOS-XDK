@@ -35,4 +35,12 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 10.0;
 }
 
+#pragma mark - UIScrollViewDelegate Implementation
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+    if (self.listViewDidScroll) {
+        self.listViewDidScroll((*targetContentOffset).x);
+    }
+}
+
 @end

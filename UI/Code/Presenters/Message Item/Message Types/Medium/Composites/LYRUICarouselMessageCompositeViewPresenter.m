@@ -51,6 +51,7 @@
     [carouselCompositeView.collectionView reloadData];
     [carouselCompositeView.contentOffsetHandler restoreContentOffsetInCarousel:carouselCompositeView];
     [self setupViewConstraints:carouselCompositeView];
+    carouselCompositeView.message = message;
     return carouselCompositeView;
 }
 

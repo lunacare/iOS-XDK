@@ -86,5 +86,11 @@ IB_DESIGNABLE
  */
 @property (nonatomic, copy) void(^loadMoreItems)(void);
 
+/**
+ @abstract An overridable method that gets invoked whenever the list view ends the scrolling.
+ @param scrollPoisiton The offset of the scroll position.
+ */
+- (void)listViewDidScroll:(CGFloat)scrollPosition;
+
 @end
 NS_ASSUME_NONNULL_END       // }

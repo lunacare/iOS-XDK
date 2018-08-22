@@ -5,6 +5,7 @@
 ### Enhancements
 
 * Adds support for audio and video messages, including the large size variants. [IOS-3378], [IOS-3387]
+* Adds support for analytics events which is available in LayerKit SDK. [IOS-3428]
 
 ### Known issues for 4.1.0-pre1
 
@@ -15,6 +16,12 @@
 * XDK-UI: Video - Preview posters not cropped correctly. [IOS-3471]
 * XDK-UI: Video - No black background when poster is missing. [IOS-3472]
 * XDK-UI: Video - Add fullscreen support. [IOS-3473]
+* XDK-UI: Feedback - Transfer star rating from the medium size message to large size when selecting it from the conversation view. [IOS-3459]
+* XDK-UI: Feedback - Experience rating with button action embedded in the message metadata disables rating. [IOS-3461]
+* XDK-UI: Feedback - Feedback message embedded in a carousel is wider than standalone. [IOS-3462]
+* XDK-UI: Feedback - Send button not hidden after submitting. [IOS-3463]
+* XDK-UI: Feedback - Persist local state if feedback not submitted yet, and use `localData` on `LYRMessage` to persist state before it roundtrips from the server. [IOS-3464]
+* XDK-UI: Feedback - Close large feedback message after submitting. [IOS-3460]
 
 ## 4.0.2
 

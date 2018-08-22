@@ -49,6 +49,11 @@ NS_ASSUME_NONNULL_BEGIN     // {
 @property (nonatomic, copy) void(^indexPathSelected)(NSIndexPath *);
 
 /**
+ @abstract A callback block called when the view stops scrolling.
+ */
+@property (nonatomic, copy) void(^listViewDidScroll)(CGFloat);
+
+/**
  @abstract Flag indicating if another page of items can be loaded.
  */
 @property (nonatomic) BOOL canLoadMoreItems;
