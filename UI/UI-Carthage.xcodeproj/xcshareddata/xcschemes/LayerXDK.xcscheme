@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D676FC62A6AF4E1E9171236E"
+               BlueprintIdentifier = "BE39767E40FE3AFF14279BFE"
                BlueprintName = "LayerXDK"
                ReferencedContainer = "container:UI-Carthage.xcodeproj"
                BuildableName = "LayerXDK.framework">
