@@ -1,10 +1,20 @@
 # LayerXDK Changelog
 
-## 4.1.0
+## 4.1.0-pre1
 
 ### Enhancements
 
 * Adds support for audio and video messages, including the large size variants. [IOS-3378], [IOS-3387]
+
+### Known issues for 4.1.0-pre1
+
+* XDK-UI: General - A bunch of `NSConstraint` violations related to feedback messages. [IOS-3474]
+* XDK-UI: General - Message cell sizing problems for messages containing photos. [IOS-3469]
+* XDK-UI: Audio - Audio and Video message cells can have undefined sizing, if missing or partial size information. [IOS-3465]
+* XDK-UI: Audio - Missing margins in the large message variant. [IOS-3468]
+* XDK-UI: Video - Preview posters not cropped correctly. [IOS-3471]
+* XDK-UI: Video - No black background when poster is missing. [IOS-3472]
+* XDK-UI: Video - Add fullscreen support. [IOS-3473]
 
 ## 4.0.2
 

@@ -21,6 +21,7 @@
 #import <UIKit/UIKit.h>
 #import "LYRUIMessageType.h"
 #import "LYRUIConfigurable.h"
+#import "LYRUIActionHandling.h"
 
 NS_ASSUME_NONNULL_BEGIN     // {
 
@@ -35,6 +36,11 @@ NS_ASSUME_NONNULL_BEGIN     // {
    message data which will be deserialized and presented in full screen.
  */
 @property (nonatomic, strong, readwrite) NSURL *messagePartID;
+
+/**
+ @abstract An optional action handler forwarded to messages.
+ */
+@property (nonatomic, weak, readwrite, nullable) id<LYRUIActionHandlingDelegate> actionHandlingDelegate;
 
 /**
  @abstract The default initializer.

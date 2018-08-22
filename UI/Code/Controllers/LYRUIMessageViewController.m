@@ -30,6 +30,7 @@
 
 @interface LYRUIMessageViewController () <LYRQueryControllerDelegate>
 
+@property (nonatomic, readonly) UIScrollView *scrollView;
 @property (nonatomic, readonly) LYRUIMessageSerializer *messageSerializer;
 @property (nonatomic, readonly) LYRUILargeMessageItemContentPresentersProvider *contentPresentersProvider;
 @property (nonatomic, readonly) LYRUIMessageItemView *messageView;
@@ -74,9 +75,7 @@
 - (void)lyr_commonInit {
     _noMessageLabel = [[UILabel alloc] initWithFrame:self.view.frame];
     _noMessageLabel.text = @"no message";
-    self.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    [self.view setBackgroundColor:[UIColor colorWithWhite:242.0/255.0 alpha:1.0]];
 }
 
 - (instancetype)init {
@@ -89,8 +88,17 @@
     _contentPresentersProvider = [layerConfiguration.injector objectOfType:[LYRUILargeMessageItemContentPresentersProvider class]];
 }
 
+- (void)loadView {
+    _scrollView = [[UIScrollView alloc] init];
+    _scrollView.scrollEnabled = YES;
+    _scrollView.backgroundColor = [UIColor colorWithWhite:242.0/255.0 alpha:1.0];
+    _scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+    self.view = _scrollView;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self registerForKeyboardNotifications];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(didTapDone:)];
 }
 
@@ -106,7 +114,7 @@
     self.messagePart = messageParts.firstObject;
     LYRQuery *messageQuery = [LYRQuery queryWithQueryableClass:LYRMessage.class];
     messageQuery.predicate = [LYRPredicate predicateWithProperty:@"identifier" predicateOperator:LYRPredicateOperatorIsEqualTo value:self.messagePart.message.identifier];
-    self.queryController = [self.layerConfiguration.client queryControllerWithQuery:messagePartQuery error:nil];
+    self.queryController = [self.layerConfiguration.client queryControllerWithQuery:messageQuery error:nil];
     self.queryController.delegate = self;
     [self.queryController execute:nil];
 }
@@ -116,7 +124,7 @@
 }
 
 - (void)updateMessageView {
-    for (UIView *subview in self.view.subviews.copy) {
+    for (UIView *subview in self.scrollView.subviews.copy) {
         [subview removeFromSuperview];
     }
     [NSLayoutConstraint deactivateConstraints:self.constraints];
@@ -129,25 +137,57 @@
         }
     }
     if (!typedMessage) {
-        self.noMessageLabel.frame = self.view.frame;
-        [self.view addSubview:self.noMessageLabel];
+        self.noMessageLabel.frame = self.scrollView.frame;
+        [self.scrollView addSubview:self.noMessageLabel];
         return;
     }
     self.navigationItem.title = @"Preview";
     id<LYRUIMessageItemContentPresenting> presenter = [self.contentPresentersProvider presenterForMessageClass:[typedMessage class]];
-    UIEdgeInsets safeArea = self.navigationController ? self.navigationController.view.lyr_safeAreaInsets : self.view.lyr_safeAreaInsets;
+    presenter.actionHandlingDelegate = self.actionHandlingDelegate;
+    UIEdgeInsets safeArea = self.navigationController ? self.navigationController.view.lyr_safeAreaInsets : self.scrollView.lyr_safeAreaInsets;
     UIView *messageView = [presenter viewForMessage:typedMessage];
     messageView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     messageView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - safeArea.bottom);
     messageView.translatesAutoresizingMaskIntoConstraints = YES;
     messageView.autoresizesSubviews = YES;
-    [self.view addSubview:messageView];
+    [self.scrollView addSubview:messageView];
+    self.scrollView.contentSize = messageView.frame.size;
 }
 
 #pragma mark - LYRQueryControllerDelegate Implementation
 
 - (void)queryControllerDidChangeContent:(LYRQueryController *)queryController {
     [self updateMessageView];
+}
+
+#pragma mark - Keyboard Appearance Handling
+
+// Call this method somewhere in your view controller setup code.
+- (void)registerForKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+
+}
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void)keyboardWasShown:(NSNotification*)aNotification {
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    self.scrollView.scrollIndicatorInsets = contentInsets;
+    self.scrollView.contentInset = contentInsets;
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification {
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
 }
 
 @end

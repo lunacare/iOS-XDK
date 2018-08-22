@@ -25,7 +25,7 @@ static NSUInteger const LYRUIOROperationIDLength = 6;
 
 @interface LYRUIOROperation ()
 
-@property (nonatomic, readwrite) NSString *value;
+@property (nonatomic, readwrite) id value;
 
 @property (nonatomic, readwrite) NSString *operationID;
 
@@ -33,12 +33,12 @@ static NSUInteger const LYRUIOROperationIDLength = 6;
 
 @implementation LYRUIOROperation
 
-- (instancetype)initWithValue:(NSString *)value {
+- (instancetype)initWithValue:(id)value {
     self = [self initWithValue:value operationID:nil];
     return self;
 }
 
-- (instancetype)initWithValue:(NSString *)value operationID:(NSString *)operationID {
+- (instancetype)initWithValue:(id)value operationID:(NSString *)operationID {
     self = [super init];
     if (self) {
         self.value = value;

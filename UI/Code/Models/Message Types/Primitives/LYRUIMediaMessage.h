@@ -66,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
                         status:(nullable LYRUIMessageTypeStatus *)status
                    messagePart:(nullable LYRMessagePart *)messagePart;
 
-- (LYRUIMessageMetadata *)metadataForTitle:(NSString *)title subtitle:(NSString *)subtitle artist:(NSString *)artist;
+- (LYRUIMessageMetadata *)metadataForTitle:(nullable NSString *)title album:(nullable NSString *)album genre:(nullable NSString *)genre subtitle:(nullable NSString *)subtitle type:(nullable NSString *)type;
 
 - (NSString *)formattedDuration;
 

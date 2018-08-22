@@ -53,7 +53,7 @@
 }
 
 - (LYRUIMessageMetadata *)metadata {
-    return [self metadataForTitle:self.title subtitle:self.album artist:self.artist];
+    return [self metadataForTitle:self.title album:self.album genre:self.genre subtitle:nil type:@"Audio Message"];
 }
 
 + (NSString *)MIMEType {

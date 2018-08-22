@@ -55,7 +55,7 @@
 }
 
 - (LYRUIMessageMetadata *)metadata {
-    return [self metadataForTitle:self.title subtitle:self.subtitle artist:self.artist];
+    return [self metadataForTitle:self.title album:nil genre:nil subtitle:self.subtitle type:@"Video Message"];
 }
 
 + (NSString *)MIMEType {

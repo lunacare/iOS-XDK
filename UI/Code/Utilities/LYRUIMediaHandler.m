@@ -92,6 +92,17 @@ NSString *const LYRUIMediaPlayingSizeKey = @"size";
 - (void)dealloc {
     [self.player removeTimeObserver:self.timeObserver];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self removeObserver:self.player forKeyPath:@"status"];
+}
+
+#pragma mark - AVPlayerItem Status Observing
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if (object == self.playerItem && [keyPath isEqualToString:@"status"]) {
+        if (self.playerItem.status == AVPlayerItemStatusFailed) {
+            self.state = LYRUIMediaPlaybackStateInvalid;
+        }
+    }
 }
 
 #pragma mark - LYRUIMediaPlaying Content Loading
@@ -137,6 +148,7 @@ NSString *const LYRUIMediaPlayingSizeKey = @"size";
     
     // Register AVPlayerItem notifications.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerItemDidFinishPlaying:) name:AVPlayerItemDidPlayToEndTimeNotification object:self.playerItem];
+    [self.playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
 
     _currentMediaMessageOpened = mediaMessage;
     return NO;
@@ -145,6 +157,9 @@ NSString *const LYRUIMediaPlayingSizeKey = @"size";
 - (void)closeMedia {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self detachMediaOverlay];
+    if (self.playerItem) {
+        [self.playerItem removeObserver:self forKeyPath:@"status"];
+    }
     self.playerItem = nil;
     [self.player pause];
     [self.player replaceCurrentItemWithPlayerItem:nil];
@@ -180,8 +195,8 @@ NSString *const LYRUIMediaPlayingSizeKey = @"size";
         if (CMTimeCompare(self.player.currentItem.currentTime, self.player.currentItem.asset.duration) >= 0) {
             [self seekPlaybackToTime:0];
         }
-        [self.player play];
         self.state = LYRUIMediaPlaybackStatePlaying;
+        [self.player play];
     }
 }
 

@@ -22,7 +22,7 @@
 #import "LYRUIOROperation.h"
 
 NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIORSet : NSObject
+@interface LYRUIORSet<__covariant ObjectType> : NSObject
 
 @property (nonatomic, strong, readonly) NSString *type;
 
@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN     // {
 
 @property (nonatomic, readonly) NSArray *operationsDictionaries;
 
-@property (nonatomic, readonly) NSOrderedSet<NSString *> *selectedValues;
+@property (nonatomic, readonly) NSOrderedSet<ObjectType> *selectedValues;
 
 - (instancetype)initWithPropertyName:(NSString *)propertyName;
 - (instancetype)initWithPropertyName:(NSString *)propertyName dictionary:(NSDictionary *)dictionary;

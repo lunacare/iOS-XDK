@@ -25,6 +25,7 @@
 
 static NSString *const LYRUIPlaybackControlViewPauseImage = @"playback-control-pause";
 static NSString *const LYRUIPlaybackControlViewPlayImage = @"playback-control-play";
+static NSString *const LYRUIPlaybackControlViewBrokenImage = @"Broken";
 static NSString *const LYRUIPlaybackControlViewMutedImage = @"playback-control-muted";
 static NSString *const LYRUIPlaybackControlViewUnmutedImage = @"playback-control-unmuted";
 static NSString *const LYRUIPlaybackControlViewRewind10Image = @"playback-control-rewind-10";
@@ -41,6 +42,7 @@ NSTimeInterval const LYRUIPlaybackSeekDistance = 10.f;
 @property (nonatomic, readonly) CALayer *topBorderLayer;
 @property (nonatomic, readonly) UIImage *imagePause;
 @property (nonatomic, readonly) UIImage *imagePlay;
+@property (nonatomic, readonly) UIImage *imageBroken;
 @property (nonatomic, readonly) UIImage *imageMuted;
 @property (nonatomic, readonly) UIImage *imageUnmuted;
 @property (nonatomic, readonly) UIImage *imageFF10;
@@ -212,6 +214,7 @@ NSTimeInterval const LYRUIPlaybackSeekDistance = 10.f;
     _imageFactory = [self.layerConfiguration.injector protocolImplementation:@protocol(LYRUIImageCreating) forClass:[self class]];
     _imagePause = [[self.imageFactory imageNamed:LYRUIPlaybackControlViewPauseImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     _imagePlay = [[self.imageFactory imageNamed:LYRUIPlaybackControlViewPlayImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    _imageBroken = [[self.imageFactory imageNamed:LYRUIPlaybackControlViewBrokenImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     _imageMuted = [[self.imageFactory imageNamed:LYRUIPlaybackControlViewMutedImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     _imageUnmuted = [[self.imageFactory imageNamed:LYRUIPlaybackControlViewUnmutedImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     _imageFF10 = [[self.imageFactory imageNamed:LYRUIPlaybackControlViewFastforward10Image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -260,7 +263,20 @@ NSTimeInterval const LYRUIPlaybackSeekDistance = 10.f;
 
 - (void)updateButtonImages {
     [self.muteButton setImage:self.isPlaybackMuted ? self.imageMuted : self.imageUnmuted forState:UIControlStateNormal];
-    [self.playbackControlButton setImage:self.playbackState == LYRUIMediaPlaybackStatePlaying ? self.imagePause : self.imagePlay forState:UIControlStateNormal];
+    UIImage *playbackButtonImage = nil;
+    switch (self.playbackState) {
+        case LYRUIMediaPlaybackStatePlaying:
+            playbackButtonImage = self.imagePause;
+            break;
+        case LYRUIMediaPlaybackStateLoading:
+        case LYRUIMediaPlaybackStatePaused:
+            playbackButtonImage = self.imagePlay;
+            break;
+        default:
+            playbackButtonImage = self.imageBroken;
+            break;
+    }
+    [self.playbackControlButton setImage:playbackButtonImage forState:UIControlStateNormal];
 }
 
 /**

@@ -168,6 +168,14 @@
 #import "LYRUILargeMediaMessageContentViewPresenter.h"
 #import "LYRUILargeVideoMessageContentViewPresenter.h"
 #import "LYRUILargeMessageContainerViewDefaultTheme.h"
+#import "LYRUIFeedbackMessage.h"
+#import "LYRUIFeedbackResponseMessage.h"
+#import "LYRUIFeedbackMessagePresenter.h"
+#import "LYRUIFeedbackResponseMessagePresenter.h"
+#import "LYRUILargeFeedbackMessageContainerViewPresenter.h"
+#import "LYRUILargeFeedbackResponseMessageContainerViewPresenter.h"
+#import "LYRUIFeedbackMessageSerializer.h"
+#import "LYRUIFeedbackMessageContainerView.h"
 
 static NSString * const LYRUILegacyTextMessageMimeType = @"text/plain";
 static NSString * const LYRUILegacyPDFFileMessageMimeType = @"application/pdf";
@@ -386,12 +394,16 @@ static NSString * const LYRUILegacyLocationMessageMimeType = @"location/coordina
     [self setMessagePresenterClass:[LYRUIProductMessageCompositeViewPresenter class] forMessageClass:[LYRUIProductMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
     [self setMessagePresenterClass:[LYRUIReceiptMessageCompositeViewPresenter class] forMessageClass:[LYRUIReceiptMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
     [self setMessagePresenterClass:[LYRUICarouselMessageCompositeViewPresenter class] forMessageClass:[LYRUICarouselMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessagePresenterClass:[LYRUIFeedbackMessagePresenter class] forMessageClass:[LYRUIFeedbackMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
+    [self setMessagePresenterClass:[LYRUIFeedbackResponseMessagePresenter class] forMessageClass:[LYRUIFeedbackResponseMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
 
     // Large size messages
     [self setMessagePresenterClass:[LYRUIMediaMessageContentViewPresenter class] forMessageClass:[LYRUIAudioMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
     [self setMessagePresenterClass:[LYRUIMediaMessageContentViewPresenter class] forMessageClass:[LYRUIVideoMessage class] sizeVariant:LYRUIMessageSizeVariantMedium];
     [self setMessagePresenterClass:[LYRUILargeMediaMessageContentViewPresenter class] forMessageClass:[LYRUIAudioMessage class] sizeVariant:LYRUIMessageSizeVariantLarge];
     [self setMessagePresenterClass:[LYRUILargeVideoMessageContentViewPresenter class] forMessageClass:[LYRUIVideoMessage class] sizeVariant:LYRUIMessageSizeVariantLarge];
+    [self setMessagePresenterClass:[LYRUILargeFeedbackMessageContainerViewPresenter class] forMessageClass:[LYRUIFeedbackMessage class] sizeVariant:LYRUIMessageSizeVariantLarge];
+    [self setMessagePresenterClass:[LYRUILargeFeedbackResponseMessageContainerViewPresenter class] forMessageClass:[LYRUIFeedbackResponseMessage class] sizeVariant:LYRUIMessageSizeVariantLarge];
 }
 
 - (void)setupMessageContainerPresenters {
@@ -431,6 +443,8 @@ static NSString * const LYRUILegacyLocationMessageMimeType = @"location/coordina
     [self setMessageSerializerClass:[LYRUICarouselMessageSerializer class] forMIMEType:LYRUICarouselMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIAudioMessageSerializer class] forMIMEType:LYRUIAudioMessage.MIMEType];
     [self setMessageSerializerClass:[LYRUIVideoMessageSerializer class] forMIMEType:LYRUIVideoMessage.MIMEType];
+    [self setMessageSerializerClass:[LYRUIFeedbackMessageSerializer class] forMIMEType:LYRUIFeedbackMessage.MIMEType];
+    [self setMessageSerializerClass:[LYRUIFeedbackMessageSerializer class] forMIMEType:LYRUIFeedbackResponseMessage.MIMEType];
 }
 
 - (void)setupActionHandlers {
@@ -438,7 +452,8 @@ static NSString * const LYRUILegacyLocationMessageMimeType = @"location/coordina
     [self setActionHandlerClass:[LYRUIMessageOpenURLActionHandler class] forEvent:@"open-url"];
     [self setActionHandlerClass:[LYRUIMessageOpenMapActionHandler class] forEvent:@"open-map"];
     [self setActionHandlerClass:[LYRUIMessageChoiceSelectedActionHandler class] forEvent:@"layer-choice-select"];
-    [self setActionHandlerClass:[LYRUIMessageOpenMessageActionHandler class] forEvent:@"open-message"];
+    [self setActionHandlerClass:[LYRUIMessageChoiceSelectedActionHandler class] forEvent:@"layer-send-feedback"];
+    [self setActionHandlerClass:[LYRUIMessageOpenMessageActionHandler class] forEvent:@"layer-open-expanded-view"];
 }
 
 @end

@@ -1,9 +1,9 @@
 //
-//  LYRUIFWWRegister.h
+//  LYRUILargeFeedbackResponseMessageContainerViewPresenter.h
 //  Layer-XDK-UI-iOS
 //
-//  Created by Łukasz Przytuła on 22.03.2018.
-//  Copyright (c) 2017 Layer. All rights reserved.
+//  Created by Klemen Verdnik on 8/1/18.
+//  Copyright (c) 2018 Layer. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,7 +18,12 @@
 //  limitations under the License.
 //
 
-#import "LYRUIORSet.h"
+#import "LYRUIFeedbackResponseMessagePresenter.h"
 
-@interface LYRUIFWWRegister<__covariant ObjectType> : LYRUIORSet
+NS_ASSUME_NONNULL_BEGIN     // {
+
+@interface LYRUILargeFeedbackResponseMessageContainerViewPresenter : LYRUIFeedbackResponseMessagePresenter
+
 @end
+
+NS_ASSUME_NONNULL_END       // }

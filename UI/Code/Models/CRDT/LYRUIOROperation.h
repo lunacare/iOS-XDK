@@ -21,15 +21,15 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN     // {
-@interface LYRUIOROperation : NSObject
+@interface LYRUIOROperation<__covariant ObjectType> : NSObject
 
-@property (nonatomic, readonly) NSString *value;
+@property (nonatomic, readonly) ObjectType value;
 
 @property (nonatomic, readonly) NSString *operationID;
 
-- (instancetype)initWithValue:(NSString *)value;
+- (instancetype)initWithValue:(ObjectType)value;
 
-- (instancetype)initWithValue:(NSString *)value operationID:(nullable NSString *)operationID;
+- (instancetype)initWithValue:(ObjectType)value operationID:(nullable NSString *)operationID;
 
 @end
 NS_ASSUME_NONNULL_END       // }

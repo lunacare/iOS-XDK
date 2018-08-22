@@ -49,6 +49,7 @@ static CGFloat const LYRUITitledMessageContainerViewMinHeaderHeight = 40.0;
     LYRUIMessageMetadata *metadata = message.metadata;
     
     id<LYRUIMessageItemContentPresenting> presenter = [self.presentersProvider contentPresenterForMessageClass:[message class]];
+    presenter.actionHandlingDelegate = self.actionHandlingDelegate;
     UIView *contentView = [presenter viewForMessage:message];
     
     if (metadata == nil) {

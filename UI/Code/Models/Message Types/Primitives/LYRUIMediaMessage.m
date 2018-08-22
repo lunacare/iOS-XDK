@@ -91,28 +91,93 @@
     return metadata;
 }
 
-- (LYRUIMessageMetadata *)metadataForTitle:(NSString *)title subtitle:(NSString *)subtitle artist:(NSString *)artist {
+- (LYRUIMessageMetadata *)metadataForTitle:(NSString *)title album:(NSString *)album genre:(NSString *)genre subtitle:(NSString *)subtitle type:(NSString *)type {
     LYRUIMessageMetadata *metadata;
     NSString *metadataTitle;        // slotB
     NSString *metadataDescription;  // slotC
     NSString *metadataFooter;       // slotD
-    if (title.length > 0 && subtitle.length > 0 && artist.length > 0) {
-        metadataTitle = title;
-        metadataDescription = subtitle;
-        metadataFooter = artist;
-    } else if (title.length > 0 && subtitle.length == 0 && artist.length > 0) {
-        metadataTitle = title;
-        metadataDescription = subtitle;
-        metadataFooter = [self formattedDuration];
-    } else if (title.length > 0 && subtitle.length == 0 && artist.length == 0) {
-        metadataTitle = title;
-        metadataDescription = [self formattedDuration];
-        metadataFooter = [self formattedSize];
-    } else {
-        metadataTitle = self.sourceURL.lastPathComponent;
-        metadataDescription = [self formattedDuration];
-        metadataFooter = [self formattedSize];
+    NSMutableArray<NSString *> *queueSlotOrder = [NSMutableArray array];
+    NSMutableArray<NSString *> *queueTitle = [NSMutableArray array];
+    if (self.title.length) {
+        [queueTitle addObject:self.title];
+        [queueSlotOrder addObject:self.title];
     }
+    if (self.sourceURL) {
+        NSString *sourceFileName = self.sourceURL.lastPathComponent.stringByDeletingPathExtension;
+        [queueTitle addObject:sourceFileName];
+        [queueSlotOrder addObject:sourceFileName];
+    }
+    if (queueTitle.count == 0) {
+        type = type ?: @"Media Message";
+        [queueTitle addObject:type];
+        [queueSlotOrder addObject:type];
+    }
+
+    NSMutableArray<NSString *> *queueSubtitle = [NSMutableArray array];
+    if (self.artist.length) {
+        [queueSubtitle addObject:self.artist];
+        [queueSlotOrder addObject:self.artist];
+    }
+    if (album.length) {
+        [queueSubtitle addObject:album];
+        [queueSlotOrder addObject:album];
+    }
+    if (genre.length) {
+        [queueSubtitle addObject:genre];
+        [queueSlotOrder addObject:genre];
+    }
+    if (subtitle.length) {
+        [queueSubtitle addObject:subtitle];
+        [queueSlotOrder addObject:subtitle];
+    }
+
+    NSMutableArray<NSString *> *queueFooter = [NSMutableArray array];
+    if (self.duration) {
+        NSString *duration = [self formattedDuration];
+        [queueFooter addObject:duration];
+        [queueSlotOrder addObject:duration];
+    }
+    if (self.size != LYRSizeNotDefined) {
+        NSString *size = [self formattedSize];
+        [queueFooter addObject:size];
+        [queueSlotOrder addObject:size];
+    }
+
+    metadataTitle = queueTitle.firstObject;
+    if (metadataTitle) {
+        [queueTitle removeObjectAtIndex:0];
+    }
+
+    metadataDescription = queueSubtitle.firstObject;
+    if (metadataDescription) {
+        [queueSubtitle removeObjectAtIndex:0];
+    }
+    if (!metadataDescription) {
+        metadataDescription = queueFooter.firstObject;
+        if (metadataDescription) {
+            [queueFooter removeObjectAtIndex:0];
+        }
+    }
+    if (!metadataDescription) {
+        metadataDescription = queueTitle.firstObject;
+        if (metadataDescription) {
+            [queueTitle removeObjectAtIndex:0];
+        }
+    }
+    metadataFooter = queueFooter.firstObject;
+    if (metadataFooter) {
+        [queueFooter removeObjectAtIndex:0];
+    }
+    if (!metadataFooter) {
+        metadataFooter = queueSubtitle.firstObject;
+    }
+    if (!metadataFooter) {
+        metadataFooter = queueFooter.firstObject;
+        if (metadataFooter) {
+            [queueFooter removeObjectAtIndex:0];
+        }
+    }
+
     metadata = [[LYRUIMessageMetadata alloc] initWithDescription:metadataDescription
                                                            title:metadataTitle
                                                           footer:metadataFooter];

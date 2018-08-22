@@ -23,6 +23,8 @@
 #import "LYRMessagePart+LYRUIHelpers.h"
 #import "LYRUIMessageActionSerializer.h"
 
+static NSString * const LYRUIVideoMessageSerializerDefaultAction = @"layer-open-expanded-view";
+
 @interface LYRUIVideoMessageSerializer ()
 
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
@@ -50,7 +52,7 @@
                                  [messagePart.properties[@"preview_height"] doubleValue]);
     }
     LYRSize size = messagePart.properties[@"size"] ? [messagePart.properties[@"size"] integerValue] : LYRSizeNotDefined;
-    NSTimeInterval duration = messagePart.properties[@"duration"] ? [messagePart.properties[@"duration"] doubleValue] : LYRSizeNotDefined;
+    NSTimeInterval duration = messagePart.properties[@"duration"] ? [messagePart.properties[@"duration"] doubleValue] : 0;
     NSString *mimeType = messagePart.properties[@"mime_type"] ?: @"application/octet-stream";
     NSURL *sourceLocalURL;
     LYRMessagePart *sourcePart = [messagePart childPartWithRole:@"source"];
@@ -76,7 +78,7 @@
     NSURL *previewURL = messagePart.properties[@"preview_url"] ? [NSURL URLWithString:messagePart.properties[@"preview_url"]] : nil;
     NSMutableDictionary *properties = messagePart.properties.mutableCopy;
     properties[@"message_part_id"] = messagePart.identifier;
-    LYRUIMessageAction *action = [[LYRUIMessageAction alloc] initWithEvent:@"open-message" data:properties];
+    LYRUIMessageAction *action = [[LYRUIMessageAction alloc] initWithEvent:LYRUIVideoMessageSerializerDefaultAction data:properties];
     return [[LYRUIVideoMessage alloc] initWithArtist:messagePart.properties[@"artist"]
                                                title:messagePart.properties[@"title"]
                                            createdAt:createdAt

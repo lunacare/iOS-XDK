@@ -39,19 +39,24 @@
 #pragma mark - LYRUIActionHandling Implementation
 
 - (void)handleActionWithData:(NSDictionary *)data delegate:(id<LYRUIActionHandlingDelegate>)delegate {
-    UIViewController *viewController = [self viewControllerForActionWithData:data];
+    UIViewController *viewController = [self viewControllerForActionWithData:data delegate:delegate];
     if (viewController) {
         [delegate actionHandler:self presentViewController:viewController];
     }
 }
 
-- (UIViewController *)viewControllerForActionWithData:(NSDictionary *)data {
+- (UIViewController *)viewControllerForActionWithData:(NSDictionary<NSString *,id> *)data {
+    return [self viewControllerForActionWithData:data delegate:nil];
+}
+
+- (UIViewController *)viewControllerForActionWithData:(NSDictionary *)data delegate:(id<LYRUIActionHandlingDelegate>)delegate {
     if (data == nil || data[@"message_part_id"] == nil) {
         return nil;
     }
     NSURL *messagePartID = data[@"message_part_id"];
     LYRUIMessageViewController *messageViewController = [[LYRUIMessageViewController alloc] initWithConfiguration:self.layerConfiguration];
     messageViewController.messagePartID = messagePartID;
+    messageViewController.actionHandlingDelegate = delegate;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:messageViewController];
     navigationController.navigationBar.translucent = NO;
     navigationController.navigationItem.hidesBackButton = NO;

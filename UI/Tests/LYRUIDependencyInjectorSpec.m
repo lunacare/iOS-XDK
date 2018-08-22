@@ -869,8 +869,8 @@ describe(@"LYRUIDependencyInjector", ^{
                 returnedClasses = [injector handledMessageClasses];
             });
             
-            it(@"should contain 12 message types", ^{
-                expect(returnedClasses).to.haveCount(12);
+            it(@"should contain 14 message types", ^{
+                expect(returnedClasses).to.haveCount(14);
             });
             it(@"should contain LYRUITextMessage", ^{
                 expect(returnedClasses).to.contain([LYRUITextMessage class]);
@@ -920,8 +920,8 @@ describe(@"LYRUIDependencyInjector", ^{
                 returnedClasses = [injector handledMessageClasses];
             });
             
-            it(@"should contain 11 message types", ^{
-                expect(returnedClasses).to.haveCount(13);
+            it(@"should contain 15 message types", ^{
+                expect(returnedClasses).to.haveCount(15);
             });
             it(@"should contain LYRUITextMessage", ^{
                 expect(returnedClasses).to.contain([LYRUITextMessage class]);

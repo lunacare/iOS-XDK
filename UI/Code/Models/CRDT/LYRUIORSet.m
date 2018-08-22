@@ -46,8 +46,8 @@
     self = [self initWithPropertyName:propertyName];
     if (self) {
         for (NSDictionary *operationDictionary in dictionary[@"adds"]) {
-            NSString *value = operationDictionary[@"value"];
-            if (value == nil || value.length == 0) {
+            id value = operationDictionary[@"value"];
+            if (value == nil) {
                 continue;
             }
             for (NSString *operationID in operationDictionary[@"ids"]) {

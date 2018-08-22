@@ -20,5 +20,5 @@
 
 #import "LYRUILWWNRegister.h"
 
-@interface LYRUILWWRegister : LYRUILWWNRegister
+@interface LYRUILWWRegister<__covariant ObjectType> : LYRUILWWNRegister
 @end
