@@ -39,6 +39,9 @@
 #import "LYRUISendButton.h"
 #import "LYRUIComposeBar.h"
 #import "LYRUIConversationView.h"
+#import "LYRUITextMessageContentView.h"
+#import "LYRUIStandardMessageContainerView.h"
+#import "LYRUIMessageViewContainer.h"
 
 ///----------------
 /// @name Utilities
@@ -48,6 +51,7 @@
 #import "LYRUIMessageSender.h"
 #import "LYRMessage+LYRUIHelpers.h"
 #import "LYRMessagePart+LYRUIHelpers.h"
+#import "LYRUIReusableViewsQueue.h"
 
 ///----------------
 /// @name Protocols
@@ -67,6 +71,13 @@
 #import "LYRUIMessageListTypingIndicatorsControlling.h"
 #import "LYRUIMessageItemContentPresenting.h"
 #import "LYRUIMessageTypeSerializing.h"
+#import "LYRUIBaseMessageTypeSerializer.h"
+#import "LYRUIIdentityNameFormatting.h"
+#import "LYRUITextMessageSerializer.h"
+#import "LYRUIMessageItemContentBasePresenter.h"
+#import "LYRUITextMessageContentViewPresenter.h"
+#import "LYRUIMessageItemContentContainerPresenting.h"
+#import "LYRUIStandardMessageContainerViewPresenter.h"
 
 ///--------------
 /// @name Layouts
@@ -91,6 +102,7 @@
 #import "LYRUIMessageAction.h"
 #import "LYRUIMessageTypeStatus.h"
 #import "LYRUIListSection.h"
+#import "LYRUITextMessage.h"
 
 /**
  @abstract Returns the XDK UI version as a string.
