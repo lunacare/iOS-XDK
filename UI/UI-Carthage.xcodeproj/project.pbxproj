@@ -994,6 +994,8 @@
 		5E706F02E90D321DBA4F6FF4 /* Pause@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Pause@3x.png"; path = "Resources/Pause@3x.png"; sourceTree = "<group>"; };
 		5EB8A035552A9A9CE617881D /* LYRUISortDescriptor.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LYRUISortDescriptor.m; path = Code/Utilities/LYRUISortDescriptor.m; sourceTree = "<group>"; };
 		5EC4D62C931B2AFF498B2F2F /* LYRUIProductMessageCompositeViewPresenter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LYRUIProductMessageCompositeViewPresenter.m; path = "Code/Presenters/Message Item/Message Types/Medium/Composites/LYRUIProductMessageCompositeViewPresenter.m"; sourceTree = "<group>"; };
+		5ED8413C215149AF00BAC58C /* LayerXDK.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = LayerXDK.modulemap; sourceTree = SOURCE_ROOT; };
+		5ED8413D215149BA00BAC58C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		5F734F194C3A540DC844094B /* Hollow@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Hollow@2x.png"; path = "Resources/Hollow@2x.png"; sourceTree = "<group>"; };
 		603A93974D2AD0898E18DD9A /* LYRUIMessageItemViewPresenter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LYRUIMessageItemViewPresenter.m; path = "Code/Presenters/Message Item/LYRUIMessageItemViewPresenter.m"; sourceTree = "<group>"; };
 		6050684AF440E4A53220F6A4 /* LYRUIProgressView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LYRUIProgressView.h; path = Code/Views/LYRUIProgressView.h; sourceTree = "<group>"; };
@@ -2206,6 +2208,8 @@
 		B6EC02DA9C11BCCE6AEED41C /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				5ED8413C215149AF00BAC58C /* LayerXDK.modulemap */,
+				5ED8413D215149BA00BAC58C /* Info.plist */,
 				D013673DDA3AF90F0ADBD1D8 /* LayerXDK.framework */,
 			);
 			name = UI;
