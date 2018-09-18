@@ -48,7 +48,7 @@
 - (void)lyr_commonInit {
     LYRUIMessageItemView *messageView = [[LYRUIMessageItemView alloc] init];
     [self.contentView addSubview:messageView];
-    messageView.backgroundColor = [UIColor whiteColor];
+    messageView.backgroundColor = [UIColor clearColor];
     messageView.frame = self.contentView.bounds;
     self.messageView = messageView;
     
