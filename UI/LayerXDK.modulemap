@@ -1,0 +1,6 @@
+framework module LayerXDK {
+    umbrella header "LayerXDKUI.h"
+    
+    export *
+    module * { export * }
+}
