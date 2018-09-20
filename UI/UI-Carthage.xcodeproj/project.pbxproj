@@ -3187,6 +3187,7 @@
 				GCC_PREFIX_HEADER = "${SRCROOT}/Code/Support/LayerXDK-prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "${SRCROOT}/LayerXDK.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.layer.xdk.ui;
@@ -3224,6 +3225,7 @@
 				GCC_PREFIX_HEADER = "${SRCROOT}/Code/Support/LayerXDK-prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "${SRCROOT}/LayerXDK.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.layer.xdk.ui;
