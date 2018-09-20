@@ -3188,7 +3188,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "${SRCROOT}/LayerXDK.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.layer.xdk.ui;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -3226,7 +3226,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "${SRCROOT}/LayerXDK.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.layer.xdk.ui;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
