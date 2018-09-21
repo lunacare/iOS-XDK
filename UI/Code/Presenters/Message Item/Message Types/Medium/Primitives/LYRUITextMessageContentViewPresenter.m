@@ -91,7 +91,7 @@ static CGFloat const LYRUITextMessageContentViewVerticalPadding = 17.0;
     CGFloat textWidth = maxWidth - textInsets;
     CGRect stringRect = [textView.text boundingRectWithSize:CGSizeMake(textWidth, CGFLOAT_MAX)
                                                     options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                                 attributes:textView.typingAttributes
+                                                 attributes:@{NSFontAttributeName: textView.font}
                                                     context:nil];
     CGFloat textViewHeight = ceil(stringRect.size.height);
     return textViewHeight + LYRUITextMessageContentViewVerticalPadding;
