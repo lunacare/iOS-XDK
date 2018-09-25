@@ -102,7 +102,8 @@ static CGFloat const LYRUITextMessageContentViewVerticalPadding = 17.0;
     [textStorage addAttributes:textView.typingAttributes range:NSMakeRange(0, [textStorage length])];
     [textContainer setLineFragmentPadding:textView.textContainer.lineFragmentPadding];
     [layoutManager glyphRangeForTextContainer:textContainer];
-    CGFloat maxTextHeight = MAX(textViewHeight, [layoutManager usedRectForTextContainer:textContainer].size.height);
+    CGFloat textContainerHeight = ceil([layoutManager usedRectForTextContainer:textContainer].size.height);
+    CGFloat maxTextHeight = MAX(textViewHeight, textContainerHeight);
     return maxTextHeight + LYRUITextMessageContentViewVerticalPadding;
 }
 
