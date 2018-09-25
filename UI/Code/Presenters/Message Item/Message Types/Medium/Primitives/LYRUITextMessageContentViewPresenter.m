@@ -89,11 +89,6 @@ static CGFloat const LYRUITextMessageContentViewVerticalPadding = 17.0;
     [self setupTextView:textView forMessage:message];
     CGFloat textInsets = textView.textContainerInset.left + textView.textContainerInset.right + textView.textContainer.lineFragmentPadding;
     CGFloat textWidth = maxWidth - textInsets;
-    CGRect stringRect = [textView.text boundingRectWithSize:CGSizeMake(textWidth, CGFLOAT_MAX)
-                                                    options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                                 attributes:textView.typingAttributes
-                                                    context:nil];
-    CGFloat textViewHeight = ceil(stringRect.size.height);
     NSTextStorage *textStorage = [[NSTextStorage alloc] initWithString:textView.text];
     NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(textWidth, FLT_MAX)];
     NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
@@ -103,8 +98,7 @@ static CGFloat const LYRUITextMessageContentViewVerticalPadding = 17.0;
     [textContainer setLineFragmentPadding:textView.textContainer.lineFragmentPadding];
     [layoutManager glyphRangeForTextContainer:textContainer];
     CGFloat textContainerHeight = ceil([layoutManager usedRectForTextContainer:textContainer].size.height);
-    CGFloat maxTextHeight = MAX(textViewHeight, textContainerHeight);
-    return maxTextHeight + LYRUITextMessageContentViewVerticalPadding;
+    return textContainerHeight + LYRUITextMessageContentViewVerticalPadding;
 }
 
 #pragma mark - UITextViewDelegate
