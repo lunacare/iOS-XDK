@@ -42,7 +42,7 @@
 
 - (void)lyr_commonInit {
     LYRUIBubbleTypingIndicatorView *typingIndicatorView = [[LYRUIBubbleTypingIndicatorView alloc] init];
-    typingIndicatorView.backgroundColor = [UIColor clearColor];
+    typingIndicatorView.backgroundColor = [UIColor whiteColor];
     typingIndicatorView.frame = self.contentView.bounds;
     typingIndicatorView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     [self.contentView addSubview:typingIndicatorView];

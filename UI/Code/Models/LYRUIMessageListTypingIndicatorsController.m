@@ -137,7 +137,10 @@
         weakSelf.collectionView.contentOffset = oldOffset;
         LYRUIBubbleTypingIndicatorCollectionViewCell *typingIndicatorCell =
             (LYRUIBubbleTypingIndicatorCollectionViewCell *)[weakSelf.collectionView cellForItemAtIndexPath:indexPath];
-        typingIndicatorCell.typingIndicatorView.bubbleView.animating = YES;
+        if ([typingIndicatorCell respondsToSelector:@selector(typingIndicatorView)]) {
+            LYRUIBubbleTypingIndicatorView *typingIndicatorView = typingIndicatorCell.typingIndicatorView;
+            typingIndicatorView.bubbleView.animating = YES;
+        }
         if (shouldScrollToBottom) {
             [weakSelf scrollToBottom];
         }
