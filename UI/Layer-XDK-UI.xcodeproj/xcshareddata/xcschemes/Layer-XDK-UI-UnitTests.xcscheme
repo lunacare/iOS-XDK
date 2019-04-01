@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1000"
+   LastUpgradeVersion = "1020"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3EDE9EBC0EC199CC9DBE650A8D0B5FBB"
+               BlueprintIdentifier = "652E728EAAE72E02B10CDAE58CB7E467"
                BuildableName = "LayerXDK.framework"
                BlueprintName = "LayerXDK"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -42,7 +42,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3EDE9EBC0EC199CC9DBE650A8D0B5FBB"
+            BlueprintIdentifier = "652E728EAAE72E02B10CDAE58CB7E467"
             BuildableName = "LayerXDK.framework"
             BlueprintName = "LayerXDK"
             ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -64,7 +64,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3EDE9EBC0EC199CC9DBE650A8D0B5FBB"
+            BlueprintIdentifier = "652E728EAAE72E02B10CDAE58CB7E467"
             BuildableName = "LayerXDK.framework"
             BlueprintName = "LayerXDK"
             ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -82,7 +82,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3EDE9EBC0EC199CC9DBE650A8D0B5FBB"
+            BlueprintIdentifier = "652E728EAAE72E02B10CDAE58CB7E467"
             BuildableName = "LayerXDK.framework"
             BlueprintName = "LayerXDK"
             ReferencedContainer = "container:Pods/Pods.xcodeproj">
